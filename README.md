@@ -1,5 +1,13 @@
 # Tensor rewrite verification experiment
 
+Independent Git/Lake project for tensor rewrite verification. The current proof
+baseline uses pinned Mathlib and FloatLib dependencies; see [dependency setup](docs/dependencies.md).
+Run `lake update`, `lake build`, then `python3 tools/check_libraries.py`.
+No GitHub remote is configured yet. Historical Std-only proofs/evidence are retained.
+The library-backed artifact has **2,796 custom Lean lines**: the historical 2,763
+plus 33 integration lines (category A). Imported library code is listed separately.
+See `reports/library-setup.json` for build and axiom-audit evidence.
+
 Implementation/evidence workspace for the 2026-11-10 plan in `../notes/`.
 Scheduling remains in `../notes/TODO.md`. The final research goal is active.
 
@@ -99,7 +107,7 @@ primary-agent mapping, not independent semantic review or a complete census.
 Run `python3 tools/check_pilot.py` to rebuild the arbitrary-rank tensor value
 model, check all value/index lemmas and their axiom dependencies, verify scalar,
 empty and nontrivial-index controls and require rejection of false identities.
-The latest source totals are S=776, H=926, R=691, A=33, C=337 code lines (2763 total including certificates);
+The historical Std-only pilot totals are S=776, H=926, R=691, A=33, C=337 code lines (2763 total including certificates);
 test/audit lines are listed separately. The baseline is pinned Lean/Std only.
 This extends the first Boolean/bitvector pilot with logical axis reversal,
 mask composition, list-of-legal-axes triviality and shape-aware axis permutation.

@@ -1,0 +1,195 @@
+# Functions
+
+Part of [A Lean Style Guide for Software](../README.md), a community draft. Every example compiles with Lean 4.35.0.
+
+<a name="functions-signatures"></a>
+## Type signatures
+
+Give every top-level definition explicit argument types and an explicit result type. The type tells the reader what the function does and keeps type errors close to the mistake.
+
+```lean
+-- bad
+def area (width height : Nat) := width * height
+```
+
+```lean
+-- good
+def area (width height : Nat) : Nat := width * height
+```
+
+*Sources: [FPIL][fpil-annot], [Google Haskell guide][google-types].*
+
+<a name="functions-implicit"></a>
+## Implicit arguments
+
+Make an argument implicit, with braces, when later arguments determine it. That's usually true of type arguments.
+
+```lean
+-- bad
+def firstOr (α : Type) (xs : List α) (fallback : α) : α := xs.headD fallback
+
+def first := firstOr Nat [1, 2, 3] 0
+```
+
+```lean
+-- good
+def firstOr {α : Type} (xs : List α) (fallback : α) : α := xs.headD fallback
+
+def first := firstOr [1, 2, 3] 0
+```
+
+*Source: [FPIL][fpil-implicit].*
+
+<a name="functions-auto-implicit"></a>
+## Automatic implicit arguments
+
+Turn off `autoImplicit` (see [Lean options](projects.md#project-options)). By default, Lean turns every unknown name in a signature into a new implicit argument, so a misspelled type name compiles and means something else.
+
+```lean
+structure Item where
+  price : Nat
+
+-- bad: `Iten` is a typo, and Lean makes it a type variable
+def count (items : List Iten) : Nat := items.length
+```
+
+```lean
+set_option autoImplicit false
+
+structure Item where
+  price : Nat
+
+-- good: the typo would be an error, and type variables are declared
+def count {α : Type} (items : List α) : Nat := items.length
+
+def totalPrice (items : List Item) : Nat := items.foldl (· + ·.price) 0
+```
+
+*Sources: [Mathlib configuration][ml-autoimplicit], [checked with Lean 4.35][checked].*
+
+<a name="functions-helpers"></a>
+## Local helpers
+
+Put a helper that only one function uses in a `where` clause after that function, and name a recursive helper `go`. A `where` helper can use the parameters of the function it belongs to. Use `let rec` only when the helper needs a local variable from inside the body.
+
+```lean
+-- bad
+def sumSquaresAux : List Nat → Nat → Nat
+  | [], acc => acc
+  | x :: xs, acc => sumSquaresAux xs (acc + x * x)
+
+def sumSquares (xs : List Nat) : Nat := sumSquaresAux xs 0
+```
+
+```lean
+-- good
+def sumSquares (xs : List Nat) : Nat := go xs 0
+where
+  go : List Nat → Nat → Nat
+    | [], acc => acc
+    | x :: xs, acc => go xs (acc + x * x)
+```
+
+*Source: [FRO practice][fro-c].*
+
+<a name="functions-options"></a>
+## Optional parameters
+
+Give optional parameters default values. Callers then leave them out and set the ones they need by name, as in `connect "localhost" (useTls := false)`. When several functions take the same options, put the options in a structure with default values instead. The standard library does this with `IO.Process.SpawnArgs`, which `IO.Process.spawn`, `IO.Process.output` and `IO.Process.run` all take.
+
+```lean
+-- bad
+def connect (host : String) (port timeoutMs retries : Nat) (useTls : Bool) : String :=
+  s!"{host}:{port} timeout={timeoutMs} retries={retries} tls={useTls}"
+
+def localConnection := connect "localhost" 5432 5000 3 false
+```
+
+```lean
+-- good
+def connect (host : String) (port : Nat := 5432) (timeoutMs : Nat := 5000)
+    (retries : Nat := 3) (useTls : Bool := true) : String :=
+  s!"{host}:{port} timeout={timeoutMs} retries={retries} tls={useTls}"
+
+def localConnection := connect "localhost" (useTls := false)
+```
+
+*Sources: [standard library][std-spawnargs], [Lake's `proc`][lake-proc].*
+
+<a name="functions-bool-args"></a>
+## Boolean arguments
+
+Pass a `Bool` argument by name, as in `(lastFirst := true)`, because a bare `true` doesn't say what it switches on. If most callers want the same value, make it the parameter's default. Lake works this way: its `proc` function takes `(quiet := false)`, and callers that want no output write `(quiet := true)`.
+
+```lean
+-- bad
+def formatName (first last : String) (lastFirst : Bool) : String :=
+  if lastFirst then s!"{last}, {first}" else s!"{first} {last}"
+
+def label := formatName "Ada" "Lovelace" true
+```
+
+```lean
+-- good
+def formatName (first last : String) (lastFirst : Bool := false) : String :=
+  if lastFirst then s!"{last}, {first}" else s!"{first} {last}"
+
+def label := formatName "Ada" "Lovelace" (lastFirst := true)
+```
+
+*Sources: [Lake's `proc`][lake-proc], [measured in Std and Lake][checked].*
+
+<a name="functions-pipelines"></a>
+## Pipelines
+
+Use `|>` when a value goes through several steps in order, and `|>.` to continue with a method call. Use `<|` to avoid parentheses around a last argument. Don't use `$`.
+
+```lean
+-- bad
+def report (words : List String) : String :=
+  String.intercalate ", " (List.map String.toUpper (List.filter (fun w => w.length > 3) words))
+```
+
+```lean
+-- good
+def report (words : List String) : String :=
+  words.filter (·.length > 3) |>.map String.toUpper |> ", ".intercalate
+```
+
+*Sources: [FPIL][fpil-pipe], [Mathlib style][ml-delims].*
+
+<a name="functions-lambdas"></a>
+## Lambdas
+
+Write lambdas as `fun x => e`. Don't use `λ` or `↦`. For very simple lambdas, use the `·` shorthand, so `(· + 1)` means `fun x => x + 1`.
+
+```lean
+-- bad
+def incrementAll (xs : List Nat) : List Nat := xs.map (λ x ↦ x + 1)
+```
+
+```lean
+-- good
+def incrementAll (xs : List Nat) : List Nat := xs.map (· + 1)
+
+def names (people : List (String × Nat)) : List String := people.map fun (name, _) => name
+```
+
+*Sources: [Lean core style][cs-notation], [FPIL][fpil-fun], [FRO practice][fro-c].*
+
+---
+
+Previous: [Naming](naming.md) · [Contents](../README.md#rules) · Next: [Type classes and instances](classes.md)
+
+[checked]: https://github.com/saviorand/lean-style-guide/blob/5a1bab3990237788a8cb1f815644eceb0dc27b56/research/decisions.md#facts-checked-while-drafting
+[cs-notation]: https://github.com/leanprover/lean4/blob/3a685e6c855f0eb4ccabe92e21120f1b1ef81d24/doc/std/style.md#notation-and-unicode
+[fpil-annot]: https://github.com/leanprover/fp-lean/blob/0abeea545d560a324e2561f7210fbd6ed154fa02/book/FPLean/GettingToKnow/Conveniences.lean#L238-L246
+[fpil-fun]: https://github.com/leanprover/fp-lean/blob/0abeea545d560a324e2561f7210fbd6ed154fa02/book/FPLean/GettingToKnow/Conveniences.lean#L511-L553
+[fpil-implicit]: https://github.com/leanprover/fp-lean/blob/0abeea545d560a324e2561f7210fbd6ed154fa02/book/FPLean/GettingToKnow/Polymorphism.lean#L288
+[fpil-pipe]: https://github.com/leanprover/fp-lean/blob/0abeea545d560a324e2561f7210fbd6ed154fa02/book/FPLean/MonadTransformers/Conveniences.lean#L25-L38
+[fro-c]: https://github.com/saviorand/lean-style-guide/blob/5a1bab3990237788a8cb1f815644eceb0dc27b56/research/author-survey.md#consistent-across-authors
+[google-types]: https://google.github.io/styleguide/haskellguide.html#type-declarations
+[lake-proc]: https://github.com/leanprover/lean4/blob/3a685e6c855f0eb4ccabe92e21120f1b1ef81d24/src/lake/Lake/Util/Proc.lean#L38-L40
+[ml-autoimplicit]: https://github.com/leanprover-community/mathlib4/blob/7bb03b4c5313d552989ba5b1c6d3f0f436f65d73/lakefile.lean#L44
+[ml-delims]: https://leanprover-community.github.io/contribute/style.html#whitespace-and-delimiters
+[std-spawnargs]: https://github.com/leanprover/lean4/blob/3a685e6c855f0eb4ccabe92e21120f1b1ef81d24/src/Init/System/IO.lean#L1434-L1455
