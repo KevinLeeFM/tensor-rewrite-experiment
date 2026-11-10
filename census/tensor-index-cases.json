@@ -1,0 +1,1745 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "HandleBroadcast",
+    "HandleConcatenate",
+    "HandleDynamicSlice",
+    "HandleDynamicUpdateSlice",
+    "HandleGather",
+    "HandlePad"
+  ],
+  "cases": [
+    {
+      "id": "HandleConcatenate/unary",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(x)",
+      "rhs": "x",
+      "guard": "one operand; compatibility succeeds",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "SameShape",
+        "return even if compatibility fails"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02108-C005",
+      "replacement_line": 2108,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    ReplaceInstructionIfCompatible(concatenate, operands[0]);",
+      "additional_replacement_sites": [],
+      "returns_even_if_compatibility_fails": true
+    },
+    {
+      "id": "HandleConcatenate/filter-all-empty",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(xs)",
+      "rhs": "original first operand",
+      "guard": "at least one operand zero-element; selected nonempty count 0; compatibility succeeds",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "empty means zero total elements, not necessarily zero concat-axis extent",
+        "SameShape can reject all-empty shape differences",
+        "CloneWithNewOperands"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02131-C005",
+      "replacement_line": 2131,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    ReplaceInstructionIfCompatible(concatenate, replacement);",
+      "additional_replacement_sites": [],
+      "returns_even_if_compatibility_fails": true
+    },
+    {
+      "id": "HandleConcatenate/filter-one-nonempty",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(xs)",
+      "rhs": "only nonempty operand",
+      "guard": "at least one operand zero-element; selected nonempty count 1; compatibility succeeds",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "empty means zero total elements, not necessarily zero concat-axis extent",
+        "SameShape can reject all-empty shape differences",
+        "CloneWithNewOperands"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02131-C005",
+      "replacement_line": 2131,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    ReplaceInstructionIfCompatible(concatenate, replacement);",
+      "additional_replacement_sites": [],
+      "returns_even_if_compatibility_fails": true
+    },
+    {
+      "id": "HandleConcatenate/filter-many-nonempty",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(xs)",
+      "rhs": "cloned Concat of nonempty operands",
+      "guard": "at least one operand zero-element; selected nonempty count >1; compatibility succeeds",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "empty means zero total elements, not necessarily zero concat-axis extent",
+        "SameShape can reject all-empty shape differences",
+        "CloneWithNewOperands"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02131-C005",
+      "replacement_line": 2131,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    ReplaceInstructionIfCompatible(concatenate, replacement);",
+      "additional_replacement_sites": [],
+      "returns_even_if_compatibility_fails": true
+    },
+    {
+      "id": "HandleConcatenate/flatten",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(xs with nested Concat on same axis)",
+      "rhs": "Concat(unnested operands)",
+      "guard": "layout insensitive; unnested operand count differs from original count",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "source expands one level in operand order",
+        "concat extent sums and empty-operand early returns"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L02156-C012",
+      "replacement_line": 2156,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleConcatenate/adjacent-slices",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(...,Slice(x),Slice(x),...)",
+      "rhs": "Concat(...,merged Slice(x),...)",
+      "guard": "layout insensitive; merge loop finds >=2 consecutive unstrided Slices sharing x; adjacent concat-axis limits/starts; other-axis starts equal; new operand count smaller; compatibility succeeds",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "nested scan and prefix bounds",
+        "legal equal nonconcat extents imply equal other limits",
+        "UpdateLayout",
+        "return even if compatibility fails"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L02227-C005",
+      "replacement_line": 2227,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    ReplaceInstructionIfCompatible(concatenate, replacement);",
+      "additional_replacement_sites": [],
+      "returns_even_if_compatibility_fails": true
+    },
+    {
+      "id": "HandleConcatenate/pad-low",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "binary Concat of x and scalar Broadcast",
+      "rhs": "Pad(other operand,scalar,padding on concat axis low)",
+      "guard": "layout insensitive; exactly two operands; operand0 scalar Broadcast (takes priority even if both match)",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "pad extent equals broadcast concat-axis extent",
+        "padding elsewhere zero",
+        "value and mixed output type semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L02262-C014",
+      "replacement_line": 2262,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(concatenate, pad);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleConcatenate/pad-high",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "binary Concat of x and scalar Broadcast",
+      "rhs": "Pad(other operand,scalar,padding on concat axis high)",
+      "guard": "layout insensitive; exactly two operands; operand0 not scalar Broadcast; operand1 scalar Broadcast",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "pad extent equals broadcast concat-axis extent",
+        "padding elsewhere zero",
+        "value and mixed output type semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L02262-C014",
+      "replacement_line": 2262,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(concatenate, pad);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleConcatenate/repeat-unit-axis",
+      "handler": "HandleConcatenate",
+      "line": 2103,
+      "end_line": 2283,
+      "lhs": "Concat(x,x,...,axis)",
+      "rhs": "Broadcast(Reshape(x,delete axis),all other axes)",
+      "guard": "layout insensitive; all operand pointers same; x extent on concat axis ==1",
+      "source_body_sha256": "fb1a256408f8e4871685453eebfe3bf6d15789ac265dd3f1bd8db4fe9d807b49",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "MakeReshapeHlo .value error boundary",
+        "dimension deletion and remapped broadcast",
+        "rank and count overflow"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L02277-C012",
+      "replacement_line": 2277,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/reshape",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast(x,dims)",
+      "rhs": "Reshape(x,output shape)",
+      "guard": "dims sorted; equal input/output element counts",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "legal broadcast indexing including zero extents",
+        "logical row-major reshape versus layout"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05782-C012",
+      "replacement_line": 5782,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/transpose",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast(x,dims)",
+      "rhs": "Transpose(x,InversePermutation(dims))",
+      "guard": "input/output rank equal; element counts equal; prior sorted/count branch did not return",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "permutation validity from legal broadcast",
+        "inverse direction"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L05792-C012",
+      "replacement_line": 5792,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/inserted-unit-axes",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast(Reshape(x),dims)",
+      "rhs": "Broadcast(x,dims with inserted reshape axes erased)",
+      "guard": "ReshapeMerelyInsertsOrDeletes1SizedDimensions descriptor exists; deleted_dimensions empty; erase inserted dimensions in reversed order",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "dimension-list positions and index shifting",
+        "original-value recovery computation construction",
+        "shape and metadata preservation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L05822-C014",
+      "replacement_line": 5822,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/sink-users-delegation",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast feeding elementwise users",
+      "rhs": "helper-dependent smaller operations and broadcasts",
+      "guard": "enable_sink_broadcast; helper returns true; handler MarkAsChanged then returns",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "caller option now explicit",
+        "helper can change several users"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "delegation_target": "TryToSinkBroadcastAfterElementwiseOps",
+      "delegation_line": 5831
+    },
+    {
+      "id": "HandleBroadcast/scalar-user-reshape",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Reshape(Broadcast(scalar))",
+      "rhs": "new Broadcast(scalar,MakeStaticShape(user output)) replacing all user uses",
+      "guard": "operand scalar; user live; OutputIsPermutationOfOperandElements true (Sort result must not Tuple); first qualifying user in loop",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutates uses of a user, not visited Broadcast",
+        "MakeStaticShape and runtime dynamic dimensions",
+        "MarkAsChanged before ReplaceAllUsesWith status"
+      ],
+      "helper_contract_ids": [
+        "OutputIsPermutationOfOperandElements"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05859-C022",
+      "replacement_line": 5859,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "        return user->ReplaceAllUsesWith(new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/scalar-user-reverse",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Reverse(Broadcast(scalar))",
+      "rhs": "new Broadcast(scalar,MakeStaticShape(user output)) replacing all user uses",
+      "guard": "operand scalar; user live; OutputIsPermutationOfOperandElements true (Sort result must not Tuple); first qualifying user in loop",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutates uses of a user, not visited Broadcast",
+        "MakeStaticShape and runtime dynamic dimensions",
+        "MarkAsChanged before ReplaceAllUsesWith status"
+      ],
+      "helper_contract_ids": [
+        "OutputIsPermutationOfOperandElements"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05859-C022",
+      "replacement_line": 5859,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "        return user->ReplaceAllUsesWith(new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/scalar-user-transpose",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Transpose(Broadcast(scalar))",
+      "rhs": "new Broadcast(scalar,MakeStaticShape(user output)) replacing all user uses",
+      "guard": "operand scalar; user live; OutputIsPermutationOfOperandElements true (Sort result must not Tuple); first qualifying user in loop",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutates uses of a user, not visited Broadcast",
+        "MakeStaticShape and runtime dynamic dimensions",
+        "MarkAsChanged before ReplaceAllUsesWith status"
+      ],
+      "helper_contract_ids": [
+        "OutputIsPermutationOfOperandElements"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05859-C022",
+      "replacement_line": 5859,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "        return user->ReplaceAllUsesWith(new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/scalar-user-sort",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Sort(Broadcast(scalar))",
+      "rhs": "new Broadcast(scalar,MakeStaticShape(user output)) replacing all user uses",
+      "guard": "operand scalar; user live; OutputIsPermutationOfOperandElements true (Sort result must not Tuple); first qualifying user in loop",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutates uses of a user, not visited Broadcast",
+        "MakeStaticShape and runtime dynamic dimensions",
+        "MarkAsChanged before ReplaceAllUsesWith status"
+      ],
+      "helper_contract_ids": [
+        "OutputIsPermutationOfOperandElements"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05859-C022",
+      "replacement_line": 5859,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "        return user->ReplaceAllUsesWith(new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/scalar-user-slice",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Slice(Broadcast(scalar))",
+      "rhs": "new Broadcast(scalar,MakeStaticShape(user output)) replacing all user uses",
+      "guard": "operand scalar; user live; OutputIsSubsetOfOperandElements true: broadcast occurs once, at data operand0; first qualifying user in loop",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutates uses of a user, not visited Broadcast",
+        "MakeStaticShape and runtime dynamic dimensions",
+        "MarkAsChanged before ReplaceAllUsesWith status"
+      ],
+      "helper_contract_ids": [
+        "OutputIsSubsetOfOperandElements"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05859-C022",
+      "replacement_line": 5859,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "        return user->ReplaceAllUsesWith(new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/scalar-user-dynamicslice",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "DynamicSlice(Broadcast(scalar))",
+      "rhs": "new Broadcast(scalar,MakeStaticShape(user output)) replacing all user uses",
+      "guard": "operand scalar; user live; OutputIsSubsetOfOperandElements true: broadcast occurs once, at data operand0; first qualifying user in loop",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutates uses of a user, not visited Broadcast",
+        "MakeStaticShape and runtime dynamic dimensions",
+        "MarkAsChanged before ReplaceAllUsesWith status"
+      ],
+      "helper_contract_ids": [
+        "OutputIsSubsetOfOperandElements"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05859-C022",
+      "replacement_line": 5859,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "        return user->ReplaceAllUsesWith(new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/iota",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast(Iota(axis),dims)",
+      "rhs": "Iota(output shape,dims[axis])",
+      "guard": "operand nonscalar: scalar branch returns even if it finds no user; operand Iota",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "finite-width Iota values",
+        "dimension mapping"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L05867-C012",
+      "replacement_line": 5867,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/compose",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast(Broadcast(x,inner_dims),dims)",
+      "rhs": "Broadcast(x,[dims[d] for d in inner_dims])",
+      "guard": "operand nonscalar: scalar branch returns even if it finds no user; operand Broadcast",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "arbitrary rank and non-sorted dimension maps"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L05881-C012",
+      "replacement_line": 5881,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleBroadcast/drop-unit-axes",
+      "handler": "HandleBroadcast",
+      "line": 5770,
+      "end_line": 5905,
+      "lhs": "Broadcast(x,dims)",
+      "rhs": "Broadcast(Reshape(x,drop unit axes),filtered dims)",
+      "guard": "operand nonscalar: scalar branch returns even if it finds no user; layout insensitive; enable_broadcast_degenerate_dimension; operand HasDegenerateDimensions",
+      "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "drop only extent1, not extent0",
+        "layout and dynamic-extent flags"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L05900-C012",
+      "replacement_line": 5900,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandlePad/empty-input",
+      "handler": "HandlePad",
+      "line": 6198,
+      "end_line": 6403,
+      "lhs": "Pad(empty,value,config)",
+      "rhs": "Broadcast(value,output shape)",
+      "guard": "operand0 zero-element array",
+      "source_body_sha256": "1081bccc1849bdc442febbd0535231bef2f92933afc2a78258de617ebc7c801f",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "empty shape versus empty scalar index domain",
+        "padding/cropping output extents and mixed types"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06200-C012",
+      "replacement_line": 6200,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandlePad/unit-interior",
+      "handler": "HandlePad",
+      "line": 6198,
+      "end_line": 6403,
+      "lhs": "Pad(x,value,config)",
+      "rhs": "Pad(x,value,config with selected interior padding zero)",
+      "guard": "HasInteriorPadding; at least one axis has interior>0 and input extent1",
+      "source_body_sha256": "1081bccc1849bdc442febbd0535231bef2f92933afc2a78258de617ebc7c801f",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "one-element axes have no inter-element gaps",
+        "all other padding attributes preserved"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L06218-C014",
+      "replacement_line": 6218,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandlePad/compatible",
+      "handler": "HandlePad",
+      "line": 6198,
+      "end_line": 6403,
+      "lhs": "Pad(x,value,config)",
+      "rhs": "x",
+      "guard": "all edge padding low/high zero; compatibility succeeds (interior may remain in source predicate)",
+      "source_body_sha256": "1081bccc1849bdc442febbd0535231bef2f92933afc2a78258de617ebc7c801f",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "source all_zero tracks edges rather than all config fields",
+        "legal pad extents and SameShape justify actual no-op"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L06248-C009",
+      "replacement_line": 6248,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    if (ReplaceInstructionIfCompatible(pad, pad->mutable_operand(0))) {",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandlePad/broadcast-projection",
+      "handler": "HandlePad",
+      "line": 6198,
+      "end_line": 6403,
+      "lhs": "Pad(Broadcast(x),value,config)",
+      "rhs": "Broadcast(smaller Pad(mutated smaller Broadcast(x)),padded axes)",
+      "guard": "padded/interior axis list strict subset of output axes; Broadcast one user; rank(x)<=padded axis count; every original broadcast target axis in padded list",
+      "source_body_sha256": "1081bccc1849bdc442febbd0535231bef2f92933afc2a78258de617ebc7c801f",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "delete all unpadded axes in descending order",
+        "in-place Broadcast shape/dimensions/sharding/layout changes",
+        "cloned smaller Pad config and layout",
+        "negative padding handled later only if this branch does not return"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L06325-C014",
+      "replacement_line": 6325,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(pad, broadcast2);",
+      "additional_replacement_sites": [],
+      "effect_evidence": [
+        {
+          "anchor": "*broadcast->mutable_shape() = broadcast_shape1;",
+          "line": 6316,
+          "role": "broadcast shape assignment"
+        },
+        {
+          "anchor": "*broadcast->mutable_dimensions() = broadcast_dimensions;",
+          "line": 6317,
+          "role": "broadcast dimensions assignment"
+        },
+        {
+          "anchor": "broadcast->clear_sharding();",
+          "line": 6318,
+          "role": "broadcast sharding clear"
+        },
+        {
+          "anchor": "*pad2->mutable_padding_config() = pad_config;",
+          "line": 6321,
+          "role": "new pad config assignment"
+        }
+      ]
+    },
+    {
+      "id": "HandlePad/negative-edges",
+      "handler": "HandlePad",
+      "line": 6198,
+      "end_line": 6403,
+      "lhs": "Pad(x,value,negative config)",
+      "rhs": "Slice(Pad(x,value,nonnegative-edge config),crop starts/ends,stride1)",
+      "guard": "some edge negative; enable_negative_padding_replacement; final shape check succeeds, ignoring tiles only when layout insensitive",
+      "source_body_sha256": "1081bccc1849bdc442febbd0535231bef2f92933afc2a78258de617ebc7c801f",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "MakePadHlo then restore original output element type",
+        "copy layout to new pad and slice",
+        "negating int64 minimum and extent arithmetic",
+        "status/error and TF_RET_CHECK boundaries"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L06399-C012",
+      "replacement_line": 6399,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(pad, slice);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/scalar",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(scalar,indices)",
+      "rhs": "operand",
+      "guard": "not in async computation; result shape scalar",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "rank-zero legality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L08150-C012",
+      "replacement_line": 8150,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dynamic_slice, operand);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/same-shape",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(x,indices)",
+      "rhs": "x",
+      "guard": "not in async computation; SameShape(x,result)",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "index clamping to zero on full extents",
+        "layout-sensitive equality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L08155-C012",
+      "replacement_line": 8155,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dynamic_slice, operand);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/zero-full-axis-indices",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(x,indices)",
+      "rhs": "cloned DynamicSlice with full-axis indices zero",
+      "guard": "not in async computation; at least one axis has input extent==result extent and index not (Constant AND IsAll(0))",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutable_operands returns InstructionVector by value: temporary edits do not alias original graph",
+        "zero type uses first index operand",
+        "CloneWithNewOperands"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L08175-C012",
+      "replacement_line": 8175,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/broadcast-scalar",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(Broadcast(x,dims),indices,sizes)",
+      "rhs": "Broadcast(x,dims,output shape)",
+      "guard": "not in async computation; Broadcast operand; broadcast input rank 0",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "preserve broadcast dims order",
+        "clamp equality on mapped axes",
+        "UpdateLayout for new slice"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L08213-C012",
+      "replacement_line": 8213,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dynamic_slice, new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/broadcast-array",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(Broadcast(x,dims),indices,sizes)",
+      "rhs": "Broadcast(DynamicSlice(x,selected indices,selected sizes),dims,output shape)",
+      "guard": "not in async computation; Broadcast operand; broadcast input rank >0",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "preserve broadcast dims order",
+        "clamp equality on mapped axes",
+        "UpdateLayout for new slice"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L08213-C012",
+      "replacement_line": 8213,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dynamic_slice, new_broadcast);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/unit-reshape",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(Reshape(x),indices,sizes)",
+      "rhs": "Reshape(DynamicSlice(x,remapped indices/sizes),output shape)",
+      "guard": "not in async computation; layout insensitive; Reshape only inserts/deletes unit axes",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "DimensionsUnmodifiedByReshape",
+        "new input-axis slice sizes default to1; no inserted-output-axis slice-size1 check",
+        "zero copied from first index type"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L08239-C012",
+      "replacement_line": 8239,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "checks_inserted_axis_slice_size_one": false,
+      "empty_inserted_axis_profile": "x[2] -> reshape[1,2] -> dynamic-slice[0,1]; new slice[1] fails reshape element-count CHECK; verifier-accepted zero extents versus positive-size XLA prose remains explicit"
+    },
+    {
+      "id": "HandleDynamicSlice/transpose",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(Transpose(x,p),indices,sizes)",
+      "rhs": "Transpose(DynamicSlice(x,inverse-permuted indices/sizes),p)",
+      "guard": "not in async computation; layout insensitive; Transpose operand",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "InversePermutation",
+        "Permute overloads and clamping equivariance",
+        "PermuteDimensions output shape"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L08257-C012",
+      "replacement_line": 8257,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/constant-indices",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(nonconstant x,constant indices)",
+      "rhs": "Slice(x,clamped starts,starts+sizes,1)",
+      "guard": "not in async computation; conversion not disabled; all offsets Constant integral; layout insensitive OR both layouts and equal memory spaces; every GetFirstInteger succeeds and is >=0",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "source rejects negative constants even though runtime slice clamps them",
+        "min(input-output extent,offset)",
+        "memory-space legality and finite integer sums"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L08297-C012",
+      "replacement_line": 8297,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/iota-plain-same-type",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "size1 DynamicSlice(Iota,index)",
+      "rhs": "Reshape(Clamp(0,index,min(iota_size-1,index_type_max)))",
+      "guard": "not in async computation; input/result rank1; result extent1; element and index types S32/U32; type difference False; direct Iota; multiplier matcher null",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "Clamp in index type then optional conversion to result type",
+        "finite-width Iota and multiplication",
+        "scalar multiplier may be runtime value",
+        "iota extent legality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L08375-C016",
+      "replacement_line": 8375,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/iota-plain-convert",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "size1 DynamicSlice(Iota,index)",
+      "rhs": "Reshape(Convert(Clamp(0,index,min(iota_size-1,index_type_max))))",
+      "guard": "not in async computation; input/result rank1; result extent1; element and index types S32/U32; type difference True; direct Iota; multiplier matcher null",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "Clamp in index type then optional conversion to result type",
+        "finite-width Iota and multiplication",
+        "scalar multiplier may be runtime value",
+        "iota extent legality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L08375-C016",
+      "replacement_line": 8375,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/iota-scaled-same-type",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "size1 DynamicSlice(Multiply(Iota,Broadcast(scalar)),index)",
+      "rhs": "Reshape(Multiply(Clamp(0,index,min(iota_size-1,index_type_max)),scalar))",
+      "guard": "not in async computation; input/result rank1; result extent1; element and index types S32/U32; type difference False; Multiply with Broadcast scalar at operand1 (no constant requirement)",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "Clamp in index type then optional conversion to result type",
+        "finite-width Iota and multiplication",
+        "scalar multiplier may be runtime value",
+        "iota extent legality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L08375-C016",
+      "replacement_line": 8375,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/iota-scaled-convert",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "size1 DynamicSlice(Multiply(Iota,Broadcast(scalar)),index)",
+      "rhs": "Reshape(Multiply(Convert(Clamp(0,index,min(iota_size-1,index_type_max))),scalar))",
+      "guard": "not in async computation; input/result rank1; result extent1; element and index types S32/U32; type difference True; Multiply with Broadcast scalar at operand1 (no constant requirement)",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "Clamp in index type then optional conversion to result type",
+        "finite-width Iota and multiplication",
+        "scalar multiplier may be runtime value",
+        "iota extent legality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L08375-C016",
+      "replacement_line": 8375,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicSlice/nested",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(DynamicSlice(x,inner),outer)",
+      "rhs": "mutated DynamicSlice(x,Clamp(outer,0,inner_size-outer_size)+ConvertIfNeeded(Clamp(inner,0,input_size-inner_size)))",
+      "guard": "not in async computation; original data operand DynamicSlice (direct-nested partition); every input-inner extent difference fits inner index type and input-outer difference fits outer index type",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "replace data operand first, then each index in loop",
+        "clamped inner cast and sum representability",
+        "MarkAsChanged after all per-index writes"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        8,
+        9
+      ],
+      "replacement_site_id": "site-L08401-C041",
+      "replacement_line": 8401,
+      "replacement_call": "ReplaceOperandWithDifferentShape",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(dynamic_slice->ReplaceOperandWithDifferentShape(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L08428-C026",
+          "replacement_line": 8428,
+          "replacement_call": "ReplaceOperandWith",
+          "replacement_source": "          dynamic_slice->ReplaceOperandWith(i, combined_index));"
+        }
+      ],
+      "mutation_multiplicity": "one outer write then one index write per axis",
+      "source_path_partition": "direct_original_data_operand"
+    },
+    {
+      "id": "HandleDynamicSlice/nested-after-scaled-probe",
+      "handler": "HandleDynamicSlice",
+      "line": 8142,
+      "end_line": 8433,
+      "lhs": "DynamicSlice(Multiply(DynamicSlice(x,inner),Broadcast(scalar)),outer)",
+      "rhs": "mutated DynamicSlice(x,Clamp(outer,0,inner_size-outer_size)+ConvertIfNeeded(Clamp(inner,0,input_size-inner_size))); multiplication discarded",
+      "guard": "not in async computation; all prior returning branches fall through; input/result rank1; result extent1; result type S32/U32; Multiply operand1 Broadcast has empty dimensions and scalar operand; stripped operand0 DynamicSlice; every source fit check succeeds",
+      "source_body_sha256": "a8512ebdce236bb372b68d161a5854f3677e31de8ccad88a63003f3cf2a2ffa4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "failed Iota probe leaves local operand rebound to Multiply operand0",
+        "current local binding differs from original data operand graph",
+        "runtime scalar multiplier is not required to be Constant",
+        "direct-nested logical composition theorem does not cover the dropped multiplication",
+        "earlier constant-index conversion/shape/layout paths must fall through",
+        "replace data operand before each index update; partial status/frame outcomes"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        8,
+        9
+      ],
+      "replacement_site_id": "site-L08401-C041",
+      "replacement_line": 8401,
+      "replacement_call": "ReplaceOperandWithDifferentShape",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(dynamic_slice->ReplaceOperandWithDifferentShape(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L08428-C026",
+          "replacement_line": 8428,
+          "replacement_call": "ReplaceOperandWith",
+          "replacement_source": "          dynamic_slice->ReplaceOperandWith(i, combined_index));"
+        }
+      ],
+      "mutation_multiplicity": "one outer write then one index write per axis",
+      "source_path_partition": "failed_scaled_iota_probe_local_binding",
+      "source_path_predecessor": "failed Iota test after local operand assignment; not a direct-nested original graph",
+      "discarded_original_operation": "Multiply with broadcast runtime scalar",
+      "local_binding_evidence": [
+        {
+          "anchor": "operand = operand->mutable_operand(0);",
+          "line": 8330
+        },
+        {
+          "anchor": "if (operand->opcode() == HloOpcode::kIota)",
+          "line": 8333
+        },
+        {
+          "anchor": "if (operand->opcode() == HloOpcode::kDynamicSlice)",
+          "line": 8385
+        }
+      ]
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/pad-scalar-list",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(Broadcast(scalar),update,constant indices)",
+      "rhs": "Pad(update,scalar,clamped low/high edges)",
+      "guard": "not in async computation; enable_dynamic_update_slice_to_pad_replacement; scalar Broadcast base; indices encoded as scalar-list; source compatibility logic accepts encoding; all axis starts ConstantScalar with GetFirstInteger; no MoveToHost custom call through reshape/bitcast/copy chain around update",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "legacy encoding reachability under legal HLO needs review",
+        "host offloading pattern excludes a later memory-space transfer",
+        "clamp each start to [0,base_extent-update_extent]",
+        "interior padding0"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L08539-C014",
+      "replacement_line": 8539,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dynamic_update_slice, pad);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/pad-tuple",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(Broadcast(scalar),update,constant indices)",
+      "rhs": "Pad(update,scalar,clamped low/high edges)",
+      "guard": "not in async computation; enable_dynamic_update_slice_to_pad_replacement; scalar Broadcast base; indices encoded as tuple; source compatibility logic accepts encoding; all axis starts ConstantScalar with GetFirstInteger; no MoveToHost custom call through reshape/bitcast/copy chain around update",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "legacy encoding reachability under legal HLO needs review",
+        "host offloading pattern excludes a later memory-space transfer",
+        "clamp each start to [0,base_extent-update_extent]",
+        "interior padding0"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L08539-C014",
+      "replacement_line": 8539,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dynamic_update_slice, pad);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/pad-concatenate",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(Broadcast(scalar),update,constant indices)",
+      "rhs": "Pad(update,scalar,clamped low/high edges)",
+      "guard": "not in async computation; enable_dynamic_update_slice_to_pad_replacement; scalar Broadcast base; indices encoded as concatenate; source compatibility logic accepts encoding; all axis starts ConstantScalar with GetFirstInteger; no MoveToHost custom call through reshape/bitcast/copy chain around update",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "legacy encoding reachability under legal HLO needs review",
+        "host offloading pattern excludes a later memory-space transfer",
+        "clamp each start to [0,base_extent-update_extent]",
+        "interior padding0"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L08539-C014",
+      "replacement_line": 8539,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dynamic_update_slice, pad);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/full-update",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(base,update,i)",
+      "rhs": "update",
+      "guard": "not in async computation; SameShape(result,update)",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "clamping and complete overwrite",
+        "layout and metadata equality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L08546-C012",
+      "replacement_line": 8546,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dynamic_update_slice, dus_update);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/pad-concat-high",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(Pad(x),update,constant indices)",
+      "rhs": "Concat(x,update,padded axis)",
+      "guard": "not in async computation; operand_count==rank+2; no interior/negative padding; exactly one axis has padding only high>0; x extent there>0; update extent equals padded width and clamped start is x extent; other axes update=x extents and clamped start0; layout insensitive OR all three layouts equal",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "constant-index extraction per axis",
+        "input/update ranks",
+        "MakeConcatHlo and explicit result shape assignment"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L08635-C018",
+      "replacement_line": 8635,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "          return ReplaceInstruction(dynamic_update_slice, concat);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/pad-concat-low",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(Pad(x),update,constant indices)",
+      "rhs": "Concat(update,x,padded axis)",
+      "guard": "not in async computation; operand_count==rank+2; no interior/negative padding; exactly one axis has padding only low>0; x extent there>0; update extent equals padded width and clamped start is 0; other axes update=x extents and clamped start0; layout insensitive OR all three layouts equal",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "constant-index extraction per axis",
+        "input/update ranks",
+        "MakeConcatHlo and explicit result shape assignment"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L08635-C018",
+      "replacement_line": 8635,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "          return ReplaceInstruction(dynamic_update_slice, concat);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/zero-full-axis-indices",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(base,update,indices)",
+      "rhs": "cloned DUS with full-axis indices zero",
+      "guard": "not in async computation; at least one update extent equals output extent and index not (Constant AND IsAll(0))",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "mutable_operands returns copied InstructionVector",
+        "zero type from first index operand",
+        "CloneWithNewOperands"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L08659-C012",
+      "replacement_line": 8659,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/empty-update",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DynamicUpdateSlice(base,empty,i)",
+      "rhs": "base",
+      "guard": "not in async computation; update zero-element array",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "index clamping/no out-of-bounds warning observation",
+        "effects of otherwise unused index computations"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L08670-C012",
+      "replacement_line": 8670,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dynamic_update_slice, updated);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDynamicUpdateSlice/nested",
+      "handler": "HandleDynamicUpdateSlice",
+      "line": 8435,
+      "end_line": 8732,
+      "lhs": "DUS(a,DUS(DS(a,id),c,inner),id)",
+      "rhs": "mutated DUS(a,c,Clamp(id,0,base-inner_size)+ConvertIfNeeded(Clamp(inner,0,inner_size-update_size)))",
+      "guard": "not in async computation; inner update base is DynamicSlice of same a; outer indices pointer-equal to that slice indices; every inner-update extent difference fits inner index type and base-update difference fits outer index type",
+      "source_body_sha256": "af2de24350e48f692dd8b418194d7a4fd6d3cddbe9b467ca45cd9bdfc2a14ddf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "replace update operand first then each index in loop",
+        "cast and sum bounds",
+        "source depends on saved inner DUS pointer after outer mutation",
+        "MarkAsChanged after all writes"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        5,
+        6
+      ],
+      "replacement_site_id": "site-L08699-C048",
+      "replacement_line": 8699,
+      "replacement_call": "ReplaceOperandWithDifferentShape",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(dynamic_update_slice->ReplaceOperandWithDifferentShape(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L08726-C033",
+          "replacement_line": 8726,
+          "replacement_call": "ReplaceOperandWith",
+          "replacement_source": "          dynamic_update_slice->ReplaceOperandWith(i, combined_index));"
+        }
+      ],
+      "mutation_multiplicity": "one outer write then one index write per axis"
+    },
+    {
+      "id": "HandleGather/empty-input",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(empty,indices)",
+      "rhs": "MakeScalarLike(gather,0)",
+      "guard": "operand zero-element array",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "legal Gather slice sizes and result shape",
+        "empty tensor legality versus elementwise vacuity"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04637-C012",
+      "replacement_line": 4637,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(gather, MakeScalarLike(gather, 0));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleGather/effective-scalar-rank-zero",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(effective scalar x,indices)",
+      "rhs": "Broadcast(x,output shape)",
+      "guard": "operand IsEffectiveScalar; operand rank 0",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "MakeReshapeHlo status when needed",
+        "Gather clamping and unit/empty dimension cases",
+        "MakeBroadcastHlo"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04651-C012",
+      "replacement_line": 4651,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(gather, new_gather);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleGather/effective-scalar-unit-array",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(effective scalar x,indices)",
+      "rhs": "Broadcast(Reshape(x,scalar),output shape)",
+      "guard": "operand IsEffectiveScalar; operand rank >0",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "MakeReshapeHlo status when needed",
+        "Gather clamping and unit/empty dimension cases",
+        "MakeBroadcastHlo"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04651-C012",
+      "replacement_line": 4651,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(gather, new_gather);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleGather/small-select-chain",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(rank1 operand,indices)",
+      "rhs": "typed Select chain: start get_value(0); for every i choose get_value(i) when index >= MakeScalarLike(index,i) in the actual index comparison type",
+      "guard": "operand rank1 and extent<=very_small_gather_size option; index_vector_dim==index rank; collapsed_slice_dims count1; prior effective-scalar/empty paths did not return",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "initial get_value(0); loop i from0 through operand_elements-1",
+        "each get_value uses Slice/Reshape/Broadcast",
+        "index comparison mode and clamping semantics",
+        "MakeScalarLike index literal i has no local representability guard"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L04686-C012",
+      "replacement_line": 4686,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(gather, result);",
+      "additional_replacement_sites": [],
+      "checks_literal_representability": false,
+      "literal_safe_condition": "every position in range(operand_extent) is represented exactly in the signed/unsigned index comparison type",
+      "literal_boundary_profile": "signed8 extent129 threshold129 narrows position128 to -128; default threshold4 and wider-index profiles differ"
+    },
+    {
+      "id": "HandleGather/pad-hoist-passthrough",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(Pad(x,value),indices)",
+      "rhs": "Pad(Gather(x,indices,adjusted slice sizes),value,remapped padding)",
+      "guard": "GetGatherOperandPassthroughDims maps input/result axes; CheckPaddedDimsForGatherOfPad.should_transform; has_padded_batching_dims=False",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "pass-through and explicit-batching dimension maps",
+        "identical padding configs on paired input/index batching axes",
+        "indices pad must contain only required batching pads",
+        "result shape and slice-size updates",
+        "indices_are_sorted flag preserved"
+      ],
+      "helper_contract_ids": [
+        "GetPaddedDims",
+        "CheckPaddedDimsForGatherOfPad"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L04761-C014",
+      "replacement_line": 4761,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(gather, result);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleGather/pad-hoist-batching",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(Pad(x,value),indices)",
+      "rhs": "Pad(Gather(x,unpadded indices,adjusted slice sizes),value,remapped padding)",
+      "guard": "GetGatherOperandPassthroughDims maps input/result axes; CheckPaddedDimsForGatherOfPad.should_transform; has_padded_batching_dims=True",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "pass-through and explicit-batching dimension maps",
+        "identical padding configs on paired input/index batching axes",
+        "indices pad must contain only required batching pads",
+        "result shape and slice-size updates",
+        "indices_are_sorted flag preserved"
+      ],
+      "helper_contract_ids": [
+        "GetPaddedDims",
+        "CheckPaddedDimsForGatherOfPad"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L04761-C014",
+      "replacement_line": 4761,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(gather, result);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleGather/reshape-pad-hoist",
+      "handler": "HandleGather",
+      "line": 4634,
+      "end_line": 4858,
+      "lhs": "Gather(Reshape(Pad(x,value)),indices)",
+      "rhs": "Pad(Gather(Reshape(x,unpadded shape),indices,adjusted sizes),value,remapped padding)",
+      "guard": "operand Reshape; ShapeUtil::ReshapeIsBitcast(padded input,reshape output); inner Pad; every padded axis unmodified by reshape and its mapped reshape axis is Gather operand-passthrough",
+      "source_body_sha256": "59b71d25b1d9c40daf232a5132d265362e4245114ac3d06cda77fcb930422195",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO; earlier returning branches and current matcher bindings apply; failed compatibility attempts can still return from handler",
+      "dependencies": [
+        "DimensionsUnmodifiedByReshape map and default-inserting lookups before final flags",
+        "preserve padding low/high/interior through two axis maps",
+        "adjust reshape/gather extents and gather slice sizes",
+        "external sharding utility passthrough contract"
+      ],
+      "helper_contract_ids": [
+        "GetPaddedDims"
+      ],
+      "type_partition_status": "datatype, dynamic shape, layout and index-width profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L04853-C016",
+      "replacement_line": 4853,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(gather, result);",
+      "additional_replacement_sites": []
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "OutputIsPermutationOfOperandElements",
+      "line": 5664,
+      "end_line": 5677,
+      "source_body_sha256": "b3400361698c9a20e80e9bc004336a07761638289fd1b6a12c9efff2ebf3e3a8",
+      "source_behavior": "operand present precondition; Reshape/Reverse/Transpose true; Sort true only when output not Tuple; other opcodes false",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "OutputIsSubsetOfOperandElements",
+      "line": 5681,
+      "end_line": 5698,
+      "source_body_sha256": "f0737226f199ad5be6ebd4ccb42cd843aa8301244b6094459dbdfec82ec746c3",
+      "source_behavior": "operand must occur exactly once; Slice requires operand0; DynamicSlice requires data operand0; other opcodes false",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "GetPaddedDims",
+      "line": 4513,
+      "end_line": 4524,
+      "source_body_sha256": "4a52fbdb3a1c34ffc2e599bb920e47121e90f7eca1d8b5232c74204a1a600048",
+      "source_behavior": "enumerate axes with any nonzero edge or interior padding; includes negative edges",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "CheckPaddedDimsForGatherOfPad",
+      "line": 4547,
+      "end_line": 4630,
+      "source_body_sha256": "46df8aa03a4674cdfb61c5c9cbe72eb66cdbb05d384f906df1030a170583b266",
+      "source_behavior": "each padded operand axis must be passthrough or explicit batching; batching requires identical paired index padding and no extra index-padded axes; extend both in/out maps for batching dimensions",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "limitations": [
+    "inspected branch schemas not a disjoint/frozen obligation count",
+    "dynamic shape/index types, widths and layouts not exhaustively split",
+    "loop multiplicity and graph effects remain semantic obligations",
+    "helper/source review is not independent and no whole-source proof accepted"
+  ]
+}

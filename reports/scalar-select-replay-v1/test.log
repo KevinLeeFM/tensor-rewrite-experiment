@@ -1,0 +1,237 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:scalar_select_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 57123 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ScalarSelectReplay
+[ RUN      ] ScalarSelectReplay.BranchSpecificScalarMovement
+xla/hlo/transforms/simplifiers/scalar_select_replay_test.cc:96: Failure
+Expected equality of these values:
+  changed
+    Which is: true
+  enabled
+    Which is: false
+Google Test trace:
+xla/hlo/transforms/simplifiers/scalar_select_replay_test.cc:51: false
+xla/hlo/transforms/simplifiers/scalar_select_replay_test.cc:50: false
+
+SCALAR_SELECT_RESULT enabled=0 predicate=0 before=12 after=12 rewritten_verified=1 fast_math=0
+ORIGINAL_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %left, %right)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  ROOT %conv = f32[1,1,1]{2,1,0} convolution(%selected, %filter), window={size=4}, dim_labels=b0f_0io->b0f
+}
+
+REWRITTEN_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+%multiply.reduce_sub_computation (lhs: f32[], rhs: f32[]) -> f32[] {
+  %lhs = f32[] parameter(0)
+  %rhs = f32[] parameter(1)
+  ROOT %add = f32[] add(%lhs, %rhs)
+}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %left, %right)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  %transpose = f32[1,4,1]{2,0,1} transpose(%filter), dimensions={1,0,2}
+  %reshape = f32[1,4,1]{2,1,0} reshape(%transpose)
+  %broadcast = f32[1,4,1]{2,1,0} broadcast(%reshape), dimensions={0,1,2}
+  %multiply = f32[1,4,1]{2,1,0} multiply(%selected, %broadcast)
+  %constant = s32[] constant(0)
+  %convert = f32[] convert(%constant)
+  %reduce = f32[1,1]{1,0} reduce(%multiply, %convert), dimensions={1}, to_apply=%multiply.reduce_sub_computation
+  ROOT %reshape.1 = f32[1,1,1]{2,1,0} reshape(%reduce)
+}
+
+xla/hlo/transforms/simplifiers/scalar_select_replay_test.cc:96: Failure
+Expected equality of these values:
+  changed
+    Which is: true
+  enabled
+    Which is: false
+Google Test trace:
+xla/hlo/transforms/simplifiers/scalar_select_replay_test.cc:51: true
+xla/hlo/transforms/simplifiers/scalar_select_replay_test.cc:50: false
+
+SCALAR_SELECT_RESULT enabled=0 predicate=1 before=8 after=8 rewritten_verified=1 fast_math=0
+ORIGINAL_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %left, %right)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  ROOT %conv = f32[1,1,1]{2,1,0} convolution(%selected, %filter), window={size=4}, dim_labels=b0f_0io->b0f
+}
+
+REWRITTEN_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+%multiply.reduce_sub_computation (lhs: f32[], rhs: f32[]) -> f32[] {
+  %lhs = f32[] parameter(0)
+  %rhs = f32[] parameter(1)
+  ROOT %add = f32[] add(%lhs, %rhs)
+}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %left, %right)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  %transpose = f32[1,4,1]{2,0,1} transpose(%filter), dimensions={1,0,2}
+  %reshape = f32[1,4,1]{2,1,0} reshape(%transpose)
+  %broadcast = f32[1,4,1]{2,1,0} broadcast(%reshape), dimensions={0,1,2}
+  %multiply = f32[1,4,1]{2,1,0} multiply(%selected, %broadcast)
+  %constant = s32[] constant(0)
+  %convert = f32[] convert(%constant)
+  %reduce = f32[1,1]{1,0} reduce(%multiply, %convert), dimensions={1}, to_apply=%multiply.reduce_sub_computation
+  ROOT %reshape.1 = f32[1,1,1]{2,1,0} reshape(%reduce)
+}
+
+SCALAR_SELECT_RESULT enabled=1 predicate=0 before=12 after=24 rewritten_verified=1 fast_math=0
+ORIGINAL_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %left, %right)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  ROOT %conv = f32[1,1,1]{2,1,0} convolution(%selected, %filter), window={size=4}, dim_labels=b0f_0io->b0f
+}
+
+REWRITTEN_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+%multiply.1.reduce_sub_computation (lhs: f32[], rhs: f32[]) -> f32[] {
+  %lhs = f32[] parameter(0)
+  %rhs = f32[] parameter(1)
+  ROOT %add = f32[] add(%lhs, %rhs)
+}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %input, %input)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  %transpose = f32[1,4,1]{2,0,1} transpose(%filter), dimensions={1,0,2}
+  %reshape = f32[1,4,1]{2,1,0} reshape(%transpose)
+  %broadcast.1 = f32[1,4,1]{2,1,0} broadcast(%reshape), dimensions={0,1,2}
+  %multiply.1 = f32[1,4,1]{2,1,0} multiply(%selected, %broadcast.1)
+  %constant.1 = s32[] constant(0)
+  %convert = f32[] convert(%constant.1)
+  %reduce = f32[1,1]{1,0} reduce(%multiply.1, %convert), dimensions={1}, to_apply=%multiply.1.reduce_sub_computation
+  %reshape.1 = f32[1,1,1]{2,1,0} reshape(%reduce)
+  %constant = f32[] constant(6)
+  %broadcast = f32[1,1,1]{2,1,0} broadcast(%constant), dimensions={}
+  ROOT %multiply = f32[1,1,1]{2,1,0} multiply(%reshape.1, %broadcast)
+}
+
+SCALAR_SELECT_RESULT enabled=1 predicate=1 before=8 after=24 rewritten_verified=1 fast_math=0
+ORIGINAL_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %left, %right)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  ROOT %conv = f32[1,1,1]{2,1,0} convolution(%selected, %filter), window={size=4}, dim_labels=b0f_0io->b0f
+}
+
+REWRITTEN_HLO
+HloModule scalar_select, entry_computation_layout={(pred[1,4,1]{2,1,0}, f32[1,4,1]{2,1,0}, f32[4,1,1]{2,1,0})->f32[1,1,1]{2,1,0}}
+
+%multiply.1.reduce_sub_computation (lhs: f32[], rhs: f32[]) -> f32[] {
+  %lhs = f32[] parameter(0)
+  %rhs = f32[] parameter(1)
+  ROOT %add = f32[] add(%lhs, %rhs)
+}
+
+ENTRY %main (predicate: pred[1,4,1], input: f32[1,4,1], filter: f32[4,1,1]) -> f32[1,1,1] {
+  %input = f32[1,4,1]{2,1,0} parameter(1)
+  %two = f32[] constant(2)
+  %twos = f32[1,4,1]{2,1,0} broadcast(%two), dimensions={}
+  %left = f32[1,4,1]{2,1,0} multiply(%input, %twos)
+  %three = f32[] constant(3)
+  %threes = f32[1,4,1]{2,1,0} broadcast(%three), dimensions={}
+  %right = f32[1,4,1]{2,1,0} multiply(%input, %threes)
+  %predicate = pred[1,4,1]{2,1,0} parameter(0)
+  %selected = f32[1,4,1]{2,1,0} select(%predicate, %input, %input)
+  %filter = f32[4,1,1]{2,1,0} parameter(2)
+  %transpose = f32[1,4,1]{2,0,1} transpose(%filter), dimensions={1,0,2}
+  %reshape = f32[1,4,1]{2,1,0} reshape(%transpose)
+  %broadcast.1 = f32[1,4,1]{2,1,0} broadcast(%reshape), dimensions={0,1,2}
+  %multiply.1 = f32[1,4,1]{2,1,0} multiply(%selected, %broadcast.1)
+  %constant.1 = s32[] constant(0)
+  %convert = f32[] convert(%constant.1)
+  %reduce = f32[1,1]{1,0} reduce(%multiply.1, %convert), dimensions={1}, to_apply=%multiply.1.reduce_sub_computation
+  %reshape.1 = f32[1,1,1]{2,1,0} reshape(%reduce)
+  %constant = f32[] constant(6)
+  %broadcast = f32[1,1,1]{2,1,0} broadcast(%constant), dimensions={}
+  ROOT %multiply = f32[1,1,1]{2,1,0} multiply(%reshape.1, %broadcast)
+}
+
+[  FAILED  ] ScalarSelectReplay.BranchSpecificScalarMovement (18 ms)
+[----------] 1 test from ScalarSelectReplay (18 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (18 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] ScalarSelectReplay.BranchSpecificScalarMovement
+
+ 1 FAILED TEST

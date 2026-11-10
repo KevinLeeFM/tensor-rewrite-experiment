@@ -1,0 +1,147 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:pred_mul_nonfinite_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 34977 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from PredMulNonfiniteReplay
+[ RUN      ] PredMulNonfiniteReplay.StrictIEEEWitness
+PRED_MUL_RESULT input=positive_infinity swapped=0 before_nan=1 after_zero=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0
+ORIGINAL_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %converted = f32[] convert(%predicate)
+  %operand = f32[] parameter(1)
+  ROOT %product = f32[] multiply(%converted, %operand)
+}
+
+REWRITTEN_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %operand = f32[] parameter(1)
+  %constant = f32[] constant(0)
+  %broadcast = f32[] broadcast(%constant), dimensions={}
+  ROOT %select = f32[] select(%predicate, %operand, %broadcast)
+}
+
+PRED_MUL_RESULT input=negative_infinity swapped=0 before_nan=1 after_zero=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0
+ORIGINAL_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %converted = f32[] convert(%predicate)
+  %operand = f32[] parameter(1)
+  ROOT %product = f32[] multiply(%converted, %operand)
+}
+
+REWRITTEN_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %operand = f32[] parameter(1)
+  %constant = f32[] constant(0)
+  %broadcast = f32[] broadcast(%constant), dimensions={}
+  ROOT %select = f32[] select(%predicate, %operand, %broadcast)
+}
+
+PRED_MUL_RESULT input=quiet_nan swapped=0 before_nan=1 after_zero=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0
+ORIGINAL_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %converted = f32[] convert(%predicate)
+  %operand = f32[] parameter(1)
+  ROOT %product = f32[] multiply(%converted, %operand)
+}
+
+REWRITTEN_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %operand = f32[] parameter(1)
+  %constant = f32[] constant(0)
+  %broadcast = f32[] broadcast(%constant), dimensions={}
+  ROOT %select = f32[] select(%predicate, %operand, %broadcast)
+}
+
+PRED_MUL_RESULT input=positive_infinity swapped=1 before_nan=1 after_zero=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0
+ORIGINAL_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %operand = f32[] parameter(1)
+  %predicate = pred[] parameter(0)
+  %converted = f32[] convert(%predicate)
+  ROOT %product = f32[] multiply(%operand, %converted)
+}
+
+REWRITTEN_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %operand = f32[] parameter(1)
+  %constant = f32[] constant(0)
+  %broadcast = f32[] broadcast(%constant), dimensions={}
+  ROOT %select = f32[] select(%predicate, %operand, %broadcast)
+}
+
+PRED_MUL_RESULT input=negative_infinity swapped=1 before_nan=1 after_zero=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0
+ORIGINAL_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %operand = f32[] parameter(1)
+  %predicate = pred[] parameter(0)
+  %converted = f32[] convert(%predicate)
+  ROOT %product = f32[] multiply(%operand, %converted)
+}
+
+REWRITTEN_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %operand = f32[] parameter(1)
+  %constant = f32[] constant(0)
+  %broadcast = f32[] broadcast(%constant), dimensions={}
+  ROOT %select = f32[] select(%predicate, %operand, %broadcast)
+}
+
+PRED_MUL_RESULT input=quiet_nan swapped=1 before_nan=1 after_zero=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0
+ORIGINAL_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %operand = f32[] parameter(1)
+  %predicate = pred[] parameter(0)
+  %converted = f32[] convert(%predicate)
+  ROOT %product = f32[] multiply(%operand, %converted)
+}
+
+REWRITTEN_HLO
+HloModule pred_mul_nonfinite, entry_computation_layout={(pred[], f32[])->f32[]}
+
+ENTRY %main (predicate: pred[], operand: f32[]) -> f32[] {
+  %predicate = pred[] parameter(0)
+  %operand = f32[] parameter(1)
+  %constant = f32[] constant(0)
+  %broadcast = f32[] broadcast(%constant), dimensions={}
+  ROOT %select = f32[] select(%predicate, %operand, %broadcast)
+}
+
+[       OK ] PredMulNonfiniteReplay.StrictIEEEWitness (4 ms)
+[----------] 1 test from PredMulNonfiniteReplay (4 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (4 ms total)
+[  PASSED  ] 1 test.

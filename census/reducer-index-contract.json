@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_role_and_literal_witnesses_source_correspondence_pending",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "source_correspondence_reviewed": false,
+  "backend_execution_claimed": false,
+  "profile": "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract",
+  "source_cases": [
+    "HandleAdd/scatter-single-rhs",
+    "HandleAdd/scatter-single-lhs",
+    "HandleGather/small-select-chain"
+  ],
+  "related_unreplayed_scatter_cases": [
+    "HandleAdd/scatter-concat",
+    "HandleAdd/scatter-nested"
+  ],
+  "native_evidence": "reports/reducer-index-replay-v1/result.json",
+  "native_run_count": 75,
+  "value_change_run_count": 14,
+  "native_scatter_runs": 48,
+  "native_gather_runs": 27,
+  "model_vector_count": 13,
+  "support_theorems": [
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve",
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original"
+  ],
+  "certificates": [
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes",
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows",
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes",
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes",
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes",
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving"
+  ],
+  "corrected_statement_profiles": [
+    "distinct reducer parameter roles suffice for single-update word arithmetic",
+    "exact representation of every generated position makes signed-index Select chain equal clamping"
+  ],
+  "preservation_claim_for_actual_source_guard": false,
+  "source_obligations": [
+    "complete update computation parameter/shape/index/source correspondence",
+    "HLO legal signed index types and Literal Convert host/platform interpretation",
+    "graph/API/control/metadata/status/frame observations",
+    "floating association and general multiple-update Scatter ordering"
+  ],
+  "source_spans": [
+    {
+      "id": "scatter-role-match",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 1100,
+      "end_line": 1120,
+      "source_body_sha256": "93a6b7c44d4508f3bfd4a06a8acbea991d7d6cc13e690e8eb1b19e91e03dafab"
+    },
+    {
+      "id": "scatter-base-rewrite",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 1249,
+      "end_line": 1262,
+      "source_body_sha256": "7874255de5916a43883a35c114936f9cfa17c1750a9aab6e8f8c345beb0697c2"
+    },
+    {
+      "id": "gather-select-chain",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 4654,
+      "end_line": 4688,
+      "source_body_sha256": "e8c20a48c36603e32560183f52ed9ea213d2b10206c1192b00f54a3b1ebdd751"
+    },
+    {
+      "id": "literal-conversion",
+      "path": "sources/xla/xla/literal.cc",
+      "line": 1834,
+      "end_line": 1881,
+      "source_body_sha256": "54dab5a9b77e076e4329e1841fd3bea0ae8fdf674661f8572dfecd6c21975d6f"
+    },
+    {
+      "id": "parameter-opcode-default",
+      "path": "sources/xla/xla/service/pattern_matcher.h",
+      "line": 146,
+      "end_line": 155,
+      "source_body_sha256": "0f233f3a38317286a830ae4edaa0163e76af6747aadde9171da54895f4decacf"
+    },
+    {
+      "id": "parameter-number-overload",
+      "path": "sources/xla/xla/service/pattern_matcher.h",
+      "line": 3129,
+      "end_line": 3141,
+      "source_body_sha256": "3ede9e4b589ec83a0762d39e3976b242ad068527c776ff6219d2e961e9546e6d"
+    },
+    {
+      "id": "index-literal-builder",
+      "path": "sources/xla/xla/service/hlo_creation_utils.h",
+      "line": 328,
+      "end_line": 339,
+      "source_body_sha256": "892f96bb6a630a889965474f72a964febd13605a8bab77eea06f225d4ef6c2a6"
+    },
+    {
+      "id": "scatter-parameter-role-contract",
+      "path": "sources/xla/docs/operation_semantics.md",
+      "line": 4759,
+      "end_line": 4777,
+      "source_body_sha256": "4dd0fe76fdbc6628d8e617d040ae5d4375c4d481c3a6a24a1fbaca1349230751"
+    },
+    {
+      "id": "gather-in-bounds-index-contract",
+      "path": "sources/xla/docs/operation_semantics.md",
+      "line": 2895,
+      "end_line": 2934,
+      "source_body_sha256": "87ccfb9899702fde1214af89db3ef898084021039692586715fd847991d9a4e6"
+    },
+    {
+      "id": "gather-evaluator-clamp",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 2758,
+      "end_line": 2778,
+      "source_body_sha256": "1c4493076543efa116ebd22c7735b3986dc40ff3ce9103e6cd0edf604f1153ad"
+    }
+  ],
+  "normative_operation_manifest": "sources/reduction-contract-manifest.json",
+  "gather_primary_witness_in_bounds": true,
+  "gather_out_of_bounds_controls": "pinned evaluator clamp observations; principal zero/maximum-index failures are in bounds"
+}

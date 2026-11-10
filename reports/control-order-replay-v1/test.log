@@ -1,0 +1,684 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:control_order_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 96138 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ControlOrderReplay
+[ RUN      ] ControlOrderReplay.DiscardedEffectOperandAndControlSuccessor
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1794321325.375563 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.375803 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.376102 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.376474 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.376848 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.376975 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+CONTROL_ORDER_RESULT case=annihilator_successor mode=control changed=0 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_successor mode=handler changed=1 reachable_before=1 reachable_after=0 reverse_before=0 reverse_after=1 forward_trace=A,B reverse_trace=B,A actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%flag}
+  ROOT %result = (pred[], pred[]) tuple(%flag, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_successor mode=pass changed=1 reachable_before=1 reachable_after=0 reverse_before=0 reverse_after=1 forward_trace=A,B reverse_trace=B,A actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%flag}
+  ROOT %result = (pred[], pred[]) tuple(%flag, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_predecessor mode=control changed=0 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag), control-predecessors={%effect_a}
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+E0000 00:00:1794321325.377260 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.377385 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.377674 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.377814 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.378083 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.378201 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag), control-predecessors={%effect_a}
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_predecessor mode=handler changed=0 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag), control-predecessors={%effect_a}
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag), control-predecessors={%effect_a}
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_predecessor mode=pass changed=0 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag), control-predecessors={%effect_a}
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag), control-predecessors={%effect_a}
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=identity_successor mode=control changed=0 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(true)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(true)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-E0000 00:00:1794321325.378475 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.378599 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor effect_a
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.378866 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor combined
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+E0000 00:00:1794321325.378997 1426233 status_macros.cc:58] INTERNAL: RET_CHECK failure (xla/hlo/ir/hlo_schedule.cc:464) instruction_position.at(pred) < instruction_position.at(instruction) Instruction effect_b is not scheduled after its control predecessor effect_a
+=== Source Location Trace: ===
+xla/status_macros.cc:81
+
+*** Begin stack trace ***
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	__libc_start_main
+	
+*** End stack trace ***
+
+call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=identity_successor mode=handler changed=1 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(true)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%effect_a}
+  ROOT %result = (pred[], pred[]) tuple(%effect_a, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=identity_successor mode=pass changed=1 reachable_before=1 reachable_after=1 reverse_before=0 reverse_after=0 forward_trace=A,B reverse_trace=invalid actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(true)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%combined}
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true, control-predecessors={%effect_a}
+  ROOT %result = (pred[], pred[]) tuple(%effect_a, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_unordered mode=control changed=0 reachable_before=0 reachable_after=0 reverse_before=1 reverse_after=1 forward_trace=A,B reverse_trace=B,A actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_unordered mode=handler changed=1 reachable_before=0 reachable_after=0 reverse_before=1 reverse_after=1 forward_trace=A,B reverse_trace=B,A actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true
+  ROOT %result = (pred[], pred[]) tuple(%flag, %effect_b)
+}
+
+CONTROL_ORDER_RESULT case=annihilator_unordered mode=pass changed=1 reachable_before=0 reachable_after=0 reverse_before=1 reverse_after=1 forward_trace=A,B reverse_trace=B,A actors_retained=1 verified=1
+ORIGINAL_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %combined = pred[] and(%effect_a, %flag)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true
+  ROOT %result = (pred[], pred[]) tuple(%combined, %effect_b)
+}
+
+REWRITTEN_HLO
+HloModule control_order, entry_computation_layout={()->(pred[], pred[])}
+
+ENTRY %main () -> (pred[], pred[]) {
+  %effect_a = pred[] custom-call(), custom_call_target="A", custom_call_has_side_effect=true
+  %flag = pred[] constant(false)
+  %effect_b = pred[] custom-call(), custom_call_target="B", custom_call_has_side_effect=true
+  ROOT %result = (pred[], pred[]) tuple(%flag, %effect_b)
+}
+
+[       OK ] ControlOrderReplay.DiscardedEffectOperandAndControlSuccessor (8 ms)
+[----------] 1 test from ControlOrderReplay (8 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (8 ms total)
+[  PASSED  ] 1 test.

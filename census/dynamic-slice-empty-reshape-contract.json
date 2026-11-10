@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "status": "native_checked_fatal_on_verifier_accepted_empty_shape_semantic_domain_unresolved",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "source_cases": [
+    "HandleDynamicSlice/unit-reshape"
+  ],
+  "accepted_source_rewrites": 0,
+  "source_correspondence_reviewed": false,
+  "lean_certified": false,
+  "backend_execution_claimed": false,
+  "native_operator_evaluation": false,
+  "semantic_domain_resolved": false,
+  "published_xla_sizes_strictly_positive": true,
+  "pinned_shape_inference_accepts_zero": true,
+  "stablehlo_zero_sizes_permitted": true,
+  "stablehlo_contract_automatically_transferred_to_hlo": false,
+  "semantic_denominator": null,
+  "native_run_count": 21,
+  "checked_fatal_run_count": 4,
+  "native_evidence": "reports/dynamic-slice-empty-reshape-replay-v4/result.json",
+  "additional_lean_lines": 0,
+  "contracts": [
+    {
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 8142,
+      "end_line": 8235,
+      "source_body_sha256": "e3e4a6cdbccbe653304ff63d86d1a7497d3476eebe90407d2914250e402cefb6"
+    },
+    {
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 8263,
+      "end_line": 8303,
+      "source_body_sha256": "0301c4515ce8f698bfef905eb9d581988abfc4f51c06642d51c1c5d2adfff931"
+    },
+    {
+      "path": "sources/xla/xla/hlo/ir/hlo_instruction.cc",
+      "line": 2506,
+      "end_line": 2515,
+      "source_body_sha256": "090ff7577354f5f8583cb27fc3b65ae1440d14bbead4b636ca492c55a5cbd8e5"
+    },
+    {
+      "path": "sources/xla/xla/service/shape_inference.cc",
+      "line": 3587,
+      "end_line": 3612,
+      "source_body_sha256": "96135f1a46b9fa39f326115878ecd5cb217908d15c14ac74c7fcf9f972d5def2"
+    },
+    {
+      "path": "sources/xla/docs/operation_semantics.md",
+      "line": 2502,
+      "end_line": 2538,
+      "source_body_sha256": "24df6c1531b1917d0f803c90b1b610d04fa7a853de1a9689a869c102fc10b52a"
+    }
+  ],
+  "constructor_failure": {
+    "original_operand_shape": [
+      2
+    ],
+    "reshape_shape": [
+      1,
+      2
+    ],
+    "output_slice_sizes": [
+      0,
+      1
+    ],
+    "new_dynamic_slice_sizes": [
+      1
+    ],
+    "new_reshape_element_counts": [
+      1,
+      0
+    ]
+  },
+  "earlier_returns": "async/scalar/fullshape/zero-fullsize-index/Broadcast; unit-Reshape occurs BEFORE constant-index conversion, so constant indices alone do not preempt it",
+  "layout_control": "handler skips unit-reshape; whole pass converts upstream Reshape to Bitcast and reports changed with original DynamicSlice root retained",
+  "constant_conversion_control": "layout sensitive bypasses unit-reshape, allowing later constant conversion; layout-insensitive all-constant profile still fails earlier unit-reshape",
+  "failed_run_archives": [
+    "reports/dynamic-slice-empty-reshape-replay-v1",
+    "reports/dynamic-slice-empty-reshape-replay-v2"
+  ],
+  "failed_run_diagnosis": {
+    "v1": "initialization suppressed DynamicSlice only; unrelated upstream layout-sensitive Reshape changed during priming",
+    "v2": "fixture incorrectly assumed later constant-index conversion preempted earlier unit-reshape; untrapped constant profile hit actual constructor CHECK; covered by checked death in v3"
+  },
+  "specification_sources": [
+    {
+      "url": "https://openxla.org/xla/operation_semantics#dynamicslice",
+      "role": "positive-size prose; pinned local document identity in contracts"
+    },
+    {
+      "url": "https://openxla.org/stablehlo/spec#dynamic_slice",
+      "role": "different IR permits0<=slice_sizes; context, not automatic HLO contract adoption"
+    }
+  ]
+}

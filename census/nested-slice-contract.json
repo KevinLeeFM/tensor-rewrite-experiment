@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "status": "logical_composition_proved_evaluator_preservation_refuted_source_contract_open",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "source_case": "HandleDynamicSlice/nested",
+  "accepted_source_rewrites": 0,
+  "logical_profile": "arbitrary finite rank and bounded static extents; mathematical decoded starts",
+  "evaluator_profile": "observed s64 conversion for DynamicSlice; typed unsigned HLO clamps; 10 to 6 to 2 shape chain",
+  "source_contract": {
+    "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+    "line": 8379,
+    "end_line": 8433,
+    "source_body_sha256": "3d859e1c51e866e28b3dc1c56847d8837318614a9d723c1f56ece32cd08c5e3c"
+  },
+  "support_theorems": [
+    "TensorRewrite.Pilot.DynamicIndex.combinedStart_bounds",
+    "TensorRewrite.Pilot.DynamicIndex.clampStart_combined",
+    "TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_compose"
+  ],
+  "logical_rule_theorems": [
+    "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose"
+  ],
+  "evaluator_profile_certificates": [
+    "TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes",
+    "TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes",
+    "TensorRewrite.Pilot.NestedUnsigned64.both_high_changes",
+    "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving"
+  ],
+  "native_evidence": "reports/nested-slice-replay-v2/result.json",
+  "remaining": [
+    "independent per-backend index contract review",
+    "C++ typed clamp/convert/add correspondence",
+    "graph mutation and metadata/frame observations",
+    "dynamic dimension and layout conditions"
+  ]
+}

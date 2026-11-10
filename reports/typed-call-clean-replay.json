@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "archive": "snapshots/typed-call-census-v1.zip",
+  "archive_sha256": "a18765ad086ce6ecbf28280d6cbdd9041bf268eebb13ed336865e968a94741bf",
+  "archive_bytes": 75286925,
+  "cacheless_compiler_output_replay": true,
+  "cpp_compiler_rerun": false,
+  "independent_semantic_review": false,
+  "matching_typed_evidence": true,
+  "runs": [
+    {
+      "command": [
+        "python",
+        "tools/typed_call_inventory.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Typed definitions: 206 ; unmatched functions: 0\nSource calls: 7391 ; exact range matches: 7105\nTyped call/construction variants: 17440\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/typed_delegation_evidence.py"
+      ],
+      "exit_code": 0,
+      "stdout": "Typed schema delegations: 35 ; source acceptance remains zero\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "python",
+        "tools/check_typed_call_evidence.py"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"schema\": 1,\n  \"source_sha256\": \"1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f\",\n  \"source_functions\": 161,\n  \"typed_function_declarations\": 206,\n  \"source_calls\": 7391,\n  \"exact_range_matches\": 7105,\n  \"unmatched_macro_invocations\": {\n    \"ABSL_RETURN_IF_ERROR\": 55,\n    \"CHECK\": 29,\n    \"CHECK_EQ\": 25,\n    \"CHECK_GE\": 2,\n    \"CHECK_LT\": 3,\n    \"CHECK_OK\": 5,\n    \"DCHECK\": 1,\n    \"DCHECK_EQ\": 1,\n    \"LOG\": 2,\n    \"TF_RET_CHECK\": 12,\n    \"VLOG\": 151\n  },\n  \"ambiguous_name_candidate_sets\": 113,\n  \"ambiguous_sets_selecting_local_definition\": 110,\n  \"ambiguous_sets_selecting_external_member\": 3,\n  \"formerly_unnamed_operator_calls\": 8,\n  \"sites_with_dependent_variant\": 25,\n  \"local_static_dependency_edges\": 292,\n  \"accepted_source_rewrites\": 0,\n  \"denominator_frozen\": false,\n  \"runtime_dispatch_closed\": false,\n  \"independent_semantic_review\": false,\n  \"typed_schema_delegations\": 35,\n  \"compiler_version\": \"clang version 22.1.8 (https://github.com/llvm/llvm-project ca7933e47d3a3451d81e72ac174dcb5aa28b59d1)\\nTarget: x86_64-unknown-linux-gnu\\nThread model: posix\\nInstalledDir: /home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-cache/bazel/f0050a6656bcdb99d14ae9346ccd7a91/external/rules_ml_toolchain++toolchain_ext+llvm22_linux_x86_64/bin\\n\",\n  \"preprocessing_dependencies\": 1745,\n  \"extraction_documents\": 10269\n}\n",
+      "stderr": ""
+    }
+  ],
+  "checked_at_utc": "2026-11-10T13:31:27.903125+00:00"
+}

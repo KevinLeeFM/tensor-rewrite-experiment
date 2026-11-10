@@ -1,0 +1,1427 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:compare_nonnegative_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 71086 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from CompareNonnegativeReplay
+[ RUN      ] CompareNonnegativeReplay.StrictNanAndFiniteControls
+NONNEG_COMPARE_RESULT kind=abs direction=GE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=GE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=GE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=LE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=LE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=LE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=LT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=LT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=LT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=GT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=GT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=abs direction=GT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} abs(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=GE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=GE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=GE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=LE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=LE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=LE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=LT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=LT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=LT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=GT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=GT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=exp direction=GT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} exponential(%p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=GE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=GE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=GE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=LE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=LE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=LE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=LT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=LT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=LT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=GT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=GT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=square direction=GT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} multiply(%p, %p)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=GE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=GE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=GE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=LE mode=control changed=0 before=0,1,1,1,1,1 after=0,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=LE mode=handler changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=LE mode=pass changed=1 before=0,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(true)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=LT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=LT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=LT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%v, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=GT mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=GT mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=maximum direction=GT mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  %v = f32[6]{0} maximum(%p, %z)
+  ROOT %result = pred[6]{0} compare(%z, %v), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %constant = pred[] constant(false)
+  ROOT %broadcast = pred[6]{0} broadcast(%constant), dimensions={}
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=GE mode=control changed=0 before=0,0,1,1,1,0 after=0,0,1,1,1,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=GE mode=handler changed=0 before=0,0,1,1,1,0 after=0,0,1,1,1,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=GE mode=pass changed=0 before=0,0,1,1,1,0 after=0,0,1,1,1,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=GE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=GE
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=LE mode=control changed=0 before=0,0,1,1,1,0 after=0,0,1,1,1,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=LE mode=handler changed=0 before=0,0,1,1,1,0 after=0,0,1,1,1,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=LE mode=pass changed=0 before=0,0,1,1,1,0 after=0,0,1,1,1,0 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=LE
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=LE
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=LT mode=control changed=0 before=0,1,0,0,0,1 after=0,1,0,0,0,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=LT mode=handler changed=0 before=0,1,0,0,0,1 after=0,1,0,0,0,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=LT mode=pass changed=0 before=0,1,0,0,0,1 after=0,1,0,0,0,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=LT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %p = f32[6]{0} parameter(0)
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  ROOT %result = pred[6]{0} compare(%p, %z), direction=LT
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=GT mode=control changed=0 before=0,1,0,0,0,1 after=0,1,0,0,0,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=GT
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=GT mode=handler changed=0 before=0,1,0,0,0,1 after=0,1,0,0,0,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=GT
+}
+
+
+NONNEG_COMPARE_RESULT kind=parameter direction=GT mode=pass changed=0 before=0,1,0,0,0,1 after=0,1,0,0,0,1 rewritten_verified=1 cpu_fast_math=0 honor_nans=1 honor_infs=1 evaluator_fast_path=0 simplifier_fast_math=0
+ORIGINAL_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=GT
+}
+
+
+REWRITTEN_HLO
+HloModule compare_nonnegative, entry_computation_layout={(f32[6]{0})->pred[6]{0}}
+
+ENTRY %main (p: f32[6]) -> pred[6] {
+  %zero = f32[] constant(0)
+  %z = f32[6]{0} broadcast(%zero), dimensions={}
+  %p = f32[6]{0} parameter(0)
+  ROOT %result = pred[6]{0} compare(%z, %p), direction=GT
+}
+
+
+[       OK ] CompareNonnegativeReplay.StrictNanAndFiniteControls (28 ms)
+[----------] 1 test from CompareNonnegativeReplay (28 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (28 ms total)
+[  PASSED  ] 1 test.

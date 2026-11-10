@@ -1,0 +1,441 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:nested_dynamic_slice_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 71039 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from NestedDynamicSliceReplay
+[ RUN      ] NestedDynamicSliceReplay.TypedClampVersusEvaluatorConversion
+NESTED_SLICE_RESULT case=inner_high run_pass=0 changed=0 before=1 after=1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=inner_high run_pass=1 changed=1 before=1 after=5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = u64[] constant(0)
+  %outer_start = u64[] parameter(2)
+  %constant.1 = u64[] constant(4)
+  %clamp = u64[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = u64[] constant(0)
+  %constant.3 = u64[] constant(4)
+  %clamp.1 = u64[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = u64[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=outer_high run_pass=0 changed=0 before=1 after=1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=outer_high run_pass=1 changed=1 before=1 after=5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = u64[] constant(0)
+  %outer_start = u64[] parameter(2)
+  %constant.1 = u64[] constant(4)
+  %clamp = u64[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = u64[] constant(0)
+  %constant.3 = u64[] constant(4)
+  %clamp.1 = u64[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = u64[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=both_high run_pass=0 changed=0 before=0 after=0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=both_high run_pass=1 changed=1 before=0 after=8 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = u64[] constant(0)
+  %outer_start = u64[] parameter(2)
+  %constant.1 = u64[] constant(4)
+  %clamp = u64[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = u64[] constant(0)
+  %constant.3 = u64[] constant(4)
+  %clamp.1 = u64[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = u64[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=max_signed run_pass=0 changed=0 before=8 after=8 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=max_signed run_pass=1 changed=1 before=8 after=8 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = u64[] constant(0)
+  %outer_start = u64[] parameter(2)
+  %constant.1 = u64[] constant(4)
+  %clamp = u64[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = u64[] constant(0)
+  %constant.3 = u64[] constant(4)
+  %clamp.1 = u64[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = u64[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=signed_bounds run_pass=0 changed=0 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=signed_bounds run_pass=1 changed=1 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(4)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=inner_high_mixed run_pass=0 changed=0 before=1 after=1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=inner_high_mixed run_pass=1 changed=1 before=1 after=5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u64[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u64[], outer_start: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u64[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(4)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = u64[] constant(0)
+  %constant.3 = u64[] constant(4)
+  %clamp.1 = u64[] clamp(%constant.2, %inner_start, %constant.3)
+  %convert = s32[] convert(%clamp.1)
+  %add = s32[] add(%clamp, %convert)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=outer_high_mixed run_pass=0 changed=0 before=0 after=0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=outer_high_mixed run_pass=1 changed=1 before=0 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u64[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, s32[], u64[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: u64[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = u64[] constant(0)
+  %outer_start = u64[] parameter(2)
+  %constant.1 = u64[] constant(4)
+  %clamp = u64[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %convert = u64[] convert(%clamp.1)
+  %add = u64[] add(%clamp, %convert)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=u32_max run_pass=0 changed=0 before=8 after=8 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u32[], u32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u32[], outer_start: u32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u32[], u32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u32[], outer_start: u32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+NESTED_SLICE_RESULT case=u32_max run_pass=1 changed=1 before=8 after=8 rewritten_verified=1
+ORIGINAL_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u32[], u32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u32[], outer_start: u32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = u32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={2}
+}
+
+REWRITTEN_HLO
+HloModule nested_dynamic_slice, entry_computation_layout={(s32[10]{0}, u32[], u32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: u32[], outer_start: u32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = u32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = u32[] constant(0)
+  %outer_start = u32[] parameter(2)
+  %constant.1 = u32[] constant(4)
+  %clamp = u32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = u32[] constant(0)
+  %constant.3 = u32[] constant(4)
+  %clamp.1 = u32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = u32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[2]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={2}
+}
+
+[       OK ] NestedDynamicSliceReplay.TypedClampVersusEvaluatorConversion (6 ms)
+[----------] 1 test from NestedDynamicSliceReplay (6 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (6 ms total)
+[  PASSED  ] 1 test.

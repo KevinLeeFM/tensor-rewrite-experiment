@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_bounded_maps_and_oracle_profile_diagnostic",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "profile": "bounded static extents; signedness-preserving finite-word decoding; evaluator u64 conversion separate",
+  "accepted_source_rewrites": 0,
+  "operator_names": [
+    "DynamicSlice"
+  ],
+  "native_scope": "operator_evaluator_only_no_handler_or_pass",
+  "native_evidence": "reports/dynamic-index-evaluator-v1/result.json",
+  "source_contracts": [
+    {
+      "id": "signed-index-conversion",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 1263,
+      "end_line": 1289,
+      "source_body_sha256": "d27eaf0d084a991a4b6aeb7ab121ec4cdb793a656c767e05b94cdef72c45f806"
+    },
+    {
+      "id": "dynamic-slice-evaluation",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 3712,
+      "end_line": 3768,
+      "source_body_sha256": "743d60604c459fb3cb9a6a355dbc558e7fa9fb79db546c49526f3803c0892246"
+    },
+    {
+      "id": "dynamic-slice-shape",
+      "path": "sources/xla/xla/service/shape_inference.cc",
+      "line": 3500,
+      "end_line": 3622,
+      "source_body_sha256": "b97664af123c645fa2310649d9503d05db5cd0fa8d208f56d676b75b9f914230"
+    }
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.DynamicIndex.clampStart_bounds",
+    "TensorRewrite.Pilot.DynamicIndex.coordinate_bounds",
+    "TensorRewrite.Pilot.DynamicIndex.clampStart_full_extent",
+    "TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue",
+    "TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_val",
+    "TensorRewrite.Pilot.DynamicIndex.dynamicSliceView_constant"
+  ],
+  "diagnostic_certificates": [
+    "TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees",
+    "TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees",
+    "TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal"
+  ],
+  "diagnostic_scope": "evaluator/logical index profiles; not an algebraic-simplifier counterexample",
+  "disagreement_cases": [
+    "u64/high_bit",
+    "u64/maximum"
+  ],
+  "comparison_reference": {
+    "url": "https://openxla.org/stablehlo/spec#dynamic_slice",
+    "checked_date": "2026-11-10",
+    "status": "current comparison reference, not the pinned XLA revision specification"
+  },
+  "remaining": [
+    "C++ conversion/attribute/layout correspondence",
+    "adopted per-backend signed/unsigned index contract",
+    "unbounded dynamic dimensions",
+    "independent semantic/source review"
+  ]
+}

@@ -1,0 +1,1421 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "denominator_frozen": false,
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "cases": [
+    {
+      "id": "HandleAbs/nonnegative",
+      "handler": "HandleAbs",
+      "line": 916,
+      "end_line": 924,
+      "lhs": "Abs(x)",
+      "rhs": "x",
+      "guard": "IsNonNegative(x,options)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "IsNonNegative: expand recursive/value-range and option contract",
+        "Abs exceptional values and result type",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "802612d3b0a662bcf439cd27309589507cc08052b257978d3d600b4da52fc0f4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L00921-C012",
+      "replacement_line": 921,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(abs, abs_operand);"
+    },
+    {
+      "id": "HandleClamp/idempotent",
+      "handler": "HandleClamp",
+      "line": 5101,
+      "end_line": 5136,
+      "lhs": "Clamp(a,Clamp(a,x,b),b)",
+      "rhs": "Clamp(a,x,b)",
+      "guard": "both bound operand pointers match; ReplaceInstructionIfCompatible succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Clamp ordered/NaN/signed-zero semantics",
+        "SameShape"
+      ],
+      "source_body_sha256": "302562b4bfb2b45f66a853e635e4393a9a50c11b97fd0a65ba2bb4dafb6c6a4e",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05111-C007",
+      "replacement_line": 5111,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(clamp, to_clamp)) {"
+    },
+    {
+      "id": "HandleClamp/runtime-id",
+      "handler": "HandleClamp",
+      "line": 5101,
+      "end_line": 5136,
+      "lhs": "Clamp(0,PartitionId/ReplicaId,upper)",
+      "rhs": "PartitionId/ReplicaId",
+      "guard": "ID opcode; lower ConstantScalar(0U); upper ConstantScalar; read upper as uint32; module bound != 1 and bound <= upper+1",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "module replica/partition configuration and actual runtime range",
+        "Literal::GetFirstElement<uint32_t>",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "302562b4bfb2b45f66a853e635e4393a9a50c11b97fd0a65ba2bb4dafb6c6a4e",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L05131-C014",
+      "replacement_line": 5131,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(clamp, to_clamp);"
+    },
+    {
+      "id": "HandleLog/exp",
+      "handler": "HandleLog",
+      "line": 5507,
+      "end_line": 5556,
+      "lhs": "Log(Exp(a))",
+      "rhs": "a",
+      "guard": "enable_fast_math; compatibility replacement succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "independent fast-math observation contract"
+      ],
+      "source_body_sha256": "866512c38733eb0dc05f93959973eafd32298ea03fe79d595709c77d99526d37",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05512-C007",
+      "replacement_line": 5512,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(log, a)) {"
+    },
+    {
+      "id": "HandleLog/power-real",
+      "handler": "HandleLog",
+      "line": 5507,
+      "end_line": 5556,
+      "lhs": "Log(Power(a,b))",
+      "rhs": "Select(b == 0,0,Multiply(Log(Abs(a)),b))",
+      "guard": "enable_fast_math; a element type not complex",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "complex branch cuts or real logarithm domains",
+        "MakeCompareHlo Eq",
+        "MakeScalarLike",
+        "UpdateLayout",
+        "fast-math contract"
+      ],
+      "source_body_sha256": "866512c38733eb0dc05f93959973eafd32298ea03fe79d595709c77d99526d37",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L05533-C012",
+      "replacement_line": 5533,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleLog/power-complex",
+      "handler": "HandleLog",
+      "line": 5507,
+      "end_line": 5556,
+      "lhs": "Log(Power(a,b))",
+      "rhs": "Select(b == 0,0,Multiply(Log(a),b))",
+      "guard": "enable_fast_math; a element type complex",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "complex branch cuts or real logarithm domains",
+        "MakeCompareHlo Eq",
+        "MakeScalarLike",
+        "UpdateLayout",
+        "fast-math contract"
+      ],
+      "source_body_sha256": "866512c38733eb0dc05f93959973eafd32298ea03fe79d595709c77d99526d37",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L05533-C012",
+      "replacement_line": 5533,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleLog/sqrt",
+      "handler": "HandleLog",
+      "line": 5507,
+      "end_line": 5556,
+      "lhs": "Log(Sqrt(a))",
+      "rhs": "Multiply(Log(a),0.5)",
+      "guard": "Sqrt matcher; no local fast-math or domain guard",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Log/Sqrt rounding, domains and exceptional values"
+      ],
+      "source_body_sha256": "866512c38733eb0dc05f93959973eafd32298ea03fe79d595709c77d99526d37",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L05542-C012",
+      "replacement_line": 5542,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleLog/rsqrt",
+      "handler": "HandleLog",
+      "line": 5507,
+      "end_line": 5556,
+      "lhs": "Log(Rsqrt(a))",
+      "rhs": "Multiply(Log(a),-0.5)",
+      "guard": "Rsqrt matcher; no local fast-math or domain guard",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Log/Rsqrt rounding, domains and exceptional values"
+      ],
+      "source_body_sha256": "866512c38733eb0dc05f93959973eafd32298ea03fe79d595709c77d99526d37",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05550-C012",
+      "replacement_line": 5550,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleConvert/same-type",
+      "handler": "HandleConvert",
+      "line": 6053,
+      "end_line": 6097,
+      "lhs": "Convert(x,T)",
+      "rhs": "x",
+      "guard": "source element type == destination element type",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Convert semantics",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "e992c199deedca4da8c727ec43b987eb80ec37e108c2d402060ed9ad75f397df",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06061-C012",
+      "replacement_line": 6061,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(convert, convert->mutable_operand(0));"
+    },
+    {
+      "id": "HandleConvert/noop-pair",
+      "handler": "HandleConvert",
+      "line": 6053,
+      "end_line": 6097,
+      "lhs": "Convert(Convert(x,U),T)",
+      "rhs": "x",
+      "guard": "IsConvertPairNoOp(convert)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "IsConvertPairNoOp: expand all legal type pairs and precision/range predicates"
+      ],
+      "source_body_sha256": "e992c199deedca4da8c727ec43b987eb80ec37e108c2d402060ed9ad75f397df",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L06076-C012",
+      "replacement_line": 6076,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(convert,"
+    },
+    {
+      "id": "HandleConvert/constant-fold",
+      "handler": "HandleConvert",
+      "line": 6053,
+      "end_line": 6097,
+      "lhs": "Convert(Constant(c),T)",
+      "rhs": "Constant(Literal.Convert(c,T))",
+      "guard": "use_convert_constant_folding; constant one user; 8 <= destination BitWidth <= source BitWidth; literal conversion succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Literal::Convert signedness, rounding and overflow",
+        "status/error propagation"
+      ],
+      "source_body_sha256": "e992c199deedca4da8c727ec43b987eb80ec37e108c2d402060ed9ad75f397df",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L06092-C012",
+      "replacement_line": 6092,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleConvert/binary-surround-delegation",
+      "handler": "HandleConvert",
+      "line": 6053,
+      "end_line": 6097,
+      "lhs": "Convert(Binary(Convert(a),Convert(b)))",
+      "rhs": "helper-dependent graph",
+      "guard": "all prior branches did not rewrite",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "TryRemoveUpcastAndDowncastSurroundingBinaryOp: expand all branches"
+      ],
+      "source_body_sha256": "e992c199deedca4da8c727ec43b987eb80ec37e108c2d402060ed9ad75f397df",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "delegation_target": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
+      "delegation_line": 6096
+    },
+    {
+      "id": "HandleCustomCall/dynamic-roundtrip-raw-size",
+      "handler": "HandleCustomCall",
+      "line": 6099,
+      "end_line": 6137,
+      "lhs": "SliceToDynamic(GTE(PadToStatic(x),0),GTE(PadToStatic(x),1))",
+      "rhs": "x",
+      "guard": "output rank-one array; same PadToStatic instruction pointer for both GTEs; SameShape(output,x); clamped upper bound is output extent when present",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PadToStatic/SliceToDynamic ABI, dynamic sizes and out-of-bound behavior",
+        "SameShape",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "676311fd71545340ec1f13406ca5a6c851fc47c99577dbcab7c5572595ad8579",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06123-C014",
+      "replacement_line": 6123,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(custom_call, pad_to_static_operand);"
+    },
+    {
+      "id": "HandleCustomCall/dynamic-roundtrip-clamped-size",
+      "handler": "HandleCustomCall",
+      "line": 6099,
+      "end_line": 6137,
+      "lhs": "SliceToDynamic(GTE(PadToStatic(x),0),Clamp(0,GTE(PadToStatic(x),1),bound))",
+      "rhs": "x",
+      "guard": "output rank-one array; same PadToStatic instruction pointer for both GTEs; SameShape(output,x); clamped upper bound is output extent when present",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PadToStatic/SliceToDynamic ABI, dynamic sizes and out-of-bound behavior",
+        "SameShape",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "676311fd71545340ec1f13406ca5a6c851fc47c99577dbcab7c5572595ad8579",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06123-C014",
+      "replacement_line": 6123,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(custom_call, pad_to_static_operand);"
+    },
+    {
+      "id": "HandleCustomCall/layout-identity",
+      "handler": "HandleCustomCall",
+      "line": 6099,
+      "end_line": 6137,
+      "lhs": "LayoutConstraint(x)",
+      "rhs": "x",
+      "guard": "layout sensitive; SameShape(output,x)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "LayoutConstraint custom-call contract",
+        "SameShape"
+      ],
+      "source_body_sha256": "676311fd71545340ec1f13406ca5a6c851fc47c99577dbcab7c5572595ad8579",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L06129-C014",
+      "replacement_line": 6129,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(custom_call, custom_call->mutable_operand(0));"
+    },
+    {
+      "id": "HandleCustomCall/layout-copy",
+      "handler": "HandleCustomCall",
+      "line": 6099,
+      "end_line": 6137,
+      "lhs": "LayoutConstraint(x)",
+      "rhs": "Copy(x,output shape)",
+      "guard": "layout sensitive; !SameShape(output,x)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "LayoutConstraint contract",
+        "Copy layout/memory-space behavior"
+      ],
+      "source_body_sha256": "676311fd71545340ec1f13406ca5a6c851fc47c99577dbcab7c5572595ad8579",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L06131-C012",
+      "replacement_line": 6131,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandlePower/zero",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(a,0)",
+      "rhs": "MakeScalarLike(output,1)",
+      "guard": "IsAll(exponent,0)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Power zero exponent semantics",
+        "MakeScalarLike"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06410-C012",
+      "replacement_line": 6410,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(power, MakeScalarLike(power, 1));"
+    },
+    {
+      "id": "HandlePower/one",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(a,1)",
+      "rhs": "a",
+      "guard": "IsAll(exponent,1); compatibility replacement succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Power semantics",
+        "SameShape"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L06414-C024",
+      "replacement_line": 6414,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "  if (IsAll(rhs, 1) && ReplaceInstructionIfCompatible(power, lhs)) {"
+    },
+    {
+      "id": "HandlePower/exp-base",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(Exp(a),b)",
+      "rhs": "Exp(Multiply(a,b))",
+      "guard": "enable_fast_math; Exp matcher",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "independent fast-math contract",
+        "complex branches"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L06424-C012",
+      "replacement_line": 6424,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandlePower/two",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(a,2)",
+      "rhs": "Multiply(a,a)",
+      "guard": "IsAll(exponent,2); no local fast-math guard",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Power versus Multiply rounding"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L06431-C012",
+      "replacement_line": 6431,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandlePower/three",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(a,3)",
+      "rhs": "Multiply(a,Multiply(a,a))",
+      "guard": "IsAll(exponent,3); no local fast-math guard",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "source multiplication association",
+        "Power rounding"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L06441-C012",
+      "replacement_line": 6441,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandlePower/minus-one",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(a,-1)",
+      "rhs": "Divide(1,a)",
+      "guard": "output not integral; IsAll(exponent,-1)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Power/Divide rounding and exceptional values"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L06448-C012",
+      "replacement_line": 6448,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandlePower/half",
+      "handler": "HandlePower",
+      "line": 6405,
+      "end_line": 6462,
+      "lhs": "Power(a,0.5)",
+      "rhs": "Sqrt(a)",
+      "guard": "IsAllFloat(exponent,0.5); IsNonNegative(a,options)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "IsAllFloat",
+        "IsNonNegative",
+        "Power/Sqrt rounding"
+      ],
+      "source_body_sha256": "d004b10cbfe4e0cb50d270bd319262c478a1d5f63beaa7c1b351714c553cf87a",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L06456-C012",
+      "replacement_line": 6456,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleRsqrt/inverse-square",
+      "handler": "HandleRsqrt",
+      "line": 8119,
+      "end_line": 8140,
+      "lhs": "Rsqrt(Power(a,-2))",
+      "rhs": "a",
+      "guard": "Power opcode; IsAll(exponent,-2); IsNonNegative(a,options); no local fast-math guard",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "IsNonNegative",
+        "Power/Rsqrt rounding, overflow and underflow"
+      ],
+      "source_body_sha256": "ab137a526cffbeee61c4f5479930f3c0f7c35a77f7801d2ae9e1da2c2f1dc5f7",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L08126-C012",
+      "replacement_line": 8126,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(rsqrt, rsqrt_operand->mutable_operand(0));"
+    },
+    {
+      "id": "HandleRsqrt/reciprocal",
+      "handler": "HandleRsqrt",
+      "line": 8119,
+      "end_line": 8140,
+      "lhs": "Rsqrt(Divide(1,a))",
+      "rhs": "Sqrt(a)",
+      "guard": "Divide opcode; IsAll(numerator,1); IsNonNegative(a,options); no local fast-math guard",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "IsNonNegative",
+        "Divide/Rsqrt/Sqrt rounding"
+      ],
+      "source_body_sha256": "ab137a526cffbeee61c4f5479930f3c0f7c35a77f7801d2ae9e1da2c2f1dc5f7",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L08134-C012",
+      "replacement_line": 8134,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleReducePrecision/full-width",
+      "handler": "HandleReducePrecision",
+      "line": 9552,
+      "end_line": 9568,
+      "lhs": "ReducePrecision(x,e,m)",
+      "rhs": "x",
+      "guard": "enable_remove_no_op_reduce_precision; exponent_bits == ExponentWidth(input type); mantissa_bits+1 == SignificandWidth(input type)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "ReducePrecision NaN, subnormal and signed-zero behavior",
+        "primitive_util widths"
+      ],
+      "source_body_sha256": "31c58768737b62f849516af8f5ac321be4d31f09e829ec6a5966d508e596d809",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L09563-C012",
+      "replacement_line": 9563,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction("
+    },
+    {
+      "id": "HandleSelect/equal-values",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,x,x)",
+      "rhs": "x",
+      "guard": "true/false operand pointer identity; compatibility replacement succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Select scalar-or-tensor predicate semantics",
+        "SameShape where used"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10118-C007",
+      "replacement_line": 10118,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(select, select->mutable_operand(1))) {"
+    },
+    {
+      "id": "HandleSelect/true",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(true,x,y)",
+      "rhs": "x",
+      "guard": "IsAll(predicate,true); compatibility replacement succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Select scalar-or-tensor predicate semantics",
+        "SameShape where used"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L10123-C007",
+      "replacement_line": 10123,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(select, select->mutable_operand(1))) {"
+    },
+    {
+      "id": "HandleSelect/false",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(false,x,y)",
+      "rhs": "y",
+      "guard": "IsAll(predicate,false); compatibility replacement succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Select scalar-or-tensor predicate semantics",
+        "SameShape where used"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L10128-C007",
+      "replacement_line": 10128,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(select, select->mutable_operand(2))) {"
+    },
+    {
+      "id": "HandleSelect/not-predicate",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Not(p),x,y)",
+      "rhs": "Select(p,y,x)",
+      "guard": "predicate opcode Not",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Select scalar-or-tensor predicate semantics",
+        "SameShape where used"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L10136-C012",
+      "replacement_line": 10136,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSelect/true-false-direct",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,true,false)",
+      "rhs": "p",
+      "guard": "output PRED; IsAll(branches,listed values); replacement not (replacement scalar and output nonscalar)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "predicate broadcasting at arbitrary rank",
+        "MakeBroadcastHlo",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L10160-C014",
+      "replacement_line": 10160,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(select, replacement);"
+    },
+    {
+      "id": "HandleSelect/true-false-broadcast",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,true,false)",
+      "rhs": "Broadcast(p)",
+      "guard": "output PRED; IsAll(branches,listed values); replacement scalar and output nonscalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "predicate broadcasting at arbitrary rank",
+        "MakeBroadcastHlo",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L10160-C014",
+      "replacement_line": 10160,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(select, replacement);"
+    },
+    {
+      "id": "HandleSelect/false-true-direct",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,false,true)",
+      "rhs": "Not(p)",
+      "guard": "output PRED; IsAll(branches,listed values); replacement not (replacement scalar and output nonscalar)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "predicate broadcasting at arbitrary rank",
+        "MakeBroadcastHlo",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L10160-C014",
+      "replacement_line": 10160,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(select, replacement);"
+    },
+    {
+      "id": "HandleSelect/false-true-broadcast",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,false,true)",
+      "rhs": "Broadcast(Not(p))",
+      "guard": "output PRED; IsAll(branches,listed values); replacement scalar and output nonscalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "predicate broadcasting at arbitrary rank",
+        "MakeBroadcastHlo",
+        "ReplaceInstruction"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L10160-C014",
+      "replacement_line": 10160,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(select, replacement);"
+    },
+    {
+      "id": "HandleSelect/boolean-compare-gt",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Compare(a,b,Gt),a,b)",
+      "rhs": "Or(a,b)",
+      "guard": "output PRED; compare operands same pointers as select true/false operands; direction Gt",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PRED comparison ordering and comparison_type",
+        "Boolean operators"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L10172-C016",
+      "replacement_line": 10172,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSelect/boolean-compare-ge",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Compare(a,b,Ge),a,b)",
+      "rhs": "Or(a,b)",
+      "guard": "output PRED; compare operands same pointers as select true/false operands; direction Ge",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PRED comparison ordering and comparison_type",
+        "Boolean operators"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L10172-C016",
+      "replacement_line": 10172,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSelect/boolean-compare-lt",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Compare(a,b,Lt),a,b)",
+      "rhs": "And(a,b)",
+      "guard": "output PRED; compare operands same pointers as select true/false operands; direction Lt",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PRED comparison ordering and comparison_type",
+        "Boolean operators"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L10178-C016",
+      "replacement_line": 10178,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSelect/boolean-compare-le",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Compare(a,b,Le),a,b)",
+      "rhs": "And(a,b)",
+      "guard": "output PRED; compare operands same pointers as select true/false operands; direction Le",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PRED comparison ordering and comparison_type",
+        "Boolean operators"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L10178-C016",
+      "replacement_line": 10178,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSelect/boolean-compare-eq",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Compare(a,b,Eq),a,b)",
+      "rhs": "b",
+      "guard": "output PRED; compare operands same pointers as select true/false operands; direction Eq",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PRED comparison ordering and comparison_type",
+        "Boolean operators"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L10183-C016",
+      "replacement_line": 10183,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(select, rhs);"
+    },
+    {
+      "id": "HandleSelect/boolean-compare-ne",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(Compare(a,b,Ne),a,b)",
+      "rhs": "a",
+      "guard": "output PRED; compare operands same pointers as select true/false operands; direction Ne",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "PRED comparison ordering and comparison_type",
+        "Boolean operators"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L10186-C016",
+      "replacement_line": 10186,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(select, lhs);"
+    },
+    {
+      "id": "HandleSelect/update-false-tensor-pred",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+      "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
+      "guard": "update instruction has one use; shared base pointer; predicate nonscalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "clamping and index type for DynamicSlice and DynamicUpdateSlice",
+        "matching slice extents",
+        "layout update"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L10231-C012",
+      "replacement_line": 10231,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(select, std::move(new_xs));"
+    },
+    {
+      "id": "HandleSelect/update-false-scalar-pred",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+      "rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
+      "guard": "update instruction has one use; shared base pointer; predicate scalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "clamping and index type for DynamicSlice and DynamicUpdateSlice",
+        "matching slice extents",
+        "layout update"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L10231-C012",
+      "replacement_line": 10231,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(select, std::move(new_xs));"
+    },
+    {
+      "id": "HandleSelect/update-true-tensor-pred",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+      "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
+      "guard": "update instruction has one use; shared base pointer; predicate nonscalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "clamping and index type for DynamicSlice and DynamicUpdateSlice",
+        "matching slice extents",
+        "layout update"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L10231-C012",
+      "replacement_line": 10231,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(select, std::move(new_xs));"
+    },
+    {
+      "id": "HandleSelect/update-true-scalar-pred",
+      "handler": "HandleSelect",
+      "line": 10115,
+      "end_line": 10235,
+      "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+      "rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
+      "guard": "update instruction has one use; shared base pointer; predicate scalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "clamping and index type for DynamicSlice and DynamicUpdateSlice",
+        "matching slice extents",
+        "layout update"
+      ],
+      "source_body_sha256": "6d982507d3c3f98f3e0d7896ebfc7c1f6090ecc8b40b5e0a8205562aa019b9ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L10231-C012",
+      "replacement_line": 10231,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(select, std::move(new_xs));"
+    },
+    {
+      "id": "HandleScatter/empty-updates",
+      "handler": "HandleScatter",
+      "line": 10237,
+      "end_line": 10258,
+      "lhs": "Scatter(bases,indices,updates)",
+      "rhs": "bases (or tuple)",
+      "guard": "all updates zero-element arrays; ReplaceInstructionIfCompatible with scatter_operands succeeds",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "variadic replacement overload and tuple handling",
+        "Scatter update computation side effects"
+      ],
+      "source_body_sha256": "1e2d69e99f991965fd51f4d79abf390a208282bc1cfafcd67d16411b64ab98ef",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10244-C007",
+      "replacement_line": 10244,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(scatter, scatter->scatter_operands())) {"
+    },
+    {
+      "id": "HandleScatter/empty-indices",
+      "handler": "HandleScatter",
+      "line": 10237,
+      "end_line": 10258,
+      "lhs": "Scatter(base,empty_indices,update)",
+      "rhs": "Map(base,update,to_apply)",
+      "guard": "one scatter operand; indices zero-element array; SameShape(output,base) and SameShape(output,update)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Scatter empty index-vector interpretation versus no updates",
+        "scatter dimension numbers",
+        "Map application semantics"
+      ],
+      "source_body_sha256": "1e2d69e99f991965fd51f4d79abf390a208282bc1cfafcd67d16411b64ab98ef",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L10251-C012",
+      "replacement_line": 10251,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSort/trivial-single",
+      "handler": "HandleSort",
+      "line": 10260,
+      "end_line": 10273,
+      "lhs": "Sort(operands,axis)",
+      "rhs": "operand0",
+      "guard": "(operand0 zero-element array OR extent(axis)<=1); operand_count == 1",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Sort comparator effects and ordering",
+        "tuple value semantics"
+      ],
+      "source_body_sha256": "237b6b13c9571810ab5d45cdb7b5e12395b761f56ef49da0f4f4c38d80cc3612",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10266-C014",
+      "replacement_line": 10266,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(sort, operand);"
+    },
+    {
+      "id": "HandleSort/trivial-tuple",
+      "handler": "HandleSort",
+      "line": 10260,
+      "end_line": 10273,
+      "lhs": "Sort(operands,axis)",
+      "rhs": "Tuple(operands)",
+      "guard": "(operand0 zero-element array OR extent(axis)<=1); operand_count != 1",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Sort comparator effects and ordering",
+        "tuple value semantics"
+      ],
+      "source_body_sha256": "237b6b13c9571810ab5d45cdb7b5e12395b761f56ef49da0f4f4c38d80cc3612",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L10269-C012",
+      "replacement_line": 10269,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSqrt/square-complex",
+      "handler": "HandleSqrt",
+      "line": 10275,
+      "end_line": 10303,
+      "lhs": "Sqrt(Multiply(a,a))",
+      "rhs": "Convert(Abs(a),complex type)",
+      "guard": "enable_fast_math; Multiply opcode; same operand pointers; element type complex",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "complex principal square root versus modulus",
+        "independently specified fast-math permissions",
+        "type-changing Abs and Convert"
+      ],
+      "source_body_sha256": "180abd00e5641b2456bd5d4867d301a7bdbdc954226360f091e871eff905d243",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10294-C014",
+      "replacement_line": 10294,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleSqrt/square-real",
+      "handler": "HandleSqrt",
+      "line": 10275,
+      "end_line": 10303,
+      "lhs": "Sqrt(Multiply(a,a))",
+      "rhs": "Abs(a)",
+      "guard": "enable_fast_math; Multiply opcode; same operand pointers; element type not complex",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "complex principal square root versus modulus",
+        "independently specified fast-math permissions",
+        "type-changing Abs and Convert"
+      ],
+      "source_body_sha256": "180abd00e5641b2456bd5d4867d301a7bdbdc954226360f091e871eff905d243",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L10297-C012",
+      "replacement_line": 10297,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleMap/parameter-root",
+      "handler": "HandleMap",
+      "line": 11278,
+      "end_line": 11313,
+      "lhs": "Map(operands,Parameter(k))",
+      "rhs": "operands[k]",
+      "guard": "map computation root Parameter; ReplaceInstructionIfCompatible succeeds (return value ignored by handler)",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "to_apply well-formedness and side effects",
+        "parameter indexing",
+        "SameShape"
+      ],
+      "source_body_sha256": "4191e775de159e66ebb7f12e2187fc8601ac67c1492088072c37c59310d84f76",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11282-C005",
+      "replacement_line": 11282,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    ReplaceInstructionIfCompatible("
+    },
+    {
+      "id": "HandleMap/constant-root-scalar",
+      "handler": "HandleMap",
+      "line": 11278,
+      "end_line": 11313,
+      "lhs": "Map(operands,Constant(c))",
+      "rhs": "cloned Constant(c)",
+      "guard": "map root scalar Constant; output scalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Map evaluated computation and unused operations",
+        "constant cloning",
+        "broadcast"
+      ],
+      "source_body_sha256": "4191e775de159e66ebb7f12e2187fc8601ac67c1492088072c37c59310d84f76",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L11292-C014",
+      "replacement_line": 11292,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(map, std::move(clone));"
+    },
+    {
+      "id": "HandleMap/constant-root-broadcast",
+      "handler": "HandleMap",
+      "line": 11278,
+      "end_line": 11313,
+      "lhs": "Map(operands,Constant(c))",
+      "rhs": "Broadcast(cloned Constant(c),output shape)",
+      "guard": "map root scalar Constant; output nonscalar",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "Map evaluated computation and unused operations",
+        "constant cloning",
+        "broadcast"
+      ],
+      "source_body_sha256": "4191e775de159e66ebb7f12e2187fc8601ac67c1492088072c37c59310d84f76",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L11294-C012",
+      "replacement_line": 11294,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleMap/elementwise-root",
+      "handler": "HandleMap",
+      "line": 11278,
+      "end_line": 11313,
+      "lhs": "Map(operands,Elementwise(Parameter(k0),...))",
+      "rhs": "clone Elementwise with output shape and selected operands[kj]",
+      "guard": "root not Fusion and IsElementwise; every direct root operand Parameter",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "IsElementwise shape polymorphism and opcode attributes",
+        "CloneWithNewOperands",
+        "effect/call semantics"
+      ],
+      "source_body_sha256": "4191e775de159e66ebb7f12e2187fc8601ac67c1492088072c37c59310d84f76",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L11312-C010",
+      "replacement_line": 11312,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(map, std::move(clone));"
+    },
+    {
+      "id": "HandleConditional/predicate-convert",
+      "handler": "HandleConditional",
+      "line": 11343,
+      "end_line": 11367,
+      "lhs": "Conditional(Convert(p),arg0,branch0,arg1,branch1)",
+      "rhs": "Conditional(p,true_arg=arg1,true_branch=branch1,false_arg=arg0,false_branch=branch0)",
+      "guard": "enable_conditional_simplification; selector opcode Convert; Convert input PRED; exactly two branches",
+      "path_condition": "legal input HLO; earlier branches did not successfully rewrite; enclosing conditions apply",
+      "dependencies": [
+        "integer conditional index/clamping semantics",
+        "PRED conversion",
+        "Boolean branch order",
+        "branch effects"
+      ],
+      "source_body_sha256": "cb84523f1dfd19bd844d4c7a1df9b7d9b6a20f8fad4ae6614a04bb9d7a9e8f1b",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "type_partition_status": "legal source types not yet exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11356-C012",
+      "replacement_line": 11356,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    }
+  ],
+  "selected_handlers": [
+    "HandleAbs",
+    "HandleClamp",
+    "HandleConditional",
+    "HandleConvert",
+    "HandleCustomCall",
+    "HandleLog",
+    "HandleMap",
+    "HandlePower",
+    "HandleReducePrecision",
+    "HandleRsqrt",
+    "HandleScatter",
+    "HandleSelect",
+    "HandleSort",
+    "HandleSqrt"
+  ],
+  "limitations": [
+    "primary-agent extraction only; no independent source review",
+    "delegated helpers and scalar type/option profiles remain to be expanded",
+    "numeric expressions are source descriptions, not accepted algebraic identities",
+    "graph/effect/layout obligations remain open; no source rewrite accepted"
+  ]
+}

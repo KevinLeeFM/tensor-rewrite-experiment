@@ -1,0 +1,3512 @@
+{
+  "schema": 1,
+  "status": "real_xla_signed_word_overflow_and_narrowing_preserved",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "pass_source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "command": [
+    "/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-tools/bazel",
+    "--output_user_root=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-cache/bazel",
+    "test",
+    "//xla/hlo/transforms/simplifiers:signed_word_replay_test",
+    "--compilation_mode=opt",
+    "--jobs=12",
+    "--repo_env=HERMETIC_PYTHON_VERSION=3.12",
+    "--repository_cache=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-cache/repos",
+    "--test_output=all",
+    "--nocache_test_results",
+    "--build_event_json_file=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/reports/signed-word-replay-v2/events.json",
+    "--noshow_progress"
+  ],
+  "xla_full_pass_run": true,
+  "xla_handler_run": true,
+  "native_operator_evaluation": true,
+  "execution_scope": "s8/s16/s32/s64 words and signed observations; typed 64-bit intermediate arithmetic; native HloEvaluator; no floating or whole-source graph claim",
+  "test_passed": true,
+  "exit_code": 0,
+  "elapsed_seconds": 18.089438571128994,
+  "binary_sha256": "000c5915b3a87b935e36255757fcf237ae9355a43ca4e595536a9a56ef590615",
+  "cases": [
+    {
+      "dtype": "s8",
+      "name": "add_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        129,
+        130,
+        1,
+        131,
+        128,
+        2
+      ],
+      "signed_values": [
+        -127,
+        -126,
+        1,
+        -125,
+        -128,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        129,
+        130,
+        1,
+        131,
+        128,
+        2
+      ],
+      "signed_values": [
+        -127,
+        -126,
+        1,
+        -125,
+        -128,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        129,
+        130,
+        1,
+        131,
+        128,
+        2
+      ],
+      "signed_values": [
+        -127,
+        -126,
+        1,
+        -125,
+        -128,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_assoc",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        132,
+        133,
+        4,
+        134,
+        131,
+        5
+      ],
+      "signed_values": [
+        -124,
+        -123,
+        4,
+        -122,
+        -125,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_assoc",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        132,
+        133,
+        4,
+        134,
+        131,
+        5
+      ],
+      "signed_values": [
+        -124,
+        -123,
+        4,
+        -122,
+        -125,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "add_assoc",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        132,
+        133,
+        4,
+        134,
+        131,
+        5
+      ],
+      "signed_values": [
+        -124,
+        -123,
+        4,
+        -122,
+        -125,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "factor",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        128,
+        254,
+        3,
+        0,
+        255,
+        128
+      ],
+      "signed_values": [
+        -128,
+        -2,
+        3,
+        0,
+        -1,
+        -128
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "factor",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        128,
+        254,
+        3,
+        0,
+        255,
+        128
+      ],
+      "signed_values": [
+        -128,
+        -2,
+        3,
+        0,
+        -1,
+        -128
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "factor",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        128,
+        254,
+        3,
+        0,
+        255,
+        128
+      ],
+      "signed_values": [
+        -128,
+        -2,
+        3,
+        0,
+        -1,
+        -128
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_one",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_one",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_one",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        254,
+        255,
+        122,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -2,
+        -1,
+        122,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        254,
+        255,
+        122,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -2,
+        -1,
+        122,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "mul_neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        254,
+        255,
+        122,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -2,
+        -1,
+        122,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "four_factors",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        250,
+        0,
+        244,
+        250,
+        220,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "four_factors",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        250,
+        0,
+        244,
+        250,
+        220,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "four_factors",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        250,
+        0,
+        244,
+        250,
+        220,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_self",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_self",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_self",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        124,
+        125,
+        252,
+        126,
+        123,
+        253
+      ],
+      "signed_values": [
+        124,
+        125,
+        -4,
+        126,
+        123,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        124,
+        125,
+        252,
+        126,
+        123,
+        253
+      ],
+      "signed_values": [
+        124,
+        125,
+        -4,
+        126,
+        123,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "sub_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        124,
+        125,
+        252,
+        126,
+        123,
+        253
+      ],
+      "signed_values": [
+        124,
+        125,
+        -4,
+        126,
+        123,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s8",
+      "name": "neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        127,
+        128,
+        255,
+        129,
+        126,
+        0
+      ],
+      "signed_values": [
+        127,
+        -128,
+        -1,
+        -127,
+        126,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32769,
+        32770,
+        1,
+        32771,
+        32768,
+        2
+      ],
+      "signed_values": [
+        -32767,
+        -32766,
+        1,
+        -32765,
+        -32768,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32769,
+        32770,
+        1,
+        32771,
+        32768,
+        2
+      ],
+      "signed_values": [
+        -32767,
+        -32766,
+        1,
+        -32765,
+        -32768,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32769,
+        32770,
+        1,
+        32771,
+        32768,
+        2
+      ],
+      "signed_values": [
+        -32767,
+        -32766,
+        1,
+        -32765,
+        -32768,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_assoc",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32772,
+        32773,
+        4,
+        32774,
+        32771,
+        5
+      ],
+      "signed_values": [
+        -32764,
+        -32763,
+        4,
+        -32762,
+        -32765,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_assoc",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32772,
+        32773,
+        4,
+        32774,
+        32771,
+        5
+      ],
+      "signed_values": [
+        -32764,
+        -32763,
+        4,
+        -32762,
+        -32765,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "add_assoc",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32772,
+        32773,
+        4,
+        32774,
+        32771,
+        5
+      ],
+      "signed_values": [
+        -32764,
+        -32763,
+        4,
+        -32762,
+        -32765,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "factor",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32768,
+        65534,
+        3,
+        0,
+        65535,
+        32768
+      ],
+      "signed_values": [
+        -32768,
+        -2,
+        3,
+        0,
+        -1,
+        -32768
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "factor",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32768,
+        65534,
+        3,
+        0,
+        65535,
+        32768
+      ],
+      "signed_values": [
+        -32768,
+        -2,
+        3,
+        0,
+        -1,
+        -32768
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "factor",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32768,
+        65534,
+        3,
+        0,
+        65535,
+        32768
+      ],
+      "signed_values": [
+        -32768,
+        -2,
+        3,
+        0,
+        -1,
+        -32768
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_one",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_one",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_one",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65534,
+        65535,
+        32762,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -2,
+        -1,
+        32762,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65534,
+        65535,
+        32762,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -2,
+        -1,
+        32762,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "mul_neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65534,
+        65535,
+        32762,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -2,
+        -1,
+        32762,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "four_factors",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        65530,
+        0,
+        65524,
+        65530,
+        65500,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "four_factors",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        65530,
+        0,
+        65524,
+        65530,
+        65500,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "four_factors",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        65530,
+        0,
+        65524,
+        65530,
+        65500,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_self",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_self",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_self",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32764,
+        32765,
+        65532,
+        32766,
+        32763,
+        65533
+      ],
+      "signed_values": [
+        32764,
+        32765,
+        -4,
+        32766,
+        32763,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32764,
+        32765,
+        65532,
+        32766,
+        32763,
+        65533
+      ],
+      "signed_values": [
+        32764,
+        32765,
+        -4,
+        32766,
+        32763,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "sub_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32764,
+        32765,
+        65532,
+        32766,
+        32763,
+        65533
+      ],
+      "signed_values": [
+        32764,
+        32765,
+        -4,
+        32766,
+        32763,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s16",
+      "name": "neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        32767,
+        32768,
+        65535,
+        32769,
+        32766,
+        0
+      ],
+      "signed_values": [
+        32767,
+        -32768,
+        -1,
+        -32767,
+        32766,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483649,
+        2147483650,
+        1,
+        2147483651,
+        2147483648,
+        2
+      ],
+      "signed_values": [
+        -2147483647,
+        -2147483646,
+        1,
+        -2147483645,
+        -2147483648,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483649,
+        2147483650,
+        1,
+        2147483651,
+        2147483648,
+        2
+      ],
+      "signed_values": [
+        -2147483647,
+        -2147483646,
+        1,
+        -2147483645,
+        -2147483648,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483649,
+        2147483650,
+        1,
+        2147483651,
+        2147483648,
+        2
+      ],
+      "signed_values": [
+        -2147483647,
+        -2147483646,
+        1,
+        -2147483645,
+        -2147483648,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_assoc",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483652,
+        2147483653,
+        4,
+        2147483654,
+        2147483651,
+        5
+      ],
+      "signed_values": [
+        -2147483644,
+        -2147483643,
+        4,
+        -2147483642,
+        -2147483645,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_assoc",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483652,
+        2147483653,
+        4,
+        2147483654,
+        2147483651,
+        5
+      ],
+      "signed_values": [
+        -2147483644,
+        -2147483643,
+        4,
+        -2147483642,
+        -2147483645,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "add_assoc",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483652,
+        2147483653,
+        4,
+        2147483654,
+        2147483651,
+        5
+      ],
+      "signed_values": [
+        -2147483644,
+        -2147483643,
+        4,
+        -2147483642,
+        -2147483645,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "factor",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483648,
+        4294967294,
+        3,
+        0,
+        4294967295,
+        2147483648
+      ],
+      "signed_values": [
+        -2147483648,
+        -2,
+        3,
+        0,
+        -1,
+        -2147483648
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "factor",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483648,
+        4294967294,
+        3,
+        0,
+        4294967295,
+        2147483648
+      ],
+      "signed_values": [
+        -2147483648,
+        -2,
+        3,
+        0,
+        -1,
+        -2147483648
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "factor",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483648,
+        4294967294,
+        3,
+        0,
+        4294967295,
+        2147483648
+      ],
+      "signed_values": [
+        -2147483648,
+        -2,
+        3,
+        0,
+        -1,
+        -2147483648
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_one",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_one",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_one",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967294,
+        4294967295,
+        2147483642,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -2,
+        -1,
+        2147483642,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967294,
+        4294967295,
+        2147483642,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -2,
+        -1,
+        2147483642,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "mul_neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967294,
+        4294967295,
+        2147483642,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -2,
+        -1,
+        2147483642,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "four_factors",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        4294967290,
+        0,
+        4294967284,
+        4294967290,
+        4294967260,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "four_factors",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        4294967290,
+        0,
+        4294967284,
+        4294967290,
+        4294967260,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "four_factors",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        4294967290,
+        0,
+        4294967284,
+        4294967290,
+        4294967260,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_self",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_self",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_self",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483644,
+        2147483645,
+        4294967292,
+        2147483646,
+        2147483643,
+        4294967293
+      ],
+      "signed_values": [
+        2147483644,
+        2147483645,
+        -4,
+        2147483646,
+        2147483643,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483644,
+        2147483645,
+        4294967292,
+        2147483646,
+        2147483643,
+        4294967293
+      ],
+      "signed_values": [
+        2147483644,
+        2147483645,
+        -4,
+        2147483646,
+        2147483643,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "sub_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483644,
+        2147483645,
+        4294967292,
+        2147483646,
+        2147483643,
+        4294967293
+      ],
+      "signed_values": [
+        2147483644,
+        2147483645,
+        -4,
+        2147483646,
+        2147483643,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s32",
+      "name": "neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        2147483647,
+        2147483648,
+        4294967295,
+        2147483649,
+        2147483646,
+        0
+      ],
+      "signed_values": [
+        2147483647,
+        -2147483648,
+        -1,
+        -2147483647,
+        2147483646,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775809,
+        9223372036854775810,
+        1,
+        9223372036854775811,
+        9223372036854775808,
+        2
+      ],
+      "signed_values": [
+        -9223372036854775807,
+        -9223372036854775806,
+        1,
+        -9223372036854775805,
+        -9223372036854775808,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775809,
+        9223372036854775810,
+        1,
+        9223372036854775811,
+        9223372036854775808,
+        2
+      ],
+      "signed_values": [
+        -9223372036854775807,
+        -9223372036854775806,
+        1,
+        -9223372036854775805,
+        -9223372036854775808,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775809,
+        9223372036854775810,
+        1,
+        9223372036854775811,
+        9223372036854775808,
+        2
+      ],
+      "signed_values": [
+        -9223372036854775807,
+        -9223372036854775806,
+        1,
+        -9223372036854775805,
+        -9223372036854775808,
+        2
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_assoc",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775812,
+        9223372036854775813,
+        4,
+        9223372036854775814,
+        9223372036854775811,
+        5
+      ],
+      "signed_values": [
+        -9223372036854775804,
+        -9223372036854775803,
+        4,
+        -9223372036854775802,
+        -9223372036854775805,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_assoc",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775812,
+        9223372036854775813,
+        4,
+        9223372036854775814,
+        9223372036854775811,
+        5
+      ],
+      "signed_values": [
+        -9223372036854775804,
+        -9223372036854775803,
+        4,
+        -9223372036854775802,
+        -9223372036854775805,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "add_assoc",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775812,
+        9223372036854775813,
+        4,
+        9223372036854775814,
+        9223372036854775811,
+        5
+      ],
+      "signed_values": [
+        -9223372036854775804,
+        -9223372036854775803,
+        4,
+        -9223372036854775802,
+        -9223372036854775805,
+        5
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "factor",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775808,
+        18446744073709551614,
+        3,
+        0,
+        18446744073709551615,
+        9223372036854775808
+      ],
+      "signed_values": [
+        -9223372036854775808,
+        -2,
+        3,
+        0,
+        -1,
+        -9223372036854775808
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "factor",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775808,
+        18446744073709551614,
+        3,
+        0,
+        18446744073709551615,
+        9223372036854775808
+      ],
+      "signed_values": [
+        -9223372036854775808,
+        -2,
+        3,
+        0,
+        -1,
+        -9223372036854775808
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "factor",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775808,
+        18446744073709551614,
+        3,
+        0,
+        18446744073709551615,
+        9223372036854775808
+      ],
+      "signed_values": [
+        -9223372036854775808,
+        -2,
+        3,
+        0,
+        -1,
+        -9223372036854775808
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_one",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_one",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_one",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551614,
+        18446744073709551615,
+        9223372036854775802,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -2,
+        -1,
+        9223372036854775802,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551614,
+        18446744073709551615,
+        9223372036854775802,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -2,
+        -1,
+        9223372036854775802,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "mul_neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551614,
+        18446744073709551615,
+        9223372036854775802,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -2,
+        -1,
+        9223372036854775802,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "four_factors",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        18446744073709551610,
+        0,
+        18446744073709551604,
+        18446744073709551610,
+        18446744073709551580,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "four_factors",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        18446744073709551610,
+        0,
+        18446744073709551604,
+        18446744073709551610,
+        18446744073709551580,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "four_factors",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        18446744073709551610,
+        0,
+        18446744073709551604,
+        18446744073709551610,
+        18446744073709551580,
+        0
+      ],
+      "signed_values": [
+        -6,
+        0,
+        -12,
+        -6,
+        -36,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_self",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_self",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_self",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "signed_values": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_zero",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_zero",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_zero",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_constant",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775804,
+        9223372036854775805,
+        18446744073709551612,
+        9223372036854775806,
+        9223372036854775803,
+        18446744073709551613
+      ],
+      "signed_values": [
+        9223372036854775804,
+        9223372036854775805,
+        -4,
+        9223372036854775806,
+        9223372036854775803,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_constant",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775804,
+        9223372036854775805,
+        18446744073709551612,
+        9223372036854775806,
+        9223372036854775803,
+        18446744073709551613
+      ],
+      "signed_values": [
+        9223372036854775804,
+        9223372036854775805,
+        -4,
+        9223372036854775806,
+        9223372036854775803,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "sub_constant",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775804,
+        9223372036854775805,
+        18446744073709551612,
+        9223372036854775806,
+        9223372036854775803,
+        18446744073709551613
+      ],
+      "signed_values": [
+        9223372036854775804,
+        9223372036854775805,
+        -4,
+        9223372036854775806,
+        9223372036854775803,
+        -3
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "neg_neg",
+      "mode": "control",
+      "changed": false,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "neg_neg",
+      "mode": "handler",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    },
+    {
+      "dtype": "s64",
+      "name": "neg_neg",
+      "mode": "pass",
+      "changed": true,
+      "checked": 6,
+      "values": [
+        9223372036854775807,
+        9223372036854775808,
+        18446744073709551615,
+        9223372036854775809,
+        9223372036854775806,
+        0
+      ],
+      "signed_values": [
+        9223372036854775807,
+        -9223372036854775808,
+        -1,
+        -9223372036854775807,
+        9223372036854775806,
+        0
+      ],
+      "rewritten_verified": true
+    }
+  ],
+  "files": [
+    {
+      "path": "reports/signed-word-replay-v2/BUILD",
+      "sha256": "daf319e6c2b1278d582f287c0ed9136e0e1af70ab27c8726862e10f4ad6cec3a"
+    },
+    {
+      "path": "reports/signed-word-replay-v2/build.log",
+      "sha256": "3fc0e6d872db9dc08fc32a8256bf02c912309e57f81679ae32994ef94d416583"
+    },
+    {
+      "path": "reports/signed-word-replay-v2/events.json",
+      "sha256": "bd14d3302629ae0ea3e6a5692675b3741b44283e6ace62f0ea451e4beafebd4c"
+    },
+    {
+      "path": "reports/signed-word-replay-v2/fixture.cc",
+      "sha256": "5932c231abcd1c35e20c422cd8d35c51b2b3a82cc04eec292dc9fca3d01f7318"
+    },
+    {
+      "path": "reports/signed-word-replay-v2/test.log",
+      "sha256": "d7d1dedc526dde2eec270baaf8b1c79eeafa93aaba08b5dafb8ad1051946dc72"
+    },
+    {
+      "path": "reports/signed-word-replay-v2/test.xml",
+      "sha256": "237d4e07c31d54eefca6ce59730008c245e2b7ebee94c8df8cc91a985e410b10"
+    }
+  ]
+}

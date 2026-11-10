@@ -1,0 +1,221 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:pred_constant_guard_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 20388 .
+[==========] Running 2 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 2 tests from PredConstantGuardReplay
+[ RUN      ] PredConstantGuardReplay.ActualHandlerRecognizesOnlySupportedViews
+PRED_GUARD_RESULT wrapper=literal expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %rhs = pred[2,2]{1,0} constant({ { 1, 1 }, { 1, 1 } })
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=broadcast expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[] constant(true)
+  %rhs = pred[2,2]{1,0} broadcast(%base), dimensions={}
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=copy expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[2,2]{1,0} constant({ { 1, 1 }, { 1, 1 } })
+  %rhs = pred[2,2]{1,0} copy(%base)
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=dynamic_slice expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[3,3]{1,0} constant({ { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } })
+  %index = s32[] parameter(1)
+  %rhs = pred[2,2]{1,0} dynamic-slice(%base, %index, %index), dynamic_slice_sizes={2,2}
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=reshape expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[1,4]{1,0} constant({ { 1, 1, 1, 1 } })
+  %rhs = pred[2,2]{1,0} reshape(%base)
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=reverse expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[2,2]{1,0} constant({ { 1, 1 }, { 1, 1 } })
+  %rhs = pred[2,2]{1,0} reverse(%base), dimensions={0,1}
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=slice expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[3,3]{1,0} constant({ { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 } })
+  %rhs = pred[2,2]{1,0} slice(%base), slice={[1:3], [0:2]}
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=transpose expected_changed=1 changed=1 before_after_equal=1 root_parameter=1
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[2,2]{1,0} constant({ { 1, 1 }, { 1, 1 } })
+  %rhs = pred[2,2]{1,0} transpose(%base), dimensions={1,0}
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  ROOT %lhs = pred[2,2]{1,0} parameter(0)
+  %index = s32[] parameter(1)
+}
+
+PRED_GUARD_RESULT wrapper=opaque_not expected_changed=0 changed=0 before_after_equal=1 root_parameter=0
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[2,2]{1,0} constant({ { 0, 0 }, { 0, 0 } })
+  %rhs = pred[2,2]{1,0} not(%base)
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %base = pred[2,2]{1,0} constant({ { 0, 0 }, { 0, 0 } })
+  %rhs = pred[2,2]{1,0} not(%base)
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+PRED_GUARD_RESULT wrapper=nonuniform expected_changed=0 changed=0 before_after_equal=1 root_parameter=0
+ORIGINAL_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %rhs = pred[2,2]{1,0} constant({ { 1, 0 }, { 1, 1 } })
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+REWRITTEN_HLO
+HloModule pred_guard, entry_computation_layout={(pred[2,2]{1,0}, s32[])->pred[2,2]{1,0}}
+
+ENTRY %main (lhs: pred[2,2], index: s32[]) -> pred[2,2] {
+  %index = s32[] parameter(1)
+  %lhs = pred[2,2]{1,0} parameter(0)
+  %rhs = pred[2,2]{1,0} constant({ { 1, 0 }, { 1, 1 } })
+  ROOT %result = pred[2,2]{1,0} and(%lhs, %rhs)
+}
+
+[       OK ] PredConstantGuardReplay.ActualHandlerRecognizesOnlySupportedViews (15 ms)
+[ RUN      ] PredConstantGuardReplay.LiteralStorageBoundaries
+PRED_GUARD_LITERAL empty_matches_both=1 mixed_matches_neither=1 ones_only_one=1 value_two_rejected=1
+[       OK ] PredConstantGuardReplay.LiteralStorageBoundaries (0 ms)
+[----------] 2 tests from PredConstantGuardReplay (15 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test suite ran. (15 ms total)
+[  PASSED  ] 2 tests.

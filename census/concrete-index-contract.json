@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_static_math_maps_not_cpp_extraction",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "profile": "static bounded shapes; mathematical signed attributes and arithmetic",
+  "operator_names": [
+    "Broadcast",
+    "Slice"
+  ],
+  "contracts": [
+    {
+      "id": "hlo-broadcast-shape",
+      "path": "sources/xla/xla/service/hlo_verifier.cc",
+      "line": 1741,
+      "end_line": 1762,
+      "source_body_sha256": "3778644052d1a637f8f3e285fe22410abde81edf08326942a824f7a35960f083"
+    },
+    {
+      "id": "hlo-broadcast-order",
+      "path": "sources/xla/xla/service/hlo_verifier.cc",
+      "line": 4734,
+      "end_line": 4753,
+      "source_body_sha256": "40fa3065038bad315a973989068e3df6014e38a2bb16001b31f18c9b42a85888"
+    },
+    {
+      "id": "static-slice-shape",
+      "path": "sources/xla/xla/service/shape_inference.cc",
+      "line": 3424,
+      "end_line": 3497,
+      "source_body_sha256": "ea8229c9f53cf5734b485af1ebc0d8a3cd364bca3a2daad286af1eccddbaf15a"
+    }
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.SliceShape.coordinate_bounds",
+    "TensorRewrite.Pilot.IndexMaps.broadcastIndex_val",
+    "TensorRewrite.Pilot.IndexMaps.sliceIndex_val",
+    "TensorRewrite.Pilot.IndexMaps.broadcastView_constant",
+    "TensorRewrite.Pilot.IndexMaps.sliceView_constant"
+  ],
+  "native_evidence": "reports/index-map-evaluator-v1/result.json",
+  "native_scope": "operator_evaluator_only_no_handler_or_pass",
+  "accepted_source_rewrites": 0,
+  "remaining": [
+    "C++ signed-int64 arithmetic/overflow and attribute decoding",
+    "literal storage/layout correspondence",
+    "dynamic/unbounded shapes and remaining wrapper maps",
+    "independent source and semantic review"
+  ]
+}

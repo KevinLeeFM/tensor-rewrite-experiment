@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "status": "native_operational_evidence_not_value_counterexample_or_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "source_cases": [
+    "HandleConcatenate/unary",
+    "HandleConcatenate/filter-all-empty",
+    "HandleConcatenate/filter-one-nonempty",
+    "HandleConcatenate/filter-many-nonempty",
+    "HandleConcatenate/adjacent-slices"
+  ],
+  "accepted_source_rewrites": 0,
+  "semantic_denominator": null,
+  "family_denominator": null,
+  "source_correspondence_reviewed": false,
+  "lean_certified": false,
+  "backend_execution_claimed": false,
+  "tensor_value_counterexample_claimed": false,
+  "native_evidence": "reports/concatenate-status-replay-v3/result.json",
+  "native_run_count": 120,
+  "false_changed_with_added_nodes_run_count": 15,
+  "value_change_run_count": 0,
+  "early_control_rejection": "predecessors_only",
+  "existing_instruction_api_relays_successors": true,
+  "fixedpoint_false_changed_stops_after_one_traversal": true,
+  "nontermination_claimed": false,
+  "additional_lean_lines": 0,
+  "contracts": [
+    {
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 2103,
+      "end_line": 2133,
+      "source_body_sha256": "8d89c078dbc32239e73d6bf8e55def48f9cc17e2e1d2070ae41f2cf8c253c381"
+    },
+    {
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 2158,
+      "end_line": 2242,
+      "source_body_sha256": "f849b55400f17077c6aa74ecd745725b639ccd91b262b68743782e1c957d4ae2"
+    },
+    {
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 861,
+      "end_line": 880,
+      "source_body_sha256": "c93df4a44cd15cc6d7acdcb82ef17e90d281d6e243701e64a2868f72e8d4aae2"
+    },
+    {
+      "path": "sources/xla/xla/hlo/ir/dfs_hlo_visitor_with_default.h",
+      "line": 380,
+      "end_line": 413,
+      "source_body_sha256": "a660f69bacd04e67350f76fd04921bc70070d79f2a384659d9dfdd164729929b"
+    },
+    {
+      "path": "sources/xla/xla/hlo/ir/hlo_computation.cc",
+      "line": 2091,
+      "end_line": 2115,
+      "source_body_sha256": "caabe2605672682fd51aaa7c53f27d5dff46ce1f963863aee1bf61532f8e1ebf"
+    },
+    {
+      "path": "sources/xla/xla/hlo/ir/hlo_computation.cc",
+      "line": 2176,
+      "end_line": 2189,
+      "source_body_sha256": "05827d10ad3e613076f27380677857e2ef7ba9e6baba4372e63c5fa3c58f8f8b"
+    },
+    {
+      "path": "sources/xla/xla/hlo/ir/hlo_computation.cc",
+      "line": 2690,
+      "end_line": 2703,
+      "source_body_sha256": "6fb9bbf49513a6f48b03fce5ac9a8004b75cc55a006606c3f8c9411d455c7458"
+    }
+  ],
+  "failed_run_archives": [
+    "reports/concatenate-status-replay-v1",
+    "reports/concatenate-status-replay-v2"
+  ],
+  "failed_run_diagnosis": {
+    "v1": "fixture incorrectly treated successor as early-rejected predecessor, then reused replaced pointer; archived failure is not a pass crash claim",
+    "v2": "fixture omitted recursive removal of unused original slices and successor-triggered traversal of current root after unreachable roots"
+  },
+  "scope": "Original root/control edges and evaluated values remain for predecessor skips; fresh dead nodes are observable in graph inventory despite changed=false. This does not by itself refute tensor semantics or an independently permitted allocation frame.",
+  "active_allocations": {
+    "filter_many": 1,
+    "adjacent_layout_insensitive": 2
+  },
+  "empty_unary_controls": "no allocation on predecessor skips; filtering precedes layout-sensitive early return",
+  "successor_adjacent_traversal": "unreachable successor marker visits original root; replacement relays marker edge; final current-root traversal simplifies newly created full slice and unary concatenate"
+}

@@ -1,0 +1,280 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:replacement_status_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 70113 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ReplacementStatusReplay
+[ RUN      ] ReplacementStatusReplay.DefaultRelaySkipRetainsNewNodes
+REPLACEMENT_STATUS_RESULT profile=plain mode=control step=1 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=plain mode=control step=2 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=plain mode=control step=3 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data)
+}
+
+REPLACEMENT_STATUS_RESULT profile=plain mode=handler step=1 changed=1 delta=0 cumulative=0 root_retained=0 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=plain mode=handler step=2 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=plain mode=handler step=3 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %data = s32[] parameter(0)
+  %constant = s32[] constant(2)
+  ROOT %result = s32[] add(%data, %constant)
+}
+
+REPLACEMENT_STATUS_RESULT profile=plain mode=pass step=1 changed=1 delta=0 cumulative=0 root_retained=0 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=plain mode=pass step=2 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=plain mode=pass step=3 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %data = s32[] parameter(0)
+  %constant = s32[] constant(2)
+  ROOT %result = s32[] add(%data, %constant)
+}
+
+REPLACEMENT_STATUS_RESULT profile=plain mode=fixedpoint step=1 changed=1 delta=0 cumulative=0 root_retained=0 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %data = s32[] parameter(0)
+  %constant = s32[] constant(2)
+  ROOT %result = s32[] add(%data, %constant)
+}
+
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=control step=1 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=control step=2 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=control step=3 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data), control-predecessors={%marker}
+}
+
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=handler step=1 changed=1 delta=1 cumulative=1 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=handler step=2 changed=1 delta=1 cumulative=2 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=handler step=3 changed=1 delta=1 cumulative=3 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data), control-predecessors={%marker}
+  %add = s32[] add(%data, %constant)
+  %add.1 = s32[] add(%data, %constant)
+  %add.2 = s32[] add(%data, %constant)
+}
+
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=pass step=1 changed=1 delta=1 cumulative=1 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=pass step=2 changed=1 delta=1 cumulative=2 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=pass step=3 changed=1 delta=1 cumulative=3 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data), control-predecessors={%marker}
+  %add = s32[] add(%data, %constant)
+  %add.1 = s32[] add(%data, %constant)
+  %add.2 = s32[] add(%data, %constant)
+}
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+E0000 00:00:1794323399.333733 1441073 algebraic_simplifier.cc:11335] Algebraic simplifier is likely stuck in a circular simplification loop and ran for 50 runs on computation main
+REPLACEMENT_STATUS_RESULT profile=predecessor mode=fixedpoint step=1 changed=1 delta=50 cumulative=50 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %marker = s32[] constant(1)
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data), control-predecessors={%marker}
+  %add = s32[] add(%data, %constant)
+  %add.1 = s32[] add(%data, %constant)
+  %add.2 = s32[] add(%data, %constant)
+  %add.3 = s32[] add(%data, %constant)
+  %add.4 = s32[] add(%data, %constant)
+  %add.5 = s32[] add(%data, %constant)
+  %add.6 = s32[] add(%data, %constant)
+  %add.7 = s32[] add(%data, %constant)
+  %add.8 = s32[] add(%data, %constant)
+  %add.9 = s32[] add(%data, %constant)
+  %add.10 = s32[] add(%data, %constant)
+  %add.11 = s32[] add(%data, %constant)
+  %add.12 = s32[] add(%data, %constant)
+  %add.13 = s32[] add(%data, %constant)
+  %add.14 = s32[] add(%data, %constant)
+  %add.15 = s32[] add(%data, %constant)
+  %add.16 = s32[] add(%data, %constant)
+  %add.17 = s32[] add(%data, %constant)
+  %add.18 = s32[] add(%data, %constant)
+  %add.19 = s32[] add(%data, %constant)
+  %add.20 = s32[] add(%data, %constant)
+  %add.21 = s32[] add(%data, %constant)
+  %add.22 = s32[] add(%data, %constant)
+  %add.23 = s32[] add(%data, %constant)
+  %add.24 = s32[] add(%data, %constant)
+  %add.25 = s32[] add(%data, %constant)
+  %add.26 = s32[] add(%data, %constant)
+  %add.27 = s32[] add(%data, %constant)
+  %add.28 = s32[] add(%data, %constant)
+  %add.29 = s32[] add(%data, %constant)
+  %add.30 = s32[] add(%data, %constant)
+  %add.31 = s32[] add(%data, %constant)
+  %add.32 = s32[] add(%data, %constant)
+  %add.33 = s32[] add(%data, %constant)
+  %add.34 = s32[] add(%data, %constant)
+  %add.35 = s32[] add(%data, %constant)
+  %add.36 = s32[] add(%data, %constant)
+  %add.37 = s32[] add(%data, %constant)
+  %add.38 = s32[] add(%data, %constant)
+  %add.39 = s32[] add(%data, %constant)
+  %add.40 = s32[] add(%data, %constant)
+  %add.41 = s32[] add(%data, %constant)
+  %add.42 = s32[] add(%data, %constant)
+  %add.43 = s32[] add(%data, %constant)
+  %add.44 = s32[] add(%data, %constant)
+  %add.45 = s32[] add(%data, %constant)
+  %add.46 = s32[] add(%data, %constant)
+  %add.47 = s32[] add(%data, %constant)
+  %add.48 = s32[] add(%data, %constant)
+  %add.49 = s32[] add(%data, %constant)
+}
+
+REPLACEMENT_STATUS_RESULT profile=successor mode=control step=1 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=successor mode=control step=2 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=successor mode=control step=3 changed=0 delta=0 cumulative=0 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data)
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+REPLACEMENT_STATUS_RESULT profile=successor mode=handler step=1 changed=1 delta=1 cumulative=1 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=successor mode=handler step=2 changed=1 delta=1 cumulative=2 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=successor mode=handler step=3 changed=1 delta=1 cumulative=3 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data)
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %add = s32[] add(%data, %constant)
+  %add.1 = s32[] add(%data, %constant)
+  %add.2 = s32[] add(%data, %constant)
+}
+
+REPLACEMENT_STATUS_RESULT profile=successor mode=pass step=1 changed=1 delta=1 cumulative=1 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=successor mode=pass step=2 changed=1 delta=1 cumulative=2 root_retained=1 selected=7 verified=1 cap=50
+REPLACEMENT_STATUS_RESULT profile=successor mode=pass step=3 changed=1 delta=1 cumulative=3 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data)
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %add = s32[] add(%data, %constant)
+  %add.1 = s32[] add(%data, %constant)
+  %add.2 = s32[] add(%data, %constant)
+}
+
+E0000 00:00:1794323399.336456 1441073 algebraic_simplifier.cc:11335] Algebraic simplifier is likely stuck in a circular simplification loop and ran for 50 runs on computation main
+REPLACEMENT_STATUS_RESULT profile=successor mode=fixedpoint step=1 changed=1 delta=50 cumulative=50 root_retained=1 selected=7 verified=1 cap=50
+FINAL_HLO
+HloModule replacement_status, entry_computation_layout={(s32[])->s32[]}
+
+ENTRY %main (data: s32[]) -> s32[] {
+  %constant = s32[] constant(2)
+  %data = s32[] parameter(0)
+  ROOT %result = s32[] add(%constant, %data)
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %add = s32[] add(%data, %constant)
+  %add.1 = s32[] add(%data, %constant)
+  %add.2 = s32[] add(%data, %constant)
+  %add.3 = s32[] add(%data, %constant)
+  %add.4 = s32[] add(%data, %constant)
+  %add.5 = s32[] add(%data, %constant)
+  %add.6 = s32[] add(%data, %constant)
+  %add.7 = s32[] add(%data, %constant)
+  %add.8 = s32[] add(%data, %constant)
+  %add.9 = s32[] add(%data, %constant)
+  %add.10 = s32[] add(%data, %constant)
+  %add.11 = s32[] add(%data, %constant)
+  %add.12 = s32[] add(%data, %constant)
+  %add.13 = s32[] add(%data, %constant)
+  %add.14 = s32[] add(%data, %constant)
+  %add.15 = s32[] add(%data, %constant)
+  %add.16 = s32[] add(%data, %constant)
+  %add.17 = s32[] add(%data, %constant)
+  %add.18 = s32[] add(%data, %constant)
+  %add.19 = s32[] add(%data, %constant)
+  %add.20 = s32[] add(%data, %constant)
+  %add.21 = s32[] add(%data, %constant)
+  %add.22 = s32[] add(%data, %constant)
+  %add.23 = s32[] add(%data, %constant)
+  %add.24 = s32[] add(%data, %constant)
+  %add.25 = s32[] add(%data, %constant)
+  %add.26 = s32[] add(%data, %constant)
+  %add.27 = s32[] add(%data, %constant)
+  %add.28 = s32[] add(%data, %constant)
+  %add.29 = s32[] add(%data, %constant)
+  %add.30 = s32[] add(%data, %constant)
+  %add.31 = s32[] add(%data, %constant)
+  %add.32 = s32[] add(%data, %constant)
+  %add.33 = s32[] add(%data, %constant)
+  %add.34 = s32[] add(%data, %constant)
+  %add.35 = s32[] add(%data, %constant)
+  %add.36 = s32[] add(%data, %constant)
+  %add.37 = s32[] add(%data, %constant)
+  %add.38 = s32[] add(%data, %constant)
+  %add.39 = s32[] add(%data, %constant)
+  %add.40 = s32[] add(%data, %constant)
+  %add.41 = s32[] add(%data, %constant)
+  %add.42 = s32[] add(%data, %constant)
+  %add.43 = s32[] add(%data, %constant)
+  %add.44 = s32[] add(%data, %constant)
+  %add.45 = s32[] add(%data, %constant)
+  %add.46 = s32[] add(%data, %constant)
+  %add.47 = s32[] add(%data, %constant)
+  %add.48 = s32[] add(%data, %constant)
+  %add.49 = s32[] add(%data, %constant)
+}
+
+[       OK ] ReplacementStatusReplay.DefaultRelaySkipRetainsNewNodes (10 ms)
+[----------] 1 test from ReplacementStatusReplay (10 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (10 ms total)
+[  PASSED  ] 1 test.

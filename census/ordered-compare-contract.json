@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_necessary_ordered_nan_profile_not_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "source_correspondence_reviewed": false,
+  "backend_observation_contract_adopted": false,
+  "profile": "necessary ordinary ordered binary32 NaN comparison condition only; no full arithmetic, producer or backend model",
+  "source_cases": [
+    "HandleCompare/nonnegative-ge",
+    "HandleCompare/nonnegative-le"
+  ],
+  "related_control_cases": [
+    "HandleCompare/nonnegative-lt",
+    "HandleCompare/nonnegative-gt"
+  ],
+  "certificates": [
+    "TensorRewrite.Pilot.OrderedCompareProfile.false_consistent",
+    "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan",
+    "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan",
+    "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan",
+    "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes",
+    "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes"
+  ],
+  "native_evidence": "reports/compare-nonnegative-replay-v1/result.json",
+  "native_run_count": 60,
+  "boolean_change_run_count": 16,
+  "source_path_records": "census/ordered-source-paths.json",
+  "source_obligations": [
+    "typed IsNonNegative producer/recursive/fallback interpretation",
+    "ordinary ordered comparison versus total-order comparison/type and NaN permissions",
+    "source guard and graph/API/metadata/frame correspondence",
+    "independent source/observation review"
+  ],
+  "contracts": [
+    {
+      "id": "nonnegative-analysis",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 540,
+      "end_line": 607,
+      "source_body_sha256": "99e72a262a837d1137f3b801afedc167bf3a93b74754e1be05f4f410ef17e4f4"
+    },
+    {
+      "id": "compare-guards",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 5907,
+      "end_line": 5983,
+      "source_body_sha256": "aa321e79a981d898ea26405ba92f7b6538e7e7eec32ae508d2a770b7304f0108"
+    },
+    {
+      "id": "comparison-default-order",
+      "path": "sources/xla/xla/comparison_util.h",
+      "line": 90,
+      "end_line": 99,
+      "source_body_sha256": "c1c12fc05c3631c1037473a72e2805efec982f01ce4ac4dd639d7c352c383888"
+    },
+    {
+      "id": "ordered-comparator-dispatch",
+      "path": "sources/xla/xla/comparison_util.h",
+      "line": 155,
+      "end_line": 217,
+      "source_body_sha256": "2c497977b585e95ca4a265ba7e5364b20ac9f21684ba18b2dfd7a4ee26804e5b"
+    },
+    {
+      "id": "evaluator-compare-order",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 1658,
+      "end_line": 1686,
+      "source_body_sha256": "4984c0dadbd63e088b25a569ad7092f196fc9c83dd4d5e456f662db8f91ccc66"
+    }
+  ],
+  "source_order_policy": "floats default to partial order; explicit total/weak order remain separate; evaluator uses instruction comparison_order"
+}

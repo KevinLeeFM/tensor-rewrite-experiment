@@ -1,0 +1,1007 @@
+{
+  "schema": 1,
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "status": "partial_source_extraction",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "HandleBitcast",
+    "HandleBitcastConvert",
+    "HandleConstant",
+    "HandleCopy",
+    "HandleOptimizationBarrier",
+    "SwapCopyBitcastCopy",
+    "TrySimplifyTautologicalBitcastConvert"
+  ],
+  "cases": [
+    {
+      "id": "HandleBitcast/unary-sandwich",
+      "handler": "HandleBitcast",
+      "line": 1548,
+      "end_line": 1639,
+      "lhs": "Bitcast(Unary(Bitcast(x)))",
+      "rhs": "Bitcast(cloned Unary(x))",
+      "guard": "initial bitcast has no control dependencies; Unary elementwise, not Fusion, one operand and one user; same element types through all four endpoints; inner bitcast and x have no tiles or no layout",
+      "source_body_sha256": "a9a3e32c677c03996b280fa9ae87b6ba127e923ae6821ab60493839419bbe9a1",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "CloneWithNewOperands at x shape",
+        "physical indexing versus logical elementwise behavior",
+        "layout and byte-size legality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L01585-C012",
+      "replacement_line": 1585,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleBitcast/compose-stage",
+      "handler": "HandleBitcast",
+      "line": 1548,
+      "end_line": 1639,
+      "lhs": "Bitcast(Bitcast(x))",
+      "rhs": "Bitcast(x)",
+      "guard": "initial bitcast has no control dependencies; nested Bitcast matcher after recursive simplification of inner operand",
+      "source_body_sha256": "a9a3e32c677c03996b280fa9ae87b6ba127e923ae6821ab60493839419bbe9a1",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "rebind local bitcast to new node; continue type check, compatible elimination and later helper calls",
+      "dependencies": [
+        "recursive HandleBitcast may already change inner graph",
+        "new_bitcast_ptr survives replacement",
+        "control and metadata propagation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L01599-C009",
+      "replacement_line": 1599,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        ReplaceWithNewInstruction(bitcast, std::move(new_bitcast)));"
+    },
+    {
+      "id": "HandleBitcast/compatible-stage",
+      "handler": "HandleBitcast",
+      "line": 1548,
+      "end_line": 1639,
+      "lhs": "current Bitcast(x)",
+      "rhs": "current operand x",
+      "guard": "initial bitcast has no control dependencies; current output and operand same element type; ReplaceInstructionIfCompatible succeeds",
+      "source_body_sha256": "a9a3e32c677c03996b280fa9ae87b6ba127e923ae6821ab60493839419bbe9a1",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "rebind bitcast to its operand; continue chain removal and possible broadcast folding",
+      "dependencies": [
+        "SameShape depends on layout sensitivity",
+        "control predecessors and sharding preservation",
+        "helper may receive an opcode other than Bitcast after rebinding"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L01610-C007",
+      "replacement_line": 1610,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "  if (ReplaceInstructionIfCompatible(bitcast, new_bitcast)) {"
+    },
+    {
+      "id": "HandleBitcast/recursive-inner",
+      "handler": "HandleBitcast",
+      "line": 1548,
+      "end_line": 1639,
+      "lhs": "Bitcast(Bitcast(x))",
+      "rhs": "inner handler-dependent graph",
+      "guard": "initial bitcast has no control dependencies; current operand opcode Bitcast",
+      "source_body_sha256": "a9a3e32c677c03996b280fa9ae87b6ba127e923ae6821ab60493839419bbe9a1",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "after recursive success, re-match outer node for composition; success need not mean a rewrite",
+      "dependencies": [
+        "recursive call status and reachability",
+        "intermediate graph changes and current operand aliases"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "delegation_target": "HandleBitcast",
+      "delegation_line": 1592
+    },
+    {
+      "id": "HandleBitcast/chain-delegation",
+      "handler": "HandleBitcast",
+      "line": 1548,
+      "end_line": 1639,
+      "lhs": "current rebound node",
+      "rhs": "helper-dependent graph",
+      "guard": "initial bitcast has no control dependencies; same-type check passed; helper returns true",
+      "source_body_sha256": "a9a3e32c677c03996b280fa9ae87b6ba127e923ae6821ab60493839419bbe9a1",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "current node may differ from original visited node",
+        "chain helper caller-specific premises"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "delegation_target": "TryRemovingBitcastOrReshapeTransposeChain",
+      "delegation_line": 1615
+    },
+    {
+      "id": "HandleBitcast/broadcast-delegation",
+      "handler": "HandleBitcast",
+      "line": 1548,
+      "end_line": 1639,
+      "lhs": "Bitcast(Broadcast(x))",
+      "rhs": "Broadcast(x,remapped dims)",
+      "guard": "initial bitcast has no control dependencies; current node still Bitcast with Broadcast operand; output/broadcast tile lists equal; DeduceTransposeDimensionsForBitcast returns permutation",
+      "source_body_sha256": "a9a3e32c677c03996b280fa9ae87b6ba127e923ae6821ab60493839419bbe9a1",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "ShapeUtil::DeduceTransposeDimensionsForBitcast",
+        "supplied permutation must implement this physical bitcast",
+        "broadcast helper layout restrictions"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "delegation_target": "SimplifyTransposeOfBroadcast",
+      "delegation_line": 1633
+    },
+    {
+      "id": "HandleBitcastConvert/compose",
+      "handler": "HandleBitcastConvert",
+      "line": 1899,
+      "end_line": 1954,
+      "lhs": "BitcastConvert(BitcastConvert(x))",
+      "rhs": "BitcastConvert(x,final shape)",
+      "guard": "inner opcode BitcastConvert",
+      "source_body_sha256": "c4418abd0c632964642a38df60f96160285d61ffa0703b837b1b9b612d1ef8ec",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "bit packing/unpacking, endianness and rank-changing shape inference"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L01905-C012",
+      "replacement_line": 1905,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleBitcastConvert/concat-delegation",
+      "handler": "HandleBitcastConvert",
+      "line": 1899,
+      "end_line": 1954,
+      "lhs": "BitcastConvert(Concat(...))",
+      "rhs": "helper-dependent Concat",
+      "guard": "earlier composition did not return; helper returns true",
+      "source_body_sha256": "c4418abd0c632964642a38df60f96160285d61ffa0703b837b1b9b612d1ef8ec",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "input/output bit widths and original concat dimension"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "delegation_target": "TrySimplifyTautologicalBitcastConvert",
+      "delegation_line": 1911
+    },
+    {
+      "id": "HandleBitcastConvert/same-physical-shape",
+      "handler": "HandleBitcastConvert",
+      "line": 1899,
+      "end_line": 1954,
+      "lhs": "BitcastConvert(x)",
+      "rhs": "Bitcast(x)",
+      "guard": "layout sensitive; rewrite_no_op_bitcast_convert_to_bitcast; ShapeUtil::EqualIgnoringElementType(output,x); legal source implies same storage bit width",
+      "source_body_sha256": "c4418abd0c632964642a38df60f96160285d61ffa0703b837b1b9b612d1ef8ec",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "shape legality is a premise to justify the width inference",
+        "bit representations and memory layout"
+      ],
+      "helper_contract_ids": [
+        "ReplaceWithBitcast"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L01923-C007",
+      "replacement_line": 1923,
+      "replacement_call": "ReplaceWithBitcast",
+      "replacement_source": "      ReplaceWithBitcast(bitcast);"
+    },
+    {
+      "id": "HandleBitcastConvert/last-contiguous-axis",
+      "handler": "HandleBitcastConvert",
+      "line": 1899,
+      "end_line": 1954,
+      "lhs": "BitcastConvert(x)",
+      "rhs": "Bitcast(x)",
+      "guard": "layout sensitive; rewrite_no_op_bitcast_convert_to_bitcast; shape with more dimensions has LastDimIsMinorMost; absent/zero element_size_in_bits requires StorageBitWidth divisible by8, otherwise exact element-size/width equality",
+      "source_body_sha256": "c4418abd0c632964642a38df60f96160285d61ffa0703b837b1b9b612d1ef8ec",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "StorageBitWidth versus logical bit width",
+        "extra-axis packing, rank and endian semantics"
+      ],
+      "helper_contract_ids": [
+        "ReplaceWithBitcast"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L01946-C007",
+      "replacement_line": 1946,
+      "replacement_call": "ReplaceWithBitcast",
+      "replacement_source": "      ReplaceWithBitcast(bitcast);"
+    },
+    {
+      "id": "HandleBitcastConvert/compatible",
+      "handler": "HandleBitcastConvert",
+      "line": 1899,
+      "end_line": 1954,
+      "lhs": "BitcastConvert(x)",
+      "rhs": "x",
+      "guard": "compatibility replacement succeeds; return value otherwise ignored",
+      "source_body_sha256": "c4418abd0c632964642a38df60f96160285d61ffa0703b837b1b9b612d1ef8ec",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "SameShape",
+        "control and representation equality"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L01952-C003",
+      "replacement_line": 1952,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "  ReplaceInstructionIfCompatible(bitcast, bitcast->mutable_operand(0));"
+    },
+    {
+      "id": "HandleCopy/swap-delegation",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Bitcast*(Copy(x)))",
+      "rhs": "helper-dependent reordered copies/bitcast",
+      "guard": "first handler path; helper true",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "host copies and tiling predicates"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "delegation_target": "SwapCopyBitcastCopy",
+      "delegation_line": 1957
+    },
+    {
+      "id": "HandleCopy/compose-identity",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Copy(x))",
+      "rhs": "x",
+      "guard": "nested Copy matcher; ShapeUtil::Equal(x shape,outer shape) is True",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "allocation/memory-space behavior",
+        "copy side effects and graph metadata"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L01964-C014",
+      "replacement_line": 1964,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(copy, op);"
+    },
+    {
+      "id": "HandleCopy/compose-copy",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Copy(x))",
+      "rhs": "Copy(x,outer shape)",
+      "guard": "nested Copy matcher; ShapeUtil::Equal(x shape,outer shape) is False",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "allocation/memory-space behavior",
+        "copy side effects and graph metadata"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L01966-C012",
+      "replacement_line": 1966,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleCopy/compatible",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(x)",
+      "rhs": "x",
+      "guard": "no sharding OR copy is not module entry root; compatibility replacement succeeds",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "entry-root sharding preservation",
+        "SameShape",
+        "control dependency contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L01972-C007",
+      "replacement_line": 1972,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "      ReplaceInstructionIfCompatible(copy, copy->mutable_operand(0))) {"
+    },
+    {
+      "id": "HandleCopy/chain-bitcast",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(copy/reshape chain)",
+      "rhs": "Bitcast(selected ancestor)",
+      "guard": "not(layout sensitive AND both endpoint layouts present AND memory spaces differ); BitcastingOperandOfReshapeOrCopyChain returns nonnull",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "layout-sensitive helper walk",
+        "memory-space preservation"
+      ],
+      "helper_contract_ids": [
+        "BitcastingOperandOfReshapeOrCopyChain",
+        "ReplaceWithBitcast"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L01986-C007",
+      "replacement_line": 1986,
+      "replacement_call": "ReplaceWithBitcast",
+      "replacement_source": "      ReplaceWithBitcast(copy, bitcast_operand);"
+    },
+    {
+      "id": "HandleCopy/reshape-clone",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Reshape(x))",
+      "rhs": "Reshape(x,copy shape)",
+      "guard": "Reshape one user; ShapeUtil::ReshapeIsBitcast(reshape shape,copy shape); layout insensitive OR neither endpoint has match-dimension tile OR tile lists equal",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "clone keeps Reshape attributes",
+        "logical versus hardware bitcast predicates",
+        "tiling/padding"
+      ],
+      "helper_contract_ids": [
+        "HasMatchDimensionTile"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L02000-C012",
+      "replacement_line": 2000,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleCopy/reshape-reorder-new-copy-reshape",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Reshape(optional Copy(x)))",
+      "rhs": "Reshape(Copy(reshape_operand,aligned shape),output shape)",
+      "guard": "layout sensitive; Reshape one user; optional preceding Copy one user; AlignLayouts(output,reshape_operand) succeeds; should_rewrite = (!old_hardware AND new_hardware) OR (copy_before present AND (!old_hardware OR new_hardware)); after allocation estimate <= 10*before/9; new_reshape_is_hardware_bitcast=False; can_remove_copy=False where removal requires copy_before and equality ignoring memory space between aligned shape and copy_before input",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "ShapeUtil::AlignLayouts",
+        "UpdateLayout",
+        "virtual ReshapeIsBitcast",
+        "ArraySize products and integer overflow",
+        "memory space ignored by one equality, not universally"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L02094-C018",
+      "replacement_line": 2094,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "          return ReplaceInstruction(copy, new_reshape);"
+    },
+    {
+      "id": "HandleCopy/reshape-reorder-new-copy-bitcast",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Reshape(optional Copy(x)))",
+      "rhs": "Bitcast(Copy(reshape_operand,aligned shape),output shape)",
+      "guard": "layout sensitive; Reshape one user; optional preceding Copy one user; AlignLayouts(output,reshape_operand) succeeds; should_rewrite = (!old_hardware AND new_hardware) OR (copy_before present AND (!old_hardware OR new_hardware)); after allocation estimate <= 10*before/9; new_reshape_is_hardware_bitcast=True; can_remove_copy=False where removal requires copy_before and equality ignoring memory space between aligned shape and copy_before input",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "ShapeUtil::AlignLayouts",
+        "UpdateLayout",
+        "virtual ReshapeIsBitcast",
+        "ArraySize products and integer overflow",
+        "memory space ignored by one equality, not universally"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L02094-C018",
+      "replacement_line": 2094,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "          return ReplaceInstruction(copy, new_reshape);"
+    },
+    {
+      "id": "HandleCopy/reshape-reorder-omit-copy-reshape",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Reshape(optional Copy(x)))",
+      "rhs": "Reshape(x,output shape)",
+      "guard": "layout sensitive; Reshape one user; optional preceding Copy one user; AlignLayouts(output,reshape_operand) succeeds; should_rewrite = (!old_hardware AND new_hardware) OR (copy_before present AND (!old_hardware OR new_hardware)); after allocation estimate <= 10*before/9; new_reshape_is_hardware_bitcast=False; can_remove_copy=True where removal requires copy_before and equality ignoring memory space between aligned shape and copy_before input",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "ShapeUtil::AlignLayouts",
+        "UpdateLayout",
+        "virtual ReshapeIsBitcast",
+        "ArraySize products and integer overflow",
+        "memory space ignored by one equality, not universally"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L02094-C018",
+      "replacement_line": 2094,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "          return ReplaceInstruction(copy, new_reshape);"
+    },
+    {
+      "id": "HandleCopy/reshape-reorder-omit-copy-bitcast",
+      "handler": "HandleCopy",
+      "line": 1956,
+      "end_line": 2101,
+      "lhs": "Copy(Reshape(optional Copy(x)))",
+      "rhs": "Bitcast(x,output shape)",
+      "guard": "layout sensitive; Reshape one user; optional preceding Copy one user; AlignLayouts(output,reshape_operand) succeeds; should_rewrite = (!old_hardware AND new_hardware) OR (copy_before present AND (!old_hardware OR new_hardware)); after allocation estimate <= 10*before/9; new_reshape_is_hardware_bitcast=True; can_remove_copy=True where removal requires copy_before and equality ignoring memory space between aligned shape and copy_before input",
+      "source_body_sha256": "6bf6ab605c694c5635874161edc6a354e8a7489da2e61f3ddfbb44deec0d4270",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "ShapeUtil::AlignLayouts",
+        "UpdateLayout",
+        "virtual ReshapeIsBitcast",
+        "ArraySize products and integer overflow",
+        "memory space ignored by one equality, not universally"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L02094-C018",
+      "replacement_line": 2094,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "          return ReplaceInstruction(copy, new_reshape);"
+    },
+    {
+      "id": "SwapCopyBitcastCopy/move-bitcast",
+      "handler": "SwapCopyBitcastCopy",
+      "line": 1825,
+      "end_line": 1897,
+      "lhs": "Copy(Bitcast*(Copy(x)))",
+      "rhs": "Copy(Bitcast(x,new shape),output shape)",
+      "guard": "outer and inner Copy not synchronous host transfers; intervening nodes Bitcast; ComputeBitcastDimMap succeeds; initial ValidateTilingOfBitcast succeeds; tiling test against x succeeds; corresponding ReshapeLayoutDimensions returns shape and IsValidLayout true",
+      "source_body_sha256": "327bd33e5473888202ee0a8c75735b27a2002cace4038f03688d5efb87c1be66",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "host_offload_utils contract",
+        "CHECK_OK error behavior",
+        "virtual layout legality",
+        "intermediate cloned node attributes"
+      ],
+      "helper_contract_ids": [
+        "ComputeBitcastDimMap",
+        "InvertBitcastDimMap",
+        "ReshapeLayoutDimensions",
+        "ValidateTilingOfBitcast"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L01877-C014",
+      "replacement_line": 1877,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    CHECK_OK(ReplaceWithNewInstruction(root_copy, std::move(repl)));"
+    },
+    {
+      "id": "SwapCopyBitcastCopy/move-copy",
+      "handler": "SwapCopyBitcastCopy",
+      "line": 1825,
+      "end_line": 1897,
+      "lhs": "Copy(Bitcast*(Copy(x)))",
+      "rhs": "Bitcast(Copy(x,new shape),output shape)",
+      "guard": "outer and inner Copy not synchronous host transfers; intervening nodes Bitcast; ComputeBitcastDimMap succeeds; initial ValidateTilingOfBitcast succeeds; tiling test against x fails; tiling test against outer Copy succeeds; corresponding ReshapeLayoutDimensions returns shape and IsValidLayout true",
+      "source_body_sha256": "327bd33e5473888202ee0a8c75735b27a2002cace4038f03688d5efb87c1be66",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "host_offload_utils contract",
+        "CHECK_OK error behavior",
+        "virtual layout legality",
+        "intermediate cloned node attributes"
+      ],
+      "helper_contract_ids": [
+        "ComputeBitcastDimMap",
+        "InvertBitcastDimMap",
+        "ReshapeLayoutDimensions",
+        "ValidateTilingOfBitcast"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L01893-C014",
+      "replacement_line": 1893,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    CHECK_OK(ReplaceWithNewInstruction(root_copy, std::move(repl)));"
+    },
+    {
+      "id": "TrySimplifyTautologicalBitcastConvert/concat",
+      "handler": "TrySimplifyTautologicalBitcastConvert",
+      "line": 2286,
+      "end_line": 2312,
+      "lhs": "BitcastConvert(Concat(BitcastConvert(xs)))",
+      "rhs": "Concat(xs,original axis)",
+      "guard": "outer BitcastConvert; Concat operand; all concat inputs BitcastConvert whose source type equals outer output type; MakeConcatHlo succeeds",
+      "source_body_sha256": "32b09438ff6c20869a61c59879c299cc5581f629b443974732a01af67cf50ae4",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "bitwidth-induced extra axes",
+        "concat dimension interpretation before/after packing",
+        "shape and byte correspondence"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02309-C024",
+      "replacement_line": 2309,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(bitcast, new_concat));"
+    },
+    {
+      "id": "HandleConstant/tuple",
+      "handler": "HandleConstant",
+      "line": 2407,
+      "end_line": 2452,
+      "lhs": "Constant(literal)",
+      "rhs": "recursive Tuple of leaf constants",
+      "guard": "output shape Tuple",
+      "source_body_sha256": "f398d5102855e85fdfb861192555b2eed05730a67041a8ed96da140d91801605",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "tuple/token leaves",
+        "literal slicing and recursive termination"
+      ],
+      "helper_contract_ids": [
+        "BuildTupleConstant"
+      ],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02412-C012",
+      "replacement_line": 2412,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction("
+    },
+    {
+      "id": "HandleConstant/uniform",
+      "handler": "HandleConstant",
+      "line": 2407,
+      "end_line": 2452,
+      "lhs": "Constant(literal)",
+      "rhs": "Broadcast(first scalar literal,original shape)",
+      "guard": "not Tuple or TOKEN; ElementsIn>1; literal IsAllFirst",
+      "source_body_sha256": "f398d5102855e85fdfb861192555b2eed05730a67041a8ed96da140d91801605",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "bitwise/NaN/signed-zero meaning of IsAllFirst",
+        "CreateConstantWithLayoutUpdated"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02430-C012",
+      "replacement_line": 2430,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(constant, broadcast);"
+    },
+    {
+      "id": "HandleConstant/iota",
+      "handler": "HandleConstant",
+      "line": 2407,
+      "end_line": 2452,
+      "lhs": "Constant(literal)",
+      "rhs": "Iota(original shape,axis0)",
+      "guard": "not Tuple/TOKEN; ElementsIn>1; IsR1Iota",
+      "source_body_sha256": "f398d5102855e85fdfb861192555b2eed05730a67041a8ed96da140d91801605",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "Literal::IsR1Iota type/rounding domain",
+        "Iota finite-width values"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L02436-C012",
+      "replacement_line": 2436,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleConstant/strided-iota",
+      "handler": "HandleConstant",
+      "line": 2407,
+      "end_line": 2452,
+      "lhs": "Constant(literal)",
+      "rhs": "Multiply(Iota(original shape,axis0),MakeScalarLike(stride))",
+      "guard": "not Tuple/TOKEN; earlier uniform/iota paths did not return; IsR1StridedIota returns stride",
+      "source_body_sha256": "f398d5102855e85fdfb861192555b2eed05730a67041a8ed96da140d91801605",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "Literal::IsR1StridedIota",
+        "finite-width multiplier conversion and rounding"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L02445-C012",
+      "replacement_line": 2445,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction("
+    },
+    {
+      "id": "HandleOptimizationBarrier/prune-producer",
+      "handler": "HandleOptimizationBarrier",
+      "line": 5575,
+      "end_line": 5650,
+      "lhs": "OptimizationBarrier(tuple-valued operand) and its GTE users",
+      "rhs": "same barrier with projected operand tuple and shape; every GTE tuple index remapped",
+      "guard": "barrier Tuple shape and not computation root; every user GTE; direct token elements retained; at least one unused element; operand not Tuple, so selected elements obtained through new GTEs",
+      "source_body_sha256": "e067cdb19de7a0e3196c79b80eb71d986b0b646dbd6fe21f25143bff39e502f7",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "whole graph observation includes user remapping and metadata",
+        "token/effect reachability",
+        "index_map -1 entries",
+        "CopyOriginalValue pruning map",
+        "MarkAsChanged before later status failure"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05641-C016",
+      "replacement_line": 5641,
+      "replacement_call": "ReplaceOperandWithDifferentShape",
+      "replacement_source": "      barrier->ReplaceOperandWithDifferentShape(0, new_operand));",
+      "effect_evidence": [
+        {
+          "anchor": "barrier->ReplaceOperandWithDifferentShape(0, new_operand)",
+          "line": 5641,
+          "role": "operand edge mutation"
+        },
+        {
+          "anchor": "*barrier->mutable_shape() = new_operand->shape();",
+          "line": 5642,
+          "role": "shape assignment"
+        },
+        {
+          "anchor": "CopyOriginalValue(barrier, barrier, index_map);",
+          "line": 5643,
+          "role": "barrier metadata remap"
+        },
+        {
+          "anchor": "CopyOriginalValue(operand, new_operand, index_map);",
+          "line": 5644,
+          "role": "operand metadata remap"
+        },
+        {
+          "anchor": "use->set_tuple_index(index_map[use->tuple_index()]);",
+          "line": 5647,
+          "role": "each user GTE index mutation"
+        }
+      ],
+      "acceptance_unit": "barrier operand, barrier shape, both metadata maps and every GTE user; not a single replacement call"
+    },
+    {
+      "id": "HandleOptimizationBarrier/prune-tuple",
+      "handler": "HandleOptimizationBarrier",
+      "line": 5575,
+      "end_line": 5650,
+      "lhs": "OptimizationBarrier(tuple-valued operand) and its GTE users",
+      "rhs": "same barrier with projected operand tuple and shape; every GTE tuple index remapped",
+      "guard": "barrier Tuple shape and not computation root; every user GTE; direct token elements retained; at least one unused element; operand Tuple, retaining unused elements with multiple users, computation-root identity or side effects",
+      "source_body_sha256": "e067cdb19de7a0e3196c79b80eb71d986b0b646dbd6fe21f25143bff39e502f7",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "unit_kind": "branch_or_rewrite_stage_pending_complete_path_composition",
+      "path_condition": "legal input HLO; source-order early exits and current local pointer bindings apply; earlier stages may already have rewritten",
+      "continuation": "return after successful branch",
+      "dependencies": [
+        "whole graph observation includes user remapping and metadata",
+        "token/effect reachability",
+        "index_map -1 entries",
+        "CopyOriginalValue pruning map",
+        "MarkAsChanged before later status failure"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "datatype/layout/memory-space profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05641-C016",
+      "replacement_line": 5641,
+      "replacement_call": "ReplaceOperandWithDifferentShape",
+      "replacement_source": "      barrier->ReplaceOperandWithDifferentShape(0, new_operand));",
+      "effect_evidence": [
+        {
+          "anchor": "barrier->ReplaceOperandWithDifferentShape(0, new_operand)",
+          "line": 5641,
+          "role": "operand edge mutation"
+        },
+        {
+          "anchor": "*barrier->mutable_shape() = new_operand->shape();",
+          "line": 5642,
+          "role": "shape assignment"
+        },
+        {
+          "anchor": "CopyOriginalValue(barrier, barrier, index_map);",
+          "line": 5643,
+          "role": "barrier metadata remap"
+        },
+        {
+          "anchor": "CopyOriginalValue(operand, new_operand, index_map);",
+          "line": 5644,
+          "role": "operand metadata remap"
+        },
+        {
+          "anchor": "use->set_tuple_index(index_map[use->tuple_index()]);",
+          "line": 5647,
+          "role": "each user GTE index mutation"
+        }
+      ],
+      "acceptance_unit": "barrier operand, barrier shape, both metadata maps and every GTE user; not a single replacement call"
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "ComputeBitcastDimMap",
+      "line": 1650,
+      "end_line": 1724,
+      "source_body_sha256": "73390c7724963c887833c69d5f514bd11ff8cb378c72cf24fb43065bae8c70cb",
+      "source_behavior": "walk physical minor-to-major dimensions, accumulating products and matching split/combine groups; unsupported repartition/size paths return nullopt; CHECK/index and overflow obligations remain",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "InvertBitcastDimMap",
+      "line": 1807,
+      "end_line": 1823,
+      "source_body_sha256": "1d0affcb2d3f26c6fd8379f148985a8f8849549dabe891384786f9a793389c07",
+      "source_behavior": "invert dimension adjacency lists in original physical layout order; depends on input map bounds",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ReshapeLayoutDimensions",
+      "line": 1726,
+      "end_line": 1805,
+      "source_body_sha256": "43a7045d9b8487423e9d849b4f36a1150c807029c0d10b128913b596d07039f8",
+      "source_behavior": "construct candidate minor-to-major layout from paired maps; reject noncontiguous or reordered groups; append unit dimensions; CHECK final size",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ValidateTilingOfBitcast",
+      "line": 357,
+      "end_line": 435,
+      "source_body_sha256": "b461300ea0416aa22f9e9137338b298d4f7c9281698d534b068c246210975403",
+      "source_behavior": "accept immediately if either tile list empty; otherwise compare first tile shapes and divisibility/split/combine restrictions while walking minor-to-major order",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "HasMatchDimensionTile",
+      "line": 300,
+      "end_line": 310,
+      "source_body_sha256": "1fe0e7046cde9e96c1bf461e20222b566601b5d5e29888c136531025190d1d72",
+      "source_behavior": "return whether any existing layout tile contains Tile::kMatchDimension",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "BitcastingOperandOfReshapeOrCopyChain",
+      "line": 824,
+      "end_line": 842,
+      "source_body_sha256": "f0ef03330f86584affcb323bf86b1e19474f89985e83425ca75f30e4b1591400",
+      "source_behavior": "layout-sensitive only; walk copy/reshape operands until virtual ReshapeIsBitcast to original target shape succeeds; otherwise return null",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ReplaceWithBitcast",
+      "line": 844,
+      "end_line": 856,
+      "source_body_sha256": "dc01d037c073098bb9d81c22043104a513e402848de25b7a78c20a87004af142",
+      "source_behavior": "one operand required; select provided or original operand; CHECK equal byte sizes; create Bitcast with original output shape; CHECK_OK replacement",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "BuildTupleConstant",
+      "line": 2391,
+      "end_line": 2405,
+      "source_body_sha256": "8b471b579a151b9382a08949659d3d1c775471403602f9d015bf66ba836ee32f",
+      "source_behavior": "recursively rebuild tuple literal structure; leaf literals cloned through layout-updated constants",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "limitations": [
+    "branch and continuing-stage schemas are not disjoint complete execution paths or a frozen denominator",
+    "primary-agent inspection only; layout algorithms and virtual predicates unproved",
+    "barrier effect evidence includes assignment and user writes outside replacement-site counting",
+    "datatype, tiling, memory space, errors and metadata obligations remain open"
+  ]
+}

@@ -1,0 +1,428 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:dynamic_slice_empty_reshape_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 35118 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from DynamicSliceEmptyReshapeReplay
+[ RUN      ] DynamicSliceEmptyReshapeReplay.InsertedEmptyAxisAndControls
+DS_EMPTY_RESHAPE_RESULT case=empty_inserted mode=control original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=empty_inserted mode=handler original_verified=1 outcome=checked_fatal changed=unreturned
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=empty_inserted mode=pass original_verified=1 outcome=checked_fatal changed=unreturned
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=nonempty mode=control original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=nonempty mode=handler original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,1] {
+  %constant = s32[] constant(0)
+  %data = s32[2]{0} parameter(0)
+  %index = s32[] parameter(1)
+  %dynamic-slice = s32[1]{0} dynamic-slice(%data, %index), dynamic_slice_sizes={1}
+  ROOT %reshape = s32[1,1]{1,0} reshape(%dynamic-slice)
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=nonempty mode=pass original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,1] {
+  %constant = s32[] constant(0)
+  %data = s32[2]{0} parameter(0)
+  %index = s32[] parameter(1)
+  %dynamic-slice = s32[1]{0} dynamic-slice(%data, %index), dynamic_slice_sizes={1}
+  ROOT %reshape = s32[1,1]{1,0} reshape(%dynamic-slice)
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=empty_retained mode=control original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,0}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,0}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=empty_retained mode=handler original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,0}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,0] {
+  %constant = s32[] constant(0)
+  %data = s32[2]{0} parameter(0)
+  %index = s32[] parameter(1)
+  %dynamic-slice = s32[0]{0} dynamic-slice(%data, %index), dynamic_slice_sizes={0}
+  ROOT %reshape = s32[1,0]{1,0} reshape(%dynamic-slice)
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=empty_retained mode=pass original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[1,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={1,0}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[1,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[1,0] {
+  %constant = s32[] constant(0)
+  %data = s32[2]{0} parameter(0)
+  %index = s32[] parameter(1)
+  %dynamic-slice = s32[0]{0} dynamic-slice(%data, %index), dynamic_slice_sizes={0}
+  ROOT %reshape = s32[1,0]{1,0} reshape(%dynamic-slice)
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=both_empty mode=control original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,0}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,0}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=both_empty mode=handler original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,0}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,0] {
+  %constant = s32[] constant(0)
+  %data = s32[2]{0} parameter(0)
+  %index = s32[] parameter(1)
+  %dynamic-slice = s32[0]{0} dynamic-slice(%data, %index), dynamic_slice_sizes={0}
+  ROOT %reshape = s32[0,0]{1,0} reshape(%dynamic-slice)
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=both_empty mode=pass original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,0] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,0]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,0}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,0]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,0] {
+  %constant = s32[] constant(0)
+  %data = s32[2]{0} parameter(0)
+  %index = s32[] parameter(1)
+  %dynamic-slice = s32[0]{0} dynamic-slice(%data, %index), dynamic_slice_sizes={0}
+  ROOT %reshape = s32[0,0]{1,0} reshape(%dynamic-slice)
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=layout_sensitive mode=control original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=layout_sensitive mode=handler original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=layout_sensitive mode=pass original_verified=1 outcome=valid changed=1
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %data = s32[2]{0} parameter(0)
+  %bitcast = s32[1,2]{1,0} bitcast(%data)
+  %zero = s32[] constant(0)
+  %index = s32[] parameter(1)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%bitcast, %zero, %index), dynamic_slice_sizes={0,1}
+}
+
+
+DS_EMPTY_RESHAPE_RESULT case=constant_conversion mode=control original_verified=1 outcome=valid changed=0
+ORIGINAL_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %index = s32[] parameter(1)
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %zero), dynamic_slice_sizes={0,1}
+}
+
+
+PARENT_HLO
+HloModule ds_empty_reshape, entry_computation_layout={(s32[2]{0}, s32[])->s32[0,1]{1,0}}
+
+ENTRY %main (data: s32[2], index: s32[]) -> s32[0,1] {
+  %index = s32[] parameter(1)
+  %data = s32[2]{0} parameter(0)
+  %reshaped = s32[1,2]{1,0} reshape(%data)
+  %zero = s32[] constant(0)
+  ROOT %result = s32[0,1]{1,0} dynamic-slice(%reshaped, %zero, %zero), dynamic_slice_sizes={0,1}
+}
+
+
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+F0000 00:00:1794341264.560623 1545438 hlo_instruction.cc:2510] Check failed: operand->shape().is_unbounded_dynamic() || ShapeUtil::StaticExtentProduct(shape) == ShapeUtil::StaticExtentProduct(operand->shape()) shape: s32[0,1] operand: s32[1]
+*** Check failure stack trace: ***
+    @     0x63a07e1a5464  absl::lts_20260526::log_internal::LogMessage::SendToLog()
+    @     0x63a07e1a5412  absl::lts_20260526::log_internal::LogMessage::Flush()
+    @     0x63a07de1ab0c  xla::HloInstruction::CreateReshape()
+    @     0x63a07db6e705  xla::AlgebraicSimplifierVisitor::HandleDynamicSlice()
+    @     0x63a07db27b04  xla::(anonymous namespace)::DynamicSliceEmptyReshapeReplay_InsertedEmptyAxisAndControls_Test::TestBody()
+    @     0x63a07dfa081d  testing::internal::HandleExceptionsInMethodIfSupported<>()
+    @     0x63a07dfa0720  testing::Test::Run()
+    @     0x63a07dfa15bd  testing::TestInfo::Run()
+    @     0x63a07dfa2525  testing::TestSuite::Run()
+    @     0x63a07dfb19ae  testing::internal::UnitTestImpl::RunAllTests()
+    @     0x63a07dfb119d  testing::internal::HandleExceptionsInMethodIfSupported<>()
+    @     0x63a07dfb0ffc  testing::UnitTest::Run()
+    @     0x63a07df8ee8d  main
+    @     0x7c2d5242a1ca  (unknown)
+    @     0x7c2d5242a28b  __libc_start_main
+    @     0x63a07e22a3ca  _start

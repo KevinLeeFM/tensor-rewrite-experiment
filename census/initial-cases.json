@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "status": "partial_extraction",
+  "cases": [
+    {
+      "id": "double-negation",
+      "handler": "HandleNegate",
+      "line": 5415,
+      "end_line": 5423,
+      "description": "negate(negate(x)) => x",
+      "guard_summary": "Match Negate(Negate(x)) and successful ReplaceInstructionIfCompatible",
+      "replacement": "x",
+      "semantic_dependencies": "scalar negation involution; finite-width and floating-point exceptional-value contract",
+      "source_excerpt": "absl::Status AlgebraicSimplifierVisitor::HandleNegate(HloInstruction* negate) {\n  // negate(negate(x)) => x\n  HloInstruction* x;\n  if (Match(negate, m::Negate(m::Negate(m::Op(&x)))) &&\n      ReplaceInstructionIfCompatible(negate, x)) {\n    return absl::OkStatus();\n  }\n  return absl::OkStatus();\n}",
+      "helper_dependencies": [
+        "ReplaceInstruction / DfsHloRewriteVisitor",
+        "SameShape and control/sharding checks where compatibility helper used"
+      ],
+      "status": "extracted_pending_review",
+      "semantic_track_status": "not_formalized",
+      "accepted_proof": null,
+      "independent_review": null
+    },
+    {
+      "id": "double-not",
+      "handler": "HandleNot",
+      "line": 5425,
+      "end_line": 5434,
+      "description": "not(not(x)) => x",
+      "guard_summary": "Match Not(Not(x)) and successful ReplaceInstructionIfCompatible",
+      "replacement": "x",
+      "semantic_dependencies": "PRED Boolean and integer bitwise Not cases must be split or covered parametrically",
+      "source_excerpt": "absl::Status AlgebraicSimplifierVisitor::HandleNot(\n    HloInstruction* logical_not) {\n  // not(not(x)) => x\n  HloInstruction* x;\n  if (Match(logical_not, m::Not(m::Not(m::Op(&x)))) &&\n      ReplaceInstructionIfCompatible(logical_not, x)) {\n    return absl::OkStatus();\n  }\n  return absl::OkStatus();\n}",
+      "helper_dependencies": [
+        "ReplaceInstruction / DfsHloRewriteVisitor",
+        "SameShape and control/sharding checks where compatibility helper used"
+      ],
+      "status": "extracted_pending_review",
+      "semantic_track_status": "not_formalized",
+      "accepted_proof": null,
+      "independent_review": null
+    },
+    {
+      "id": "exp-zero",
+      "handler": "HandleExp",
+      "line": 6139,
+      "end_line": 6147,
+      "description": "Exp(0) => 1",
+      "guard_summary": "Exp(ConstantScalar(0)) OR Exp(Broadcast(ConstantScalar(0)))",
+      "replacement": "MakeScalarLike(exponential, 1.0)",
+      "semantic_dependencies": "constant matching; scalar conversion; broadcast; supported scalar exp behavior",
+      "source_excerpt": "absl::Status AlgebraicSimplifierVisitor::HandleExp(\n    HloInstruction* exponential) {\n  // Exp(0) => 1\n  if (Match(exponential, m::Exp(m::ConstantScalar(0))) ||\n      Match(exponential, m::Exp(m::Broadcast(m::ConstantScalar(0))))) {\n    return ReplaceInstruction(exponential, MakeScalarLike(exponential, 1.0));\n  }\n  return absl::OkStatus();\n}",
+      "helper_dependencies": [
+        "ReplaceInstruction / DfsHloRewriteVisitor",
+        "SameShape and control/sharding checks where compatibility helper used"
+      ],
+      "status": "extracted_pending_review",
+      "semantic_track_status": "not_formalized",
+      "accepted_proof": null,
+      "independent_review": null
+    },
+    {
+      "id": "complex-components",
+      "handler": "HandleComplex",
+      "line": 6150,
+      "end_line": 6158,
+      "description": "Complex(Real(c), Imag(c)) -> c",
+      "guard_summary": "Real(c0) and Imag(c1), pointer identity c0 == c1",
+      "replacement": "c0",
+      "semantic_dependencies": "complex representation and component projection; shape/layout preservation",
+      "source_excerpt": "absl::Status AlgebraicSimplifierVisitor::HandleComplex(\n    HloInstruction* complex) {\n  HloInstruction *c0, *c1;\n  if (Match(complex, m::Complex(m::Real(m::Op(&c0)), m::Imag(m::Op(&c1)))) &&\n      c0 == c1) {\n    return ReplaceInstruction(complex, c0);\n  }\n  return absl::OkStatus();\n}",
+      "helper_dependencies": [
+        "ReplaceInstruction / DfsHloRewriteVisitor",
+        "SameShape and control/sharding checks where compatibility helper used"
+      ],
+      "status": "extracted_pending_review",
+      "semantic_track_status": "not_formalized",
+      "accepted_proof": null,
+      "independent_review": null
+    },
+    {
+      "id": "real-component",
+      "handler": "HandleReal",
+      "line": 6161,
+      "end_line": 6171,
+      "description": "Real(Complex(r, i)) -> r",
+      "guard_summary": "Real(Complex(op, any))",
+      "replacement": "op",
+      "semantic_dependencies": "real projection; element type and output shape; graph replacement contract",
+      "source_excerpt": "absl::Status AlgebraicSimplifierVisitor::HandleReal(HloInstruction* real) {\n  HloInstruction* op;\n  if (Match(real, m::Real(m::Complex(m::Op(&op), m::Op())))) {\n    return ReplaceInstruction(real, op);\n  }\n  // real(x) -> x if x is not complex.\n  if (!ShapeUtil::ElementIsComplex(real->operand(0)->shape())) {\n    return ReplaceInstruction(real, real->mutable_operand(0));\n  }\n  return absl::OkStatus();\n}",
+      "helper_dependencies": [
+        "ReplaceInstruction / DfsHloRewriteVisitor",
+        "SameShape and control/sharding checks where compatibility helper used"
+      ],
+      "status": "extracted_pending_review",
+      "semantic_track_status": "not_formalized",
+      "accepted_proof": null,
+      "independent_review": null
+    }
+  ]
+}

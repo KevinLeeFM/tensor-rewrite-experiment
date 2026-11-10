@@ -1,0 +1,3549 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:concatenate_status_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 68024 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ConcatenateStatusReplay
+[ RUN      ] ConcatenateStatusReplay.AllocationBeforeCompatibilitySkip
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=plain mode=handler step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=plain mode=pass step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=predecessor mode=handler step=1 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=predecessor mode=handler step=2 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.2 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=predecessor mode=handler step=3 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.2 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.2 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.3 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=predecessor mode=pass step=1 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=predecessor mode=fixedpoint step=1 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=successor mode=handler step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %data = s32[2]{0} parameter(0)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=0 profile=successor mode=pass step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %data = s32[2]{0} parameter(0)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=plain mode=handler step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=plain mode=pass step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=predecessor mode=handler step=1 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=predecessor mode=handler step=2 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.2 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=predecessor mode=handler step=3 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.2 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.2 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %result.3 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=predecessor mode=pass step=1 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=predecessor mode=fixedpoint step=1 changed=0 delta=1 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}, control-predecessors={%marker}
+  %result.1 = s32[4]{0} concatenate(%data, %other), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=successor mode=handler step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %data = s32[2]{0} parameter(0)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_many layout=1 profile=successor mode=pass step=1 changed=1 delta=0 root_retained=0 before=3,7,11,13 after=3,7,11,13 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %empty, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[4]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[4] {
+  %empty = s32[0]{0} parameter(1)
+  %data = s32[2]{0} parameter(0)
+  %other = s32[2]{0} parameter(2)
+  ROOT %result = s32[4]{0} concatenate(%data, %other), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=0 profile=successor mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_one layout=1 profile=successor mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[2]{0} concatenate(%data, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1), control-predecessors={%empty}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=0 profile=successor mode=pass step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1), control-predecessors={%empty}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1), control-predecessors={%empty}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=filter_all layout=1 profile=successor mode=pass step=1 changed=1 delta=-1 root_retained=0 before=empty after=empty verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  %other = s32[2]{0} parameter(2)
+  %empty = s32[0]{0} parameter(1)
+  ROOT %result = s32[0]{0} concatenate(%empty, %empty), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[0]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[0] {
+  ROOT %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1), control-predecessors={%empty}
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=0 profile=successor mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  ROOT %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=unary layout=1 profile=successor mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  ROOT %result = s32[2]{0} concatenate(%data), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  ROOT %data = s32[2]{0} parameter(0)
+  %marker = s32[] constant(1), control-predecessors={%data}
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:100: Failure
+Expected equality of these values:
+  computation->instruction_count()-count
+    Which is: -1
+  delta
+    Which is: 1
+Google Test trace:
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:57: adjacentplainhandler0
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=plain mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  ROOT %result = s32[2]{0} concatenate(%slice), dimensions={0}
+}
+
+
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:100: Failure
+Expected equality of these values:
+  computation->instruction_count()-count
+    Which is: -1
+  delta
+    Which is: 1
+Google Test trace:
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:57: adjacentplainpass0
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=plain mode=pass step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  ROOT %result = s32[2]{0} concatenate(%slice), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=predecessor mode=handler step=1 changed=0 delta=2 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=predecessor mode=handler step=2 changed=0 delta=2 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+  %slice.1 = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.2 = s32[2]{0} concatenate(%slice.1), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=predecessor mode=handler step=3 changed=0 delta=2 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+  %slice.1 = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.2 = s32[2]{0} concatenate(%slice.1), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+  %slice.1 = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.2 = s32[2]{0} concatenate(%slice.1), dimensions={0}
+  %slice.2 = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.3 = s32[2]{0} concatenate(%slice.2), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=predecessor mode=pass step=1 changed=0 delta=2 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=predecessor mode=fixedpoint step=1 changed=0 delta=2 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  %result.1 = s32[2]{0} concatenate(%slice), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:100: Failure
+Expected equality of these values:
+  computation->instruction_count()-count
+    Which is: -1
+  delta
+    Which is: 1
+Google Test trace:
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:57: adjacentsuccessorhandler0
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=successor mode=handler step=1 changed=1 delta=-1 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %slice = s32[2]{0} slice(%data), slice={[0:2]}
+  ROOT %result = s32[2]{0} concatenate(%slice), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:100: Failure
+Expected equality of these values:
+  computation->instruction_count()-count
+    Which is: -3
+  delta
+    Which is: 1
+Google Test trace:
+xla/hlo/transforms/simplifiers/concatenate_status_replay_test.cc:57: adjacentsuccessorpass0
+
+CONCAT_STATUS_RESULT case=adjacent layout=0 profile=successor mode=pass step=1 changed=1 delta=-3 root_retained=0 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  ROOT %data = s32[2]{0} parameter(0)
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1), control-predecessors={%data}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=plain mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=plain mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=plain mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=predecessor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=predecessor mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=predecessor mode=handler step=2 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=predecessor mode=handler step=3 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=predecessor mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=predecessor mode=fixedpoint step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %marker = s32[] constant(1)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}, control-predecessors={%marker}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=successor mode=control step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=successor mode=handler step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+CONCAT_STATUS_RESULT case=adjacent layout=1 profile=successor mode=pass step=1 changed=0 delta=0 root_retained=1 before=3,7 after=3,7 verified=1
+ORIGINAL_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+REWRITTEN_HLO
+HloModule concat_status, entry_computation_layout={(s32[2]{0}, s32[0]{0}, s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (data: s32[2], empty: s32[0], other: s32[2]) -> s32[2] {
+  %empty = s32[0]{0} parameter(1)
+  %other = s32[2]{0} parameter(2)
+  %data = s32[2]{0} parameter(0)
+  %left = s32[1]{0} slice(%data), slice={[0:1]}
+  %right = s32[1]{0} slice(%data), slice={[1:2]}
+  ROOT %result = s32[2]{0} concatenate(%left, %right), dimensions={0}
+  %marker = s32[] constant(1), control-predecessors={%result}
+}
+
+
+[  FAILED  ] ConcatenateStatusReplay.AllocationBeforeCompatibilitySkip (35 ms)
+[----------] 1 test from ConcatenateStatusReplay (35 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (35 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] ConcatenateStatusReplay.AllocationBeforeCompatibilitySkip
+
+ 1 FAILED TEST

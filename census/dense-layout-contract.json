@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_dense_cell_layout_not_full_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "profile": "static untiled dense arrays; same fixed cell type; mathematical cell addresses; tiles, packing and memory spaces separate",
+  "source_case": "HandleTranspose/layout-bitcast",
+  "contracts": [
+    {
+      "id": "transpose-physical-guard",
+      "path": "sources/xla/xla/shape_util.cc",
+      "line": 1734,
+      "end_line": 1766,
+      "source_body_sha256": "8abec2a43488b9451d22aac960be90cc913fb7348db358ccf4388bd0320e6f02"
+    },
+    {
+      "id": "transpose-handler-helper",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 300,
+      "end_line": 330,
+      "source_body_sha256": "ef56c932f8f180af5cd0d8fc31fcdc64dcacfa7613afae061763572f55ff4690"
+    },
+    {
+      "id": "transpose-bitcast-branch",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 10584,
+      "end_line": 10587,
+      "source_body_sha256": "b004cebfb8626e40d956828a82128746aaba6ed5d8421f317dc6ca740a694ed1"
+    },
+    {
+      "id": "bitcast-verifier",
+      "path": "sources/xla/xla/service/hlo_verifier.cc",
+      "line": 1684,
+      "end_line": 1704,
+      "source_body_sha256": "14a8ce655ac28d2c569b9a9ca3547bf1e13763de997ac8ba4686e6e2828b1fa2"
+    },
+    {
+      "id": "verifier-size-options",
+      "path": "sources/xla/xla/service/hlo_verifier.h",
+      "line": 486,
+      "end_line": 505,
+      "source_body_sha256": "6d7db541f9e03e0a845b499634de57a2553ddcc471859a50b359f80f6dca5dad"
+    },
+    {
+      "id": "tiled-array-size",
+      "path": "sources/xla/xla/shape_util.cc",
+      "line": 2545,
+      "end_line": 2605,
+      "source_body_sha256": "b2d5479572ca25d7c1fca837a78a4812e63f0483eec76557b2ed1ee8441f93b4"
+    },
+    {
+      "id": "bitcast-evaluator",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 1376,
+      "end_line": 1407,
+      "source_body_sha256": "54a0fa9030e478ef5ce822ac6bc04fa0a50701e85d40b1ef8e74a473b8399a0a"
+    }
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.DenseLayout.fromOrdered_toOrdered",
+    "TensorRewrite.Pilot.DenseLayout.toOrdered_fromOrdered",
+    "TensorRewrite.Pilot.DenseLayout.read_write",
+    "TensorRewrite.Pilot.DenseLayout.write_read",
+    "TensorRewrite.Pilot.DenseLayout.minorOrderMatches_axis",
+    "TensorRewrite.Pilot.DenseLayout.minorOrderMatches_of_axis",
+    "TensorRewrite.Pilot.DenseLayout.transpose_extents",
+    "TensorRewrite.Pilot.DenseLayout.orderedShape_transpose",
+    "TensorRewrite.Pilot.DenseLayout.linearize_cast_val",
+    "TensorRewrite.Pilot.DenseLayout.address_transpose_val"
+  ],
+  "rule": {
+    "theorem": "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast",
+    "module": "TensorRewrite/Pilot/DenseLayoutRules.lean",
+    "source_case": "HandleTranspose/layout-bitcast",
+    "source_partition": "untiled dense same-cell-type subcase; actual minor-order array equation explicit",
+    "status": "pilot_value_proof_pending_source_graph_review",
+    "semantic_track": "static untiled dense arrays; same fixed cell type; mathematical cell addresses; tiles, packing and memory spaces separate",
+    "source_rewrite_accepted": false
+  },
+  "native_evidence": "reports/transpose-bitcast-replay-v2/result.json",
+  "native_scope": "dense handler/pass/no-rewrite runs; tiled ArraySize diagnostic uses direct handler only",
+  "tiled_boundary_scope": "ArraySize verifier policy; backend adoption and tiled value semantics pending",
+  "tiled_diagnostic_is_lean_refutation": false,
+  "remaining": [
+    "signed source permutation/layout extraction",
+    "finite byte widths, padding, tiles and packed elements",
+    "memory spaces and backend size policy",
+    "graph/replacement/frame and independent source review"
+  ]
+}

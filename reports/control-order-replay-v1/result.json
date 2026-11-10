@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "status": "real_xla_control_order_relaxation_reproduced",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "pass_source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "command": [
+    "/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-tools/bazel",
+    "--output_user_root=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-cache/bazel",
+    "test",
+    "//xla/hlo/transforms/simplifiers:control_order_replay_test",
+    "--compilation_mode=opt",
+    "--jobs=12",
+    "--repo_env=HERMETIC_PYTHON_VERSION=3.12",
+    "--repository_cache=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.build-cache/repos",
+    "--test_output=all",
+    "--nocache_test_results",
+    "--build_event_json_file=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/reports/control-order-replay-v1/events.json",
+    "--noshow_progress"
+  ],
+  "xla_full_pass_run": true,
+  "xla_handler_run": true,
+  "native_schedule_verified": true,
+  "custom_call_callbacks": true,
+  "execution_scope": "native verified HloSchedules; per-instruction HloEvaluator with cached substitutions; mock synchronous effects",
+  "test_passed": true,
+  "exit_code": 0,
+  "elapsed_seconds": 17.042229691054672,
+  "binary_sha256": "9a02e926f5787b367ee00fa6e80923b7a518f4c9136f62d2ce0baa48265c6ef0",
+  "cases": [
+    {
+      "name": "annihilator_successor",
+      "mode": "control",
+      "changed": false,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_successor",
+      "mode": "handler",
+      "changed": true,
+      "reachable_before": true,
+      "reachable_after": false,
+      "reverse_before": false,
+      "reverse_after": true,
+      "forward_trace": "A,B",
+      "reverse_trace": "B,A",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_successor",
+      "mode": "pass",
+      "changed": true,
+      "reachable_before": true,
+      "reachable_after": false,
+      "reverse_before": false,
+      "reverse_after": true,
+      "forward_trace": "A,B",
+      "reverse_trace": "B,A",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_predecessor",
+      "mode": "control",
+      "changed": false,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_predecessor",
+      "mode": "handler",
+      "changed": false,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_predecessor",
+      "mode": "pass",
+      "changed": false,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "identity_successor",
+      "mode": "control",
+      "changed": false,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "identity_successor",
+      "mode": "handler",
+      "changed": true,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "identity_successor",
+      "mode": "pass",
+      "changed": true,
+      "reachable_before": true,
+      "reachable_after": true,
+      "reverse_before": false,
+      "reverse_after": false,
+      "forward_trace": "A,B",
+      "reverse_trace": "invalid",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_unordered",
+      "mode": "control",
+      "changed": false,
+      "reachable_before": false,
+      "reachable_after": false,
+      "reverse_before": true,
+      "reverse_after": true,
+      "forward_trace": "A,B",
+      "reverse_trace": "B,A",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_unordered",
+      "mode": "handler",
+      "changed": true,
+      "reachable_before": false,
+      "reachable_after": false,
+      "reverse_before": true,
+      "reverse_after": true,
+      "forward_trace": "A,B",
+      "reverse_trace": "B,A",
+      "actors_retained": true,
+      "verified": true
+    },
+    {
+      "name": "annihilator_unordered",
+      "mode": "pass",
+      "changed": true,
+      "reachable_before": false,
+      "reachable_after": false,
+      "reverse_before": true,
+      "reverse_after": true,
+      "forward_trace": "A,B",
+      "reverse_trace": "B,A",
+      "actors_retained": true,
+      "verified": true
+    }
+  ],
+  "files": [
+    {
+      "path": "reports/control-order-replay-v1/BUILD",
+      "sha256": "5ab53aa2c4bc238cc4d0430981a74bb78b9387d468c8299cfcc46cd77ffd0dd2"
+    },
+    {
+      "path": "reports/control-order-replay-v1/build.log",
+      "sha256": "a25e8c1000efa496bb0c7f66d413d3445d2725c21d3c60a8c712bb4651473334"
+    },
+    {
+      "path": "reports/control-order-replay-v1/events.json",
+      "sha256": "6fabe03b3fe2fe2ec67eadb9bff10ca0144083e51f74e632da6fda172e87fac8"
+    },
+    {
+      "path": "reports/control-order-replay-v1/fixture.cc",
+      "sha256": "f2523897229448e5e36de11e9cbe42c84f4fe241c8b5fe8b24a3ef9028042e7b"
+    },
+    {
+      "path": "reports/control-order-replay-v1/test.log",
+      "sha256": "93f2e294bc79a8718fc07ab24bf9230215c948cd1cfba3fe51a50778658abc33"
+    },
+    {
+      "path": "reports/control-order-replay-v1/test.xml",
+      "sha256": "253dc413299454108b15a744f6dd19e0b91454735c0db4fb3252c9bfef0a5b82"
+    }
+  ]
+}

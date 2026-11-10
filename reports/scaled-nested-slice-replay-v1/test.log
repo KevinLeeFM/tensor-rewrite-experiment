@@ -1,0 +1,1133 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:scaled_nested_slice_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 62488 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ScaledNestedSliceReplay
+[ RUN      ] ScaledNestedSliceReplay.FailedIotaProbeContinuation
+SCALED_NESTED_RESULT case=scaled mode=control changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=scaled mode=handler changed=1 before=28 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=scaled mode=pass changed=1 before=28 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=negative_multiplier mode=control changed=0 before=-12 after=-12 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=negative_multiplier mode=handler changed=1 before=-12 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=negative_multiplier mode=pass changed=1 before=-12 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=one_multiplier mode=control changed=0 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=one_multiplier mode=handler changed=1 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=one_multiplier mode=pass changed=1 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=zero_multiplier mode=control changed=0 before=0 after=0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=zero_multiplier mode=handler changed=1 before=0 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=zero_multiplier mode=pass changed=1 before=0 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=reversed mode=control changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %product = s32[6]{0} multiply(%scale, %inner)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %product = s32[6]{0} multiply(%scale, %inner)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=reversed mode=handler changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %product = s32[6]{0} multiply(%scale, %inner)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %product = s32[6]{0} multiply(%scale, %inner)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=reversed mode=pass changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %product = s32[6]{0} multiply(%scale, %inner)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %product = s32[6]{0} multiply(%scale, %inner)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=outer_two mode=control changed=0 before=28,35 after=28,35 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={2}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={2}
+}
+
+
+SCALED_NESTED_RESULT case=outer_two mode=handler changed=0 before=28,35 after=28,35 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={2}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={2}
+}
+
+
+SCALED_NESTED_RESULT case=outer_two mode=pass changed=0 before=28,35 after=28,35 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={2}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[2]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[2] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[2]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={2}
+}
+
+
+SCALED_NESTED_RESULT case=s64_result mode=control changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s64[10]{0}, s32[], s32[], s64[])->s64[1]{0}}
+
+ENTRY %main (data: s64[10], inner_start: s32[], outer_start: s32[], multiplier: s64[]) -> s64[1] {
+  %data = s64[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s64[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s64[] parameter(3)
+  %scale = s64[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s64[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s64[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s64[10]{0}, s32[], s32[], s64[])->s64[1]{0}}
+
+ENTRY %main (data: s64[10], inner_start: s32[], outer_start: s32[], multiplier: s64[]) -> s64[1] {
+  %data = s64[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s64[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s64[] parameter(3)
+  %scale = s64[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s64[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s64[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=s64_result mode=handler changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s64[10]{0}, s32[], s32[], s64[])->s64[1]{0}}
+
+ENTRY %main (data: s64[10], inner_start: s32[], outer_start: s32[], multiplier: s64[]) -> s64[1] {
+  %data = s64[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s64[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s64[] parameter(3)
+  %scale = s64[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s64[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s64[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s64[10]{0}, s32[], s32[], s64[])->s64[1]{0}}
+
+ENTRY %main (data: s64[10], inner_start: s32[], outer_start: s32[], multiplier: s64[]) -> s64[1] {
+  %data = s64[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s64[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s64[] parameter(3)
+  %scale = s64[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s64[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s64[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=s64_result mode=pass changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s64[10]{0}, s32[], s32[], s64[])->s64[1]{0}}
+
+ENTRY %main (data: s64[10], inner_start: s32[], outer_start: s32[], multiplier: s64[]) -> s64[1] {
+  %data = s64[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s64[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s64[] parameter(3)
+  %scale = s64[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s64[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s64[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s64[10]{0}, s32[], s32[], s64[])->s64[1]{0}}
+
+ENTRY %main (data: s64[10], inner_start: s32[], outer_start: s32[], multiplier: s64[]) -> s64[1] {
+  %data = s64[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s64[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %multiplier = s64[] parameter(3)
+  %scale = s64[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s64[6]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s64[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=direct_nested mode=control changed=0 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=direct_nested mode=handler changed=1 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=direct_nested mode=pass changed=1 before=4 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%inner, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %multiplier = s32[] parameter(3)
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %inner_start), dynamic_slice_sizes={6}
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %inner_start, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=constant_starts mode=control changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=constant_starts mode=handler changed=1 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  ROOT %slice = s32[1]{0} slice(%product), slice={[2:3]}
+}
+
+
+SCALED_NESTED_RESULT case=constant_starts mode=pass changed=1 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %slice = s32[6]{0} slice(%data), slice={[1:7]}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%slice, %scale)
+  ROOT %slice.1 = s32[1]{0} slice(%product), slice={[2:3]}
+}
+
+
+SCALED_NESTED_RESULT case=constant_starts_disabled mode=control changed=0 before=28 after=28 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=constant_starts_disabled mode=handler changed=1 before=28 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %co = s32[] constant(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %co, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %ci, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=constant_starts_disabled mode=pass changed=1 before=28 after=4 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %co = s32[] constant(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %co), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %inner_start = s32[] parameter(1)
+  %outer_start = s32[] parameter(2)
+  %data = s32[10]{0} parameter(0)
+  %ci = s32[] constant(1)
+  %inner = s32[6]{0} dynamic-slice(%data, %ci), dynamic_slice_sizes={6}
+  %multiplier = s32[] parameter(3)
+  %scale = s32[6]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[6]{0} multiply(%inner, %scale)
+  %constant = s32[] constant(0)
+  %co = s32[] constant(2)
+  %constant.1 = s32[] constant(5)
+  %clamp = s32[] clamp(%constant, %co, %constant.1)
+  %constant.2 = s32[] constant(0)
+  %constant.3 = s32[] constant(4)
+  %clamp.1 = s32[] clamp(%constant.2, %ci, %constant.3)
+  %add = s32[] add(%clamp, %clamp.1)
+  ROOT %outer = s32[1]{0} dynamic-slice(%data, %add), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=intended_iota mode=control changed=0 before=14 after=14 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[10]{0} iota(), iota_dimension=0
+  %multiplier = s32[] parameter(3)
+  %scale = s32[10]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[10]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[10]{0} iota(), iota_dimension=0
+  %multiplier = s32[] parameter(3)
+  %scale = s32[10]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[10]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+SCALED_NESTED_RESULT case=intended_iota mode=handler changed=1 before=14 after=14 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[10]{0} iota(), iota_dimension=0
+  %multiplier = s32[] parameter(3)
+  %scale = s32[10]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[10]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(9)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %multiplier = s32[] parameter(3)
+  %multiply = s32[] multiply(%clamp, %multiplier)
+  ROOT %reshape = s32[1]{0} reshape(%multiply)
+}
+
+
+SCALED_NESTED_RESULT case=intended_iota mode=pass changed=1 before=14 after=14 rewritten_verified=1
+ORIGINAL_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %inner = s32[10]{0} iota(), iota_dimension=0
+  %multiplier = s32[] parameter(3)
+  %scale = s32[10]{0} broadcast(%multiplier), dimensions={}
+  %product = s32[10]{0} multiply(%inner, %scale)
+  %outer_start = s32[] parameter(2)
+  ROOT %outer = s32[1]{0} dynamic-slice(%product, %outer_start), dynamic_slice_sizes={1}
+}
+
+
+REWRITTEN_HLO
+HloModule scaled_nested_slice, entry_computation_layout={(s32[10]{0}, s32[], s32[], s32[])->s32[1]{0}}
+
+ENTRY %main (data: s32[10], inner_start: s32[], outer_start: s32[], multiplier: s32[]) -> s32[1] {
+  %data = s32[10]{0} parameter(0)
+  %inner_start = s32[] parameter(1)
+  %constant = s32[] constant(0)
+  %outer_start = s32[] parameter(2)
+  %constant.1 = s32[] constant(9)
+  %clamp = s32[] clamp(%constant, %outer_start, %constant.1)
+  %multiplier = s32[] parameter(3)
+  %multiply = s32[] multiply(%clamp, %multiplier)
+  ROOT %reshape = s32[1]{0} reshape(%multiply)
+}
+
+
+[       OK ] ScaledNestedSliceReplay.FailedIotaProbeContinuation (23 ms)
+[----------] 1 test from ScaledNestedSliceReplay (23 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (23 ms total)
+[  PASSED  ] 1 test.

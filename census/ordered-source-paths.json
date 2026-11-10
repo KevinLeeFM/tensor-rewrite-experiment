@@ -1,0 +1,751 @@
+{
+  "schema": 1,
+  "status": "source_inspected_ordered_paths_not_accepted_semantic_census",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "semantic_denominator": null,
+  "family_denominator": null,
+  "independent_review_complete": false,
+  "source_functions": [
+    {
+      "name": "HandleBroadcast",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5770,
+        "end_line": 5905,
+        "source_body_sha256": "a73f8676453cc51408234028a6a74e8dbfecfaf75b63fd046888ead8febae4ca"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "independent_semantic_review": false,
+      "semantic_closure_complete": false,
+      "stages": [
+        {
+          "id": "sorted-equal-count",
+          "guard": "sorted dimensions and equal element count",
+          "source_cases": [
+            "HandleBroadcast/reshape"
+          ],
+          "false_continuation": "same-rank-equal-count",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "same-rank-equal-count",
+          "guard": "same ranks and equal element count; prior sorted branch false",
+          "source_cases": [
+            "HandleBroadcast/transpose"
+          ],
+          "false_continuation": "inserted-unit-axes",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "inserted-unit-axes",
+          "guard": "reshape descriptor exists and deleted_dimensions empty",
+          "source_cases": [
+            "HandleBroadcast/inserted-unit-axes"
+          ],
+          "false_continuation": "sink-enabled",
+          "effects_before_terminal": [
+            "reverse local inserted-axis list and erase dimension-list entries",
+            "module original-value recovery table adds a recovery computation BEFORE replacement attempt"
+          ],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "sink-enabled",
+          "guard": "enable_sink_broadcast",
+          "source_cases": [
+            "HandleBroadcast/sink-users-delegation"
+          ],
+          "false_continuation": "scalar-operand",
+          "effects_before_terminal": [
+            "helper can modify multiple user graphs; earlier user modifications survive a later error"
+          ],
+          "outcome_contract": [
+            "helper error: return error before caller MarkAsChanged; earlier graph changes are not rolled back",
+            "helper true: MarkAsChanged and return OK",
+            "helper false: continue to scalar-operand"
+          ]
+        },
+        {
+          "id": "scalar-operand",
+          "guard": "operand shape scalar",
+          "source_cases": [
+            "HandleBroadcast/scalar-user-reshape",
+            "HandleBroadcast/scalar-user-reverse",
+            "HandleBroadcast/scalar-user-transpose",
+            "HandleBroadcast/scalar-user-sort",
+            "HandleBroadcast/scalar-user-slice",
+            "HandleBroadcast/scalar-user-dynamicslice"
+          ],
+          "false_continuation": "iota",
+          "effects_before_terminal": [
+            "scan live users in source order; first permutation/subset user only",
+            "AddInstruction with MakeStaticShape(user.shape), then MarkAsChanged BEFORE ReplaceAllUsesWith status"
+          ],
+          "outcome_contract": [
+            "first qualifying user: replace its uses, return status; visited Broadcast itself is retained",
+            "no qualifying live user: return OK and do not reach Iota/compose/drop-unit stages"
+          ]
+        },
+        {
+          "id": "iota",
+          "guard": "nonscalar operand Iota",
+          "source_cases": [
+            "HandleBroadcast/iota"
+          ],
+          "false_continuation": "compose",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "compose",
+          "guard": "nonscalar operand Broadcast",
+          "source_cases": [
+            "HandleBroadcast/compose"
+          ],
+          "false_continuation": "layout-gate",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "layout-gate",
+          "guard": "is_layout_sensitive",
+          "source_cases": [],
+          "false_continuation": "drop-unit-axes",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "return OK with no later degenerate-dimension rewrite"
+          ]
+        },
+        {
+          "id": "drop-unit-axes",
+          "guard": "enable_broadcast_degenerate_dimension and operand has extent-one axis",
+          "source_cases": [
+            "HandleBroadcast/drop-unit-axes"
+          ],
+          "false_continuation": "return-ok",
+          "effects_before_terminal": [
+            "insert reshape of operand before replacement; filter only extent1 axes"
+          ],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        }
+      ],
+      "source_cases": [
+        "HandleBroadcast/reshape",
+        "HandleBroadcast/transpose",
+        "HandleBroadcast/inserted-unit-axes",
+        "HandleBroadcast/sink-users-delegation",
+        "HandleBroadcast/scalar-user-reshape",
+        "HandleBroadcast/scalar-user-reverse",
+        "HandleBroadcast/scalar-user-transpose",
+        "HandleBroadcast/scalar-user-sort",
+        "HandleBroadcast/scalar-user-slice",
+        "HandleBroadcast/scalar-user-dynamicslice",
+        "HandleBroadcast/iota",
+        "HandleBroadcast/compose",
+        "HandleBroadcast/drop-unit-axes"
+      ]
+    },
+    {
+      "name": "HandleCompare",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5907,
+        "end_line": 6051,
+        "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "independent_semantic_review": false,
+      "semantic_closure_complete": false,
+      "stages": [
+        {
+          "id": "unsigned-zero",
+          "guard": "lhs unsigned integral; ordered Lt/Ge/Gt/Le with corresponding IsAll zero",
+          "source_cases": [
+            "HandleCompare/unsigned-lt-zero",
+            "HandleCompare/unsigned-ge-zero",
+            "HandleCompare/unsigned-zero-gt",
+            "HandleCompare/unsigned-zero-le"
+          ],
+          "false_continuation": "nonnegative-zero",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved"
+          ]
+        },
+        {
+          "id": "nonnegative-zero",
+          "guard": "Lt/Ge on recognized lhs and zero rhs, or Gt/Le on zero lhs and recognized rhs",
+          "source_cases": [
+            "HandleCompare/nonnegative-lt",
+            "HandleCompare/nonnegative-gt",
+            "HandleCompare/nonnegative-ge",
+            "HandleCompare/nonnegative-le"
+          ],
+          "false_continuation": "integral-self",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved",
+            "IsNonNegative may recognize NaN-producing floating Abs/Exp/self-product/Maximum; GE/LE true-fold needs a separate NaN-aware contract"
+          ]
+        },
+        {
+          "id": "integral-self",
+          "guard": "same operand pointers and integral lhs; six legal directions split",
+          "source_cases": [
+            "HandleCompare/integral-self-gt",
+            "HandleCompare/integral-self-lt",
+            "HandleCompare/integral-self-ne",
+            "HandleCompare/integral-self-eq",
+            "HandleCompare/integral-self-ge",
+            "HandleCompare/integral-self-le"
+          ],
+          "false_continuation": "predicate-identity",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved"
+          ]
+        },
+        {
+          "id": "predicate-identity",
+          "guard": "both PRED and Ne/false or Eq/true identity in source rhs-first order",
+          "source_cases": [
+            "HandleCompare/predicate-ne-rhs",
+            "HandleCompare/predicate-ne-lhs",
+            "HandleCompare/predicate-eq-rhs",
+            "HandleCompare/predicate-eq-lhs"
+          ],
+          "false_continuation": "causal-mask",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved"
+          ]
+        },
+        {
+          "id": "causal-mask",
+          "guard": "outer Ne zero; Select(Compare GE,ones,zeros) and SameShape predicates",
+          "source_cases": [
+            "HandleCompare/causal-mask"
+          ],
+          "false_continuation": "extremum-gt",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved"
+          ]
+        },
+        {
+          "id": "extremum-gt",
+          "guard": "Gt; lhs Maximum matcher takes priority over rhs Minimum; pointer identity chooses operand",
+          "source_cases": [
+            "HandleCompare/maximum-first",
+            "HandleCompare/maximum-second",
+            "HandleCompare/minimum-first",
+            "HandleCompare/minimum-second"
+          ],
+          "false_continuation": "return-ok",
+          "effects_before_terminal": [
+            "ReplaceOperandWith mutates visited Compare at operand0 or operand1; no node replacement"
+          ],
+          "outcome_contract": [
+            "operand replacement failure: return error before MarkAsChanged",
+            "success: MarkAsChanged then return OK; same Compare object retained",
+            "lhs Maximum matched with no shared rhs: skip rhs Minimum branch because source uses else-if"
+          ]
+        }
+      ],
+      "source_cases": [
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/predicate-ne-rhs",
+        "HandleCompare/predicate-ne-lhs",
+        "HandleCompare/predicate-eq-rhs",
+        "HandleCompare/predicate-eq-lhs",
+        "HandleCompare/causal-mask",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second"
+      ]
+    },
+    {
+      "name": "HandlePad",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 6198,
+        "end_line": 6403,
+        "source_body_sha256": "1081bccc1849bdc442febbd0535231bef2f92933afc2a78258de617ebc7c801f"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "independent_semantic_review": false,
+      "semantic_closure_complete": false,
+      "stages": [
+        {
+          "id": "empty-input",
+          "guard": "operand0 has zero elements",
+          "source_cases": [
+            "HandlePad/empty-input"
+          ],
+          "false_continuation": "unit-interior",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "unit-interior",
+          "guard": "HasInteriorPadding and some positive interior padding axis has input extent1",
+          "source_cases": [
+            "HandlePad/unit-interior"
+          ],
+          "false_continuation": "classify-padding",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "construct replacement; API can insert before deciding whether replacement is skipped",
+            "return from handler on OK replacement or OK skip, without trying later branches",
+            "construction, graph/API status, relay and changed-state behavior require the selected overload contract"
+          ]
+        },
+        {
+          "id": "classify-padding",
+          "guard": "scan all dimensions",
+          "source_cases": [],
+          "false_continuation": "compatible",
+          "effects_before_terminal": [
+            "all_zero tracks ONLY edge padding, not interior padding",
+            "padding_dimensions includes any nonzero edge or nonzero interior; has_negative tracks edges"
+          ],
+          "outcome_contract": [
+            "local bookkeeping only; proceed to compatible"
+          ]
+        },
+        {
+          "id": "compatible",
+          "guard": "all edge padding zero",
+          "source_cases": [
+            "HandlePad/compatible"
+          ],
+          "false_continuation": "broadcast-projection",
+          "effects_before_terminal": [],
+          "outcome_contract": [
+            "compatible replacement true: return OK",
+            "compatibility false: CONTINUE to broadcast-projection; unlike returning new-instruction branches"
+          ]
+        },
+        {
+          "id": "broadcast-projection",
+          "guard": "padding axes strict subset; operand Broadcast one user; rank(source)<=axis count; broadcast dims subset of padding axes",
+          "source_cases": [
+            "HandlePad/broadcast-projection"
+          ],
+          "false_continuation": "negative-edges",
+          "effects_before_terminal": [
+            "delete unpadded shape dimensions in descending order",
+            "mutate shared Broadcast shape/dimensions, clear sharding, update layout BEFORE final replacement",
+            "insert cloned smaller Pad and set config/layout, then insert outer Broadcast"
+          ],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved",
+            "if subset check fails: continue to negative-edges without these graph mutations",
+            "single-user condition is a frame premise; original-value/sharding/layout and error behavior remain obligations"
+          ]
+        },
+        {
+          "id": "negative-edges",
+          "guard": "has_negative and enable_negative_padding_replacement",
+          "source_cases": [
+            "HandlePad/negative-edges"
+          ],
+          "false_continuation": "return-ok",
+          "effects_before_terminal": [
+            "MakePadHlo inserts clamped-edge Pad; restore original output type and copy/update layout",
+            "compute crop starts/end extents using signed int64 negation/addition; insert Slice and copy/update layout",
+            "TF_RET_CHECK shape equality before replacement; ignore tiles only when layout insensitive"
+          ],
+          "outcome_contract": [
+            "construct scalar/value or retain existing operand as recorded",
+            "return replacement status immediately, even if replacement fails",
+            "relay/control/uses/metadata/frame and status correspondence not proved",
+            "error may occur AFTER insertion/type/layout edits; no rollback is shown in handler",
+            "int64-min edge negation and extent arithmetic require legality/representability premises"
+          ]
+        }
+      ],
+      "source_cases": [
+        "HandlePad/empty-input",
+        "HandlePad/unit-interior",
+        "HandlePad/compatible",
+        "HandlePad/broadcast-projection",
+        "HandlePad/negative-edges"
+      ]
+    }
+  ],
+  "helpers": [
+    {
+      "name": "IsNonNegative",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 540,
+        "end_line": 607,
+        "source_body_sha256": "99e72a262a837d1137f3b801afedc167bf3a93b74754e1be05f4f410ef17e4f4"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "semantic_closure_complete": false,
+      "open_obligations": [
+        "not equivalent to ordered >=0 on NaN-capable floating inputs",
+        "recursive Broadcast/Min/Max/Power/Select and fallback IsPositive require typed value-range contract"
+      ]
+    },
+    {
+      "name": "OutputIsPermutationOfOperandElements",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5664,
+        "end_line": 5677,
+        "source_body_sha256": "b3400361698c9a20e80e9bc004336a07761638289fd1b6a12c9efff2ebf3e3a8"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "semantic_closure_complete": false,
+      "open_obligations": [
+        "Sort tuple exclusion; legal input and dynamic size/shape semantics"
+      ]
+    },
+    {
+      "name": "OutputIsSubsetOfOperandElements",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5681,
+        "end_line": 5698,
+        "source_body_sha256": "f0737226f199ad5be6ebd4ccb42cd843aa8301244b6094459dbdfec82ec746c3"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "semantic_closure_complete": false,
+      "open_obligations": [
+        "exactly one operand occurrence; DynamicSlice data operand only; effects of discarded start indices"
+      ]
+    },
+    {
+      "name": "TryToSinkBroadcastAfterElementwiseOps",
+      "source": {
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 6464,
+        "end_line": 6548,
+        "source_body_sha256": "abe5c3084464fc4a46d22c019a688f6cb301ddde84d3c953069fbf0e2efdbd43"
+      },
+      "reading_depth": "complete_body_integrator_inspection",
+      "semantic_closure_complete": false,
+      "open_obligations": [
+        "per-user skipping Copy/Fusion/dead/non-elementwise",
+        "same operand shape and equal dim maps or scalar Broadcast",
+        "new nodes and multiple successful user rewrites can precede later errors",
+        "snapshot/order of users and CloneWithNewOperands metadata/frame semantics"
+      ]
+    }
+  ],
+  "case_links": [
+    {
+      "schema_id": "HandleCompare/unsigned-lt-zero",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/unsigned-ge-zero",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/unsigned-zero-gt",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/unsigned-zero-le",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/nonnegative-lt",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/nonnegative-gt",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/nonnegative-ge",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/nonnegative-le",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/integral-self-gt",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/integral-self-lt",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/integral-self-ne",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/integral-self-eq",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/integral-self-ge",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/integral-self-le",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/predicate-ne-rhs",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/predicate-ne-lhs",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/predicate-eq-rhs",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/predicate-eq-lhs",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/causal-mask",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/maximum-first",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/maximum-second",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/minimum-first",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleCompare/minimum-second",
+      "schema_file": "census/arithmetic-cases.json",
+      "source_handler": "HandleCompare",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/reshape",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/transpose",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/inserted-unit-axes",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/sink-users-delegation",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/scalar-user-reshape",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/scalar-user-reverse",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/scalar-user-transpose",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/scalar-user-sort",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/scalar-user-slice",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/scalar-user-dynamicslice",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/iota",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/compose",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandleBroadcast/drop-unit-axes",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandleBroadcast",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandlePad/empty-input",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandlePad",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandlePad/unit-interior",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandlePad",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandlePad/compatible",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandlePad",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandlePad/broadcast-projection",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandlePad",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    },
+    {
+      "schema_id": "HandlePad/negative-edges",
+      "schema_file": "census/tensor-index-cases.json",
+      "source_handler": "HandlePad",
+      "status": "source_path_inspected_type_graph_contracts_open"
+    }
+  ],
+  "common_open_obligations": [
+    "legal HLO rank/type/dynamic/layout/finite-width attribute partitions",
+    "source matcher/helper/value-observation contract correspondence",
+    "allocation/skip/error/status/changed/root/uses/control/metadata/frame outcomes",
+    "independent reconciliation and final source acceptance"
+  ],
+  "nonnegative_native_evidence": "reports/compare-nonnegative-replay-v1/result.json"
+}

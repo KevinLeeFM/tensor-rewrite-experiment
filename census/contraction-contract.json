@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_logical_contraction_not_full_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "source_correspondence_reviewed": false,
+  "source_cpp_extraction_proved": false,
+  "profile": "arbitrary static ranks/extents and operand axis bijections; ordered scalar accumulation and explicit operand/product/finish conversions; graph/API and source mapping pending",
+  "value_theorems": [
+    "TensorRewrite.Pilot.Contraction.dot_empty_contract",
+    "TensorRewrite.Pilot.Contraction.dot_empty_output",
+    "TensorRewrite.Pilot.Contraction.dot_empty_lhs",
+    "TensorRewrite.Pilot.Contraction.dot_empty_rhs",
+    "TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity",
+    "TensorRewrite.Pilot.Contraction.dot_no_contract"
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.Contraction.firstIndex_appendIndex",
+    "TensorRewrite.Pilot.Contraction.secondIndex_appendIndex",
+    "TensorRewrite.Pilot.Contraction.terms_length",
+    "TensorRewrite.Pilot.Contraction.terms_no_contract",
+    "TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty",
+    "TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty"
+  ],
+  "diagnostic_certificates": [
+    "TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent",
+    "TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive",
+    "TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible",
+    "TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ"
+  ],
+  "native_evidence": "reports/contraction-replay-v3/result.json",
+  "prior_native_evidence": [
+    "reports/contraction-replay-v1/result.json",
+    "reports/contraction-replay-v2/result.json"
+  ],
+  "native_run_count": 57,
+  "model_vector_count": 15,
+  "fp_observation_contract_adopted": false,
+  "fp_diagnostic_is_source_refutation": false,
+  "fp_profile": "minimal strict binary32 one-MAC bit conditions; RNE evaluator observation; not a full IEEE or backend contract",
+  "source_obligations": [
+    "match concrete Dot dimension lists and canonical operand permutations to Plan",
+    "type/precision configuration, operand/result casts and finish correspondence",
+    "initializer identity after finish, empty result signed-zero permissions",
+    "graph uses/control/metadata replacement API effects",
+    "independent source and observation-contract review"
+  ],
+  "contracts": [
+    {
+      "id": "normalize-operands",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 3095,
+      "end_line": 3114,
+      "source_body_sha256": "b0aea546063f2e94a85ae6fb83cb7c2996bfc526e5dac941d8f48667ac390cea"
+    },
+    {
+      "id": "outer-helper",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 3884,
+      "end_line": 3929,
+      "source_body_sha256": "52ce491ec2356f64a27249e3bcfc01a19b1013fe83eb08af8df96f253a5b1132"
+    },
+    {
+      "id": "dot-guards",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 4365,
+      "end_line": 4410,
+      "source_body_sha256": "0cec61ff8423a07134a20ba1b3f96fc68881a3f839fac880db988dc5cf84901d"
+    },
+    {
+      "id": "dot-slow-mac",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 6092,
+      "end_line": 6150,
+      "source_body_sha256": "7f1869835b822379e307b40194686c33abc2869396d95ec45134638e28c2c529"
+    },
+    {
+      "id": "dot-casts-and-dispatch",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 6674,
+      "end_line": 6735,
+      "source_body_sha256": "849cf9fa5652dd8b01ba25eeef47c86badfa0b647bfffaa634f2cf137af52351"
+    }
+  ]
+}

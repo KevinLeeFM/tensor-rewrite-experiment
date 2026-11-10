@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_logical_reshape_not_full_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "profile": "static bounded shapes; logical dim0-major order; mathematical element counts; physical layout separate",
+  "source_cases": [
+    "HandleReshape/identity",
+    "HandleReshape/compose",
+    "HandleReshape/empty"
+  ],
+  "contracts": [
+    {
+      "id": "reshape-handler",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 6911,
+      "end_line": 6946,
+      "source_body_sha256": "63c81d0c81b646d2e6e70ed4c09a3b9f47fdd551098456cc0fb93c819cc06226"
+    },
+    {
+      "id": "reshape-evaluator",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 1512,
+      "end_line": 1521,
+      "source_body_sha256": "92d8f15048174d05b69220f94bdf6d948b7af3d8345b5f24880fef2beafefa4b"
+    },
+    {
+      "id": "reshape-literal",
+      "path": "sources/xla/xla/literal.cc",
+      "line": 1298,
+      "end_line": 1329,
+      "source_body_sha256": "ed5112c3ae37cab26f97316040e2ad39a2fb4e337b6f8ed77eecfc5276a83a9a"
+    },
+    {
+      "id": "reshape-shape",
+      "path": "sources/xla/xla/service/shape_inference.cc",
+      "line": 4069,
+      "end_line": 4096,
+      "source_body_sha256": "e79d7431f9ab7bd9691db8320162359cf5b9bbeae98f52c3fa204dc8d69b060b"
+    },
+    {
+      "id": "reshape-documentation",
+      "path": "sources/xla/docs/operation_semantics.md",
+      "line": 4339,
+      "end_line": 4352,
+      "source_body_sha256": "8b2dc776e7ca8a09726f41b86b575a1793dfd263440f112f5d542d2df2b1e4b9"
+    }
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.FiniteProduct.row_join",
+    "TensorRewrite.Pilot.FiniteProduct.column_join",
+    "TensorRewrite.Pilot.FiniteProduct.join_row_column",
+    "TensorRewrite.Pilot.LinearIndex.delinearize_linearize",
+    "TensorRewrite.Pilot.LinearIndex.linearize_delinearize",
+    "TensorRewrite.Pilot.Reshape.tensor_eq_of_empty",
+    "TensorRewrite.Pilot.Reshape.reshapeIndex_compose",
+    "TensorRewrite.Pilot.Reshape.reshapeView_constant"
+  ],
+  "rules": [
+    {
+      "theorem": "TensorRewrite.Pilot.Reshape.reshapeTensor_identity",
+      "module": "TensorRewrite/Pilot/ReshapeRules.lean",
+      "source_case": "HandleReshape/identity",
+      "status": "pilot_value_proof_pending_source_graph_review",
+      "semantic_track": "static logical dim0-major indexing; arbitrary rank and element type",
+      "source_rewrite_accepted": false
+    },
+    {
+      "theorem": "TensorRewrite.Pilot.Reshape.reshapeTensor_compose",
+      "module": "TensorRewrite/Pilot/ReshapeRules.lean",
+      "source_case": "HandleReshape/compose",
+      "status": "pilot_value_proof_pending_source_graph_review",
+      "semantic_track": "static logical dim0-major indexing; arbitrary rank and element type",
+      "source_rewrite_accepted": false
+    },
+    {
+      "theorem": "TensorRewrite.Pilot.Reshape.reshapeTensor_empty",
+      "module": "TensorRewrite/Pilot/ReshapeRules.lean",
+      "source_case": "HandleReshape/empty",
+      "status": "pilot_value_proof_pending_source_graph_review",
+      "semantic_track": "static logical dim0-major indexing; arbitrary rank and element type",
+      "source_rewrite_accepted": false
+    }
+  ],
+  "native_evidence": "reports/reshape-replay-v3/result.json",
+  "native_scope": "separate direct handler, full pass and no-rewrite controls",
+  "remaining": [
+    "finite source element-count arithmetic",
+    "dynamic dimensions",
+    "physical layout and bitcast correspondence",
+    "replacement metadata/control/frame observations",
+    "independent source correspondence review"
+  ]
+}

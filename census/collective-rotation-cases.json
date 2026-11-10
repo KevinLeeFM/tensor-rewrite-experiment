@@ -1,0 +1,670 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "HandleAllGather",
+    "HandleAllReduce",
+    "HandleAllReduceOrReduceScatter",
+    "HandleAllToAll",
+    "HandleReduceScatter",
+    "HandleRemainder",
+    "HandleShuffle",
+    "TryToSinkBroadcastAfterElementwiseOps"
+  ],
+  "cases": [
+    {
+      "id": "HandleAllGather/uniform",
+      "handler": "HandleAllGather",
+      "line": 1406,
+      "end_line": 1417,
+      "lhs": "AllGather(uniform_literal)",
+      "rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "guard": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst",
+      "source_body_sha256": "d321dacee67a5040e3a677876ecf45dc696eb46b4950556a43aea63d34ada43c",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "cross-device value uniformity and collective participation/deadlock semantics",
+        "source matching forms may be unreachable for some legal opcode shapes",
+        "factory layout/constant reuse branches",
+        "device groups and channels"
+      ],
+      "helper_contract_ids": [
+        "IsInConditionalBranch",
+        "MatchUniformCollectiveOperand",
+        "CreateUniformCollectiveReplacement"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0,
+        1
+      ],
+      "replacement_site_id": "site-L01413-C010",
+      "replacement_line": 1413,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01415-C007",
+          "replacement_line": 1415,
+          "replacement_call": "CreateUniformCollectiveReplacement",
+          "replacement_source": "      CreateUniformCollectiveReplacement(all_gather, std::move(*uniform),"
+        }
+      ],
+      "site_roles": [
+        {
+          "site_id": "site-L01413-C010",
+          "role": "graph_replacement"
+        },
+        {
+          "site_id": "site-L01415-C007",
+          "role": "replacement_argument_construction"
+        }
+      ],
+      "site_order_interpretation": "source_coordinates_with_nested_factory_argument",
+      "acceptance_unit": "one collective rewrite including its nested construction; site list is not an execution trace"
+    },
+    {
+      "id": "HandleAllToAll/uniform",
+      "handler": "HandleAllToAll",
+      "line": 1419,
+      "end_line": 1430,
+      "lhs": "AllToAll(uniform_literal)",
+      "rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "guard": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst",
+      "source_body_sha256": "ad560ebc16d21f855e574139642f95f9b80dd97aedc5fe42ded272c6a7a648cd",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "cross-device value uniformity and collective participation/deadlock semantics",
+        "source matching forms may be unreachable for some legal opcode shapes",
+        "factory layout/constant reuse branches",
+        "device groups and channels"
+      ],
+      "helper_contract_ids": [
+        "IsInConditionalBranch",
+        "MatchUniformCollectiveOperand",
+        "CreateUniformCollectiveReplacement"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0,
+        1
+      ],
+      "replacement_site_id": "site-L01426-C010",
+      "replacement_line": 1426,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01428-C007",
+          "replacement_line": 1428,
+          "replacement_call": "CreateUniformCollectiveReplacement",
+          "replacement_source": "      CreateUniformCollectiveReplacement(all_to_all, std::move(*uniform),"
+        }
+      ],
+      "site_roles": [
+        {
+          "site_id": "site-L01426-C010",
+          "role": "graph_replacement"
+        },
+        {
+          "site_id": "site-L01428-C007",
+          "role": "replacement_argument_construction"
+        }
+      ],
+      "site_order_interpretation": "source_coordinates_with_nested_factory_argument",
+      "acceptance_unit": "one collective rewrite including its nested construction; site list is not an execution trace"
+    },
+    {
+      "id": "HandleAllReduceOrReduceScatter/min",
+      "handler": "HandleAllReduceOrReduceScatter",
+      "line": 1432,
+      "end_line": 1491,
+      "lhs": "AllReduce or ReduceScatter(uniform_literal,reducer MIN)",
+      "rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "guard": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst; MatchReductionComputation returns MIN",
+      "source_body_sha256": "67fa54ad4447e4f09bc3aed9af18c9a4c361602b4eb7497cdd588953ccf1f99d",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "external reducer matcher includes PRED And/Or as MIN/MAX",
+        "actual reduction order, NaN payloads and signed zeros",
+        "eliminating collective participation needs more than scalar idempotence"
+      ],
+      "helper_contract_ids": [
+        "IsInConditionalBranch",
+        "MatchUniformCollectiveOperand",
+        "CreateUniformCollectiveReplacement"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0,
+        1
+      ],
+      "replacement_site_id": "site-L01449-C014",
+      "replacement_line": 1449,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01451-C011",
+          "replacement_line": 1451,
+          "replacement_call": "CreateUniformCollectiveReplacement",
+          "replacement_source": "          CreateUniformCollectiveReplacement(collective, std::move(*uniform),"
+        }
+      ],
+      "site_roles": [
+        {
+          "site_id": "site-L01449-C014",
+          "role": "graph_replacement"
+        },
+        {
+          "site_id": "site-L01451-C011",
+          "role": "replacement_argument_construction"
+        }
+      ],
+      "site_order_interpretation": "source_coordinates_with_nested_factory_argument",
+      "acceptance_unit": "one collective rewrite including its nested construction; site list is not an execution trace"
+    },
+    {
+      "id": "HandleAllReduceOrReduceScatter/max",
+      "handler": "HandleAllReduceOrReduceScatter",
+      "line": 1432,
+      "end_line": 1491,
+      "lhs": "AllReduce or ReduceScatter(uniform_literal,reducer MAX)",
+      "rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "guard": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst; MatchReductionComputation returns MAX",
+      "source_body_sha256": "67fa54ad4447e4f09bc3aed9af18c9a4c361602b4eb7497cdd588953ccf1f99d",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "external reducer matcher includes PRED And/Or as MIN/MAX",
+        "actual reduction order, NaN payloads and signed zeros",
+        "eliminating collective participation needs more than scalar idempotence"
+      ],
+      "helper_contract_ids": [
+        "IsInConditionalBranch",
+        "MatchUniformCollectiveOperand",
+        "CreateUniformCollectiveReplacement"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0,
+        1
+      ],
+      "replacement_site_id": "site-L01449-C014",
+      "replacement_line": 1449,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01451-C011",
+          "replacement_line": 1451,
+          "replacement_call": "CreateUniformCollectiveReplacement",
+          "replacement_source": "          CreateUniformCollectiveReplacement(collective, std::move(*uniform),"
+        }
+      ],
+      "site_roles": [
+        {
+          "site_id": "site-L01449-C014",
+          "role": "graph_replacement"
+        },
+        {
+          "site_id": "site-L01451-C011",
+          "role": "replacement_argument_construction"
+        }
+      ],
+      "site_order_interpretation": "source_coordinates_with_nested_factory_argument",
+      "acceptance_unit": "one collective rewrite including its nested construction; site list is not an execution trace"
+    },
+    {
+      "id": "HandleAllReduceOrReduceScatter/sum-integral",
+      "handler": "HandleAllReduceOrReduceScatter",
+      "line": 1432,
+      "end_line": 1491,
+      "lhs": "AllReduce or ReduceScatter(uniform_literal,Add)",
+      "rhs": "uniform replacement of host-T literal (value * static_cast<T>(group_size))",
+      "guard": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst; MatchReductionComputation SUM; GetReplicaGroupCountAndSize succeeds with value; output type integral; new literal initialized",
+      "source_body_sha256": "67fa54ad4447e4f09bc3aed9af18c9a4c361602b4eb7497cdd588953ccf1f99d",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "replica/partition group-mode counts, iota device lists and equal participant counts",
+        "host scalar cast and multiplication versus repeated HLO addition",
+        "signed C++ overflow and floating rounding/exceptional behavior",
+        "factory receives no reusable scalar instruction"
+      ],
+      "helper_contract_ids": [
+        "IsInConditionalBranch",
+        "MatchUniformCollectiveOperand",
+        "CreateUniformCollectiveReplacement"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        2,
+        3
+      ],
+      "replacement_site_id": "site-L01483-C014",
+      "replacement_line": 1483,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01484-C023",
+          "replacement_line": 1484,
+          "replacement_call": "CreateUniformCollectiveReplacement",
+          "replacement_source": "          collective, CreateUniformCollectiveReplacement("
+        }
+      ],
+      "site_roles": [
+        {
+          "site_id": "site-L01483-C014",
+          "role": "graph_replacement"
+        },
+        {
+          "site_id": "site-L01484-C023",
+          "role": "replacement_argument_construction"
+        }
+      ],
+      "site_order_interpretation": "source_coordinates_with_nested_factory_argument",
+      "acceptance_unit": "one collective rewrite including its nested construction; site list is not an execution trace"
+    },
+    {
+      "id": "HandleAllReduceOrReduceScatter/sum-floating",
+      "handler": "HandleAllReduceOrReduceScatter",
+      "line": 1432,
+      "end_line": 1491,
+      "lhs": "AllReduce or ReduceScatter(uniform_literal,Add)",
+      "rhs": "uniform replacement of host-T literal (value * static_cast<T>(group_size))",
+      "guard": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst; MatchReductionComputation SUM; GetReplicaGroupCountAndSize succeeds with value; output type floating; new literal initialized",
+      "source_body_sha256": "67fa54ad4447e4f09bc3aed9af18c9a4c361602b4eb7497cdd588953ccf1f99d",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "replica/partition group-mode counts, iota device lists and equal participant counts",
+        "host scalar cast and multiplication versus repeated HLO addition",
+        "signed C++ overflow and floating rounding/exceptional behavior",
+        "factory receives no reusable scalar instruction"
+      ],
+      "helper_contract_ids": [
+        "IsInConditionalBranch",
+        "MatchUniformCollectiveOperand",
+        "CreateUniformCollectiveReplacement"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        2,
+        3
+      ],
+      "replacement_site_id": "site-L01483-C014",
+      "replacement_line": 1483,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01484-C023",
+          "replacement_line": 1484,
+          "replacement_call": "CreateUniformCollectiveReplacement",
+          "replacement_source": "          collective, CreateUniformCollectiveReplacement("
+        }
+      ],
+      "site_roles": [
+        {
+          "site_id": "site-L01483-C014",
+          "role": "graph_replacement"
+        },
+        {
+          "site_id": "site-L01484-C023",
+          "role": "replacement_argument_construction"
+        }
+      ],
+      "site_order_interpretation": "source_coordinates_with_nested_factory_argument",
+      "acceptance_unit": "one collective rewrite including its nested construction; site list is not an execution trace"
+    },
+    {
+      "id": "HandleAllReduce/shared-handler",
+      "handler": "HandleAllReduce",
+      "line": 1493,
+      "end_line": 1496,
+      "lhs": "AllReduce(x)",
+      "rhs": "shared handler-dependent graph",
+      "guard": "unconditional wrapper delegation",
+      "source_body_sha256": "66c8fce09052ec6649a3d459aab6123270594c35ec3a95bf2992cdf46cc57ddd",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "retain caller opcode, shape and group configuration when instantiating shared branches"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "delegation_target": "HandleAllReduceOrReduceScatter",
+      "delegation_line": 1495
+    },
+    {
+      "id": "HandleReduceScatter/shared-handler",
+      "handler": "HandleReduceScatter",
+      "line": 1498,
+      "end_line": 1501,
+      "lhs": "ReduceScatter(x)",
+      "rhs": "shared handler-dependent graph",
+      "guard": "unconditional wrapper delegation",
+      "source_body_sha256": "14b6110437339fe4fe7f49879c8de987530c9f6e2600a096dc8268f6cddf23a9",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "retain caller opcode, shape and group configuration when instantiating shared branches"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "delegation_target": "HandleAllReduceOrReduceScatter",
+      "delegation_line": 1500
+    },
+    {
+      "id": "HandleRemainder/nested",
+      "handler": "HandleRemainder",
+      "line": 6614,
+      "end_line": 6704,
+      "lhs": "Remainder(Remainder(a,b),b)",
+      "rhs": "inner Remainder(a,b)",
+      "guard": "denominator pointer identity; no local scalar-type/fast-math guard",
+      "source_body_sha256": "6c13ae2518509cc7169c7c35296dd4b571f5444feb4ce8bfcdae0f5cc5db64ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "Remainder floating exceptional behavior, signed remainder convention and zero divisor"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06621-C012",
+      "replacement_line": 6621,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(remainder, a);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleRemainder/power-two-unsigned",
+      "handler": "HandleRemainder",
+      "line": 6614,
+      "end_line": 6704,
+      "lhs": "Remainder(a,constant_power_two)",
+      "rhs": "And(a,b-1)",
+      "guard": "integral primitive dispatch; denominator effective-scalar Constant direct or broadcast; unsigned denominator has_single_bit",
+      "source_body_sha256": "6c13ae2518509cc7169c7c35296dd4b571f5444feb4ce8bfcdae0f5cc5db64ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "minimum signed value and modular negation",
+        "sub-byte widths, constant casts and masking",
+        "BroadcastZeros and layout update"
+      ],
+      "helper_contract_ids": [
+        "TryRemainderToAnd"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L06636-C012",
+      "replacement_line": 6636,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(remainder, std::move(shift));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleRemainder/power-two-signed",
+      "handler": "HandleRemainder",
+      "line": 6614,
+      "end_line": 6704,
+      "lhs": "Remainder(a,constant_power_two)",
+      "rhs": "Select(a<0,Negate(And(Select(a<0,Negate(a),a),b-1)),And(Select(a<0,Negate(a),a),b-1))",
+      "guard": "integral primitive dispatch; denominator effective-scalar Constant direct or broadcast; signed denominator >0 and has_single_bit",
+      "source_body_sha256": "6c13ae2518509cc7169c7c35296dd4b571f5444feb4ce8bfcdae0f5cc5db64ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "minimum signed value and modular negation",
+        "sub-byte widths, constant casts and masking",
+        "BroadcastZeros and layout update"
+      ],
+      "helper_contract_ids": [
+        "TryRemainderToAnd"
+      ],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L06636-C012",
+      "replacement_line": 6636,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(remainder, std::move(shift));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleRemainder/iota-in-range",
+      "handler": "HandleRemainder",
+      "line": 6614,
+      "end_line": 6704,
+      "lhs": "Remainder(Iota(axis),Broadcast(divisor))",
+      "rhs": "Iota(axis)",
+      "guard": "divisor ConstantEffectiveScalar; GetFirstInteger succeeds; divisor>0 and divisor>=axis extent; extent==0 OR extent-1 FitsInIntegralType",
+      "source_body_sha256": "6c13ae2518509cc7169c7c35296dd4b571f5444feb4ce8bfcdae0f5cc5db64ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "empty axes are explicitly allowed",
+        "primitive_util::FitsInIntegralType and Iota representation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L06660-C014",
+      "replacement_line": 6660,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(remainder, iota);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleRemainder/iota-add-lhs",
+      "handler": "HandleRemainder",
+      "line": 6614,
+      "end_line": 6704,
+      "lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at lhs",
+      "rhs": "Remainder(Iota,Broadcast(N))",
+      "guard": "same addend/divisor ConstantEffectiveScalar pointer; GetFirstInteger positive; extent>0; extent-1 FitsInIntegralType; OverflowSafeAdd(N,extent-1) succeeds and result fits element type",
+      "source_body_sha256": "6c13ae2518509cc7169c7c35296dd4b571f5444feb4ce8bfcdae0f5cc5db64ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "source checks overflow instead of assuming integer-real equivalence",
+        "signed remainder and Iota range",
+        "OverflowSafeAdd builtin/fallback implementations"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L06695-C016",
+      "replacement_line": 6695,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleRemainder/iota-add-rhs",
+      "handler": "HandleRemainder",
+      "line": 6614,
+      "end_line": 6704,
+      "lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at rhs",
+      "rhs": "Remainder(Iota,Broadcast(N))",
+      "guard": "same addend/divisor ConstantEffectiveScalar pointer; GetFirstInteger positive; extent>0; extent-1 FitsInIntegralType; OverflowSafeAdd(N,extent-1) succeeds and result fits element type",
+      "source_body_sha256": "6c13ae2518509cc7169c7c35296dd4b571f5444feb4ce8bfcdae0f5cc5db64ca",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "source checks overflow instead of assuming integer-real equivalence",
+        "signed remainder and Iota range",
+        "OverflowSafeAdd builtin/fallback implementations"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L06695-C016",
+      "replacement_line": 6695,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleShuffle/rotate-identity",
+      "handler": "HandleShuffle",
+      "line": 7325,
+      "end_line": 7401,
+      "lhs": "Rotate chain(x)",
+      "rhs": "base x",
+      "guard": "mode Rotate; accumulate shifts by dimension across whole consecutive Rotate chain; base operand is after chain; drop axes of size<=1, literal IsAllFirst splats, or Broadcast-created axes; remaining shifts normalized with shuffle::NormalizeShift and zero results dropped; new_dimensions empty",
+      "source_body_sha256": "f143ccf183b4a671565793c1e3644bc3fef0a8a9aca7fed3e77e6c1661915c05",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "sum of shifts is signed int64 before modular normalization",
+        "constant bit equality and broadcast axis membership",
+        "zero extents and legal dimension lists"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L07386-C016",
+      "replacement_line": 7386,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(shuffle, base_operand);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleShuffle/rotate-canonical",
+      "handler": "HandleShuffle",
+      "line": 7325,
+      "end_line": 7401,
+      "lhs": "Rotate chain(x)",
+      "rhs": "Rotate(base,sorted new_dimensions,new_shifts)",
+      "guard": "mode Rotate; accumulate shifts by dimension across whole consecutive Rotate chain; base operand is after chain; drop axes of size<=1, literal IsAllFirst splats, or Broadcast-created axes; remaining shifts normalized with shuffle::NormalizeShift and zero results dropped; new_dimensions nonempty; base differs from immediate operand OR dimensions differ OR shifts differ",
+      "source_body_sha256": "f143ccf183b4a671565793c1e3644bc3fef0a8a9aca7fed3e77e6c1661915c05",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "shift aggregation and NormalizeShift bounds/overflow",
+        "chain traversal and dimension ordering",
+        "logical rotation index direction"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L07394-C016",
+      "replacement_line": 7394,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        return ReplaceWithNewInstruction(shuffle, std::move(new_shuffle));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryToSinkBroadcastAfterElementwiseOps/eligible-user",
+      "handler": "TryToSinkBroadcastAfterElementwiseOps",
+      "line": 6465,
+      "end_line": 6548,
+      "lhs": "Elementwise(Broadcast(x,dims), compatible broadcast operands)",
+      "rhs": "Broadcast(cloned Elementwise of smaller operands,dims), replacing all uses of each eligible user",
+      "guard": "input Broadcast and output nonscalar; user live, not Copy or Fusion, IsElementwise; every user operand scalar Broadcast OR equal-input-shape Broadcast with same dimensions",
+      "source_body_sha256": "69b8ab499603b65b345c3c8aa91b35e9ef2d2bda324a3740e4cf8c5e0be80939",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal HLO and source-order earlier paths/status checks apply; caller context is part of the obligation",
+      "dependencies": [
+        "loop over all eligible users; helper can rewrite several nodes per call",
+        "scalar operands rebroadcast to changed shape",
+        "user result element type preserved in changed shape",
+        "ReplaceAllUsesWith affects graph users rather than replacing visited Broadcast",
+        "caller layout/option restrictions still to reconcile"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "scalar types, layouts, group modes and observation profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L06544-C032",
+      "replacement_line": 6544,
+      "replacement_call": "ReplaceAllUsesWith",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(user->ReplaceAllUsesWith(new_broadcast));",
+      "additional_replacement_sites": []
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "IsInConditionalBranch",
+      "line": 1321,
+      "end_line": 1338,
+      "source_body_sha256": "401ca5b3fe7721dcb1ebcfc75acd9181e02f55fdff5b06e9d96f7d29ac6a4b7b",
+      "source_behavior": "walk transitive caller computations with visited set; any Conditional caller rejects collective folding; preserves a distributed participation concern",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MatchUniformCollectiveOperand",
+      "line": 1340,
+      "end_line": 1367,
+      "source_body_sha256": "a032e3c3d4352414552f151c328cfdb1aae388e5cc117521162b30fd9664390e",
+      "source_behavior": "reject multioperand/nonarray/control/async/conditional/host cases; match direct/broadcast scalar constant or nonempty uniform literal",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "CreateUniformCollectiveReplacement",
+      "line": 1372,
+      "end_line": 1402,
+      "source_body_sha256": "01e1e41a94a22203386d777f96e081fbf6e1c0e95cae4470d19d40c54f261fc0",
+      "source_behavior": "construct scalar Constant for scalar/default-memory output, otherwise Broadcast; optionally reuse suitable scalar; may add nodes and assign layout, does not itself replace the collective",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "TryRemainderToAnd",
+      "line": 6552,
+      "end_line": 6611,
+      "source_body_sha256": "ee9f447c38f05015afffaac43cff8760338b461243ed56dde0565718ae02ec2d",
+      "source_behavior": "integral single-bit denominator lowering: signed sign-select/modular-negate/mask/sign-select or unsigned mask; other cases return null",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "external_contract_sources": "sources/collective-contract-manifest.json",
+  "limitations": [
+    "source schemas are not a disjoint/frozen rewrite denominator",
+    "construction factory calls are not extra graph rewrites",
+    "distributed effects, external group/reducer semantics, host arithmetic and layout remain unproved",
+    "primary-agent source inspection; independent review and full profile splitting pending"
+  ]
+}

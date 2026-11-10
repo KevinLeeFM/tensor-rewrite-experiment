@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_promoted_signed_words_not_full_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "profile": "modular words and injective signed observations; arbitrary shapes and widths with width <= promoted; no floating/custom subbyte or graph/API proof",
+  "source_scope": "typed evaluator s8/s16/s32/s64; exact input widening, unsigned binary arithmetic, signed reinterpretation and return narrowing; backend/ABI/source correspondence review pending",
+  "source_dtype_profiles": [
+    {
+      "dtype": "s8",
+      "stored_width": 8,
+      "elementwise_type": "int64_t",
+      "binary_unsigned_type": "uint64_t",
+      "binary_intermediate_width": 64,
+      "negate_unsigned_width": 8,
+      "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int8.cc"
+    },
+    {
+      "dtype": "s16",
+      "stored_width": 16,
+      "elementwise_type": "int64_t",
+      "binary_unsigned_type": "uint64_t",
+      "binary_intermediate_width": 64,
+      "negate_unsigned_width": 16,
+      "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int16.cc"
+    },
+    {
+      "dtype": "s32",
+      "stored_width": 32,
+      "elementwise_type": "int64_t",
+      "binary_unsigned_type": "uint64_t",
+      "binary_intermediate_width": 64,
+      "negate_unsigned_width": 32,
+      "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int32.cc"
+    },
+    {
+      "dtype": "s64",
+      "stored_width": 64,
+      "elementwise_type": "int64_t",
+      "binary_unsigned_type": "uint64_t",
+      "binary_intermediate_width": 64,
+      "negate_unsigned_width": 64,
+      "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int64.cc"
+    }
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg",
+    "TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective"
+  ],
+  "related_word_value_theorems": [
+    "TensorRewrite.Pilot.ModularArithmetic.add_assoc",
+    "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc",
+    "TensorRewrite.Pilot.ModularArithmetic.add_comm",
+    "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero",
+    "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero",
+    "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left",
+    "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right",
+    "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order",
+    "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
+    "TensorRewrite.Pilot.ModularArithmetic.factor_left",
+    "TensorRewrite.Pilot.ModularArithmetic.factor_right",
+    "TensorRewrite.Pilot.ModularArithmetic.four_factors",
+    "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_assoc",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one",
+    "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero",
+    "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast",
+    "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant",
+    "TensorRewrite.Pilot.Subtract.add_sub_self_left",
+    "TensorRewrite.Pilot.Subtract.add_sub_self_right",
+    "TensorRewrite.Pilot.Subtract.neg_neg",
+    "TensorRewrite.Pilot.Subtract.sub_add_self_left",
+    "TensorRewrite.Pilot.Subtract.sub_add_self_right",
+    "TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg",
+    "TensorRewrite.Pilot.Subtract.sub_eq_add_neg",
+    "TensorRewrite.Pilot.Subtract.sub_self",
+    "TensorRewrite.Pilot.Subtract.sub_sub_self",
+    "TensorRewrite.Pilot.Subtract.sub_zero"
+  ],
+  "native_recipe_source_cases": {
+    "add_zero": "HandleAdd/rhs-zero",
+    "add_constant": "HandleAdd/constant-right",
+    "add_assoc": "HandleAdd/constant-sum-direct-constants",
+    "factor": "HandleAdd/factor-rhs-rhs",
+    "mul_zero": "HandleMultiply/rhs-zero",
+    "mul_one": "HandleMultiply/rhs-one",
+    "mul_neg_neg": "HandleMultiply/negated-operands",
+    "four_factors": "HandleMultiply/four-factors",
+    "sub_self": "HandleSubtract/self",
+    "sub_zero": "HandleSubtract/zero",
+    "sub_constant": "HandleSubtract/constant",
+    "neg_neg": "HandleNegate/involution"
+  },
+  "contracts": [
+    {
+      "id": "signed-typed-dispatch",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 877,
+      "end_line": 910,
+      "source_body_sha256": "0dad2762a625df185264dd838a8f195cc733107378bbbee6b74f8fe997344e68"
+    },
+    {
+      "id": "unsigned-safe-arithmetic",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "line": 87,
+      "end_line": 109,
+      "source_body_sha256": "0341ab621abf25fea6dea87892faded676f00056f51d7d584de74b69bbcc345d"
+    },
+    {
+      "id": "signed-native-negate",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "line": 381,
+      "end_line": 404,
+      "source_body_sha256": "0062edfeba203b5c2e916a25e73d1f4233324aa01c8556b5940129e37b3f0300"
+    },
+    {
+      "id": "add-subtract-multiply",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "line": 484,
+      "end_line": 525,
+      "source_body_sha256": "e94b9ff3e162e3f6003482b1d6a5c1a37dbb185107fc392bbb8fb8db4e026967"
+    },
+    {
+      "id": "typed-input-result-casts",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "line": 1168,
+      "end_line": 1224,
+      "source_body_sha256": "f061f1638b12169f242f8eda7e625869d66166b40071c9265cea728eebb29de3"
+    }
+  ],
+  "manifest": "sources/signed-arithmetic-contract-manifest.json",
+  "native_evidence": "reports/signed-word-replay-v2/result.json",
+  "prior_native_evidence": "reports/signed-word-replay-v1/result.json",
+  "native_scope": "s8/s16/s32/s64 words and signed observations; typed 64-bit intermediate arithmetic; native HloEvaluator; no floating or whole-source graph claim",
+  "native_run_count": 144,
+  "model_vector_count": 48,
+  "source_correspondence_reviewed": false,
+  "source_cpp_extraction_proved": false
+}

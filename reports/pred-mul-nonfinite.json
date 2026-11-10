@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "status": "candidate_source_rewrite_counterexample_under_strict_ieee_not_xla_reproduction",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "rewrite": "multiply(convert(pred),x) -> select(pred,x,0)",
+  "source_handler": "HandleMultiply",
+  "source_condition": "Convert operand input type PRED, MultiplyAnyOrder; no local finite/fast-math guard",
+  "compiler": "/usr/bin/c++",
+  "compiler_version": "c++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0\nCopyright (C) 2023 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+  "flags": [
+    "-std=c++20",
+    "-O2",
+    "-fno-fast-math",
+    "-ffp-contract=off"
+  ],
+  "witness_cpp_sha256": "be002989d95d2fdf245f5a78fb8aff70b4b5941825bc505211e3ccfea93cefe5",
+  "hlo_sha256": "c9a929b8761ec12e2a35abaf5218bedc9f600ee07ac2345139343475e76485be",
+  "cases": [
+    {
+      "predicate": false,
+      "input_bits": 2139095040,
+      "lhs_bits": 4290772992,
+      "rhs_bits": 0,
+      "lhs_nan": true,
+      "rhs_nan": false
+    },
+    {
+      "predicate": false,
+      "input_bits": 4286578688,
+      "lhs_bits": 4290772992,
+      "rhs_bits": 0,
+      "lhs_nan": true,
+      "rhs_nan": false
+    },
+    {
+      "predicate": false,
+      "input_bits": 2143289344,
+      "lhs_bits": 2143289344,
+      "rhs_bits": 0,
+      "lhs_nan": true,
+      "rhs_nan": false
+    },
+    {
+      "predicate": false,
+      "input_bits": 1065353216,
+      "lhs_bits": 0,
+      "rhs_bits": 0,
+      "lhs_nan": false,
+      "rhs_nan": false
+    },
+    {
+      "predicate": false,
+      "input_bits": 3212836864,
+      "lhs_bits": 2147483648,
+      "rhs_bits": 0,
+      "lhs_nan": false,
+      "rhs_nan": false
+    },
+    {
+      "predicate": true,
+      "input_bits": 2139095040,
+      "lhs_bits": 2139095040,
+      "rhs_bits": 2139095040,
+      "lhs_nan": false,
+      "rhs_nan": false
+    },
+    {
+      "predicate": true,
+      "input_bits": 4286578688,
+      "lhs_bits": 4286578688,
+      "rhs_bits": 4286578688,
+      "lhs_nan": false,
+      "rhs_nan": false
+    },
+    {
+      "predicate": true,
+      "input_bits": 2143289344,
+      "lhs_bits": 2143289344,
+      "rhs_bits": 2143289344,
+      "lhs_nan": true,
+      "rhs_nan": true
+    },
+    {
+      "predicate": true,
+      "input_bits": 1065353216,
+      "lhs_bits": 1065353216,
+      "rhs_bits": 1065353216,
+      "lhs_nan": false,
+      "rhs_nan": false
+    },
+    {
+      "predicate": true,
+      "input_bits": 3212836864,
+      "lhs_bits": 3212836864,
+      "rhs_bits": 3212836864,
+      "lhs_nan": false,
+      "rhs_nan": false
+    }
+  ],
+  "nan_classification_mismatches": 3,
+  "xla_pass_run": false,
+  "lean_refutation_checked": false,
+  "remaining": [
+    "verify pinned HLO contract and admissible nonfinite inputs",
+    "run exact pinned XLA pass with fast math disabled and confirm Select output",
+    "evaluate original and replacement through pinned HloEvaluator",
+    "construct kernel-checked floating-point refutation"
+  ]
+}

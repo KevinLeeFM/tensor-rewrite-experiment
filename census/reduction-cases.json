@@ -1,0 +1,1909 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "BroadcastReduce",
+    "HandleReduce",
+    "HandleReduceWindow",
+    "MergeReduces",
+    "ReorderReduceDotToDotReduce",
+    "ReplaceReduceWithReshape"
+  ],
+  "cases": [
+    {
+      "id": "HandleReduce/empty-delegation",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(empty input or empty result,init)",
+      "rhs": "Broadcast(init) or Tuple of broadcasts",
+      "guard": "ShouldBroadcastReduce(representative input,result shape)",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "shared first shape represents all tuple components",
+        "empty result legality"
+      ],
+      "helper_contract_ids": [
+        "ShouldBroadcastReduce"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "delegation_target": "BroadcastReduce",
+      "delegation_line": 9058
+    },
+    {
+      "id": "HandleReduce/singleton-tuple",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "one-output variadic Reduce",
+      "rhs": "Tuple(single-output Reduce with cloned untupled reducer)",
+      "guard": "tuple result of size1; input_count1; reducer root Tuple",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "CloneWithReplacements removes old root",
+        "AddEmbeddedComputation mutates module",
+        "preserve dimensions and init"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        0,
+        1
+      ],
+      "replacement_site_id": "site-L09069-C019",
+      "replacement_line": 9069,
+      "replacement_call": "CloneWithReplacements",
+      "replacement_source": "        function->CloneWithReplacements(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L09077-C012",
+          "replacement_line": 9077,
+          "replacement_call": "ReplaceWithNewInstruction",
+          "replacement_source": "    return ReplaceWithNewInstruction(reduce,"
+        }
+      ],
+      "construction_kind": "embedded_reducer_clone",
+      "site_roles": [
+        {
+          "site_id": "site-L09069-C019",
+          "role": "embedded_computation_construction"
+        },
+        {
+          "site_id": "site-L09077-C012",
+          "role": "graph_replacement"
+        }
+      ],
+      "acceptance_unit": "construct cloned embedded reducer then replace outer result; construction is not another rewrite"
+    },
+    {
+      "id": "HandleReduce/same-element-count",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(arg,init,f)",
+      "rhs": "helper Reshape(arg) or Tuple of reshapes",
+      "guard": "input/result element counts equal; layout insensitive OR virtual ReshapeIsBitcast(input,result)",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "init identity is a documented semantic premise, not checked by this branch",
+        "reducer tuple coupling and trivial dimensions",
+        "helper call is itself a lexical replacement candidate"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L09089-C012",
+      "replacement_line": 9089,
+      "replacement_call": "ReplaceReduceWithReshape",
+      "replacement_source": "    return ReplaceReduceWithReshape(reduce_result_shape, multi_output_reduce,",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/negate-sum",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Negate(x),0,Add)",
+      "rhs": "Negate(mutated Reduce(x,0,Add)) for saved old users",
+      "guard": "layout insensitive; floating reduce shape; input Negate; IsScalarConstantZero(init); reducer AddAnyOrder(Parameter0,Parameter1)",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "snapshot users before adding Negate(reduce) to avoid self-cycle",
+        "operand write then ReplaceUsesWith saved users",
+        "signed zero and permissible rounding",
+        "MarkAsChanged before final status"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        3,
+        4
+      ],
+      "replacement_site_id": "site-L09103-C034",
+      "replacement_line": 9103,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(reduce->ReplaceOperandWith(0, negate_arg));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L09108-C020",
+          "replacement_line": 9108,
+          "replacement_call": "ReplaceUsesWith",
+          "replacement_source": "    return reduce->ReplaceUsesWith(users, negated_reduce);"
+        }
+      ]
+    },
+    {
+      "id": "HandleReduce/argmin-constant",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "ArgMin/Max Reduce(Broadcast(Constant scalar),Iota)",
+      "rhs": "Tuple(Broadcast(value),Broadcast(index zero))",
+      "guard": "layout insensitive; MatchArgMin; data Broadcast(Constant scalar); reduction dimensions include Iota axis",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "exact reducer select/compare pattern",
+        "NaNs, extrema, ties and index wrapping",
+        "coupled identity/range contract"
+      ],
+      "helper_contract_ids": [
+        "MatchArgMin",
+        "MatchArgMinMax",
+        "IsScalarConstantInf"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L09134-C014",
+      "replacement_line": 9134,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/argmax-constant",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "ArgMin/Max Reduce(Broadcast(Constant scalar),Iota)",
+      "rhs": "Tuple(Broadcast(value),Broadcast(index zero))",
+      "guard": "layout insensitive; MatchArgMax; data Broadcast(Constant scalar); reduction dimensions include Iota axis",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "exact reducer select/compare pattern",
+        "NaNs, extrema, ties and index wrapping",
+        "coupled identity/range contract"
+      ],
+      "helper_contract_ids": [
+        "MatchArgMax",
+        "MatchArgMinMax",
+        "IsScalarConstantNegInf"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L09134-C014",
+      "replacement_line": 9134,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/dot-reorder-delegation",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Dot(...))",
+      "rhs": "helper-dependent reordered graph",
+      "guard": "layout insensitive; helper optional<Status> engaged",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "caller tests optional engagement and returns OkStatus without propagating contained Status",
+        "helper can construct nodes even when cost guard later fails"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "delegation_target": "ReorderReduceDotToDotReduce",
+      "delegation_line": 9140,
+      "optional_status_handling": "engagement tested; contained status not propagated by caller"
+    },
+    {
+      "id": "HandleReduce/transpose-sorted",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Transpose(x,p),dims)",
+      "rhs": "Reduce(x,p[dims])",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; input Transpose; unconditional option OR result rank<2 OR transpose one user OR all its users Reduce; surviving input-axis sequence sorted=True",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "DeleteDimensions",
+        "rank-polymorphic output axis renumbering",
+        "allowed reduction order"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09183-C014",
+      "replacement_line": 9183,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(reduce, new_reduce);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/transpose-permute-result",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Transpose(x,p),dims)",
+      "rhs": "Reduce(x,p[dims]) followed by remapped output Transpose",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; input Transpose; unconditional option OR result rank<2 OR transpose one user OR all its users Reduce; surviving input-axis sequence sorted=False",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "DeleteDimensions",
+        "rank-polymorphic output axis renumbering",
+        "allowed reduction order"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L09196-C012",
+      "replacement_line": 9196,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce, new_transpose);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/merge-delegation",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Reduce(x,f,init),f,init)",
+      "rhs": "one combined Reduce",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; input Reduce; init Identical to inner operand1; ReductionComputationsEquivalent",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "outer to inner dimension lifting",
+        "identity and allowed association"
+      ],
+      "helper_contract_ids": [
+        "ReductionComputationsEquivalent"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "delegation_target": "MergeReduces",
+      "delegation_line": 9204
+    },
+    {
+      "id": "HandleReduce/reshape-reduced-axes",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Reshape(x),dims)",
+      "rhs": "Reduce(x,all axes except mapped preserved output axes)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; enable_reduce_of_reshape; input Reshape; every surviving output axis unmodified by reshape",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "DimensionsUnmodifiedByReshape",
+        "set membership and output rank",
+        "MarkAsChanged"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L09260-C014",
+      "replacement_line": 9260,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/reshape-output-axes",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Reshape(x),dims)",
+      "rhs": "Reshape(Reduce(x,mapped dims),output shape)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; enable_reduce_of_reshape; input Reshape; earlier reshape case did not return; reshape one user OR unconditional option; every reduced axis unmodified",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "dimension pair lookup CHECK",
+        "MakeReduceHlo copies reduce metadata",
+        "MakeReshapeHlo"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L09287-C014",
+      "replacement_line": 9287,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(reduce, new_reshape);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/concat",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Concat(xs,axis),dims)",
+      "rhs": "left-associated Map(f) chain of per-operand Reduce results",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; concat axis reduced; unconditional concat option OR all concat operand shapes equal ignoring layout OR scalar reduce output",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "one init per partial reduce; documented identity needed",
+        "nonempty concat and loop accumulator",
+        "association and element order versus approximate profile"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        10
+      ],
+      "replacement_site_id": "site-L09323-C014",
+      "replacement_line": 9323,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(reduce, old_reduce);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/dot-batch-all-batch",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Dot(lhs,rhs),dims)",
+      "rhs": "Dot with reduced batch pairs made contracting",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; supports_non_canonical_dots; enable_dot_strength_reduction; input Dot one user; Add reducer; some reduced dimensions are dot batch axes; remaining nonbatch reduce dimensions empty",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "init identity not separately checked as zero here",
+        "precision_config/result element type retained",
+        "SetupDerivedInstruction",
+        "batch/free/contracting axis ordering"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        11
+      ],
+      "replacement_site_id": "site-L09371-C014",
+      "replacement_line": 9371,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(hlo, new_dot);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/dot-batch-residual-reduce",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Dot(lhs,rhs),dims)",
+      "rhs": "Dot with reduced batch pairs made contracting followed by Reduce on other renumbered axes",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; supports_non_canonical_dots; enable_dot_strength_reduction; input Dot one user; Add reducer; some reduced dimensions are dot batch axes; remaining nonbatch reduce dimensions nonempty",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "init identity not separately checked as zero here",
+        "precision_config/result element type retained",
+        "SetupDerivedInstruction",
+        "batch/free/contracting axis ordering"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        12
+      ],
+      "replacement_site_id": "site-L09377-C012",
+      "replacement_line": 9377,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(hlo, new_reduce);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/reuse-argmax",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "ReduceMax(arg)",
+      "rhs": "GetTupleElement(existing ArgMax/ArgMin of same arg,0)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; operand_count2; IsScalarConstantNegInf(init); matching binary reducer; another user of same arg matches corresponding ArgMin/Max with identical reduction dimensions",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "shared-user search",
+        "extreme matcher includes native lowest/max for types without infinity",
+        "arg reducer NaN/tie behavior versus scalar min/max"
+      ],
+      "helper_contract_ids": [
+        "MatchArgMax",
+        "MatchArgMinMax",
+        "IsScalarConstantNegInf"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        13
+      ],
+      "replacement_site_id": "site-L09394-C014",
+      "replacement_line": 9394,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/reuse-argmin",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "ReduceMin(arg)",
+      "rhs": "GetTupleElement(existing ArgMax/ArgMin of same arg,0)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; operand_count2; IsScalarConstantInf(init); matching binary reducer; another user of same arg matches corresponding ArgMin/Max with identical reduction dimensions",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "shared-user search",
+        "extreme matcher includes native lowest/max for types without infinity",
+        "arg reducer NaN/tie behavior versus scalar min/max"
+      ],
+      "helper_contract_ids": [
+        "MatchArgMin",
+        "MatchArgMinMax",
+        "IsScalarConstantInf"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        14
+      ],
+      "replacement_site_id": "site-L09414-C014",
+      "replacement_line": 9414,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/scalar-broadcast-maximum",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Broadcast(x),init,Maximum)",
+      "rhs": "Maximum(x,init)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; x scalar; all input axes reduced; exact MaximumAnyOrder(Parameter0,Parameter1) reducer",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "idempotence under selected observation",
+        "actual opcode and operand order",
+        "empty input handled first"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        15
+      ],
+      "replacement_site_id": "site-L09435-C014",
+      "replacement_line": 9435,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/scalar-broadcast-minimum",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Broadcast(x),init,Minimum)",
+      "rhs": "Minimum(x,init)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; x scalar; all input axes reduced; exact MinimumAnyOrder(Parameter0,Parameter1) reducer",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "idempotence under selected observation",
+        "actual opcode and operand order",
+        "empty input handled first"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        15
+      ],
+      "replacement_site_id": "site-L09435-C014",
+      "replacement_line": 9435,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/scalar-broadcast-and",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Broadcast(x),init,And)",
+      "rhs": "And(x,init)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; x scalar; all input axes reduced; exact AndAnyOrder(Parameter0,Parameter1) reducer",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "idempotence under selected observation",
+        "actual opcode and operand order",
+        "empty input handled first"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        15
+      ],
+      "replacement_site_id": "site-L09435-C014",
+      "replacement_line": 9435,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/scalar-broadcast-or",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Broadcast(x),init,Or)",
+      "rhs": "Or(x,init)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; x scalar; all input axes reduced; exact OrAnyOrder(Parameter0,Parameter1) reducer",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "idempotence under selected observation",
+        "actual opcode and operand order",
+        "empty input handled first"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        15
+      ],
+      "replacement_site_id": "site-L09435-C014",
+      "replacement_line": 9435,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/broadcast-base-axes",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Broadcast(x,bcast_dims),dims)",
+      "rhs": "Broadcast(Reduce(x,mapped dims),renumbered surviving axes)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; all reduced axes occur in broadcast dimension map",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "inverse lookup positions",
+        "remaining output dimension shifts",
+        "init and dynamic-shape semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        16
+      ],
+      "replacement_site_id": "site-L09490-C014",
+      "replacement_line": 9490,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduce/broadcast-replicated-axes",
+      "handler": "HandleReduce",
+      "line": 9044,
+      "end_line": 9550,
+      "lhs": "Reduce(Broadcast(x),init,Add)",
+      "rhs": "Broadcast(Add(Broadcast(init),Multiply(x,repetition count)),new dims)",
+      "guard": "layout insensitive; non-tuple reduce after earlier multi-output return; Add reducer; TF_RET_CHECK broadcast dims sorted; every reduced axis introduced by Broadcast",
+      "source_body_sha256": "85a7b7d4fa12b4b444782011ac33f4f1aa7f1414c268e146d41295e0b17cceaf",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "int64 repetition product and conversion to element type",
+        "repeated addition versus multiplication",
+        "independent numerical error relation",
+        "retained and removed axis map"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        17
+      ],
+      "replacement_site_id": "site-L09543-C014",
+      "replacement_line": 9543,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "BroadcastReduce/tuple",
+      "handler": "BroadcastReduce",
+      "line": 8857,
+      "end_line": 8878,
+      "lhs": "empty Reduce inputs/result",
+      "rhs": "Tuple of Broadcast(init_i)",
+      "guard": "caller ShouldBroadcastReduce and multi_output_reduce=True",
+      "source_body_sha256": "52c1ed7792205ef4671f32eb5f015399e4802337c1d8ef6c00ea666cb6d11504",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "all tuple components represented by first shape",
+        "component types, shapes and init values"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L08871-C012",
+      "replacement_line": 8871,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "ReplaceReduceWithReshape/tuple",
+      "handler": "ReplaceReduceWithReshape",
+      "line": 8880,
+      "end_line": 8901,
+      "lhs": "trivial-size Reduce",
+      "rhs": "Tuple of Reshape(input_i)",
+      "guard": "caller equal-element-count and layout conditions; multi_output_reduce=True",
+      "source_body_sha256": "822506b751fcaba609981e079a9a77826e30339561eba4420a81b458ef487d94",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "identity of all coupled init components",
+        "one reshape per component",
+        "helper declaration is excluded from executable sites"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L08894-C012",
+      "replacement_line": 8894,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "BroadcastReduce/single",
+      "handler": "BroadcastReduce",
+      "line": 8857,
+      "end_line": 8878,
+      "lhs": "empty Reduce inputs/result",
+      "rhs": "Broadcast(init0)",
+      "guard": "caller ShouldBroadcastReduce and multi_output_reduce=False",
+      "source_body_sha256": "52c1ed7792205ef4671f32eb5f015399e4802337c1d8ef6c00ea666cb6d11504",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "all tuple components represented by first shape",
+        "component types, shapes and init values"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L08875-C010",
+      "replacement_line": 8875,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "ReplaceReduceWithReshape/single",
+      "handler": "ReplaceReduceWithReshape",
+      "line": 8880,
+      "end_line": 8901,
+      "lhs": "trivial-size Reduce",
+      "rhs": "Reshape(input0)",
+      "guard": "caller equal-element-count and layout conditions; multi_output_reduce=False",
+      "source_body_sha256": "822506b751fcaba609981e079a9a77826e30339561eba4420a81b458ef487d94",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "identity of all coupled init components",
+        "one reshape per component",
+        "helper declaration is excluded from executable sites"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L08898-C010",
+      "replacement_line": 8898,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "MergeReduces/combined-axes",
+      "handler": "MergeReduces",
+      "line": 9014,
+      "end_line": 9042,
+      "lhs": "Reduce(Reduce(x,inner_dims),outer_dims)",
+      "rhs": "Reduce(x,merged lifted axis list)",
+      "guard": "caller single-output, same init and equivalent reducer guards",
+      "source_body_sha256": "336cc630cec248ca2837f59efa00e17b66a08a49fa9203672733fc26a3016cae",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "sort copies of both dimension lists",
+        "increment each outer axis for removed inner axes",
+        "std::merge and legal uniqueness"
+      ],
+      "helper_contract_ids": [
+        "ReductionComputationsEquivalent"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L09038-C010",
+      "replacement_line": 9038,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "ReorderReduceDotToDotReduce/profitable",
+      "handler": "ReorderReduceDotToDotReduce",
+      "line": 8904,
+      "end_line": 9012,
+      "lhs": "Reduce(Dot(a,b),0,Add)",
+      "rhs": "Dot(Reduce(a,mapped dims),Reduce(b,mapped dims),new dnums)",
+      "guard": "raise_slice_and_reduce_through_dot; input Dot; zero init; Add reducer; no lhs batch dimensions; old_flops/double(new_flops)>threshold",
+      "source_body_sha256": "dcebbe8968ced086bfb40659969c0c3bba563b1d205e5e4ea21f846179720731",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "ConstructFromDotMaps and retained contracting dimensions",
+        "MakeDotHlo precision and result type",
+        "finite flop-count arithmetic and zero denominator in cost ratio",
+        "optional Status return is not propagated by caller"
+      ],
+      "helper_contract_ids": [
+        "GetReduceFlops"
+      ],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L09007-C016",
+      "replacement_line": 9007,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(reduce, new_dot);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/empty-tuple",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(inputs,inits,f)",
+      "rhs": "Tuple of Broadcast(init_i)",
+      "guard": "representative input or result zero-element; multi_output_reduce_window=True",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "dispatch through local replace_with_span lambda",
+        "caller guard plus captured tuple mode determine actual replacement",
+        "documented identity premise for scalar input case"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L09582-C014",
+      "replacement_line": 9582,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(reduce_window,",
+      "additional_replacement_sites": [],
+      "lambda_invocation_anchor": "replace_with_span(broadcast_inits)"
+    },
+    {
+      "id": "HandleReduceWindow/empty-single",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(inputs,inits,f)",
+      "rhs": "Broadcast(init_i)",
+      "guard": "representative input or result zero-element; multi_output_reduce_window=False",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "dispatch through local replace_with_span lambda",
+        "caller guard plus captured tuple mode determine actual replacement",
+        "documented identity premise for scalar input case"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L09585-C012",
+      "replacement_line": 9585,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, elements[0]);",
+      "additional_replacement_sites": [],
+      "lambda_invocation_anchor": "replace_with_span(broadcast_inits)"
+    },
+    {
+      "id": "HandleReduceWindow/scalar-tuple",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(inputs,inits,f)",
+      "rhs": "Tuple of original input_i",
+      "guard": "representative input scalar; if tuple output, reducer root Tuple; every input/output scalar checked; multi_output_reduce_window=True",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "dispatch through local replace_with_span lambda",
+        "caller guard plus captured tuple mode determine actual replacement",
+        "documented identity premise for scalar input case"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L09582-C014",
+      "replacement_line": 9582,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(reduce_window,",
+      "additional_replacement_sites": [],
+      "lambda_invocation_anchor": "replace_with_span(maps)"
+    },
+    {
+      "id": "HandleReduceWindow/scalar-single",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(inputs,inits,f)",
+      "rhs": "original input_i",
+      "guard": "representative input scalar; if tuple output, reducer root Tuple; every input/output scalar checked; multi_output_reduce_window=False",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "dispatch through local replace_with_span lambda",
+        "caller guard plus captured tuple mode determine actual replacement",
+        "documented identity premise for scalar input case"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L09585-C012",
+      "replacement_line": 9585,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, elements[0]);",
+      "additional_replacement_sites": [],
+      "lambda_invocation_anchor": "replace_with_span(maps)"
+    },
+    {
+      "id": "HandleReduceWindow/singleton-tuple",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "one-input tuple ReduceWindow",
+      "rhs": "Tuple(single-output ReduceWindow with cloned untupled reducer)",
+      "guard": "multi-output; input_count1; reducer root Tuple; earlier empty/scalar paths did not return",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "embedded reducer/root construction",
+        "window, init and tuple shape preservation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        2,
+        3
+      ],
+      "replacement_site_id": "site-L09634-C036",
+      "replacement_line": 9634,
+      "replacement_call": "CloneWithReplacements",
+      "replacement_source": "        reduce_window->to_apply()->CloneWithReplacements(",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L09643-C012",
+          "replacement_line": 9643,
+          "replacement_call": "ReplaceWithNewInstruction",
+          "replacement_source": "    return ReplaceWithNewInstruction("
+        }
+      ],
+      "construction_kind": "embedded_reducer_clone",
+      "site_roles": [
+        {
+          "site_id": "site-L09634-C036",
+          "role": "embedded_computation_construction"
+        },
+        {
+          "site_id": "site-L09643-C012",
+          "role": "graph_replacement"
+        }
+      ],
+      "acceptance_unit": "construct cloned embedded reducer then replace outer result; construction is not another rewrite"
+    },
+    {
+      "id": "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "cumsum-like ReduceWindow of uniform converted literal",
+      "rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
+      "guard": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type S64; literal scalarization or convert list needed=True",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "replay every Convert in reverse chain order through Literal.Convert",
+        "count generated in S64 only for S64 literal, otherwise S32",
+        "count range/overflow and conversion",
+        "floating sum versus count multiply"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L09775-C014",
+      "replacement_line": 9775,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/cumsum-i64-reuse-literal",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "cumsum-like ReduceWindow of uniform converted literal",
+      "rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
+      "guard": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type S64; literal scalarization or convert list needed=False",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "replay every Convert in reverse chain order through Literal.Convert",
+        "count generated in S64 only for S64 literal, otherwise S32",
+        "count range/overflow and conversion",
+        "floating sum versus count multiply"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L09775-C014",
+      "replacement_line": 9775,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "cumsum-like ReduceWindow of uniform converted literal",
+      "rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
+      "guard": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type not S64; literal scalarization or convert list needed=True",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "replay every Convert in reverse chain order through Literal.Convert",
+        "count generated in S64 only for S64 literal, otherwise S32",
+        "count range/overflow and conversion",
+        "floating sum versus count multiply"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L09775-C014",
+      "replacement_line": 9775,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/cumsum-i32-reuse-literal",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "cumsum-like ReduceWindow of uniform converted literal",
+      "rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
+      "guard": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type not S64; literal scalarization or convert list needed=False",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "replay every Convert in reverse chain order through Literal.Convert",
+        "count generated in S64 only for S64 literal, otherwise S32",
+        "count range/overflow and conversion",
+        "floating sum versus count multiply"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L09775-C014",
+      "replacement_line": 9775,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-crop-all-add",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window and cropping",
+      "rhs": "Broadcast(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; some negative window padding; operand static; some axis cropped by at least its whole size",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "signed negation and bounds",
+        "no original input survives crop"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L09837-C018",
+      "replacement_line": 9837,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "          return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-add-no-pad-no-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Add(operand,Broadcast(init))",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=False; negative padding=False; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-add-no-pad-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Add(operand,Broadcast(init)) then Slice crop",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=False; negative padding=True; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-add-pad-no-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Add(operand,Broadcast(init)) then Pad(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=True; negative padding=False; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-add-pad-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Add(operand,Broadcast(init)) then Slice crop then Pad(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=True; negative padding=True; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-crop-all-minimum",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window and cropping",
+      "rhs": "Broadcast(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; some negative window padding; operand static; some axis cropped by at least its whole size",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "signed negation and bounds",
+        "no original input survives crop"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L09837-C018",
+      "replacement_line": 9837,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "          return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Minimum(operand,Broadcast(init))",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=False; negative padding=False; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-minimum-no-pad-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Minimum(operand,Broadcast(init)) then Slice crop",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=False; negative padding=True; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-minimum-pad-no-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Minimum(operand,Broadcast(init)) then Pad(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=True; negative padding=False; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-minimum-pad-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Minimum(operand,Broadcast(init)) then Slice crop then Pad(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=True; negative padding=True; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-crop-all-maximum",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window and cropping",
+      "rhs": "Broadcast(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; some negative window padding; operand static; some axis cropped by at least its whole size",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "signed negation and bounds",
+        "no original input survives crop"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L09837-C018",
+      "replacement_line": 9837,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "          return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Maximum(operand,Broadcast(init))",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=False; negative padding=False; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-maximum-no-pad-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Maximum(operand,Broadcast(init)) then Slice crop",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=False; negative padding=True; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-maximum-pad-no-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Maximum(operand,Broadcast(init)) then Pad(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=True; negative padding=False; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/singleton-maximum-pad-crop",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow with unit window",
+      "rhs": "Maximum(operand,Broadcast(init)) then Slice crop then Pad(init)",
+      "guard": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=True; negative padding=True; if cropping, operand static and no full-axis crop",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "crop precedes positive Pad",
+        "init placement and commutative opcode matching",
+        "dynamic dimensions rejected for cropping",
+        "pad config keeps only positive edges"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L09868-C012",
+      "replacement_line": 9868,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(reduce_window, new_op);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/full-dimensions",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(x,init,f)",
+      "rhs": "Reshape(Reduce(x,init,effective dims,f))",
+      "guard": "single-output after early tuple return; enable_window_reduce_to_reduce_replacement; no stride/dilation/padding; each nonunit window axis has result extent1; at least one such axis",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "window reversal not independently excluded by this local predicate",
+        "legal geometry ties window size to input extent",
+        "allowed reduction order and axis deletion"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L09911-C014",
+      "replacement_line": 9911,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/pad-broadcast-direct-combined",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(Pad(x))",
+      "rhs": "CreateBroadcastSequence of selected operand",
+      "guard": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=False; combined padded-window test true",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "effective-broadcast test requires static input/output",
+        "unit axes require every output window cover sole unpadded element, with OverflowSafeMultiply guard",
+        "nonunit axes require trivial window and equal output extent",
+        "optional Convert recreated only when dropping Pad"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L10098-C012",
+      "replacement_line": 10098,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/pad-broadcast-direct-existing",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(Pad(x))",
+      "rhs": "CreateBroadcastSequence of selected operand",
+      "guard": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=False; combined test false; existing window test true",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "effective-broadcast test requires static input/output",
+        "unit axes require every output window cover sole unpadded element, with OverflowSafeMultiply guard",
+        "nonunit axes require trivial window and equal output extent",
+        "optional Convert recreated only when dropping Pad"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L10098-C012",
+      "replacement_line": 10098,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/pad-fold-direct",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(Pad(x))",
+      "rhs": "ReduceWindow(x,init,composed window)",
+      "guard": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=False; both effective-broadcast tests false",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "new edge padding = old window padding + base_dilation*Pad edge",
+        "interior Pad replaces base dilation only when prior base dilation1",
+        "shape/result/reducer retained",
+        "finite signed arithmetic and backend constraints"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L10106-C010",
+      "replacement_line": 10106,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/pad-broadcast-convert-combined",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(Convert(Pad(x)))",
+      "rhs": "CreateBroadcastSequence of selected operand",
+      "guard": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=True; combined padded-window test true",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "effective-broadcast test requires static input/output",
+        "unit axes require every output window cover sole unpadded element, with OverflowSafeMultiply guard",
+        "nonunit axes require trivial window and equal output extent",
+        "optional Convert recreated only when dropping Pad"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L10098-C012",
+      "replacement_line": 10098,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/pad-broadcast-convert-existing",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(Convert(Pad(x)))",
+      "rhs": "CreateBroadcastSequence of selected operand",
+      "guard": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=True; combined test false; existing window test true",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "effective-broadcast test requires static input/output",
+        "unit axes require every output window cover sole unpadded element, with OverflowSafeMultiply guard",
+        "nonunit axes require trivial window and equal output extent",
+        "optional Convert recreated only when dropping Pad"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L10098-C012",
+      "replacement_line": 10098,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleReduceWindow/pad-fold-convert",
+      "handler": "HandleReduceWindow",
+      "line": 9570,
+      "end_line": 10113,
+      "lhs": "ReduceWindow(Convert(Pad(x)))",
+      "rhs": "ReduceWindow(Convert(x),init,composed window)",
+      "guard": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=True; both effective-broadcast tests false",
+      "source_body_sha256": "b6b426efc8894e55889f4a236b6679032637ec3aac7f1a52cd287dc7003aea35",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "path_condition": "legal XLA Reduce/ReduceWindow semantics plus source-order earlier returns and caller guards; helper/body cases overlap",
+      "semantic_contract_status": "documented identity and reassociation premises need precise domain/observation models; not new local source guards",
+      "dependencies": [
+        "new edge padding = old window padding + base_dilation*Pad edge",
+        "interior Pad replaces base dilation only when prior base dilation1",
+        "shape/result/reducer retained",
+        "finite signed arithmetic and backend constraints"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "tuple coupling, scalar type, numerical relation, dynamic shape and layout profiles not fully split",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L10106-C010",
+      "replacement_line": 10106,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "ShouldBroadcastReduce",
+      "line": 8851,
+      "end_line": 8855,
+      "source_body_sha256": "99b134a2ee96ce1cd17abadd49ac2f12dbacef8ff888e51586f026a3fc978f49",
+      "source_behavior": "true if representative input or result has zero elements",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ReductionComputationsEquivalent",
+      "line": 8815,
+      "end_line": 8848,
+      "source_body_sha256": "86cb18a46fb57af31ae9908cec96b14a14e07cd5ac52dbdea9f9362e35935f1e",
+      "source_behavior": "same computation object OR two-parameter Add/Multiply/And/Or AnyOrder category matches; classification does not establish arbitrary scalar equivalence",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MatchArgMinMax",
+      "line": 8734,
+      "end_line": 8757,
+      "source_body_sha256": "26f8219a315846decc5f10a9654fd86d3bd10104c2305d352be32d5b24205bc9",
+      "source_behavior": "exact coupled tuple/select/compare reducer pattern, including NaN test on parameter0 and smaller-index tie rule",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MatchArgMin",
+      "line": 8775,
+      "end_line": 8785,
+      "source_body_sha256": "3ac70b81df7cd5fc19312a37a8bfb15a7f04664862f2cb4a50cea9cd44f06c2f",
+      "source_behavior": "four-operand tuple Reduce, Iota index input, IsScalarConstantInf value init, IsScalarConstantZero index init and MatchArgMinMax(false)",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MatchArgMax",
+      "line": 8803,
+      "end_line": 8813,
+      "source_body_sha256": "d4aed30de90679d8dc7f4442ca41019a84ce8720675360b098f1f82967753911",
+      "source_behavior": "four-operand tuple Reduce, Iota index input, IsScalarConstantNegInf value init, IsScalarConstantZero index init and MatchArgMinMax(true)",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "IsScalarConstantInf",
+      "line": 252,
+      "end_line": 273,
+      "source_body_sha256": "cef4dbdb6155992d8ea2800bb1ad3d49895ede11b7c80571b4f37190e6b81f96",
+      "source_behavior": "IsScalarConstant and not complex; compare against native positive infinity when available, otherwise native maximum",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "IsScalarConstantNegInf",
+      "line": 229,
+      "end_line": 250,
+      "source_body_sha256": "009be00cf7da00eec9819edb7bd3e9c6ce727b4ab0b56ad1dbd4828cc947fcb6",
+      "source_behavior": "IsScalarConstant and not complex; compare against native negative infinity when available, otherwise native lowest",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "GetReduceFlops",
+      "line": 520,
+      "end_line": 527,
+      "source_body_sha256": "3404f275f9c94b32a7c3e1ac1081a8d93ef28fce42b82c440b552a24c9f80830",
+      "source_behavior": "product of reduced axis extents minus1 times output element count; finite int64 estimate",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "noncall_declaration_site_ids": [
+    "site-L08880-C042"
+  ],
+  "documented_contract": "sources/reduction-contract-manifest.json",
+  "limitations": [
+    "source/helper/lambda schemas overlap; not frozen obligation denominator",
+    "identity and reassociation prose is not a complete floating observation relation",
+    "primary-agent inspection only; source and algebraic correspondence pending",
+    "zero accepted full-source proofs"
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_static_reduction_not_full_source_acceptance",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "profile": "static single-output ordered fibers; exact initializer law explicit; reassociation and physical layout separate",
+  "accepted_source_rewrites": 0,
+  "source_cases": [
+    "BroadcastReduce/single",
+    "HandleReduce/empty-delegation",
+    "HandleReduce/same-element-count",
+    "ReplaceReduceWithReshape/single"
+  ],
+  "contracts": [
+    {
+      "id": "reduce-handler",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 9044,
+      "end_line": 9094,
+      "source_body_sha256": "515085439b0441372a6fcdac1b891a66461305390b8ad8004caeac31f5cb8bd3"
+    },
+    {
+      "id": "broadcast-helper",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 8851,
+      "end_line": 8879,
+      "source_body_sha256": "39327f1b0f133e1f4cd0e99a55488e408fff9673a0cc103b5c05bb4d88b8daa9"
+    },
+    {
+      "id": "reshape-helper",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "line": 8880,
+      "end_line": 8907,
+      "source_body_sha256": "627e7b1f43ebbfd868f33b7840bdcb0abdf0cd0886efd5d7ca7f223cc40b1349"
+    },
+    {
+      "id": "documented-laws",
+      "path": "sources/xla/docs/operation_semantics.md",
+      "line": 3831,
+      "end_line": 3890,
+      "source_body_sha256": "9665005564a6854aa7024c2a1e51ce0d102f0509257b1ed557884649d769e608"
+    },
+    {
+      "id": "evaluator-initializer",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 4760,
+      "end_line": 4832,
+      "source_body_sha256": "067b180885759aa3fe775ee0c82517db841c94cd300b2475909e9571d4332da9"
+    },
+    {
+      "id": "evaluator-axes",
+      "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "line": 4833,
+      "end_line": 4893,
+      "source_body_sha256": "30a3aa8062ca614b6c080155b4842897818cd81379a0cb367ed8d205baa9b82b"
+    },
+    {
+      "id": "shape-axis-validation",
+      "path": "sources/xla/xla/service/shape_inference.cc",
+      "line": 3119,
+      "end_line": 3187,
+      "source_body_sha256": "16d10d6d8f6c5218c7e7d996a08b8b0dbb90236e75930fe859efdf256ebb7023"
+    }
+  ],
+  "support_theorems": [
+    "TensorRewrite.Pilot.Reduction.length_flatMap_constant",
+    "TensorRewrite.Pilot.Reduction.fiberValues_length",
+    "TensorRewrite.Pilot.Reduction.elementCount_factor",
+    "TensorRewrite.Pilot.Reduction.unitReducedAxes_of_fiberCount_one",
+    "TensorRewrite.Pilot.Reduction.fiberCount_one_of_sameCount",
+    "TensorRewrite.Pilot.Reduction.elementCount_eq_of_units",
+    "TensorRewrite.Pilot.Reduction.fiberValues_unit",
+    "TensorRewrite.Pilot.Reduction.unitIndex_linearize_val",
+    "TensorRewrite.Pilot.Reduction.unitIndex_eq_reshapeIndex"
+  ],
+  "rules": [
+    {
+      "theorem": "TensorRewrite.Pilot.Reduction.reduceTensor_empty_input",
+      "module": "TensorRewrite/Pilot/ReductionRules.lean",
+      "source_case": "BroadcastReduce/single",
+      "additional_source_cases": [
+        "HandleReduce/empty-delegation"
+      ],
+      "source_partition": "single output; input element count zero",
+      "status": "pilot_value_proof_pending_source_graph_review",
+      "semantic_track": "static single-output ordered fibers; exact initializer law explicit; reassociation and physical layout separate",
+      "source_rewrite_accepted": false
+    },
+    {
+      "theorem": "TensorRewrite.Pilot.Reduction.reduceTensor_empty_output",
+      "module": "TensorRewrite/Pilot/ReductionRules.lean",
+      "source_case": "BroadcastReduce/single",
+      "additional_source_cases": [
+        "HandleReduce/empty-delegation"
+      ],
+      "source_partition": "single output; output element count zero",
+      "status": "pilot_value_proof_pending_source_graph_review",
+      "semantic_track": "static single-output ordered fibers; exact initializer law explicit; reassociation and physical layout separate",
+      "source_rewrite_accepted": false
+    },
+    {
+      "theorem": "TensorRewrite.Pilot.Reduction.reduceTensor_sameCount",
+      "module": "TensorRewrite/Pilot/ReductionRules.lean",
+      "source_case": "ReplaceReduceWithReshape/single",
+      "additional_source_cases": [
+        "HandleReduce/same-element-count"
+      ],
+      "source_partition": "single output; equal counts; actual initializer left identity explicit",
+      "status": "pilot_value_proof_pending_source_graph_review",
+      "semantic_track": "static single-output ordered fibers; exact initializer law explicit; reassociation and physical layout separate",
+      "source_rewrite_accepted": false
+    }
+  ],
+  "native_evidence": "reports/reduction-replay-v1/result.json",
+  "native_scope": "separate direct handler, full pass and no-rewrite controls",
+  "invalid_identity_case_is_source_counterexample": false,
+  "remaining": [
+    "signed axis-array and finite shape extraction",
+    "all permitted reduction orders and floating observation relation",
+    "physical layout/ReshapeIsBitcast correspondence",
+    "variadic and effectful reducers",
+    "graph API/frame and independent source review"
+  ]
+}

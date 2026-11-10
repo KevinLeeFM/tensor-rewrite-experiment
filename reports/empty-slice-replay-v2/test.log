@@ -1,0 +1,66 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:empty_slice_boundary_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 45750 .
+[==========] Running 2 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 2 tests from EmptySliceBoundaryReplay
+[ RUN      ] EmptySliceBoundaryReplay.EmptySliceProducesInvalidShape
+EMPTY_SLICE_RESULT reversed=0 original_verified=1 changed=1 rewritten_verified=0
+ORIGINAL_HLO
+HloModule empty_slice_boundary, entry_computation_layout={(s32[4]{0})->s32[0]{0}}
+
+ENTRY %main (operand: s32[4]) -> s32[0] {
+  %operand = s32[4]{0} parameter(0)
+  ROOT %sliced = s32[0]{0} slice(%operand), slice={[1:1:2]}
+}
+
+REWRITTEN_HLO
+HloModule empty_slice_boundary, entry_computation_layout={(s32[4]{0})->s32[0]{0}}
+
+ENTRY %main (operand: s32[4]) -> s32[0] {
+  %operand = s32[4]{0} parameter(0)
+  ROOT %sliced = s32[0]{0} slice(%operand), slice={[1:2]}
+}
+
+VERIFIER_STATUS
+INTERNAL: during context [Unknown]: Expected instruction to have shape equal to s32[1], actual shape is s32[0]:
+%sliced = s32[0]{0} slice(%operand), slice={[1:2]}
+=== Source Location Trace: ===
+xla/service/hlo_verifier.cc:5162
+
+EMPTY_SLICE_RESULT reversed=1 original_verified=1 changed=1 rewritten_verified=0
+ORIGINAL_HLO
+HloModule empty_slice_boundary, entry_computation_layout={(s32[4]{0})->s32[0]{0}}
+
+ENTRY %main (operand: s32[4]) -> s32[0] {
+  %operand = s32[4]{0} parameter(0)
+  %reversed = s32[4]{0} reverse(%operand), dimensions={0}
+  ROOT %sliced = s32[0]{0} slice(%reversed), slice={[1:1:2]}
+}
+
+REWRITTEN_HLO
+HloModule empty_slice_boundary, entry_computation_layout={(s32[4]{0})->s32[0]{0}}
+
+ENTRY %main (operand: s32[4]) -> s32[0] {
+  %operand = s32[4]{0} parameter(0)
+  %slice = s32[0]{0} slice(%operand), slice={[2:3:2]}
+  ROOT %reverse = s32[0]{0} reverse(%slice), dimensions={0}
+}
+
+VERIFIER_STATUS
+INTERNAL: during context [Unknown]: Expected instruction to have shape equal to s32[1], actual shape is s32[0]:
+%slice = s32[0]{0} slice(%operand), slice={[2:3:2]}
+=== Source Location Trace: ===
+xla/service/hlo_verifier.cc:5162
+
+[       OK ] EmptySliceBoundaryReplay.EmptySliceProducesInvalidShape (2 ms)
+[ RUN      ] EmptySliceBoundaryReplay.NonemptyStrideControlRemainsValid
+EMPTY_SLICE_CONTROL original_verified=1 changed=1 rewritten_verified=1 start=1 limit=2 stride=1
+[       OK ] EmptySliceBoundaryReplay.NonemptyStrideControlRemainsValid (0 ms)
+[----------] 2 tests from EmptySliceBoundaryReplay (2 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test suite ran. (2 ms total)
+[  PASSED  ] 2 tests.

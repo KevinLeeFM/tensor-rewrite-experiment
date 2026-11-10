@@ -1,0 +1,2607 @@
+{
+  "schema": 1,
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "status": "partial_source_extraction",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "HandleAdd",
+    "HandleCompare",
+    "HandleDivide",
+    "HandleMaximum",
+    "HandleMinimum"
+  ],
+  "cases": [
+    {
+      "id": "HandleAdd/rhs-zero",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,0) with zero at rhs",
+      "rhs": "x",
+      "guard": "IsAll(rhs,0); compatibility replacement succeeds; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L00932-C024",
+      "replacement_line": 932,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "  if (IsAll(rhs, 0) && ReplaceInstructionIfCompatible(add, lhs)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "IsAll representation and signed-zero matching",
+        "ReplaceInstructionIfCompatible",
+        "SameShape"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/lhs-zero",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,0) with zero at lhs",
+      "rhs": "x",
+      "guard": "IsAll(lhs,0); compatibility replacement succeeds; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L00937-C024",
+      "replacement_line": 937,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "  if (IsAll(lhs, 0) && ReplaceInstructionIfCompatible(add, rhs)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "IsAll representation and signed-zero matching",
+        "ReplaceInstructionIfCompatible",
+        "SameShape"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/constant-right",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Constant(c),NonConstant(x))",
+      "rhs": "Add(x,c)",
+      "guard": "exact direct-Constant matcher",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L00945-C012",
+      "replacement_line": 945,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "commutativity under selected scalar/NaN observation contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/constant-sum-direct-constants",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Add(a,c1),c2) with direct-constants",
+      "rhs": "Add(a,Add(c1,c2)), rebroadcasting constant sum when scalar result and nonscalar output",
+      "guard": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L00973-C012",
+      "replacement_line": 973,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "CreateBroadcast",
+        "finite-width addition and independently specified fast-math relation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/constant-subtract-direct-constants",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Subtract(c1,a),c2) with direct-constants",
+      "rhs": "Subtract(Add(c1,c2),a), rebroadcasting scalar constant sum if needed",
+      "guard": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L00994-C012",
+      "replacement_line": 994,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "CreateBroadcast",
+        "subtraction/addition rounding or modular arithmetic"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/constant-sum-broadcast-scalars",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Add(a,c1),c2) with broadcast-scalars",
+      "rhs": "Add(a,Add(c1,c2)), rebroadcasting constant sum when scalar result and nonscalar output",
+      "guard": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L00973-C012",
+      "replacement_line": 973,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "CreateBroadcast",
+        "finite-width addition and independently specified fast-math relation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/constant-subtract-broadcast-scalars",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Subtract(c1,a),c2) with broadcast-scalars",
+      "rhs": "Subtract(Add(c1,c2),a), rebroadcasting scalar constant sum if needed",
+      "guard": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L00994-C012",
+      "replacement_line": 994,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "CreateBroadcast",
+        "subtraction/addition rounding or modular arithmetic"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/cancel-subtract-lhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,Subtract(y,x)) with Subtract at lhs",
+      "rhs": "y",
+      "guard": "AddAnyOrder matcher; same x pointer; integral output OR enable_fast_math; compatibility succeeds",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L01008-C009",
+      "replacement_line": 1008,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    if (ReplaceInstructionIfCompatible(add, y)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "pointer identities",
+        "SameShape",
+        "modular or fast-math contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/partial-update-lhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at lhs",
+      "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+      "guard": "AddAnyOrder matcher; DUS base Broadcast(ConstantEffectiveScalar(0)); no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L01051-C012",
+      "replacement_line": 1051,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(add, std::move(dynamic_update_slice_full));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "matcher captures may rebind lhs/rhs locals",
+        "matching slice/update index clamping",
+        "addition zero behavior outside update",
+        "CreateDynamicSlice",
+        "CreateDynamicUpdateSlice"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/cancel-subtract-rhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,Subtract(y,x)) with Subtract at rhs",
+      "rhs": "y",
+      "guard": "AddAnyOrder matcher; same x pointer; integral output OR enable_fast_math; compatibility succeeds",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L01008-C009",
+      "replacement_line": 1008,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    if (ReplaceInstructionIfCompatible(add, y)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "pointer identities",
+        "SameShape",
+        "modular or fast-math contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/partial-update-rhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at rhs",
+      "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+      "guard": "AddAnyOrder matcher; DUS base Broadcast(ConstantEffectiveScalar(0)); no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L01051-C012",
+      "replacement_line": 1051,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(add, std::move(dynamic_update_slice_full));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "matcher captures may rebind lhs/rhs locals",
+        "matching slice/update index clamping",
+        "addition zero behavior outside update",
+        "CreateDynamicSlice",
+        "CreateDynamicUpdateSlice"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/factor-lhs-lhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at lhs/lhs",
+      "rhs": "Multiply(Add(a,b),c)",
+      "guard": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L01087-C012",
+      "replacement_line": 1087,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source explicitly permits some floating rounding/overflow/underflow differences",
+        "finite-width distributivity",
+        "one-use matcher dataflow"
+      ],
+      "helper_contract_ids": [
+        "IsAllFpConstantPowerOf2"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/factor-lhs-rhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at lhs/rhs",
+      "rhs": "Multiply(Add(a,b),c)",
+      "guard": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L01087-C012",
+      "replacement_line": 1087,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source explicitly permits some floating rounding/overflow/underflow differences",
+        "finite-width distributivity",
+        "one-use matcher dataflow"
+      ],
+      "helper_contract_ids": [
+        "IsAllFpConstantPowerOf2"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/factor-rhs-lhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at rhs/lhs",
+      "rhs": "Multiply(Add(a,b),c)",
+      "guard": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L01087-C012",
+      "replacement_line": 1087,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source explicitly permits some floating rounding/overflow/underflow differences",
+        "finite-width distributivity",
+        "one-use matcher dataflow"
+      ],
+      "helper_contract_ids": [
+        "IsAllFpConstantPowerOf2"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/factor-rhs-rhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at rhs/rhs",
+      "rhs": "Multiply(Add(a,b),c)",
+      "guard": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L01087-C012",
+      "replacement_line": 1087,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source explicitly permits some floating rounding/overflow/underflow differences",
+        "finite-width distributivity",
+        "one-use matcher dataflow"
+      ],
+      "helper_contract_ids": [
+        "IsAllFpConstantPowerOf2"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleAdd/scatter-concat",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Scatter(base1,i1,u1),Scatter(base2,i2,u2))",
+      "rhs": "Scatter(Add(base1,base2),Concat(i1,i2,index_axis),Concat(u1,u2,update_axis),lhs_reducer,lhs_dnums,false,false)",
+      "guard": "layout insensitive; both operands Scatter with one use; both reducer roots Add(Parameter,Parameter); index ranks equal; concat-dimension loop does not early-return; selected concat axis is not scalar sentinel; sum of update element counts < lhs result element count; both scatters not unique and not sorted; all six dimension-number fields equal; index element types equal; filtered update window dimensions equal; Parameter0/Parameter1 identities and distinctness are NOT checked",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L01237-C014",
+      "replacement_line": 1237,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "concat-dimension and update_dim loops",
+        "Scatter collision/reduction ordering",
+        "parameter identities in reducer body",
+        "integer count overflow",
+        "MakeConcatHlo"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split",
+      "reducer_role_profiles": [
+        "00",
+        "01",
+        "10",
+        "11"
+      ],
+      "matcher_checks_parameter_numbers": false,
+      "matcher_checks_parameter_distinctness": false,
+      "reducer_role_obligation": "Add(Parameter(),Parameter()) checks opcodes, not parameter roles; repeated roles are legal HLO"
+    },
+    {
+      "id": "HandleAdd/scatter-nested",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(lhsScatter,rhsScatter)",
+      "rhs": "lhsScatter mutated to base=rhsScatter mutated to base=Add(lhs_base,rhs_base)",
+      "guard": "layout insensitive; both operands Scatter with one use; both reducer roots Add(Parameter,Parameter); index ranks equal; concat-dimension loop does not early-return; selected concat axis is not scalar sentinel; sum of update element counts < lhs result element count; concat safety conjunction fails; Parameter0/Parameter1 identities and distinctness are NOT checked",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        9,
+        10,
+        11
+      ],
+      "replacement_site_id": "site-L01245-C031",
+      "replacement_line": 1245,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(rhs->ReplaceOperandWith(0, new_operand));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01246-C031",
+          "replacement_line": 1246,
+          "replacement_call": "ReplaceOperandWith",
+          "replacement_source": "    ABSL_RETURN_IF_ERROR(lhs->ReplaceOperandWith(0, rhs));"
+        },
+        {
+          "replacement_site_id": "site-L01247-C012",
+          "replacement_line": 1247,
+          "replacement_call": "ReplaceInstruction",
+          "replacement_source": "    return ReplaceInstruction(add, lhs);"
+        }
+      ],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "rhs base mutation precedes lhs base mutation and final Add replacement",
+        "one-use reachability and aliases",
+        "reducer reassociation and NaN/overflow behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split",
+      "reducer_role_profiles": [
+        "00",
+        "01",
+        "10",
+        "11"
+      ],
+      "matcher_checks_parameter_numbers": false,
+      "matcher_checks_parameter_distinctness": false,
+      "reducer_role_obligation": "Add(Parameter(),Parameter()) checks opcodes, not parameter roles; repeated roles are legal HLO"
+    },
+    {
+      "id": "HandleAdd/scatter-single-rhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(x,Scatter_f(base,i,u))",
+      "rhs": "existing Scatter_f mutated to base=Add(x,base)",
+      "guard": "layout insensitive; only rhs local scatter-match flag true; matched Scatter one use; reducer root Add(Parameter,Parameter); Parameter0/Parameter1 identities and distinctness are NOT checked",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        12,
+        13
+      ],
+      "replacement_site_id": "site-L01252-C031",
+      "replacement_line": 1252,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(rhs->ReplaceOperandWith(0, new_operand));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01253-C012",
+          "replacement_line": 1253,
+          "replacement_call": "ReplaceInstruction",
+          "replacement_source": "    return ReplaceInstruction(add, rhs);"
+        }
+      ],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "operand0 mutation then final replacement",
+        "scatter reducer effects, identities and order",
+        "other graph uses and aliases"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split",
+      "reducer_role_profiles": [
+        "00",
+        "01",
+        "10",
+        "11"
+      ],
+      "matcher_checks_parameter_numbers": false,
+      "matcher_checks_parameter_distinctness": false,
+      "reducer_role_obligation": "Add(Parameter(),Parameter()) checks opcodes, not parameter roles; repeated roles are legal HLO",
+      "single_update_word_profile": "distinct roles suffice for word arithmetic; repeated roles admit concrete value changes; graph/float contracts separate"
+    },
+    {
+      "id": "HandleAdd/scatter-single-lhs",
+      "handler": "HandleAdd",
+      "line": 926,
+      "end_line": 1262,
+      "lhs": "Add(Scatter_f(base,i,u),x)",
+      "rhs": "existing Scatter_f mutated to base=Add(base,x)",
+      "guard": "layout insensitive; only lhs local scatter-match flag true; matched Scatter one use; reducer root Add(Parameter,Parameter); Parameter0/Parameter1 identities and distinctness are NOT checked",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "710a379b2de698af0c71fe77e03f49bed1f0f6a564d14cd528517e8eedd19c3d",
+      "replacement_ordinals": [
+        14,
+        15
+      ],
+      "replacement_site_id": "site-L01258-C031",
+      "replacement_line": 1258,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(lhs->ReplaceOperandWith(0, new_operand));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L01259-C012",
+          "replacement_line": 1259,
+          "replacement_call": "ReplaceInstruction",
+          "replacement_source": "    return ReplaceInstruction(add, lhs);"
+        }
+      ],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "operand0 mutation then final replacement",
+        "scatter reducer effects, identities and order",
+        "other graph uses and aliases"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split",
+      "reducer_role_profiles": [
+        "00",
+        "01",
+        "10",
+        "11"
+      ],
+      "matcher_checks_parameter_numbers": false,
+      "matcher_checks_parameter_distinctness": false,
+      "reducer_role_obligation": "Add(Parameter(),Parameter()) checks opcodes, not parameter roles; repeated roles are legal HLO",
+      "single_update_word_profile": "distinct roles suffice for word arithmetic; repeated roles admit concrete value changes; graph/float contracts separate"
+    },
+    {
+      "id": "HandleDivide/one",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,1)",
+      "rhs": "a",
+      "guard": "IsAll(denominator,1); compatibility succeeds",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02597-C022",
+      "replacement_line": 2597,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "  if (IsAll(b, 1) && ReplaceInstructionIfCompatible(divide, a)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "IsAll representation and signed-zero matching",
+        "ReplaceInstructionIfCompatible",
+        "SameShape"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/power-two-unsigned",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,constant_power_of_two)",
+      "rhs": "ShiftRightLogical(a,log2(b))",
+      "guard": "integral primitive dispatch; effective-scalar Constant direct or broadcast; unsigned element type; uint64 denominator has_single_bit",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02613-C012",
+      "replacement_line": 2613,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(divide, std::move(shift));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "modular negation of minimum signed value",
+        "logical shift amount width",
+        "signed division truncation",
+        "NativeTypeOf includes legal sub-byte types"
+      ],
+      "helper_contract_ids": [
+        "TryDivideToShift"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/power-two-signed",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,constant_power_of_two)",
+      "rhs": "Select(a<0,Negate(LSR(Select(a<0,Negate(a),a),log2(b))),LSR(Select(a<0,Negate(a),a),log2(b)))",
+      "guard": "integral primitive dispatch; effective-scalar Constant direct or broadcast; signed element type; int64 denominator >0 and has_single_bit",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02613-C012",
+      "replacement_line": 2613,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(divide, std::move(shift));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "modular negation of minimum signed value",
+        "logical shift amount width",
+        "signed division truncation",
+        "NativeTypeOf includes legal sub-byte types"
+      ],
+      "helper_contract_ids": [
+        "TryDivideToShift"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/exp-pair",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(Exp(a),Exp(b))",
+      "rhs": "Exp(Subtract(a,b))",
+      "guard": "enable_fast_math",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L02624-C012",
+      "replacement_line": 2624,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Exp domain/rounding and complex branches"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/exp-denominator",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,Exp(b))",
+      "rhs": "Multiply(a,Exp(Negate(b)))",
+      "guard": "enable_fast_math",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L02636-C012",
+      "replacement_line": 2636,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Exp/Negate exceptional behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/power-denominator",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,Power(b,c))",
+      "rhs": "Multiply(a,Power(b,Negate(c)))",
+      "guard": "output not integral; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L02656-C012",
+      "replacement_line": 2656,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Power exponent type/shape and branch conventions"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/sqrt-denominator",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,Sqrt(b))",
+      "rhs": "Multiply(a,Rsqrt(b))",
+      "guard": "Sqrt one use; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L02665-C012",
+      "replacement_line": 2665,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "rounding, overflow, subnormals and signed zeros"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/rsqrt-denominator",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,Rsqrt(b))",
+      "rhs": "Multiply(a,Sqrt(b))",
+      "guard": "Rsqrt one use; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L02674-C012",
+      "replacement_line": 2674,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "rounding, overflow, subnormals and signed zeros"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/constant-direct",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(NonConstant(a),Constant(c))",
+      "rhs": "Multiply(a,inverted_literal)",
+      "guard": "after integral-output early return; literal primitive dispatch floating OR complex; InvertConstant succeeds; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L02711-C020",
+      "replacement_line": 2711,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "            return ReplaceInstruction(divide, new_divide);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Literal::Populate",
+        "host NativeT division and conversion/rounding",
+        "CreateConstantWithLayoutUpdated",
+        "rebroadcast original shape/dimensions"
+      ],
+      "helper_contract_ids": [
+        "InvertConstant"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/constant-broadcast",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(NonConstant(a),Broadcast(Constant(c),dims))",
+      "rhs": "Multiply(a,Broadcast(inverted_literal,dims))",
+      "guard": "after integral-output early return; literal primitive dispatch floating OR complex; InvertConstant succeeds; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L02711-C020",
+      "replacement_line": 2711,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "            return ReplaceInstruction(divide, new_divide);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Literal::Populate",
+        "host NativeT division and conversion/rounding",
+        "CreateConstantWithLayoutUpdated",
+        "rebroadcast original shape/dimensions"
+      ],
+      "helper_contract_ids": [
+        "InvertConstant"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/broadcast-reciprocal",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,Broadcast(b,dims))",
+      "rhs": "Multiply(a,Broadcast(Divide(1,b),dims))",
+      "guard": "after integral-output early return; executing_on_cpu; enable_sink_broadcast; enable_fast_math; broadcast input b has one use",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L02736-C012",
+      "replacement_line": 2736,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "intermediate reciprocal rounding explicitly documented in source",
+        "MakeScalarLike",
+        "shape/layout preservation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/fractions",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(Divide(a,b),Divide(c,d))",
+      "rhs": "Divide(Multiply(a,d),Multiply(b,c))",
+      "guard": "after integral-output early return; exact Divide matcher; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L02751-C012",
+      "replacement_line": 2751,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(divide, new_divide);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "rounding, exceptional values and complex division semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/nested-numerator",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(Divide(a,b),c)",
+      "rhs": "Divide(a,Multiply(b,c))",
+      "guard": "after integral-output early return; exact Divide matcher; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        10
+      ],
+      "replacement_site_id": "site-L02760-C012",
+      "replacement_line": 2760,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(divide, new_divide);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "rounding, exceptional values and complex division semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/nested-denominator",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(a,Divide(b,c))",
+      "rhs": "Divide(Multiply(a,c),b)",
+      "guard": "after integral-output early return; exact Divide matcher; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        11
+      ],
+      "replacement_site_id": "site-L02769-C012",
+      "replacement_line": 2769,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(divide, new_divide);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "MakeBinaryHlo",
+        "rounding, exceptional values and complex division semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleDivide/predicate-scalar-broadcast",
+      "handler": "HandleDivide",
+      "line": 2592,
+      "end_line": 2789,
+      "lhs": "Divide(Convert(pred),Broadcast(scalar_b))",
+      "rhs": "Multiply(Broadcast(Divide(1,b)),Convert(pred))",
+      "guard": "after integral-output early return; Convert input PRED; denominator broadcast input scalar; no local fast-math guard",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23efb94546b2e1090a292f25e111c8959b85df7b80f18a0f80a7a4481b45dff1",
+      "replacement_ordinals": [
+        12
+      ],
+      "replacement_site_id": "site-L02785-C012",
+      "replacement_line": 2785,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(divide, mul);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "false predicate and exceptional/zero denominators",
+        "source multiplies with reciprocal first",
+        "MakeScalarLike"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/self",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(x,x)",
+      "rhs": "x",
+      "guard": "same operand pointers",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04928-C012",
+      "replacement_line": 4928,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(maximum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "NaN payload/quieting and exact observation relation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/lhs-extreme",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(x,extreme) with extreme at lhs",
+      "rhs": "x",
+      "guard": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MinValue(extreme operand type); remaining operand element type equals result type",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04942-C014",
+      "replacement_line": 4942,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(maximum, rhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mixed floating operand/result types",
+        "LiteralUtil extrema",
+        "IsAll",
+        "NaN propagation and signed zero"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/rhs-extreme",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(x,extreme) with extreme at rhs",
+      "rhs": "x",
+      "guard": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MinValue(extreme operand type); remaining operand element type equals result type",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L04946-C014",
+      "replacement_line": 4946,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(maximum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mixed floating operand/result types",
+        "LiteralUtil extrema",
+        "IsAll",
+        "NaN propagation and signed zero"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/nested-left-lhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(Maximum(x,y),repeated_operand)",
+      "rhs": "inner Maximum(x,y)",
+      "guard": "outer lhs opcode same min/max; outer rhs pointer equals inner lhs operand",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L04953-C012",
+      "replacement_line": 4953,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(maximum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "operand-order-sensitive NaN sign/payload behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/nested-left-rhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(Maximum(x,y),repeated_operand)",
+      "rhs": "inner Maximum(x,y)",
+      "guard": "outer lhs opcode same min/max; outer rhs pointer equals inner rhs operand",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L04953-C012",
+      "replacement_line": 4953,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(maximum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "operand-order-sensitive NaN sign/payload behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/nested-right-first",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(x,Maximum(x,y))",
+      "rhs": "inner Maximum(x,y)",
+      "guard": "inner lhs pointer equals outer lhs",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L04957-C012",
+      "replacement_line": 4957,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(maximum, rhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "ordered min/max NaN behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/nested-right-second",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(y,Maximum(x,y))",
+      "rhs": "Maximum(y,x)",
+      "guard": "inner rhs pointer equals outer lhs; mutate outer operand1 to inner operand0",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L04964-C018",
+      "replacement_line": 4964,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "        maximum->ReplaceOperandWith(1, rhs->mutable_operand(0)));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "ReplaceOperandWith and MarkAsChanged",
+        "source explicitly retains operand order to preserve NaN sign"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/clamp-lhs-lhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(lower,Minimum(x,upper))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at lhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L04983-C014",
+      "replacement_line": 4983,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(maximum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/clamp-lhs-rhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(lower,Minimum(x,upper))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at lhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L04983-C014",
+      "replacement_line": 4983,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(maximum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/clamp-rhs-lhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(lower,Minimum(x,upper))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at rhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L04983-C014",
+      "replacement_line": 4983,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(maximum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/clamp-rhs-rhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(lower,Minimum(x,upper))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at rhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L04983-C014",
+      "replacement_line": 4983,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(maximum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/self",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(x,x)",
+      "rhs": "x",
+      "guard": "same operand pointers",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05039-C012",
+      "replacement_line": 5039,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(minimum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "NaN payload/quieting and exact observation relation"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/lhs-extreme",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(x,extreme) with extreme at lhs",
+      "rhs": "x",
+      "guard": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MaxValue(extreme operand type); remaining operand element type equals result type",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L05053-C014",
+      "replacement_line": 5053,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(minimum, rhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mixed floating operand/result types",
+        "LiteralUtil extrema",
+        "IsAll",
+        "NaN propagation and signed zero"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/rhs-extreme",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(x,extreme) with extreme at rhs",
+      "rhs": "x",
+      "guard": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MaxValue(extreme operand type); remaining operand element type equals result type",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L05057-C014",
+      "replacement_line": 5057,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(minimum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mixed floating operand/result types",
+        "LiteralUtil extrema",
+        "IsAll",
+        "NaN propagation and signed zero"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/nested-left-lhs",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(Minimum(x,y),repeated_operand)",
+      "rhs": "inner Minimum(x,y)",
+      "guard": "outer lhs opcode same min/max; outer rhs pointer equals inner lhs operand",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05064-C012",
+      "replacement_line": 5064,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(minimum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "operand-order-sensitive NaN sign/payload behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/nested-left-rhs",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(Minimum(x,y),repeated_operand)",
+      "rhs": "inner Minimum(x,y)",
+      "guard": "outer lhs opcode same min/max; outer rhs pointer equals inner rhs operand",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05064-C012",
+      "replacement_line": 5064,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(minimum, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "operand-order-sensitive NaN sign/payload behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/nested-right-first",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(x,Minimum(x,y))",
+      "rhs": "inner Minimum(x,y)",
+      "guard": "inner lhs pointer equals outer lhs",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L05068-C012",
+      "replacement_line": 5068,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(minimum, rhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "ordered min/max NaN behavior"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/nested-right-second",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(y,Minimum(x,y))",
+      "rhs": "Minimum(y,x)",
+      "guard": "inner rhs pointer equals outer lhs; mutate outer operand1 to inner operand0",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L05075-C018",
+      "replacement_line": 5075,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "        minimum->ReplaceOperandWith(1, rhs->mutable_operand(0)));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "ReplaceOperandWith and MarkAsChanged",
+        "source explicitly retains operand order to preserve NaN sign"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/clamp-lhs-lhs",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(upper,Maximum(x,lower))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at lhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L05094-C014",
+      "replacement_line": 5094,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(minimum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/clamp-lhs-rhs",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(upper,Maximum(x,lower))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at lhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L05094-C014",
+      "replacement_line": 5094,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(minimum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/clamp-rhs-lhs",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(upper,Maximum(x,lower))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at rhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L05094-C014",
+      "replacement_line": 5094,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(minimum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMinimum/clamp-rhs-rhs",
+      "handler": "HandleMinimum",
+      "line": 5032,
+      "end_line": 5099,
+      "lhs": "Minimum(upper,Maximum(x,lower))",
+      "rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "guard": "outer bound at rhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "123647de9c9dac72b46c327c29720346e6564ba76b4a5a0639189f8b20b37fa3",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L05094-C014",
+      "replacement_line": 5094,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      return ReplaceWithNewInstruction(minimum, std::move(clamp));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "AnyOrder matching versus NaN order",
+        "Clamp numerical semantics",
+        "status propagation"
+      ],
+      "helper_contract_ids": [
+        "MinMaxToClamp"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/clamp-lower-lhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(lower,Clamp(lower,x,upper)) with Clamp at lhs",
+      "rhs": "matched Clamp",
+      "guard": "max operand pointer equals clamp lower bound; compatibility replacement succeeds",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L04997-C009",
+      "replacement_line": 4997,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "        ReplaceInstructionIfCompatible(maximum, clamp)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "SameShape",
+        "Clamp exceptional values and signed-zero semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/clamp-lower-rhs",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(lower,Clamp(lower,x,upper)) with Clamp at rhs",
+      "rhs": "matched Clamp",
+      "guard": "max operand pointer equals clamp lower bound; compatibility replacement succeeds",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L04997-C009",
+      "replacement_line": 4997,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "        ReplaceInstructionIfCompatible(maximum, clamp)) {",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "SameShape",
+        "Clamp exceptional values and signed-zero semantics"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/sink-cbrt",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(Cbrt(x),Cbrt(y))",
+      "rhs": "Cbrt(Maximum(x,y))",
+      "guard": "both unary opcodes Cbrt; IsNondecreasingSublinear(lhs) true",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05024-C012",
+      "replacement_line": 5024,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "actual scalar implementation monotonicity and NaN behavior",
+        "MakeBinaryHlo",
+        "no local fast-math guard"
+      ],
+      "helper_contract_ids": [
+        "IsNondecreasingSublinear"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/sink-erf",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(Erf(x),Erf(y))",
+      "rhs": "Erf(Maximum(x,y))",
+      "guard": "both unary opcodes Erf; IsNondecreasingSublinear(lhs) true",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05024-C012",
+      "replacement_line": 5024,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "actual scalar implementation monotonicity and NaN behavior",
+        "MakeBinaryHlo",
+        "no local fast-math guard"
+      ],
+      "helper_contract_ids": [
+        "IsNondecreasingSublinear"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/sink-logistic",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(Logistic(x),Logistic(y))",
+      "rhs": "Logistic(Maximum(x,y))",
+      "guard": "both unary opcodes Logistic; IsNondecreasingSublinear(lhs) true",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05024-C012",
+      "replacement_line": 5024,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "actual scalar implementation monotonicity and NaN behavior",
+        "MakeBinaryHlo",
+        "no local fast-math guard"
+      ],
+      "helper_contract_ids": [
+        "IsNondecreasingSublinear"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleMaximum/sink-tanh",
+      "handler": "HandleMaximum",
+      "line": 4921,
+      "end_line": 5030,
+      "lhs": "Maximum(Tanh(x),Tanh(y))",
+      "rhs": "Tanh(Maximum(x,y))",
+      "guard": "both unary opcodes Tanh; IsNondecreasingSublinear(lhs) true",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "e7900ffb35db94a82f90efc82d8c75735a728bb734239a44689504cdc83b2df9",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05024-C012",
+      "replacement_line": 5024,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "actual scalar implementation monotonicity and NaN behavior",
+        "MakeBinaryHlo",
+        "no local fast-math guard"
+      ],
+      "helper_contract_ids": [
+        "IsNondecreasingSublinear"
+      ],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/unsigned-lt-zero",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Lt(x,0)",
+      "rhs": "MakeScalarLike(compare,false)",
+      "guard": "lhs element type unsigned integral; direction Lt; IsAll(rhs,0)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05917-C014",
+      "replacement_line": 5917,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/unsigned-ge-zero",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ge(x,0)",
+      "rhs": "MakeScalarLike(compare,true)",
+      "guard": "lhs element type unsigned integral; direction Ge; IsAll(rhs,0)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L05922-C014",
+      "replacement_line": 5922,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/unsigned-zero-gt",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(0,x)",
+      "rhs": "MakeScalarLike(compare,false)",
+      "guard": "lhs element type unsigned integral; direction Gt; IsAll(lhs,0)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L05927-C014",
+      "replacement_line": 5927,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/unsigned-zero-le",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Le(0,x)",
+      "rhs": "MakeScalarLike(compare,true)",
+      "guard": "lhs element type unsigned integral; direction Le; IsAll(lhs,0)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L05932-C014",
+      "replacement_line": 5932,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/nonnegative-lt",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Lt(x,0)",
+      "rhs": "MakeScalarLike(compare,false)",
+      "guard": "direction Lt; IsNonNegative(lhs,options); IsAll(rhs,0)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L05938-C012",
+      "replacement_line": 5938,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/nonnegative-gt",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(0,x)",
+      "rhs": "MakeScalarLike(compare,false)",
+      "guard": "direction Gt; IsAll(lhs,0); IsNonNegative(rhs,options)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        5
+      ],
+      "replacement_site_id": "site-L05941-C012",
+      "replacement_line": 5941,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/nonnegative-ge",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ge(x,0)",
+      "rhs": "MakeScalarLike(compare,true)",
+      "guard": "direction Ge; IsNonNegative(lhs,options); IsAll(rhs,0)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        6
+      ],
+      "replacement_site_id": "site-L05944-C012",
+      "replacement_line": 5944,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/nonnegative-le",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Le(0,x)",
+      "rhs": "MakeScalarLike(compare,true)",
+      "guard": "direction Le; IsAll(lhs,0); IsNonNegative(rhs,options)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        7
+      ],
+      "replacement_site_id": "site-L05947-C012",
+      "replacement_line": 5947,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "source comparison_type and operand type semantics",
+        "IsAll and IsNonNegative contracts",
+        "floating NaN/signed-zero behavior where legal"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/integral-self-gt",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(x,x)",
+      "rhs": "MakeScalarLike(compare,False)",
+      "guard": "same operand pointers; lhs type integral; direction Gt",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05955-C016",
+      "replacement_line": 5955,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "comparison_type compatibility and finite-width ordering",
+        "PRED is handled by later distinct branches where not integral"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/integral-self-lt",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Lt(x,x)",
+      "rhs": "MakeScalarLike(compare,False)",
+      "guard": "same operand pointers; lhs type integral; direction Lt",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05955-C016",
+      "replacement_line": 5955,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "comparison_type compatibility and finite-width ordering",
+        "PRED is handled by later distinct branches where not integral"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/integral-self-ne",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ne(x,x)",
+      "rhs": "MakeScalarLike(compare,False)",
+      "guard": "same operand pointers; lhs type integral; direction Ne",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        8
+      ],
+      "replacement_site_id": "site-L05955-C016",
+      "replacement_line": 5955,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, MakeScalarLike(compare, false));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "comparison_type compatibility and finite-width ordering",
+        "PRED is handled by later distinct branches where not integral"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/integral-self-eq",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Eq(x,x)",
+      "rhs": "MakeScalarLike(compare,True)",
+      "guard": "same operand pointers; lhs type integral; direction Eq",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L05959-C016",
+      "replacement_line": 5959,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "comparison_type compatibility and finite-width ordering",
+        "PRED is handled by later distinct branches where not integral"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/integral-self-ge",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ge(x,x)",
+      "rhs": "MakeScalarLike(compare,True)",
+      "guard": "same operand pointers; lhs type integral; direction Ge",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L05959-C016",
+      "replacement_line": 5959,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "comparison_type compatibility and finite-width ordering",
+        "PRED is handled by later distinct branches where not integral"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/integral-self-le",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Le(x,x)",
+      "rhs": "MakeScalarLike(compare,True)",
+      "guard": "same operand pointers; lhs type integral; direction Le",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        9
+      ],
+      "replacement_site_id": "site-L05959-C016",
+      "replacement_line": 5959,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, MakeScalarLike(compare, true));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "comparison_type compatibility and finite-width ordering",
+        "PRED is handled by later distinct branches where not integral"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/predicate-ne-rhs",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ne(x,false) with constant at rhs",
+      "rhs": "other predicate operand",
+      "guard": "both operand shapes PRED; direction Ne; IsAll(rhs,false)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        10
+      ],
+      "replacement_site_id": "site-L05967-C016",
+      "replacement_line": 5967,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Boolean comparison meaning",
+        "ReplaceInstruction graph/type contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/predicate-ne-lhs",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ne(x,false) with constant at lhs",
+      "rhs": "other predicate operand",
+      "guard": "both operand shapes PRED; direction Ne; IsAll(lhs,false)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        11
+      ],
+      "replacement_site_id": "site-L05971-C016",
+      "replacement_line": 5971,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, rhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Boolean comparison meaning",
+        "ReplaceInstruction graph/type contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/predicate-eq-rhs",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Eq(x,true) with constant at rhs",
+      "rhs": "other predicate operand",
+      "guard": "both operand shapes PRED; direction Eq; IsAll(rhs,true)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        12
+      ],
+      "replacement_site_id": "site-L05976-C016",
+      "replacement_line": 5976,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, lhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Boolean comparison meaning",
+        "ReplaceInstruction graph/type contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/predicate-eq-lhs",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Eq(x,true) with constant at lhs",
+      "rhs": "other predicate operand",
+      "guard": "both operand shapes PRED; direction Eq; IsAll(lhs,true)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        13
+      ],
+      "replacement_site_id": "site-L05980-C016",
+      "replacement_line": 5980,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "        return ReplaceInstruction(compare, rhs);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "Boolean comparison meaning",
+        "ReplaceInstruction graph/type contract"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/causal-mask",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Ne(Select(Ge(a,b),ones,zeros),zeros)",
+      "rhs": "inner Ge(a,b)",
+      "guard": "direction Ne; IsAll(rhs,0); lhs Select with Compare Ge predicate; true value IsAll(1); false value IsAll(0); SameShape(outer result,inner predicate)",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        14
+      ],
+      "replacement_site_id": "site-L06016-C014",
+      "replacement_line": 6016,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(compare, compare0);",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "value types and numeric conversion of one/zero",
+        "scalar/tensor Select predicate legality",
+        "SameShape and metadata"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/maximum-first",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(Maximum(a,b),a)",
+      "rhs": "Gt(b,a)",
+      "guard": "direction Gt; lhs Maximum; rhs pointer == a",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        15
+      ],
+      "replacement_site_id": "site-L06029-C039",
+      "replacement_line": 6029,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "        ABSL_RETURN_IF_ERROR(compare->ReplaceOperandWith(0, b));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mutates existing Compare operand and calls MarkAsChanged",
+        "comparison attributes retained",
+        "min/max NaN and total-order semantics; no local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/maximum-second",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(Maximum(a,b),b)",
+      "rhs": "Gt(a,b)",
+      "guard": "direction Gt; lhs Maximum; rhs pointer == b; prior rhs==a branch excluded",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        16
+      ],
+      "replacement_site_id": "site-L06033-C039",
+      "replacement_line": 6033,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "        ABSL_RETURN_IF_ERROR(compare->ReplaceOperandWith(0, a));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mutates existing Compare operand and calls MarkAsChanged",
+        "comparison attributes retained",
+        "min/max NaN and total-order semantics; no local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/minimum-first",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(a,Minimum(a,b))",
+      "rhs": "Gt(a,b)",
+      "guard": "direction Gt; lhs Maximum matcher fails; rhs Minimum; lhs pointer == a",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        17
+      ],
+      "replacement_site_id": "site-L06039-C039",
+      "replacement_line": 6039,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "        ABSL_RETURN_IF_ERROR(compare->ReplaceOperandWith(1, b));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mutates existing Compare operand and calls MarkAsChanged",
+        "comparison attributes retained",
+        "min/max NaN and total-order semantics; no local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    },
+    {
+      "id": "HandleCompare/minimum-second",
+      "handler": "HandleCompare",
+      "line": 5907,
+      "end_line": 6051,
+      "lhs": "Gt(b,Minimum(a,b))",
+      "rhs": "Gt(b,a)",
+      "guard": "direction Gt; lhs Maximum matcher fails; rhs Minimum; lhs pointer == b; prior lhs==a branch excluded",
+      "path_condition": "legal input HLO; source-order earlier branches, early returns and matcher binding dataflow apply",
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "802710f54413e737ce6111f9308b7ffe54ac970c3325ffe89d1c13307bb712a3",
+      "replacement_ordinals": [
+        18
+      ],
+      "replacement_site_id": "site-L06043-C039",
+      "replacement_line": 6043,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "        ABSL_RETURN_IF_ERROR(compare->ReplaceOperandWith(1, a));",
+      "additional_replacement_sites": [],
+      "acceptance_unit": "complete source case including sequential operand writes and final replacement",
+      "dependencies": [
+        "mutates existing Compare operand and calls MarkAsChanged",
+        "comparison attributes retained",
+        "min/max NaN and total-order semantics; no local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "type_partition_status": "legal types and numerical permission profiles not exhaustively split"
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "IsAllFpConstantPowerOf2",
+      "line": 279,
+      "end_line": 298,
+      "source_body_sha256": "84e6248d45fb1b32aa4727f5cca0c509f685527ee081aa71e0c04e5fa4198961",
+      "source_behavior": "direct effective-scalar Constant OR Broadcast(Constant effective scalar); GetConstantValue succeeds; frexp mantissa == +/-0.5",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "TryDivideToShift",
+      "line": 2536,
+      "end_line": 2589,
+      "source_body_sha256": "556e0a3ddf655cb403e6a0437112fce3d536cf451bddd4b97b91ac33ad0ca725",
+      "source_behavior": "integral dispatcher only; signed positive single-bit denominator uses select/negate/logical-shift/select; unsigned single-bit denominator uses logical shift; other paths return null",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "InvertConstant",
+      "line": 2529,
+      "end_line": 2533,
+      "source_body_sha256": "23c3413752915ad6e989475cf95a3a9e299ad42de51fba38fea7dabdbe6d2295",
+      "source_behavior": "Literal::Populate<T> with T{1.0}/constant literal element at every index; errors propagate",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MinMaxToClamp",
+      "line": 4861,
+      "end_line": 4905,
+      "source_body_sha256": "cda6619760f41c86db429aa60d9e0f1ac9931cc772949aedf1e5eff4bbe16da5",
+      "source_behavior": "reshape effective-scalar literals to rank0; evaluate lower<upper; return Clamp only when all comparison results true; else null; status errors propagate",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "IsNondecreasingSublinear",
+      "line": 4908,
+      "end_line": 4919,
+      "source_body_sha256": "bb4ea55af69c6e7f22d4bf27c8fdfd4696475be73d9247cef895d45ed1f92e6d",
+      "source_behavior": "opcode whitelist Cbrt, Erf, Logistic, Tanh; classification alone is not a proof of numeric monotonicity",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "limitations": [
+    "primary-agent extraction, not independent semantic review",
+    "all lexical replacement sites in selected handlers mapped, but indirect writes and type/option splitting remain open",
+    "helper summaries describe inspected source behavior, not proved scalar contracts",
+    "source explicitly documents some default floating distributivity error permissions",
+    "zero accepted whole-source rewrites; do not sum cases as a rewrite denominator"
+  ]
+}

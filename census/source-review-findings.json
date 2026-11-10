@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "status": "source_review_findings_with_disclosed_validation_levels",
+  "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+  "accepted_source_rewrites": 0,
+  "semantic_denominator": null,
+  "findings": [
+    {
+      "id": "nonnegative-nan-ordered-true-fold",
+      "source_cases": [
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-le"
+      ],
+      "status": "native_truth_change_and_necessary_profile_certificates_pending_source_observation_review",
+      "native_evidence": "reports/compare-nonnegative-replay-v1/result.json",
+      "lean_contract": "census/ordered-compare-contract.json",
+      "source_path_contract": "census/ordered-source-paths.json",
+      "native_runs": 60,
+      "truth_change_runs": 16,
+      "source_accepted": false
+    },
+    {
+      "id": "scatter-reducer-parameter-roles",
+      "source_cases": [
+        "HandleAdd/scatter-single-rhs",
+        "HandleAdd/scatter-single-lhs"
+      ],
+      "status": "native_counterexample_certified_source_contract_review_pending",
+      "review": "reviews/results/census-pilot-v1-large-handlers-codex-reviewer.md",
+      "review_sha256": "dbbb6b639872f5912a9a13e7e32187770f4378170479da358100c928a8b9bc73",
+      "witness": {
+        "lhs": [
+          1,
+          1
+        ],
+        "scatter_base": [
+          3,
+          3
+        ],
+        "index": 0,
+        "update": 5,
+        "reducer": "Add(Parameter(0),Parameter(0))",
+        "before": [
+          7,
+          4
+        ],
+        "after": [
+          8,
+          4
+        ]
+      },
+      "native_replayed": true,
+      "lean_certified": true,
+      "source_accepted": false,
+      "native_evidence": "reports/reducer-index-replay-v1/result.json",
+      "lean_contract": "census/reducer-index-contract.json"
+    },
+    {
+      "id": "gather-index-literal-representability",
+      "source_cases": [
+        "HandleGather/small-select-chain"
+      ],
+      "status": "native_counterexample_certified_source_contract_review_pending",
+      "review": "reviews/results/census-pilot-v1-large-handlers-codex-reviewer.md",
+      "review_sha256": "dbbb6b639872f5912a9a13e7e32187770f4378170479da358100c928a8b9bc73",
+      "witness": {
+        "operand_dtype": "s32",
+        "operand_extent": 129,
+        "index_dtype": "s8",
+        "index_value": 0,
+        "very_small_gather_size": 129,
+        "converted_last_literal": -128,
+        "before_label": 0,
+        "after_label": 128
+      },
+      "native_replayed": true,
+      "lean_certified": true,
+      "source_accepted": false,
+      "native_evidence": "reports/reducer-index-replay-v1/result.json",
+      "lean_contract": "census/reducer-index-contract.json"
+    },
+    {
+      "id": "concatenate-post-allocation-compatibility-skip",
+      "source_cases": [
+        "HandleConcatenate/filter-many-nonempty",
+        "HandleConcatenate/adjacent-slices"
+      ],
+      "status": "native_operational_confirmation_not_value_failure_or_lean_proof",
+      "review": "reviews/results/census-pilot-v1-large-handlers-codex-reviewer.md",
+      "review_sha256": "dbbb6b639872f5912a9a13e7e32187770f4378170479da358100c928a8b9bc73",
+      "witness": "Concat(parameter[1],parameter[0],parameter[1]) with old concat control predecessor; inspect allocation/root/status/changed; no value-change claim",
+      "native_replayed": true,
+      "lean_certified": false,
+      "source_accepted": false,
+      "native_evidence": "reports/concatenate-status-replay-v3/result.json",
+      "operational_contract": "census/concatenate-status-contract.json",
+      "native_runs": 120,
+      "false_changed_with_added_nodes_runs": 15,
+      "value_change_runs": 0
+    },
+    {
+      "id": "reshape-dus-unit-axis-empty-update",
+      "source_cases": [
+        "HandleReshape/dynamic-update-unit-dims"
+      ],
+      "status": "independent_source_inspection_conditional_reachability_only",
+      "review": "reviews/results/census-pilot-v1-shape-handlers-codex-reviewer.md",
+      "review_sha256": "c56bd38583e2d37a679888fb51aec20199fd826a110967c4f03432ffc810e821",
+      "witness": {
+        "base_shape": [
+          1,
+          2
+        ],
+        "update_shape": [
+          0,
+          1
+        ],
+        "result_shape": [
+          2
+        ],
+        "constructed_update_shape": [
+          1
+        ]
+      },
+      "native_replayed": false,
+      "lean_certified": false,
+      "source_accepted": false,
+      "ordinary_pass_empty_update_cleanup": true,
+      "ordinary_pass_counterexample_claimed": false,
+      "async_reachability_unverified": true,
+      "additional_obligation": "rank-zero empty reduction bounds in deleted unit-axis grouping"
+    },
+    {
+      "id": "scaled-iota-probe-local-binding-continuation",
+      "source_cases": [
+        "HandleDynamicSlice/nested-after-scaled-probe"
+      ],
+      "status": "native_counterexample_certified_source_contract_review_pending",
+      "review": "reviews/results/census-pilot-v1-index-reduction-handlers-codex-reviewer.md",
+      "review_sha256": "d608d3317fc3284130f5db0f13efad86ca93d9703040738f8c1080d48b01d894",
+      "native_replayed": true,
+      "lean_certified": true,
+      "source_accepted": false,
+      "native_evidence": "reports/scaled-nested-slice-replay-v1/result.json",
+      "lean_contract": "census/scaled-nested-slice-contract.json",
+      "witness": {
+        "input": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10
+        ],
+        "inner_size": 6,
+        "outer_size": 1,
+        "inner_start": 1,
+        "outer_start": 2,
+        "multiplier": 7,
+        "before": 28,
+        "after": 4
+      },
+      "semantic_partition_added": true
+    },
+    {
+      "id": "scatter-reducer-roles-two-scatter-branches",
+      "source_cases": [
+        "HandleAdd/scatter-concat",
+        "HandleAdd/scatter-nested"
+      ],
+      "status": "independent_source_inspection_candidate_not_native_or_lean_confirmed",
+      "review": "reviews/results/census-pilot-v1-large-handlers-codex-reviewer.md",
+      "review_sha256": "dbbb6b639872f5912a9a13e7e32187770f4378170479da358100c928a8b9bc73",
+      "witness": "same opcode-only role matcher; both-scatter source branches not replayed; single-Scatter concrete witness does not establish these paths",
+      "native_replayed": false,
+      "lean_certified": false,
+      "source_accepted": false
+    },
+    {
+      "id": "dynamic-slice-unit-reshape-empty-axis",
+      "source_cases": [
+        "HandleDynamicSlice/unit-reshape"
+      ],
+      "status": "native_checked_fatal_semantic_domain_unresolved_not_lean_proof",
+      "review": "reviews/results/census-pilot-v1-index-reduction-handlers-codex-reviewer.md",
+      "review_sha256": "d608d3317fc3284130f5db0f13efad86ca93d9703040738f8c1080d48b01d894",
+      "native_replayed": true,
+      "lean_certified": false,
+      "source_accepted": false,
+      "native_evidence": "reports/dynamic-slice-empty-reshape-replay-v4/result.json",
+      "diagnostic_contract": "census/dynamic-slice-empty-reshape-contract.json",
+      "native_runs": 21,
+      "checked_fatal_runs": 4,
+      "semantic_domain_resolved": false
+    }
+  ]
+}

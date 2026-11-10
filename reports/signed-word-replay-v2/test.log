@@ -1,0 +1,3431 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:signed_word_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 83661 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from SignedWordReplay
+[ RUN      ] SignedWordReplay.SignedOverflowAndNarrowing
+SIGNED_WORD_RESULT dtype=s8 case=add_zero mode=control changed=0 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} add(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_zero mode=handler changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_zero mode=pass changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_constant mode=control changed=0 checked=6 values=129,130,1,131,128,2 signed=-127,-126,1,-125,-128,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %c2 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %c2 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} add(%c2, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_constant mode=handler changed=1 checked=6 values=129,130,1,131,128,2 signed=-127,-126,1,-125,-128,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %c2 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c2 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  ROOT %result = s8[6]{0} add(%data, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_constant mode=pass changed=1 checked=6 values=129,130,1,131,128,2 signed=-127,-126,1,-125,-128,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %c2 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %constant = s8[] constant(2)
+  %broadcast = s8[6]{0} broadcast(%constant), dimensions={}
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} add(%broadcast, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_assoc mode=control changed=0 checked=6 values=132,133,4,134,131,5 signed=-124,-123,4,-122,-125,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s8[6]{0} add(%data, %c1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s8[6]{0} add(%data, %c1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} add(%inner, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_assoc mode=handler changed=1 checked=6 values=132,133,4,134,131,5 signed=-124,-123,4,-122,-125,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s8[6]{0} add(%data, %c1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %add = s8[6]{0} add(%c1, %c2)
+  ROOT %result = s8[6]{0} add(%data, %add)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=add_assoc mode=pass changed=1 checked=6 values=132,133,4,134,131,5 signed=-124,-123,4,-122,-125,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s8[6]{0} add(%data, %c1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %constant = s8[] constant(2)
+  %constant.1 = s8[] constant(3)
+  %add = s8[] add(%constant, %constant.1)
+  %broadcast.2 = s8[6]{0} broadcast(%add), dimensions={}
+  ROOT %result = s8[6]{0} add(%data, %broadcast.2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=factor mode=control changed=0 checked=6 values=128,254,3,0,255,128 signed=-128,-2,3,0,-1,-128 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %shared = s8[6]{0} parameter(2)
+  %left = s8[6]{0} multiply(%data, %shared)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} multiply(%other, %shared)
+  ROOT %result = s8[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %shared = s8[6]{0} parameter(2)
+  %left = s8[6]{0} multiply(%data, %shared)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} multiply(%other, %shared)
+  ROOT %result = s8[6]{0} add(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=factor mode=handler changed=1 checked=6 values=128,254,3,0,255,128 signed=-128,-2,3,0,-1,-128 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %shared = s8[6]{0} parameter(2)
+  %left = s8[6]{0} multiply(%data, %shared)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} multiply(%other, %shared)
+  ROOT %result = s8[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %add = s8[6]{0} add(%data, %other)
+  %shared = s8[6]{0} parameter(2)
+  ROOT %multiply = s8[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=factor mode=pass changed=1 checked=6 values=128,254,3,0,255,128 signed=-128,-2,3,0,-1,-128 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %shared = s8[6]{0} parameter(2)
+  %left = s8[6]{0} multiply(%data, %shared)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} multiply(%other, %shared)
+  ROOT %result = s8[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %add = s8[6]{0} add(%data, %other)
+  %shared = s8[6]{0} parameter(2)
+  ROOT %multiply = s8[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_zero mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} multiply(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_zero mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  ROOT %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_zero mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %constant = s8[] constant(0)
+  ROOT %broadcast = s8[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_one mode=control changed=0 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %one = s8[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s8[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %one = s8[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s8[6]{0} multiply(%data, %one)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_one mode=handler changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %one = s8[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s8[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_one mode=pass changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %one = s8[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s8[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_neg_neg mode=control changed=0 checked=6 values=127,128,254,255,122,0 signed=127,-128,-2,-1,122,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %left = s8[6]{0} negate(%data)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} negate(%other)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %left = s8[6]{0} negate(%data)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} negate(%other)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_neg_neg mode=handler changed=1 checked=6 values=127,128,254,255,122,0 signed=127,-128,-2,-1,122,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %left = s8[6]{0} negate(%data)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} negate(%other)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %left = s8[6]{0} negate(%data)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} negate(%other)
+  ROOT %result = s8[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=mul_neg_neg mode=pass changed=1 checked=6 values=127,128,254,255,122,0 signed=127,-128,-2,-1,122,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %left = s8[6]{0} negate(%data)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} negate(%other)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %left = s8[6]{0} negate(%data)
+  %other = s8[6]{0} parameter(1)
+  %right = s8[6]{0} negate(%other)
+  ROOT %result = s8[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=four_factors mode=control changed=0 checked=6 values=250,0,244,250,220,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s8[6]{0} multiply(%data, %c1)
+  %other = s8[6]{0} parameter(1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s8[6]{0} multiply(%other, %c2)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s8[6]{0} multiply(%data, %c1)
+  %other = s8[6]{0} parameter(1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s8[6]{0} multiply(%other, %c2)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=four_factors mode=handler changed=1 checked=6 values=250,0,244,250,220,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s8[6]{0} multiply(%data, %c1)
+  %other = s8[6]{0} parameter(1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s8[6]{0} multiply(%other, %c2)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %multiply.1 = s8[6]{0} multiply(%data, %other)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %multiply = s8[6]{0} multiply(%c1, %c2)
+  ROOT %result = s8[6]{0} multiply(%multiply.1, %multiply)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=four_factors mode=pass changed=1 checked=6 values=250,0,244,250,220,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c1 = s8[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s8[6]{0} multiply(%data, %c1)
+  %other = s8[6]{0} parameter(1)
+  %c2 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s8[6]{0} multiply(%other, %c2)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %constant = s8[] constant(2)
+  %broadcast = s8[6]{0} broadcast(%constant), dimensions={}
+  %left = s8[6]{0} multiply(%data, %broadcast)
+  %other = s8[6]{0} parameter(1)
+  %constant.1 = s8[] constant(3)
+  %broadcast.1 = s8[6]{0} broadcast(%constant.1), dimensions={}
+  %right = s8[6]{0} multiply(%other, %broadcast.1)
+  ROOT %result = s8[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_self mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} subtract(%data, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_self mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %constant = s8[] constant(0)
+  ROOT %broadcast = s8[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_self mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  ROOT %result = s8[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %constant = s8[] constant(0)
+  ROOT %broadcast = s8[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_zero mode=control changed=0 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} subtract(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_zero mode=handler changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_zero mode=pass changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %zero = s8[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s8[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_constant mode=control changed=0 checked=6 values=124,125,252,126,123,253 signed=124,125,-4,126,123,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c3 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c3 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} subtract(%data, %c3)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_constant mode=handler changed=1 checked=6 values=124,125,252,126,123,253 signed=124,125,-4,126,123,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c3 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c3 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %negate = s8[6]{0} negate(%c3)
+  ROOT %add = s8[6]{0} add(%data, %negate)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=sub_constant mode=pass changed=1 checked=6 values=124,125,252,126,123,253 signed=124,125,-4,126,123,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %c3 = s8[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s8[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %constant = s8[] constant(3)
+  %negate = s8[] negate(%constant)
+  %broadcast.1 = s8[6]{0} broadcast(%negate), dimensions={}
+  ROOT %add = s8[6]{0} add(%data, %broadcast.1)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=neg_neg mode=control changed=0 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %inner = s8[6]{0} negate(%data)
+  ROOT %result = s8[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %inner = s8[6]{0} negate(%data)
+  ROOT %result = s8[6]{0} negate(%inner)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=neg_neg mode=handler changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %inner = s8[6]{0} negate(%data)
+  ROOT %result = s8[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s8 case=neg_neg mode=pass changed=1 checked=6 values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+  %data = s8[6]{0} parameter(0)
+  %inner = s8[6]{0} negate(%data)
+  ROOT %result = s8[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s8[6]{0}, s8[6]{0}, s8[6]{0})->s8[6]{0}}
+
+ENTRY %main (data: s8[6], other: s8[6], shared: s8[6]) -> s8[6] {
+  ROOT %data = s8[6]{0} parameter(0)
+  %other = s8[6]{0} parameter(1)
+  %shared = s8[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_zero mode=control changed=0 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} add(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_zero mode=handler changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_zero mode=pass changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_constant mode=control changed=0 checked=6 values=32769,32770,1,32771,32768,2 signed=-32767,-32766,1,-32765,-32768,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %c2 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %c2 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} add(%c2, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_constant mode=handler changed=1 checked=6 values=32769,32770,1,32771,32768,2 signed=-32767,-32766,1,-32765,-32768,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %c2 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c2 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  ROOT %result = s16[6]{0} add(%data, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_constant mode=pass changed=1 checked=6 values=32769,32770,1,32771,32768,2 signed=-32767,-32766,1,-32765,-32768,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %c2 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %constant = s16[] constant(2)
+  %broadcast = s16[6]{0} broadcast(%constant), dimensions={}
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} add(%broadcast, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_assoc mode=control changed=0 checked=6 values=32772,32773,4,32774,32771,5 signed=-32764,-32763,4,-32762,-32765,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s16[6]{0} add(%data, %c1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s16[6]{0} add(%data, %c1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} add(%inner, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_assoc mode=handler changed=1 checked=6 values=32772,32773,4,32774,32771,5 signed=-32764,-32763,4,-32762,-32765,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s16[6]{0} add(%data, %c1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %add = s16[6]{0} add(%c1, %c2)
+  ROOT %result = s16[6]{0} add(%data, %add)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=add_assoc mode=pass changed=1 checked=6 values=32772,32773,4,32774,32771,5 signed=-32764,-32763,4,-32762,-32765,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s16[6]{0} add(%data, %c1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %constant = s16[] constant(2)
+  %constant.1 = s16[] constant(3)
+  %add = s16[] add(%constant, %constant.1)
+  %broadcast.2 = s16[6]{0} broadcast(%add), dimensions={}
+  ROOT %result = s16[6]{0} add(%data, %broadcast.2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=factor mode=control changed=0 checked=6 values=32768,65534,3,0,65535,32768 signed=-32768,-2,3,0,-1,-32768 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %shared = s16[6]{0} parameter(2)
+  %left = s16[6]{0} multiply(%data, %shared)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} multiply(%other, %shared)
+  ROOT %result = s16[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %shared = s16[6]{0} parameter(2)
+  %left = s16[6]{0} multiply(%data, %shared)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} multiply(%other, %shared)
+  ROOT %result = s16[6]{0} add(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=factor mode=handler changed=1 checked=6 values=32768,65534,3,0,65535,32768 signed=-32768,-2,3,0,-1,-32768 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %shared = s16[6]{0} parameter(2)
+  %left = s16[6]{0} multiply(%data, %shared)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} multiply(%other, %shared)
+  ROOT %result = s16[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %add = s16[6]{0} add(%data, %other)
+  %shared = s16[6]{0} parameter(2)
+  ROOT %multiply = s16[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=factor mode=pass changed=1 checked=6 values=32768,65534,3,0,65535,32768 signed=-32768,-2,3,0,-1,-32768 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %shared = s16[6]{0} parameter(2)
+  %left = s16[6]{0} multiply(%data, %shared)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} multiply(%other, %shared)
+  ROOT %result = s16[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %add = s16[6]{0} add(%data, %other)
+  %shared = s16[6]{0} parameter(2)
+  ROOT %multiply = s16[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_zero mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} multiply(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_zero mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  ROOT %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_zero mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %constant = s16[] constant(0)
+  ROOT %broadcast = s16[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_one mode=control changed=0 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %one = s16[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s16[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %one = s16[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s16[6]{0} multiply(%data, %one)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_one mode=handler changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %one = s16[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s16[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_one mode=pass changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %one = s16[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s16[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_neg_neg mode=control changed=0 checked=6 values=32767,32768,65534,65535,32762,0 signed=32767,-32768,-2,-1,32762,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %left = s16[6]{0} negate(%data)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} negate(%other)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %left = s16[6]{0} negate(%data)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} negate(%other)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_neg_neg mode=handler changed=1 checked=6 values=32767,32768,65534,65535,32762,0 signed=32767,-32768,-2,-1,32762,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %left = s16[6]{0} negate(%data)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} negate(%other)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %left = s16[6]{0} negate(%data)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} negate(%other)
+  ROOT %result = s16[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=mul_neg_neg mode=pass changed=1 checked=6 values=32767,32768,65534,65535,32762,0 signed=32767,-32768,-2,-1,32762,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %left = s16[6]{0} negate(%data)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} negate(%other)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %left = s16[6]{0} negate(%data)
+  %other = s16[6]{0} parameter(1)
+  %right = s16[6]{0} negate(%other)
+  ROOT %result = s16[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=four_factors mode=control changed=0 checked=6 values=65530,0,65524,65530,65500,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s16[6]{0} multiply(%data, %c1)
+  %other = s16[6]{0} parameter(1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s16[6]{0} multiply(%other, %c2)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s16[6]{0} multiply(%data, %c1)
+  %other = s16[6]{0} parameter(1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s16[6]{0} multiply(%other, %c2)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=four_factors mode=handler changed=1 checked=6 values=65530,0,65524,65530,65500,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s16[6]{0} multiply(%data, %c1)
+  %other = s16[6]{0} parameter(1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s16[6]{0} multiply(%other, %c2)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %multiply.1 = s16[6]{0} multiply(%data, %other)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %multiply = s16[6]{0} multiply(%c1, %c2)
+  ROOT %result = s16[6]{0} multiply(%multiply.1, %multiply)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=four_factors mode=pass changed=1 checked=6 values=65530,0,65524,65530,65500,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c1 = s16[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s16[6]{0} multiply(%data, %c1)
+  %other = s16[6]{0} parameter(1)
+  %c2 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s16[6]{0} multiply(%other, %c2)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %constant = s16[] constant(2)
+  %broadcast = s16[6]{0} broadcast(%constant), dimensions={}
+  %left = s16[6]{0} multiply(%data, %broadcast)
+  %other = s16[6]{0} parameter(1)
+  %constant.1 = s16[] constant(3)
+  %broadcast.1 = s16[6]{0} broadcast(%constant.1), dimensions={}
+  %right = s16[6]{0} multiply(%other, %broadcast.1)
+  ROOT %result = s16[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_self mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} subtract(%data, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_self mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %constant = s16[] constant(0)
+  ROOT %broadcast = s16[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_self mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  ROOT %result = s16[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %constant = s16[] constant(0)
+  ROOT %broadcast = s16[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_zero mode=control changed=0 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} subtract(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_zero mode=handler changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_zero mode=pass changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %zero = s16[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s16[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_constant mode=control changed=0 checked=6 values=32764,32765,65532,32766,32763,65533 signed=32764,32765,-4,32766,32763,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c3 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c3 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} subtract(%data, %c3)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_constant mode=handler changed=1 checked=6 values=32764,32765,65532,32766,32763,65533 signed=32764,32765,-4,32766,32763,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c3 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c3 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %negate = s16[6]{0} negate(%c3)
+  ROOT %add = s16[6]{0} add(%data, %negate)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=sub_constant mode=pass changed=1 checked=6 values=32764,32765,65532,32766,32763,65533 signed=32764,32765,-4,32766,32763,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %c3 = s16[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s16[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %constant = s16[] constant(3)
+  %negate = s16[] negate(%constant)
+  %broadcast.1 = s16[6]{0} broadcast(%negate), dimensions={}
+  ROOT %add = s16[6]{0} add(%data, %broadcast.1)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=neg_neg mode=control changed=0 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %inner = s16[6]{0} negate(%data)
+  ROOT %result = s16[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %inner = s16[6]{0} negate(%data)
+  ROOT %result = s16[6]{0} negate(%inner)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=neg_neg mode=handler changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %inner = s16[6]{0} negate(%data)
+  ROOT %result = s16[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s16 case=neg_neg mode=pass changed=1 checked=6 values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+  %data = s16[6]{0} parameter(0)
+  %inner = s16[6]{0} negate(%data)
+  ROOT %result = s16[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s16[6]{0}, s16[6]{0}, s16[6]{0})->s16[6]{0}}
+
+ENTRY %main (data: s16[6], other: s16[6], shared: s16[6]) -> s16[6] {
+  ROOT %data = s16[6]{0} parameter(0)
+  %other = s16[6]{0} parameter(1)
+  %shared = s16[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_zero mode=control changed=0 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} add(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_zero mode=handler changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_zero mode=pass changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_constant mode=control changed=0 checked=6 values=2147483649,2147483650,1,2147483651,2147483648,2 signed=-2147483647,-2147483646,1,-2147483645,-2147483648,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %c2 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %c2 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} add(%c2, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_constant mode=handler changed=1 checked=6 values=2147483649,2147483650,1,2147483651,2147483648,2 signed=-2147483647,-2147483646,1,-2147483645,-2147483648,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %c2 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c2 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  ROOT %result = s32[6]{0} add(%data, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_constant mode=pass changed=1 checked=6 values=2147483649,2147483650,1,2147483651,2147483648,2 signed=-2147483647,-2147483646,1,-2147483645,-2147483648,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %c2 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %constant = s32[] constant(2)
+  %broadcast = s32[6]{0} broadcast(%constant), dimensions={}
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} add(%broadcast, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_assoc mode=control changed=0 checked=6 values=2147483652,2147483653,4,2147483654,2147483651,5 signed=-2147483644,-2147483643,4,-2147483642,-2147483645,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s32[6]{0} add(%data, %c1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s32[6]{0} add(%data, %c1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} add(%inner, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_assoc mode=handler changed=1 checked=6 values=2147483652,2147483653,4,2147483654,2147483651,5 signed=-2147483644,-2147483643,4,-2147483642,-2147483645,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s32[6]{0} add(%data, %c1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %add = s32[6]{0} add(%c1, %c2)
+  ROOT %result = s32[6]{0} add(%data, %add)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=add_assoc mode=pass changed=1 checked=6 values=2147483652,2147483653,4,2147483654,2147483651,5 signed=-2147483644,-2147483643,4,-2147483642,-2147483645,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s32[6]{0} add(%data, %c1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %constant = s32[] constant(2)
+  %constant.1 = s32[] constant(3)
+  %add = s32[] add(%constant, %constant.1)
+  %broadcast.2 = s32[6]{0} broadcast(%add), dimensions={}
+  ROOT %result = s32[6]{0} add(%data, %broadcast.2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=factor mode=control changed=0 checked=6 values=2147483648,4294967294,3,0,4294967295,2147483648 signed=-2147483648,-2,3,0,-1,-2147483648 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %shared = s32[6]{0} parameter(2)
+  %left = s32[6]{0} multiply(%data, %shared)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} multiply(%other, %shared)
+  ROOT %result = s32[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %shared = s32[6]{0} parameter(2)
+  %left = s32[6]{0} multiply(%data, %shared)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} multiply(%other, %shared)
+  ROOT %result = s32[6]{0} add(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=factor mode=handler changed=1 checked=6 values=2147483648,4294967294,3,0,4294967295,2147483648 signed=-2147483648,-2,3,0,-1,-2147483648 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %shared = s32[6]{0} parameter(2)
+  %left = s32[6]{0} multiply(%data, %shared)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} multiply(%other, %shared)
+  ROOT %result = s32[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %add = s32[6]{0} add(%data, %other)
+  %shared = s32[6]{0} parameter(2)
+  ROOT %multiply = s32[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=factor mode=pass changed=1 checked=6 values=2147483648,4294967294,3,0,4294967295,2147483648 signed=-2147483648,-2,3,0,-1,-2147483648 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %shared = s32[6]{0} parameter(2)
+  %left = s32[6]{0} multiply(%data, %shared)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} multiply(%other, %shared)
+  ROOT %result = s32[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %add = s32[6]{0} add(%data, %other)
+  %shared = s32[6]{0} parameter(2)
+  ROOT %multiply = s32[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_zero mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} multiply(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_zero mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  ROOT %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_zero mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_one mode=control changed=0 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %one = s32[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s32[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %one = s32[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s32[6]{0} multiply(%data, %one)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_one mode=handler changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %one = s32[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s32[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_one mode=pass changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %one = s32[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s32[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_neg_neg mode=control changed=0 checked=6 values=2147483647,2147483648,4294967294,4294967295,2147483642,0 signed=2147483647,-2147483648,-2,-1,2147483642,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %left = s32[6]{0} negate(%data)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} negate(%other)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %left = s32[6]{0} negate(%data)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} negate(%other)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_neg_neg mode=handler changed=1 checked=6 values=2147483647,2147483648,4294967294,4294967295,2147483642,0 signed=2147483647,-2147483648,-2,-1,2147483642,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %left = s32[6]{0} negate(%data)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} negate(%other)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %left = s32[6]{0} negate(%data)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} negate(%other)
+  ROOT %result = s32[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=mul_neg_neg mode=pass changed=1 checked=6 values=2147483647,2147483648,4294967294,4294967295,2147483642,0 signed=2147483647,-2147483648,-2,-1,2147483642,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %left = s32[6]{0} negate(%data)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} negate(%other)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %left = s32[6]{0} negate(%data)
+  %other = s32[6]{0} parameter(1)
+  %right = s32[6]{0} negate(%other)
+  ROOT %result = s32[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=four_factors mode=control changed=0 checked=6 values=4294967290,0,4294967284,4294967290,4294967260,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s32[6]{0} multiply(%data, %c1)
+  %other = s32[6]{0} parameter(1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s32[6]{0} multiply(%other, %c2)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s32[6]{0} multiply(%data, %c1)
+  %other = s32[6]{0} parameter(1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s32[6]{0} multiply(%other, %c2)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=four_factors mode=handler changed=1 checked=6 values=4294967290,0,4294967284,4294967290,4294967260,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s32[6]{0} multiply(%data, %c1)
+  %other = s32[6]{0} parameter(1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s32[6]{0} multiply(%other, %c2)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %multiply.1 = s32[6]{0} multiply(%data, %other)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %multiply = s32[6]{0} multiply(%c1, %c2)
+  ROOT %result = s32[6]{0} multiply(%multiply.1, %multiply)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=four_factors mode=pass changed=1 checked=6 values=4294967290,0,4294967284,4294967290,4294967260,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c1 = s32[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s32[6]{0} multiply(%data, %c1)
+  %other = s32[6]{0} parameter(1)
+  %c2 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s32[6]{0} multiply(%other, %c2)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %constant = s32[] constant(2)
+  %broadcast = s32[6]{0} broadcast(%constant), dimensions={}
+  %left = s32[6]{0} multiply(%data, %broadcast)
+  %other = s32[6]{0} parameter(1)
+  %constant.1 = s32[] constant(3)
+  %broadcast.1 = s32[6]{0} broadcast(%constant.1), dimensions={}
+  %right = s32[6]{0} multiply(%other, %broadcast.1)
+  ROOT %result = s32[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_self mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} subtract(%data, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_self mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_self mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  ROOT %result = s32[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_zero mode=control changed=0 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} subtract(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_zero mode=handler changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_zero mode=pass changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %zero = s32[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s32[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_constant mode=control changed=0 checked=6 values=2147483644,2147483645,4294967292,2147483646,2147483643,4294967293 signed=2147483644,2147483645,-4,2147483646,2147483643,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c3 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c3 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} subtract(%data, %c3)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_constant mode=handler changed=1 checked=6 values=2147483644,2147483645,4294967292,2147483646,2147483643,4294967293 signed=2147483644,2147483645,-4,2147483646,2147483643,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c3 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c3 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %negate = s32[6]{0} negate(%c3)
+  ROOT %add = s32[6]{0} add(%data, %negate)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=sub_constant mode=pass changed=1 checked=6 values=2147483644,2147483645,4294967292,2147483646,2147483643,4294967293 signed=2147483644,2147483645,-4,2147483646,2147483643,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %c3 = s32[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s32[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %constant = s32[] constant(3)
+  %negate = s32[] negate(%constant)
+  %broadcast.1 = s32[6]{0} broadcast(%negate), dimensions={}
+  ROOT %add = s32[6]{0} add(%data, %broadcast.1)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=neg_neg mode=control changed=0 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %inner = s32[6]{0} negate(%data)
+  ROOT %result = s32[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %inner = s32[6]{0} negate(%data)
+  ROOT %result = s32[6]{0} negate(%inner)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=neg_neg mode=handler changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %inner = s32[6]{0} negate(%data)
+  ROOT %result = s32[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s32 case=neg_neg mode=pass changed=1 checked=6 values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+  %data = s32[6]{0} parameter(0)
+  %inner = s32[6]{0} negate(%data)
+  ROOT %result = s32[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s32[6]{0}, s32[6]{0}, s32[6]{0})->s32[6]{0}}
+
+ENTRY %main (data: s32[6], other: s32[6], shared: s32[6]) -> s32[6] {
+  ROOT %data = s32[6]{0} parameter(0)
+  %other = s32[6]{0} parameter(1)
+  %shared = s32[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_zero mode=control changed=0 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} add(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_zero mode=handler changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_zero mode=pass changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} add(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_constant mode=control changed=0 checked=6 values=9223372036854775809,9223372036854775810,1,9223372036854775811,9223372036854775808,2 signed=-9223372036854775807,-9223372036854775806,1,-9223372036854775805,-9223372036854775808,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %c2 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %c2 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} add(%c2, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_constant mode=handler changed=1 checked=6 values=9223372036854775809,9223372036854775810,1,9223372036854775811,9223372036854775808,2 signed=-9223372036854775807,-9223372036854775806,1,-9223372036854775805,-9223372036854775808,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %c2 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c2 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  ROOT %result = s64[6]{0} add(%data, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_constant mode=pass changed=1 checked=6 values=9223372036854775809,9223372036854775810,1,9223372036854775811,9223372036854775808,2 signed=-9223372036854775807,-9223372036854775806,1,-9223372036854775805,-9223372036854775808,2 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %c2 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} add(%c2, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %constant = s64[] constant(2)
+  %broadcast = s64[6]{0} broadcast(%constant), dimensions={}
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} add(%broadcast, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_assoc mode=control changed=0 checked=6 values=9223372036854775812,9223372036854775813,4,9223372036854775814,9223372036854775811,5 signed=-9223372036854775804,-9223372036854775803,4,-9223372036854775802,-9223372036854775805,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s64[6]{0} add(%data, %c1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s64[6]{0} add(%data, %c1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} add(%inner, %c2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_assoc mode=handler changed=1 checked=6 values=9223372036854775812,9223372036854775813,4,9223372036854775814,9223372036854775811,5 signed=-9223372036854775804,-9223372036854775803,4,-9223372036854775802,-9223372036854775805,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s64[6]{0} add(%data, %c1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %add = s64[6]{0} add(%c1, %c2)
+  ROOT %result = s64[6]{0} add(%data, %add)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=add_assoc mode=pass changed=1 checked=6 values=9223372036854775812,9223372036854775813,4,9223372036854775814,9223372036854775811,5 signed=-9223372036854775804,-9223372036854775803,4,-9223372036854775802,-9223372036854775805,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %inner = s64[6]{0} add(%data, %c1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} add(%inner, %c2)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %constant = s64[] constant(2)
+  %constant.1 = s64[] constant(3)
+  %add = s64[] add(%constant, %constant.1)
+  %broadcast.2 = s64[6]{0} broadcast(%add), dimensions={}
+  ROOT %result = s64[6]{0} add(%data, %broadcast.2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=factor mode=control changed=0 checked=6 values=9223372036854775808,18446744073709551614,3,0,18446744073709551615,9223372036854775808 signed=-9223372036854775808,-2,3,0,-1,-9223372036854775808 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %shared = s64[6]{0} parameter(2)
+  %left = s64[6]{0} multiply(%data, %shared)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} multiply(%other, %shared)
+  ROOT %result = s64[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %shared = s64[6]{0} parameter(2)
+  %left = s64[6]{0} multiply(%data, %shared)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} multiply(%other, %shared)
+  ROOT %result = s64[6]{0} add(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=factor mode=handler changed=1 checked=6 values=9223372036854775808,18446744073709551614,3,0,18446744073709551615,9223372036854775808 signed=-9223372036854775808,-2,3,0,-1,-9223372036854775808 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %shared = s64[6]{0} parameter(2)
+  %left = s64[6]{0} multiply(%data, %shared)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} multiply(%other, %shared)
+  ROOT %result = s64[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %add = s64[6]{0} add(%data, %other)
+  %shared = s64[6]{0} parameter(2)
+  ROOT %multiply = s64[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=factor mode=pass changed=1 checked=6 values=9223372036854775808,18446744073709551614,3,0,18446744073709551615,9223372036854775808 signed=-9223372036854775808,-2,3,0,-1,-9223372036854775808 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %shared = s64[6]{0} parameter(2)
+  %left = s64[6]{0} multiply(%data, %shared)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} multiply(%other, %shared)
+  ROOT %result = s64[6]{0} add(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %add = s64[6]{0} add(%data, %other)
+  %shared = s64[6]{0} parameter(2)
+  ROOT %multiply = s64[6]{0} multiply(%add, %shared)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_zero mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} multiply(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_zero mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  ROOT %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_zero mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} multiply(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %constant = s64[] constant(0)
+  ROOT %broadcast = s64[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_one mode=control changed=0 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %one = s64[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s64[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %one = s64[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s64[6]{0} multiply(%data, %one)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_one mode=handler changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %one = s64[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s64[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_one mode=pass changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %one = s64[6]{0} constant({1, 1, 1, 1, 1, 1})
+  ROOT %result = s64[6]{0} multiply(%data, %one)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_neg_neg mode=control changed=0 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551614,18446744073709551615,9223372036854775802,0 signed=9223372036854775807,-9223372036854775808,-2,-1,9223372036854775802,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %left = s64[6]{0} negate(%data)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} negate(%other)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %left = s64[6]{0} negate(%data)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} negate(%other)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_neg_neg mode=handler changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551614,18446744073709551615,9223372036854775802,0 signed=9223372036854775807,-9223372036854775808,-2,-1,9223372036854775802,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %left = s64[6]{0} negate(%data)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} negate(%other)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %left = s64[6]{0} negate(%data)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} negate(%other)
+  ROOT %result = s64[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=mul_neg_neg mode=pass changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551614,18446744073709551615,9223372036854775802,0 signed=9223372036854775807,-9223372036854775808,-2,-1,9223372036854775802,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %left = s64[6]{0} negate(%data)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} negate(%other)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %left = s64[6]{0} negate(%data)
+  %other = s64[6]{0} parameter(1)
+  %right = s64[6]{0} negate(%other)
+  ROOT %result = s64[6]{0} multiply(%data, %other)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=four_factors mode=control changed=0 checked=6 values=18446744073709551610,0,18446744073709551604,18446744073709551610,18446744073709551580,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s64[6]{0} multiply(%data, %c1)
+  %other = s64[6]{0} parameter(1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s64[6]{0} multiply(%other, %c2)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s64[6]{0} multiply(%data, %c1)
+  %other = s64[6]{0} parameter(1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s64[6]{0} multiply(%other, %c2)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=four_factors mode=handler changed=1 checked=6 values=18446744073709551610,0,18446744073709551604,18446744073709551610,18446744073709551580,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s64[6]{0} multiply(%data, %c1)
+  %other = s64[6]{0} parameter(1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s64[6]{0} multiply(%other, %c2)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %multiply.1 = s64[6]{0} multiply(%data, %other)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %multiply = s64[6]{0} multiply(%c1, %c2)
+  ROOT %result = s64[6]{0} multiply(%multiply.1, %multiply)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=four_factors mode=pass changed=1 checked=6 values=18446744073709551610,0,18446744073709551604,18446744073709551610,18446744073709551580,0 signed=-6,0,-12,-6,-36,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c1 = s64[6]{0} constant({2, 2, 2, 2, 2, 2})
+  %left = s64[6]{0} multiply(%data, %c1)
+  %other = s64[6]{0} parameter(1)
+  %c2 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %right = s64[6]{0} multiply(%other, %c2)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %constant = s64[] constant(2)
+  %broadcast = s64[6]{0} broadcast(%constant), dimensions={}
+  %left = s64[6]{0} multiply(%data, %broadcast)
+  %other = s64[6]{0} parameter(1)
+  %constant.1 = s64[] constant(3)
+  %broadcast.1 = s64[6]{0} broadcast(%constant.1), dimensions={}
+  %right = s64[6]{0} multiply(%other, %broadcast.1)
+  ROOT %result = s64[6]{0} multiply(%left, %right)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_self mode=control changed=0 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} subtract(%data, %data)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_self mode=handler changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %constant = s64[] constant(0)
+  ROOT %broadcast = s64[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_self mode=pass changed=1 checked=6 values=0,0,0,0,0,0 signed=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  ROOT %result = s64[6]{0} subtract(%data, %data)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %constant = s64[] constant(0)
+  ROOT %broadcast = s64[6]{0} broadcast(%constant), dimensions={}
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_zero mode=control changed=0 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} subtract(%data, %zero)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_zero mode=handler changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_zero mode=pass changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %zero = s64[6]{0} constant({0, 0, 0, 0, 0, 0})
+  ROOT %result = s64[6]{0} subtract(%data, %zero)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_constant mode=control changed=0 checked=6 values=9223372036854775804,9223372036854775805,18446744073709551612,9223372036854775806,9223372036854775803,18446744073709551613 signed=9223372036854775804,9223372036854775805,-4,9223372036854775806,9223372036854775803,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c3 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c3 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} subtract(%data, %c3)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_constant mode=handler changed=1 checked=6 values=9223372036854775804,9223372036854775805,18446744073709551612,9223372036854775806,9223372036854775803,18446744073709551613 signed=9223372036854775804,9223372036854775805,-4,9223372036854775806,9223372036854775803,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c3 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c3 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  %negate = s64[6]{0} negate(%c3)
+  ROOT %add = s64[6]{0} add(%data, %negate)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=sub_constant mode=pass changed=1 checked=6 values=9223372036854775804,9223372036854775805,18446744073709551612,9223372036854775806,9223372036854775803,18446744073709551613 signed=9223372036854775804,9223372036854775805,-4,9223372036854775806,9223372036854775803,-3 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %c3 = s64[6]{0} constant({3, 3, 3, 3, 3, 3})
+  ROOT %result = s64[6]{0} subtract(%data, %c3)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %constant = s64[] constant(3)
+  %negate = s64[] negate(%constant)
+  %broadcast.1 = s64[6]{0} broadcast(%negate), dimensions={}
+  ROOT %add = s64[6]{0} add(%data, %broadcast.1)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=neg_neg mode=control changed=0 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %inner = s64[6]{0} negate(%data)
+  ROOT %result = s64[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %inner = s64[6]{0} negate(%data)
+  ROOT %result = s64[6]{0} negate(%inner)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=neg_neg mode=handler changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %inner = s64[6]{0} negate(%data)
+  ROOT %result = s64[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+SIGNED_WORD_RESULT dtype=s64 case=neg_neg mode=pass changed=1 checked=6 values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+  %data = s64[6]{0} parameter(0)
+  %inner = s64[6]{0} negate(%data)
+  ROOT %result = s64[6]{0} negate(%inner)
+}
+
+REWRITTEN_HLO
+HloModule modular, entry_computation_layout={(s64[6]{0}, s64[6]{0}, s64[6]{0})->s64[6]{0}}
+
+ENTRY %main (data: s64[6], other: s64[6], shared: s64[6]) -> s64[6] {
+  ROOT %data = s64[6]{0} parameter(0)
+  %other = s64[6]{0} parameter(1)
+  %shared = s64[6]{0} parameter(2)
+}
+
+[       OK ] SignedWordReplay.SignedOverflowAndNarrowing (44 ms)
+[----------] 1 test from SignedWordReplay (44 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (44 ms total)
+[  PASSED  ] 1 test.

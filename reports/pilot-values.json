@@ -1,0 +1,3269 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_values_and_explicit_contract_refutation_not_full_source_acceptance",
+  "reducer_index_scope": {
+    "schema": 1,
+    "status": "kernel_checked_role_and_literal_witnesses_source_correspondence_pending",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "accepted_source_rewrites": 0,
+    "source_correspondence_reviewed": false,
+    "backend_execution_claimed": false,
+    "profile": "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract",
+    "source_cases": [
+      "HandleAdd/scatter-single-rhs",
+      "HandleAdd/scatter-single-lhs",
+      "HandleGather/small-select-chain"
+    ],
+    "related_unreplayed_scatter_cases": [
+      "HandleAdd/scatter-concat",
+      "HandleAdd/scatter-nested"
+    ],
+    "native_evidence": "reports/reducer-index-replay-v1/result.json",
+    "native_run_count": 75,
+    "value_change_run_count": 14,
+    "native_scatter_runs": 48,
+    "native_gather_runs": 27,
+    "model_vector_count": 13,
+    "support_theorems": [
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original"
+    ],
+    "certificates": [
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving"
+    ],
+    "corrected_statement_profiles": [
+      "distinct reducer parameter roles suffice for single-update word arithmetic",
+      "exact representation of every generated position makes signed-index Select chain equal clamping"
+    ],
+    "preservation_claim_for_actual_source_guard": false,
+    "source_obligations": [
+      "complete update computation parameter/shape/index/source correspondence",
+      "HLO legal signed index types and Literal Convert host/platform interpretation",
+      "graph/API/control/metadata/status/frame observations",
+      "floating association and general multiple-update Scatter ordering"
+    ],
+    "source_spans": [
+      {
+        "id": "scatter-role-match",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 1100,
+        "end_line": 1120,
+        "source_body_sha256": "93a6b7c44d4508f3bfd4a06a8acbea991d7d6cc13e690e8eb1b19e91e03dafab"
+      },
+      {
+        "id": "scatter-base-rewrite",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 1249,
+        "end_line": 1262,
+        "source_body_sha256": "7874255de5916a43883a35c114936f9cfa17c1750a9aab6e8f8c345beb0697c2"
+      },
+      {
+        "id": "gather-select-chain",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 4654,
+        "end_line": 4688,
+        "source_body_sha256": "e8c20a48c36603e32560183f52ed9ea213d2b10206c1192b00f54a3b1ebdd751"
+      },
+      {
+        "id": "literal-conversion",
+        "path": "sources/xla/xla/literal.cc",
+        "line": 1834,
+        "end_line": 1881,
+        "source_body_sha256": "54dab5a9b77e076e4329e1841fd3bea0ae8fdf674661f8572dfecd6c21975d6f"
+      },
+      {
+        "id": "parameter-opcode-default",
+        "path": "sources/xla/xla/service/pattern_matcher.h",
+        "line": 146,
+        "end_line": 155,
+        "source_body_sha256": "0f233f3a38317286a830ae4edaa0163e76af6747aadde9171da54895f4decacf"
+      },
+      {
+        "id": "parameter-number-overload",
+        "path": "sources/xla/xla/service/pattern_matcher.h",
+        "line": 3129,
+        "end_line": 3141,
+        "source_body_sha256": "3ede9e4b589ec83a0762d39e3976b242ad068527c776ff6219d2e961e9546e6d"
+      },
+      {
+        "id": "index-literal-builder",
+        "path": "sources/xla/xla/service/hlo_creation_utils.h",
+        "line": 328,
+        "end_line": 339,
+        "source_body_sha256": "892f96bb6a630a889965474f72a964febd13605a8bab77eea06f225d4ef6c2a6"
+      },
+      {
+        "id": "scatter-parameter-role-contract",
+        "path": "sources/xla/docs/operation_semantics.md",
+        "line": 4759,
+        "end_line": 4777,
+        "source_body_sha256": "4dd0fe76fdbc6628d8e617d040ae5d4375c4d481c3a6a24a1fbaca1349230751"
+      },
+      {
+        "id": "gather-in-bounds-index-contract",
+        "path": "sources/xla/docs/operation_semantics.md",
+        "line": 2895,
+        "end_line": 2934,
+        "source_body_sha256": "87ccfb9899702fde1214af89db3ef898084021039692586715fd847991d9a4e6"
+      },
+      {
+        "id": "gather-evaluator-clamp",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+        "line": 2758,
+        "end_line": 2778,
+        "source_body_sha256": "1c4493076543efa116ebd22c7735b3986dc40ff3ce9103e6cd0edf604f1153ad"
+      }
+    ],
+    "normative_operation_manifest": "sources/reduction-contract-manifest.json",
+    "gather_primary_witness_in_bounds": true,
+    "gather_out_of_bounds_controls": "pinned evaluator clamp observations; principal zero/maximum-index failures are in bounds"
+  },
+  "checked_reducer_index_certificates": 8,
+  "scaled_nested_slice_scope": {
+    "schema": 1,
+    "status": "finite_word_counterexample_certified_source_correspondence_pending",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "accepted_source_rewrites": 0,
+    "source_correspondence_reviewed": false,
+    "backend_execution_claimed": false,
+    "source_case": "HandleDynamicSlice/nested-after-scaled-probe",
+    "direct_nested_source_case": "HandleDynamicSlice/nested",
+    "profile": "rank1 s32 words; input10/inner6/outer1; starts1/2; runtime multiplier; bounded decoded indices without overflow/high-bit ambiguity",
+    "certificates": [
+      "TensorRewrite.Pilot.ScaledNestedSlice.original_witness",
+      "TensorRewrite.Pilot.ScaledNestedSlice.rewritten_witness",
+      "TensorRewrite.Pilot.ScaledNestedSlice.changes_of_not_fixed",
+      "TensorRewrite.Pilot.ScaledNestedSlice.multiplier_seven_changes",
+      "TensorRewrite.Pilot.ScaledNestedSlice.negative_multiplier_changes",
+      "TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes",
+      "TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving"
+    ],
+    "native_evidence": "reports/scaled-nested-slice-replay-v1/result.json",
+    "native_run_count": 33,
+    "value_change_run_count": 8,
+    "logical_word_bridge": "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul",
+    "preservation_claim": false,
+    "source_obligations": [
+      "independent actual graph-to-model and signed-word/index correspondence",
+      "complete earlier guards/type/layout/static conversion partitions",
+      "API changed/status/uses/control/metadata/frame outcomes"
+    ],
+    "source_spans": [
+      {
+        "id": "static-conversion",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 8264,
+        "end_line": 8299,
+        "source_body_sha256": "b3b81d3056340e88b78542eda33cbf33483574731753f6b7151d264f9e3f7636"
+      },
+      {
+        "id": "local-binding-and-iota",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 8304,
+        "end_line": 8384,
+        "source_body_sha256": "3ec31181cf8709fa58b97b9748b4e2deb4472865bfeb2f6e77bb046a0b8bb3dd"
+      },
+      {
+        "id": "nested-continuation",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 8385,
+        "end_line": 8433,
+        "source_body_sha256": "bc571c554de3b32678f41e940739961a4fce5471e146d8659248d4f7069ebe3e"
+      }
+    ]
+  },
+  "checked_scaled_nested_slice_certificates": 7,
+  "ordered_compare_scope": {
+    "schema": 1,
+    "status": "kernel_checked_necessary_ordered_nan_profile_not_source_acceptance",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "accepted_source_rewrites": 0,
+    "source_correspondence_reviewed": false,
+    "backend_observation_contract_adopted": false,
+    "profile": "necessary ordinary ordered binary32 NaN comparison condition only; no full arithmetic, producer or backend model",
+    "source_cases": [
+      "HandleCompare/nonnegative-ge",
+      "HandleCompare/nonnegative-le"
+    ],
+    "related_control_cases": [
+      "HandleCompare/nonnegative-lt",
+      "HandleCompare/nonnegative-gt"
+    ],
+    "certificates": [
+      "TensorRewrite.Pilot.OrderedCompareProfile.false_consistent",
+      "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan",
+      "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan",
+      "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan",
+      "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes",
+      "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes"
+    ],
+    "native_evidence": "reports/compare-nonnegative-replay-v1/result.json",
+    "native_run_count": 60,
+    "boolean_change_run_count": 16,
+    "source_path_records": "census/ordered-source-paths.json",
+    "source_obligations": [
+      "typed IsNonNegative producer/recursive/fallback interpretation",
+      "ordinary ordered comparison versus total-order comparison/type and NaN permissions",
+      "source guard and graph/API/metadata/frame correspondence",
+      "independent source/observation review"
+    ],
+    "contracts": [
+      {
+        "id": "nonnegative-analysis",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 540,
+        "end_line": 607,
+        "source_body_sha256": "99e72a262a837d1137f3b801afedc167bf3a93b74754e1be05f4f410ef17e4f4"
+      },
+      {
+        "id": "compare-guards",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5907,
+        "end_line": 5983,
+        "source_body_sha256": "aa321e79a981d898ea26405ba92f7b6538e7e7eec32ae508d2a770b7304f0108"
+      },
+      {
+        "id": "comparison-default-order",
+        "path": "sources/xla/xla/comparison_util.h",
+        "line": 90,
+        "end_line": 99,
+        "source_body_sha256": "c1c12fc05c3631c1037473a72e2805efec982f01ce4ac4dd639d7c352c383888"
+      },
+      {
+        "id": "ordered-comparator-dispatch",
+        "path": "sources/xla/xla/comparison_util.h",
+        "line": 155,
+        "end_line": 217,
+        "source_body_sha256": "2c497977b585e95ca4a265ba7e5364b20ac9f21684ba18b2dfd7a4ee26804e5b"
+      },
+      {
+        "id": "evaluator-compare-order",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+        "line": 1658,
+        "end_line": 1686,
+        "source_body_sha256": "4984c0dadbd63e088b25a569ad7092f196fc9c83dd4d5e456f662db8f91ccc66"
+      }
+    ],
+    "source_order_policy": "floats default to partial order; explicit total/weak order remain separate; evaluator uses instruction comparison_order"
+  },
+  "checked_ordered_comparison_certificates": 6,
+  "contraction_scope": {
+    "schema": 1,
+    "status": "kernel_checked_logical_contraction_not_full_source_acceptance",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "accepted_source_rewrites": 0,
+    "source_correspondence_reviewed": false,
+    "source_cpp_extraction_proved": false,
+    "profile": "arbitrary static ranks/extents and operand axis bijections; ordered scalar accumulation and explicit operand/product/finish conversions; graph/API and source mapping pending",
+    "value_theorems": [
+      "TensorRewrite.Pilot.Contraction.dot_empty_contract",
+      "TensorRewrite.Pilot.Contraction.dot_empty_output",
+      "TensorRewrite.Pilot.Contraction.dot_empty_lhs",
+      "TensorRewrite.Pilot.Contraction.dot_empty_rhs",
+      "TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity",
+      "TensorRewrite.Pilot.Contraction.dot_no_contract"
+    ],
+    "support_theorems": [
+      "TensorRewrite.Pilot.Contraction.firstIndex_appendIndex",
+      "TensorRewrite.Pilot.Contraction.secondIndex_appendIndex",
+      "TensorRewrite.Pilot.Contraction.terms_length",
+      "TensorRewrite.Pilot.Contraction.terms_no_contract",
+      "TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty",
+      "TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty"
+    ],
+    "diagnostic_certificates": [
+      "TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent",
+      "TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive",
+      "TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible",
+      "TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ"
+    ],
+    "native_evidence": "reports/contraction-replay-v3/result.json",
+    "prior_native_evidence": [
+      "reports/contraction-replay-v1/result.json",
+      "reports/contraction-replay-v2/result.json"
+    ],
+    "native_run_count": 57,
+    "model_vector_count": 15,
+    "fp_observation_contract_adopted": false,
+    "fp_diagnostic_is_source_refutation": false,
+    "fp_profile": "minimal strict binary32 one-MAC bit conditions; RNE evaluator observation; not a full IEEE or backend contract",
+    "source_obligations": [
+      "match concrete Dot dimension lists and canonical operand permutations to Plan",
+      "type/precision configuration, operand/result casts and finish correspondence",
+      "initializer identity after finish, empty result signed-zero permissions",
+      "graph uses/control/metadata replacement API effects",
+      "independent source and observation-contract review"
+    ],
+    "contracts": [
+      {
+        "id": "normalize-operands",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 3095,
+        "end_line": 3114,
+        "source_body_sha256": "b0aea546063f2e94a85ae6fb83cb7c2996bfc526e5dac941d8f48667ac390cea"
+      },
+      {
+        "id": "outer-helper",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 3884,
+        "end_line": 3929,
+        "source_body_sha256": "52ce491ec2356f64a27249e3bcfc01a19b1013fe83eb08af8df96f253a5b1132"
+      },
+      {
+        "id": "dot-guards",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 4365,
+        "end_line": 4410,
+        "source_body_sha256": "0cec61ff8423a07134a20ba1b3f96fc68881a3f839fac880db988dc5cf84901d"
+      },
+      {
+        "id": "dot-slow-mac",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+        "line": 6092,
+        "end_line": 6150,
+        "source_body_sha256": "7f1869835b822379e307b40194686c33abc2869396d95ec45134638e28c2c529"
+      },
+      {
+        "id": "dot-casts-and-dispatch",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+        "line": 6674,
+        "end_line": 6735,
+        "source_body_sha256": "849cf9fa5652dd8b01ba25eeef47c86badfa0b647bfffaa634f2cf137af52351"
+      }
+    ]
+  },
+  "checked_contraction_diagnostic_certificates": 4,
+  "signed_word_scope": {
+    "schema": 1,
+    "status": "kernel_checked_promoted_signed_words_not_full_source_acceptance",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "accepted_source_rewrites": 0,
+    "profile": "modular words and injective signed observations; arbitrary shapes and widths with width <= promoted; no floating/custom subbyte or graph/API proof",
+    "source_scope": "typed evaluator s8/s16/s32/s64; exact input widening, unsigned binary arithmetic, signed reinterpretation and return narrowing; backend/ABI/source correspondence review pending",
+    "source_dtype_profiles": [
+      {
+        "dtype": "s8",
+        "stored_width": 8,
+        "elementwise_type": "int64_t",
+        "binary_unsigned_type": "uint64_t",
+        "binary_intermediate_width": 64,
+        "negate_unsigned_width": 8,
+        "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int8.cc"
+      },
+      {
+        "dtype": "s16",
+        "stored_width": 16,
+        "elementwise_type": "int64_t",
+        "binary_unsigned_type": "uint64_t",
+        "binary_intermediate_width": 64,
+        "negate_unsigned_width": 16,
+        "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int16.cc"
+      },
+      {
+        "dtype": "s32",
+        "stored_width": 32,
+        "elementwise_type": "int64_t",
+        "binary_unsigned_type": "uint64_t",
+        "binary_intermediate_width": 64,
+        "negate_unsigned_width": 32,
+        "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int32.cc"
+      },
+      {
+        "dtype": "s64",
+        "stored_width": 64,
+        "elementwise_type": "int64_t",
+        "binary_unsigned_type": "uint64_t",
+        "binary_intermediate_width": 64,
+        "negate_unsigned_width": 64,
+        "instantiation": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor_int64.cc"
+      }
+    ],
+    "support_theorems": [
+      "TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective"
+    ],
+    "related_word_value_theorems": [
+      "TensorRewrite.Pilot.ModularArithmetic.add_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.add_comm",
+      "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left",
+      "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right",
+      "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.factor_left",
+      "TensorRewrite.Pilot.ModularArithmetic.factor_right",
+      "TensorRewrite.Pilot.ModularArithmetic.four_factors",
+      "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast",
+      "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant",
+      "TensorRewrite.Pilot.Subtract.add_sub_self_left",
+      "TensorRewrite.Pilot.Subtract.add_sub_self_right",
+      "TensorRewrite.Pilot.Subtract.neg_neg",
+      "TensorRewrite.Pilot.Subtract.sub_add_self_left",
+      "TensorRewrite.Pilot.Subtract.sub_add_self_right",
+      "TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg",
+      "TensorRewrite.Pilot.Subtract.sub_eq_add_neg",
+      "TensorRewrite.Pilot.Subtract.sub_self",
+      "TensorRewrite.Pilot.Subtract.sub_sub_self",
+      "TensorRewrite.Pilot.Subtract.sub_zero"
+    ],
+    "native_recipe_source_cases": {
+      "add_zero": "HandleAdd/rhs-zero",
+      "add_constant": "HandleAdd/constant-right",
+      "add_assoc": "HandleAdd/constant-sum-direct-constants",
+      "factor": "HandleAdd/factor-rhs-rhs",
+      "mul_zero": "HandleMultiply/rhs-zero",
+      "mul_one": "HandleMultiply/rhs-one",
+      "mul_neg_neg": "HandleMultiply/negated-operands",
+      "four_factors": "HandleMultiply/four-factors",
+      "sub_self": "HandleSubtract/self",
+      "sub_zero": "HandleSubtract/zero",
+      "sub_constant": "HandleSubtract/constant",
+      "neg_neg": "HandleNegate/involution"
+    },
+    "contracts": [
+      {
+        "id": "signed-typed-dispatch",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+        "line": 877,
+        "end_line": 910,
+        "source_body_sha256": "0dad2762a625df185264dd838a8f195cc733107378bbbee6b74f8fe997344e68"
+      },
+      {
+        "id": "unsigned-safe-arithmetic",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+        "line": 87,
+        "end_line": 109,
+        "source_body_sha256": "0341ab621abf25fea6dea87892faded676f00056f51d7d584de74b69bbcc345d"
+      },
+      {
+        "id": "signed-native-negate",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+        "line": 381,
+        "end_line": 404,
+        "source_body_sha256": "0062edfeba203b5c2e916a25e73d1f4233324aa01c8556b5940129e37b3f0300"
+      },
+      {
+        "id": "add-subtract-multiply",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+        "line": 484,
+        "end_line": 525,
+        "source_body_sha256": "e94b9ff3e162e3f6003482b1d6a5c1a37dbb185107fc392bbb8fb8db4e026967"
+      },
+      {
+        "id": "typed-input-result-casts",
+        "path": "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+        "line": 1168,
+        "end_line": 1224,
+        "source_body_sha256": "f061f1638b12169f242f8eda7e625869d66166b40071c9265cea728eebb29de3"
+      }
+    ],
+    "manifest": "sources/signed-arithmetic-contract-manifest.json",
+    "native_evidence": "reports/signed-word-replay-v2/result.json",
+    "prior_native_evidence": "reports/signed-word-replay-v1/result.json",
+    "native_scope": "s8/s16/s32/s64 words and signed observations; typed 64-bit intermediate arithmetic; native HloEvaluator; no floating or whole-source graph claim",
+    "native_run_count": 144,
+    "model_vector_count": 48,
+    "source_correspondence_reviewed": false,
+    "source_cpp_extraction_proved": false
+  },
+  "modular_bridge_scope": {
+    "schema": 1,
+    "status": "kernel_checked_operand_orientation_and_broadcast_values_not_full_source_acceptance",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "profile": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+    "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+    "accepted_source_rewrites": 0,
+    "source_matcher_extraction_proved": false,
+    "graph_API_correspondence_proved": false,
+    "broadcast_contract": "census/concrete-index-contract.json",
+    "rules": [
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleAdd/factor-rhs-rhs",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false,
+        "additional_source_cases": [
+          "HandleAdd/factor-lhs-lhs",
+          "HandleAdd/factor-lhs-rhs",
+          "HandleAdd/factor-rhs-lhs"
+        ]
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleMultiply/constant-product",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleMultiply/four-factors",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleAdd/constant-sum-broadcast-scalars",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleAdd/constant-subtract-broadcast-scalars",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order",
+        "module": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "source_case": "HandleMultiply/broadcast-factor",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "arbitrary finite shapes and widths; modular words; captured operand orientations and checked Broadcast axes; no floating or mutable-IR contract",
+        "source_partition": "modular integral values; all stated captured operand orientations; concrete shared Broadcast map where present; matcher/literal evaluation, typing and graph/API effects pending",
+        "source_rewrite_accepted": false
+      }
+    ],
+    "support_theorems": [
+      "TensorRewrite.Pilot.OperandOrder.map\u2082_eq",
+      "TensorRewrite.Pilot.Tensor.reindex_map\u2082",
+      "TensorRewrite.Pilot.Tensor.reindex_constant"
+    ],
+    "contracts": [
+      {
+        "id": "add-broadcast-gather",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 950,
+        "end_line": 1000,
+        "source_body_sha256": "99a8ca972a84a048b420702bb0735e95dfa013680cdbc4404814db1e772735e3"
+      },
+      {
+        "id": "factor-any-order",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 1080,
+        "end_line": 1093,
+        "source_body_sha256": "bd05364f352ab43f3f26a53407b0ff846517410a311aad7b15314371d9315928"
+      },
+      {
+        "id": "multiply-four-any-order",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5254,
+        "end_line": 5284,
+        "source_body_sha256": "026dc49b504772071d2dfe42bf95ccd2d79b3cb7ddfcce65233c6c2ec87bc329"
+      },
+      {
+        "id": "multiply-product-any-order",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5285,
+        "end_line": 5310,
+        "source_body_sha256": "a1a0b7d6b24722acb46075d813457d570062cb678c5afcb54a18bbdf591afa82"
+      },
+      {
+        "id": "broadcast-scalar-movement",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5311,
+        "end_line": 5344,
+        "source_body_sha256": "5ea20d002e8a1dc0475f7c4bfce11bdde7397cf82214bb647591e1efd08d5874"
+      },
+      {
+        "id": "legacy-broadcast-product",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5345,
+        "end_line": 5373,
+        "source_body_sha256": "68665a72fff79a81380ccccfebd0380bd7bd3096e16195ef3db2ed16c7aacaee"
+      }
+    ],
+    "native_evidence": "reports/modular-bridge-replay-v2/result.json",
+    "native_scope": "u8/u32/u64 captured operand orders and static Broadcast axes; native HloEvaluator; guard controls; no floating or whole-source graph claim",
+    "native_recipe_count": 29,
+    "native_run_count": 261,
+    "model_row_count": 87,
+    "failed_archive": "reports/modular-bridge-replay-v1/result.json",
+    "failed_archive_reason": "reserved HLO names s1/s2 prevented scalar-constant recipe parsing; fixture corrected without changing source pass"
+  },
+  "modular_arithmetic_scope": {
+    "schema": 1,
+    "status": "kernel_checked_modular_values_not_full_source_acceptance",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "profile": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+    "accepted_source_rewrites": 0,
+    "rules": [
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/rhs-zero",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/lhs-zero",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_comm",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/constant-right",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_assoc",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/constant-sum-direct-constants",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/constant-subtract-direct-constants",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/cancel-subtract-rhs",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/cancel-subtract-lhs",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/rhs-zero",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/lhs-zero",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/rhs-one",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/lhs-one",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/negated-operands",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_assoc",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/constant-product",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.factor_right",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/factor-rhs-rhs",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.factor_left",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleAdd/factor-lhs-lhs",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.ModularArithmetic.four_factors",
+        "module": "TensorRewrite/Pilot/ModularArithmetic.lean",
+        "source_case": "HandleMultiply/four-factors",
+        "status": "pilot_value_proof_pending_source_graph_review",
+        "semantic_track": "same-shape tensor words modulo 2^width; arbitrary finite rank/extents/width; no floating-point or full mutable-IR semantics",
+        "source_partition": "modular integral value subcase; exact displayed operand order; source constants represented by same-shape tensors; AnyOrder alternatives, broadcast construction, helper guards and graph/API behavior pending",
+        "source_rewrite_accepted": false
+      }
+    ],
+    "contracts": [
+      {
+        "id": "add-identity-canonicalization",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 926,
+        "end_line": 948,
+        "source_body_sha256": "3705aecc8a0ce2777d120c0056b099e272d11d06ab8adc302b60f03924da836b"
+      },
+      {
+        "id": "add-reassociation",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 950,
+        "end_line": 1012,
+        "source_body_sha256": "b65f991b0f6298e8354b99f6473ef4a87de6966f1510710b710d8aa6951312a6"
+      },
+      {
+        "id": "add-factor",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 1054,
+        "end_line": 1092,
+        "source_body_sha256": "569b0002c063a0e4d9fb8055a279e54d9da73d00609bbfc44231adbdd68f1e3b"
+      },
+      {
+        "id": "multiply-identities-negation",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5183,
+        "end_line": 5225,
+        "source_body_sha256": "1d961f1c134207ec7d168f6e02c62979c8a93ab441613862cf8b701fd7048cfe"
+      },
+      {
+        "id": "multiply-reassociation",
+        "path": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+        "line": 5255,
+        "end_line": 5363,
+        "source_body_sha256": "ce02013f1e8b91ab141be963a6f84df31efc7be121c80a2563d7606155f195bf"
+      }
+    ],
+    "native_evidence": "reports/modular-arithmetic-replay-v1/result.json",
+    "native_scope": "static same-shape u8/u32/u64 arrays; native HloEvaluator; overflow values; no floating or whole-source graph claim",
+    "source_correspondence_reviewed": false,
+    "remaining": [
+      "floating/complex permissions and observation contract",
+      "signed and other integral source representation",
+      "AnyOrder source alternatives and broadcast indices",
+      "constant evaluator, guards, graph/API/frame and all-schedule effect refinement"
+    ]
+  },
+  "checked_effectful_graph_context_theorems": 12,
+  "effectful_graph_context_scope": {
+    "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+    "semantic_track": "fixed topological schedule; same-shape PRED pure local step; arbitrary external state/errors; final state retained on failure",
+    "accepted_source_rewrites": 0,
+    "all_schedule_refinement_proved": false,
+    "rules": [
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true",
+        "source_case": "HandleAnd/rhs-true",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true",
+        "source_case": "HandleAnd/lhs-true",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false",
+        "source_case": "HandleAnd/rhs-zero",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false",
+        "source_case": "HandleAnd/lhs-zero",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true",
+        "source_case": "HandleOr/rhs-true",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true",
+        "source_case": "HandleOr/lhs-true",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false",
+        "source_case": "HandleOr/rhs-zero",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false",
+        "source_case": "HandleOr/lhs-zero",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false",
+        "source_case": "HandleXor/rhs-zero",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false",
+        "source_case": "HandleXor/lhs-zero",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.xor_self",
+        "source_case": "HandleXor/equal-inputs",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only; pointer-identical self-input subcase only, not Identical equivalence",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.not_not",
+        "source_case": "HandleNot/involution",
+        "source_partition": "PRED same-shape pure local step in fixed effectful schedule only",
+        "status": "kernel_checked_fixed_schedule_effectful_context_not_source_acceptance",
+        "module": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean"
+      }
+    ]
+  },
+  "checked_control_order_repair_certificates": 5,
+  "boolean_control_family_scope": {
+    "schema": 1,
+    "status": "native_boolean_family_order_diagnosis_not_full_source_acceptance",
+    "source_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "accepted_source_rewrites": 0,
+    "all_schedule_refinement_proved": false,
+    "production_backend_executed": false,
+    "native_evidence": "reports/boolean-control-family-replay-v3/result.json",
+    "native_scope": "native verified HloSchedules; per-instruction HloEvaluator with cached substitutions; mock synchronous effects",
+    "repair_scope": "test-only added A-to-B control dependency after full pass; no canonical pass modification or general source repair proof",
+    "rule_scope": "twelve scalar PRED pilot branches; pointer-identical Xor subcase; discarded operand/inner Not carries A control prerequisite",
+    "source_cases": [
+      {
+        "source_case": "HandleAnd/rhs-true",
+        "native_rule": "and_rhs_true",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true",
+        "source_line": 1503,
+        "source_end_line": 1546,
+        "source_body_sha256": "8639072d1297b9f7be94c318fc6d6f18d2279e66283f2331e17db56d5ae0dc1f",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleAnd/lhs-true",
+        "native_rule": "and_lhs_true",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true",
+        "source_line": 1503,
+        "source_end_line": 1546,
+        "source_body_sha256": "8639072d1297b9f7be94c318fc6d6f18d2279e66283f2331e17db56d5ae0dc1f",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleAnd/rhs-zero",
+        "native_rule": "and_rhs_false",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false",
+        "source_line": 1503,
+        "source_end_line": 1546,
+        "source_body_sha256": "8639072d1297b9f7be94c318fc6d6f18d2279e66283f2331e17db56d5ae0dc1f",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleAnd/lhs-zero",
+        "native_rule": "and_lhs_false",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false",
+        "source_line": 1503,
+        "source_end_line": 1546,
+        "source_body_sha256": "8639072d1297b9f7be94c318fc6d6f18d2279e66283f2331e17db56d5ae0dc1f",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleOr/rhs-true",
+        "native_rule": "or_rhs_true",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true",
+        "source_line": 5436,
+        "source_end_line": 5470,
+        "source_body_sha256": "5a46e486ea7b52394e052a6db529e15d96760766a157199d92f6ee3af06c7df2",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleOr/lhs-true",
+        "native_rule": "or_lhs_true",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true",
+        "source_line": 5436,
+        "source_end_line": 5470,
+        "source_body_sha256": "5a46e486ea7b52394e052a6db529e15d96760766a157199d92f6ee3af06c7df2",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleOr/rhs-zero",
+        "native_rule": "or_rhs_false",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false",
+        "source_line": 5436,
+        "source_end_line": 5470,
+        "source_body_sha256": "5a46e486ea7b52394e052a6db529e15d96760766a157199d92f6ee3af06c7df2",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleOr/lhs-zero",
+        "native_rule": "or_lhs_false",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false",
+        "source_line": 5436,
+        "source_end_line": 5470,
+        "source_body_sha256": "5a46e486ea7b52394e052a6db529e15d96760766a157199d92f6ee3af06c7df2",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleXor/rhs-zero",
+        "native_rule": "xor_rhs_false",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false",
+        "source_line": 5472,
+        "source_end_line": 5505,
+        "source_body_sha256": "9dc7b48629a152aae1fb80b2bf5cfd75bb6b3e1e3e8812709a4c6c358de1493e",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleXor/lhs-zero",
+        "native_rule": "xor_lhs_false",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false",
+        "source_line": 5472,
+        "source_end_line": 5505,
+        "source_body_sha256": "9dc7b48629a152aae1fb80b2bf5cfd75bb6b3e1e3e8812709a4c6c358de1493e",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleXor/equal-inputs",
+        "native_rule": "xor_self",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.xor_self",
+        "source_line": 5472,
+        "source_end_line": 5505,
+        "source_body_sha256": "9dc7b48629a152aae1fb80b2bf5cfd75bb6b3e1e3e8812709a4c6c358de1493e",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      },
+      {
+        "source_case": "HandleNot/involution",
+        "native_rule": "not_not",
+        "related_fixed_schedule_theorem": "TensorRewrite.Pilot.EffectfulBooleanDag.not_not",
+        "source_line": 5425,
+        "source_end_line": 5434,
+        "source_body_sha256": "13e6e389d5e621488bb4d4dd252d4d088dd0780a08ec8ee1caf84fc550d07327",
+        "status": "native_dependency_order_loss_observed_effect_contract_review_pending",
+        "accepted_source_proof": null,
+        "cpp_extraction_proved": false
+      }
+    ],
+    "support_theorems": [
+      "TensorRewrite.Pilot.DependencyOrder.Graph.isSchedule_of_predecessor_inclusion",
+      "TensorRewrite.Pilot.DependencyOrder.Graph.isTrace_of_predecessor_inclusion"
+    ],
+    "repair_certificates": [
+      "TensorRewrite.Pilot.ControlOrder.repaired_forward_valid",
+      "TensorRewrite.Pilot.ControlOrder.repaired_requires_forward",
+      "TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible",
+      "TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement",
+      "TensorRewrite.Pilot.ControlOrder.repaired_forward_trace"
+    ],
+    "expected_native_runs": 144,
+    "failed_archives": [
+      {
+        "path": "reports/boolean-control-family-replay-v1/result.json",
+        "reason": "candidate reverse order placed B before its surviving pure prerequisite"
+      },
+      {
+        "path": "reports/boolean-control-family-replay-v2/result.json",
+        "reason": "native assertions passed; buffered stdout and stderr interleaved result rows"
+      }
+    ]
+  },
+  "checked_control_order_certificates": 7,
+  "control_order_diagnostic_scope": {
+    "status": "kernel_checked_finite_dependency_order_countermodel_not_cpp_extraction",
+    "accepted_source_rewrites": 0,
+    "source_case": "HandleAnd/rhs-zero",
+    "certificates": [
+      "TensorRewrite.Pilot.ControlOrder.original_forward_valid",
+      "TensorRewrite.Pilot.ControlOrder.original_requires_forward",
+      "TensorRewrite.Pilot.ControlOrder.original_reverse_impossible",
+      "TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid",
+      "TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace",
+      "TensorRewrite.Pilot.ControlOrder.original_forward_trace",
+      "TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse"
+    ],
+    "production_backend_executed": false,
+    "native_evidence": "reports/control-order-replay-v1/result.json"
+  },
+  "checked_value_theorems": 77,
+  "checked_graph_context_theorems": 12,
+  "checked_guard_bridge_theorems": 1,
+  "constant_guard_scope": {
+    "contract": "census/pred-guard-contract.json",
+    "source_case": "HandleAnd/rhs-true",
+    "bridge_theorems": [
+      "TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll"
+    ],
+    "accepted_source_rewrites": 0,
+    "semantic_track": "PRED finite storage and pure total index pullbacks",
+    "source_correspondence": "finite Bool storage and total map abstraction kernel checked; raw C++ memory and per-op attributes/indices translation pending",
+    "native_scope": "direct handler and literal API; not a full pass run"
+  },
+  "graph_context_scope": {
+    "status": "kernel_checked_pure_pred_graph_context_not_full_source_acceptance",
+    "semantic_track": "pure_same_shape_PRED_dataflow",
+    "accepted_source_rewrites": 0,
+    "scope": "arbitrary finite acyclic suffix with sharing, root redirection and partial operator semantics; arbitrary finite rank/extents; no metadata/control/effect semantics",
+    "source_correspondence": "primary-agent source inspection only; IsAll, typed graph extraction, replacement API and metadata/frame contracts pending independent review",
+    "rules": [
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.and_rhs_true",
+        "source_case": "HandleAnd/rhs-true",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.and_lhs_true",
+        "source_case": "HandleAnd/lhs-true",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.and_rhs_false",
+        "source_case": "HandleAnd/rhs-zero",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.and_lhs_false",
+        "source_case": "HandleAnd/lhs-zero",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.or_rhs_true",
+        "source_case": "HandleOr/rhs-true",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.or_lhs_true",
+        "source_case": "HandleOr/lhs-true",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.or_rhs_false",
+        "source_case": "HandleOr/rhs-zero",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.or_lhs_false",
+        "source_case": "HandleOr/lhs-zero",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.xor_rhs_false",
+        "source_case": "HandleXor/rhs-zero",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.xor_lhs_false",
+        "source_case": "HandleXor/lhs-zero",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.xor_self",
+        "source_case": "HandleXor/equal-inputs",
+        "source_partition": "PRED pure same-shape dataflow only; pointer-identical self-input subcase only, not Identical equivalence",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      },
+      {
+        "theorem": "TensorRewrite.Pilot.BooleanDag.not_not",
+        "source_case": "HandleNot/involution",
+        "source_partition": "PRED pure same-shape dataflow only",
+        "status": "kernel_checked_graph_context_not_source_acceptance"
+      }
+    ]
+  },
+  "checked_support_theorems": 90,
+  "accepted_source_rewrites": 0,
+  "checked_refutation_theorems": 17,
+  "checked_nested_slice_logical_rules": 1,
+  "checked_evaluator_relative_nested_slice_certificates": 4,
+  "nested_slice_scope": {
+    "source_case": "HandleDynamicSlice/nested",
+    "accepted_source_rewrites": 0,
+    "logical_profile": "arbitrary finite rank and bounded static extents; mathematical decoded starts",
+    "evaluator_profile": "observed s64 conversion for DynamicSlice; typed unsigned HLO clamps; 10 to 6 to 2 shape chain",
+    "logical_rule_theorems": [
+      "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose"
+    ],
+    "evaluator_profile_certificates": [
+      "TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes",
+      "TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes",
+      "TensorRewrite.Pilot.NestedUnsigned64.both_high_changes",
+      "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving"
+    ],
+    "native_evidence": "reports/nested-slice-replay-v2/result.json",
+    "contract": "census/nested-slice-contract.json"
+  },
+  "checked_index_oracle_diagnostic_certificates": 3,
+  "index_oracle_diagnostic_scope": {
+    "contract": "census/dynamic-index-contract.json",
+    "diagnostic_certificates": [
+      "TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees",
+      "TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees",
+      "TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal"
+    ],
+    "scope": "evaluator/logical index profiles; not an algebraic-simplifier counterexample",
+    "accepted_source_rewrites": 0,
+    "native_evidence": "reports/dynamic-index-evaluator-v1/result.json"
+  },
+  "checked_contract_consistency_theorems": 2,
+  "checked_shape_witness_theorems": 2,
+  "refuted_value_targets_under_explicit_contract": 1,
+  "refuted_shape_targets_under_explicit_contract": 2,
+  "numerical_refutation_scope": {
+    "case_id": "HandleMultiply/predicate-convert",
+    "profile": "binary32 necessary IEEE exceptional-multiplication contract",
+    "source_contract_review": "pending",
+    "refutation_theorems": [
+      "TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.false_neg_inf_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.false_nan_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.inf_false_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid",
+      "TensorRewrite.Pilot.Float32Exceptional.false_nonfinite_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs",
+      "TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects"
+    ],
+    "consistency_theorems": [
+      "TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed"
+    ],
+    "scope": "rules out the observed zero output for every compliant refinement; not a complete FP arithmetic model"
+  },
+  "shape_refutation_scope": {
+    "case_ids": [
+      "RemoveRedundantStride/single-element-axes",
+      "TryToReorderSliceAndReverse/commute"
+    ],
+    "profile": "one static slice axis with legal input bounds and declared-output extent; Int arithmetic with truncation toward zero",
+    "source_contract_review": "primary source inspected; independent correspondence and signed-int64 range bridge pending",
+    "refutation_theorems": [
+      "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes",
+      "TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes",
+      "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+      "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving"
+    ],
+    "consistency_theorems": [
+      "TensorRewrite.Pilot.SliceShape.empty_witness_well_formed"
+    ],
+    "witness_theorems": [
+      "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness",
+      "TensorRewrite.Pilot.SliceShape.reorder_reverse_witness"
+    ],
+    "scope": "refutes preservation of the observed zero declared extent for two source-shaped one-axis transformations; not C++ extraction or a complete tensor graph semantics",
+    "native_evidence": "reports/empty-slice-replay-v2/result.json",
+    "targets": [
+      {
+        "case_id": "RemoveRedundantStride/single-element-axes",
+        "refutation_theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes",
+        "not_preserving_theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+        "witness_theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness"
+      },
+      {
+        "case_id": "TryToReorderSliceAndReverse/commute",
+        "refutation_theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes",
+        "not_preserving_theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+        "witness_theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_witness"
+      }
+    ]
+  },
+  "algebraic_refutation_scope": {
+    "case_id": "ScalarMultiplyReduction/target-output",
+    "profile": "mathematical integer contraction with unit filter and uniform Boolean Select; branch scalars 2 and 3",
+    "source_contract_review": "native source graph observed; independent source correspondence and binary32 exact arithmetic bridge pending",
+    "refutation_theorems": [
+      "TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes",
+      "TensorRewrite.Pilot.SelectContraction.not_universally_valid"
+    ],
+    "witness_theorems": [
+      "TensorRewrite.Pilot.SelectContraction.true_witness",
+      "TensorRewrite.Pilot.SelectContraction.false_witness"
+    ],
+    "native_evidence": "reports/scalar-select-replay-v2/result.json",
+    "scope": "general arbitrary-list nonzero-sum refutation plus both native witness values; not a binary32 or C++ traversal theorem",
+    "standard_axiom_refutation_theorems": [
+      "TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes"
+    ],
+    "axiom_policy": "general nonzero Int/list theorem permits only Std propext/Quot.sound; both concrete witnesses and not_universally_valid require empty dependencies; no new assumptions"
+  },
+  "checked_algebraic_witness_theorems": 2,
+  "refuted_algebraic_targets_in_mathematical_track": 1,
+  "axiom_dependencies": {
+    "TensorRewrite.Pilot.Boolean.not_not": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.and_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.and_rhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.and_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.and_lhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.or_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.or_rhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.or_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.or_lhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.xor_self": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.xor_rhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Boolean.xor_lhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.not_not": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.and_rhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.and_lhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.or_rhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.or_lhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.xor_rhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.xor_lhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Bitwise.xor_self": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reverse.reverse_reverse": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reverse.reverse_comp": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reverse.reverse_trivial": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reverse.reverse_axisMask_trivial": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Transpose.transpose_comp": [
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_self": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_eq_add_neg": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_sub_self": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_add_self_left": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_add_self_right": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.add_sub_self_left": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.add_sub_self_right": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.neg_neg": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Tensor.reverseIndex_reverseIndex": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Tensor.reverseIndex_comp": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.decode_preserves": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.compose_get": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.ofPermutation_get": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.ofPermutation_comp": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.composePrefix_size": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.composePrefix_get": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.AxisArray.composeLoop_eq_compose": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.SelectContraction.branchContraction_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Node.eval_mapRefs": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Dag.extend_liftRefs": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.eval_mapInputs": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.eval_delete_equal": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.eval_replace_equal": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.and_rhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.and_lhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.and_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.and_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.or_rhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.or_lhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.or_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.or_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.xor_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.xor_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.xor_self": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.not_not": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ConstantGuard.matchesAll_all": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ConstantGuard.DenseLiteral.matchesAll_sound": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ConstantGuard.View.isAll_sound": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.SliceShape.coordinate_bounds": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.IndexMaps.broadcastIndex_val": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.IndexMaps.sliceIndex_val": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.IndexMaps.broadcastView_constant": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.IndexMaps.sliceView_constant": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.clampStart_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.coordinate_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.clampStart_full_extent": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_val": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.dynamicSliceView_constant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.combinedStart_bounds": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.clampStart_combined": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_compose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.NestedUnsigned64.both_high_changes": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.FiniteProduct.row_join": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.FiniteProduct.column_join": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.FiniteProduct.join_row_column": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.LinearIndex.delinearize_linearize": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.LinearIndex.linearize_delinearize": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reshape.tensor_eq_of_empty": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reshape.reshapeIndex_compose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reshape.reshapeView_constant": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reshape.reshapeTensor_identity": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reshape.reshapeTensor_compose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reshape.reshapeTensor_empty": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reduction.length_flatMap_constant": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reduction.fiberValues_length": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reduction.elementCount_factor": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reduction.unitReducedAxes_of_fiberCount_one": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reduction.fiberCount_one_of_sameCount": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reduction.elementCount_eq_of_units": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reduction.fiberValues_unit": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reduction.unitIndex_linearize_val": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reduction.unitIndex_eq_reshapeIndex": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reduction.reduceTensor_empty_input": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reduction.reduceTensor_empty_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Reduction.reduceTensor_sameCount": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.fromOrdered_toOrdered": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.toOrdered_fromOrdered": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.read_write": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.write_read": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.minorOrderMatches_axis": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.minorOrderMatches_of_axis": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.orderedShape_transpose": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.linearize_cast_val": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.address_transpose_val": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.evalEffectful_mapInputs": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_equal": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.evalEffectful_replace_equal": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_unused": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.eval_delete_of_pure": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.eval_replace_of_pure": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.xor_self": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.EffectfulBooleanDag.not_not": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.original_forward_valid": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.original_requires_forward": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.original_reverse_impossible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.original_forward_trace": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DependencyOrder.Graph.isSchedule_of_predecessor_inclusion": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.DependencyOrder.Graph.isTrace_of_predecessor_inclusion": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.repaired_forward_valid": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.repaired_requires_forward": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ControlOrder.repaired_forward_trace": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_comm": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_assoc": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_assoc": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.factor_right": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.factor_left": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.four_factors": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.OperandOrder.map\u2082_eq": [
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.factor_any_order": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.dot_empty_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.dot_empty_output": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.dot_empty_lhs": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.dot_empty_rhs": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.dot_no_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.firstIndex_appendIndex": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.secondIndex_appendIndex": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.terms_length": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.terms_no_contract": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.original_witness": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.rewritten_witness": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.changes_of_not_fixed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.multiplier_seven_changes": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.negative_multiplier_changes": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original": [
+      "propext",
+      "Quot.sound"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving": [
+      "propext"
+    ],
+    "TensorRewrite.Pilot.Reverse.reverse_constant": [],
+    "TensorRewrite.Pilot.Reverse.reverse_map\u2082": [],
+    "TensorRewrite.Pilot.Reverse.reverse_binary_constant_rhs": [],
+    "TensorRewrite.Pilot.Reverse.reverse_binary_constant_lhs": [],
+    "TensorRewrite.Pilot.Transpose.transpose_identity": [],
+    "TensorRewrite.Pilot.Transpose.transpose_constant": [],
+    "TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.false_neg_inf_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.false_nan_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.inf_false_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid": [],
+    "TensorRewrite.Pilot.Float32Exceptional.false_nonfinite_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs": [],
+    "TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes": [],
+    "TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects": [],
+    "TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed": [],
+    "TensorRewrite.Pilot.SliceShape.empty_witness_well_formed": [],
+    "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness": [],
+    "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes": [],
+    "TensorRewrite.Pilot.SliceShape.reorder_reverse_witness": [],
+    "TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes": [],
+    "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving": [],
+    "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving": [],
+    "TensorRewrite.Pilot.SelectContraction.not_universally_valid": [],
+    "TensorRewrite.Pilot.SelectContraction.true_witness": [],
+    "TensorRewrite.Pilot.SelectContraction.false_witness": [],
+    "TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees": [],
+    "TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees": [],
+    "TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal": [],
+    "TensorRewrite.Pilot.DenseLayout.transpose_extents": [],
+    "TensorRewrite.Pilot.Tensor.reindex_map\u2082": [],
+    "TensorRewrite.Pilot.Tensor.reindex_constant": [],
+    "TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent": [],
+    "TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive": [],
+    "TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible": [],
+    "TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ": [],
+    "TensorRewrite.Pilot.OrderedCompareProfile.false_consistent": [],
+    "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan": [],
+    "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan": [],
+    "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan": [],
+    "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes": [],
+    "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes": [],
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows": [],
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes": [],
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes": [],
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes": [],
+    "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving": []
+  },
+  "checks": {
+    "build": {
+      "exit_code": 0,
+      "stdout": "Build completed successfully (81 jobs).\n",
+      "stderr": ""
+    },
+    "audit": {
+      "exit_code": 0,
+      "stdout": "'TensorRewrite.Pilot.Boolean.not_not' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.and_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.and_rhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.and_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.and_lhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.or_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.or_rhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.or_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.or_lhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.xor_self' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.xor_rhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Boolean.xor_lhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.not_not' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.and_rhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.and_lhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.or_rhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.or_lhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.xor_rhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.xor_lhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Bitwise.xor_self' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reverse.reverse_reverse' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reverse.reverse_comp' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reverse.reverse_constant' does not depend on any axioms\n'TensorRewrite.Pilot.Reverse.reverse_map\u2082' does not depend on any axioms\n'TensorRewrite.Pilot.Reverse.reverse_binary_constant_rhs' does not depend on any axioms\n'TensorRewrite.Pilot.Reverse.reverse_binary_constant_lhs' does not depend on any axioms\n'TensorRewrite.Pilot.Reverse.reverse_trivial' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reverse.reverse_axisMask_trivial' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Transpose.transpose_identity' does not depend on any axioms\n'TensorRewrite.Pilot.Transpose.transpose_comp' depends on axioms: [Quot.sound]\n'TensorRewrite.Pilot.Transpose.transpose_constant' does not depend on any axioms\n'TensorRewrite.Pilot.Subtract.sub_self' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.sub_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.sub_eq_add_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.sub_sub_self' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.sub_add_self_left' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.sub_add_self_right' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.add_sub_self_left' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.add_sub_self_right' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.neg_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Tensor.reverseIndex_reverseIndex' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Tensor.reverseIndex_comp' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.decode_preserves' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.compose_get' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.ofPermutation_get' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.ofPermutation_comp' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.composePrefix_size' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.composePrefix_get' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.AxisArray.composeLoop_eq_compose' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.false_neg_inf_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.false_nan_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.inf_false_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.not_universally_valid' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.false_nonfinite_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects' does not depend on any axioms\n'TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.empty_witness_well_formed' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.reorder_reverse_witness' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving' does not depend on any axioms\n'TensorRewrite.Pilot.SelectContraction.branchContraction_eq' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.SelectContraction.not_universally_valid' does not depend on any axioms\n'TensorRewrite.Pilot.SelectContraction.true_witness' does not depend on any axioms\n'TensorRewrite.Pilot.SelectContraction.false_witness' does not depend on any axioms\n'TensorRewrite.Pilot.Dag.Node.eval_mapRefs' depends on axioms: [propext]\n'TensorRewrite.Pilot.Dag.extend_liftRefs' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Dag.Program.eval_mapInputs' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Dag.Program.eval_delete_equal' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Dag.Program.eval_replace_equal' depends on axioms: [propext]\n'TensorRewrite.Pilot.BooleanDag.and_rhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.and_lhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.and_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.and_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.or_rhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.or_lhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.or_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.or_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.xor_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.xor_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.xor_self' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.not_not' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ConstantGuard.matchesAll_all' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ConstantGuard.DenseLiteral.matchesAll_sound' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ConstantGuard.View.isAll_sound' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.SliceShape.coordinate_bounds' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.IndexMaps.broadcastIndex_val' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.IndexMaps.sliceIndex_val' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.IndexMaps.broadcastView_constant' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.IndexMaps.sliceView_constant' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.clampStart_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.coordinate_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.clampStart_full_extent' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue' depends on axioms: [propext]\n'TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_val' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.dynamicSliceView_constant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees' does not depend on any axioms\n'TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees' does not depend on any axioms\n'TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal' does not depend on any axioms\n'TensorRewrite.Pilot.DynamicIndex.combinedStart_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.clampStart_combined' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_compose' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes' depends on axioms: [propext]\n'TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes' depends on axioms: [propext]\n'TensorRewrite.Pilot.NestedUnsigned64.both_high_changes' depends on axioms: [propext]\n'TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving' depends on axioms: [propext]\n'TensorRewrite.Pilot.FiniteProduct.row_join' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.FiniteProduct.column_join' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.FiniteProduct.join_row_column' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.LinearIndex.delinearize_linearize' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.LinearIndex.linearize_delinearize' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reshape.tensor_eq_of_empty' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reshape.reshapeIndex_compose' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reshape.reshapeView_constant' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reshape.reshapeTensor_identity' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reshape.reshapeTensor_compose' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reshape.reshapeTensor_empty' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reduction.length_flatMap_constant' depends on axioms: [propext]\n'TensorRewrite.Pilot.Reduction.fiberValues_length' depends on axioms: [propext]\n'TensorRewrite.Pilot.Reduction.elementCount_factor' depends on axioms: [propext]\n'TensorRewrite.Pilot.Reduction.unitReducedAxes_of_fiberCount_one' depends on axioms: [propext]\n'TensorRewrite.Pilot.Reduction.fiberCount_one_of_sameCount' depends on axioms: [propext]\n'TensorRewrite.Pilot.Reduction.elementCount_eq_of_units' depends on axioms: [propext]\n'TensorRewrite.Pilot.Reduction.fiberValues_unit' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reduction.unitIndex_linearize_val' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reduction.unitIndex_eq_reshapeIndex' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reduction.reduceTensor_empty_input' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Reduction.reduceTensor_empty_output' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Reduction.reduceTensor_sameCount' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.fromOrdered_toOrdered' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.toOrdered_fromOrdered' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.read_write' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.write_read' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.minorOrderMatches_axis' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.minorOrderMatches_of_axis' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.transpose_extents' does not depend on any axioms\n'TensorRewrite.Pilot.DenseLayout.orderedShape_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.linearize_cast_val' depends on axioms: [propext]\n'TensorRewrite.Pilot.DenseLayout.address_transpose_val' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs' depends on axioms: [propext]\n'TensorRewrite.Pilot.Dag.Program.evalEffectful_mapInputs' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_equal' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Dag.Program.evalEffectful_replace_equal' depends on axioms: [propext]\n'TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_unused' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.eval_delete_of_pure' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.eval_replace_of_pure' depends on axioms: [propext]\n'TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.xor_self' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.EffectfulBooleanDag.not_not' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.original_forward_valid' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.original_requires_forward' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.original_reverse_impossible' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace' depends on axioms: [propext]\n'TensorRewrite.Pilot.ControlOrder.original_forward_trace' depends on axioms: [propext]\n'TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.DependencyOrder.Graph.isSchedule_of_predecessor_inclusion' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.DependencyOrder.Graph.isTrace_of_predecessor_inclusion' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.repaired_forward_valid' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.repaired_requires_forward' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ControlOrder.repaired_forward_trace' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_comm' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_assoc' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.sub_add_constant' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_assoc' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.factor_right' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.factor_left' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.four_factors' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.OperandOrder.map\u2082_eq' depends on axioms: [Quot.sound]\n'TensorRewrite.Pilot.Tensor.reindex_map\u2082' does not depend on any axioms\n'TensorRewrite.Pilot.Tensor.reindex_constant' does not depend on any axioms\n'TensorRewrite.Pilot.ModularArithmetic.factor_any_order' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Contraction.dot_empty_contract' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.dot_empty_output' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.dot_empty_lhs' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.dot_empty_rhs' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.Contraction.dot_no_contract' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.firstIndex_appendIndex' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Contraction.secondIndex_appendIndex' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.Contraction.terms_length' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.terms_no_contract' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent' does not depend on any axioms\n'TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive' does not depend on any axioms\n'TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible' does not depend on any axioms\n'TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ' does not depend on any axioms\n'TensorRewrite.Pilot.OrderedCompareProfile.false_consistent' does not depend on any axioms\n'TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan' does not depend on any axioms\n'TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan' does not depend on any axioms\n'TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan' does not depend on any axioms\n'TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.ScaledNestedSlice.original_witness' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ScaledNestedSlice.rewritten_witness' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ScaledNestedSlice.changes_of_not_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Pilot.ScaledNestedSlice.multiplier_seven_changes' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ScaledNestedSlice.negative_multiplier_changes' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes' depends on axioms: [propext]\n'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes' depends on axioms: [propext]\n'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving' depends on axioms: [propext]\n'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows' does not depend on any axioms\n'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes' does not depend on any axioms\n'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes' does not depend on any axioms\n'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes' does not depend on any axioms\n'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving' does not depend on any axioms\n",
+      "stderr": ""
+    },
+    "controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "transpose_controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "float_exception_controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "empty_slice_controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "select_contraction_controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "dag_controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "constant_guard_controls": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "index_map_controls": {
+      "exit_code": 0,
+      "stdout": "INDEX_MAP_MODEL_BROADCAST selected=5\nINDEX_MAP_MODEL_SLICE values=9,12,23,26,37,40\nINDEX_MAP_MODEL_EMPTY elements=0\nINDEX_MAP_MODEL_LARGE_STRIDE value=1\n",
+      "stderr": ""
+    },
+    "dynamic_index_controls": {
+      "exit_code": 0,
+      "stdout": "DYNAMIC_INDEX_MODEL s32=0,0,0,1,3,3,3\nDYNAMIC_INDEX_MODEL s64=0,0,0,1,3\nDYNAMIC_INDEX_MODEL u32=0,1,3\nDYNAMIC_INDEX_MODEL u64_logical=0,1,3,3,3\nDYNAMIC_INDEX_MODEL u64_evaluator=0,1,3,0,0\n",
+      "stderr": ""
+    },
+    "nested_slice_controls": {
+      "exit_code": 0,
+      "stdout": "NESTED_SLICE_MODEL before=1,1,0\nNESTED_SLICE_MODEL after=5,5,8\n",
+      "stderr": ""
+    },
+    "reshape_controls": {
+      "exit_code": 0,
+      "stdout": "RESHAPE_MODEL values=0,1,2,3,4,5\nRESHAPE_MODEL composed=0,1,2,3,4,5\nRESHAPE_MODEL empty=0\n",
+      "stderr": ""
+    },
+    "reduction_controls": {
+      "exit_code": 0,
+      "stdout": "REDUCTION_MODEL case=unit_axes values=0,1,0\nREDUCTION_MODEL case=no_axes values=1,0,1,0,1,0\nREDUCTION_MODEL case=empty_reduced values=1,1,1,1,1,1\nREDUCTION_MODEL case=empty_kept values=empty\nREDUCTION_MODEL case=scalar values=0\nREDUCTION_MODEL case=nontrivial_axes values=0,0,1\nREDUCTION_MODEL case=nonidentity_control before=0,0,0 after=0,1,0\n",
+      "stderr": ""
+    },
+    "dense_layout_controls": {
+      "exit_code": 0,
+      "stdout": "DENSE_LAYOUT_MODEL correct=0,3,1,4,2,5\nDENSE_LAYOUT_MODEL wrong=0,1,2,3,4,5\nDENSE_LAYOUT_MODEL rank3_selected=100 address=12\nDENSE_LAYOUT_MODEL guards=true,false,true\n",
+      "stderr": ""
+    },
+    "effectful_dag_controls": {
+      "exit_code": 0,
+      "stdout": "EFFECTFUL_MODEL original=(Except.error (EffectfulControls.Error.stopped), [7, 0, 0, 9])\nEFFECTFUL_MODEL redirected=(Except.error (EffectfulControls.Error.stopped), [7, 0, 0, 9])\nEFFECTFUL_MODEL success=(Except.ok false, [7, 0, 0])\nORDER_MODEL original=[\"A\", \"B\"]\nORDER_MODEL replacement=[\"B\", \"A\"]\n",
+      "stderr": ""
+    },
+    "control_repair_controls": {
+      "exit_code": 0,
+      "stdout": "ORDER_REPAIR_MODEL reverse_before=true reverse_after=false forward_after=true\n",
+      "stderr": ""
+    },
+    "modular_arithmetic_controls": {
+      "exit_code": 0,
+      "stdout": "MODULAR_MODEL width=8 case=add_zero values=0,1,255,128,254,3\nMODULAR_MODEL width=8 case=add_constant values=2,3,1,130,0,5\nMODULAR_MODEL width=8 case=add_assoc values=5,6,4,133,3,8\nMODULAR_MODEL width=8 case=factor values=1,3,4,0,0,252\nMODULAR_MODEL width=8 case=mul_zero values=0,0,0,0,0,0\nMODULAR_MODEL width=8 case=mul_one values=0,1,255,128,254,3\nMODULAR_MODEL width=8 case=mul_neg_neg values=0,2,253,0,248,253\nMODULAR_MODEL width=8 case=four_factors values=0,12,238,0,208,238\nMODULAR_MODEL width=32 case=add_zero values=0,1,4294967295,2147483648,4294967294,3\nMODULAR_MODEL width=32 case=add_constant values=2,3,1,2147483650,0,5\nMODULAR_MODEL width=32 case=add_assoc values=5,6,4,2147483653,3,8\nMODULAR_MODEL width=32 case=factor values=1,3,4,0,0,4294967292\nMODULAR_MODEL width=32 case=mul_zero values=0,0,0,0,0,0\nMODULAR_MODEL width=32 case=mul_one values=0,1,4294967295,2147483648,4294967294,3\nMODULAR_MODEL width=32 case=mul_neg_neg values=0,2,4294967293,0,4294967288,4294967293\nMODULAR_MODEL width=32 case=four_factors values=0,12,4294967278,0,4294967248,4294967278\nMODULAR_MODEL width=64 case=add_zero values=0,1,18446744073709551615,9223372036854775808,18446744073709551614,3\nMODULAR_MODEL width=64 case=add_constant values=2,3,1,9223372036854775810,0,5\nMODULAR_MODEL width=64 case=add_assoc values=5,6,4,9223372036854775813,3,8\nMODULAR_MODEL width=64 case=factor values=1,3,4,0,0,18446744073709551612\nMODULAR_MODEL width=64 case=mul_zero values=0,0,0,0,0,0\nMODULAR_MODEL width=64 case=mul_one values=0,1,18446744073709551615,9223372036854775808,18446744073709551614,3\nMODULAR_MODEL width=64 case=mul_neg_neg values=0,2,18446744073709551613,0,18446744073709551608,18446744073709551613\nMODULAR_MODEL width=64 case=four_factors values=0,12,18446744073709551598,0,18446744073709551568,18446744073709551598\n",
+      "stderr": ""
+    },
+    "modular_bridge_controls": {
+      "exit_code": 0,
+      "stdout": "MODULAR_BRIDGE_MODEL width=8 case=factor_00 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=8 case=factor_01 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=8 case=factor_10 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=8 case=factor_11 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=8 case=product_00 values=0,6,250,0\nMODULAR_BRIDGE_MODEL width=8 case=product_01 values=0,6,250,0\nMODULAR_BRIDGE_MODEL width=8 case=product_10 values=0,6,250,0\nMODULAR_BRIDGE_MODEL width=8 case=product_11 values=0,6,250,0\nMODULAR_BRIDGE_MODEL width=8 case=four_000 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_001 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_010 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_011 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_100 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_101 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_110 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=four_111 values=0,12,238,0\nMODULAR_BRIDGE_MODEL width=8 case=move_0_00 values=0,254,250,0\nMODULAR_BRIDGE_MODEL width=8 case=move_0_01 values=0,254,250,0\nMODULAR_BRIDGE_MODEL width=8 case=move_0_10 values=0,254,250,0\nMODULAR_BRIDGE_MODEL width=8 case=move_0_11 values=0,254,250,0\nMODULAR_BRIDGE_MODEL width=8 case=move_1_00 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=8 case=move_1_01 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=8 case=move_1_10 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=8 case=move_1_11 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=8 case=add_broadcast values=5,6,4,133\nMODULAR_BRIDGE_MODEL width=8 case=subadd_broadcast values=5,4,6,133\nMODULAR_BRIDGE_MODEL width=8 case=mul_broadcast values=0,6,250,0\nMODULAR_BRIDGE_MODEL width=8 case=guard_vector_constant values=0,253,244,128\nMODULAR_BRIDGE_MODEL width=8 case=guard_nonbroadcast values=0,4,250,0\nMODULAR_BRIDGE_MODEL width=32 case=factor_00 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=32 case=factor_01 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=32 case=factor_10 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=32 case=factor_11 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=32 case=product_00 values=0,6,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=product_01 values=0,6,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=product_10 values=0,6,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=product_11 values=0,6,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=four_000 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_001 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_010 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_011 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_100 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_101 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_110 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=four_111 values=0,12,4294967278,0\nMODULAR_BRIDGE_MODEL width=32 case=move_0_00 values=0,4294967294,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=move_0_01 values=0,4294967294,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=move_0_10 values=0,4294967294,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=move_0_11 values=0,4294967294,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=move_1_00 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=32 case=move_1_01 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=32 case=move_1_10 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=32 case=move_1_11 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=32 case=add_broadcast values=5,6,4,2147483653\nMODULAR_BRIDGE_MODEL width=32 case=subadd_broadcast values=5,4,6,2147483653\nMODULAR_BRIDGE_MODEL width=32 case=mul_broadcast values=0,6,4294967290,0\nMODULAR_BRIDGE_MODEL width=32 case=guard_vector_constant values=0,4294967293,4294967284,2147483648\nMODULAR_BRIDGE_MODEL width=32 case=guard_nonbroadcast values=0,4,4294967290,0\nMODULAR_BRIDGE_MODEL width=64 case=factor_00 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=64 case=factor_01 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=64 case=factor_10 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=64 case=factor_11 values=1,3,4,0\nMODULAR_BRIDGE_MODEL width=64 case=product_00 values=0,6,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=product_01 values=0,6,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=product_10 values=0,6,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=product_11 values=0,6,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=four_000 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_001 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_010 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_011 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_100 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_101 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_110 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=four_111 values=0,12,18446744073709551598,0\nMODULAR_BRIDGE_MODEL width=64 case=move_0_00 values=0,18446744073709551614,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=move_0_01 values=0,18446744073709551614,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=move_0_10 values=0,18446744073709551614,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=move_0_11 values=0,18446744073709551614,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=move_1_00 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=64 case=move_1_01 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=64 case=move_1_10 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=64 case=move_1_11 values=0,6,2,0\nMODULAR_BRIDGE_MODEL width=64 case=add_broadcast values=5,6,4,9223372036854775813\nMODULAR_BRIDGE_MODEL width=64 case=subadd_broadcast values=5,4,6,9223372036854775813\nMODULAR_BRIDGE_MODEL width=64 case=mul_broadcast values=0,6,18446744073709551610,0\nMODULAR_BRIDGE_MODEL width=64 case=guard_vector_constant values=0,18446744073709551613,18446744073709551604,9223372036854775808\nMODULAR_BRIDGE_MODEL width=64 case=guard_nonbroadcast values=0,4,18446744073709551610,0\n",
+      "stderr": ""
+    },
+    "reducer_index_controls": {
+      "exit_code": 0,
+      "stdout": "REDUCER_INDEX_MODEL family=scatter case=p00 before=7,4 after=8,4\nREDUCER_INDEX_MODEL family=scatter case=p11 before=11,4 after=10,4\nREDUCER_INDEX_MODEL family=scatter case=p01 before=9,4 after=9,4\nREDUCER_INDEX_MODEL family=scatter case=p10 before=9,4 after=9,4\nREDUCER_INDEX_MODEL family=gather case=s8_wrap_zero before=0 after=128\nREDUCER_INDEX_MODEL family=gather case=s8_wrap_negative before=0 after=128\nREDUCER_INDEX_MODEL family=gather case=s8_wrap_max before=127 after=128\nREDUCER_INDEX_MODEL family=gather case=s8_extent128 before=127 after=127\nREDUCER_INDEX_MODEL family=gather case=s8_threshold128 before=0 after=0\nREDUCER_INDEX_MODEL family=gather case=s8_default4 before=0 after=0\nREDUCER_INDEX_MODEL family=gather case=s32_zero before=0 after=0\nREDUCER_INDEX_MODEL family=gather case=s32_high before=128 after=128\nREDUCER_INDEX_MODEL family=gather case=s32_negative before=0 after=0\n",
+      "stderr": ""
+    },
+    "scaled_nested_controls": {
+      "exit_code": 0,
+      "stdout": "SCALED_NESTED_MODEL case=scaled before=28 after=4\nSCALED_NESTED_MODEL case=negative_multiplier before=-12 after=4\nSCALED_NESTED_MODEL case=one_multiplier before=4 after=4\nSCALED_NESTED_MODEL case=zero_multiplier before=0 after=4\n",
+      "stderr": ""
+    },
+    "ordered_compare_controls": {
+      "exit_code": 0,
+      "stdout": "ORDERED_COMPARE_MODEL left_nan_true_allowed=false right_nan_true_allowed=false false_allowed=true\n",
+      "stderr": ""
+    },
+    "contraction_controls": {
+      "exit_code": 0,
+      "stdout": "CONTRACTION_MODEL case=outer00 values=10,14,-4,-15,-21,6\nCONTRACTION_MODEL case=outer01 values=10,14,-4,-15,-21,6\nCONTRACTION_MODEL case=outer10 values=10,14,-4,-15,-21,6\nCONTRACTION_MODEL case=outer11 values=10,14,-4,-15,-21,6\nCONTRACTION_MODEL case=batch_left values=1,2,3,4,3,6,9,12,5,10,15,20,10,12,14,16,20,24,28,32,30,36,42,48\nCONTRACTION_MODEL case=batch_right values=1,3,5,7,2,6,10,14,3,9,15,21,8,16,24,32,10,20,30,40,12,24,36,48\nCONTRACTION_MODEL case=rank4 values=1,3,3,9,5,15,7,21,9,27,11,33,4,8,8,16,12,24,16,32,20,40,24,48\nCONTRACTION_MODEL case=matrix_contract values=38,44,50,56,83,98,113,128\nCONTRACTION_MODEL case=contract_empty values=0,0,0,0,0,0\nCONTRACTION_MODEL case=lhs_free_empty values=empty\nCONTRACTION_MODEL case=rhs_free_empty values=empty\nCONTRACTION_MODEL case=scalar_outer values=10,-6\nCONTRACTION_MODEL case=outer_free_empty values=empty\nCONTRACTION_MODEL case=option_off values=10,14,-4,-15,-21,6\nCONTRACTION_MODEL case=layout_on values=10,14,-4,-15,-21,6\nZERO_MAC_MODEL original=0 replacement=2147483648\n",
+      "stderr": ""
+    },
+    "signed_word_controls": {
+      "exit_code": 0,
+      "stdout": "SIGNED_WORD_MODEL width=8 case=add_zero values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0\nSIGNED_WORD_MODEL width=8 case=add_constant values=129,130,1,131,128,2 signed=-127,-126,1,-125,-128,2\nSIGNED_WORD_MODEL width=8 case=add_assoc values=132,133,4,134,131,5 signed=-124,-123,4,-122,-125,5\nSIGNED_WORD_MODEL width=8 case=factor values=128,254,3,0,255,128 signed=-128,-2,3,0,-1,-128\nSIGNED_WORD_MODEL width=8 case=mul_zero values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=8 case=mul_one values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0\nSIGNED_WORD_MODEL width=8 case=mul_neg_neg values=127,128,254,255,122,0 signed=127,-128,-2,-1,122,0\nSIGNED_WORD_MODEL width=8 case=four_factors values=250,0,244,250,220,0 signed=-6,0,-12,-6,-36,0\nSIGNED_WORD_MODEL width=8 case=sub_self values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=8 case=sub_zero values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0\nSIGNED_WORD_MODEL width=8 case=sub_constant values=124,125,252,126,123,253 signed=124,125,-4,126,123,-3\nSIGNED_WORD_MODEL width=8 case=neg_neg values=127,128,255,129,126,0 signed=127,-128,-1,-127,126,0\nSIGNED_WORD_MODEL width=16 case=add_zero values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0\nSIGNED_WORD_MODEL width=16 case=add_constant values=32769,32770,1,32771,32768,2 signed=-32767,-32766,1,-32765,-32768,2\nSIGNED_WORD_MODEL width=16 case=add_assoc values=32772,32773,4,32774,32771,5 signed=-32764,-32763,4,-32762,-32765,5\nSIGNED_WORD_MODEL width=16 case=factor values=32768,65534,3,0,65535,32768 signed=-32768,-2,3,0,-1,-32768\nSIGNED_WORD_MODEL width=16 case=mul_zero values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=16 case=mul_one values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0\nSIGNED_WORD_MODEL width=16 case=mul_neg_neg values=32767,32768,65534,65535,32762,0 signed=32767,-32768,-2,-1,32762,0\nSIGNED_WORD_MODEL width=16 case=four_factors values=65530,0,65524,65530,65500,0 signed=-6,0,-12,-6,-36,0\nSIGNED_WORD_MODEL width=16 case=sub_self values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=16 case=sub_zero values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0\nSIGNED_WORD_MODEL width=16 case=sub_constant values=32764,32765,65532,32766,32763,65533 signed=32764,32765,-4,32766,32763,-3\nSIGNED_WORD_MODEL width=16 case=neg_neg values=32767,32768,65535,32769,32766,0 signed=32767,-32768,-1,-32767,32766,0\nSIGNED_WORD_MODEL width=32 case=add_zero values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0\nSIGNED_WORD_MODEL width=32 case=add_constant values=2147483649,2147483650,1,2147483651,2147483648,2 signed=-2147483647,-2147483646,1,-2147483645,-2147483648,2\nSIGNED_WORD_MODEL width=32 case=add_assoc values=2147483652,2147483653,4,2147483654,2147483651,5 signed=-2147483644,-2147483643,4,-2147483642,-2147483645,5\nSIGNED_WORD_MODEL width=32 case=factor values=2147483648,4294967294,3,0,4294967295,2147483648 signed=-2147483648,-2,3,0,-1,-2147483648\nSIGNED_WORD_MODEL width=32 case=mul_zero values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=32 case=mul_one values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0\nSIGNED_WORD_MODEL width=32 case=mul_neg_neg values=2147483647,2147483648,4294967294,4294967295,2147483642,0 signed=2147483647,-2147483648,-2,-1,2147483642,0\nSIGNED_WORD_MODEL width=32 case=four_factors values=4294967290,0,4294967284,4294967290,4294967260,0 signed=-6,0,-12,-6,-36,0\nSIGNED_WORD_MODEL width=32 case=sub_self values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=32 case=sub_zero values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0\nSIGNED_WORD_MODEL width=32 case=sub_constant values=2147483644,2147483645,4294967292,2147483646,2147483643,4294967293 signed=2147483644,2147483645,-4,2147483646,2147483643,-3\nSIGNED_WORD_MODEL width=32 case=neg_neg values=2147483647,2147483648,4294967295,2147483649,2147483646,0 signed=2147483647,-2147483648,-1,-2147483647,2147483646,0\nSIGNED_WORD_MODEL width=64 case=add_zero values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0\nSIGNED_WORD_MODEL width=64 case=add_constant values=9223372036854775809,9223372036854775810,1,9223372036854775811,9223372036854775808,2 signed=-9223372036854775807,-9223372036854775806,1,-9223372036854775805,-9223372036854775808,2\nSIGNED_WORD_MODEL width=64 case=add_assoc values=9223372036854775812,9223372036854775813,4,9223372036854775814,9223372036854775811,5 signed=-9223372036854775804,-9223372036854775803,4,-9223372036854775802,-9223372036854775805,5\nSIGNED_WORD_MODEL width=64 case=factor values=9223372036854775808,18446744073709551614,3,0,18446744073709551615,9223372036854775808 signed=-9223372036854775808,-2,3,0,-1,-9223372036854775808\nSIGNED_WORD_MODEL width=64 case=mul_zero values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=64 case=mul_one values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0\nSIGNED_WORD_MODEL width=64 case=mul_neg_neg values=9223372036854775807,9223372036854775808,18446744073709551614,18446744073709551615,9223372036854775802,0 signed=9223372036854775807,-9223372036854775808,-2,-1,9223372036854775802,0\nSIGNED_WORD_MODEL width=64 case=four_factors values=18446744073709551610,0,18446744073709551604,18446744073709551610,18446744073709551580,0 signed=-6,0,-12,-6,-36,0\nSIGNED_WORD_MODEL width=64 case=sub_self values=0,0,0,0,0,0 signed=0,0,0,0,0,0\nSIGNED_WORD_MODEL width=64 case=sub_zero values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0\nSIGNED_WORD_MODEL width=64 case=sub_constant values=9223372036854775804,9223372036854775805,18446744073709551612,9223372036854775806,9223372036854775803,18446744073709551613 signed=9223372036854775804,9223372036854775805,-4,9223372036854775806,9223372036854775803,-3\nSIGNED_WORD_MODEL width=64 case=neg_neg values=9223372036854775807,9223372036854775808,18446744073709551615,9223372036854775809,9223372036854775806,0 signed=9223372036854775807,-9223372036854775808,-1,-9223372036854775807,9223372036854775806,0\n",
+      "stderr": ""
+    },
+    "invalid_control": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidPilot.lean:10:2: error: Tactic `rfl` failed: The left-hand side\n  map\u2082 and (constant true) (constant true)\nis not definitionally equal to the right-hand side\n  constant false\n\n\u22a2 map\u2082 and (constant true) (constant true) = constant false\n",
+      "stderr": ""
+    },
+    "invalid_reverse": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidReverse.lean:9:2: error: Tactic `rfl` failed: The left-hand side\n  reverse (fun x => true) fun i => \u2191(i 0)\nis not definitionally equal to the right-hand side\n  fun i => \u2191(i 0)\n\n\u22a2 (reverse (fun x => true) fun i => \u2191(i 0)) = fun i => \u2191(i 0)\n",
+      "stderr": ""
+    },
+    "invalid_transpose": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidTranspose.lean:27:2: error: Tactic `rfl` failed: The left-hand side\n  transpose (reverseAxes.comp swap01) \u22ef coordinateTensor\nis not definitionally equal to the right-hand side\n  transpose (swap01.comp reverseAxes) \u22ef coordinateTensor\n\n\u22a2 transpose (reverseAxes.comp swap01) \u22ef coordinateTensor = transpose (swap01.comp reverseAxes) \u22ef coordinateTensor\n",
+      "stderr": ""
+    },
+    "invalid_subtract": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidSubtract.lean:5:2: error: Tactic `rfl` failed: The left-hand side\n  3#8 - (3#8 + 1#8)\nis not definitionally equal to the right-hand side\n  1#8\n\n\u22a2 3#8 - (3#8 + 1#8) = 1#8\n",
+      "stderr": ""
+    },
+    "invalid_float_exception": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidFloatExceptional.lean:9:2: error: Tactic `rfl` failed: The left-hand side\n  classify (rewritten false 2139095040#32)\nis not definitionally equal to the right-hand side\n  Class.nan\n\na\u271d :\n  classify (convertPredicate false) = Class.nan \u2228\n    classify 2139095040#32 = Class.nan \u2228\n      classify (convertPredicate false) = Class.zero \u2227 classify 2139095040#32 = Class.infinity \u2228\n        classify (convertPredicate false) = Class.infinity \u2227 classify 2139095040#32 = Class.zero\n\u22a2 classify (rewritten false 2139095040#32) = Class.nan\n",
+      "stderr": ""
+    },
+    "invalid_empty_slice": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidEmptySlice.lean:7:2: error: Tactic `rfl` failed: The left-hand side\n  (removeRedundantStride emptyWitness).elementCount\nis not definitionally equal to the right-hand side\n  0\n\n\u22a2 (removeRedundantStride emptyWitness).elementCount = 0\n",
+      "stderr": ""
+    },
+    "invalid_select_contraction": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidSelectContraction.lean:6:2: error: Tactic `rfl` failed: The left-hand side\n  branchContraction true [1, 1, 1, 1]\nis not definitionally equal to the right-hand side\n  hoistedContraction true [1, 1, 1, 1]\n\n\u22a2 branchContraction true [1, 1, 1, 1] = hoistedContraction true [1, 1, 1, 1]\n",
+      "stderr": ""
+    },
+    "invalid_dag": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidDag.lean:18:2: error: Tactic `rfl` failed: The left-hand side\n  Option.map (fun t => t scalarIndex)\n    (Program.eval (meaning scalarShape) (fun x => none)\n      (Program.bind (Node.operation Opcode.logicalAnd [1, 0]) (Program.result 0)) env)\nis not definitionally equal to the right-hand side\n  Option.map (fun t => t scalarIndex)\n    (Program.eval (meaning scalarShape) (fun x => none) (Program.mapInputs (dropRef 1) (Program.result 0)) env)\n\n\u22a2 Option.map (fun t => t scalarIndex)\n      (Program.eval (meaning scalarShape) (fun x => none)\n        (Program.bind (Node.operation Opcode.logicalAnd [1, 0]) (Program.result 0)) env) =\n    Option.map (fun t => t scalarIndex)\n      (Program.eval (meaning scalarShape) (fun x => none) (Program.mapInputs (dropRef 1) (Program.result 0)) env)\n",
+      "stderr": ""
+    },
+    "invalid_constant_guard": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidConstantGuard.lean:7:2: error: Tactic `rfl` failed: The left-hand side\n  matchesAll true [true, true, false]\nis not definitionally equal to the right-hand side\n  true\n\n\u22a2 matchesAll true [true, true, false] = true\n",
+      "stderr": ""
+    },
+    "invalid_index_map": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidIndexMap.lean:11:2: error: Tactic `rfl` failed: The left-hand side\n  \u2191(sliceIndex (fun x => { start := 1, limit := 6, stride := 2 }) \u22ef (fun x => 1) 0)\nis not definitionally equal to the right-hand side\n  2\n\n\u22a2 \u2191(sliceIndex (fun x => { start := 1, limit := 6, stride := 2 }) \u22ef (fun x => 1) 0) = 2\n",
+      "stderr": ""
+    },
+    "invalid_dynamic_index": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidDynamicIndex.lean:8:2: error: Tactic `rfl` failed: The left-hand side\n  clampStart 5 2 (unsignedValue (BitVec.ofNat 64 (2 ^ 63)))\nis not definitionally equal to the right-hand side\n  clampStart 5 2 (evaluatorUnsigned64 (BitVec.ofNat 64 (2 ^ 63)))\n\n\u22a2 clampStart 5 2 (unsignedValue (BitVec.ofNat 64 (2 ^ 63))) =\n    clampStart 5 2 (evaluatorUnsigned64 (BitVec.ofNat 64 (2 ^ 63)))\n",
+      "stderr": ""
+    },
+    "invalid_nested_slice": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidNestedSlice.lean:5:48: error: Tactic `rfl` failed: The left-hand side\n  combinedStart 10 6 2 99 1\nis not definitionally equal to the right-hand side\n  100\n\n\u22a2 combinedStart 10 6 2 99 1 = 100\n",
+      "stderr": ""
+    },
+    "invalid_reshape": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidReshape.lean:5:55: error: Tactic `rfl` failed: The left-hand side\n  \u2191(join 1 0)\nis not definitionally equal to the right-hand side\n  1\n\n\u22a2 \u2191(join 1 0) = 1\n",
+      "stderr": ""
+    },
+    "invalid_reduction": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidReduction.lean:5:2: error: Tactic `rfl` failed: The left-hand side\n  initial && value\nis not definitionally equal to the right-hand side\n  value\n\ninitial value : Bool\n\u22a2 (initial && value) = value\n",
+      "stderr": ""
+    },
+    "invalid_dense_layout": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidDenseLayout.lean:7:65: error: Tactic `rfl` failed: The left-hand side\n  inputLayout\nis not definitionally equal to the right-hand side\n  outputLayout\n\npermutation : AxisPermutation 2\ninputLayout outputLayout : DenseLayout 2\n\u22a2 MinorOrderMatches permutation inputLayout outputLayout\n",
+      "stderr": ""
+    },
+    "invalid_effectful_dag": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidEffectfulDag.lean:8:2: error: Tactic `rfl` failed: The left-hand side\n  { result := Except.ok false, state := [1] }\nis not definitionally equal to the right-hand side\n  { result := Except.ok false, state := [] }\n\n\u22a2 { result := Except.ok false, state := [1] } = { result := Except.ok false, state := [] }\n",
+      "stderr": ""
+    },
+    "invalid_control_repair": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidControlRepair.lean:8:2: error: Tactic `rfl` failed: The left-hand side\n  decide (ControlOrder.repaired.IsSchedule [0, 2, 1, 3])\nis not definitionally equal to the right-hand side\n  true\n\n\u22a2 decide (ControlOrder.repaired.IsSchedule [0, 2, 1, 3]) = true\n",
+      "stderr": ""
+    },
+    "invalid_modular_arithmetic": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidModularArithmetic.lean:5:2: error: Tactic `rfl` failed: The left-hand side\n  (255#8 + 1#8).toNat\nis not definitionally equal to the right-hand side\n  256\n\n\u22a2 (255#8 + 1#8).toNat = 256\n",
+      "stderr": ""
+    },
+    "invalid_modular_bridge": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidModularBridge.lean:24:2: error: Tactic `rfl` failed: The left-hand side\n  (moved false coordinate).toNat\nis not definitionally equal to the right-hand side\n  (moved true coordinate).toNat\n\n\u22a2 (moved false coordinate).toNat = (moved true coordinate).toNat\n",
+      "stderr": ""
+    },
+    "invalid_reducer_role": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidReducerRole.lean:6:2: error: Tactic `rfl` failed: The left-hand side\n  before Parameter.current Parameter.current lhs base 0 5 0\nis not definitionally equal to the right-hand side\n  after Parameter.current Parameter.current lhs base 0 5 0\n\n\u22a2 before Parameter.current Parameter.current lhs base 0 5 0 = after Parameter.current Parameter.current lhs base 0 5 0\n",
+      "stderr": ""
+    },
+    "invalid_gather_literal": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidGatherLiteral.lean:6:2: error: Tactic `rfl` failed: The left-hand side\n  originalIndex 129 0#8\nis not definitionally equal to the right-hand side\n  selectedIndex 129 0#8\n\n\u22a2 originalIndex 129 0#8 = selectedIndex 129 0#8\n",
+      "stderr": ""
+    },
+    "invalid_scaled_nested": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidScaledNestedSlice.lean:7:2: error: Tactic `rfl` failed: The left-hand side\n  original 1 \u22ef 7 1 2 witnessIndex\nis not definitionally equal to the right-hand side\n  rewritten 1 \u22ef 1 2 witnessIndex\n\n\u22a2 original 1 \u22ef 7 1 2 witnessIndex = rewritten 1 \u22ef 1 2 witnessIndex\n",
+      "stderr": ""
+    },
+    "invalid_ordered_compare": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidOrderedCompare.lean:7:2: error: Tactic `rfl` failed: The left-hand side\n  true\nis not definitionally equal to the right-hand side\n  false\n\nnan : IsNaN quietNaN \u2228 IsNaN zero\n\u22a2 true = false\n",
+      "stderr": ""
+    },
+    "invalid_contraction": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidContraction.lean:18:2: error: Tactic `rfl` failed: The left-hand side\n  dotTensor twoTerms (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id (fun index => if \u2191(index 0) = 0 then 1 else 2)\n    (fun index => if \u2191(index 0) = 0 then 3 else 4) fun axis => axis.elim0\nis not definitionally equal to the right-hand side\n  3\n\n\u22a2 (dotTensor twoTerms (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id (fun index => if \u2191(index 0) = 0 then 1 else 2)\n      (fun index => if \u2191(index 0) = 0 then 3 else 4) fun axis => axis.elim0) =\n    3\n",
+      "stderr": ""
+    },
+    "invalid_signed_word": {
+      "exit_code": 1,
+      "stdout": "tests/fixtures/InvalidSignedWord.lean:7:2: error: Tactic `rfl` failed: The left-hand side\n  (-BitVec.ofInt 8 (-128)).toInt\nis not definitionally equal to the right-hand side\n  - -128\n\n\u22a2 (-BitVec.ofInt 8 (-128)).toInt = - -128\n",
+      "stderr": ""
+    }
+  },
+  "files": [
+    {
+      "path": "TensorRewrite/Pilot/Tensor.lean",
+      "category": "S",
+      "sha256": "c1b41d38bee3d55c4a63df7333c7f0d23ea5917e4260062e2efad97edbeab122",
+      "physical_lines": 36,
+      "code_lines": 15
+    },
+    {
+      "path": "TensorRewrite/Pilot/Indexing.lean",
+      "category": "S",
+      "sha256": "73632c28e066f7651378c107bb7b9331b874138d6813d1571ed7386aaaa54c9c",
+      "physical_lines": 31,
+      "code_lines": 17
+    },
+    {
+      "path": "TensorRewrite/Pilot/Permutation.lean",
+      "category": "S",
+      "sha256": "5a57706897e2e1de8ab7cdff4fb880818f3d2931a4f3cc4f1a0b01eaf3a447c0",
+      "physical_lines": 54,
+      "code_lines": 36
+    },
+    {
+      "path": "TensorRewrite/Pilot/PermutationArrays.lean",
+      "category": "S",
+      "sha256": "5660b5ada4a334fca6fe92643414f67bedee5b48b37af0683b0e90e5f7865369",
+      "physical_lines": 37,
+      "code_lines": 22
+    },
+    {
+      "path": "TensorRewrite/Pilot/PermutationLoop.lean",
+      "category": "S",
+      "sha256": "80e84291c54d03701fcbf8d46ae80fed84d4df5aed95ebfea88b1c88c6c79d47",
+      "physical_lines": 18,
+      "code_lines": 11
+    },
+    {
+      "path": "TensorRewrite/Pilot/Float32Exceptional.lean",
+      "category": "S",
+      "sha256": "7aa5fc1cdf976c65d22f83730fcd95c4d224aeaac21ddb543e6a3fd992f70881",
+      "physical_lines": 43,
+      "code_lines": 25
+    },
+    {
+      "path": "TensorRewrite/Pilot/SliceShape.lean",
+      "category": "S",
+      "sha256": "94b8b41aabc6c75182fca18d1b45f9a0e623a4468247de03f0da650a43c7b7f8",
+      "physical_lines": 55,
+      "code_lines": 30
+    },
+    {
+      "path": "TensorRewrite/Pilot/SelectContraction.lean",
+      "category": "S",
+      "sha256": "69724500e09621dbe03e246a5781ec9a461f9ef595a58e47dfaa09b85d3d1f51",
+      "physical_lines": 28,
+      "code_lines": 13
+    },
+    {
+      "path": "TensorRewrite/Pilot/Dag.lean",
+      "category": "S",
+      "sha256": "2ab6e7b69f7748a1d36a5079e4c03781c3a6756c37e769b2422c393081fb90a3",
+      "physical_lines": 69,
+      "code_lines": 40
+    },
+    {
+      "path": "TensorRewrite/Pilot/BooleanDag.lean",
+      "category": "S",
+      "sha256": "56c21684cce51b58a2322fa53fb93655e276896575a6fac2375dc762cb59d608",
+      "physical_lines": 34,
+      "code_lines": 22
+    },
+    {
+      "path": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "category": "S",
+      "sha256": "6d2e1b66b0284731f6f0289634a667adeffc9c65e76644a55a2b4d6d0d04398e",
+      "physical_lines": 65,
+      "code_lines": 40
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMaps.lean",
+      "category": "S",
+      "sha256": "4e5980165487d76cc7c4d798ef7acc33bc724bc9b74b8b0e032dbfb8508c75e1",
+      "physical_lines": 58,
+      "code_lines": 37
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndexValue.lean",
+      "category": "S",
+      "sha256": "561ed00bcef5a2019e56208e2c4db4263c36682518c0c8f87234eeffedcd46a7",
+      "physical_lines": 24,
+      "code_lines": 11
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndex.lean",
+      "category": "S",
+      "sha256": "7bee1bb77eaf9a249d4a0b96abd78510dec028c6f0dd73e178f3c26f77e8d35c",
+      "physical_lines": 32,
+      "code_lines": 20
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicSliceTensor.lean",
+      "category": "S",
+      "sha256": "d7dcd9b90dc8df5157295534c00bce6369deaea0cd7bb1b55cf0ee7e59edb344",
+      "physical_lines": 21,
+      "code_lines": 12
+    },
+    {
+      "path": "TensorRewrite/Pilot/NestedUnsigned64.lean",
+      "category": "S",
+      "sha256": "42d80e3ca65ec05c97e1de8af59c9a18c37e723e8e178d9fa8faca144c7b1691",
+      "physical_lines": 27,
+      "code_lines": 13
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProduct.lean",
+      "category": "S",
+      "sha256": "ac83afd5255db6543d7cd28a3c0adb2df86a0c2656835eb6f4f1a76138c1a0e1",
+      "physical_lines": 38,
+      "code_lines": 24
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "category": "S",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978",
+      "physical_lines": 33,
+      "code_lines": 20
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reshape.lean",
+      "category": "S",
+      "sha256": "542164be841d856e88f310b37e70b2a98ccdd19ea18239bcfc3f35a99ca3bc2d",
+      "physical_lines": 36,
+      "code_lines": 24
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reduction.lean",
+      "category": "S",
+      "sha256": "bea0cf586bdf37c77ed80435eea287930f6b15a3e44a0c725373859c02d15499",
+      "physical_lines": 84,
+      "code_lines": 56
+    },
+    {
+      "path": "TensorRewrite/Pilot/DenseLayout.lean",
+      "category": "S",
+      "sha256": "9ce92a554976c85e6f279b1d7cfcf0edbdf95e45b4ce0c03a1b89a8fa863b734",
+      "physical_lines": 99,
+      "code_lines": 62
+    },
+    {
+      "path": "TensorRewrite/Pilot/OperandOrder.lean",
+      "category": "S",
+      "sha256": "ef6e0ef30f28f08ddd5c41b830bdce979de1ad140838ef5010b0922170513767",
+      "physical_lines": 20,
+      "code_lines": 10
+    },
+    {
+      "path": "TensorRewrite/Pilot/EffectfulDag.lean",
+      "category": "S",
+      "sha256": "d86890d40697b5f2b5bb4b965c99838868a86d09dcfb16f732299b90e47f5875",
+      "physical_lines": 44,
+      "code_lines": 27
+    },
+    {
+      "path": "TensorRewrite/Pilot/EffectfulBooleanDag.lean",
+      "category": "S",
+      "sha256": "0fe4a8bdbe9f43a552bbcb9fba8dd10657a3fc0b13721d4dc1d98ec49d695cfe",
+      "physical_lines": 29,
+      "code_lines": 18
+    },
+    {
+      "path": "TensorRewrite/Pilot/DependencyOrder.lean",
+      "category": "S",
+      "sha256": "28c3eb17cc2cba9e53736185c08d105d46e707d9cce757ddaa322d36a8bc9b39",
+      "physical_lines": 34,
+      "code_lines": 17
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReducerIndex.lean",
+      "category": "S",
+      "sha256": "10bd9cfa55c85042495a5e751cfae1a2b745298e5bb9790101ef3ad48aa95905",
+      "physical_lines": 62,
+      "code_lines": 32
+    },
+    {
+      "path": "TensorRewrite/Pilot/ScaledNestedSlice.lean",
+      "category": "S",
+      "sha256": "f8b9b4b0a1f6cde415bebf10514512c07a803b981ad92a88c78429c15ae42c16",
+      "physical_lines": 40,
+      "code_lines": 20
+    },
+    {
+      "path": "TensorRewrite/Pilot/OrderedCompareProfile.lean",
+      "category": "S",
+      "sha256": "7d7b28e40cde19c116325ffe5ba39730f46883c07d13d03fb5a744e6bd52ad41",
+      "physical_lines": 39,
+      "code_lines": 18
+    },
+    {
+      "path": "TensorRewrite/Pilot/Contraction.lean",
+      "category": "S",
+      "sha256": "f46ad9843e5a7b66fd91ddf5814b04cc155684d5c1adc0c804fe5cdb6413b73c",
+      "physical_lines": 109,
+      "code_lines": 68
+    },
+    {
+      "path": "TensorRewrite/Pilot/ZeroMacProfile.lean",
+      "category": "S",
+      "sha256": "7097e30325c9c315884da6547ff3e0f70108ef046ce6ce1bbb3309f71ab34643",
+      "physical_lines": 39,
+      "code_lines": 16
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexLemmas.lean",
+      "category": "H",
+      "sha256": "9d649039419759c40d87976a0436e43f1356c7838879c5c9d79aea8482e3de03",
+      "physical_lines": 19,
+      "code_lines": 12
+    },
+    {
+      "path": "TensorRewrite/Pilot/PermutationArrayLemmas.lean",
+      "category": "H",
+      "sha256": "b387a54031685e5eb99d75dbaa943dbffef5f5f5f0256a3ee02ea292d98fbc19",
+      "physical_lines": 36,
+      "code_lines": 23
+    },
+    {
+      "path": "TensorRewrite/Pilot/PermutationLoopLemmas.lean",
+      "category": "H",
+      "sha256": "c4edf8ca74e9691e53d30aaef3fccea834dc023fb12300b4d289c837dce591cf",
+      "physical_lines": 42,
+      "code_lines": 33
+    },
+    {
+      "path": "TensorRewrite/Pilot/SelectContractionLemmas.lean",
+      "category": "H",
+      "sha256": "01991abeb50016af670f4ec9c5a104a0386a78439d6eb11140e383878d4ee9ea",
+      "physical_lines": 26,
+      "code_lines": 17
+    },
+    {
+      "path": "TensorRewrite/Pilot/DagLemmas.lean",
+      "category": "H",
+      "sha256": "e123c8794fa36109b06f21e48575b798331bb73c08475b243b8af6c006e06e8f",
+      "physical_lines": 73,
+      "code_lines": 56
+    },
+    {
+      "path": "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+      "category": "H",
+      "sha256": "a36b32ecd2f1edaeccabf133ce17bb792c91055b96cce7b290bc405f4f982e15",
+      "physical_lines": 47,
+      "code_lines": 36
+    },
+    {
+      "path": "TensorRewrite/Pilot/SliceIndexBounds.lean",
+      "category": "H",
+      "sha256": "274dabb6a95babeae1dd07aec41fbb6cc2d09afcf687b23f7ada1753e475c280",
+      "physical_lines": 29,
+      "code_lines": 22
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMapLemmas.lean",
+      "category": "H",
+      "sha256": "d499dcd95d963cc7e280c735c760fbdedc590aa408ab87507529272b31e74606",
+      "physical_lines": 48,
+      "code_lines": 35
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndexBounds.lean",
+      "category": "H",
+      "sha256": "2c93c567374e4a4002edad2cc5934d9c75579ba19fe982c36cb8a1e008882fc1",
+      "physical_lines": 26,
+      "code_lines": 17
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndexLemmas.lean",
+      "category": "H",
+      "sha256": "c56888eb39aa5d8bab016555be9cd7d6907935a1d2b30974fbd0b1a65f0f8f8d",
+      "physical_lines": 41,
+      "code_lines": 28
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicSliceCompositionLemmas.lean",
+      "category": "H",
+      "sha256": "61da781e26019dc47059fb387527abb519442052c6c8e53fe567959b296011b0",
+      "physical_lines": 57,
+      "code_lines": 46
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProductLemmas.lean",
+      "category": "H",
+      "sha256": "846b504cd4bd6bb2039dbc25d8cb6c325856393268b799b8438457a70ea29711",
+      "physical_lines": 32,
+      "code_lines": 21
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndexLemmas.lean",
+      "category": "H",
+      "sha256": "f5850dd78c05d62837a026f7fed3c73c0206e916fa2b57148b1e4f1c597118ff",
+      "physical_lines": 44,
+      "code_lines": 35
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReshapeLemmas.lean",
+      "category": "H",
+      "sha256": "5615961108dc75baa7daca9748b8b2c2a434ef8cfe2b51bbe978c1e6fe0e9731",
+      "physical_lines": 49,
+      "code_lines": 37
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReductionLemmas.lean",
+      "category": "H",
+      "sha256": "1bb1f7d4b0dc13ce6b58b59928b83f2e0704f9d6550adb07ad826d751c4ea24f",
+      "physical_lines": 136,
+      "code_lines": 112
+    },
+    {
+      "path": "TensorRewrite/Pilot/DenseLayoutLemmas.lean",
+      "category": "H",
+      "sha256": "8a721be3f4df8b68def8cd237f8db5139edbb850b5d840b9a7a203951dd04bec",
+      "physical_lines": 126,
+      "code_lines": 101
+    },
+    {
+      "path": "TensorRewrite/Pilot/PromotedWordArithmetic.lean",
+      "category": "H",
+      "sha256": "35af0aacdfaf0b6837bf2e784d2fef0ea881ba82cf9c014ac0c3b5eb738d9968",
+      "physical_lines": 69,
+      "code_lines": 45
+    },
+    {
+      "path": "TensorRewrite/Pilot/OperandOrderLemmas.lean",
+      "category": "H",
+      "sha256": "a9f671b11cd655e5c76b569d690301abc9aef45a0153ba3f67d78a7268214792",
+      "physical_lines": 32,
+      "code_lines": 21
+    },
+    {
+      "path": "TensorRewrite/Pilot/DependencyOrderLemmas.lean",
+      "category": "H",
+      "sha256": "5c4d2a7a820ef3d1ef340c52493f72aa0e642159d82bd525ac402d4b8ac7f229",
+      "physical_lines": 32,
+      "code_lines": 20
+    },
+    {
+      "path": "TensorRewrite/Pilot/EffectfulDagLemmas.lean",
+      "category": "H",
+      "sha256": "ce87ac99519ec5de942e86bcca57fdd0f7b02e1109c50c1ea732209ffb3c51ea",
+      "physical_lines": 85,
+      "code_lines": 68
+    },
+    {
+      "path": "TensorRewrite/Pilot/EffectfulBooleanDagLemmas.lean",
+      "category": "H",
+      "sha256": "ede36c913e6d5ad2c367332b5a92d06235cbb3b582c7c6ba51122a0b3e7d4257",
+      "physical_lines": 43,
+      "code_lines": 32
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReducerIndexLemmas.lean",
+      "category": "H",
+      "sha256": "be861056b00e9cc8325b0128a404f4d3eeecbe426952dfa9482beaf586645eec",
+      "physical_lines": 76,
+      "code_lines": 60
+    },
+    {
+      "path": "TensorRewrite/Pilot/ContractionLemmas.lean",
+      "category": "H",
+      "sha256": "bd6d81c1089dd71ba211befe634bf25e9399f499979ca32dd4de63c154e5d657",
+      "physical_lines": 66,
+      "code_lines": 49
+    },
+    {
+      "path": "TensorRewrite/Pilot/Boolean.lean",
+      "category": "R",
+      "sha256": "86676823db277fcf439e35f82c5ec14be68c187a1bfb7df9b8d3aba7a721f597",
+      "physical_lines": 61,
+      "code_lines": 43
+    },
+    {
+      "path": "TensorRewrite/Pilot/Bitwise.lean",
+      "category": "R",
+      "sha256": "a67194ffaddce51a198ece69211cea307405f3f4a523c793eea394b238e7214f",
+      "physical_lines": 41,
+      "code_lines": 29
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reverse.lean",
+      "category": "R",
+      "sha256": "1fd91f918064b8a2412fa13a36d21a450f164df47c47dd436ca0139596edbbbf",
+      "physical_lines": 50,
+      "code_lines": 37
+    },
+    {
+      "path": "TensorRewrite/Pilot/Transpose.lean",
+      "category": "R",
+      "sha256": "e9ae063b1097582fcf098a1d09012b3bee2cac5d2f51ce5982c5afebd32253fb",
+      "physical_lines": 30,
+      "code_lines": 20
+    },
+    {
+      "path": "TensorRewrite/Pilot/Subtract.lean",
+      "category": "R",
+      "sha256": "0e9dfef1b5a31220cba8f7a002c722cf7bf71caeae440e10af2e96090592aaf6",
+      "physical_lines": 60,
+      "code_lines": 45
+    },
+    {
+      "path": "TensorRewrite/Pilot/BooleanDagRules.lean",
+      "category": "R",
+      "sha256": "2c9146cc5d43ed95a0be4d05617ffe1dd6e45405125c25f3afb65d2d075ddf34",
+      "physical_lines": 115,
+      "code_lines": 84
+    },
+    {
+      "path": "TensorRewrite/Pilot/GuardedBooleanDag.lean",
+      "category": "R",
+      "sha256": "5f79f6fe1ee1c59b8cc33c20e6ea36299bbe4835da5998e3147df7775058b3bd",
+      "physical_lines": 26,
+      "code_lines": 18
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicSliceComposition.lean",
+      "category": "R",
+      "sha256": "432069bdce416faa7f4baed75bd8e122378eaa4de79927b3de388a9364f50bf8",
+      "physical_lines": 23,
+      "code_lines": 16
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReshapeRules.lean",
+      "category": "R",
+      "sha256": "852a798f782560f1d63f4c023e21c825034d84667e6e1e9b20ff692cf6b644a2",
+      "physical_lines": 39,
+      "code_lines": 27
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReductionRules.lean",
+      "category": "R",
+      "sha256": "3f712d5364701d724c9e0ea57680962ccb514bd892f14af5219efc86a2e30b0a",
+      "physical_lines": 57,
+      "code_lines": 45
+    },
+    {
+      "path": "TensorRewrite/Pilot/DenseLayoutRules.lean",
+      "category": "R",
+      "sha256": "5a420da725b5d873603efb6cece1f43091e754df6360dfda9f11603dd581d356",
+      "physical_lines": 38,
+      "code_lines": 31
+    },
+    {
+      "path": "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+      "category": "R",
+      "sha256": "3157cc7f5fc2d3ab81660e519377a13cc79c32cb2a62c9d364a747a3b8708447",
+      "physical_lines": 96,
+      "code_lines": 69
+    },
+    {
+      "path": "TensorRewrite/Pilot/EffectfulBooleanDagRules.lean",
+      "category": "R",
+      "sha256": "dd44bfd350339d728000017d61aa4dc84bc27254c7a42570eaa279cac00ff4da",
+      "physical_lines": 140,
+      "code_lines": 109
+    },
+    {
+      "path": "TensorRewrite/Pilot/ModularArithmetic.lean",
+      "category": "R",
+      "sha256": "9bcb99af74d03d7d4e877b9f319270e641e8fccf98c62816ccaea5a8835c2dd7",
+      "physical_lines": 112,
+      "code_lines": 70
+    },
+    {
+      "path": "TensorRewrite/Pilot/ContractionRules.lean",
+      "category": "R",
+      "sha256": "e5a04269ad0707c9cc44aa9a28c4a2b92be381a448df7ccf60e9826ce50a2315",
+      "physical_lines": 66,
+      "code_lines": 48
+    },
+    {
+      "path": "TensorRewrite.lean",
+      "category": "A",
+      "sha256": "031aa1890d16c7d2ad9bd356276dcfeef7d46ff6184d23b4fe7e7a679a419298",
+      "physical_lines": 39,
+      "code_lines": 33
+    },
+    {
+      "path": "TensorRewrite/Pilot/PredMulRefutation.lean",
+      "category": "C",
+      "sha256": "ac1cfb2bab04a91c7afa6226187f5fdc36769e32d6bc7aef0b189e1413a0173c",
+      "physical_lines": 101,
+      "code_lines": 73
+    },
+    {
+      "path": "TensorRewrite/Pilot/EmptySliceRefutation.lean",
+      "category": "C",
+      "sha256": "fbfb6e29794e1f6ce6c453dcdc8ea8bfb91491e5d06357239677f279fd0d33bf",
+      "physical_lines": 57,
+      "code_lines": 33
+    },
+    {
+      "path": "TensorRewrite/Pilot/SelectContractionRefutation.lean",
+      "category": "C",
+      "sha256": "9011ebde9b05d6ae61b1cbfd4720c96ca7f22d4d15a981b9fc86e425e1f9df45",
+      "physical_lines": 40,
+      "code_lines": 27
+    },
+    {
+      "path": "TensorRewrite/Pilot/UnsignedIndexBoundary.lean",
+      "category": "C",
+      "sha256": "c45c08f037c307d18d7d4a6aaf3b8f059c3aeea2dd6d5f0e482107b667f2f05c",
+      "physical_lines": 38,
+      "code_lines": 23
+    },
+    {
+      "path": "TensorRewrite/Pilot/NestedUnsigned64Certificates.lean",
+      "category": "C",
+      "sha256": "3f00ecc89a4878b26bd5db1fd6531b5896ee9e3ba51e5ccdb432545bb7f993b7",
+      "physical_lines": 34,
+      "code_lines": 21
+    },
+    {
+      "path": "TensorRewrite/Pilot/ControlOrderCertificates.lean",
+      "category": "C",
+      "sha256": "0b6eacd1efd107fc50ea02280c67d9915d3f8ea9255849072f9aa8f04860c606",
+      "physical_lines": 103,
+      "code_lines": 59
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReducerIndexCertificates.lean",
+      "category": "C",
+      "sha256": "7c088eb05ce9056d003fe19f74ab0454ef3596dde51bfdb2321d20996229df95",
+      "physical_lines": 62,
+      "code_lines": 34
+    },
+    {
+      "path": "TensorRewrite/Pilot/ScaledNestedSliceCertificates.lean",
+      "category": "C",
+      "sha256": "e59270485466f390b9ce00c2517160107adce3aaa6bb643cafaf590530fdd0b2",
+      "physical_lines": 48,
+      "code_lines": 29
+    },
+    {
+      "path": "TensorRewrite/Pilot/OrderedCompareCertificates.lean",
+      "category": "C",
+      "sha256": "c5a60d42b3d85f3c3b0f5d9717d9bd88b60307de7da3a1120d901517b0957c71",
+      "physical_lines": 37,
+      "code_lines": 20
+    },
+    {
+      "path": "TensorRewrite/Pilot/ZeroMacCertificates.lean",
+      "category": "C",
+      "sha256": "6d2f098961791a53f8639a26f44e62237cd7d607eeefb994fc8f7efc07c36042",
+      "physical_lines": 31,
+      "code_lines": 18
+    }
+  ],
+  "category_lines": {
+    "S": 776,
+    "H": 926,
+    "R": 691,
+    "A": 33,
+    "C": 337
+  },
+  "total_custom_lean_lines": 2763,
+  "refutation_certificate_lines": 337,
+  "measurement_scope": "full custom Lean value and static-shape development; audit/test files excluded and reported separately",
+  "test_audit_lines": {
+    "TensorRewrite/Pilot/Audit.lean": {
+      "physical_lines": 271,
+      "code_lines": 261
+    },
+    "tests/fixtures/PilotControls.lean": {
+      "physical_lines": 31,
+      "code_lines": 19
+    },
+    "tests/fixtures/InvalidPilot.lean": {
+      "physical_lines": 10,
+      "code_lines": 6
+    },
+    "tests/fixtures/InvalidReverse.lean": {
+      "physical_lines": 9,
+      "code_lines": 6
+    },
+    "tests/fixtures/TransposeControls.lean": {
+      "physical_lines": 46,
+      "code_lines": 33
+    },
+    "tests/fixtures/InvalidTranspose.lean": {
+      "physical_lines": 27,
+      "code_lines": 19
+    },
+    "tests/fixtures/InvalidSubtract.lean": {
+      "physical_lines": 5,
+      "code_lines": 3
+    },
+    "tests/fixtures/FloatExceptionalControls.lean": {
+      "physical_lines": 17,
+      "code_lines": 13
+    },
+    "tests/fixtures/InvalidFloatExceptional.lean": {
+      "physical_lines": 9,
+      "code_lines": 6
+    },
+    "tests/fixtures/EmptySliceControls.lean": {
+      "physical_lines": 19,
+      "code_lines": 12
+    },
+    "tests/fixtures/InvalidEmptySlice.lean": {
+      "physical_lines": 7,
+      "code_lines": 4
+    },
+    "tests/fixtures/SelectContractionControls.lean": {
+      "physical_lines": 8,
+      "code_lines": 6
+    },
+    "tests/fixtures/InvalidSelectContraction.lean": {
+      "physical_lines": 6,
+      "code_lines": 4
+    },
+    "tests/fixtures/DagControls.lean": {
+      "physical_lines": 68,
+      "code_lines": 48
+    },
+    "tests/fixtures/InvalidDag.lean": {
+      "physical_lines": 18,
+      "code_lines": 14
+    },
+    "tests/fixtures/ConstantGuardControls.lean": {
+      "physical_lines": 39,
+      "code_lines": 28
+    },
+    "tests/fixtures/InvalidConstantGuard.lean": {
+      "physical_lines": 7,
+      "code_lines": 4
+    },
+    "tests/fixtures/IndexMapControls.lean": {
+      "physical_lines": 69,
+      "code_lines": 52
+    },
+    "tests/fixtures/InvalidIndexMap.lean": {
+      "physical_lines": 11,
+      "code_lines": 8
+    },
+    "tests/fixtures/DynamicIndexControls.lean": {
+      "physical_lines": 45,
+      "code_lines": 39
+    },
+    "tests/fixtures/InvalidDynamicIndex.lean": {
+      "physical_lines": 8,
+      "code_lines": 5
+    },
+    "tests/fixtures/NestedSliceControls.lean": {
+      "physical_lines": 20,
+      "code_lines": 16
+    },
+    "tests/fixtures/InvalidNestedSlice.lean": {
+      "physical_lines": 5,
+      "code_lines": 3
+    },
+    "tests/fixtures/ReshapeControls.lean": {
+      "physical_lines": 30,
+      "code_lines": 25
+    },
+    "tests/fixtures/InvalidReshape.lean": {
+      "physical_lines": 5,
+      "code_lines": 3
+    },
+    "tests/fixtures/ReductionControls.lean": {
+      "physical_lines": 76,
+      "code_lines": 68
+    },
+    "tests/fixtures/InvalidReduction.lean": {
+      "physical_lines": 5,
+      "code_lines": 4
+    },
+    "tests/fixtures/DenseLayoutControls.lean": {
+      "physical_lines": 77,
+      "code_lines": 68
+    },
+    "tests/fixtures/InvalidDenseLayout.lean": {
+      "physical_lines": 7,
+      "code_lines": 5
+    },
+    "tests/fixtures/EffectfulDagControls.lean": {
+      "physical_lines": 92,
+      "code_lines": 61
+    },
+    "tests/fixtures/InvalidEffectfulDag.lean": {
+      "physical_lines": 8,
+      "code_lines": 5
+    },
+    "tests/fixtures/ControlRepairControls.lean": {
+      "physical_lines": 33,
+      "code_lines": 22
+    },
+    "tests/fixtures/InvalidControlRepair.lean": {
+      "physical_lines": 8,
+      "code_lines": 5
+    },
+    "tests/fixtures/ModularArithmeticControls.lean": {
+      "physical_lines": 83,
+      "code_lines": 60
+    },
+    "tests/fixtures/InvalidModularArithmetic.lean": {
+      "physical_lines": 5,
+      "code_lines": 3
+    },
+    "tests/fixtures/ModularBridgeControls.lean": {
+      "physical_lines": 176,
+      "code_lines": 139
+    },
+    "tests/fixtures/InvalidModularBridge.lean": {
+      "physical_lines": 24,
+      "code_lines": 19
+    },
+    "tests/fixtures/SignedWordControls.lean": {
+      "physical_lines": 108,
+      "code_lines": 83
+    },
+    "tests/fixtures/InvalidSignedWord.lean": {
+      "physical_lines": 7,
+      "code_lines": 4
+    },
+    "tests/fixtures/ContractionControls.lean": {
+      "physical_lines": 202,
+      "code_lines": 148
+    },
+    "tests/fixtures/InvalidContraction.lean": {
+      "physical_lines": 18,
+      "code_lines": 14
+    },
+    "tests/fixtures/OrderedCompareControls.lean": {
+      "physical_lines": 8,
+      "code_lines": 6
+    },
+    "tests/fixtures/InvalidOrderedCompare.lean": {
+      "physical_lines": 7,
+      "code_lines": 5
+    },
+    "tests/fixtures/ScaledNestedSliceControls.lean": {
+      "physical_lines": 11,
+      "code_lines": 9
+    },
+    "tests/fixtures/InvalidScaledNestedSlice.lean": {
+      "physical_lines": 7,
+      "code_lines": 5
+    },
+    "tests/fixtures/ReducerIndexControls.lean": {
+      "physical_lines": 37,
+      "code_lines": 31
+    },
+    "tests/fixtures/InvalidReducerRole.lean": {
+      "physical_lines": 6,
+      "code_lines": 4
+    },
+    "tests/fixtures/InvalidGatherLiteral.lean": {
+      "physical_lines": 6,
+      "code_lines": 4
+    }
+  }
+}

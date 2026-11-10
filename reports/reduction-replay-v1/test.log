@@ -1,0 +1,658 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:reduction_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 99757 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ReductionReplay
+[ RUN      ] ReductionReplay.InitializerLawAndStaticFibers
+REDUCTION_RESULT case=unit_axes mode=control changed=0 identity_law=1 before=0,1,0 after=0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=unit_axes mode=handler changed=1 identity_law=1 before=0,1,0 after=0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  ROOT %reshape = pred[3]{0} reshape(%data)
+}
+
+REDUCTION_RESULT case=unit_axes mode=pass changed=1 identity_law=1 before=0,1,0 after=0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  ROOT %reshape = pred[3]{0} reshape(%data)
+}
+
+REDUCTION_RESULT case=no_axes mode=control changed=0 identity_law=1 before=1,0,1,0,1,0 after=1,0,1,0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3]{1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3]) -> pred[2,3] {
+  %data = pred[2,3]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3]{1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3]) -> pred[2,3] {
+  %data = pred[2,3]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=no_axes mode=handler changed=1 identity_law=1 before=1,0,1,0,1,0 after=1,0,1,0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3]{1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3]) -> pred[2,3] {
+  %data = pred[2,3]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3]{1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3]) -> pred[2,3] {
+  %data = pred[2,3]{1,0} parameter(0)
+  ROOT %reshape = pred[2,3]{1,0} reshape(%data)
+}
+
+REDUCTION_RESULT case=no_axes mode=pass changed=1 identity_law=1 before=1,0,1,0,1,0 after=1,0,1,0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3]{1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3]) -> pred[2,3] {
+  %data = pred[2,3]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3]{1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3]) -> pred[2,3] {
+  %data = pred[2,3]{1,0} parameter(0)
+  ROOT %reshape = pred[2,3]{1,0} reshape(%data)
+}
+
+REDUCTION_RESULT case=empty_reduced mode=control changed=0 identity_law=1 before=1,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,0,3]{2,1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,0,3]) -> pred[2,3] {
+  %data = pred[2,0,3]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,0,3]{2,1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,0,3]) -> pred[2,3] {
+  %data = pred[2,0,3]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=empty_reduced mode=handler changed=1 identity_law=1 before=1,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,0,3]{2,1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,0,3]) -> pred[2,3] {
+  %data = pred[2,0,3]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,0,3]{2,1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,0,3]) -> pred[2,3] {
+  %data = pred[2,0,3]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %broadcast = pred[2,3]{1,0} broadcast(%initial), dimensions={}
+}
+
+REDUCTION_RESULT case=empty_reduced mode=pass changed=1 identity_law=1 before=1,1,1,1,1,1 after=1,1,1,1,1,1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,0,3]{2,1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,0,3]) -> pred[2,3] {
+  %data = pred[2,0,3]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[2,3]{1,0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,0,3]{2,1,0})->pred[2,3]{1,0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,0,3]) -> pred[2,3] {
+  %data = pred[2,0,3]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %broadcast = pred[2,3]{1,0} broadcast(%initial), dimensions={}
+}
+
+REDUCTION_RESULT case=empty_kept mode=control changed=0 identity_law=1 before=empty after=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[0,2]{1,0})->pred[0]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[0,2]) -> pred[0] {
+  %data = pred[0,2]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[0]{0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[0,2]{1,0})->pred[0]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[0,2]) -> pred[0] {
+  %data = pred[0,2]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[0]{0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=empty_kept mode=handler changed=1 identity_law=1 before=empty after=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[0,2]{1,0})->pred[0]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[0,2]) -> pred[0] {
+  %data = pred[0,2]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[0]{0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[0,2]{1,0})->pred[0]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[0,2]) -> pred[0] {
+  %data = pred[0,2]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %broadcast = pred[0]{0} broadcast(%initial), dimensions={}
+}
+
+REDUCTION_RESULT case=empty_kept mode=pass changed=1 identity_law=1 before=empty after=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[0,2]{1,0})->pred[0]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[0,2]) -> pred[0] {
+  %data = pred[0,2]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[0]{0} reduce(%data, %initial), dimensions={1}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[0,2]{1,0})->pred[0]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[0,2]) -> pred[0] {
+  %data = pred[0,2]{1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %broadcast = pred[0]{0} broadcast(%initial), dimensions={}
+}
+
+REDUCTION_RESULT case=scalar mode=control changed=0 identity_law=1 before=0 after=0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[])->pred[]}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[]) -> pred[] {
+  %data = pred[] parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[] reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[])->pred[]}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[]) -> pred[] {
+  %data = pred[] parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[] reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=scalar mode=handler changed=1 identity_law=1 before=0 after=0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[])->pred[]}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[]) -> pred[] {
+  %data = pred[] parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[] reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[])->pred[]}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[]) -> pred[] {
+  %data = pred[] parameter(0)
+  ROOT %reshape = pred[] reshape(%data)
+}
+
+REDUCTION_RESULT case=scalar mode=pass changed=1 identity_law=1 before=0 after=0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[])->pred[]}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[]) -> pred[] {
+  %data = pred[] parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[] reduce(%data, %initial), dimensions={}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[])->pred[]}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[]) -> pred[] {
+  %data = pred[] parameter(0)
+  ROOT %reshape = pred[] reshape(%data)
+}
+
+REDUCTION_RESULT case=nontrivial_axes mode=control changed=0 identity_law=1 before=0,0,1 after=0,0,1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3,2]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3,2]) -> pred[3] {
+  %data = pred[2,3,2]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3,2]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3,2]) -> pred[3] {
+  %data = pred[2,3,2]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=nontrivial_axes mode=handler changed=0 identity_law=1 before=0,0,1 after=0,0,1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3,2]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3,2]) -> pred[3] {
+  %data = pred[2,3,2]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3,2]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3,2]) -> pred[3] {
+  %data = pred[2,3,2]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=nontrivial_axes mode=pass changed=0 identity_law=1 before=0,0,1 after=0,0,1 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3,2]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3,2]) -> pred[3] {
+  %data = pred[2,3,2]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[2,3,2]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[2,3,2]) -> pred[3] {
+  %data = pred[2,3,2]{2,1,0} parameter(0)
+  %initial = pred[] constant(true)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=nonidentity_control mode=control changed=0 identity_law=0 before=0,0,0 after=0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(false)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(false)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REDUCTION_RESULT case=nonidentity_control mode=handler changed=1 identity_law=0 before=0,0,0 after=0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(false)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  ROOT %reshape = pred[3]{0} reshape(%data)
+}
+
+REDUCTION_RESULT case=nonidentity_control mode=pass changed=1 identity_law=0 before=0,0,0 after=0,1,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  %initial = pred[] constant(false)
+  ROOT %result = pred[3]{0} reduce(%data, %initial), dimensions={0,2}, to_apply=%combine
+}
+
+REWRITTEN_HLO
+HloModule reduction_replay, entry_computation_layout={(pred[1,3,1]{2,1,0})->pred[3]{0}}
+
+%combine (left: pred[], right: pred[]) -> pred[] {
+  %left = pred[] parameter(0)
+  %right = pred[] parameter(1)
+  ROOT %combined = pred[] and(%left, %right)
+}
+
+ENTRY %main (data: pred[1,3,1]) -> pred[3] {
+  %data = pred[1,3,1]{2,1,0} parameter(0)
+  ROOT %reshape = pred[3]{0} reshape(%data)
+}
+
+[       OK ] ReductionReplay.InitializerLawAndStaticFibers (24 ms)
+[----------] 1 test from ReductionReplay (25 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (25 ms total)
+[  PASSED  ] 1 test.

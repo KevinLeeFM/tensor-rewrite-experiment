@@ -1,0 +1,23 @@
+diff --git a/xla/hlo/transforms/simplifiers/BUILD b/xla/hlo/transforms/simplifiers/BUILD
+index 1401b6e..c829fe2 100644
+--- a/xla/hlo/transforms/simplifiers/BUILD
++++ b/xla/hlo/transforms/simplifiers/BUILD
+@@ -2281,3 +2281,18 @@ xla_cc_test(
+         "@com_google_googletest//:gtest_main",
+     ],
+ )
++
++
++xla_cc_test(
++    name = "pred_mul_nonfinite_replay_test",
++    srcs = ["pred_mul_nonfinite_replay_test.cc"],
++    deps = [
++        ":algebraic_simplifier",
++        "//xla:literal",
++        "//xla:literal_util",
++        "//xla/hlo/evaluator:hlo_evaluator",
++        "//xla/hlo/ir:hlo",
++        "//xla/hlo/testlib:hlo_hardware_independent_test_base",
++        "@com_google_googletest//:gtest_main",
++    ],
++)

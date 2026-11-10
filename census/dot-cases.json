@@ -1,0 +1,1491 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "AssociativeReorderNestedDot",
+    "HandleDot",
+    "MoveDotParamToRhs",
+    "RemoveDegenerateDimensionFromDot",
+    "RemoveTransposesFromDotOperands",
+    "ReplaceInstructionIfCompatible",
+    "ReplaceWithBitcast",
+    "RewriteAsMultiplyDotWithZeroLhsContractingDim",
+    "RewriteBatchPlusContractingAsReduce",
+    "TryRemoveUpcastAndDowncastSurroundingBinaryOp"
+  ],
+  "cases": [
+    {
+      "id": "ReplaceWithBitcast/unary",
+      "handler": "ReplaceWithBitcast",
+      "line": 844,
+      "end_line": 856,
+      "source_body_sha256": "dc01d037c073098bb9d81c22043104a513e402848de25b7a78c20a87004af142",
+      "lhs": "unary instruction with supplied or default operand",
+      "rhs": "Bitcast with original result shape",
+      "guard": "CHECK operand_count1 and equal ByteSizeOf(result,operand)",
+      "dependencies": [
+        "caller must justify physical bitcast semantics; byte equality alone is insufficient",
+        "CHECK_OK replacement abort behavior, sharding and control effects"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L00855-C012",
+      "replacement_line": 855,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  CHECK_OK(ReplaceInstruction(instruction, bitcast));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "ReplaceInstructionIfCompatible/single",
+      "handler": "ReplaceInstructionIfCompatible",
+      "line": 861,
+      "end_line": 880,
+      "source_body_sha256": "c93df4a44cd15cc6d7acdcb82ef17e90d281d6e243701e64a2868f72e8d4aae2",
+      "lhs": "old instruction",
+      "rhs": "existing new instruction",
+      "guard": "no old control predecessors; SameShape(old,new)",
+      "dependencies": [
+        "ReplaceInstruction preserves sharding and frontend attributes; StatusOr.value failure path",
+        "returned Boolean depends on successful replacement"
+      ],
+      "helper_contract_ids": [
+        "SameShape"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L00876-C010",
+      "replacement_line": 876,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  return ReplaceInstruction(old_instruction, new_instruction,",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "ReplaceInstructionIfCompatible/span-single",
+      "handler": "ReplaceInstructionIfCompatible",
+      "line": 882,
+      "end_line": 914,
+      "source_body_sha256": "7a705c0dfa460d84909a7297c417ed25366425efe5ce917a517886dd67ae5782",
+      "lhs": "old instruction; new instruction span of size1",
+      "rhs": "single-instruction overload",
+      "guard": "no old control predecessors; span.size1",
+      "dependencies": [
+        "same-named overload dispatch; inherited compatibility guard"
+      ],
+      "helper_contract_ids": [
+        "SameShape"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L00896-C012",
+      "replacement_line": 896,
+      "replacement_call": "ReplaceInstructionIfCompatible",
+      "replacement_source": "    return ReplaceInstructionIfCompatible(old_instruction, new_instructions[0]);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "ReplaceInstructionIfCompatible/span-tuple",
+      "handler": "ReplaceInstructionIfCompatible",
+      "line": 882,
+      "end_line": 914,
+      "source_body_sha256": "7a705c0dfa460d84909a7297c417ed25366425efe5ce917a517886dd67ae5782",
+      "lhs": "old tuple; multiple replacement components",
+      "rhs": "MaybeMakeTuple(new_instructions)",
+      "guard": "no old control predecessors; span size !=1; CHECK nonempty; old tuple arity matches; every component SameShape",
+      "dependencies": [
+        "tuple construction; preserve sharding/frontend attributes; StatusOr.value failure path"
+      ],
+      "helper_contract_ids": [
+        "SameShape"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L00910-C010",
+      "replacement_line": 910,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  return ReplaceInstruction(old_instruction, MaybeMakeTuple(new_instructions),",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryRemoveUpcastAndDowncastSurroundingBinaryOp/add",
+      "handler": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
+      "line": 2315,
+      "end_line": 2389,
+      "source_body_sha256": "7ed3b5af78265c262dabaf54744d2bafd2356c4734126d7cd1e95a0332da2786",
+      "lhs": "Convert(op(Convert(a),Convert(b)))",
+      "rhs": "op(a,b) cloned at original narrow type",
+      "guard": "both inner Converts and binary op one user; inputs and final types equal; input and wide op integral, non-subbyte, same signedness; CastPreservesValues(input,wide); exact Add matcher",
+      "dependencies": [
+        "narrow modular arithmetic versus widening/truncation; division by zero behavior",
+        "CloneWithNewOperands copies opcode attributes; no shape/rank change"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02387-C024",
+      "replacement_line": 2387,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(final_convert_instr, new_bin_op));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryRemoveUpcastAndDowncastSurroundingBinaryOp/subtract",
+      "handler": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
+      "line": 2315,
+      "end_line": 2389,
+      "source_body_sha256": "7ed3b5af78265c262dabaf54744d2bafd2356c4734126d7cd1e95a0332da2786",
+      "lhs": "Convert(op(Convert(a),Convert(b)))",
+      "rhs": "op(a,b) cloned at original narrow type",
+      "guard": "both inner Converts and binary op one user; inputs and final types equal; input and wide op integral, non-subbyte, same signedness; CastPreservesValues(input,wide); exact Subtract matcher",
+      "dependencies": [
+        "narrow modular arithmetic versus widening/truncation; division by zero behavior",
+        "CloneWithNewOperands copies opcode attributes; no shape/rank change"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02387-C024",
+      "replacement_line": 2387,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(final_convert_instr, new_bin_op));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryRemoveUpcastAndDowncastSurroundingBinaryOp/multiply",
+      "handler": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
+      "line": 2315,
+      "end_line": 2389,
+      "source_body_sha256": "7ed3b5af78265c262dabaf54744d2bafd2356c4734126d7cd1e95a0332da2786",
+      "lhs": "Convert(op(Convert(a),Convert(b)))",
+      "rhs": "op(a,b) cloned at original narrow type",
+      "guard": "both inner Converts and binary op one user; inputs and final types equal; input and wide op integral, non-subbyte, same signedness; CastPreservesValues(input,wide); exact Multiply matcher",
+      "dependencies": [
+        "narrow modular arithmetic versus widening/truncation; division by zero behavior",
+        "CloneWithNewOperands copies opcode attributes; no shape/rank change"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02387-C024",
+      "replacement_line": 2387,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(final_convert_instr, new_bin_op));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryRemoveUpcastAndDowncastSurroundingBinaryOp/divide",
+      "handler": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
+      "line": 2315,
+      "end_line": 2389,
+      "source_body_sha256": "7ed3b5af78265c262dabaf54744d2bafd2356c4734126d7cd1e95a0332da2786",
+      "lhs": "Convert(op(Convert(a),Convert(b)))",
+      "rhs": "op(a,b) cloned at original narrow type",
+      "guard": "both inner Converts and binary op one user; inputs and final types equal; input and wide op integral, non-subbyte, same signedness; CastPreservesValues(input,wide); wide Divide/Remainder unsigned",
+      "dependencies": [
+        "narrow modular arithmetic versus widening/truncation; division by zero behavior",
+        "CloneWithNewOperands copies opcode attributes; no shape/rank change"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02387-C024",
+      "replacement_line": 2387,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(final_convert_instr, new_bin_op));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryRemoveUpcastAndDowncastSurroundingBinaryOp/remainder",
+      "handler": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
+      "line": 2315,
+      "end_line": 2389,
+      "source_body_sha256": "7ed3b5af78265c262dabaf54744d2bafd2356c4734126d7cd1e95a0332da2786",
+      "lhs": "Convert(op(Convert(a),Convert(b)))",
+      "rhs": "op(a,b) cloned at original narrow type",
+      "guard": "both inner Converts and binary op one user; inputs and final types equal; input and wide op integral, non-subbyte, same signedness; CastPreservesValues(input,wide); wide Divide/Remainder unsigned",
+      "dependencies": [
+        "narrow modular arithmetic versus widening/truncation; division by zero behavior",
+        "CloneWithNewOperands copies opcode attributes; no shape/rank change"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02387-C024",
+      "replacement_line": 2387,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(final_convert_instr, new_bin_op));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RemoveDegenerateDimensionFromDot/direct",
+      "handler": "RemoveDegenerateDimensionFromDot",
+      "line": 2792,
+      "end_line": 2871,
+      "source_body_sha256": "b9d305ec18cab845c931ea8bd133d63a876da8cd19b0304d41bcdcdcbeee9938",
+      "lhs": "Dot with some extent-one operand axes",
+      "rhs": "Dot of reshaped operands with deleted/renumbered unit axes",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; some lhs or rhs unit axis; ShapeUtil.Compatible(new_dot,old)=True",
+      "dependencies": [
+        "pairwise extent equality links removed batch/contracting axes",
+        "precision and result element type retained",
+        "fallback preserve_sharding=false and relay_control_dependency=true",
+        "dynamic unit axes versus static extent"
+      ],
+      "helper_contract_ids": [
+        "ConstructToDotMaps",
+        "ConstructFromDotMaps"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L02864-C026",
+      "replacement_line": 2864,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(ReplaceInstruction(dot, new_dot));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RemoveDegenerateDimensionFromDot/reshape-result",
+      "handler": "RemoveDegenerateDimensionFromDot",
+      "line": 2792,
+      "end_line": 2871,
+      "source_body_sha256": "b9d305ec18cab845c931ea8bd133d63a876da8cd19b0304d41bcdcdcbeee9938",
+      "lhs": "Dot with some extent-one operand axes",
+      "rhs": "Dot of reshaped operands with deleted/renumbered unit axes, then Reshape to original result",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; some lhs or rhs unit axis; ShapeUtil.Compatible(new_dot,old)=False",
+      "dependencies": [
+        "pairwise extent equality links removed batch/contracting axes",
+        "precision and result element type retained",
+        "fallback preserve_sharding=false and relay_control_dependency=true",
+        "dynamic unit axes versus static extent"
+      ],
+      "helper_contract_ids": [
+        "ConstructToDotMaps",
+        "ConstructFromDotMaps"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L02866-C026",
+      "replacement_line": 2866,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    ABSL_RETURN_IF_ERROR(ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RemoveTransposesFromDotOperands/keep-order",
+      "handler": "RemoveTransposesFromDotOperands",
+      "line": 2952,
+      "end_line": 3024,
+      "source_body_sha256": "10074ea1cb1eb98ba7c98dab7b7ca25722c16f0a96103dc9455a9c935bd0114f",
+      "lhs": "Dot(Transpose(a,p),Transpose(b,p))",
+      "rhs": "Transpose(Dot(a,b),outer_permutation)",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; equal input transpose permutations; lhs/rhs batch lists equal; exactly one contracting axis each at rank-1/rank-2; result rank=batchcount+2; permutation suffix [rank-2,rank-1]",
+      "dependencies": [
+        "batch-axis list need not be numerically canonical merely because the source comment says canonical",
+        "inverse permutation shapes; swap operand precision when swapping inputs; SetupDerivedInstruction"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03020-C024",
+      "replacement_line": 3020,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RemoveTransposesFromDotOperands/swap",
+      "handler": "RemoveTransposesFromDotOperands",
+      "line": 2952,
+      "end_line": 3024,
+      "source_body_sha256": "10074ea1cb1eb98ba7c98dab7b7ca25722c16f0a96103dc9455a9c935bd0114f",
+      "lhs": "Dot(Transpose(a,p),Transpose(b,p))",
+      "rhs": "Transpose(Dot(b,a),outer_permutation)",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; equal input transpose permutations; lhs/rhs batch lists equal; exactly one contracting axis each at rank-1/rank-2; result rank=batchcount+2; permutation suffix [rank-1,rank-2]",
+      "dependencies": [
+        "batch-axis list need not be numerically canonical merely because the source comment says canonical",
+        "inverse permutation shapes; swap operand precision when swapping inputs; SetupDerivedInstruction"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03020-C024",
+      "replacement_line": 3020,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "MoveDotParamToRhs/parameter-left",
+      "handler": "MoveDotParamToRhs",
+      "line": 3042,
+      "end_line": 3092,
+      "source_body_sha256": "2bd2519a4ee840b0ea4698d0d10814736d69f544916bdd632248633388e5fc8a",
+      "lhs": "Dot(parameter-like a,non-parameter-like b)",
+      "rhs": "Transpose(Dot(b,a),batch/rhs-free/lhs-free permutation)",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; enable_move_dot_param_to_rhs; IsParameterLike(lhs) and not IsParameterLike(rhs)",
+      "dependencies": [
+        "swap batch/contracting lists and operand precision entries",
+        "SetupDerivedInstruction fusion attribute choices; final preserve_frontend_attributes=false"
+      ],
+      "helper_contract_ids": [
+        "IsParameterLike"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03089-C007",
+      "replacement_line": 3089,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      ReplaceInstruction(dot, new_transpose,",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-00",
+      "handler": "RewriteAsMultiplyDotWithZeroLhsContractingDim",
+      "line": 3884,
+      "end_line": 3927,
+      "source_body_sha256": "18a9c0bb4efcc8f6949bd4a3549cc177390965c8bc29a21e50e8e03c685466f8",
+      "lhs": "Dot(a,b) without contracting axes",
+      "rhs": "Multiply(broadcasted normalized operands converted to result type as needed)",
+      "guard": "HandleDot early outer-product branch; SupportedDotPrecisionConfig(false); enable_dot_to_multiply_rewrite; no lhs contracting axes; lhs conversion=False; rhs conversion=False",
+      "dependencies": [
+        "batch-major/free/contracting-minor normalization; output broadcast maps",
+        "source uses plain Multiply here, not MakeMultiplyForPrecisionAlgorithm",
+        "conversion and multiplication precision/exception behavior"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "SupportedDotPrecisionConfig"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03926-C010",
+      "replacement_line": 3926,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(dot, std::move(new_instruction));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-01",
+      "handler": "RewriteAsMultiplyDotWithZeroLhsContractingDim",
+      "line": 3884,
+      "end_line": 3927,
+      "source_body_sha256": "18a9c0bb4efcc8f6949bd4a3549cc177390965c8bc29a21e50e8e03c685466f8",
+      "lhs": "Dot(a,b) without contracting axes",
+      "rhs": "Multiply(broadcasted normalized operands converted to result type as needed)",
+      "guard": "HandleDot early outer-product branch; SupportedDotPrecisionConfig(false); enable_dot_to_multiply_rewrite; no lhs contracting axes; lhs conversion=False; rhs conversion=True",
+      "dependencies": [
+        "batch-major/free/contracting-minor normalization; output broadcast maps",
+        "source uses plain Multiply here, not MakeMultiplyForPrecisionAlgorithm",
+        "conversion and multiplication precision/exception behavior"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "SupportedDotPrecisionConfig"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03926-C010",
+      "replacement_line": 3926,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(dot, std::move(new_instruction));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-10",
+      "handler": "RewriteAsMultiplyDotWithZeroLhsContractingDim",
+      "line": 3884,
+      "end_line": 3927,
+      "source_body_sha256": "18a9c0bb4efcc8f6949bd4a3549cc177390965c8bc29a21e50e8e03c685466f8",
+      "lhs": "Dot(a,b) without contracting axes",
+      "rhs": "Multiply(broadcasted normalized operands converted to result type as needed)",
+      "guard": "HandleDot early outer-product branch; SupportedDotPrecisionConfig(false); enable_dot_to_multiply_rewrite; no lhs contracting axes; lhs conversion=True; rhs conversion=False",
+      "dependencies": [
+        "batch-major/free/contracting-minor normalization; output broadcast maps",
+        "source uses plain Multiply here, not MakeMultiplyForPrecisionAlgorithm",
+        "conversion and multiplication precision/exception behavior"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "SupportedDotPrecisionConfig"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03926-C010",
+      "replacement_line": 3926,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(dot, std::move(new_instruction));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-11",
+      "handler": "RewriteAsMultiplyDotWithZeroLhsContractingDim",
+      "line": 3884,
+      "end_line": 3927,
+      "source_body_sha256": "18a9c0bb4efcc8f6949bd4a3549cc177390965c8bc29a21e50e8e03c685466f8",
+      "lhs": "Dot(a,b) without contracting axes",
+      "rhs": "Multiply(broadcasted normalized operands converted to result type as needed)",
+      "guard": "HandleDot early outer-product branch; SupportedDotPrecisionConfig(false); enable_dot_to_multiply_rewrite; no lhs contracting axes; lhs conversion=True; rhs conversion=True",
+      "dependencies": [
+        "batch-major/free/contracting-minor normalization; output broadcast maps",
+        "source uses plain Multiply here, not MakeMultiplyForPrecisionAlgorithm",
+        "conversion and multiplication precision/exception behavior"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "SupportedDotPrecisionConfig"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L03926-C010",
+      "replacement_line": 3926,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(dot, std::move(new_instruction));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "AssociativeReorderNestedDot/lhs-transpose",
+      "handler": "AssociativeReorderNestedDot",
+      "line": 3930,
+      "end_line": 4280,
+      "source_body_sha256": "d5a680c44f0b705aaf643934655a2781e3adb02d8862aa4007397b85735ccc42",
+      "lhs": "nested Dot at outer lhs",
+      "rhs": "oppositely associated two Dots then output Transpose",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; lhs Dot (takes priority over rhs); no outer contracting axis originates from both inner inputs; old_flops/double(new_flops)>threshold; nonidentity permutation=True",
+      "dependencies": [
+        "kStopRewrites prevents later HandleDot rewrites when batch dimension contracted",
+        "map-vector equality used to identify side in batch loop",
+        "both new dots use OUTER dot precision config and result type",
+        "inner dot original precision/type need separate correspondence and numerical permission review",
+        "finite flop arithmetic, nonzero denominator and complete output permutation"
+      ],
+      "helper_contract_ids": [
+        "ConstructToDotMaps",
+        "ConstructFromDotMaps"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04272-C028",
+      "replacement_line": 4272,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(ReplaceInstruction(dot, transposed_new_outer));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "AssociativeReorderNestedDot/lhs-direct",
+      "handler": "AssociativeReorderNestedDot",
+      "line": 3930,
+      "end_line": 4280,
+      "source_body_sha256": "d5a680c44f0b705aaf643934655a2781e3adb02d8862aa4007397b85735ccc42",
+      "lhs": "nested Dot at outer lhs",
+      "rhs": "oppositely associated two Dots",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; lhs Dot (takes priority over rhs); no outer contracting axis originates from both inner inputs; old_flops/double(new_flops)>threshold; nonidentity permutation=False",
+      "dependencies": [
+        "kStopRewrites prevents later HandleDot rewrites when batch dimension contracted",
+        "map-vector equality used to identify side in batch loop",
+        "both new dots use OUTER dot precision config and result type",
+        "inner dot original precision/type need separate correspondence and numerical permission review",
+        "finite flop arithmetic, nonzero denominator and complete output permutation"
+      ],
+      "helper_contract_ids": [
+        "ConstructToDotMaps",
+        "ConstructFromDotMaps"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04275-C028",
+      "replacement_line": 4275,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(ReplaceInstruction(dot, new_outer));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "AssociativeReorderNestedDot/rhs-transpose",
+      "handler": "AssociativeReorderNestedDot",
+      "line": 3930,
+      "end_line": 4280,
+      "source_body_sha256": "d5a680c44f0b705aaf643934655a2781e3adb02d8862aa4007397b85735ccc42",
+      "lhs": "nested Dot at outer rhs",
+      "rhs": "oppositely associated two Dots then output Transpose",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; lhs not Dot; rhs Dot; no outer contracting axis originates from both inner inputs; old_flops/double(new_flops)>threshold; nonidentity permutation=True",
+      "dependencies": [
+        "kStopRewrites prevents later HandleDot rewrites when batch dimension contracted",
+        "map-vector equality used to identify side in batch loop",
+        "both new dots use OUTER dot precision config and result type",
+        "inner dot original precision/type need separate correspondence and numerical permission review",
+        "finite flop arithmetic, nonzero denominator and complete output permutation"
+      ],
+      "helper_contract_ids": [
+        "ConstructToDotMaps",
+        "ConstructFromDotMaps"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04272-C028",
+      "replacement_line": 4272,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(ReplaceInstruction(dot, transposed_new_outer));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "AssociativeReorderNestedDot/rhs-direct",
+      "handler": "AssociativeReorderNestedDot",
+      "line": 3930,
+      "end_line": 4280,
+      "source_body_sha256": "d5a680c44f0b705aaf643934655a2781e3adb02d8862aa4007397b85735ccc42",
+      "lhs": "nested Dot at outer rhs",
+      "rhs": "oppositely associated two Dots",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; lhs not Dot; rhs Dot; no outer contracting axis originates from both inner inputs; old_flops/double(new_flops)>threshold; nonidentity permutation=False",
+      "dependencies": [
+        "kStopRewrites prevents later HandleDot rewrites when batch dimension contracted",
+        "map-vector equality used to identify side in batch loop",
+        "both new dots use OUTER dot precision config and result type",
+        "inner dot original precision/type need separate correspondence and numerical permission review",
+        "finite flop arithmetic, nonzero denominator and complete output permutation"
+      ],
+      "helper_contract_ids": [
+        "ConstructToDotMaps",
+        "ConstructFromDotMaps"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04275-C028",
+      "replacement_line": 4275,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(ReplaceInstruction(dot, new_outer));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteBatchPlusContractingAsReduce/no-free-lhs",
+      "handler": "RewriteBatchPlusContractingAsReduce",
+      "line": 4282,
+      "end_line": 4363,
+      "source_body_sha256": "78986d9a8aca5b2214bb90c0135eefc50cdbb834ff47eeecdbf053a0e3b4ea13",
+      "lhs": "Dot with only batch/contracting axes on lhs",
+      "rhs": "Convert(ReduceAdd(Convert(precision-specific Multiply(normalized broadcast operands))))",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; SupportedDotPrecisionConfig(true); enable_dot_strength_reduction; DotHasOnlyBatchAndContractingOnOneOperand; ShouldStrengthReduceDotToReduce; free-axis partition=lhs",
+      "dependencies": [
+        "convert operands to dot result type before multiply; F32 accumulation for floating result except F64",
+        "AddReduce zero element type and scalar-add computation; final conversion",
+        "normalization and broadcasting rank arithmetic",
+        "virtual hook behavior cannot be assumed for derived visitors"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "AddReduce",
+        "SupportedDotPrecisionConfig",
+        "MakeMultiplyForPrecisionAlgorithm",
+        "ShouldStrengthReduceDotToReduce",
+        "DotHasOnlyBatchAndContractingOnOneOperand"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04362-C010",
+      "replacement_line": 4362,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  return ReplaceInstruction(dot, new_dot);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteBatchPlusContractingAsReduce/no-free-rhs",
+      "handler": "RewriteBatchPlusContractingAsReduce",
+      "line": 4282,
+      "end_line": 4363,
+      "source_body_sha256": "78986d9a8aca5b2214bb90c0135eefc50cdbb834ff47eeecdbf053a0e3b4ea13",
+      "lhs": "Dot with only batch/contracting axes on rhs",
+      "rhs": "Convert(ReduceAdd(Convert(precision-specific Multiply(normalized broadcast operands))))",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; SupportedDotPrecisionConfig(true); enable_dot_strength_reduction; DotHasOnlyBatchAndContractingOnOneOperand; ShouldStrengthReduceDotToReduce; free-axis partition=rhs",
+      "dependencies": [
+        "convert operands to dot result type before multiply; F32 accumulation for floating result except F64",
+        "AddReduce zero element type and scalar-add computation; final conversion",
+        "normalization and broadcasting rank arithmetic",
+        "virtual hook behavior cannot be assumed for derived visitors"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "AddReduce",
+        "SupportedDotPrecisionConfig",
+        "MakeMultiplyForPrecisionAlgorithm",
+        "ShouldStrengthReduceDotToReduce",
+        "DotHasOnlyBatchAndContractingOnOneOperand"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04362-C010",
+      "replacement_line": 4362,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  return ReplaceInstruction(dot, new_dot);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "RewriteBatchPlusContractingAsReduce/no-free-both",
+      "handler": "RewriteBatchPlusContractingAsReduce",
+      "line": 4282,
+      "end_line": 4363,
+      "source_body_sha256": "78986d9a8aca5b2214bb90c0135eefc50cdbb834ff47eeecdbf053a0e3b4ea13",
+      "lhs": "Dot with only batch/contracting axes on both",
+      "rhs": "Convert(ReduceAdd(Convert(precision-specific Multiply(normalized broadcast operands))))",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; SupportedDotPrecisionConfig(true); enable_dot_strength_reduction; DotHasOnlyBatchAndContractingOnOneOperand; ShouldStrengthReduceDotToReduce; free-axis partition=both",
+      "dependencies": [
+        "convert operands to dot result type before multiply; F32 accumulation for floating result except F64",
+        "AddReduce zero element type and scalar-add computation; final conversion",
+        "normalization and broadcasting rank arithmetic",
+        "virtual hook behavior cannot be assumed for derived visitors"
+      ],
+      "helper_contract_ids": [
+        "NormalizeDotOperandToBatchMajorAndContractingMinor",
+        "AddReduce",
+        "SupportedDotPrecisionConfig",
+        "MakeMultiplyForPrecisionAlgorithm",
+        "ShouldStrengthReduceDotToReduce",
+        "DotHasOnlyBatchAndContractingOnOneOperand"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04362-C010",
+      "replacement_line": 4362,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  return ReplaceInstruction(dot, new_dot);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/empty",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "Broadcast(typed zero)",
+      "guard": "operand_count<=2; layout insensitive; output OR lhs OR rhs has zero elements",
+      "dependencies": [
+        "empty output versus nonempty output with empty contraction; LiteralUtil.Zero; precision profile"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L04399-C012",
+      "replacement_line": 4399,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "    return ReplaceWithNewInstruction(",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/outer-product-delegation",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "helper graph",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; SupportedDotPrecisionConfig(false); enable_dot_to_multiply_rewrite; no contracting axes; occurs BEFORE unreduced sharding early return",
+      "dependencies": [
+        "unreduced Sharding custom-call user veto follows outer-product branch and precedes nested branch",
+        "helper true/result enum and Status propagation"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "delegation_target": "RewriteAsMultiplyDotWithZeroLhsContractingDim",
+      "delegation_line": 4409
+    },
+    {
+      "id": "HandleDot/nested-delegation",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "helper graph",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; nested return kRewritten OR kStopRewrites stops visitor",
+      "dependencies": [
+        "unreduced Sharding custom-call user veto follows outer-product branch and precedes nested branch",
+        "helper true/result enum and Status propagation"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "delegation_target": "AssociativeReorderNestedDot",
+      "delegation_line": 4433
+    },
+    {
+      "id": "HandleDot/strength-reduce-delegation",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "helper graph",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; SupportedDotPrecisionConfig(true); enable_dot_strength_reduction; one operand only batch and contracting axes; ShouldStrengthReduceDotToReduce",
+      "dependencies": [
+        "unreduced Sharding custom-call user veto follows outer-product branch and precedes nested branch",
+        "helper true/result enum and Status propagation"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "delegation_target": "RewriteBatchPlusContractingAsReduce",
+      "delegation_line": 4458
+    },
+    {
+      "id": "HandleDot/degenerate-delegation",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "helper graph",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; earlier paths failed; helper returns changed",
+      "dependencies": [
+        "unreduced Sharding custom-call user veto follows outer-product branch and precedes nested branch",
+        "helper true/result enum and Status propagation"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "delegation_target": "RemoveDegenerateDimensionFromDot",
+      "delegation_line": 4493
+    },
+    {
+      "id": "HandleDot/transposes-delegation",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "helper graph",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; earlier paths failed; helper returns changed",
+      "dependencies": [
+        "unreduced Sharding custom-call user veto follows outer-product branch and precedes nested branch",
+        "helper true/result enum and Status propagation"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "delegation_target": "RemoveTransposesFromDotOperands",
+      "delegation_line": 4499
+    },
+    {
+      "id": "HandleDot/parameter-swap-delegation",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(a,b)",
+      "rhs": "helper graph",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; earlier paths failed; helper returns changed",
+      "dependencies": [
+        "unreduced Sharding custom-call user veto follows outer-product branch and precedes nested branch",
+        "helper true/result enum and Status propagation"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "delegation_target": "MoveDotParamToRhs",
+      "delegation_line": 4504
+    },
+    {
+      "id": "HandleDot/mirror-reverse-lhs-to-rhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot with Reverse on lhs",
+      "rhs": "Dot after moving contracting-axis Reverse to the other operand",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; helper selects lhs opcode among Broadcast/Pad/Reverse before rhs; direction=lhs-to-rhs; helper returns nonnull",
+      "dependencies": [
+        "Reverse splits contracting and retained axes, requires ratio threshold, final cost veto waived",
+        "Pad requires zero fill and moves eligible nonnegative contracting padding to Slice, retaining other padding",
+        "Broadcast moves introduced contracting axes to ReduceAdd and rebuilds dimension lists/broadcast shape",
+        "Pad/Broadcast require strict flop-ratio threshold with multiplier2 if residual op",
+        "can construct nodes even when final cost guard fails; finite signed dimension arithmetic",
+        "zero products, nonfinite values and reassociation require case-specific permissions"
+      ],
+      "helper_contract_ids": [
+        "AssociativeReorderDotOperator"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04445-C014",
+      "replacement_line": 4445,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dot, dot_operator_reordered);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/mirror-pad-lhs-to-rhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot with Pad on lhs",
+      "rhs": "Dot after moving contracting-axis Pad to the other operand",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; helper selects lhs opcode among Broadcast/Pad/Reverse before rhs; direction=lhs-to-rhs; helper returns nonnull",
+      "dependencies": [
+        "Reverse splits contracting and retained axes, requires ratio threshold, final cost veto waived",
+        "Pad requires zero fill and moves eligible nonnegative contracting padding to Slice, retaining other padding",
+        "Broadcast moves introduced contracting axes to ReduceAdd and rebuilds dimension lists/broadcast shape",
+        "Pad/Broadcast require strict flop-ratio threshold with multiplier2 if residual op",
+        "can construct nodes even when final cost guard fails; finite signed dimension arithmetic",
+        "zero products, nonfinite values and reassociation require case-specific permissions"
+      ],
+      "helper_contract_ids": [
+        "AssociativeReorderDotOperator"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04445-C014",
+      "replacement_line": 4445,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dot, dot_operator_reordered);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/mirror-broadcast-lhs-to-rhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot with Broadcast on lhs",
+      "rhs": "Dot after moving contracting-axis Broadcast to the other operand",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; helper selects lhs opcode among Broadcast/Pad/Reverse before rhs; direction=lhs-to-rhs; helper returns nonnull",
+      "dependencies": [
+        "Reverse splits contracting and retained axes, requires ratio threshold, final cost veto waived",
+        "Pad requires zero fill and moves eligible nonnegative contracting padding to Slice, retaining other padding",
+        "Broadcast moves introduced contracting axes to ReduceAdd and rebuilds dimension lists/broadcast shape",
+        "Pad/Broadcast require strict flop-ratio threshold with multiplier2 if residual op",
+        "can construct nodes even when final cost guard fails; finite signed dimension arithmetic",
+        "zero products, nonfinite values and reassociation require case-specific permissions"
+      ],
+      "helper_contract_ids": [
+        "AssociativeReorderDotOperator"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04445-C014",
+      "replacement_line": 4445,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dot, dot_operator_reordered);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/mirror-reverse-rhs-to-lhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot with Reverse on rhs",
+      "rhs": "Dot after moving contracting-axis Reverse to the other operand",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; helper selects lhs opcode among Broadcast/Pad/Reverse before rhs; direction=rhs-to-lhs; helper returns nonnull",
+      "dependencies": [
+        "Reverse splits contracting and retained axes, requires ratio threshold, final cost veto waived",
+        "Pad requires zero fill and moves eligible nonnegative contracting padding to Slice, retaining other padding",
+        "Broadcast moves introduced contracting axes to ReduceAdd and rebuilds dimension lists/broadcast shape",
+        "Pad/Broadcast require strict flop-ratio threshold with multiplier2 if residual op",
+        "can construct nodes even when final cost guard fails; finite signed dimension arithmetic",
+        "zero products, nonfinite values and reassociation require case-specific permissions"
+      ],
+      "helper_contract_ids": [
+        "AssociativeReorderDotOperator"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04445-C014",
+      "replacement_line": 4445,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dot, dot_operator_reordered);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/mirror-pad-rhs-to-lhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot with Pad on rhs",
+      "rhs": "Dot after moving contracting-axis Pad to the other operand",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; helper selects lhs opcode among Broadcast/Pad/Reverse before rhs; direction=rhs-to-lhs; helper returns nonnull",
+      "dependencies": [
+        "Reverse splits contracting and retained axes, requires ratio threshold, final cost veto waived",
+        "Pad requires zero fill and moves eligible nonnegative contracting padding to Slice, retaining other padding",
+        "Broadcast moves introduced contracting axes to ReduceAdd and rebuilds dimension lists/broadcast shape",
+        "Pad/Broadcast require strict flop-ratio threshold with multiplier2 if residual op",
+        "can construct nodes even when final cost guard fails; finite signed dimension arithmetic",
+        "zero products, nonfinite values and reassociation require case-specific permissions"
+      ],
+      "helper_contract_ids": [
+        "AssociativeReorderDotOperator"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04445-C014",
+      "replacement_line": 4445,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dot, dot_operator_reordered);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/mirror-broadcast-rhs-to-lhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot with Broadcast on rhs",
+      "rhs": "Dot after moving contracting-axis Broadcast to the other operand",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; use_associative_reordering; helper selects lhs opcode among Broadcast/Pad/Reverse before rhs; direction=rhs-to-lhs; helper returns nonnull",
+      "dependencies": [
+        "Reverse splits contracting and retained axes, requires ratio threshold, final cost veto waived",
+        "Pad requires zero fill and moves eligible nonnegative contracting padding to Slice, retaining other padding",
+        "Broadcast moves introduced contracting axes to ReduceAdd and rebuilds dimension lists/broadcast shape",
+        "Pad/Broadcast require strict flop-ratio threshold with multiplier2 if residual op",
+        "can construct nodes even when final cost guard fails; finite signed dimension arithmetic",
+        "zero products, nonfinite values and reassociation require case-specific permissions"
+      ],
+      "helper_contract_ids": [
+        "AssociativeReorderDotOperator"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        1
+      ],
+      "replacement_site_id": "site-L04445-C014",
+      "replacement_line": 4445,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      return ReplaceInstruction(dot, dot_operator_reordered);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/reorder-contracting-lhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(Reshape(Transpose(x)),Constant), with Constant on lhs",
+      "rhs": "Dot(Reshape(x),Reshape(Transpose(Reshape(Constant)))) restoring original operand order",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; OptimizeDotOfReorderContractingDims returns nonnull; virtual constant-left swap as needed; one contracting dimension; exactly one reshape-modified output dimension is contracting; unsquished contracting axes consecutive; transpose fixes other axes",
+      "dependencies": [
+        "matched reshape index order; inverse transpose; constant shape reconstruction",
+        "permutation of reduction order; original dnums and precision retained",
+        "CHECK IsPermutation; no local fast-math gate"
+      ],
+      "helper_contract_ids": [
+        "OptimizeDotOfReorderContractingDims"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L04470-C012",
+      "replacement_line": 4470,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dot, dot_of_reorder_optimized);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/concat-lhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(Concat(xs,contracting axis),Constant), Constant on lhs",
+      "rhs": "left-associated Add chain of Dots against disjoint Constant slices",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; output rank2; exactly one contracting axis; no batch; helper tries lhs concat first then rhs; other operand rank2 Constant",
+      "dependencies": [
+        "cumulative slice offsets, original operand order and dot precision",
+        "empty concat segments and nonempty operand list",
+        "split/reassociated contraction numerical permissions"
+      ],
+      "helper_contract_ids": [
+        "OptimizeDotOfConcat",
+        "OptimizeDotOfConcatHelper"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L04478-C012",
+      "replacement_line": 4478,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dot, dot_of_concat_optimized);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/reorder-contracting-rhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(Reshape(Transpose(x)),Constant), with Constant on rhs",
+      "rhs": "Dot(Reshape(x),Reshape(Transpose(Reshape(Constant)))) restoring original operand order",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; OptimizeDotOfReorderContractingDims returns nonnull; virtual constant-left swap as needed; one contracting dimension; exactly one reshape-modified output dimension is contracting; unsquished contracting axes consecutive; transpose fixes other axes",
+      "dependencies": [
+        "matched reshape index order; inverse transpose; constant shape reconstruction",
+        "permutation of reduction order; original dnums and precision retained",
+        "CHECK IsPermutation; no local fast-math gate"
+      ],
+      "helper_contract_ids": [
+        "OptimizeDotOfReorderContractingDims"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        2
+      ],
+      "replacement_site_id": "site-L04470-C012",
+      "replacement_line": 4470,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dot, dot_of_reorder_optimized);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/concat-rhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(Concat(xs,contracting axis),Constant), Constant on rhs",
+      "rhs": "left-associated Add chain of Dots against disjoint Constant slices",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; output rank2; exactly one contracting axis; no batch; helper tries lhs concat first then rhs; other operand rank2 Constant",
+      "dependencies": [
+        "cumulative slice offsets, original operand order and dot precision",
+        "empty concat segments and nonempty operand list",
+        "split/reassociated contraction numerical permissions"
+      ],
+      "helper_contract_ids": [
+        "OptimizeDotOfConcat",
+        "OptimizeDotOfConcatHelper"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        3
+      ],
+      "replacement_site_id": "site-L04478-C012",
+      "replacement_line": 4478,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dot, dot_of_concat_optimized);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/dynamic-slice-lhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(DynamicSlice(Constant),Constant) with slice on lhs",
+      "rhs": "DynamicSlice(Dot(full Constants),reordered original start operands)",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; output rank2; one contracting axis; no batches; DynamicSlice preserves full contracting extent and has free extent1; helper either-side predicate succeeds",
+      "dependencies": [
+        "dynamic start indices clamp including full-extent contracting axis",
+        "lhs_is_dynamic_slice computed from opcode after pair test; start operand selection and dot dimensions",
+        "constant evaluation versus runtime dot precision"
+      ],
+      "helper_contract_ids": [
+        "OptimizeDotOfGather"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L04489-C012",
+      "replacement_line": 4489,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dot, dot_of_gather_optimized);",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleDot/dynamic-slice-rhs",
+      "handler": "HandleDot",
+      "line": 4378,
+      "end_line": 4510,
+      "source_body_sha256": "eab9a6227d7245f1223b176bdc61787596e8278f6b002258eb22a7b3dad4e9f0",
+      "lhs": "Dot(DynamicSlice(Constant),Constant) with slice on rhs",
+      "rhs": "DynamicSlice(Dot(full Constants),reordered original start operands)",
+      "guard": "HandleDot caller: operand_count<=2; layout insensitive; no earlier successful rewrite; output rank2; one contracting axis; no batches; DynamicSlice preserves full contracting extent and has free extent1; helper either-side predicate succeeds",
+      "dependencies": [
+        "dynamic start indices clamp including full-extent contracting axis",
+        "lhs_is_dynamic_slice computed from opcode after pair test; start operand selection and dot dimensions",
+        "constant evaluation versus runtime dot precision"
+      ],
+      "helper_contract_ids": [
+        "OptimizeDotOfGather"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; all earlier source-order returns, caller guards and helper success apply; helper/body schemas overlap",
+      "visitor_scope": "base AlgebraicSimplifierVisitor; virtual overrides require separate contracts",
+      "type_partition_status": "scalar types, numerical permissions, dynamic shapes, layout and precision profiles not exhaustively split",
+      "replacement_ordinals": [
+        4
+      ],
+      "replacement_site_id": "site-L04489-C012",
+      "replacement_line": 4489,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(dot, dot_of_gather_optimized);",
+      "additional_replacement_sites": []
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "SameShape",
+      "line": 628,
+      "end_line": 634,
+      "source_body_sha256": "7e93786e7f730d7deafcfc693d697978bbf39df61ae636bcbfb34c92d531d804",
+      "source_behavior": "layout-sensitive Equal; otherwise Compatible; does not by itself justify equal values",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "IsParameterLike",
+      "line": 3029,
+      "end_line": 3039,
+      "source_body_sha256": "a9344363e1385285d680d04932e7a8701ce3199220e00729dc4e9d8dd89d9564",
+      "source_behavior": "follow ANY unary operand chain to Parameter; no opcode whitelist or proof that each unary op is identity",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ConstructToDotMaps",
+      "line": 442,
+      "end_line": 475,
+      "source_body_sha256": "1126af6b0f52b1db470a4595f11eb8489b344121aee59072e0aab7bd0eac5de3",
+      "source_behavior": "input axis to output axis: batch list order then ascending lhs-free then ascending rhs-free; contracting maps to -1",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ConstructFromDotMaps",
+      "line": 482,
+      "end_line": 507,
+      "source_body_sha256": "cb07be1b219e6a25a04c6a687df434de3fbad4559b0757c4cbbb02962d9881ad",
+      "source_behavior": "invert both ConstructToDotMaps vectors; batch output may originate in both operands",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "DotHasOnlyBatchAndContractingOnOneOperand",
+      "line": 509,
+      "end_line": 517,
+      "source_body_sha256": "3097bc0b5b1f202a1b64cb6299df5f1250f4bd571f248556255b4c5f14d1050d",
+      "source_behavior": "batch+contracting counts equal lhs rank OR rhs rank; legal disjoint dimensions assumed",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "NormalizeDotOperandToBatchMajorAndContractingMinor",
+      "line": 3094,
+      "end_line": 3113,
+      "source_body_sha256": "3628f2d9ec0bf7f3946628815b1606150d06ce10d11abb42b740c32b09085524",
+      "source_behavior": "batch list then ascending free axes then contracting list; skip transpose when sorted",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "AddReduce",
+      "line": 3115,
+      "end_line": 3125,
+      "source_body_sha256": "e03f21892a3f5e425f5fd27c0fb1dced9d8d3423c0593a1af8f85dae47703b07",
+      "source_behavior": "zero literal of input element type; scalar Add computation of requested type; delete reduced axes; update layout",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "SupportedDotPrecisionConfig",
+      "line": 4365,
+      "end_line": 4370,
+      "source_body_sha256": "ddec244bcc47cd4f708b53e3241eb8b0285d39db6339327a25c06e669677e402",
+      "source_behavior": "BASE virtual implementation accepts ALG_UNSET or ALG_DOT_F32_F32_F32; has_contracting_dim unused",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MakeMultiplyForPrecisionAlgorithm",
+      "line": 4372,
+      "end_line": 4376,
+      "source_body_sha256": "2b90cb1ff47360703bc847fa460a7a54d606fae619ba44bddb3efea49137ea23",
+      "source_behavior": "BASE virtual implementation returns plain MakeBinaryHlo Multiply; does not inspect dot",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "ShouldStrengthReduceDotToReduce",
+      "line": 11369,
+      "end_line": 11393,
+      "source_body_sha256": "8423b3853828eac7b176f8de87ad81047e314bc587fc8627e62aa8332fb0df61",
+      "source_behavior": "BASE virtual implementation CPU requires BOTH inputs only batch/contracting; otherwise true",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "OptimizeDotOfConcat",
+      "line": 3127,
+      "end_line": 3151,
+      "source_body_sha256": "bdeef225347f200fe47b6990d7322f5bf5d4ef8bc0971008660157aff376cb8f",
+      "source_behavior": "rank2 result, one contracting axis, no batch; try concat on lhs before swapped rhs",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "OptimizeDotOfConcatHelper",
+      "line": 3153,
+      "end_line": 3269,
+      "source_body_sha256": "7b95b854193f969248f9cf75bc806e55fc66c06f822b9c303fc67eeba541d4e4",
+      "source_behavior": "contracting Concat versus rank2 Constant; slice cumulative intervals, preserve original dot operand order and precision; left-associative sum",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "OptimizeDotOfGather",
+      "line": 3271,
+      "end_line": 3399,
+      "source_body_sha256": "04b5a0a1e747faad474e0abbf151bd42abbd203da605c314f6328c9b20cc6c9e",
+      "source_behavior": "actually DynamicSlice(Constant), not general Gather; full contracting extent and free extent1; full Dot then DynamicSlice with remapped original indices",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "OptimizeDotOfReorderContractingDims",
+      "line": 3410,
+      "end_line": 3617,
+      "source_body_sha256": "12816c938e64681a2f55f6f0dd07a00876480e0d981e273e027ac451134b196e",
+      "source_behavior": "layout insensitive; virtual constant-side swap; reshape only squishes contracting axes, consecutive unsquished axes; move transpose to constant with inverse reshape/transpose; restore original operand order",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "AssociativeReorderDotOperator",
+      "line": 3621,
+      "end_line": 3881,
+      "source_body_sha256": "11f63f11df13a5a436e26570d5aa7cb4c7f59a9cf5c72a22123656ee7b0f0fd0",
+      "source_behavior": "lhs Broadcast/Pad/Reverse wins over eligible rhs; transfer only mapped contracting axes; cost conditions and numerical permissions described per caller schema",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "noncall_declaration_site_ids": [
+    "site-L00844-C034",
+    "site-L00861-C034",
+    "site-L00882-C034"
+  ],
+  "virtual_hook_contract_ids": [
+    "SupportedDotPrecisionConfig",
+    "MakeMultiplyForPrecisionAlgorithm",
+    "ShouldStrengthReduceDotToReduce"
+  ],
+  "limitations": [
+    "schemas overlap and remain provisional; not an obligation denominator",
+    "base visitor hooks do not describe every backend override",
+    "no independently reviewed source correspondence or accepted full-source proof"
+  ]
+}

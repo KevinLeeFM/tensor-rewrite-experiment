@@ -1,0 +1,25 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:index_map_evaluator_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 64133 .
+[==========] Running 4 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 4 tests from IndexMapEvaluatorReplay
+[ RUN      ] IndexMapEvaluatorReplay.NonuniformStaticSlice
+INDEX_MAP_SLICE checked=6 values=9,12,23,26,37,40
+[       OK ] IndexMapEvaluatorReplay.NonuniformStaticSlice (4 ms)
+[ RUN      ] IndexMapEvaluatorReplay.StrideLargerThanInterval
+INDEX_MAP_LARGE_STRIDE value=1
+[       OK ] IndexMapEvaluatorReplay.StrideLargerThanInterval (0 ms)
+[ RUN      ] IndexMapEvaluatorReplay.BroadcastProjection
+INDEX_MAP_BROADCAST axes=0,2 checked=24 selected=5
+[       OK ] IndexMapEvaluatorReplay.BroadcastProjection (0 ms)
+[ RUN      ] IndexMapEvaluatorReplay.EmptyStaticSlice
+INDEX_MAP_EMPTY elements=0
+[       OK ] IndexMapEvaluatorReplay.EmptyStaticSlice (0 ms)
+[----------] 4 tests from IndexMapEvaluatorReplay (4 ms total)
+
+[----------] Global test environment tear-down
+[==========] 4 tests from 1 test suite ran. (4 ms total)
+[  PASSED  ] 4 tests.

@@ -1,0 +1,1044 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "denominator_frozen": false,
+  "selected_handlers": [
+    "FoldConvFilterPad",
+    "FoldConvInputPad",
+    "HandleConvolution",
+    "PromoteConvolutionToF32IfNotOnednnCompatible",
+    "ScalarMultiplyReduction",
+    "SimplifyConvToDot",
+    "SimplifyConvToMultiply",
+    "TryToReorderConvAddMultiply"
+  ],
+  "cases": [
+    {
+      "id": "ScalarMultiplyReduction/target-lhs",
+      "handler": "ScalarMultiplyReduction",
+      "line": 673,
+      "end_line": 822,
+      "source_body_sha256": "5f19d06138a28fa1dee1493813c07ed7fd3732fe5c9e40979f809ad6ec8db350",
+      "lhs": "Convolution with reachable broadcast-scalar Multiply in selected operand/user traversal",
+      "rhs": "remove matched multiplies; combine float constants; attach one scalar Multiply to lhs",
+      "guard": "HandleConvolution enable_scalar_multiply_reduction; BF16 or F32 result; nonempty collected values; target is lhs by ElementsIn tie/strict inequality selection",
+      "dependencies": [
+        "operand traversal starts only on larger tensors; user traversal starts when output larger and convolution one user",
+        "operand DFS may change multiple graph edges; no visited set; shared-node and predicate alias effects",
+        "user DFS follows sole user; ReplaceAllUsesWith then rebinding can revisit graph neighbors",
+        "Select branch traversal is included by opcode classification; no branch-equal-scalar guard is added",
+        "GetConstantValue returns optional double then stored as float; combine native float before casting to target scalar",
+        "MarkAsChanged occurs after loop mutations; error paths and final use replacement semantics"
+      ],
+      "helper_contract_ids": [
+        "IsOpCodeMultiplyCommutative",
+        "GetConstantValue",
+        "MakeScalarInstruction"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0,
+        1,
+        2
+      ],
+      "replacement_site_id": "site-L00748-C034",
+      "replacement_line": 748,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(user->ReplaceOperandWith(index, operand));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L00775-C034",
+          "replacement_line": 775,
+          "replacement_call": "ReplaceAllUsesWith",
+          "replacement_source": "      ABSL_RETURN_IF_ERROR(inst->ReplaceAllUsesWith(operand));"
+        },
+        {
+          "replacement_site_id": "site-L00815-C017",
+          "replacement_line": 815,
+          "replacement_call": "ReplaceOperandWith",
+          "replacement_source": "    return dot->ReplaceOperandWith(0, new_multiply);"
+        }
+      ],
+      "loop_execution": "operand DFS zero-or-more writes; user DFS zero-or-more writes; one terminal target write",
+      "site_order_interpretation": "lexical source order; first two sites execute zero or more times, terminal selected by target; not one fixed three-write trace"
+    },
+    {
+      "id": "ScalarMultiplyReduction/target-rhs",
+      "handler": "ScalarMultiplyReduction",
+      "line": 673,
+      "end_line": 822,
+      "source_body_sha256": "5f19d06138a28fa1dee1493813c07ed7fd3732fe5c9e40979f809ad6ec8db350",
+      "lhs": "Convolution with reachable broadcast-scalar Multiply in selected operand/user traversal",
+      "rhs": "remove matched multiplies; combine float constants; attach one scalar Multiply to rhs",
+      "guard": "HandleConvolution enable_scalar_multiply_reduction; BF16 or F32 result; nonempty collected values; target is rhs by ElementsIn tie/strict inequality selection",
+      "dependencies": [
+        "operand traversal starts only on larger tensors; user traversal starts when output larger and convolution one user",
+        "operand DFS may change multiple graph edges; no visited set; shared-node and predicate alias effects",
+        "user DFS follows sole user; ReplaceAllUsesWith then rebinding can revisit graph neighbors",
+        "Select branch traversal is included by opcode classification; no branch-equal-scalar guard is added",
+        "GetConstantValue returns optional double then stored as float; combine native float before casting to target scalar",
+        "MarkAsChanged occurs after loop mutations; error paths and final use replacement semantics"
+      ],
+      "helper_contract_ids": [
+        "IsOpCodeMultiplyCommutative",
+        "GetConstantValue",
+        "MakeScalarInstruction"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0,
+        1,
+        3
+      ],
+      "replacement_site_id": "site-L00748-C034",
+      "replacement_line": 748,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(user->ReplaceOperandWith(index, operand));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L00775-C034",
+          "replacement_line": 775,
+          "replacement_call": "ReplaceAllUsesWith",
+          "replacement_source": "      ABSL_RETURN_IF_ERROR(inst->ReplaceAllUsesWith(operand));"
+        },
+        {
+          "replacement_site_id": "site-L00818-C017",
+          "replacement_line": 818,
+          "replacement_call": "ReplaceOperandWith",
+          "replacement_source": "    return dot->ReplaceOperandWith(1, new_multiply);"
+        }
+      ],
+      "loop_execution": "operand DFS zero-or-more writes; user DFS zero-or-more writes; one terminal target write",
+      "site_order_interpretation": "lexical source order; first two sites execute zero or more times, terminal selected by target; not one fixed three-write trace"
+    },
+    {
+      "id": "ScalarMultiplyReduction/target-output",
+      "handler": "ScalarMultiplyReduction",
+      "line": 673,
+      "end_line": 822,
+      "source_body_sha256": "5f19d06138a28fa1dee1493813c07ed7fd3732fe5c9e40979f809ad6ec8db350",
+      "lhs": "Convolution with reachable broadcast-scalar Multiply in selected operand/user traversal",
+      "rhs": "remove matched multiplies; combine float constants; attach one scalar Multiply to output",
+      "guard": "HandleConvolution enable_scalar_multiply_reduction; BF16 or F32 result; nonempty collected values; target is output by ElementsIn tie/strict inequality selection",
+      "dependencies": [
+        "operand traversal starts only on larger tensors; user traversal starts when output larger and convolution one user",
+        "operand DFS may change multiple graph edges; no visited set; shared-node and predicate alias effects",
+        "user DFS follows sole user; ReplaceAllUsesWith then rebinding can revisit graph neighbors",
+        "Select branch traversal is included by opcode classification; no branch-equal-scalar guard is added",
+        "GetConstantValue returns optional double then stored as float; combine native float before casting to target scalar",
+        "MarkAsChanged occurs after loop mutations; error paths and final use replacement semantics"
+      ],
+      "helper_contract_ids": [
+        "IsOpCodeMultiplyCommutative",
+        "GetConstantValue",
+        "MakeScalarInstruction"
+      ],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0,
+        1,
+        4
+      ],
+      "replacement_site_id": "site-L00748-C034",
+      "replacement_line": 748,
+      "replacement_call": "ReplaceOperandWith",
+      "replacement_source": "      ABSL_RETURN_IF_ERROR(user->ReplaceOperandWith(index, operand));",
+      "additional_replacement_sites": [
+        {
+          "replacement_site_id": "site-L00775-C034",
+          "replacement_line": 775,
+          "replacement_call": "ReplaceAllUsesWith",
+          "replacement_source": "      ABSL_RETURN_IF_ERROR(inst->ReplaceAllUsesWith(operand));"
+        },
+        {
+          "replacement_site_id": "site-L00821-C015",
+          "replacement_line": 821,
+          "replacement_call": "ReplaceAllUsesWith",
+          "replacement_source": "  return dot->ReplaceAllUsesWith(new_multiply);"
+        }
+      ],
+      "loop_execution": "operand DFS zero-or-more writes; user DFS zero-or-more writes; one terminal target write",
+      "site_order_interpretation": "lexical source order; first two sites execute zero or more times, terminal selected by target; not one fixed three-write trace"
+    },
+    {
+      "id": "TryToReorderConvAddMultiply/order-lhs-lhs",
+      "handler": "TryToReorderConvAddMultiply",
+      "line": 5138,
+      "end_line": 5181,
+      "source_body_sha256": "28dbd98b07320013583829b1a7960b2d6df9d083ecc3f275c6088eb725578516",
+      "lhs": "Multiply(Add(Convolution(input,ConstantFilter),bias),Broadcast(ConstantVector)) with matcher sides lhs/lhs",
+      "rhs": "Add(Convolution(input,Multiply(filter,Broadcast(vector,kernel_output_feature))),Multiply(bias,broadcast))",
+      "guard": "enable_conv_add_multiply_reorder; Conv,bias,broadcast one user; constant rank1; broadcast single dimension equals output feature dimension",
+      "dependencies": [
+        "Add node has no local one-user matcher; clones with original shapes/attributes",
+        "commutative matcher operand binding; feature broadcast maps; numerical distributivity and zero/exception effects",
+        "no explicit local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05180-C010",
+      "replacement_line": 5180,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(multiply, std::move(new_add));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryToReorderConvAddMultiply/order-lhs-rhs",
+      "handler": "TryToReorderConvAddMultiply",
+      "line": 5138,
+      "end_line": 5181,
+      "source_body_sha256": "28dbd98b07320013583829b1a7960b2d6df9d083ecc3f275c6088eb725578516",
+      "lhs": "Multiply(Add(Convolution(input,ConstantFilter),bias),Broadcast(ConstantVector)) with matcher sides lhs/rhs",
+      "rhs": "Add(Convolution(input,Multiply(filter,Broadcast(vector,kernel_output_feature))),Multiply(bias,broadcast))",
+      "guard": "enable_conv_add_multiply_reorder; Conv,bias,broadcast one user; constant rank1; broadcast single dimension equals output feature dimension",
+      "dependencies": [
+        "Add node has no local one-user matcher; clones with original shapes/attributes",
+        "commutative matcher operand binding; feature broadcast maps; numerical distributivity and zero/exception effects",
+        "no explicit local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05180-C010",
+      "replacement_line": 5180,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(multiply, std::move(new_add));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryToReorderConvAddMultiply/order-rhs-lhs",
+      "handler": "TryToReorderConvAddMultiply",
+      "line": 5138,
+      "end_line": 5181,
+      "source_body_sha256": "28dbd98b07320013583829b1a7960b2d6df9d083ecc3f275c6088eb725578516",
+      "lhs": "Multiply(Add(Convolution(input,ConstantFilter),bias),Broadcast(ConstantVector)) with matcher sides rhs/lhs",
+      "rhs": "Add(Convolution(input,Multiply(filter,Broadcast(vector,kernel_output_feature))),Multiply(bias,broadcast))",
+      "guard": "enable_conv_add_multiply_reorder; Conv,bias,broadcast one user; constant rank1; broadcast single dimension equals output feature dimension",
+      "dependencies": [
+        "Add node has no local one-user matcher; clones with original shapes/attributes",
+        "commutative matcher operand binding; feature broadcast maps; numerical distributivity and zero/exception effects",
+        "no explicit local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05180-C010",
+      "replacement_line": 5180,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(multiply, std::move(new_add));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "TryToReorderConvAddMultiply/order-rhs-rhs",
+      "handler": "TryToReorderConvAddMultiply",
+      "line": 5138,
+      "end_line": 5181,
+      "source_body_sha256": "28dbd98b07320013583829b1a7960b2d6df9d083ecc3f275c6088eb725578516",
+      "lhs": "Multiply(Add(Convolution(input,ConstantFilter),bias),Broadcast(ConstantVector)) with matcher sides rhs/rhs",
+      "rhs": "Add(Convolution(input,Multiply(filter,Broadcast(vector,kernel_output_feature))),Multiply(bias,broadcast))",
+      "guard": "enable_conv_add_multiply_reorder; Conv,bias,broadcast one user; constant rank1; broadcast single dimension equals output feature dimension",
+      "dependencies": [
+        "Add node has no local one-user matcher; clones with original shapes/attributes",
+        "commutative matcher operand binding; feature broadcast maps; numerical distributivity and zero/exception effects",
+        "no explicit local fast-math guard"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L05180-C010",
+      "replacement_line": 5180,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "  return ReplaceWithNewInstruction(multiply, std::move(new_add));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "FoldConvInputPad/compose",
+      "handler": "FoldConvInputPad",
+      "line": 10749,
+      "end_line": 10816,
+      "source_body_sha256": "8d96c4630ea37b80f79d7e1d4a44efd41373069940ba67f4bc081f3bf2c2c315",
+      "lhs": "Convolution(Pad(input,ConstantScalar0),filter)",
+      "rhs": "Convolution(input,filter) with composed input window padding/base dilation",
+      "guard": "enable_folding_pad_into_convolution; no batch/feature padding; no negative pad; interior pad cannot coexist with window padding/base dilation; base dilation cannot coexist with any Pad on same axis",
+      "dependencies": [
+        "window edge addition; interior pad sets base_dilation=1+interior; clone original convolution attributes",
+        "nonfinite zero products, finite signed dimension arithmetic and legal result geometry"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10812-C009",
+      "replacement_line": 10812,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "        ReplaceWithNewInstruction(convolution, std::move(new_conv)));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "FoldConvFilterPad/dilation",
+      "handler": "FoldConvFilterPad",
+      "line": 10818,
+      "end_line": 10885,
+      "source_body_sha256": "25d64c3772fa3d155ca46e2f4af590060cf57ac447b96a72b0b9ff20032474ad",
+      "lhs": "Convolution(input,Pad(filter,zero))",
+      "rhs": "Convolution(input,filter) with composed kernel window dilation/size",
+      "guard": "enable_folding_pad_into_convolution; rhs Pad; IsAll(fill,0); no feature padding; no spatial edge padding; nonzero interior only when old window dilation<=1 then CHECK==1",
+      "dependencies": [
+        "zero-interior axes retain window size; changed axes set size to unpadded filter extent",
+        "clone original attributes; numerical zeros and reversal; signed extent arithmetic"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10883-C007",
+      "replacement_line": 10883,
+      "replacement_call": "ReplaceWithNewInstruction",
+      "replacement_source": "      ReplaceWithNewInstruction(convolution, std::move(new_conv)));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "PromoteConvolutionToF32IfNotOnednnCompatible/promote-and-continue",
+      "handler": "PromoteConvolutionToF32IfNotOnednnCompatible",
+      "line": 10904,
+      "end_line": 10979,
+      "source_body_sha256": "ebc1d96baeacf0877a6d8280a006a671e5bbd3a1901c3041883a1bfa80cdb021",
+      "lhs": "BF16 Convolution not locally eligible for oneDNN",
+      "rhs": "BF16 Convert(F32 Convolution(F32-converted original operands))",
+      "guard": "HandleConvolution enable_onednn_support; executing_on_cpu; BF16 result; local can_rewrite false",
+      "dependencies": [
+        "ineligibility: batch grouping !=1, rhs Reverse, any empty array, spatial rank outside1..3, ranks unequal, negative padding/stride, base dilation!=1, or reversal",
+        "convert every original operand, clone convolution, replace outer result",
+        "sets caller pointer to inner F32 convolution and RETURNS FALSE; subsequent simplification still runs",
+        "eligible BF16 returns TRUE without this replacement, causing caller early return",
+        "precision configuration and BF16 accumulation/cast relation need source contract"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L10976-C024",
+      "replacement_line": 10976,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(*convolution, from_conv));",
+      "additional_replacement_sites": [],
+      "continuing_rebind_anchor": "*convolution = to_conv;"
+    },
+    {
+      "id": "SimplifyConvToDot/pointwise-layout",
+      "handler": "SimplifyConvToDot",
+      "line": 10981,
+      "end_line": 11100,
+      "source_body_sha256": "3a245cf1f8bcdb99afbe379571b1972088c49b54732b58d68bc2efb579b4b1d0",
+      "lhs": "pointwise Convolution(input,filter)",
+      "rhs": "Bitcast(Dot(Bitcast(input),Bitcast(filter)))",
+      "guard": "enable_conv_simplification; layout SENSITIVE; all layouts present; every kernel spatial extent1; no stride/padding/base dilation; input/output layouts equal and feature most minor; filter input feature more major than output feature; both group counts1",
+      "dependencies": [
+        "layout-sensitive physical address correspondence; input/output spatial order and bitcast shapes",
+        "conv_width int64 product; updated descending layouts; dot contracting lhs1/rhs0",
+        "window dilation harmless for unit kernel extent; original precision config retained; dynamic layout/sparsity contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11098-C007",
+      "replacement_line": 11098,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "      ReplaceInstruction(convolution, add_bitcast(convolution_shape, dot)));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/pointwise-000",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel))",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=False/False",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/pointwise-001",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel))",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=False/True",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/pointwise-010",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel))",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=True/False",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/pointwise-011",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel))",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=True/True",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-000",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=False; input/kernel type casts=False/False",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-001",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=False; input/kernel type casts=False/True",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-010",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=False; input/kernel type casts=True/False",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-011",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=False; input/kernel type casts=True/True",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-100",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=True; input/kernel type casts=False/False",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-101",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=True; input/kernel type casts=False/True",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-110",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=True; input/kernel type casts=True/False",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "SimplifyConvToMultiply/reduce-111",
+      "handler": "SimplifyConvToMultiply",
+      "line": 11102,
+      "end_line": 11221,
+      "source_body_sha256": "1b326843b0821b156ec512b40542628ede8f8af77cc07c942fa23ea9432b69d9",
+      "lhs": "restricted grouped/depthwise Convolution",
+      "rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
+      "guard": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=True; input/kernel type casts=True/True",
+      "dependencies": [
+        "no enable_conv_simplification check inside this helper; caller invokes unconditionally at last stage",
+        "no separate local batch_group_count==1 guard; legal group geometry must be traced",
+        "reverse kernel on contracted nonunit spatial axes before transposing",
+        "convert operands to convolution output type; reduction stays output type rather than dot F32 accumulation rule",
+        "original precision_config not passed to plain Multiply/ReduceAdd; numerical permission and algorithm contracts"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11219-C024",
+      "replacement_line": 11219,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "  ABSL_RETURN_IF_ERROR(ReplaceInstruction(convolution, result));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleConvolution/empty",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "Convolution with empty input or filter",
+      "rhs": "MakeScalarLike(convolution,0)",
+      "guard": "after optional scalar movement; lhs OR rhs zero elements",
+      "dependencies": [
+        "source does not test output empty here; previous movement may already have mutated graph",
+        "shape/type and zero reduction semantics"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "replacement_ordinals": [
+        0
+      ],
+      "replacement_site_id": "site-L11232-C012",
+      "replacement_line": 11232,
+      "replacement_call": "ReplaceInstruction",
+      "replacement_source": "    return ReplaceInstruction(convolution, MakeScalarLike(convolution, 0));",
+      "additional_replacement_sites": []
+    },
+    {
+      "id": "HandleConvolution/scalar-movement-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "enable_scalar_multiply_reduction; CONTINUES regardless of successful non-error mutation",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "ScalarMultiplyReduction",
+      "delegation_line": 11226
+    },
+    {
+      "id": "HandleConvolution/input-pad-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "after empty check; helper true stops",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "FoldConvInputPad",
+      "delegation_line": 11236
+    },
+    {
+      "id": "HandleConvolution/filter-pad-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "input fold false; helper true stops",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "FoldConvFilterPad",
+      "delegation_line": 11242
+    },
+    {
+      "id": "HandleConvolution/operand-swap-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "both pad folds false; helper true stops",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "SwapConvOperands",
+      "delegation_line": 11248
+    },
+    {
+      "id": "HandleConvolution/onednn-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "enable_onednn_support; true means compatible and stops; false can mean promoted and continues",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "PromoteConvolutionToF32IfNotOnednnCompatible",
+      "delegation_line": 11258
+    },
+    {
+      "id": "HandleConvolution/to-dot-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "current pointer possibly promoted; helper true stops",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "SimplifyConvToDot",
+      "delegation_line": 11265
+    },
+    {
+      "id": "HandleConvolution/to-multiply-delegation",
+      "handler": "HandleConvolution",
+      "line": 11223,
+      "end_line": 11276,
+      "source_body_sha256": "0d13e88107f68eb2e1f9bea767577659e0a9c53d166af166fb23b2b9d8c9668a",
+      "lhs": "current Convolution",
+      "rhs": "helper-dependent graph",
+      "guard": "dot helper false; current pointer possibly promoted; helper true stops",
+      "dependencies": [
+        "compose all previous graph effects, pointer rebindings and source return conditions"
+      ],
+      "helper_contract_ids": [],
+      "proof": null,
+      "status": "source_extracted_pending_independent_review",
+      "path_condition": "legal input HLO; source-order caller guards, helper results, status propagation and earlier stages apply",
+      "unit_kind": "branch_or_rewrite_stage_pending_path_composition",
+      "acceptance_unit": "complete caller path including earlier graph mutations and any continuing rewrites",
+      "type_partition_status": "types, precision/numerical relation, dynamic geometry, sparsity and grouping need full partition",
+      "delegation_target": "SimplifyConvToMultiply",
+      "delegation_line": 11270
+    }
+  ],
+  "helper_contracts": [
+    {
+      "id": "IsOpCodeMultiplyCommutative",
+      "line": 638,
+      "end_line": 648,
+      "source_body_sha256": "f6b482dfc0d6082f5cc3c82fe923a670a6277ccb6c448276d2cbaa19894deafd",
+      "source_behavior": "opcode whitelist Multiply/Transpose/Reshape/Select; classification itself is not a linearity proof, especially for Select branches",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "GetConstantValue",
+      "line": 191,
+      "end_line": 211,
+      "source_body_sha256": "9befb25e594d4f33358d71b54d62d5c67671cf3e3d5d35080ee0cedceb8ee4a0",
+      "source_behavior": "scalar Constant floating -> native double, integral -> int64 -> double; unsupported returns nullopt; scalar movement dereferences result",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "MakeScalarInstruction",
+      "line": 650,
+      "end_line": 669,
+      "source_body_sha256": "a87e400bc3b452b6b15bf7713675629a5911b189ee0b72eb978b57ea6cabf5fb",
+      "source_behavior": "native float multiplier cast to target primitive; supports floating/integral dispatch, fatal otherwise",
+      "status": "source_inspected_pending_independent_semantic_review"
+    },
+    {
+      "id": "SwapConvOperands",
+      "line": 10887,
+      "end_line": 10901,
+      "source_body_sha256": "15727ff0a910fb098548e3136d987cbe8240e61e85458190db9707eb8ec8e9a1",
+      "source_behavior": "enable_conv_operand_swap and layout insensitive; delegate external swap with virtual ConvIsLowerable callback; MarkAsChanged if true",
+      "status": "source_inspected_pending_independent_semantic_review"
+    }
+  ],
+  "external_contracts": [
+    {
+      "id": "SwapConvolutionOperandsIfBeneficial",
+      "path": "sources/xla/xla/hlo/transforms/simplifiers/conv_operand_swapper.cc",
+      "line": 34,
+      "end_line": 173,
+      "source_body_sha256": "723c79316f0de7bb189d5f6711b34ad530b1f5fa809f627f354544a9708e209c",
+      "status": "source_inspected_pending_independent_semantic_review",
+      "source_behavior": "reject grouping>1, sparsity and block scales; preserve group/pure-contraction window axes; transpose convolution roles with reversed kernel, exchanged dilations and recomputed padding; strict kernel-product profitability; fresh PrecisionConfig with swapped operand precision only; lowerability veto removes constructed convolution; final replacement preserves sharding/frontend attrs and relays control dependencies",
+      "obligations": [
+        "finite int64 arithmetic and physical/numerical convolution symmetry",
+        "fresh precision config may omit other fields; compare full precision/algorithm semantics",
+        "ConvIsLowerable is virtual, base returns true; removal and auxiliary construction effects"
+      ]
+    }
+  ],
+  "limitations": [
+    "branch/stage schemas overlap; lexical mapping is not semantic completeness",
+    "loop, alias, profile and continuing graph effects remain unproved",
+    "external swapper belongs to caller obligation; source file boundary does not exclude delegated behavior",
+    "zero accepted full-source proofs"
+  ]
+}

@@ -1,0 +1,1204 @@
+{
+  "schema": 1,
+  "status": "partial_source_extraction",
+  "denominator_frozen": false,
+  "source_sha256": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+  "cases": [
+    {
+      "id": "HandleReshape/empty",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "ShapeUtil::IsZeroElementArray(reshape->shape())",
+      "anchor_line": 6917,
+      "lhs": "Reshape(x,target)",
+      "rhs": "empty constant with updated layout",
+      "guard": "target IsZeroElementArray; establish default literal layout if absent",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "Literal::CreateFromShape",
+        "CreateConstantWithLayoutUpdated",
+        "ReplaceWithNewInstruction with relay_control_dependency=true"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/identity",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "if (SameShape(reshape, operand))",
+      "anchor_line": 6933,
+      "lhs": "Reshape(x,target)",
+      "rhs": "x",
+      "guard": "SameShape(reshape,x)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "SameShape",
+        "ReplaceInstruction preserve_frontend_attributes=false"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/compose",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "// Merge reshapes.",
+      "anchor_line": 6939,
+      "lhs": "Reshape(Reshape(x,s),t)",
+      "rhs": "Reshape(x,t)",
+      "guard": "operand opcode Reshape",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "rank-polymorphic linearization",
+        "CreateReshape",
+        "ReplaceWithNewInstruction with relay_control_dependency=true"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/rng-shape",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "operand->opcode() == HloOpcode::kRng",
+      "anchor_line": 6948,
+      "lhs": "Reshape(Rng(...),target)",
+      "rhs": "Rng(...) mutated to target shape",
+      "guard": "operand opcode Rng; user_count == 1",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "RNG distribution/state semantics",
+        "in-place shape mutation",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReverse/trivial-dimensions",
+      "handler": "HandleReverse",
+      "line": 7217,
+      "end_line": 7323,
+      "branch_anchor": "if (absl::c_all_of(reverse->dimensions(), dim_is_one))",
+      "anchor_line": 7224,
+      "lhs": "Reverse(x,dims)",
+      "rhs": "x",
+      "guard": "all reversed dimensions have extent 1 (includes empty dims list)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "ReplaceInstruction",
+        "reverse index map"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "7943c008efdce3e6bbd686c52c54fa210783739e5122b9eb91e20f5e0edd1b8f"
+    },
+    {
+      "id": "HandleReverse/cancel",
+      "handler": "HandleReverse",
+      "line": 7217,
+      "end_line": 7323,
+      "branch_anchor": "if (sym_diff.empty())",
+      "anchor_line": 7243,
+      "lhs": "Reverse(Reverse(x,a),b)",
+      "rhs": "x",
+      "guard": "layout insensitive; inner opcode Reverse; symmetric difference of axes empty",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "sorting dimensions in place",
+        "set operations",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "7943c008efdce3e6bbd686c52c54fa210783739e5122b9eb91e20f5e0edd1b8f"
+    },
+    {
+      "id": "HandleReverse/symmetric-difference",
+      "handler": "HandleReverse",
+      "line": 7217,
+      "end_line": 7323,
+      "branch_anchor": "new_dimensions = absl::MakeConstSpan(sym_diff)",
+      "anchor_line": 7246,
+      "lhs": "Reverse(Reverse(x,a),b)",
+      "rhs": "Reverse(x,a symmetric_difference b)",
+      "guard": "layout insensitive; inner opcode Reverse; symmetric difference nonempty",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "sorting dimensions in place",
+        "MakeReverseHlo",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "7943c008efdce3e6bbd686c52c54fa210783739e5122b9eb91e20f5e0edd1b8f"
+    },
+    {
+      "id": "HandleReverse/binary-scalar-0",
+      "handler": "HandleReverse",
+      "line": 7217,
+      "end_line": 7323,
+      "branch_anchor": "if (match_with_scalar(inner->mutable_operand(0)))",
+      "anchor_line": 7267,
+      "lhs": "Reverse(Binary(x,y),dims)",
+      "rhs": "Binary with operand 1 reversed",
+      "guard": "layout insensitive; binary elementwise; not Compare/Fusion; no side effects; operand 0 is Broadcast(scalar) with empty broadcast dims",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "CloneWithNewOperands",
+        "MakeReverseHlo",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "7943c008efdce3e6bbd686c52c54fa210783739e5122b9eb91e20f5e0edd1b8f"
+    },
+    {
+      "id": "HandleReverse/binary-scalar-1",
+      "handler": "HandleReverse",
+      "line": 7217,
+      "end_line": 7323,
+      "branch_anchor": "if (match_with_scalar(inner->mutable_operand(1)))",
+      "anchor_line": 7276,
+      "lhs": "Reverse(Binary(x,y),dims)",
+      "rhs": "Binary with operand 0 reversed",
+      "guard": "layout insensitive; binary elementwise; not Compare/Fusion; no side effects; operand 1 is Broadcast(scalar) with empty broadcast dims",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "CloneWithNewOperands",
+        "MakeReverseHlo",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "7943c008efdce3e6bbd686c52c54fa210783739e5122b9eb91e20f5e0edd1b8f"
+    },
+    {
+      "id": "HandleReverse/inserted-unit-dimensions",
+      "handler": "HandleReverse",
+      "line": 7217,
+      "end_line": 7323,
+      "branch_anchor": "reshape_degenerate.has_value()",
+      "anchor_line": 7295,
+      "lhs": "Reverse(Reshape(x),dims)",
+      "rhs": "Reshape(Reverse(x,remapped_dims))",
+      "guard": "layout insensitive; inner Reshape merely inserts/deletes 1-sized dims; deleted_dimensions empty",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "CountElementsLessThan",
+        "ReshapeMerelyInsertsOrDeletes1SizedDimensions",
+        "MakeReshapeHlo",
+        "MakeReverseHlo"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "7943c008efdce3e6bbd686c52c54fa210783739e5122b9eb91e20f5e0edd1b8f"
+    },
+    {
+      "id": "HandleSlice/identity",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (ReplaceInstructionIfCompatible(slice, slice->mutable_operand(0)))",
+      "anchor_line": 7657,
+      "lhs": "Slice(x,starts,limits,strides)",
+      "rhs": "x",
+      "guard": "ReplaceInstructionIfCompatible succeeds; legality plus equal output extents must justify identity",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "SameShape",
+        "slice well-formedness",
+        "ReplaceInstructionIfCompatible"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/padding-only",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (slice_in_padding)",
+      "anchor_line": 7699,
+      "lhs": "Slice(Pad(x,v),starts,limits,strides)",
+      "rhs": "Broadcast(v,output_shape)",
+      "guard": "slice_in_padding becomes true if some limit <= low or start >= padded_extent-high",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "loop/break path conditions",
+        "MakeBroadcastHlo",
+        "explicit output shape assignment",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/undo-pad",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (slice_undoes_pad &&",
+      "anchor_line": 7705,
+      "lhs": "Slice(Pad(x,v),starts,limits,strides)",
+      "rhs": "x",
+      "guard": "not padding-only; every start == low and stride-1 == interior; compatibility replacement succeeds",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "padding bounds",
+        "ReplaceInstructionIfCompatible"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/inside-pad",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (slice_inside_pad)",
+      "anchor_line": 7709,
+      "lhs": "Slice(Pad(x,v),starts,limits,strides)",
+      "rhs": "Slice(x,starts-low,limits-low,strides)",
+      "guard": "not padding-only; prior undo-pad did not succeed; every start >= low, limit <= padded_extent-high, interior == 0, stride == 1",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "MakeSliceHlo",
+        "explicit output shape assignment",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleTranspose/identity",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "if (std::is_sorted(transpose->dimensions().begin(),",
+      "anchor_line": 10415,
+      "lhs": "Transpose(x,permutation)",
+      "rhs": "x",
+      "guard": "permutation sorted; legal permutation therefore identity; earlier scatter folding failed",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "permutation validity",
+        "original-value recovery metadata",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleTranspose/compose",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "if (HloOpcode::kTranspose == operand->opcode())",
+      "anchor_line": 10424,
+      "lhs": "Transpose(Transpose(x,p),q)",
+      "rhs": "Transpose(x,ComposePermutations(p,q))",
+      "guard": "inner opcode Transpose; prior scatter folding and sorted-permutation cases did not rewrite",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "ComposePermutations",
+        "CreateTranspose",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleReshape/copy-reorder",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "// Try to reorder copy-reshape to reshape-copy.",
+      "anchor_line": 6970,
+      "lhs": "Reshape(Copy(x))",
+      "rhs": "aligned Reshape/Bitcast(x), optionally followed by Copy",
+      "guard": "layout sensitive; copy-before has one user; AlignLayouts succeeds; rewrite profitability and bitcast predicates pass; source memory is not host; new allocation estimate <= 10*old/9",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "AlignLayouts",
+        "ReshapeIsBitcast",
+        "UpdateLayout",
+        "Shape::Equal IgnoreMemorySpaceInLayout",
+        "ArraySize overflow behavior",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/broadcast",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "if (HloOpcode::kBroadcast == operand->opcode())",
+      "anchor_line": 7085,
+      "lhs": "Reshape(Broadcast(x,dims))",
+      "rhs": "Broadcast(x,remapped_dims)",
+      "guard": "operand opcode Broadcast; ReshapeLeavesDimensionsUnmodified returns remapped dimensions",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "ReshapeLeavesDimensionsUnmodified",
+        "CreateBroadcast",
+        "ReplaceWithNewInstruction relay_control_dependency=true"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/iota-mixed-radix",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "if (operand->opcode() == HloOpcode::kIota)",
+      "anchor_line": 7104,
+      "lhs": "Reshape(Iota(s,axis),t)",
+      "rhs": "mixed-radix sum of output Iotas",
+      "guard": "CommonFactors contains a nontrivial output boundary at iota axis and a boundary at iota axis+1; source loop bounds determine terms",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "CommonFactors",
+        "CreateIota",
+        "finite-width multiplier and value arithmetic",
+        "MakeScalarLike",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/dynamic-update-unit-dims",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "if (trivial_reshape.has_value() &&",
+      "anchor_line": 7151,
+      "lhs": "Reshape(DynamicUpdateSlice(base,update,indices))",
+      "rhs": "DynamicUpdateSlice(Reshape(base),Reshape(update),remapped_indices)",
+      "guard": "layout insensitive; reshape merely inserts/deletes unit dimensions; DUS one user; DUS and its base unsharded; inserted indices zero; deleted indices omitted",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "ReshapeMerelyInsertsOrDeletes1SizedDimensions",
+        "MakeScalarLike index zero",
+        "CloneWithNewOperands",
+        "ReplaceWithNewInstruction relay_control_dependency=true"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/bitcast-chain",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "BitcastingOperandOfReshapeOrCopyChain(reshape)",
+      "anchor_line": 7194,
+      "lhs": "Reshape(copy/reshape chain)",
+      "rhs": "Bitcast(selected ancestor)",
+      "guard": "BitcastingOperandOfReshapeOrCopyChain returns a nonnull operand",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "BitcastingOperandOfReshapeOrCopyChain",
+        "ReplaceWithBitcast",
+        "layout and memory-space contracts"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/transpose-chain-delegation",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "TryRemovingBitcastOrReshapeTransposeChain(reshape)",
+      "anchor_line": 6954,
+      "lhs": "Reshape(transpose/reshape/bitcast chain)",
+      "rhs": "helper-dependent replacement",
+      "guard": "TryRemovingBitcastOrReshapeTransposeChain returns true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TryRemovingBitcastOrReshapeTransposeChain: expand all internal branches"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "HandleReshape/transpose-hoist-delegation",
+      "handler": "HandleReshape",
+      "line": 6911,
+      "end_line": 7198,
+      "branch_anchor": "TryHoistTransposeOfReshape(reshape)",
+      "anchor_line": 6963,
+      "lhs": "Reshape(transpose chain)",
+      "rhs": "helper-dependent hoisted graph",
+      "guard": "layout insensitive; enable_hoist_transpose_of_reshape; TryHoistTransposeOfReshape succeeds",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TryHoistTransposeOfReshape: expand all internal branches"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "b3774b2965ea78c384c50904ff7c4d59df9351bae67a994f21b096ed3b43894f"
+    },
+    {
+      "id": "TryRemovingBitcastOrReshapeTransposeChain/layout-identity",
+      "handler": "TryRemovingBitcastOrReshapeTransposeChain",
+      "line": 6707,
+      "end_line": 6864,
+      "branch_anchor": "if (ShapeUtil::Equal(instruction->shape(), new_operand->shape()))",
+      "anchor_line": 6833,
+      "lhs": "transpose/reshape/bitcast chain",
+      "rhs": "ancestor",
+      "guard": "valid start; walk of permitted Reshape/Bitcast/Transpose nodes; reshape/bitcast nodes insert/delete unit axes with <=1 unit axis at each endpoint; bitcast nodes satisfy ReshapeIsBitcast; no inner identity transpose; at least one walked node; accumulated effective permutation identity; layout sensitive; ShapeUtil::Equal(output,ancestor)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "effective permutation construction",
+        "ComposePermutations",
+        "ShapeUtil::Equal",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23023b810d1905dcc158d8980ee78f7e2a571a8f9aa53e6d97037c56878f9b01"
+    },
+    {
+      "id": "TryRemovingBitcastOrReshapeTransposeChain/layout-bitcast",
+      "handler": "TryRemovingBitcastOrReshapeTransposeChain",
+      "line": 6707,
+      "end_line": 6864,
+      "branch_anchor": "} else if (ReshapeIsBitcast(new_operand->shape(),",
+      "anchor_line": 6836,
+      "lhs": "transpose/reshape/bitcast chain",
+      "rhs": "Bitcast(ancestor,output shape)",
+      "guard": "valid start; walk of permitted Reshape/Bitcast/Transpose nodes; reshape/bitcast nodes insert/delete unit axes with <=1 unit axis at each endpoint; bitcast nodes satisfy ReshapeIsBitcast; no inner identity transpose; at least one walked node; accumulated effective permutation identity; layout sensitive; output shape not equal; ReshapeIsBitcast(ancestor,output)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "byte-size/layout invariant",
+        "CreateBitcast",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23023b810d1905dcc158d8980ee78f7e2a571a8f9aa53e6d97037c56878f9b01"
+    },
+    {
+      "id": "TryRemovingBitcastOrReshapeTransposeChain/logical-identity",
+      "handler": "TryRemovingBitcastOrReshapeTransposeChain",
+      "line": 6707,
+      "end_line": 6864,
+      "branch_anchor": "if (Shape::Equal().IgnoreLayout()(instruction->shape(),",
+      "anchor_line": 6850,
+      "lhs": "transpose/reshape/bitcast chain",
+      "rhs": "ancestor",
+      "guard": "valid start; walk of permitted Reshape/Bitcast/Transpose nodes; reshape/bitcast nodes insert/delete unit axes with <=1 unit axis at each endpoint; bitcast nodes satisfy ReshapeIsBitcast; no inner identity transpose; at least one walked node; accumulated effective permutation identity; layout insensitive; shapes equal ignoring layout",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "Shape::Equal IgnoreLayout",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "23023b810d1905dcc158d8980ee78f7e2a571a8f9aa53e6d97037c56878f9b01"
+    },
+    {
+      "id": "TryHoistTransposeOfReshape/contiguous-chunks",
+      "handler": "TryHoistTransposeOfReshape",
+      "line": 6867,
+      "end_line": 6909,
+      "branch_anchor": "FindContiguousChunks(reshape, transpose)",
+      "anchor_line": 6879,
+      "lhs": "Reshape(Transpose(Reshape(x)))",
+      "rhs": "Transpose(Reshape(x,new chunk sizes),new chunk permutation)",
+      "guard": "input opcode sequence matches; FindContiguousChunks returns chunks; chunk sort and result_dim_idx determine mapping; caller supplies layout/option guards",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "FindContiguousChunks: expand its algorithm invariants",
+        "sorting and chunk products",
+        "UpdateLayout",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "04e887977175b5d2786f8f871deba019454f45583c979cd268ffdf9d992359ec"
+    },
+    {
+      "id": "HandleSlice/exact-dynamic-update",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (slice_matches_dus &&",
+      "anchor_line": 7765,
+      "lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
+      "rhs": "update",
+      "guard": "DUS operand_count == rank+2; all indices ConstantScalar with GetFirstInteger success; c=clamp(i,0,base_extent-update_extent); every s==c and l==c+update_extent; unstrided slice; compatibility replacement succeeds",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "integer index extraction",
+        "dynamic-update index clamping",
+        "ReplaceInstructionIfCompatible"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/inside-dynamic-update",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (slice_inside_dus &&",
+      "anchor_line": 7770,
+      "lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
+      "rhs": "Slice(update,s-c,l-c,strides)",
+      "guard": "same constant-index checks as exact-dynamic-update; every s>=c and l<=c+update_extent; layout insensitive OR output layout equals update layout",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "dynamic-update clamping",
+        "MakeSliceHlo",
+        "explicit output shape assignment"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/compose-unstrided",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "HloInstruction* operand_slice = slice->mutable_operand(0);",
+      "anchor_line": 7786,
+      "lhs": "Slice(Slice(x,a,b,1),s,l,1)",
+      "rhs": "Slice(x,s+a,l+a,1)",
+      "guard": "inner Slice opcode; both slices IsUnstridedSlice",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "slice bounds",
+        "signed int64 index additions",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/broadcast-only-dims",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (only_broadcast_dims_sliced())",
+      "anchor_line": 7812,
+      "lhs": "Slice(Broadcast(x,dims),s,l,strides)",
+      "rhs": "Broadcast(x,dims,output shape)",
+      "guard": "broadcast opcode; every mapped dim has start0, stride1, limit equal broadcast extent; other output dims may be sliced",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "broadcast index map",
+        "slice output extent computation"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/broadcast-sink",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "VLOG(3) << \"Sink broadcast through slice\"",
+      "anchor_line": 7840,
+      "lhs": "Slice(Broadcast(x,dims),s,l,strides)",
+      "rhs": "Broadcast(Slice(x,s[dims],l[dims],strides[dims]),dims)",
+      "guard": "Slice/Broadcast match; earlier broadcast-only and scalar helper paths did not rewrite; new slice extent ceil((limit-start)/stride)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "mapped dimensions order",
+        "UpdateLayout",
+        "CreateSlice",
+        "MakeBroadcastHlo"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/dot-operands",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "// Try to reorder slice of dot to the operand it comes from",
+      "anchor_line": 7863,
+      "lhs": "Slice(Dot(lhs,rhs,dnums),s,l,strides)",
+      "rhs": "Dot(selected slices of lhs/rhs,dnums)",
+      "guard": "layout insensitive; raise_slice_and_reduce_through_dot; Dot operand; ConstructToDotMaps maps noncontracting/batch axes; only changed operands sliced; !DotHasOnlyBatchAndContractingOnOneOperand on new true dimension counts",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "ConstructToDotMaps",
+        "DotHasOnlyBatchAndContractingOnOneOperand",
+        "MakeDotHlo precision_config and result type",
+        "dot reduction/numerical semantics"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/concat-exact-piece",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "SameShape(concat->operand(*start_operand), slice))",
+      "anchor_line": 7980,
+      "lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "rhs": "xs[selected]",
+      "guard": "unstrided; cumulative extent loop finds start piece and exclusive limit piece; they identify one piece; SameShape(piece,output)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "prefix-sum loop invariant",
+        "zero-sized concat operands",
+        "SameShape"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/concat-subrange-single",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (start_operand && limit_operand &&\n        *limit_operand - *start_operand < concat->operand_count())",
+      "anchor_line": 7983,
+      "lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "rhs": "Slice(selected piece,s-concat_start,adjusted_l,1)",
+      "guard": "unstrided; cumulative loop finds start and limit; selected count less than original operand count; selected count ==1; adjusted axis limit = adjusted start + output extent",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "prefix sums and bounds",
+        "MakeConcatHlo when multiple pieces",
+        "layout copy and UpdateLayout",
+        "SetupDerivedInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/concat-subrange-multi",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (start_operand && limit_operand &&\n        *limit_operand - *start_operand < concat->operand_count())",
+      "anchor_line": 7983,
+      "lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "rhs": "Slice(Concat(selected pieces,axis),s-concat_start,adjusted_l,1)",
+      "guard": "unstrided; cumulative loop finds start and limit; selected count less than original operand count; selected count >1; adjusted axis limit = adjusted start + output extent",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "prefix sums and bounds",
+        "MakeConcatHlo when multiple pieces",
+        "layout copy and UpdateLayout",
+        "SetupDerivedInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/reduce-window",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "if (!effective_reduce_dims.empty())",
+      "anchor_line": 8077,
+      "lhs": "Slice(ReduceWindow(x,init,window,f),s,l,1)",
+      "rhs": "Reshape(Reduce(x,init,effective_dims,f),output shape)",
+      "guard": "enable_window_reduce_to_reduce_replacement; ReduceWindow one use; no stride/dilation; HasPadding; all axes have limit=rw_extent, low_padding=start, high_padding=0; each axis is size1 full unsliced OR output_extent1 and rw_extent==window_size and limit-start1; at least one latter axis",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "window reversal and padding semantics",
+        "reduction computation effects, identities and reassociation",
+        "ShapeUtil::DeleteDimensions",
+        "UpdateLayout"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119"
+    },
+    {
+      "id": "HandleSlice/scalar-slice-delegation",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "TrySimplifyScalarSlice(slice)",
+      "anchor_line": 7820,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "prior direct paths did not rewrite; helper status succeeds and replaced=true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TrySimplifyScalarSlice: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119",
+      "delegation_target": "TrySimplifyScalarSlice"
+    },
+    {
+      "id": "HandleSlice/reshape-reorder-delegation",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "TryToReorderSliceAndReshape(slice)",
+      "anchor_line": 8096,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "layout insensitive; previous scalar helper returned false; helper returns true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TryToReorderSliceAndReshape: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119",
+      "delegation_target": "TryToReorderSliceAndReshape"
+    },
+    {
+      "id": "HandleSlice/reverse-reorder-delegation",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "TryToReorderSliceAndReverse(slice)",
+      "anchor_line": 8104,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "Slice(Reverse) matcher; prior paths did not rewrite; helper returns true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TryToReorderSliceAndReverse: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119",
+      "delegation_target": "TryToReorderSliceAndReverse"
+    },
+    {
+      "id": "HandleSlice/stride-delegation",
+      "handler": "HandleSlice",
+      "line": 7655,
+      "end_line": 8117,
+      "branch_anchor": "RemoveRedundantStride(slice)",
+      "anchor_line": 8111,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "prior paths did not rewrite; helper returns true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "RemoveRedundantStride: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab04578498cd471206c6ff95c2043e79acee03652b1acaece0fcfceebe5d4119",
+      "delegation_target": "RemoveRedundantStride"
+    },
+    {
+      "id": "HandleTranspose/dot-canonical",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "DotDimensionNumbers new_dnums = dnums;",
+      "anchor_line": 10491,
+      "lhs": "Transpose(Dot(a,b),p)",
+      "rhs": "Dot(b,a,swapped_contracting_dims,swapped_precision)",
+      "guard": "!supports_non_canonical_dots; dot one user; swap-policy permits; lhs/rhs batch lists equal and permutation of iota; both have >=1 contracting dims and exactly one free dim; p identity except last two swapped",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "IsPermutationOfIota",
+        "consider_swapping_dot_operands and IsParameterLike",
+        "SwapOperandsInDotPrecisionConfig",
+        "dot contraction/accumulation order"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleTranspose/dot-general",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "DotDimensionNumbers new_dnums;",
+      "anchor_line": 10543,
+      "lhs": "Transpose(Dot(a,b),p)",
+      "rhs": "Dot(b,a,new_dnums,swapped_precision)",
+      "guard": "supports_non_canonical_dots; dot one user; swap-policy permits; p maps leading batch positions only to batch positions; remaining positions exactly exchange rhs/lhs free-axis blocks; contracting lists exchanged and batch lists permuted through p",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "MakeDotHlo .value and CHECK_OK failure paths",
+        "SwapOperandsInDotPrecisionConfig",
+        "layout assignment",
+        "SetupDerivedInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleTranspose/degenerate-reshape",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "if (OnlyPermutesDegenerateDims(transpose->shape(),",
+      "anchor_line": 10573,
+      "lhs": "Transpose(x,p)",
+      "rhs": "Reshape(x,output shape)",
+      "guard": "OnlyPermutesDegenerateDims(output shape,p): at least one output axis extent1; p entries at output axes with extent!=1 form sorted sequence",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "OnlyPermutesDegenerateDims algorithm",
+        "permutation validity",
+        "row-major logical reshape"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleTranspose/rng-shape",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "if (operand->opcode() == HloOpcode::kRng && operand->user_count() == 1)",
+      "anchor_line": 10579,
+      "lhs": "Transpose(Rng(...),p)",
+      "rhs": "Rng(...) mutated to output shape",
+      "guard": "Rng opcode; one user",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "in-place shape assignment",
+        "RNG distribution versus fixed-sample observation",
+        "effect/state contract",
+        "ReplaceInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleTranspose/layout-bitcast",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "if (options_.is_layout_sensitive() && TransposeIsBitcast(transpose))",
+      "anchor_line": 10584,
+      "lhs": "Transpose(x,p)",
+      "rhs": "Bitcast(x,output shape)",
+      "guard": "layout sensitive; TransposeIsBitcast(transpose)",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TransposeIsBitcast",
+        "ReplaceWithBitcast",
+        "byte/layout/memory-space contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9"
+    },
+    {
+      "id": "HandleTranspose/space-depth-user-mutation",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "// Replace reshape of a transpose of a reshape with concatenated slicing",
+      "anchor_line": 10589,
+      "lhs": "Reshape(Transpose(Reshape(x)))",
+      "rhs": "Reshape(Concat(Slice(x,chunk_i),concat_axis))",
+      "guard": "layout insensitive; rewrite_reshape_transpose_as_slice_concatenate; inner Reshape; transpose one user which is Reshape; inner rank=input rank+1; exactly one split input axis into num_chunks*chunk_size; 0<=num_chunks<=5; permutation moves only small split axis to neither split position; output reshape axes match source scaling equations",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "split-dimension search and product/division arithmetic",
+        "permutation offset loop",
+        "outer shape/rank assumptions",
+        "MakeSliceHlo and MakeConcatHlo",
+        "ReplaceOperandWithDifferentShape on outer reshape",
+        "MarkAsChanged"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9",
+      "mutation_subject": "outer reshape operand0; transpose itself is not replaced at this site"
+    },
+    {
+      "id": "HandleTranspose/scatter-fold-delegation",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "TryFoldTransposeIntoScatter(transpose)",
+      "anchor_line": 10409,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "first handler path; helper returns true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TryFoldTransposeIntoScatter: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9",
+      "delegation_target": "TryFoldTransposeIntoScatter"
+    },
+    {
+      "id": "HandleTranspose/chain-delegation",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "TryRemovingBitcastOrReshapeTransposeChain(transpose)",
+      "anchor_line": 10433,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "identity/composition and initial scatter fold did not rewrite; helper returns true",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "TryRemovingBitcastOrReshapeTransposeChain: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9",
+      "delegation_target": "TryRemovingBitcastOrReshapeTransposeChain"
+    },
+    {
+      "id": "HandleTranspose/broadcast-delegation",
+      "handler": "HandleTranspose",
+      "line": 10407,
+      "end_line": 10747,
+      "branch_anchor": "SimplifyTransposeOfBroadcast(transpose, transpose->dimensions())",
+      "anchor_line": 10744,
+      "lhs": "caller graph",
+      "rhs": "helper-dependent graph",
+      "guard": "all earlier direct/helper paths did not rewrite; helper may replace or return no change",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "SimplifyTransposeOfBroadcast: retain every success branch and caller contract"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "3426d9610ecd4c735d0517b71fae521d013914f5c2d84ff2216eb0664c8e65a9",
+      "delegation_target": "SimplifyTransposeOfBroadcast"
+    },
+    {
+      "id": "TrySimplifyScalarSlice/concat-piece",
+      "handler": "TrySimplifyScalarSlice",
+      "line": 7403,
+      "end_line": 7453,
+      "branch_anchor": "bool replaced = ReplaceInstructionIfCompatible(",
+      "anchor_line": 7436,
+      "lhs": "effective scalar Slice(Concat(xs),s,l,stride)",
+      "rhs": "selected concat operand",
+      "guard": "effective scalar output; rank1; Concat operand; loop finds first prefix_end>slice_start; compatibility replacement succeeds",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "effective scalar definition",
+        "prefix-sum loop and TF_RET_CHECK",
+        "ReplaceInstructionIfCompatible",
+        "source keeps original stride"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "d22b9f37d0575b7b6d82755d5d9d4242cd638b73ce1c83970e57fd0ea33fa9ca"
+    },
+    {
+      "id": "TrySimplifyScalarSlice/concat-slice",
+      "handler": "TrySimplifyScalarSlice",
+      "line": 7403,
+      "end_line": 7453,
+      "branch_anchor": "Folding scalar slice of concat into slice of concat operand",
+      "anchor_line": 7441,
+      "lhs": "effective scalar Slice(Concat(xs),s,l,stride)",
+      "rhs": "Slice(selected operand,s-prefix,s-prefix+1,stride)",
+      "guard": "effective scalar output; rank1; Concat operand; loop finds first prefix_end>slice_start; compatibility replacement fails",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "effective scalar definition",
+        "prefix-sum loop and TF_RET_CHECK",
+        "ReplaceInstructionIfCompatible",
+        "source keeps original stride"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "d22b9f37d0575b7b6d82755d5d9d4242cd638b73ce1c83970e57fd0ea33fa9ca"
+    },
+    {
+      "id": "TryToReorderSliceAndReshape/leading-slice",
+      "handler": "TryToReorderSliceAndReshape",
+      "line": 7455,
+      "end_line": 7568,
+      "branch_anchor": "if (sliced_dims.size() == 1 && sliced_dims[0] == 0)",
+      "anchor_line": 7478,
+      "lhs": "Slice(Reshape(x),s,l,1)",
+      "rhs": "Reshape(Slice(x,new_starts,new_limits,1),output shape)",
+      "guard": "Slice opcode; unstrided; Reshape operand; only output dimension0 actually sliced; linear start and element count align to operand first-nonunit-axis suffix product; suffix product nonzero; reverse-axis decomposition passes divisibility/no-spill checks and ends offset0,count1; caller layout guard applies",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "products and finite int64 overflow",
+        "all-unit/zero-dimension cases",
+        "Euclidean decomposition loop",
+        "ShapeUtil::ElementsIn",
+        "UpdateLayout"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "cc34d1dbf9aba3e93daa9dbc1458b8d5587debb31ba9052fa0308617c5553542"
+    },
+    {
+      "id": "TryToReorderSliceAndReverse/commute",
+      "handler": "TryToReorderSliceAndReverse",
+      "line": 7572,
+      "end_line": 7614,
+      "branch_anchor": "if (Match(slice, m::Slice(m::Reverse())))",
+      "anchor_line": 7576,
+      "lhs": "Slice(Reverse(x,dims),s,l,stride)",
+      "rhs": "Reverse(Slice(x,new_s,new_l,stride),dims)",
+      "guard": "Slice(Reverse) matcher; each reversed axis computes last=s+((l-s-1)/stride)*stride, new_s=extent-last-1, new_l=extent-s; no explicit nonempty-slice guard",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "C++ signed division truncates toward zero",
+        "empty slice output and bound legality",
+        "shape-preserving strided index arithmetic",
+        "UpdateLayout"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "ab16f0a97feb724e4540e09109469afcb0012f0db87994fd1c6df8ab42904a9d"
+    },
+    {
+      "id": "RemoveRedundantStride/single-element-axes",
+      "handler": "RemoveRedundantStride",
+      "line": 7616,
+      "end_line": 7653,
+      "branch_anchor": "if (index_to_change.empty())",
+      "anchor_line": 7636,
+      "lhs": "Slice(x,s,l,stride)",
+      "rhs": "Slice(x,s,new_l,new_stride) with original output shape",
+      "guard": "Slice opcode; selected axes have stride!=1 AND (stride>=limit OR start+stride>=limit); at least one selected axis; selected limit becomes start+1 and stride becomes1; no explicit start<limit guard",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "legal empty slice configurations",
+        "integer overflow in start+stride",
+        "declared versus inferred output shape",
+        "ReplaceWithNewInstruction"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "59a1a92fc0d16cbcbe1017d135f1907ffb9ad2c0515a8c1b2ec1ef4bf53742ba"
+    },
+    {
+      "id": "TryFoldTransposeIntoScatter/simplified-scatter",
+      "handler": "TryFoldTransposeIntoScatter",
+      "line": 10332,
+      "end_line": 10405,
+      "branch_anchor": "const ScatterDimensionNumbers& old_dnums =",
+      "anchor_line": 10349,
+      "lhs": "Transpose(Scatter(base,indices,updates),p)",
+      "rhs": "Scatter(Transpose(base,p),indices,Transpose(updates,[0]+(p+1)),new_dnums)",
+      "guard": "enable_fold_transpose_into_scatter; Scatter one user; exactly one scatter operand; IsSimplifiedScatter; no input/index batching dims; WriteRunLength(scatter,p)>=WriteRunLength(scatter); new scatter_dims_to_operand_dims=inverse(p)[old_dims]",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "ScatterSimplifier::IsSimplifiedScatter",
+        "ScatterSimplifier::WriteRunLength",
+        "update rank/permutation construction",
+        "InversePermutation",
+        "indices_are_sorted and unique_indices retained",
+        "scatter reduction and collisions"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "faedb2483ce567b1c2a932f04a27c409fcd3b608626cebc90b641b9eb20b81d7"
+    },
+    {
+      "id": "SimplifyTransposeOfBroadcast/mapped-dims-logical",
+      "handler": "SimplifyTransposeOfBroadcast",
+      "line": 2884,
+      "end_line": 2949,
+      "branch_anchor": "auto inv_perm = InversePermutation(dimensions);",
+      "anchor_line": 2909,
+      "lhs": "view(Broadcast(x,dims),p)",
+      "rhs": "Broadcast(x,inverse(p)[dims],output shape)",
+      "guard": "operand Broadcast; original dims sorted; mapped dims sorted; layout insensitive; caller justifies supplied p for transpose or bitcast",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "InversePermutation",
+        "caller-specific transpose/bitcast index relation",
+        "layout extraction and sort comparator",
+        "MakeBroadcastHlo"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "d159a2be9796d5af6f0fd6da3502b00451d8887b2c3ecfd6b1669633deeee137"
+    },
+    {
+      "id": "SimplifyTransposeOfBroadcast/mapped-dims-layout",
+      "handler": "SimplifyTransposeOfBroadcast",
+      "line": 2884,
+      "end_line": 2949,
+      "branch_anchor": "auto inv_perm = InversePermutation(dimensions);",
+      "anchor_line": 2909,
+      "lhs": "view(Broadcast(x,dims),p)",
+      "rhs": "Broadcast(x,inverse(p)[dims],output shape)",
+      "guard": "operand Broadcast; original dims sorted; mapped dims sorted; layout sensitive; operand and extracted output layout sort permutations equal; caller justifies supplied p for transpose or bitcast",
+      "path_condition": "earlier successful handler rewrites excluded; explicit branch nesting also applies",
+      "dependencies": [
+        "InversePermutation",
+        "caller-specific transpose/bitcast index relation",
+        "layout extraction and sort comparator",
+        "MakeBroadcastHlo"
+      ],
+      "status": "source_extracted_pending_independent_review",
+      "proof": null,
+      "source_body_sha256": "d159a2be9796d5af6f0fd6da3502b00451d8887b2c3ecfd6b1669633deeee137"
+    }
+  ],
+  "lexical_replacement_coverage_owners": [
+    "HandleReshape",
+    "HandleReverse",
+    "HandleSlice",
+    "HandleTranspose",
+    "RemoveRedundantStride",
+    "SimplifyTransposeOfBroadcast",
+    "TryFoldTransposeIntoScatter",
+    "TryHoistTransposeOfReshape",
+    "TryRemovingBitcastOrReshapeTransposeChain",
+    "TrySimplifyScalarSlice",
+    "TryToReorderSliceAndReshape",
+    "TryToReorderSliceAndReverse"
+  ],
+  "residuals": [
+    "shape helper algorithm invariants and caller-to-helper semantic refinement",
+    "delegated helpers and datatype/layout case splitting",
+    "independent source and semantic review"
+  ]
+}

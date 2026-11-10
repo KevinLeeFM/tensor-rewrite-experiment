@@ -1,0 +1,219 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:reshape_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 5858 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ReshapeReplay
+[ RUN      ] ReshapeReplay.LogicalOrderAcrossLayoutsAndRanks
+RESHAPE_RESULT case=compose_default run_pass=0 changed=0 elements=6 values=0,1,2,3,4,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{1,0} parameter(0)
+  %middle = s32[3,2]{1,0} reshape(%data)
+  ROOT %result = s32[6]{0} reshape(%middle)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{1,0} parameter(0)
+  %middle = s32[3,2]{1,0} reshape(%data)
+  ROOT %result = s32[6]{0} reshape(%middle)
+}
+
+xla/hlo/transforms/simplifiers/reshape_replay_test.cc:80: Failure
+Expected equality of these values:
+  root->opcode()
+    Which is: bitcast
+  test.rewritten_opcode
+    Which is: reshape
+Google Test trace:
+xla/hlo/transforms/simplifiers/reshape_replay_test.cc:58: true
+xla/hlo/transforms/simplifiers/reshape_replay_test.cc:57: compose_default
+
+RESHAPE_RESULT case=compose_default run_pass=1 changed=1 elements=6 values=0,1,2,3,4,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{1,0} parameter(0)
+  %middle = s32[3,2]{1,0} reshape(%data)
+  ROOT %result = s32[6]{0} reshape(%middle)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{1,0} parameter(0)
+  %bitcast = s32[3,2]{1,0} bitcast(%data)
+  ROOT %bitcast.1 = s32[6]{0} bitcast(%bitcast)
+}
+
+RESHAPE_RESULT case=compose_column run_pass=0 changed=0 elements=6 values=0,1,2,3,4,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{0,1})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{0,1} parameter(0)
+  %middle = s32[3,2]{0,1} reshape(%data)
+  ROOT %result = s32[6]{0} reshape(%middle)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{0,1})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{0,1} parameter(0)
+  %middle = s32[3,2]{0,1} reshape(%data)
+  ROOT %result = s32[6]{0} reshape(%middle)
+}
+
+RESHAPE_RESULT case=compose_column run_pass=1 changed=1 elements=6 values=0,1,2,3,4,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{0,1})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{0,1} parameter(0)
+  %middle = s32[3,2]{0,1} reshape(%data)
+  ROOT %result = s32[6]{0} reshape(%middle)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{0,1})->s32[6]{0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[6] {
+  %data = s32[2,3]{0,1} parameter(0)
+  ROOT %result = s32[6]{0} reshape(%data)
+}
+
+RESHAPE_RESULT case=identity run_pass=0 changed=0 elements=6 values=0,1,2,3,4,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[2,3] {
+  %data = s32[2,3]{1,0} parameter(0)
+  ROOT %result = s32[2,3]{1,0} reshape(%data)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[2,3] {
+  %data = s32[2,3]{1,0} parameter(0)
+  ROOT %result = s32[2,3]{1,0} reshape(%data)
+}
+
+RESHAPE_RESULT case=identity run_pass=1 changed=1 elements=6 values=0,1,2,3,4,5 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[2,3] {
+  %data = s32[2,3]{1,0} parameter(0)
+  ROOT %result = s32[2,3]{1,0} reshape(%data)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (data: s32[2,3]) -> s32[2,3] {
+  ROOT %data = s32[2,3]{1,0} parameter(0)
+}
+
+RESHAPE_RESULT case=scalar_chain run_pass=0 changed=0 elements=1 values=42 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[1,1]{1,0})->s32[1]{0}}
+
+ENTRY %main (data: s32[1,1]) -> s32[1] {
+  %data = s32[1,1]{1,0} parameter(0)
+  %middle = s32[] reshape(%data)
+  ROOT %result = s32[1]{0} reshape(%middle)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[1,1]{1,0})->s32[1]{0}}
+
+ENTRY %main (data: s32[1,1]) -> s32[1] {
+  %data = s32[1,1]{1,0} parameter(0)
+  %middle = s32[] reshape(%data)
+  ROOT %result = s32[1]{0} reshape(%middle)
+}
+
+xla/hlo/transforms/simplifiers/reshape_replay_test.cc:80: Failure
+Expected equality of these values:
+  root->opcode()
+    Which is: bitcast
+  test.rewritten_opcode
+    Which is: reshape
+Google Test trace:
+xla/hlo/transforms/simplifiers/reshape_replay_test.cc:58: true
+xla/hlo/transforms/simplifiers/reshape_replay_test.cc:57: scalar_chain
+
+RESHAPE_RESULT case=scalar_chain run_pass=1 changed=1 elements=1 values=42 rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[1,1]{1,0})->s32[1]{0}}
+
+ENTRY %main (data: s32[1,1]) -> s32[1] {
+  %data = s32[1,1]{1,0} parameter(0)
+  %middle = s32[] reshape(%data)
+  ROOT %result = s32[1]{0} reshape(%middle)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[1,1]{1,0})->s32[1]{0}}
+
+ENTRY %main (data: s32[1,1]) -> s32[1] {
+  %data = s32[1,1]{1,0} parameter(0)
+  %bitcast = s32[] bitcast(%data)
+  ROOT %bitcast.1 = s32[1]{0} bitcast(%bitcast)
+}
+
+RESHAPE_RESULT case=empty run_pass=0 changed=0 elements=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,0,3]{2,1,0})->s32[0,6]{1,0}}
+
+ENTRY %main (data: s32[2,0,3]) -> s32[0,6] {
+  %data = s32[2,0,3]{2,1,0} parameter(0)
+  ROOT %result = s32[0,6]{1,0} reshape(%data)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,0,3]{2,1,0})->s32[0,6]{1,0}}
+
+ENTRY %main (data: s32[2,0,3]) -> s32[0,6] {
+  %data = s32[2,0,3]{2,1,0} parameter(0)
+  ROOT %result = s32[0,6]{1,0} reshape(%data)
+}
+
+RESHAPE_RESULT case=empty run_pass=1 changed=1 elements=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,0,3]{2,1,0})->s32[0,6]{1,0}}
+
+ENTRY %main (data: s32[2,0,3]) -> s32[0,6] {
+  %data = s32[2,0,3]{2,1,0} parameter(0)
+  ROOT %result = s32[0,6]{1,0} reshape(%data)
+}
+
+REWRITTEN_HLO
+HloModule reshape_replay, entry_computation_layout={(s32[2,0,3]{2,1,0})->s32[0,6]{1,0}}
+
+ENTRY %main (data: s32[2,0,3]) -> s32[0,6] {
+  %data = s32[2,0,3]{2,1,0} parameter(0)
+  ROOT %constant = s32[0,6]{1,0} constant({  })
+}
+
+[  FAILED  ] ReshapeReplay.LogicalOrderAcrossLayoutsAndRanks (5 ms)
+[----------] 1 test from ReshapeReplay (5 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (5 ms total)
+[  PASSED  ] 0 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] ReshapeReplay.LogicalOrderAcrossLayoutsAndRanks
+
+ 1 FAILED TEST

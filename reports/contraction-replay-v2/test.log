@@ -1,0 +1,1164 @@
+exec ${PAGER:-/usr/bin/less} "$0" || exit 1
+Executing tests from //xla/hlo/transforms/simplifiers:contraction_replay_test
+-----------------------------------------------------------------------------
+Running main() from gmock_main.cc
+Note: Randomizing tests' orders with a seed of 10310 .
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from ContractionReplay
+[ RUN      ] ContractionReplay.EmptyAndOuterProductsWithCastsAndPrecisionDiagnostic
+CONTRACTION_RESULT case=outer00 mode=control changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=outer00 mode=handler changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %broadcast = s32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = s32[3]{0} parameter(1)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer00 mode=pass changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %broadcast = s32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = s32[3]{0} parameter(1)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer01 mode=control changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=outer01 mode=handler changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %broadcast = s32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = s8[3]{0} parameter(1)
+  %convert = s32[3]{0} convert(%rhs)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%convert), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer01 mode=pass changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %broadcast = s32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = s8[3]{0} parameter(1)
+  %convert = s32[3]{0} convert(%rhs)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%convert), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer10 mode=control changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=outer10 mode=handler changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %convert = s32[2]{0} convert(%lhs)
+  %broadcast = s32[2,3]{1,0} broadcast(%convert), dimensions={0}
+  %rhs = s32[3]{0} parameter(1)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer10 mode=pass changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %convert = s32[2]{0} convert(%lhs)
+  %broadcast = s32[2,3]{1,0} broadcast(%convert), dimensions={0}
+  %rhs = s32[3]{0} parameter(1)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer11 mode=control changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=outer11 mode=handler changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %convert = s32[2]{0} convert(%lhs)
+  %broadcast = s32[2,3]{1,0} broadcast(%convert), dimensions={0}
+  %rhs = s8[3]{0} parameter(1)
+  %convert.1 = s32[3]{0} convert(%rhs)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%convert.1), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=outer11 mode=pass changed=1 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %rhs = s8[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s8[2]{0}, s8[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s8[2], rhs: s8[3]) -> s32[2,3] {
+  %lhs = s8[2]{0} parameter(0)
+  %convert = s32[2]{0} convert(%lhs)
+  %broadcast = s32[2,3]{1,0} broadcast(%convert), dimensions={0}
+  %rhs = s8[3]{0} parameter(1)
+  %convert.1 = s32[3]{0} convert(%rhs)
+  %broadcast.1 = s32[2,3]{1,0} broadcast(%convert.1), dimensions={1}
+  ROOT %multiply = s32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=batch_left mode=control changed=0 checked=24 values=1,2,3,4,3,6,9,12,5,10,15,20,10,12,14,16,20,24,28,32,30,36,42,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[3,2]{1,0}, s32[2,4]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[3,2], rhs: s32[2,4]) -> s32[2,3,4] {
+  %lhs = s32[3,2]{1,0} parameter(0)
+  %rhs = s32[2,4]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={1}, lhs_contracting_dims={}, rhs_batch_dims={0}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[3,2]{1,0}, s32[2,4]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[3,2], rhs: s32[2,4]) -> s32[2,3,4] {
+  %lhs = s32[3,2]{1,0} parameter(0)
+  %rhs = s32[2,4]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={1}, lhs_contracting_dims={}, rhs_batch_dims={0}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=batch_left mode=handler changed=1 checked=24 values=1,2,3,4,3,6,9,12,5,10,15,20,10,12,14,16,20,24,28,32,30,36,42,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[3,2]{1,0}, s32[2,4]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[3,2], rhs: s32[2,4]) -> s32[2,3,4] {
+  %lhs = s32[3,2]{1,0} parameter(0)
+  %rhs = s32[2,4]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={1}, lhs_contracting_dims={}, rhs_batch_dims={0}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[3,2]{1,0}, s32[2,4]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[3,2], rhs: s32[2,4]) -> s32[2,3,4] {
+  %lhs = s32[3,2]{1,0} parameter(0)
+  %transpose = s32[2,3]{0,1} transpose(%lhs), dimensions={1,0}
+  %broadcast = s32[2,3,4]{2,1,0} broadcast(%transpose), dimensions={0,1}
+  %rhs = s32[2,4]{1,0} parameter(1)
+  %broadcast.1 = s32[2,3,4]{2,1,0} broadcast(%rhs), dimensions={0,2}
+  ROOT %multiply = s32[2,3,4]{2,1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=batch_left mode=pass changed=1 checked=24 values=1,2,3,4,3,6,9,12,5,10,15,20,10,12,14,16,20,24,28,32,30,36,42,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[3,2]{1,0}, s32[2,4]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[3,2], rhs: s32[2,4]) -> s32[2,3,4] {
+  %lhs = s32[3,2]{1,0} parameter(0)
+  %rhs = s32[2,4]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={1}, lhs_contracting_dims={}, rhs_batch_dims={0}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[3,2]{1,0}, s32[2,4]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[3,2], rhs: s32[2,4]) -> s32[2,3,4] {
+  %lhs = s32[3,2]{1,0} parameter(0)
+  %transpose = s32[2,3]{0,1} transpose(%lhs), dimensions={1,0}
+  %broadcast = s32[2,3,4]{2,1,0} broadcast(%transpose), dimensions={0,1}
+  %rhs = s32[2,4]{1,0} parameter(1)
+  %broadcast.1 = s32[2,3,4]{2,1,0} broadcast(%rhs), dimensions={0,2}
+  ROOT %multiply = s32[2,3,4]{2,1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=batch_right mode=control changed=0 checked=24 values=1,3,5,7,2,6,10,14,3,9,15,21,8,16,24,32,10,20,30,40,12,24,36,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[4,2]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[4,2]) -> s32[2,3,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[4,2]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={0}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[4,2]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[4,2]) -> s32[2,3,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[4,2]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={0}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=batch_right mode=handler changed=1 checked=24 values=1,3,5,7,2,6,10,14,3,9,15,21,8,16,24,32,10,20,30,40,12,24,36,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[4,2]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[4,2]) -> s32[2,3,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[4,2]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={0}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[4,2]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[4,2]) -> s32[2,3,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %broadcast = s32[2,3,4]{2,1,0} broadcast(%lhs), dimensions={0,1}
+  %rhs = s32[4,2]{1,0} parameter(1)
+  %transpose = s32[2,4]{0,1} transpose(%rhs), dimensions={1,0}
+  %broadcast.1 = s32[2,3,4]{2,1,0} broadcast(%transpose), dimensions={0,2}
+  ROOT %multiply = s32[2,3,4]{2,1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=batch_right mode=pass changed=1 checked=24 values=1,3,5,7,2,6,10,14,3,9,15,21,8,16,24,32,10,20,30,40,12,24,36,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[4,2]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[4,2]) -> s32[2,3,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[4,2]{1,0} parameter(1)
+  ROOT %result = s32[2,3,4]{2,1,0} dot(%lhs, %rhs), lhs_batch_dims={0}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[4,2]{1,0})->s32[2,3,4]{2,1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[4,2]) -> s32[2,3,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %broadcast = s32[2,3,4]{2,1,0} broadcast(%lhs), dimensions={0,1}
+  %rhs = s32[4,2]{1,0} parameter(1)
+  %transpose = s32[2,4]{0,1} transpose(%rhs), dimensions={1,0}
+  %broadcast.1 = s32[2,3,4]{2,1,0} broadcast(%transpose), dimensions={0,2}
+  ROOT %multiply = s32[2,3,4]{2,1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=rank4 mode=control changed=0 checked=24 values=1,3,3,9,5,15,7,21,9,27,11,33,4,8,8,16,12,24,16,32,20,40,24,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3,2]{2,1,0}, s32[2,2]{1,0})->s32[2,2,3,2]{3,2,1,0}}
+
+ENTRY %main (lhs: s32[2,3,2], rhs: s32[2,2]) -> s32[2,2,3,2] {
+  %lhs = s32[2,3,2]{2,1,0} parameter(0)
+  %rhs = s32[2,2]{1,0} parameter(1)
+  ROOT %result = s32[2,2,3,2]{3,2,1,0} dot(%lhs, %rhs), lhs_batch_dims={2}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3,2]{2,1,0}, s32[2,2]{1,0})->s32[2,2,3,2]{3,2,1,0}}
+
+ENTRY %main (lhs: s32[2,3,2], rhs: s32[2,2]) -> s32[2,2,3,2] {
+  %lhs = s32[2,3,2]{2,1,0} parameter(0)
+  %rhs = s32[2,2]{1,0} parameter(1)
+  ROOT %result = s32[2,2,3,2]{3,2,1,0} dot(%lhs, %rhs), lhs_batch_dims={2}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=rank4 mode=handler changed=1 checked=24 values=1,3,3,9,5,15,7,21,9,27,11,33,4,8,8,16,12,24,16,32,20,40,24,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3,2]{2,1,0}, s32[2,2]{1,0})->s32[2,2,3,2]{3,2,1,0}}
+
+ENTRY %main (lhs: s32[2,3,2], rhs: s32[2,2]) -> s32[2,2,3,2] {
+  %lhs = s32[2,3,2]{2,1,0} parameter(0)
+  %rhs = s32[2,2]{1,0} parameter(1)
+  ROOT %result = s32[2,2,3,2]{3,2,1,0} dot(%lhs, %rhs), lhs_batch_dims={2}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3,2]{2,1,0}, s32[2,2]{1,0})->s32[2,2,3,2]{3,2,1,0}}
+
+ENTRY %main (lhs: s32[2,3,2], rhs: s32[2,2]) -> s32[2,2,3,2] {
+  %lhs = s32[2,3,2]{2,1,0} parameter(0)
+  %transpose = s32[2,2,3]{0,2,1} transpose(%lhs), dimensions={2,0,1}
+  %broadcast = s32[2,2,3,2]{3,2,1,0} broadcast(%transpose), dimensions={0,1,2}
+  %rhs = s32[2,2]{1,0} parameter(1)
+  %transpose.1 = s32[2,2]{0,1} transpose(%rhs), dimensions={1,0}
+  %broadcast.1 = s32[2,2,3,2]{3,2,1,0} broadcast(%transpose.1), dimensions={0,3}
+  ROOT %multiply = s32[2,2,3,2]{3,2,1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=rank4 mode=pass changed=1 checked=24 values=1,3,3,9,5,15,7,21,9,27,11,33,4,8,8,16,12,24,16,32,20,40,24,48 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3,2]{2,1,0}, s32[2,2]{1,0})->s32[2,2,3,2]{3,2,1,0}}
+
+ENTRY %main (lhs: s32[2,3,2], rhs: s32[2,2]) -> s32[2,2,3,2] {
+  %lhs = s32[2,3,2]{2,1,0} parameter(0)
+  %rhs = s32[2,2]{1,0} parameter(1)
+  ROOT %result = s32[2,2,3,2]{3,2,1,0} dot(%lhs, %rhs), lhs_batch_dims={2}, lhs_contracting_dims={}, rhs_batch_dims={1}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3,2]{2,1,0}, s32[2,2]{1,0})->s32[2,2,3,2]{3,2,1,0}}
+
+ENTRY %main (lhs: s32[2,3,2], rhs: s32[2,2]) -> s32[2,2,3,2] {
+  %lhs = s32[2,3,2]{2,1,0} parameter(0)
+  %transpose = s32[2,2,3]{0,2,1} transpose(%lhs), dimensions={2,0,1}
+  %broadcast = s32[2,2,3,2]{3,2,1,0} broadcast(%transpose), dimensions={0,1,2}
+  %rhs = s32[2,2]{1,0} parameter(1)
+  %transpose.1 = s32[2,2]{0,1} transpose(%rhs), dimensions={1,0}
+  %broadcast.1 = s32[2,2,3,2]{3,2,1,0} broadcast(%transpose.1), dimensions={0,3}
+  ROOT %multiply = s32[2,2,3,2]{3,2,1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_RESULT case=matrix_contract mode=control changed=0 checked=8 values=38,44,50,56,83,98,113,128 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,4]{1,0})->s32[2,4]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,4]) -> s32[2,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,4]{1,0} parameter(1)
+  ROOT %result = s32[2,4]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,4]{1,0})->s32[2,4]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,4]) -> s32[2,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,4]{1,0} parameter(1)
+  ROOT %result = s32[2,4]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+CONTRACTION_RESULT case=matrix_contract mode=handler changed=0 checked=8 values=38,44,50,56,83,98,113,128 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,4]{1,0})->s32[2,4]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,4]) -> s32[2,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,4]{1,0} parameter(1)
+  ROOT %result = s32[2,4]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,4]{1,0})->s32[2,4]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,4]) -> s32[2,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,4]{1,0} parameter(1)
+  ROOT %result = s32[2,4]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+CONTRACTION_RESULT case=matrix_contract mode=pass changed=0 checked=8 values=38,44,50,56,83,98,113,128 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,4]{1,0})->s32[2,4]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,4]) -> s32[2,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,4]{1,0} parameter(1)
+  ROOT %result = s32[2,4]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,4]{1,0})->s32[2,4]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,4]) -> s32[2,4] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,4]{1,0} parameter(1)
+  ROOT %result = s32[2,4]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+CONTRACTION_RESULT case=contract_empty mode=control changed=0 checked=6 values=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,0]{1,0}, s32[0,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2,0], rhs: s32[0,3]) -> s32[2,3] {
+  %lhs = s32[2,0]{1,0} parameter(0)
+  %rhs = s32[0,3]{1,0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,0]{1,0}, s32[0,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2,0], rhs: s32[0,3]) -> s32[2,3] {
+  %lhs = s32[2,0]{1,0} parameter(0)
+  %rhs = s32[0,3]{1,0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+CONTRACTION_RESULT case=contract_empty mode=handler changed=1 checked=6 values=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,0]{1,0}, s32[0,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2,0], rhs: s32[0,3]) -> s32[2,3] {
+  %lhs = s32[2,0]{1,0} parameter(0)
+  %rhs = s32[0,3]{1,0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,0]{1,0}, s32[0,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2,0], rhs: s32[0,3]) -> s32[2,3] {
+  %lhs = s32[2,0]{1,0} parameter(0)
+  %rhs = s32[0,3]{1,0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[2,3]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=contract_empty mode=pass changed=1 checked=6 values=0,0,0,0,0,0 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,0]{1,0}, s32[0,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2,0], rhs: s32[0,3]) -> s32[2,3] {
+  %lhs = s32[2,0]{1,0} parameter(0)
+  %rhs = s32[0,3]{1,0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,0]{1,0}, s32[0,3]{1,0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2,0], rhs: s32[0,3]) -> s32[2,3] {
+  %lhs = s32[2,0]{1,0} parameter(0)
+  %rhs = s32[0,3]{1,0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[2,3]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=lhs_free_empty mode=control changed=0 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[0,2]{1,0}, s32[2,3]{1,0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0,2], rhs: s32[2,3]) -> s32[0,3] {
+  %lhs = s32[0,2]{1,0} parameter(0)
+  %rhs = s32[2,3]{1,0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[0,2]{1,0}, s32[2,3]{1,0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0,2], rhs: s32[2,3]) -> s32[0,3] {
+  %lhs = s32[0,2]{1,0} parameter(0)
+  %rhs = s32[2,3]{1,0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+CONTRACTION_RESULT case=lhs_free_empty mode=handler changed=1 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[0,2]{1,0}, s32[2,3]{1,0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0,2], rhs: s32[2,3]) -> s32[0,3] {
+  %lhs = s32[0,2]{1,0} parameter(0)
+  %rhs = s32[2,3]{1,0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[0,2]{1,0}, s32[2,3]{1,0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0,2], rhs: s32[2,3]) -> s32[0,3] {
+  %lhs = s32[0,2]{1,0} parameter(0)
+  %rhs = s32[2,3]{1,0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[0,3]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=lhs_free_empty mode=pass changed=1 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[0,2]{1,0}, s32[2,3]{1,0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0,2], rhs: s32[2,3]) -> s32[0,3] {
+  %lhs = s32[0,2]{1,0} parameter(0)
+  %rhs = s32[2,3]{1,0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[0,2]{1,0}, s32[2,3]{1,0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0,2], rhs: s32[2,3]) -> s32[0,3] {
+  %lhs = s32[0,2]{1,0} parameter(0)
+  %rhs = s32[2,3]{1,0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[0,3]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=rhs_free_empty mode=control changed=0 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,0]{1,0})->s32[2,0]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,0]) -> s32[2,0] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,0]{1,0} parameter(1)
+  ROOT %result = s32[2,0]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,0]{1,0})->s32[2,0]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,0]) -> s32[2,0] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,0]{1,0} parameter(1)
+  ROOT %result = s32[2,0]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+CONTRACTION_RESULT case=rhs_free_empty mode=handler changed=1 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,0]{1,0})->s32[2,0]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,0]) -> s32[2,0] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,0]{1,0} parameter(1)
+  ROOT %result = s32[2,0]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,0]{1,0})->s32[2,0]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,0]) -> s32[2,0] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,0]{1,0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[2,0]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=rhs_free_empty mode=pass changed=1 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,0]{1,0})->s32[2,0]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,0]) -> s32[2,0] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,0]{1,0} parameter(1)
+  ROOT %result = s32[2,0]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={1}, rhs_contracting_dims={0}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2,3]{1,0}, s32[3,0]{1,0})->s32[2,0]{1,0}}
+
+ENTRY %main (lhs: s32[2,3], rhs: s32[3,0]) -> s32[2,0] {
+  %lhs = s32[2,3]{1,0} parameter(0)
+  %rhs = s32[3,0]{1,0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[2,0]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=scalar_outer mode=control changed=0 checked=2 values=10,-6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[], s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (lhs: s32[], rhs: s32[2]) -> s32[2] {
+  %lhs = s32[] parameter(0)
+  %rhs = s32[2]{0} parameter(1)
+  ROOT %result = s32[2]{0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[], s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (lhs: s32[], rhs: s32[2]) -> s32[2] {
+  %lhs = s32[] parameter(0)
+  %rhs = s32[2]{0} parameter(1)
+  ROOT %result = s32[2]{0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=scalar_outer mode=handler changed=1 checked=2 values=10,-6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[], s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (lhs: s32[], rhs: s32[2]) -> s32[2] {
+  %lhs = s32[] parameter(0)
+  %rhs = s32[2]{0} parameter(1)
+  ROOT %result = s32[2]{0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[], s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (lhs: s32[], rhs: s32[2]) -> s32[2] {
+  %lhs = s32[] parameter(0)
+  %broadcast = s32[2]{0} broadcast(%lhs), dimensions={}
+  %rhs = s32[2]{0} parameter(1)
+  ROOT %multiply = s32[2]{0} multiply(%broadcast, %rhs)
+}
+
+CONTRACTION_RESULT case=scalar_outer mode=pass changed=1 checked=2 values=10,-6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[], s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (lhs: s32[], rhs: s32[2]) -> s32[2] {
+  %lhs = s32[] parameter(0)
+  %rhs = s32[2]{0} parameter(1)
+  ROOT %result = s32[2]{0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[], s32[2]{0})->s32[2]{0}}
+
+ENTRY %main (lhs: s32[], rhs: s32[2]) -> s32[2] {
+  %lhs = s32[] parameter(0)
+  %broadcast = s32[2]{0} broadcast(%lhs), dimensions={}
+  %rhs = s32[2]{0} parameter(1)
+  ROOT %multiply = s32[2]{0} multiply(%broadcast, %rhs)
+}
+
+CONTRACTION_RESULT case=outer_free_empty mode=control changed=0 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[0]{0}, s32[3]{0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0], rhs: s32[3]) -> s32[0,3] {
+  %lhs = s32[0]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[0]{0}, s32[3]{0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0], rhs: s32[3]) -> s32[0,3] {
+  %lhs = s32[0]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=outer_free_empty mode=handler changed=1 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[0]{0}, s32[3]{0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0], rhs: s32[3]) -> s32[0,3] {
+  %lhs = s32[0]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[0]{0}, s32[3]{0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0], rhs: s32[3]) -> s32[0,3] {
+  %lhs = s32[0]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[0,3]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=outer_free_empty mode=pass changed=1 checked=0 values=empty rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[0]{0}, s32[3]{0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0], rhs: s32[3]) -> s32[0,3] {
+  %lhs = s32[0]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[0,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[0]{0}, s32[3]{0})->s32[0,3]{1,0}}
+
+ENTRY %main (lhs: s32[0], rhs: s32[3]) -> s32[0,3] {
+  %lhs = s32[0]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  %constant = s32[] constant(0)
+  ROOT %broadcast = s32[0,3]{1,0} broadcast(%constant), dimensions={}
+}
+
+CONTRACTION_RESULT case=option_off mode=control changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=option_off mode=handler changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=option_off mode=pass changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=layout_on mode=control changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=layout_on mode=handler changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_RESULT case=layout_on mode=pass changed=0 checked=6 values=10,14,-4,-15,-21,6 rewritten_verified=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(s32[2]{0}, s32[3]{0})->s32[2,3]{1,0}}
+
+ENTRY %main (lhs: s32[2], rhs: s32[3]) -> s32[2,3] {
+  %lhs = s32[2]{0} parameter(0)
+  %rhs = s32[3]{0} parameter(1)
+  ROOT %result = s32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_FP_RESULT case=f32_negative_zero mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_FP_RESULT case=f32_negative_zero mode=handler changed=1 before=0,0,0,0,0,0 after=2147483648,2147483648,2147483648,0,0,0 bits_equal=0 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %broadcast = f32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = f32[3]{0} parameter(1)
+  %broadcast.1 = f32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = f32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_FP_RESULT case=f32_negative_zero mode=pass changed=1 before=0,0,0,0,0,0 after=2147483648,2147483648,2147483648,0,0,0 bits_equal=0 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %broadcast = f32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = f32[3]{0} parameter(1)
+  %broadcast.1 = f32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = f32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_FP_RESULT case=f32_positive_zero mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_FP_RESULT case=f32_positive_zero mode=handler changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %broadcast = f32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = f32[3]{0} parameter(1)
+  %broadcast.1 = f32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = f32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_FP_RESULT case=f32_positive_zero mode=pass changed=1 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %broadcast = f32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = f32[3]{0} parameter(1)
+  %broadcast.1 = f32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = f32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_FP_RESULT case=f32_negative_result mode=control changed=0 before=3221225472,3229614080,3233808384,1077936128,1086324736,1091567616 after=3221225472,3229614080,3233808384,1077936128,1086324736,1091567616 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_FP_RESULT case=f32_negative_result mode=handler changed=1 before=3221225472,3229614080,3233808384,1077936128,1086324736,1091567616 after=3221225472,3229614080,3233808384,1077936128,1086324736,1091567616 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %broadcast = f32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = f32[3]{0} parameter(1)
+  %broadcast.1 = f32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = f32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_FP_RESULT case=f32_negative_result mode=pass changed=1 before=3221225472,3229614080,3233808384,1077936128,1086324736,1091567616 after=3221225472,3229614080,3233808384,1077936128,1086324736,1091567616 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %broadcast = f32[2,3]{1,0} broadcast(%lhs), dimensions={0}
+  %rhs = f32[3]{0} parameter(1)
+  %broadcast.1 = f32[2,3]{1,0} broadcast(%rhs), dimensions={1}
+  ROOT %multiply = f32[2,3]{1,0} multiply(%broadcast, %broadcast.1)
+}
+
+CONTRACTION_FP_RESULT case=f32_zero_option_off mode=control changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_FP_RESULT case=f32_zero_option_off mode=handler changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+CONTRACTION_FP_RESULT case=f32_zero_option_off mode=pass changed=0 before=0,0,0,0,0,0 after=0,0,0,0,0,0 bits_equal=1 numeric_equal=1 rewritten_verified=1 rne=1
+ORIGINAL_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+REWRITTEN_HLO
+HloModule contraction, entry_computation_layout={(f32[2]{0}, f32[3]{0})->f32[2,3]{1,0}}
+
+ENTRY %main (lhs: f32[2], rhs: f32[3]) -> f32[2,3] {
+  %lhs = f32[2]{0} parameter(0)
+  %rhs = f32[3]{0} parameter(1)
+  ROOT %result = f32[2,3]{1,0} dot(%lhs, %rhs), lhs_contracting_dims={}, rhs_contracting_dims={}
+}
+
+[       OK ] ContractionReplay.EmptyAndOuterProductsWithCastsAndPrecisionDiagnostic (24 ms)
+[----------] 1 test from ContractionReplay (24 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (24 ms total)
+[  PASSED  ] 1 test.
