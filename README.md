@@ -1,10 +1,18 @@
 # Tensor rewrite verification experiment
 
+**Active scope:** mathematical tensor-rewrite proofs/refutations. Code-correspondence
+tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
+Historical source/native evidence is preserved and does not gate mathematical acceptance.
+The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
+Ten new mathematical statements add 81 lines; custom Lean totals **2,877**.
+See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
+
+
 Independent Git/Lake project for tensor rewrite verification. The current proof
 baseline uses pinned Mathlib and FloatLib dependencies; see [dependency setup](docs/dependencies.md).
 Run `lake update`, `lake build`, then `python3 tools/check_libraries.py`.
 No GitHub remote is configured yet. Historical Std-only proofs/evidence are retained.
-The library-backed artifact has **2,796 custom Lean lines**: the historical 2,763
+The initial library-integration checkpoint had **2,796 custom Lean lines**: the historical 2,763
 plus 33 integration lines (category A). Imported library code is listed separately.
 See `reports/library-setup.json` for build and axiom-audit evidence.
 

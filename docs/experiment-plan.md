@@ -1,5 +1,9 @@
 # Plan: can a mixed agent team verify every XLA algebraic rewrite in Lean?
 
+**Current scope amendment (2026-11-10):** The user deferred code-correspondence
+work and proofs. The active goal is the full mathematical proof campaign; read
+[the scope amendment](theory-scope.md) before applying historical source-facing gates.
+
 [OBS 2026-11-10] The user requested a scoped experiment based on TensorRight,
 then requested an elaborated plan in notes/. They expect to use Codex subagents,
 possibly with different models, and prefer lines of Lean over token/time

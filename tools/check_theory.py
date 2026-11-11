@@ -1,0 +1,69 @@
+"""Check mathematical theory only; never invoke source extraction or native pass replay."""
+import hashlib
+import json
+from pathlib import Path
+import re
+import subprocess
+from lean_size import count_source
+
+ROOT = Path(__file__).resolve().parents[1]
+ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
+THEOREMS = {
+    'FloatNegation': ['scalar_involution', 'tensor_involution', 'reindex_neg', 'reverse_neg'],
+    'FiniteSum': ['foldl_add_eq_sum', 'reduce_add_eq_fiber_sum', 'reshapeEquiv_apply',
+                  'sum_reshape', 'sum_swap', 'sum_add'],
+}
+
+
+def main():
+    build = subprocess.run(['lake', 'build'], cwd=ROOT, text=True, capture_output=True)
+    (ROOT / 'reports/theory-build.log').write_text(build.stdout + build.stderr)
+    if build.returncode:
+        print((build.stdout + build.stderr)[-6000:]); raise SystemExit(build.returncode)
+    audit = subprocess.run(['lake', 'env', 'lean', 'tests/fixtures/TheoryAudit.lean'],
+                           cwd=ROOT, text=True, capture_output=True)
+    assert audit.returncode == 0, audit.stdout + audit.stderr
+    dependencies = {}
+    for group, names in THEOREMS.items():
+        for name in names:
+            full_name = 'TensorRewrite.Theory.' + group + '.' + name
+            match = re.search(re.escape(full_name) + r"' depends on axioms: \[([^\]]*)\]",
+                              audit.stdout)
+            if match:
+                axioms = {a.strip() for a in match[1].split(',') if a.strip()}
+            else:
+                assert full_name + "' does not depend on any axioms" in audit.stdout, audit.stdout
+                axioms = set()
+            assert axioms <= ALLOWED, (full_name, axioms)
+            dependencies[full_name] = sorted(axioms)
+    categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
+                  'TensorRewrite/Theory/FiniteSum.lean': 'H', 'TensorRewriteTheory.lean': 'A'}
+    rows = []
+    for name, category in categories.items():
+        path = ROOT / name
+        rows.append(dict(path=name, category=category,
+                         sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+                         **count_source(path.read_text())))
+    integration = json.loads((ROOT / 'reports/library-setup.json').read_text())
+    count = sum(r['code_lines'] for r in rows)
+    report = dict(status='kernel_checked_mathematical_theory', new_theorem_count=len(dependencies),
+                  code_correspondence_performed=False, code_correspondence_future_work=True,
+                  source_rewrite_acceptance_claimed=False, mathematical_workload_denominator=None,
+                  independently_reviewed_statements=False, build_exit_code=build.returncode,
+                  audit_exit_code=audit.returncode, axiom_dependencies=dependencies,
+                  files=rows, new_theory_lines=count, previous_custom_lean_lines=2796,
+                  total_custom_lean_lines=2796+count, dependency_packages=integration['packages'],
+                  proof_reuse={'FloatNegation.scalar_involution': 'FloatLib Model.neg_neg',
+                               'FiniteSum.sum_reshape': 'Mathlib Equiv.sum_comp plus existing index theory',
+                               'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
+                               'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
+                  scope='all supported FloatLib value formats for negation; exact finite sums '
+                        'under AddMonoid/AddCommMonoid; no IEEE addition reassociation claim',
+                  audit_stdout=audit.stdout)
+    (ROOT / 'reports/theory-progress.json').write_text(json.dumps(report, indent=2)+'\n')
+    print('Mathematical theory passed: '+str(len(dependencies))+' theorems; '+str(count)+
+          ' new Lean lines; code correspondence deferred.')
+
+
+if __name__ == '__main__':
+    main()

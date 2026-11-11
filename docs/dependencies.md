@@ -60,7 +60,9 @@ Commit `04d01d6` preserves the experiment before library dependencies: the origi
 Std-only Lean pilot and all previously collected evidence remain available. New
 integration modules count as category A; imported library code is disclosed rather
 than charged as new experiment code. The previous pilot's 2,763 lines remain a
-historical subtotal. Read `reports/library-setup.json` for the expanded total.
+historical subtotal. Read `reports/library-setup.json` for that checkpoint subtotal. The later
+mathematical target and current total are audited by `tools/check_theory.py`
+and recorded in `reports/theory-progress.json`.
 
 The planning protocols in this directory were copied from the original research
 notebook on 2026-11-10. Their historical notebook-relative links retain that context;

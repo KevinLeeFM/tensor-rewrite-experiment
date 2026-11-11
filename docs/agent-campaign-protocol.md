@@ -1,5 +1,9 @@
 # Running and judging a mixed-agent tensor-rewrite campaign
 
+**Current scope amendment (2026-11-10):** The user deferred code-correspondence
+work and proofs. The active goal is the full mathematical proof campaign; read
+[the scope amendment](theory-scope.md) before applying historical source-facing gates.
+
 [OBS 2026-11-10] Execution companion to
 [the experiment plan](2026-11-10-planning-tensor-rewrite-verification.md) and
 [Lean-size protocol](2026-11-10-measuring-tensor-rewrite-lean-size.md).

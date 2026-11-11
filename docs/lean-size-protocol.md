@@ -1,5 +1,9 @@
 # Measuring tensor-rewrite feasibility by Lean code size
 
+**Current scope amendment (2026-11-10):** The user deferred code-correspondence
+work and proofs. The active goal is the full mathematical proof campaign; read
+[the scope amendment](theory-scope.md) before applying historical source-facing gates.
+
 [OBS 2026-11-10] Measurement companion to
 [the experiment plan](2026-11-10-planning-tensor-rewrite-verification.md).
 The user prefers lines of Lean as the stable primary difficulty/feasibility
