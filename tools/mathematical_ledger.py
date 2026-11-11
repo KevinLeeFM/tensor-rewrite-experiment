@@ -126,13 +126,44 @@ def audit_theorems(rows,root=ROOT):
                 output_sha256=digest(root/'reports/mathematical-ledger-audit.log'))
 
 
-def assemble(cases,proofs,audit):
+def formulated_families(root=ROOT):
+    family=read('reports/logical-values-family.json',root)
+    frozen=read(family['manifest'],root)
+    assert digest(root/family['manifest'])==family['manifest_sha256']
+    assert family['status']=='kernel_complete_declared_mathematical_value_family'
+    assert family['profile_units']==frozen['profile_units']
+    assert family['profile_unit_count']==frozen['profile_unit_count']==20
+    assert not family['code_correspondence_performed']
+    assert family['code_correspondence_future_work'] and family['whole_benchmark_records_closed']==0
+    for file in frozen['model_files']:
+        assert digest(root/file['path'])==file['sha256']
+    theory=read('reports/theory-progress.json',root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.LogicalFamily.' in name}
+    assert len(expected)==6 and family['certificate_axioms']==expected
+    for profile in family['profile_units']:
+        expected_condition='inputs[0] = inputs[1]' if profile['rule']=='xor_equal' else 'True'
+        assert profile['side_condition']==expected_condition
+    return [dict(family=frozen['family'],profile_unit_count=20,
+                 kernel_status=family['status'],independent_statement_review='pending',
+                 observations=family['observations'],manifest=family['manifest'],
+                 manifest_sha256=family['manifest_sha256'],
+                 candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],
+                 label_correspondence_certified=False)]
+
+
+def assemble(cases,proofs,audit,families=()):
     for proof in proofs:
         assert proof['mathematical_acceptance']=='kernel_checked_in_declared_model'
         for label in proof['historical_candidate_benchmark_labels']:
             assert label in cases,label
             cases[label]['evidence'].append(proof['theorem'])
             cases[label]['mathematical_target_status']='partial_model_evidence_requires_partition_review'
+    for family in families:
+        for label in family['candidate_benchmark_labels']:
+            assert label in cases,label
+            cases[label].setdefault('kernel_complete_declared_value_families',[]).append(family['family'])
+            cases[label]['mathematical_target_status']='declared_value_family_complete_full_record_partitions_open'
     records=sorted(cases.values(),key=lambda row:row['benchmark_id'])
     return dict(schema=1,status='mathematical_campaign_ledger_formulation_in_progress',
         code_correspondence_performed=False,code_correspondence_future_work=True,
@@ -143,6 +174,8 @@ def assemble(cases,proofs,audit):
         batch_counts=dict(Counter(r['batch'] for r in records)),
         distinct_checked_declarations=len(proofs),
         declaration_kind_counts=dict(Counter(k for p in proofs for k in p['kinds'])),
+        formulated_mathematical_families=list(families),
+        kernel_complete_family_profile_count=sum(f['profile_unit_count'] for f in families),
         count_policy='declaration kinds can overlap; benchmark labels are retained candidates, '
                      'not certified correspondence; no proof-count/488 coverage fraction',
         corpus_manifest=MANIFEST,audit=audit,proofs=proofs,benchmark_records=records)
@@ -153,7 +186,7 @@ def main():
     args=parser.parse_args()
     if args.freeze_corpus:freeze()
     cases=corpus();proofs=evidence();audit=audit_theorems(proofs)
-    result=assemble(cases,proofs,audit)
+    result=assemble(cases,proofs,audit,formulated_families())
     (ROOT/'census/mathematical-ledger.json').write_text(json.dumps(result,indent=2)+'\n')
     print(str(result['benchmark_record_count'])+' benchmark records retained; '+
           str(result['distinct_checked_declarations'])+' mathematical declarations checked; '

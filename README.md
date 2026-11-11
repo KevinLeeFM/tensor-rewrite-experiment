@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 12 checked mathematical statements; custom Lean totals **2,907**.
+The theory target now has 18 checked mathematical statements; custom Lean totals **3,037**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -816,7 +816,7 @@ remain open.
 ## Mathematical campaign ledger
 
 The retained benchmark corpus is frozen at488 records in
-`census/mathematical-corpus-v1.json`. The mathematical ledger audits242 registered
+`census/mathematical-corpus-v1.json`. The mathematical ledger audits248 registered
 model declarations and preserves all benchmark records without a coverage claim.
 Seventy-four records have candidate model evidence; full statement/domain
 partitions and whole-record results remain open. See
@@ -827,3 +827,18 @@ and its Lean type/axiom audit without C++ processing or native pass replay.
 `TensorRewrite/Theory/ContractionAlgebra.lean` adds arbitrary-rank semiring
 contraction distributivity on both operands, with identity finish. These laws
 do not assert IEEE floating-point distributivity.
+
+
+## Complete declared logical-value family
+
+[Typed logical values](docs/mathematical-families.md) now has a frozen mathematical
+contract and20 complete profiles:12 predicates and8 universally parameterized word
+profiles. The soundness theorem requires equal tensor values for equal-input XOR;
+predicate True identities cannot be instantiated as word-one rules. Completeness,
+duplicate-free enumeration and all-width uniformity are also proved. This organizes
+the earlier individual identities; it is not20 new rewrite discoveries.
+
+The ledger audits248 declarations and attaches this pure-value family to12 candidate
+benchmark labels. Whole-record partitions, independent statement review and the full
+mathematical denominator remain open. See [evidence](reports/typed-logical-family-v1.md).
+Run `python3 tools/check_logical_family.py` after `python3 tools/check_theory.py`.

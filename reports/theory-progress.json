@@ -1,6 +1,6 @@
 {
   "status": "kernel_checked_mathematical_theory",
-  "new_theorem_count": 12,
+  "new_theorem_count": 18,
   "code_correspondence_performed": false,
   "code_correspondence_future_work": true,
   "source_rewrite_acceptance_claimed": false,
@@ -61,7 +61,21 @@
       "Classical.choice",
       "Quot.sound",
       "propext"
-    ]
+    ],
+    "TensorRewrite.Theory.LogicalFamily.rewrite_sound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.LogicalFamily.allRules_complete": [
+      "propext"
+    ],
+    "TensorRewrite.Theory.LogicalFamily.allRules_nodup": [
+      "propext"
+    ],
+    "TensorRewrite.Theory.LogicalFamily.word_keys_uniform": [],
+    "TensorRewrite.Theory.LogicalFamily.predicate_count": [],
+    "TensorRewrite.Theory.LogicalFamily.word_count": []
   },
   "files": [
     {
@@ -86,16 +100,30 @@
       "code_lines": 29
     },
     {
+      "path": "TensorRewrite/Theory/LogicalFamily.lean",
+      "category": "S",
+      "sha256": "6dcf62a20d36ed6f91d0ff6f280095cd34519c0d5bec40a6dbf43eaa0b7c17e1",
+      "physical_lines": 143,
+      "code_lines": 102
+    },
+    {
+      "path": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "category": "R",
+      "sha256": "7dddb51c43c1a5317acbca449d37666f6867944a4f47ebece9fab5cbd41db258",
+      "physical_lines": 47,
+      "code_lines": 27
+    },
+    {
       "path": "TensorRewriteTheory.lean",
       "category": "A",
-      "sha256": "89e529537e7e8d0f81018f4f6132567bf18ce5f670f46ce7a247550b89089b0e",
-      "physical_lines": 5,
-      "code_lines": 4
+      "sha256": "e77caae908aa9c52a0f7599fb188b44b26048698841f87607dc618d2bd0071f5",
+      "physical_lines": 6,
+      "code_lines": 5
     }
   ],
-  "new_theory_lines": 111,
+  "new_theory_lines": 241,
   "previous_custom_lean_lines": 2796,
-  "total_custom_lean_lines": 2907,
+  "total_custom_lean_lines": 3037,
   "dependency_packages": [
     {
       "url": "https://github.com/lean-dojo/FloatLib.git",
@@ -224,7 +252,7 @@
     "FiniteSum.sum_swap": "Mathlib Finset.sum_comm",
     "FiniteSum.sum_add": "Mathlib Finset.sum_add_distrib"
   },
-  "scope": "format-general floating negation; exact finite sums and semiring contraction distributivity; no IEEE reassociation/distributivity claim",
+  "scope": "format-general floating negation; exact finite sums and semiring contraction distributivity and typed logical family; no IEEE reassociation/distributivity claim",
   "theorem_profiles": {
     "TensorRewrite.Theory.FloatNegation.scalar_involution": "all supported FloatLib value formats; bit-exact negation; flags not observed",
     "TensorRewrite.Theory.FloatNegation.tensor_involution": "all supported FloatLib value formats; bit-exact negation; flags not observed",
@@ -237,7 +265,13 @@
     "TensorRewrite.Theory.FiniteSum.sum_swap": "exact finite sums and ordered reductions under explicitly stated AddMonoid/AddCommMonoid and equal-count premises",
     "TensorRewrite.Theory.FiniteSum.sum_add": "exact finite sums and ordered reductions under explicitly stated AddMonoid/AddCommMonoid and equal-count premises",
     "TensorRewrite.Theory.ContractionAlgebra.dot_add_left": "arbitrary static contraction plans; Semiring; identity finish; no rounded floating-point algebra instance",
-    "TensorRewrite.Theory.ContractionAlgebra.dot_add_right": "arbitrary static contraction plans; Semiring; identity finish; no rounded floating-point algebra instance"
+    "TensorRewrite.Theory.ContractionAlgebra.dot_add_right": "arbitrary static contraction plans; Semiring; identity finish; no rounded floating-point algebra instance",
+    "TensorRewrite.Theory.LogicalFamily.rewrite_sound": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
+    "TensorRewrite.Theory.LogicalFamily.allRules_complete": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
+    "TensorRewrite.Theory.LogicalFamily.allRules_nodup": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
+    "TensorRewrite.Theory.LogicalFamily.word_keys_uniform": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
+    "TensorRewrite.Theory.LogicalFamily.predicate_count": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
+    "TensorRewrite.Theory.LogicalFamily.word_count": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality"
   },
-  "audit_stdout": "'TensorRewrite.Theory.FloatNegation.scalar_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reindex_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reverse_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]\n'TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_swap' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+  "audit_stdout": "'TensorRewrite.Theory.FloatNegation.scalar_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reindex_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reverse_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]\n'TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_swap' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.LogicalFamily.rewrite_sound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.LogicalFamily.allRules_complete' depends on axioms: [propext]\n'TensorRewrite.Theory.LogicalFamily.allRules_nodup' depends on axioms: [propext]\n'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms\n'TensorRewrite.Theory.LogicalFamily.predicate_count' does not depend on any axioms\n'TensorRewrite.Theory.LogicalFamily.word_count' does not depend on any axioms\n"
 }

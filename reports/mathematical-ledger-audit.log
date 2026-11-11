@@ -1748,3 +1748,29 @@ TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes : ¬TensorRewrite.Pilot.S
       (TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg x) =
     x
 'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.LogicalFamily.allRules_complete : ∀ {domain : TensorRewrite.Theory.LogicalFamily.Domain}
+  (rule : TensorRewrite.Theory.LogicalFamily.Rule domain), rule ∈ TensorRewrite.Theory.LogicalFamily.allRules domain
+'TensorRewrite.Theory.LogicalFamily.allRules_complete' depends on axioms: [propext]
+TensorRewrite.Theory.LogicalFamily.allRules_nodup : ∀ (domain : TensorRewrite.Theory.LogicalFamily.Domain),
+  (TensorRewrite.Theory.LogicalFamily.allRules domain).Nodup
+'TensorRewrite.Theory.LogicalFamily.allRules_nodup' depends on axioms: [propext]
+TensorRewrite.Theory.LogicalFamily.predicate_count : (TensorRewrite.Theory.LogicalFamily.allRules
+      TensorRewrite.Theory.LogicalFamily.Domain.predicate).length =
+  12
+'TensorRewrite.Theory.LogicalFamily.predicate_count' does not depend on any axioms
+@TensorRewrite.Theory.LogicalFamily.rewrite_sound : ∀ {domain : TensorRewrite.Theory.LogicalFamily.Domain} {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (rule : TensorRewrite.Theory.LogicalFamily.Rule domain)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape domain.Value),
+  rule.Condition inputs →
+    TensorRewrite.Theory.LogicalFamily.Expr.eval inputs rule.lhs =
+      TensorRewrite.Theory.LogicalFamily.Expr.eval inputs rule.rhs
+'TensorRewrite.Theory.LogicalFamily.rewrite_sound' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.LogicalFamily.word_count : ∀ (width : ℕ),
+  (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word width)).length = 8
+'TensorRewrite.Theory.LogicalFamily.word_count' does not depend on any axioms
+TensorRewrite.Theory.LogicalFamily.word_keys_uniform : ∀ (width : ℕ),
+  List.map TensorRewrite.Theory.LogicalFamily.Rule.key
+      (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word width)) =
+    List.map TensorRewrite.Theory.LogicalFamily.Rule.key
+      (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word 0))
+'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms

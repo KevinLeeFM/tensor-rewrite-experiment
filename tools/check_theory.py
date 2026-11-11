@@ -13,6 +13,8 @@ THEOREMS = {
     'FiniteSum': ['foldl_add_eq_sum', 'reduce_add_eq_fiber_sum', 'reshapeEquiv_apply',
                   'sum_reshape', 'sum_swap', 'sum_add'],
     'ContractionAlgebra': ['dot_add_left', 'dot_add_right'],
+    'LogicalFamily': ['rewrite_sound', 'allRules_complete', 'allRules_nodup',
+                      'word_keys_uniform', 'predicate_count', 'word_count'],
 }
 
 
@@ -40,6 +42,8 @@ def main():
     categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
                   'TensorRewrite/Theory/FiniteSum.lean': 'H',
                   'TensorRewrite/Theory/ContractionAlgebra.lean': 'R',
+                  'TensorRewrite/Theory/LogicalFamily.lean': 'S',
+                  'TensorRewrite/Theory/LogicalFamilyProof.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     rows = []
     for name, category in categories.items():
@@ -61,10 +65,13 @@ def main():
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
                   scope='format-general floating negation; exact finite sums and semiring '
-                        'contraction distributivity; no IEEE reassociation/distributivity claim',
+                        'contraction distributivity and typed logical family; '
+                        'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: ('all supported FloatLib value formats; bit-exact negation; '
                              'flags not observed' if '.FloatNegation.' in name else
+                             'pure predicate/word tensor values; all ranks/extents/word widths; '
+                             'equal-input xor requires value equality' if '.LogicalFamily.' in name else
                              'exact finite sums and ordered reductions under explicitly stated '
                              'AddMonoid/AddCommMonoid and equal-count premises' if '.FiniteSum.' in name
                              else 'arbitrary static contraction plans; Semiring; identity finish; '

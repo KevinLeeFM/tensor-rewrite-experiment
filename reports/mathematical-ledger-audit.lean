@@ -485,3 +485,15 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.FloatNegation.scalar_involution
 #check @TensorRewrite.Theory.FloatNegation.tensor_involution
 #print axioms TensorRewrite.Theory.FloatNegation.tensor_involution
+#check @TensorRewrite.Theory.LogicalFamily.allRules_complete
+#print axioms TensorRewrite.Theory.LogicalFamily.allRules_complete
+#check @TensorRewrite.Theory.LogicalFamily.allRules_nodup
+#print axioms TensorRewrite.Theory.LogicalFamily.allRules_nodup
+#check @TensorRewrite.Theory.LogicalFamily.predicate_count
+#print axioms TensorRewrite.Theory.LogicalFamily.predicate_count
+#check @TensorRewrite.Theory.LogicalFamily.rewrite_sound
+#print axioms TensorRewrite.Theory.LogicalFamily.rewrite_sound
+#check @TensorRewrite.Theory.LogicalFamily.word_count
+#print axioms TensorRewrite.Theory.LogicalFamily.word_count
+#check @TensorRewrite.Theory.LogicalFamily.word_keys_uniform
+#print axioms TensorRewrite.Theory.LogicalFamily.word_keys_uniform
