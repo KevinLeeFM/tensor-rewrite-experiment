@@ -10,3 +10,5 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.FiniteSum.sum_reshape
 #print axioms TensorRewrite.Theory.FiniteSum.sum_swap
 #print axioms TensorRewrite.Theory.FiniteSum.sum_add
+#print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
+#print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_right

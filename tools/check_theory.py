@@ -12,6 +12,7 @@ THEOREMS = {
     'FloatNegation': ['scalar_involution', 'tensor_involution', 'reindex_neg', 'reverse_neg'],
     'FiniteSum': ['foldl_add_eq_sum', 'reduce_add_eq_fiber_sum', 'reshapeEquiv_apply',
                   'sum_reshape', 'sum_swap', 'sum_add'],
+    'ContractionAlgebra': ['dot_add_left', 'dot_add_right'],
 }
 
 
@@ -37,7 +38,9 @@ def main():
             assert axioms <= ALLOWED, (full_name, axioms)
             dependencies[full_name] = sorted(axioms)
     categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
-                  'TensorRewrite/Theory/FiniteSum.lean': 'H', 'TensorRewriteTheory.lean': 'A'}
+                  'TensorRewrite/Theory/FiniteSum.lean': 'H',
+                  'TensorRewrite/Theory/ContractionAlgebra.lean': 'R',
+                  'TensorRewriteTheory.lean': 'A'}
     rows = []
     for name, category in categories.items():
         path = ROOT / name
@@ -57,8 +60,16 @@ def main():
                                'FiniteSum.sum_reshape': 'Mathlib Equiv.sum_comp plus existing index theory',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='all supported FloatLib value formats for negation; exact finite sums '
-                        'under AddMonoid/AddCommMonoid; no IEEE addition reassociation claim',
+                  scope='format-general floating negation; exact finite sums and semiring '
+                        'contraction distributivity; no IEEE reassociation/distributivity claim',
+                  theorem_profiles={
+                      name: ('all supported FloatLib value formats; bit-exact negation; '
+                             'flags not observed' if '.FloatNegation.' in name else
+                             'exact finite sums and ordered reductions under explicitly stated '
+                             'AddMonoid/AddCommMonoid and equal-count premises' if '.FiniteSum.' in name
+                             else 'arbitrary static contraction plans; Semiring; identity finish; '
+                                  'no rounded floating-point algebra instance')
+                      for name in dependencies},
                   audit_stdout=audit.stdout)
     (ROOT / 'reports/theory-progress.json').write_text(json.dumps(report, indent=2)+'\n')
     print('Mathematical theory passed: '+str(len(dependencies))+' theorems; '+str(count)+

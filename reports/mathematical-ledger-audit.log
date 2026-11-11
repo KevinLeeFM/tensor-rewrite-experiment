@@ -1,0 +1,1750 @@
+@TensorRewrite.Pilot.AxisArray.composeLoop_eq_compose : ∀ {rank : ℕ} (left right : TensorRewrite.Pilot.AxisArray rank),
+  left.composeLoop right = (left.compose right).toArray
+'TensorRewrite.Pilot.AxisArray.composeLoop_eq_compose' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.AxisArray.composePrefix_get : ∀ {rank : ℕ} (left right : TensorRewrite.Pilot.AxisArray rank)
+  (count : ℕ) (bound : count ≤ rank) (i : ℕ) (hi : i < count),
+  (left.composePrefix right count bound)[i] = left[right[⟨i, ⋯⟩]]
+'TensorRewrite.Pilot.AxisArray.composePrefix_get' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.AxisArray.composePrefix_size : ∀ {rank : ℕ} (left right : TensorRewrite.Pilot.AxisArray rank)
+  (count : ℕ) (bound : count ≤ rank), (left.composePrefix right count bound).size = count
+'TensorRewrite.Pilot.AxisArray.composePrefix_size' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.AxisArray.compose_get : ∀ {rank : ℕ} (left right : TensorRewrite.Pilot.AxisArray rank)
+  (i : Fin rank), (left.compose right)[i] = left[right[i]]
+'TensorRewrite.Pilot.AxisArray.compose_get' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.AxisArray.decode_preserves : ∀ {rank : ℕ} (raw : Vector ℤ rank)
+  (valid : ∀ (i : Fin rank), 0 ≤ raw[i] ∧ raw[i] < ↑rank) (i : Fin rank),
+  ↑↑(TensorRewrite.Pilot.AxisArray.decode raw valid)[i] = raw[i]
+'TensorRewrite.Pilot.AxisArray.decode_preserves' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.AxisArray.ofPermutation_comp : ∀ {rank : ℕ} (p q : TensorRewrite.Pilot.AxisPermutation rank),
+  TensorRewrite.Pilot.AxisArray.ofPermutation (p.comp q) =
+    (TensorRewrite.Pilot.AxisArray.ofPermutation p).compose (TensorRewrite.Pilot.AxisArray.ofPermutation q)
+'TensorRewrite.Pilot.AxisArray.ofPermutation_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.AxisArray.ofPermutation_get : ∀ {rank : ℕ} (p : TensorRewrite.Pilot.AxisPermutation rank)
+  (i : Fin rank), (TensorRewrite.Pilot.AxisArray.ofPermutation p)[i] = p.outputToInput i
+'TensorRewrite.Pilot.AxisArray.ofPermutation_get' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.and_lhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a &&& b) (TensorRewrite.Pilot.Tensor.constant 0#width) x =
+    TensorRewrite.Pilot.Tensor.constant 0#width
+'TensorRewrite.Pilot.Bitwise.and_lhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.and_rhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a &&& b) x (TensorRewrite.Pilot.Tensor.constant 0#width) =
+    TensorRewrite.Pilot.Tensor.constant 0#width
+'TensorRewrite.Pilot.Bitwise.and_rhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.not_not : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map (fun a => ~~~a) (TensorRewrite.Pilot.Tensor.map (fun a => ~~~a) x) = x
+'TensorRewrite.Pilot.Bitwise.not_not' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.or_lhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a ||| b) (TensorRewrite.Pilot.Tensor.constant 0#width) x = x
+'TensorRewrite.Pilot.Bitwise.or_lhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.or_rhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a ||| b) x (TensorRewrite.Pilot.Tensor.constant 0#width) = x
+'TensorRewrite.Pilot.Bitwise.or_rhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.xor_lhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a ^^^ b) (TensorRewrite.Pilot.Tensor.constant 0#width) x = x
+'TensorRewrite.Pilot.Bitwise.xor_lhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.xor_rhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a ^^^ b) x (TensorRewrite.Pilot.Tensor.constant 0#width) = x
+'TensorRewrite.Pilot.Bitwise.xor_rhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Bitwise.xor_self : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun a b => a ^^^ b) x x = TensorRewrite.Pilot.Tensor.constant 0#width
+'TensorRewrite.Pilot.Bitwise.xor_self' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.and_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ and (TensorRewrite.Pilot.Tensor.constant false) x =
+    TensorRewrite.Pilot.Tensor.constant false
+'TensorRewrite.Pilot.Boolean.and_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.and_lhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ and (TensorRewrite.Pilot.Tensor.constant true) x = x
+'TensorRewrite.Pilot.Boolean.and_lhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.and_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ and x (TensorRewrite.Pilot.Tensor.constant false) =
+    TensorRewrite.Pilot.Tensor.constant false
+'TensorRewrite.Pilot.Boolean.and_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.and_rhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ and x (TensorRewrite.Pilot.Tensor.constant true) = x
+'TensorRewrite.Pilot.Boolean.and_rhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.not_not : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map not (TensorRewrite.Pilot.Tensor.map not x) = x
+'TensorRewrite.Pilot.Boolean.not_not' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.or_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ or (TensorRewrite.Pilot.Tensor.constant false) x = x
+'TensorRewrite.Pilot.Boolean.or_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.or_lhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ or (TensorRewrite.Pilot.Tensor.constant true) x =
+    TensorRewrite.Pilot.Tensor.constant true
+'TensorRewrite.Pilot.Boolean.or_lhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.or_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ or x (TensorRewrite.Pilot.Tensor.constant false) = x
+'TensorRewrite.Pilot.Boolean.or_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.or_rhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ or x (TensorRewrite.Pilot.Tensor.constant true) =
+    TensorRewrite.Pilot.Tensor.constant true
+'TensorRewrite.Pilot.Boolean.or_rhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.xor_lhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ xor (TensorRewrite.Pilot.Tensor.constant false) x = x
+'TensorRewrite.Pilot.Boolean.xor_lhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.xor_rhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ xor x (TensorRewrite.Pilot.Tensor.constant false) = x
+'TensorRewrite.Pilot.Boolean.xor_rhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Boolean.xor_self : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (x : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Pilot.Tensor.map₂ xor x x = TensorRewrite.Pilot.Tensor.constant false
+'TensorRewrite.Pilot.Boolean.xor_self' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.and_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env
+'TensorRewrite.Pilot.BooleanDag.and_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.and_lhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env
+'TensorRewrite.Pilot.BooleanDag.and_lhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.and_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env
+'TensorRewrite.Pilot.BooleanDag.and_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.and_rhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env
+'TensorRewrite.Pilot.BooleanDag.and_rhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.not_not : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.map not (env lhs) →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalNot [rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env
+'TensorRewrite.Pilot.BooleanDag.not_not' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.or_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env
+'TensorRewrite.Pilot.BooleanDag.or_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.or_lhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env
+'TensorRewrite.Pilot.BooleanDag.or_lhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.or_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env
+'TensorRewrite.Pilot.BooleanDag.or_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.or_rhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env
+'TensorRewrite.Pilot.BooleanDag.or_rhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.xor_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalXor [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env
+'TensorRewrite.Pilot.BooleanDag.xor_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.xor_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalXor [lhs, rhs]) body)
+        env =
+      TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env
+'TensorRewrite.Pilot.BooleanDag.xor_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.BooleanDag.xor_self : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  (body : TensorRewrite.Pilot.Dag.Program TensorRewrite.Pilot.BooleanDag.Opcode (scope + 1))
+  (inputs : ℕ → Option (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool) (lhs : Fin scope),
+  TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+      (TensorRewrite.Pilot.Dag.Program.bind
+        (TensorRewrite.Pilot.Dag.Node.operation TensorRewrite.Pilot.BooleanDag.Opcode.logicalXor [lhs, lhs]) body)
+      env =
+    TensorRewrite.Pilot.Dag.Program.eval (TensorRewrite.Pilot.BooleanDag.meaning shape) inputs
+      (TensorRewrite.Pilot.Dag.Program.bind
+        (TensorRewrite.Pilot.Dag.Node.operation (TensorRewrite.Pilot.BooleanDag.Opcode.constant false) []) body)
+      env
+'TensorRewrite.Pilot.BooleanDag.xor_self' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ConstantGuard.DenseLiteral.matchesAll_sound : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (literal : TensorRewrite.Pilot.ConstantGuard.DenseLiteral shape) (value : Bool),
+  TensorRewrite.Pilot.ConstantGuard.matchesAll value literal.storage = true →
+    literal.eval = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.ConstantGuard.DenseLiteral.matchesAll_sound' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ConstantGuard.View.isAll_sound : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (view : TensorRewrite.Pilot.ConstantGuard.View rank shape) (value : Bool),
+  TensorRewrite.Pilot.ConstantGuard.View.isAll value view = true → view.eval = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.ConstantGuard.View.isAll_sound' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.ConstantGuard.matchesAll_all : ∀ (value : Bool) (storage : List Bool),
+  TensorRewrite.Pilot.ConstantGuard.matchesAll value storage = true → ∀ element ∈ storage, element = value
+'TensorRewrite.Pilot.ConstantGuard.matchesAll_all' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty : ∀ {batch left right contracting : ℕ}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.lhsShape = 0 →
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.contractShape = 0
+'TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty : ∀ {batch left right contracting : ℕ}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.rhsShape = 0 →
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.contractShape = 0
+'TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Pilot.Contraction.dot_empty_contract : ∀ {batch left right contracting : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting) (add : Acc → Acc → Acc) (zero : Acc)
+  (multiply : L → R → Acc) (finish : Acc → Result) (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L)
+  (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.contractShape = 0 →
+    TensorRewrite.Pilot.Contraction.dotTensor plan add zero multiply finish lhs rhs =
+      TensorRewrite.Pilot.Tensor.constant (finish zero)
+'TensorRewrite.Pilot.Contraction.dot_empty_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Contraction.dot_empty_lhs : ∀ {batch left right contracting : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting) (add : Acc → Acc → Acc) (zero : Acc)
+  (multiply : L → R → Acc) (finish : Acc → Result) (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L)
+  (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.lhsShape = 0 →
+    TensorRewrite.Pilot.Contraction.dotTensor plan add zero multiply finish lhs rhs =
+      TensorRewrite.Pilot.Tensor.constant (finish zero)
+'TensorRewrite.Pilot.Contraction.dot_empty_lhs' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Contraction.dot_empty_output : ∀ {batch left right contracting : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting) (add : Acc → Acc → Acc) (zero : Acc)
+  (multiply : L → R → Acc) (finish : Acc → Result) (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L)
+  (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape = 0 →
+    TensorRewrite.Pilot.Contraction.dotTensor plan add zero multiply finish lhs rhs =
+      TensorRewrite.Pilot.Tensor.constant (finish zero)
+'TensorRewrite.Pilot.Contraction.dot_empty_output' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Contraction.dot_empty_rhs : ∀ {batch left right contracting : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting) (add : Acc → Acc → Acc) (zero : Acc)
+  (multiply : L → R → Acc) (finish : Acc → Result) (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L)
+  (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.rhsShape = 0 →
+    TensorRewrite.Pilot.Contraction.dotTensor plan add zero multiply finish lhs rhs =
+      TensorRewrite.Pilot.Tensor.constant (finish zero)
+'TensorRewrite.Pilot.Contraction.dot_empty_rhs' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Contraction.dot_no_contract : ∀ {L R Acc Result : Type} {batch left right : ℕ}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right 0) (add : Acc → Acc → Acc) (zero : Acc)
+  (multiply : L → R → Acc) (finish : Acc → Result),
+  (∀ (value : Acc), add zero value = value) →
+    ∀ (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L) (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R),
+      TensorRewrite.Pilot.Contraction.dotTensor plan add zero multiply finish lhs rhs =
+        TensorRewrite.Pilot.Contraction.outerTensor plan multiply finish lhs rhs
+'TensorRewrite.Pilot.Contraction.dot_no_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity : ∀ {L R Acc Result : Type} {batch left right : ℕ}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right 0) (add : Acc → Acc → Acc) (zero : Acc)
+  (multiply : L → R → Acc) (finish : Acc → Result),
+  (∀ (value : Acc), finish (add zero value) = finish value) →
+    ∀ (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L) (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R),
+      TensorRewrite.Pilot.Contraction.dotTensor plan add zero multiply finish lhs rhs =
+        TensorRewrite.Pilot.Contraction.outerTensor plan multiply finish lhs rhs
+'TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Pilot.Contraction.firstIndex_appendIndex : ∀ {left right : ℕ} {lhs : TensorRewrite.Pilot.Shape left}
+  {rhs : TensorRewrite.Pilot.Shape right} (first : TensorRewrite.Pilot.Index lhs)
+  (second : TensorRewrite.Pilot.Index rhs),
+  TensorRewrite.Pilot.Contraction.firstIndex (TensorRewrite.Pilot.Contraction.appendIndex first second) = first
+'TensorRewrite.Pilot.Contraction.firstIndex_appendIndex' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Contraction.secondIndex_appendIndex : ∀ {left right : ℕ} {lhs : TensorRewrite.Pilot.Shape left}
+  {rhs : TensorRewrite.Pilot.Shape right} (first : TensorRewrite.Pilot.Index lhs)
+  (second : TensorRewrite.Pilot.Index rhs),
+  TensorRewrite.Pilot.Contraction.secondIndex (TensorRewrite.Pilot.Contraction.appendIndex first second) = second
+'TensorRewrite.Pilot.Contraction.secondIndex_appendIndex' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Contraction.terms_length : ∀ {batch left right contracting : ℕ}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting) {L R Acc : Type} (multiply : L → R → Acc)
+  (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L) (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  (TensorRewrite.Pilot.Contraction.terms plan multiply lhs rhs output).length =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.contractShape
+'TensorRewrite.Pilot.Contraction.terms_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Contraction.terms_no_contract : ∀ {batch left right : ℕ}
+  (plan : TensorRewrite.Pilot.Contraction.Plan batch left right 0) {L R Acc : Type} (multiply : L → R → Acc)
+  (lhs : TensorRewrite.Pilot.Tensor plan.lhsShape L) (rhs : TensorRewrite.Pilot.Tensor plan.rhsShape R)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.Contraction.terms plan multiply lhs rhs output =
+    [multiply (lhs (plan.lhsIndex output fun axis => axis.elim0)) (rhs (plan.rhsIndex output fun axis => axis.elim0))]
+'TensorRewrite.Pilot.Contraction.terms_no_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs : ∀ {Op : Type u_1} {Value : Type u_2} {State : Type u_3}
+  {Error : Type u_4} {scope target : ℕ} (node : TensorRewrite.Pilot.Dag.Node Op scope) (refs : Fin scope → Fin target)
+  (meaning : Op → List Value → State → TensorRewrite.Pilot.Dag.Outcome Value State Error)
+  (inputs : ℕ → Except Error Value) (env : Fin target → Value) (state : State),
+  TensorRewrite.Pilot.Dag.Node.evalEffectful meaning inputs env (TensorRewrite.Pilot.Dag.Node.mapRefs refs node) state =
+    TensorRewrite.Pilot.Dag.Node.evalEffectful meaning inputs (fun ref => env (refs ref)) node state
+'TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs' depends on axioms: [propext]
+@TensorRewrite.Pilot.Dag.Node.eval_mapRefs : ∀ {Op : Type u_1} {Value : Type u_2} {scope target : ℕ}
+  (node : TensorRewrite.Pilot.Dag.Node Op scope) (refs : Fin scope → Fin target)
+  (meaning : Op → List Value → Option Value) (inputs : ℕ → Option Value) (env : Fin target → Value),
+  TensorRewrite.Pilot.Dag.Node.eval meaning inputs env (TensorRewrite.Pilot.Dag.Node.mapRefs refs node) =
+    TensorRewrite.Pilot.Dag.Node.eval meaning inputs (fun ref => env (refs ref)) node
+'TensorRewrite.Pilot.Dag.Node.eval_mapRefs' depends on axioms: [propext]
+@TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_equal : ∀ {Op : Type u_1} {Value : Type u_2} {State : Type u_3}
+  {Error : Type u_4} {scope : ℕ} (node : TensorRewrite.Pilot.Dag.Node Op scope)
+  (body : TensorRewrite.Pilot.Dag.Program Op (scope + 1)) (replacement : Fin scope)
+  (meaning : Op → List Value → State → TensorRewrite.Pilot.Dag.Outcome Value State Error)
+  (inputs : ℕ → Except Error Value) (env : Fin scope → Value) (state : State),
+  TensorRewrite.Pilot.Dag.Node.evalEffectful meaning inputs env node state =
+      { result := Except.ok (env replacement), state := state } →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs (TensorRewrite.Pilot.Dag.Program.bind node body) env
+        state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef replacement) body) env state
+'TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_equal' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_unused : ∀ {Op : Type u_1} {Value : Type u_2} {State : Type u_3}
+  {Error : Type u_4} {scope : ℕ} (node : TensorRewrite.Pilot.Dag.Node Op scope)
+  (body : TensorRewrite.Pilot.Dag.Program Op scope)
+  (meaning : Op → List Value → State → TensorRewrite.Pilot.Dag.Outcome Value State Error)
+  (inputs : ℕ → Except Error Value) (env : Fin scope → Value) (state : State) (value : Value),
+  TensorRewrite.Pilot.Dag.Node.evalEffectful meaning inputs env node state =
+      { result := Except.ok value, state := state } →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs
+        (TensorRewrite.Pilot.Dag.Program.bind node (TensorRewrite.Pilot.Dag.Program.mapInputs Fin.succ body)) env
+        state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs body env state
+'TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_unused' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Dag.Program.evalEffectful_mapInputs : ∀ {Op : Type u_1} {Value : Type u_2} {State : Type u_3}
+  {Error : Type u_4} {scope target : ℕ} (program : TensorRewrite.Pilot.Dag.Program Op scope)
+  (refs : Fin scope → Fin target)
+  (meaning : Op → List Value → State → TensorRewrite.Pilot.Dag.Outcome Value State Error)
+  (inputs : ℕ → Except Error Value) (env : Fin target → Value) (state : State),
+  TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs (TensorRewrite.Pilot.Dag.Program.mapInputs refs program)
+      env state =
+    TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs program (fun ref => env (refs ref)) state
+'TensorRewrite.Pilot.Dag.Program.evalEffectful_mapInputs' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Dag.Program.evalEffectful_replace_equal : ∀ {Op : Type u_1} {Value : Type u_2} {State : Type u_3}
+  {Error : Type u_4} {scope : ℕ} (before after : TensorRewrite.Pilot.Dag.Node Op scope)
+  (body : TensorRewrite.Pilot.Dag.Program Op (scope + 1))
+  (meaning : Op → List Value → State → TensorRewrite.Pilot.Dag.Outcome Value State Error)
+  (inputs : ℕ → Except Error Value) (env : Fin scope → Value) (state : State),
+  TensorRewrite.Pilot.Dag.Node.evalEffectful meaning inputs env before state =
+      TensorRewrite.Pilot.Dag.Node.evalEffectful meaning inputs env after state →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs (TensorRewrite.Pilot.Dag.Program.bind before body) env
+        state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful meaning inputs (TensorRewrite.Pilot.Dag.Program.bind after body) env
+        state
+'TensorRewrite.Pilot.Dag.Program.evalEffectful_replace_equal' depends on axioms: [propext]
+@TensorRewrite.Pilot.Dag.Program.eval_delete_equal : ∀ {Op : Type u_1} {Value : Type u_2} {scope : ℕ}
+  (node : TensorRewrite.Pilot.Dag.Node Op scope) (body : TensorRewrite.Pilot.Dag.Program Op (scope + 1))
+  (replacement : Fin scope) (meaning : Op → List Value → Option Value) (inputs : ℕ → Option Value)
+  (env : Fin scope → Value),
+  TensorRewrite.Pilot.Dag.Node.eval meaning inputs env node = some (env replacement) →
+    TensorRewrite.Pilot.Dag.Program.eval meaning inputs (TensorRewrite.Pilot.Dag.Program.bind node body) env =
+      TensorRewrite.Pilot.Dag.Program.eval meaning inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef replacement) body) env
+'TensorRewrite.Pilot.Dag.Program.eval_delete_equal' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Dag.Program.eval_mapInputs : ∀ {Op : Type u_1} {Value : Type u_2} {scope target : ℕ}
+  (program : TensorRewrite.Pilot.Dag.Program Op scope) (refs : Fin scope → Fin target)
+  (meaning : Op → List Value → Option Value) (inputs : ℕ → Option Value) (env : Fin target → Value),
+  TensorRewrite.Pilot.Dag.Program.eval meaning inputs (TensorRewrite.Pilot.Dag.Program.mapInputs refs program) env =
+    TensorRewrite.Pilot.Dag.Program.eval meaning inputs program fun ref => env (refs ref)
+'TensorRewrite.Pilot.Dag.Program.eval_mapInputs' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Dag.Program.eval_replace_equal : ∀ {Op : Type u_1} {Value : Type u_2} {scope : ℕ}
+  (before after : TensorRewrite.Pilot.Dag.Node Op scope) (body : TensorRewrite.Pilot.Dag.Program Op (scope + 1))
+  (meaning : Op → List Value → Option Value) (inputs : ℕ → Option Value) (env : Fin scope → Value),
+  TensorRewrite.Pilot.Dag.Node.eval meaning inputs env before =
+      TensorRewrite.Pilot.Dag.Node.eval meaning inputs env after →
+    TensorRewrite.Pilot.Dag.Program.eval meaning inputs (TensorRewrite.Pilot.Dag.Program.bind before body) env =
+      TensorRewrite.Pilot.Dag.Program.eval meaning inputs (TensorRewrite.Pilot.Dag.Program.bind after body) env
+'TensorRewrite.Pilot.Dag.Program.eval_replace_equal' depends on axioms: [propext]
+@TensorRewrite.Pilot.Dag.extend_liftRefs : ∀ {Value : Type u_1} {scope target : ℕ} (refs : Fin scope → Fin target)
+  (value : Value) (env : Fin target → Value),
+  (fun ref => TensorRewrite.Pilot.Dag.extend value env (TensorRewrite.Pilot.Dag.liftRefs refs ref)) =
+    TensorRewrite.Pilot.Dag.extend value fun ref => env (refs ref)
+'TensorRewrite.Pilot.Dag.extend_liftRefs' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.address_transpose_val : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank} (permutation : TensorRewrite.Pilot.AxisPermutation rank)
+  (inputLayout outputLayout : TensorRewrite.Pilot.DenseLayout rank)
+  (extents : ∀ (axis : Fin rank), outputShape axis = inputShape (permutation.outputToInput axis)),
+  TensorRewrite.Pilot.DenseLayout.MinorOrderMatches permutation inputLayout outputLayout →
+    ∀ (index : TensorRewrite.Pilot.Index outputShape),
+      ↑(inputLayout.address (TensorRewrite.Pilot.Tensor.transposeIndex permutation ⋯ index)) =
+        ↑(outputLayout.address index)
+'TensorRewrite.Pilot.DenseLayout.address_transpose_val' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.fromOrdered_toOrdered : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (layout : TensorRewrite.Pilot.DenseLayout rank) (index : TensorRewrite.Pilot.Index shape),
+  layout.fromOrderedIndex (layout.toOrderedIndex index) = index
+'TensorRewrite.Pilot.DenseLayout.fromOrdered_toOrdered' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.linearize_cast_val : ∀ {rank : ℕ} {left right : TensorRewrite.Pilot.Shape rank}
+  (sameShape : left = right) (index : TensorRewrite.Pilot.Index right),
+  ↑(TensorRewrite.Pilot.LinearIndex.linearize left fun axis => Fin.cast ⋯ (index axis)) =
+    ↑(TensorRewrite.Pilot.LinearIndex.linearize right index)
+'TensorRewrite.Pilot.DenseLayout.linearize_cast_val' depends on axioms: [propext]
+@TensorRewrite.Pilot.DenseLayout.minorOrderMatches_axis : ∀ {rank : ℕ}
+  (permutation : TensorRewrite.Pilot.AxisPermutation rank)
+  (inputLayout outputLayout : TensorRewrite.Pilot.DenseLayout rank),
+  TensorRewrite.Pilot.DenseLayout.MinorOrderMatches permutation inputLayout outputLayout →
+    ∀ (slot : Fin rank),
+      inputLayout.minorToMajor.outputToInput slot =
+        permutation.outputToInput (outputLayout.minorToMajor.outputToInput slot)
+'TensorRewrite.Pilot.DenseLayout.minorOrderMatches_axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.minorOrderMatches_of_axis : ∀ {rank : ℕ}
+  (permutation : TensorRewrite.Pilot.AxisPermutation rank)
+  (inputLayout outputLayout : TensorRewrite.Pilot.DenseLayout rank),
+  (∀ (slot : Fin rank),
+      inputLayout.minorToMajor.outputToInput slot =
+        permutation.outputToInput (outputLayout.minorToMajor.outputToInput slot)) →
+    TensorRewrite.Pilot.DenseLayout.MinorOrderMatches permutation inputLayout outputLayout
+'TensorRewrite.Pilot.DenseLayout.minorOrderMatches_of_axis' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.orderedShape_transpose : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank} (permutation : TensorRewrite.Pilot.AxisPermutation rank)
+  (inputLayout outputLayout : TensorRewrite.Pilot.DenseLayout rank),
+  (∀ (axis : Fin rank), outputShape axis = inputShape (permutation.outputToInput axis)) →
+    TensorRewrite.Pilot.DenseLayout.MinorOrderMatches permutation inputLayout outputLayout →
+      inputLayout.orderedShape inputShape = outputLayout.orderedShape outputShape
+'TensorRewrite.Pilot.DenseLayout.orderedShape_transpose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.read_write : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (layout : TensorRewrite.Pilot.DenseLayout rank) (input : TensorRewrite.Pilot.Tensor shape α),
+  layout.read (layout.write input) = input
+'TensorRewrite.Pilot.DenseLayout.read_write' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.toOrdered_fromOrdered : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (layout : TensorRewrite.Pilot.DenseLayout rank) (index : TensorRewrite.Pilot.Index (layout.orderedShape shape)),
+  layout.toOrderedIndex (layout.fromOrderedIndex index) = index
+'TensorRewrite.Pilot.DenseLayout.toOrdered_fromOrdered' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (permutation : TensorRewrite.Pilot.AxisPermutation rank)
+  (inputLayout outputLayout : TensorRewrite.Pilot.DenseLayout rank)
+  (extents : ∀ (axis : Fin rank), outputShape axis = inputShape (permutation.outputToInput axis))
+  (compatible : TensorRewrite.Pilot.DenseLayout.MinorOrderMatches permutation inputLayout outputLayout)
+  (input : TensorRewrite.Pilot.Tensor inputShape α),
+  TensorRewrite.Pilot.Tensor.transpose permutation ⋯ input = inputLayout.bitcastTensor outputLayout outputShape ⋯ input
+'TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DenseLayout.transpose_extents : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank} (permutation : TensorRewrite.Pilot.AxisPermutation rank),
+  (∀ (axis : Fin rank), outputShape axis = inputShape (permutation.outputToInput axis)) →
+    ∀ (axis : Fin rank), outputShape (permutation.inputToOutput axis) = inputShape axis
+'TensorRewrite.Pilot.DenseLayout.transpose_extents' does not depend on any axioms
+@TensorRewrite.Pilot.DenseLayout.write_read : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (layout : TensorRewrite.Pilot.DenseLayout rank) (buffer : layout.Buffer shape α),
+  layout.write (layout.read buffer) = buffer
+'TensorRewrite.Pilot.DenseLayout.write_read' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DependencyOrder.Graph.isSchedule_of_predecessor_inclusion : ∀ {nodes : ℕ}
+  (before after : TensorRewrite.Pilot.DependencyOrder.Graph nodes),
+  (∀ (node predecessor : Fin nodes), predecessor ∈ before.predecessors node → predecessor ∈ after.predecessors node) →
+    ∀ (order : List (Fin nodes)), after.IsSchedule order → before.IsSchedule order
+'TensorRewrite.Pilot.DependencyOrder.Graph.isSchedule_of_predecessor_inclusion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Pilot.DependencyOrder.Graph.isTrace_of_predecessor_inclusion : ∀ {nodes : ℕ}
+  (before after : TensorRewrite.Pilot.DependencyOrder.Graph nodes),
+  (∀ (node predecessor : Fin nodes), predecessor ∈ before.predecessors node → predecessor ∈ after.predecessors node) →
+    ∀ (labels : Fin nodes → Option String) (trace : List String),
+      after.IsTrace labels trace → before.IsTrace labels trace
+'TensorRewrite.Pilot.DependencyOrder.Graph.isTrace_of_predecessor_inclusion' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Pilot.DynamicIndex.clampStart_bounds : ∀ (extent width : ℕ),
+  width ≤ extent →
+    ∀ (start : ℤ),
+      0 ≤ TensorRewrite.Pilot.DynamicIndex.clampStart extent width start ∧
+        TensorRewrite.Pilot.DynamicIndex.clampStart extent width start ≤ ↑extent - ↑width
+'TensorRewrite.Pilot.DynamicIndex.clampStart_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.DynamicIndex.clampStart_combined : ∀ (extent intermediate width : ℕ),
+  intermediate ≤ extent →
+    width ≤ intermediate →
+      ∀ (inner outer : ℤ),
+        TensorRewrite.Pilot.DynamicIndex.clampStart extent width
+            (TensorRewrite.Pilot.DynamicIndex.combinedStart extent intermediate width inner outer) =
+          TensorRewrite.Pilot.DynamicIndex.combinedStart extent intermediate width inner outer
+'TensorRewrite.Pilot.DynamicIndex.clampStart_combined' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.DynamicIndex.clampStart_full_extent : ∀ (extent : ℕ) (start : ℤ),
+  TensorRewrite.Pilot.DynamicIndex.clampStart extent extent start = 0
+'TensorRewrite.Pilot.DynamicIndex.clampStart_full_extent' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.DynamicIndex.combinedStart_bounds : ∀ (extent intermediate width : ℕ),
+  intermediate ≤ extent →
+    width ≤ intermediate →
+      ∀ (inner outer : ℤ),
+        0 ≤ TensorRewrite.Pilot.DynamicIndex.combinedStart extent intermediate width inner outer ∧
+          TensorRewrite.Pilot.DynamicIndex.combinedStart extent intermediate width inner outer ≤ ↑extent - ↑width
+'TensorRewrite.Pilot.DynamicIndex.combinedStart_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.DynamicIndex.coordinate_bounds : ∀ (extent width : ℕ),
+  width ≤ extent →
+    ∀ (start index : ℤ),
+      0 ≤ index →
+        index < ↑width →
+          0 ≤ TensorRewrite.Pilot.DynamicIndex.clampStart extent width start + index ∧
+            TensorRewrite.Pilot.DynamicIndex.clampStart extent width start + index < ↑extent
+'TensorRewrite.Pilot.DynamicIndex.coordinate_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_compose : ∀ {rank : ℕ}
+  {inputShape middleShape outputShape : TensorRewrite.Pilot.Shape rank} (inner outer : Fin rank → ℤ)
+  (innerFits : ∀ (axis : Fin rank), middleShape axis ≤ inputShape axis)
+  (outerFits : ∀ (axis : Fin rank), outputShape axis ≤ middleShape axis)
+  (index : TensorRewrite.Pilot.Index outputShape),
+  TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex inner innerFits
+      (TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex outer outerFits index) =
+    TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex
+      (fun axis =>
+        TensorRewrite.Pilot.DynamicIndex.combinedStart (inputShape axis) (middleShape axis) (outputShape axis)
+          (inner axis) (outer axis))
+      ⋯ index
+'TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_val : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank} (starts : Fin rank → ℤ)
+  (fits : ∀ (axis : Fin rank), outputShape axis ≤ inputShape axis) (index : TensorRewrite.Pilot.Index outputShape)
+  (axis : Fin rank),
+  ↑↑(TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex starts fits index axis) =
+    TensorRewrite.Pilot.DynamicIndex.clampStart (inputShape axis) (outputShape axis) (starts axis) + ↑↑(index axis)
+'TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_val' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DynamicIndex.dynamicSliceView_constant : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank}
+  (operand : TensorRewrite.Pilot.ConstantGuard.View rank inputShape) (starts : Fin rank → ℤ)
+  (fits : ∀ (axis : Fin rank), outputShape axis ≤ inputShape axis) (value : Bool),
+  TensorRewrite.Pilot.ConstantGuard.View.isAll value operand = true →
+    (TensorRewrite.Pilot.DynamicIndex.dynamicSliceView operand starts fits).eval =
+      TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.DynamicIndex.dynamicSliceView_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue : ∀ {width : ℕ} (bits : BitVec width),
+  2 * bits.toNat < 2 ^ width →
+    TensorRewrite.Pilot.DynamicIndex.signedValue bits = TensorRewrite.Pilot.DynamicIndex.unsignedValue bits
+'TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue' depends on axioms: [propext]
+@TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose : ∀ {rank : ℕ}
+  {inputShape middleShape outputShape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (input : TensorRewrite.Pilot.Tensor inputShape α) (inner outer : Fin rank → ℤ)
+  (innerFits : ∀ (axis : Fin rank), middleShape axis ≤ inputShape axis)
+  (outerFits : ∀ (axis : Fin rank), outputShape axis ≤ middleShape axis),
+  TensorRewrite.Pilot.DynamicIndex.sliceTensor (TensorRewrite.Pilot.DynamicIndex.sliceTensor input inner innerFits)
+      outer outerFits =
+    TensorRewrite.Pilot.DynamicIndex.sliceTensor input
+      (fun axis =>
+        TensorRewrite.Pilot.DynamicIndex.combinedStart (inputShape axis) (middleShape axis) (outputShape axis)
+          (inner axis) (outer axis))
+      ⋯
+'TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalAnd) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.eval_delete_of_pure : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (opcode : TensorRewrite.Pilot.BooleanDag.Opcode) (operands : List (Fin scope))
+  (replacement : Fin scope),
+  TensorRewrite.Pilot.BooleanDag.meaning shape opcode (List.map env operands) = some (env replacement) →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl opcode) operands) body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef replacement) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.eval_delete_of_pure' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.eval_replace_of_pure : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (before after : TensorRewrite.Pilot.BooleanDag.Opcode)
+  (beforeOperands afterOperands : List (Fin scope)),
+  TensorRewrite.Pilot.BooleanDag.meaning shape before (List.map env beforeOperands) =
+      TensorRewrite.Pilot.BooleanDag.meaning shape after (List.map env afterOperands) →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl before) beforeOperands)
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl after) afterOperands)
+          body)
+        env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.eval_replace_of_pure' depends on axioms: [propext]
+@TensorRewrite.Pilot.EffectfulBooleanDag.not_not : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.map not (env lhs) →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalNot) [rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.not_not' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant true →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalOr) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env lhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalXor) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef rhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {scope : ℕ} {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs rhs : Fin scope),
+  env rhs = TensorRewrite.Pilot.Tensor.constant false →
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.bind
+          (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalXor) [lhs, rhs])
+          body)
+        env state =
+      TensorRewrite.Pilot.Dag.Program.evalEffectful
+        (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+        (TensorRewrite.Pilot.Dag.Program.mapInputs (TensorRewrite.Pilot.Dag.dropRef lhs) body) env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.EffectfulBooleanDag.xor_self : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {scope : ℕ}
+  {External State Error : Type}
+  (body : TensorRewrite.Pilot.Dag.Program (TensorRewrite.Pilot.BooleanDag.Opcode ⊕ External) (scope + 1))
+  (inputs : ℕ → Except Error (TensorRewrite.Pilot.Tensor shape Bool))
+  (env : Fin scope → TensorRewrite.Pilot.Tensor shape Bool)
+  (external :
+    External →
+      List (TensorRewrite.Pilot.Tensor shape Bool) →
+        State → TensorRewrite.Pilot.Dag.Outcome (TensorRewrite.Pilot.Tensor shape Bool) State Error)
+  (invalidArity : Error) (state : State) (lhs : Fin scope),
+  TensorRewrite.Pilot.Dag.Program.evalEffectful
+      (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+      (TensorRewrite.Pilot.Dag.Program.bind
+        (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl TensorRewrite.Pilot.BooleanDag.Opcode.logicalXor) [lhs, lhs])
+        body)
+      env state =
+    TensorRewrite.Pilot.Dag.Program.evalEffectful
+      (TensorRewrite.Pilot.EffectfulBooleanDag.meaning shape external invalidArity) inputs
+      (TensorRewrite.Pilot.Dag.Program.bind
+        (TensorRewrite.Pilot.Dag.Node.operation (Sum.inl (TensorRewrite.Pilot.BooleanDag.Opcode.constant false)) [])
+        body)
+      env state
+'TensorRewrite.Pilot.EffectfulBooleanDag.xor_self' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.FiniteProduct.column_join : ∀ {rows columns : ℕ} (r : Fin rows) (c : Fin columns),
+  TensorRewrite.Pilot.FiniteProduct.column (TensorRewrite.Pilot.FiniteProduct.join r c) = c
+'TensorRewrite.Pilot.FiniteProduct.column_join' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.FiniteProduct.join_row_column : ∀ {rows columns : ℕ} (position : Fin (rows * columns)),
+  TensorRewrite.Pilot.FiniteProduct.join (TensorRewrite.Pilot.FiniteProduct.row position)
+      (TensorRewrite.Pilot.FiniteProduct.column position) =
+    position
+'TensorRewrite.Pilot.FiniteProduct.join_row_column' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.FiniteProduct.row_join : ∀ {rows columns : ℕ} (r : Fin rows) (c : Fin columns),
+  TensorRewrite.Pilot.FiniteProduct.row (TensorRewrite.Pilot.FiniteProduct.join r c) = r
+'TensorRewrite.Pilot.FiniteProduct.row_join' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects : ∀
+  (semantics :
+    TensorRewrite.Pilot.Float32Exceptional.Bits →
+      TensorRewrite.Pilot.Float32Exceptional.Bits → TensorRewrite.Pilot.Float32Exceptional.Bits → Prop),
+  (∀ (lhs rhs output : TensorRewrite.Pilot.Float32Exceptional.Bits),
+      semantics lhs rhs output → TensorRewrite.Pilot.Float32Exceptional.MulCompatible lhs rhs output) →
+    ¬semantics (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false) (2139095040#32)
+        (TensorRewrite.Pilot.Float32Exceptional.rewritten false 2139095040#32)
+'TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs : ∀
+  (mul :
+    TensorRewrite.Pilot.Float32Exceptional.Bits →
+      TensorRewrite.Pilot.Float32Exceptional.Bits → TensorRewrite.Pilot.Float32Exceptional.Bits),
+  (∀ (lhs rhs : TensorRewrite.Pilot.Float32Exceptional.Bits),
+      TensorRewrite.Pilot.Float32Exceptional.MulCompatible lhs rhs (mul lhs rhs)) →
+    mul (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false) 2139095040#32 ≠
+      TensorRewrite.Pilot.Float32Exceptional.rewritten false 2139095040#32
+'TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+    (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false) (2139095040#32)
+    (TensorRewrite.Pilot.Float32Exceptional.rewritten false 2139095040#32)
+'TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.false_nan_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+    (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false) (2143289344#32)
+    (TensorRewrite.Pilot.Float32Exceptional.rewritten false 2143289344#32)
+'TensorRewrite.Pilot.Float32Exceptional.false_nan_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.false_neg_inf_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+    (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false) (4286578688#32)
+    (TensorRewrite.Pilot.Float32Exceptional.rewritten false 4286578688#32)
+'TensorRewrite.Pilot.Float32Exceptional.false_neg_inf_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.false_nonfinite_refutes : ∀
+  (operand : TensorRewrite.Pilot.Float32Exceptional.Bits),
+  TensorRewrite.Pilot.Float32Exceptional.classify operand = TensorRewrite.Pilot.Float32Exceptional.Class.infinity ∨
+      TensorRewrite.Pilot.Float32Exceptional.classify operand = TensorRewrite.Pilot.Float32Exceptional.Class.nan →
+    ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+        (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false) operand
+        (TensorRewrite.Pilot.Float32Exceptional.rewritten false operand)
+'TensorRewrite.Pilot.Float32Exceptional.false_nonfinite_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.inf_false_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+    (2139095040#32) (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false)
+    (TensorRewrite.Pilot.Float32Exceptional.rewritten false 2139095040#32)
+'TensorRewrite.Pilot.Float32Exceptional.inf_false_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+    (2143289344#32) (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false)
+    (TensorRewrite.Pilot.Float32Exceptional.rewritten false 2143289344#32)
+'TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.MulCompatible
+    (4286578688#32) (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false)
+    (TensorRewrite.Pilot.Float32Exceptional.rewritten false 4286578688#32)
+'TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.not_universally_valid : ¬∀ (p : Bool)
+    (operand : TensorRewrite.Pilot.Float32Exceptional.Bits),
+    TensorRewrite.Pilot.Float32Exceptional.MulCompatible (TensorRewrite.Pilot.Float32Exceptional.convertPredicate p)
+      operand (TensorRewrite.Pilot.Float32Exceptional.rewritten p operand)
+'TensorRewrite.Pilot.Float32Exceptional.not_universally_valid' does not depend on any axioms
+TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes : ¬TensorRewrite.Pilot.Float32Exceptional.TensorMulCompatible
+    (TensorRewrite.Pilot.Tensor.constant (TensorRewrite.Pilot.Float32Exceptional.convertPredicate false))
+    (TensorRewrite.Pilot.Tensor.constant 2139095040#32)
+    (TensorRewrite.Pilot.Tensor.constant (TensorRewrite.Pilot.Float32Exceptional.rewritten false 2139095040#32))
+'TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes' does not depend on any axioms
+@TensorRewrite.Pilot.IndexMaps.broadcastIndex_val : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes inputRank outputRank)
+  (extents : ∀ (axis : Fin inputRank), inputShape axis = outputShape (axes.decode axis))
+  (index : TensorRewrite.Pilot.Index outputShape) (axis : Fin inputRank),
+  ↑(TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents index axis) = ↑(index (axes.decode axis))
+'TensorRewrite.Pilot.IndexMaps.broadcastIndex_val' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.IndexMaps.broadcastView_constant : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank}
+  (operand : TensorRewrite.Pilot.ConstantGuard.View inputRank inputShape)
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes inputRank outputRank)
+  (extents : ∀ (axis : Fin inputRank), inputShape axis = outputShape (axes.decode axis)) (value : Bool),
+  TensorRewrite.Pilot.ConstantGuard.View.isAll value operand = true →
+    (TensorRewrite.Pilot.IndexMaps.broadcastView operand axes extents).eval = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.IndexMaps.broadcastView_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.IndexMaps.sliceIndex_val : ∀ {rank : ℕ} {inputShape outputShape : TensorRewrite.Pilot.Shape rank}
+  (axes : Fin rank → TensorRewrite.Pilot.SliceShape.Axis)
+  (valid :
+    ∀ (axis : Fin rank),
+      TensorRewrite.Pilot.SliceShape.IsWellFormed (↑(inputShape axis)) (↑(outputShape axis)) (axes axis))
+  (index : TensorRewrite.Pilot.Index outputShape) (axis : Fin rank),
+  ↑↑(TensorRewrite.Pilot.IndexMaps.sliceIndex axes valid index axis) =
+    (axes axis).start + (axes axis).stride * ↑↑(index axis)
+'TensorRewrite.Pilot.IndexMaps.sliceIndex_val' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.IndexMaps.sliceView_constant : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank}
+  (operand : TensorRewrite.Pilot.ConstantGuard.View rank inputShape)
+  (axes : Fin rank → TensorRewrite.Pilot.SliceShape.Axis)
+  (valid :
+    ∀ (axis : Fin rank),
+      TensorRewrite.Pilot.SliceShape.IsWellFormed (↑(inputShape axis)) (↑(outputShape axis)) (axes axis))
+  (value : Bool),
+  TensorRewrite.Pilot.ConstantGuard.View.isAll value operand = true →
+    (TensorRewrite.Pilot.IndexMaps.sliceView operand axes valid).eval = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.IndexMaps.sliceView_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.LinearIndex.delinearize_linearize : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (index : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Pilot.LinearIndex.delinearize shape (TensorRewrite.Pilot.LinearIndex.linearize shape index) = index
+'TensorRewrite.Pilot.LinearIndex.delinearize_linearize' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.LinearIndex.linearize_delinearize : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (position : Fin (TensorRewrite.Pilot.LinearIndex.elementCount shape)),
+  TensorRewrite.Pilot.LinearIndex.linearize shape (TensorRewrite.Pilot.LinearIndex.delinearize shape position) =
+    position
+'TensorRewrite.Pilot.LinearIndex.linearize_delinearize' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_assoc : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y z : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y)
+      z =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) y z)
+'TensorRewrite.Pilot.ModularArithmetic.add_assoc' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width smallRank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis))
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)) (c1 c2 : TensorRewrite.Pilot.Tensor smallShape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x
+        (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) c1))
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) c2) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) c1 c2))
+'TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_comm : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) y x
+'TensorRewrite.Pilot.ModularArithmetic.add_comm' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.constant 0#width) x = x
+'TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x (TensorRewrite.Pilot.Tensor.constant 0#width) = x
+'TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) y x)
+      x =
+    y
+'TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) y x) =
+    y
+'TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order : ∀ {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} {width smallRank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis)) (innerOrder outerOrder : Bool)
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)) (operand : TensorRewrite.Pilot.Tensor smallShape (BitVec width))
+  (scalar : BitVec width),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) outerOrder
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) innerOrder x
+        (TensorRewrite.Pilot.Tensor.constant scalar))
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) operand) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) operand (TensorRewrite.Pilot.Tensor.constant scalar)))
+'TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.factor_any_order : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (lhsOrder rhsOrder : Bool) (x y c : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) lhsOrder x c)
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) rhsOrder y c) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y)
+      c
+'TensorRewrite.Pilot.ModularArithmetic.factor_any_order' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.factor_left : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y z : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) z x)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) z y) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y)
+      z
+'TensorRewrite.Pilot.ModularArithmetic.factor_left' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.factor_right : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y z : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x z)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) y z) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y)
+      z
+'TensorRewrite.Pilot.ModularArithmetic.factor_right' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.four_factors : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y a b : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x a)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) y b) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x y)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) a b)
+'TensorRewrite.Pilot.ModularArithmetic.four_factors' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (leftOrder rightOrder outerOrder : Bool) (x y c1 c2 : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) outerOrder
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) leftOrder x c1)
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) rightOrder y c2) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x y)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) c1 c2)
+'TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_assoc : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y z : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x y)
+      z =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) y z)
+'TensorRewrite.Pilot.ModularArithmetic.mul_assoc' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (innerOrder outerOrder : Bool) (x c1 c2 : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) outerOrder
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) innerOrder x c1) c2 =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) c1 c2)
+'TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width smallRank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis))
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)) (c1 c2 : TensorRewrite.Pilot.Tensor smallShape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x
+        (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) c1))
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) c2) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) c1 c2))
+'TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.constant 1#width) x = x
+'TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.constant 0#width) x =
+    TensorRewrite.Pilot.Tensor.constant 0#width
+'TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.map Neg.neg x)
+      (TensorRewrite.Pilot.Tensor.map Neg.neg y) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x y
+'TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x (TensorRewrite.Pilot.Tensor.constant 1#width) = x
+'TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) x (TensorRewrite.Pilot.Tensor.constant 0#width) =
+    TensorRewrite.Pilot.Tensor.constant 0#width
+'TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width smallRank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis))
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)) (c1 c2 : TensorRewrite.Pilot.Tensor smallShape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2)
+        (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) c1) x)
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) c2) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2)
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) c1 c2))
+      x
+'TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ModularArithmetic.sub_add_constant : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (x y z : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) y x)
+      z =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) y z)
+      x
+'TensorRewrite.Pilot.ModularArithmetic.sub_add_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.OperandOrder.map₂_eq : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α),
+  (∀ (lhs rhs : α), operation lhs rhs = operation rhs lhs) →
+    ∀ (swapped : Bool) (lhs rhs : TensorRewrite.Pilot.Tensor shape α),
+      TensorRewrite.Pilot.OperandOrder.map₂ operation swapped lhs rhs =
+        TensorRewrite.Pilot.Tensor.map₂ operation lhs rhs
+'TensorRewrite.Pilot.OperandOrder.map₂_eq' depends on axioms: [Quot.sound]
+TensorRewrite.Pilot.OrderedCompareProfile.false_consistent : ∀
+  (lhs rhs : TensorRewrite.Pilot.OrderedCompareProfile.Bits),
+  TensorRewrite.Pilot.OrderedCompareProfile.IsOrderedCompatible lhs rhs false
+'TensorRewrite.Pilot.OrderedCompareProfile.false_consistent' does not depend on any axioms
+TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan : TensorRewrite.Pilot.OrderedCompareProfile.IsNaN
+  TensorRewrite.Pilot.OrderedCompareProfile.quietNaN
+'TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan' does not depend on any axioms
+TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes : ¬TensorRewrite.Pilot.OrderedCompareProfile.IsOrderedCompatible
+    TensorRewrite.Pilot.OrderedCompareProfile.quietNaN TensorRewrite.Pilot.OrderedCompareProfile.zero true
+'TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes' does not depend on any axioms
+TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes : ¬TensorRewrite.Pilot.OrderedCompareProfile.IsOrderedCompatible
+    TensorRewrite.Pilot.OrderedCompareProfile.zero TensorRewrite.Pilot.OrderedCompareProfile.quietNaN true
+'TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes' does not depend on any axioms
+TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan : ∀
+  (lhs rhs : TensorRewrite.Pilot.OrderedCompareProfile.Bits),
+  TensorRewrite.Pilot.OrderedCompareProfile.IsNaN lhs →
+    ¬TensorRewrite.Pilot.OrderedCompareProfile.IsOrderedCompatible lhs rhs true
+'TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan' does not depend on any axioms
+TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan : ∀
+  (lhs rhs : TensorRewrite.Pilot.OrderedCompareProfile.Bits),
+  TensorRewrite.Pilot.OrderedCompareProfile.IsNaN rhs →
+    ¬TensorRewrite.Pilot.OrderedCompareProfile.IsOrderedCompatible lhs rhs true
+'TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan' does not depend on any axioms
+@TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt : ∀ {width promoted : ℕ},
+  width ≤ promoted → ∀ (value : ℤ), BitVec.setWidth width (BitVec.ofInt promoted value) = BitVec.ofInt width value
+'TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add : ∀ {width promoted : ℕ},
+  width ≤ promoted →
+    ∀ (x y : BitVec width),
+      BitVec.setWidth width (BitVec.ofInt promoted x.toInt + BitVec.ofInt promoted y.toInt) = x + y
+'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul : ∀ {width promoted : ℕ},
+  width ≤ promoted →
+    ∀ (x y : BitVec width),
+      BitVec.setWidth width (BitVec.ofInt promoted x.toInt * BitVec.ofInt promoted y.toInt) = x * y
+'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg : ∀ {width promoted : ℕ},
+  width ≤ promoted → ∀ (x : BitVec width), BitVec.setWidth width (-BitVec.ofInt promoted x.toInt) = -x
+'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub : ∀ {width promoted : ℕ},
+  width ≤ promoted →
+    ∀ (x y : BitVec width),
+      BitVec.setWidth width (BitVec.ofInt promoted x.toInt - BitVec.ofInt promoted y.toInt) = x - y
+'TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow : ∀ {width promoted : ℕ},
+  width ≤ promoted → ∀ (value : BitVec promoted), BitVec.ofInt width value.toInt = BitVec.setWidth width value
+'TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact : ∀ {width promoted : ℕ},
+  width ≤ promoted → ∀ (value : BitVec width), (BitVec.ofInt promoted value.toInt).toInt = value.toInt
+'TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective : ∀ {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ} (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map BitVec.toInt x = TensorRewrite.Pilot.Tensor.map BitVec.toInt y ↔ x = y
+'TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows : (128#8).toInt = -128
+'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows' does not depend on any axioms
+TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes : TensorRewrite.Pilot.ReducerIndex.GatherLiterals.originalIndex
+      129 127#8 =
+    127 ∧
+  TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex 129 127#8 = 128
+'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes' does not depend on any axioms
+TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes : TensorRewrite.Pilot.ReducerIndex.GatherLiterals.originalIndex
+      129 (-1) =
+    0 ∧
+  TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex 129 (-1) = 128
+'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes' does not depend on any axioms
+TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving : ¬∀ (index : BitVec 8),
+    TensorRewrite.Pilot.ReducerIndex.GatherLiterals.originalIndex 129 index =
+      TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex 129 index
+'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving' does not depend on any axioms
+@TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original : ∀ {width : ℕ} (extent : ℕ)
+  (index : BitVec width),
+  (∀ position < extent, (BitVec.ofNat width position).toInt = ↑position) →
+    TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex extent index =
+      TensorRewrite.Pilot.ReducerIndex.GatherLiterals.originalIndex extent index
+'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes : TensorRewrite.Pilot.ReducerIndex.GatherLiterals.originalIndex
+      129 0#8 =
+    0 ∧
+  TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex 129 0#8 = 128
+'TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes' does not depend on any axioms
+@TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves : ∀ {size width : ℕ}
+  (lhs base : Fin size → BitVec width) (target : Fin size) (update : BitVec width),
+  TensorRewrite.Pilot.ReducerIndex.ScatterRoles.before TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+      TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update lhs base target update =
+    TensorRewrite.Pilot.ReducerIndex.ScatterRoles.after TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+      TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update lhs base target update
+'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve : ∀ {size width : ℕ}
+  (first second : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+  first ≠ second →
+    ∀ (lhs base : Fin size → BitVec width) (target : Fin size) (update : BitVec width),
+      TensorRewrite.Pilot.ReducerIndex.ScatterRoles.before first second lhs base target update =
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.after first second lhs base target update
+'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving : ¬∀
+    (first second : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+    TensorRewrite.Pilot.ReducerIndex.ScatterRoles.before first second TensorRewrite.Pilot.ReducerIndex.ScatterRoles.lhs
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.base 0 5 =
+      TensorRewrite.Pilot.ReducerIndex.ScatterRoles.after first second TensorRewrite.Pilot.ReducerIndex.ScatterRoles.lhs
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.base 0 5
+'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving' depends on axioms: [propext]
+TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes : (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.before
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.lhs TensorRewrite.Pilot.ReducerIndex.ScatterRoles.base 0 5
+        0).toInt =
+    7 ∧
+  (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.after TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.lhs TensorRewrite.Pilot.ReducerIndex.ScatterRoles.base 0 5
+        0).toInt =
+    8
+'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes' depends on axioms: [propext]
+TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes : (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.before
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update TensorRewrite.Pilot.ReducerIndex.ScatterRoles.lhs
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.base 0 5 0).toInt =
+    11 ∧
+  (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.after TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update TensorRewrite.Pilot.ReducerIndex.ScatterRoles.lhs
+        TensorRewrite.Pilot.ReducerIndex.ScatterRoles.base 0 5 0).toInt =
+    10
+'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes' depends on axioms: [propext]
+@TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves : ∀ {size width : ℕ}
+  (lhs base : Fin size → BitVec width) (target : Fin size) (update : BitVec width),
+  TensorRewrite.Pilot.ReducerIndex.ScatterRoles.before TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update
+      TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current lhs base target update =
+    TensorRewrite.Pilot.ReducerIndex.ScatterRoles.after TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.update
+      TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current lhs base target update
+'TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.Reduction.elementCount_eq_of_units : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  plan.UnitReducedAxes →
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+      TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape
+'TensorRewrite.Pilot.Reduction.elementCount_eq_of_units' depends on axioms: [propext]
+TensorRewrite.Pilot.Reduction.elementCount_factor : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape * plan.fiberCount
+'TensorRewrite.Pilot.Reduction.elementCount_factor' depends on axioms: [propext]
+TensorRewrite.Pilot.Reduction.fiberCount_one_of_sameCount : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+      TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape →
+    0 < TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape → plan.fiberCount = 1
+'TensorRewrite.Pilot.Reduction.fiberCount_one_of_sameCount' depends on axioms: [propext]
+@TensorRewrite.Pilot.Reduction.fiberValues_length : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α) (output : TensorRewrite.Pilot.Index plan.outputShape),
+  (TensorRewrite.Pilot.Reduction.fiberValues plan input output).length = plan.fiberCount
+'TensorRewrite.Pilot.Reduction.fiberValues_length' depends on axioms: [propext]
+@TensorRewrite.Pilot.Reduction.fiberValues_unit : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (units : plan.UnitReducedAxes) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.Reduction.fiberValues plan input output = [input (plan.unitIndex units output)]
+'TensorRewrite.Pilot.Reduction.fiberValues_unit' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Reduction.length_flatMap_constant : ∀ {α β : Type} (values : List α) (blocks : α → List β)
+  (size : ℕ), (∀ (value : α), (blocks value).length = size) → (List.flatMap blocks values).length = values.length * size
+'TensorRewrite.Pilot.Reduction.length_flatMap_constant' depends on axioms: [propext]
+@TensorRewrite.Pilot.Reduction.reduceTensor_empty_input : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : α → α → α) (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input =
+      TensorRewrite.Pilot.Tensor.constant initial
+'TensorRewrite.Pilot.Reduction.reduceTensor_empty_input' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Reduction.reduceTensor_empty_output : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : α → α → α) (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape = 0 →
+    TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input =
+      TensorRewrite.Pilot.Tensor.constant initial
+'TensorRewrite.Pilot.Reduction.reduceTensor_empty_output' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reduction.reduceTensor_sameCount : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : α → α → α) (initial : α),
+  (∀ (value : α), operation initial value = value) →
+    ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+      (sameCount :
+        TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+          TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape),
+      TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input =
+        TensorRewrite.Pilot.Reshape.reshapeTensor input plan.outputShape sameCount
+'TensorRewrite.Pilot.Reduction.reduceTensor_sameCount' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.Reduction.unitIndex_eq_reshapeIndex : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (units : plan.UnitReducedAxes)
+  (sameCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+      TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  plan.unitIndex units output =
+    TensorRewrite.Pilot.Reshape.reshapeIndex plan.inputShape plan.outputShape sameCount output
+'TensorRewrite.Pilot.Reduction.unitIndex_eq_reshapeIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.Reduction.unitIndex_linearize_val : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (units : plan.UnitReducedAxes) (output : TensorRewrite.Pilot.Index plan.outputShape),
+  ↑(TensorRewrite.Pilot.LinearIndex.linearize plan.inputShape (plan.unitIndex units output)) =
+    ↑(TensorRewrite.Pilot.LinearIndex.linearize plan.outputShape output)
+'TensorRewrite.Pilot.Reduction.unitIndex_linearize_val' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.Reduction.unitReducedAxes_of_fiberCount_one : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  plan.fiberCount = 1 → plan.UnitReducedAxes
+'TensorRewrite.Pilot.Reduction.unitReducedAxes_of_fiberCount_one' depends on axioms: [propext]
+@TensorRewrite.Pilot.Reshape.reshapeIndex_compose : ∀ {inputRank middleRank outputRank : ℕ}
+  (inputShape : TensorRewrite.Pilot.Shape inputRank) (middleShape : TensorRewrite.Pilot.Shape middleRank)
+  (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (innerCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount inputShape = TensorRewrite.Pilot.LinearIndex.elementCount middleShape)
+  (outerCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount middleShape = TensorRewrite.Pilot.LinearIndex.elementCount outputShape)
+  (index : TensorRewrite.Pilot.Index outputShape),
+  TensorRewrite.Pilot.Reshape.reshapeIndex inputShape middleShape innerCount
+      (TensorRewrite.Pilot.Reshape.reshapeIndex middleShape outputShape outerCount index) =
+    TensorRewrite.Pilot.Reshape.reshapeIndex inputShape outputShape ⋯ index
+'TensorRewrite.Pilot.Reshape.reshapeIndex_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reshape.reshapeTensor_compose : ∀ {inputRank middleRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {α : Type} (input : TensorRewrite.Pilot.Tensor inputShape α)
+  (middleShape : TensorRewrite.Pilot.Shape middleRank) (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (innerCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount inputShape = TensorRewrite.Pilot.LinearIndex.elementCount middleShape)
+  (outerCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount middleShape =
+      TensorRewrite.Pilot.LinearIndex.elementCount outputShape),
+  TensorRewrite.Pilot.Reshape.reshapeTensor (TensorRewrite.Pilot.Reshape.reshapeTensor input middleShape innerCount)
+      outputShape outerCount =
+    TensorRewrite.Pilot.Reshape.reshapeTensor input outputShape ⋯
+'TensorRewrite.Pilot.Reshape.reshapeTensor_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reshape.reshapeTensor_empty : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {α : Type} (input : TensorRewrite.Pilot.Tensor inputShape α)
+  (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (sameCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount inputShape = TensorRewrite.Pilot.LinearIndex.elementCount outputShape),
+  TensorRewrite.Pilot.LinearIndex.elementCount outputShape = 0 →
+    ∀ (replacement : TensorRewrite.Pilot.Tensor outputShape α),
+      TensorRewrite.Pilot.Reshape.reshapeTensor input outputShape sameCount = replacement
+'TensorRewrite.Pilot.Reshape.reshapeTensor_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reshape.reshapeTensor_identity : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (input : TensorRewrite.Pilot.Tensor shape α), TensorRewrite.Pilot.Reshape.reshapeTensor input shape ⋯ = input
+'TensorRewrite.Pilot.Reshape.reshapeTensor_identity' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reshape.reshapeView_constant : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank}
+  (operand : TensorRewrite.Pilot.ConstantGuard.View inputRank inputShape)
+  (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (sameCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount inputShape = TensorRewrite.Pilot.LinearIndex.elementCount outputShape)
+  (value : Bool),
+  TensorRewrite.Pilot.ConstantGuard.View.isAll value operand = true →
+    (TensorRewrite.Pilot.Reshape.reshapeView operand outputShape sameCount).eval =
+      TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.Reshape.reshapeView_constant' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reshape.tensor_eq_of_empty : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type},
+  TensorRewrite.Pilot.LinearIndex.elementCount shape = 0 → ∀ (lhs rhs : TensorRewrite.Pilot.Tensor shape α), lhs = rhs
+'TensorRewrite.Pilot.Reshape.tensor_eq_of_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reverse.reverse_axisMask_trivial : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (x : TensorRewrite.Pilot.Tensor shape α) (axes : List (Fin rank)),
+  (∀ axis ∈ axes, shape axis = 1) → TensorRewrite.Pilot.Tensor.reverse (TensorRewrite.Pilot.Tensor.axisMask axes) x = x
+'TensorRewrite.Pilot.Reverse.reverse_axisMask_trivial' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Pilot.Reverse.reverse_binary_constant_lhs : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (x : TensorRewrite.Pilot.Tensor shape α) (axes : Fin rank → Bool) (f : α → α → α) (v : α),
+  TensorRewrite.Pilot.Tensor.reverse axes
+      (TensorRewrite.Pilot.Tensor.map₂ f (TensorRewrite.Pilot.Tensor.constant v) x) =
+    TensorRewrite.Pilot.Tensor.map₂ f (TensorRewrite.Pilot.Tensor.constant v)
+      (TensorRewrite.Pilot.Tensor.reverse axes x)
+'TensorRewrite.Pilot.Reverse.reverse_binary_constant_lhs' does not depend on any axioms
+@TensorRewrite.Pilot.Reverse.reverse_binary_constant_rhs : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (x : TensorRewrite.Pilot.Tensor shape α) (axes : Fin rank → Bool) (f : α → α → α) (v : α),
+  TensorRewrite.Pilot.Tensor.reverse axes
+      (TensorRewrite.Pilot.Tensor.map₂ f x (TensorRewrite.Pilot.Tensor.constant v)) =
+    TensorRewrite.Pilot.Tensor.map₂ f (TensorRewrite.Pilot.Tensor.reverse axes x)
+      (TensorRewrite.Pilot.Tensor.constant v)
+'TensorRewrite.Pilot.Reverse.reverse_binary_constant_rhs' does not depend on any axioms
+@TensorRewrite.Pilot.Reverse.reverse_comp : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (x : TensorRewrite.Pilot.Tensor shape α) (a b : Fin rank → Bool),
+  TensorRewrite.Pilot.Tensor.reverse b (TensorRewrite.Pilot.Tensor.reverse a x) =
+    TensorRewrite.Pilot.Tensor.reverse (fun axis => a axis ^^ b axis) x
+'TensorRewrite.Pilot.Reverse.reverse_comp' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Reverse.reverse_constant : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (axes : Fin rank → Bool) (value : α),
+  TensorRewrite.Pilot.Tensor.reverse axes (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.Reverse.reverse_constant' does not depend on any axioms
+@TensorRewrite.Pilot.Reverse.reverse_map₂ : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (x : TensorRewrite.Pilot.Tensor shape α) (axes : Fin rank → Bool) (f : α → α → α)
+  (y : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Pilot.Tensor.reverse axes (TensorRewrite.Pilot.Tensor.map₂ f x y) =
+    TensorRewrite.Pilot.Tensor.map₂ f (TensorRewrite.Pilot.Tensor.reverse axes x)
+      (TensorRewrite.Pilot.Tensor.reverse axes y)
+'TensorRewrite.Pilot.Reverse.reverse_map₂' does not depend on any axioms
+@TensorRewrite.Pilot.Reverse.reverse_reverse : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (x : TensorRewrite.Pilot.Tensor shape α) (axes : Fin rank → Bool),
+  TensorRewrite.Pilot.Tensor.reverse axes (TensorRewrite.Pilot.Tensor.reverse axes x) = x
+'TensorRewrite.Pilot.Reverse.reverse_reverse' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Reverse.reverse_trivial : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (x : TensorRewrite.Pilot.Tensor shape α) (axes : Fin rank → Bool),
+  (∀ (axis : Fin rank), axes axis = true → shape axis = 1) → TensorRewrite.Pilot.Tensor.reverse axes x = x
+'TensorRewrite.Pilot.Reverse.reverse_trivial' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.changes_of_not_fixed : ∀ (multiplier : BitVec 32),
+  4#32 * multiplier ≠ 4#32 →
+    TensorRewrite.Pilot.ScaledNestedSlice.original 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1
+        multiplier 1 2 ≠
+      TensorRewrite.Pilot.ScaledNestedSlice.rewritten 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1
+        1 2
+'TensorRewrite.Pilot.ScaledNestedSlice.changes_of_not_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.multiplier_seven_changes : TensorRewrite.Pilot.ScaledNestedSlice.original 1
+      TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 7 1 2
+      TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex =
+    28#32 ∧
+  TensorRewrite.Pilot.ScaledNestedSlice.rewritten 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 1 2
+      TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex =
+    4#32
+'TensorRewrite.Pilot.ScaledNestedSlice.multiplier_seven_changes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.negative_multiplier_changes : (TensorRewrite.Pilot.ScaledNestedSlice.original 1
+        TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 (-3) 1 2
+        TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex).toInt =
+    -12 ∧
+  (TensorRewrite.Pilot.ScaledNestedSlice.rewritten 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 1 2
+        TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex).toInt =
+    4
+'TensorRewrite.Pilot.ScaledNestedSlice.negative_multiplier_changes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving : ¬∀ (multiplier : BitVec 32),
+    TensorRewrite.Pilot.ScaledNestedSlice.original 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1
+        multiplier 1 2 =
+      TensorRewrite.Pilot.ScaledNestedSlice.rewritten 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1
+        1 2
+'TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.original_witness : ∀ (multiplier : BitVec 32),
+  TensorRewrite.Pilot.ScaledNestedSlice.original 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1
+      multiplier 1 2 TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex =
+    4#32 * multiplier
+'TensorRewrite.Pilot.ScaledNestedSlice.original_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.rewritten_witness : TensorRewrite.Pilot.ScaledNestedSlice.rewritten 1
+    TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 1 2
+    TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex =
+  4#32
+'TensorRewrite.Pilot.ScaledNestedSlice.rewritten_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes : TensorRewrite.Pilot.ScaledNestedSlice.original 1
+      TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 0 1 2
+      TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex =
+    0#32 ∧
+  TensorRewrite.Pilot.ScaledNestedSlice.rewritten 1 TensorRewrite.Pilot.ScaledNestedSlice.original_witness._proof_1 1 2
+      TensorRewrite.Pilot.ScaledNestedSlice.witnessIndex =
+    4#32
+'TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Pilot.SelectContraction.branchContraction_eq : ∀ (predicate : Bool) (xs : List ℤ),
+  TensorRewrite.Pilot.SelectContraction.branchContraction predicate xs =
+    (if predicate = true then 2 else 3) * TensorRewrite.Pilot.SelectContraction.sum xs
+'TensorRewrite.Pilot.SelectContraction.branchContraction_eq' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq : ∀ (predicate : Bool) (xs : List ℤ),
+  TensorRewrite.Pilot.SelectContraction.hoistedContraction predicate xs =
+    6 * TensorRewrite.Pilot.SelectContraction.sum xs
+'TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes : ∀ (predicate : Bool) (xs : List ℤ),
+  TensorRewrite.Pilot.SelectContraction.sum xs ≠ 0 →
+    TensorRewrite.Pilot.SelectContraction.branchContraction predicate xs ≠
+      TensorRewrite.Pilot.SelectContraction.hoistedContraction predicate xs
+'TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.SelectContraction.not_universally_valid : ¬∀ (predicate : Bool) (xs : List ℤ),
+    TensorRewrite.Pilot.SelectContraction.branchContraction predicate xs =
+      TensorRewrite.Pilot.SelectContraction.hoistedContraction predicate xs
+'TensorRewrite.Pilot.SelectContraction.not_universally_valid' does not depend on any axioms
+@TensorRewrite.Pilot.SliceShape.coordinate_bounds : ∀ {extent declared : ℤ}
+  {axis : TensorRewrite.Pilot.SliceShape.Axis},
+  TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis →
+    ∀ (index : ℤ),
+      0 ≤ index → index < declared → 0 ≤ axis.start + axis.stride * index ∧ axis.start + axis.stride * index < extent
+'TensorRewrite.Pilot.SliceShape.coordinate_bounds' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving : ¬∀ (extent declared : ℤ)
+    (axis : TensorRewrite.Pilot.SliceShape.Axis),
+    TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis →
+      TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared
+        (TensorRewrite.Pilot.SliceShape.removeRedundantStride axis)
+'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving' does not depend on any axioms
+TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes : ¬TensorRewrite.Pilot.SliceShape.IsWellFormed 4 0
+    (TensorRewrite.Pilot.SliceShape.removeRedundantStride TensorRewrite.Pilot.SliceShape.emptyWitness)
+'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes' does not depend on any axioms
+TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving : ¬∀ (extent declared : ℤ)
+    (axis : TensorRewrite.Pilot.SliceShape.Axis),
+    TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis →
+      TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared
+        (TensorRewrite.Pilot.SliceShape.reorderReverse extent axis)
+'TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving' does not depend on any axioms
+TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes : ¬TensorRewrite.Pilot.SliceShape.IsWellFormed 4 0
+    (TensorRewrite.Pilot.SliceShape.reorderReverse 4 TensorRewrite.Pilot.SliceShape.emptyWitness)
+'TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes' does not depend on any axioms
+@TensorRewrite.Pilot.Subtract.add_sub_self_left : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y)
+      x =
+    y
+'TensorRewrite.Pilot.Subtract.add_sub_self_left' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.add_sub_self_right : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) y x)
+      x =
+    y
+'TensorRewrite.Pilot.Subtract.add_sub_self_right' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.neg_neg : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map Neg.neg (TensorRewrite.Pilot.Tensor.map Neg.neg x) = x
+'TensorRewrite.Pilot.Subtract.neg_neg' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_add_self_left : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y) =
+    TensorRewrite.Pilot.Tensor.map Neg.neg y
+'TensorRewrite.Pilot.Subtract.sub_add_self_left' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_add_self_right : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) y x) =
+    TensorRewrite.Pilot.Tensor.map Neg.neg y
+'TensorRewrite.Pilot.Subtract.sub_add_self_right' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {width : ℕ} (x : TensorRewrite.Pilot.Tensor shape (BitVec width)) {smallRank : ℕ}
+  {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (broadcastIndex : TensorRewrite.Pilot.Index shape → TensorRewrite.Pilot.Index smallShape)
+  (v : TensorRewrite.Pilot.Tensor smallShape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x (TensorRewrite.Pilot.Tensor.reindex broadcastIndex v) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x
+      (TensorRewrite.Pilot.Tensor.reindex broadcastIndex (TensorRewrite.Pilot.Tensor.map Neg.neg v))
+'TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_eq_add_neg : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x y =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x (TensorRewrite.Pilot.Tensor.map Neg.neg y)
+'TensorRewrite.Pilot.Subtract.sub_eq_add_neg' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_self : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x x = TensorRewrite.Pilot.Tensor.constant 0#width
+'TensorRewrite.Pilot.Subtract.sub_self' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_sub_self : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x y : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x y) =
+    y
+'TensorRewrite.Pilot.Subtract.sub_sub_self' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Subtract.sub_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {width : ℕ}
+  (x : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) x (TensorRewrite.Pilot.Tensor.constant 0#width) = x
+'TensorRewrite.Pilot.Subtract.sub_zero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Tensor.reindex_constant : ∀ {smallRank rank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (indexMap : TensorRewrite.Pilot.Index shape → TensorRewrite.Pilot.Index smallShape) (value : α),
+  TensorRewrite.Pilot.Tensor.reindex indexMap (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Pilot.Tensor.reindex_constant' does not depend on any axioms
+@TensorRewrite.Pilot.Tensor.reindex_map₂ : ∀ {smallRank rank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (indexMap : TensorRewrite.Pilot.Index shape → TensorRewrite.Pilot.Index smallShape) (operation : α → α → α)
+  (lhs rhs : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.Tensor.reindex indexMap (TensorRewrite.Pilot.Tensor.map₂ operation lhs rhs) =
+    TensorRewrite.Pilot.Tensor.map₂ operation (TensorRewrite.Pilot.Tensor.reindex indexMap lhs)
+      (TensorRewrite.Pilot.Tensor.reindex indexMap rhs)
+'TensorRewrite.Pilot.Tensor.reindex_map₂' does not depend on any axioms
+@TensorRewrite.Pilot.Tensor.reverseIndex_comp : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : Fin rank → Bool) (i : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Pilot.Tensor.reverseIndex a (TensorRewrite.Pilot.Tensor.reverseIndex b i) =
+    TensorRewrite.Pilot.Tensor.reverseIndex (fun axis => a axis ^^ b axis) i
+'TensorRewrite.Pilot.Tensor.reverseIndex_comp' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Tensor.reverseIndex_reverseIndex : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (axes : Fin rank → Bool) (i : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Pilot.Tensor.reverseIndex axes (TensorRewrite.Pilot.Tensor.reverseIndex axes i) = i
+'TensorRewrite.Pilot.Tensor.reverseIndex_reverseIndex' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Pilot.Transpose.transpose_comp : ∀ {rank : ℕ} {a b c : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (p q : TensorRewrite.Pilot.AxisPermutation rank) (hp : ∀ (axis : Fin rank), b (p.inputToOutput axis) = a axis)
+  (hq : ∀ (axis : Fin rank), c (q.inputToOutput axis) = b axis) (x : TensorRewrite.Pilot.Tensor a α),
+  TensorRewrite.Pilot.Tensor.transpose q hq (TensorRewrite.Pilot.Tensor.transpose p hp x) =
+    TensorRewrite.Pilot.Tensor.transpose (p.comp q) ⋯ x
+'TensorRewrite.Pilot.Transpose.transpose_comp' depends on axioms: [Quot.sound]
+@TensorRewrite.Pilot.Transpose.transpose_constant : ∀ {rank : ℕ} {a b : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (p : TensorRewrite.Pilot.AxisPermutation rank) (extents : ∀ (axis : Fin rank), b (p.inputToOutput axis) = a axis)
+  (v : α),
+  TensorRewrite.Pilot.Tensor.transpose p extents (TensorRewrite.Pilot.Tensor.constant v) =
+    TensorRewrite.Pilot.Tensor.constant v
+'TensorRewrite.Pilot.Transpose.transpose_constant' does not depend on any axioms
+@TensorRewrite.Pilot.Transpose.transpose_identity : ∀ {rank : ℕ} {a : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (x : TensorRewrite.Pilot.Tensor a α),
+  TensorRewrite.Pilot.Tensor.transpose (TensorRewrite.Pilot.AxisPermutation.identity rank) ⋯ x = x
+'TensorRewrite.Pilot.Transpose.transpose_identity' does not depend on any axioms
+@TensorRewrite.Theory.ContractionAlgebra.dot_add_left : ∀ {α : Type} [inst : Semiring α]
+  {batch left right contracting : ℕ} (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting)
+  (x y : TensorRewrite.Pilot.Tensor plan.lhsShape α) (z : TensorRewrite.Pilot.Tensor plan.rhsShape α),
+  TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x y) z =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x z)
+      (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id y z)
+'TensorRewrite.Theory.ContractionAlgebra.dot_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ContractionAlgebra.dot_add_right : ∀ {α : Type} [inst : Semiring α]
+  {batch left right contracting : ℕ} (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting)
+  (x : TensorRewrite.Pilot.Tensor plan.lhsShape α) (y z : TensorRewrite.Pilot.Tensor plan.rhsShape α),
+  TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) y z) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x y)
+      (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x z)
+'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum : ∀ {α : Type} [inst : AddMonoid α] (values : List α) (initial : α),
+  List.foldl (fun x1 x2 => x1 + x2) initial values = initial + values.sum
+'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]
+@TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum : ∀ {α : Type} [inst : AddMonoid α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.Reduction.reduceTensor plan (fun x1 x2 => x1 + x2) 0 input = fun output =>
+    (TensorRewrite.Pilot.Reduction.fiberValues plan input output).sum
+'TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply : ∀ {inputRank outputRank : ℕ}
+  (inputShape : TensorRewrite.Pilot.Shape inputRank) (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (sameCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount inputShape = TensorRewrite.Pilot.LinearIndex.elementCount outputShape)
+  (index : TensorRewrite.Pilot.Index outputShape),
+  (TensorRewrite.Theory.FiniteSum.reshapeEquiv inputShape outputShape sameCount) index =
+    TensorRewrite.Pilot.Reshape.reshapeIndex inputShape outputShape sameCount index
+'TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FiniteSum.sum_add : ∀ {α I : Type} [inst : AddCommMonoid α] [inst_1 : Fintype I] (x y : I → α),
+  ∑ i, x i + ∑ i, y i = ∑ i, (x i + y i)
+'TensorRewrite.Theory.FiniteSum.sum_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FiniteSum.sum_reshape : ∀ {α : Type} [inst : AddCommMonoid α] {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} (input : TensorRewrite.Pilot.Tensor inputShape α)
+  (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (sameCount :
+    TensorRewrite.Pilot.LinearIndex.elementCount inputShape = TensorRewrite.Pilot.LinearIndex.elementCount outputShape),
+  ∑ index, TensorRewrite.Pilot.Reshape.reshapeTensor input outputShape sameCount index = ∑ index, input index
+'TensorRewrite.Theory.FiniteSum.sum_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FiniteSum.sum_swap : ∀ {α I J : Type} [inst : AddCommMonoid α] [inst_1 : Fintype I]
+  [inst_2 : Fintype J] (input : I → J → α), ∑ i, ∑ j, input i j = ∑ j, ∑ i, input i j
+'TensorRewrite.Theory.FiniteSum.sum_swap' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FloatNegation.reindex_neg : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank}
+  {format : FloatLib.Floats.Formats.BinaryInterchange.FloatFormat}
+  (indices : TensorRewrite.Pilot.Index outputShape → TensorRewrite.Pilot.Index inputShape)
+  (x : TensorRewrite.Pilot.Tensor inputShape (FloatLib.Floats.Formats.BinaryInterchange.Model format)),
+  TensorRewrite.Pilot.Tensor.reindex indices
+      (TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg x) =
+    TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg
+      (TensorRewrite.Pilot.Tensor.reindex indices x)
+'TensorRewrite.Theory.FloatNegation.reindex_neg' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.FloatNegation.reverse_neg : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {format : FloatLib.Floats.Formats.BinaryInterchange.FloatFormat} (axes : Fin rank → Bool)
+  (x : TensorRewrite.Pilot.Tensor shape (FloatLib.Floats.Formats.BinaryInterchange.Model format)),
+  TensorRewrite.Pilot.Tensor.reverse axes
+      (TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg x) =
+    TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg
+      (TensorRewrite.Pilot.Tensor.reverse axes x)
+'TensorRewrite.Theory.FloatNegation.reverse_neg' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.FloatNegation.scalar_involution : ∀
+  {format : FloatLib.Floats.Formats.BinaryInterchange.FloatFormat}
+  (x : FloatLib.Floats.Formats.BinaryInterchange.Model format), x.neg.neg = x
+'TensorRewrite.Theory.FloatNegation.scalar_involution' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.FloatNegation.tensor_involution : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {format : FloatLib.Floats.Formats.BinaryInterchange.FloatFormat}
+  (x : TensorRewrite.Pilot.Tensor shape (FloatLib.Floats.Formats.BinaryInterchange.Model format)),
+  TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg
+      (TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg x) =
+    x
+'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]

@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-Ten new mathematical statements add 81 lines; custom Lean totals **2,877**.
+The theory target now has 12 checked mathematical statements; custom Lean totals **2,907**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -811,3 +811,19 @@ shadowed paths and function-byte/source-excerpt provenance are retained. Custom
 Lean stays2763 lines;68 tests, the checkpoint and both new evidence validators
 pass. Canonical N/F, semantic correspondence, reviewed pilot and campaign gates
 remain open.
+
+
+## Mathematical campaign ledger
+
+The retained benchmark corpus is frozen at488 records in
+`census/mathematical-corpus-v1.json`. The mathematical ledger audits242 registered
+model declarations and preserves all benchmark records without a coverage claim.
+Seventy-four records have candidate model evidence; full statement/domain
+partitions and whole-record results remain open. See
+[the ledger report](reports/mathematical-ledger-v1.md).
+
+Run `python3 tools/mathematical_ledger.py` to rebuild the mathematical inventory
+and its Lean type/axiom audit without C++ processing or native pass replay.
+`TensorRewrite/Theory/ContractionAlgebra.lean` adds arbitrary-rank semiring
+contraction distributivity on both operands, with identity finish. These laws
+do not assert IEEE floating-point distributivity.
