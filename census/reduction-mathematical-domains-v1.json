@@ -1,0 +1,398 @@
+{
+  "schema": 1,
+  "status": "mathematical_domain_worksheet_not_a_frozen_obligation_denominator",
+  "retained_batch": "census/reduction-cases.json",
+  "retained_batch_sha256": "c1dc27dc2fe45f38936388b72fe9f387dcb0c43439ed6eef1b04a286b08d68b7",
+  "benchmark_record_count": 60,
+  "classification_group_count": 19,
+  "classification_groups_are_not_a_frozen_family_denominator": true,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "code_correspondence_future_work": true,
+  "source_guards_adopted_as_proof_assumptions": false,
+  "scope": "All retained reduction records receive a formulation/dependency diagnosis, not a completed proof attempt or full campaign verdict.",
+  "families": [
+    {
+      "classification": "empty_fibers",
+      "benchmark_ids": [
+        "BroadcastReduce/single",
+        "BroadcastReduce/tuple",
+        "HandleReduce/empty-delegation",
+        "HandleReduceWindow/empty-single",
+        "HandleReduceWindow/empty-tuple"
+      ],
+      "mathematical_target": "Every empty reduction fiber returns the actual initializer; project tuple components only after folding the whole reducer state.",
+      "declared_premises": [
+        "Pure ordered reducer with explicit whole-state initializer; empty input fiber or no output coordinates."
+      ],
+      "core_evidence": [
+        "Pilot.Reduction.reduceTensor_empty_input",
+        "Pilot.Reduction.reduceTensor_empty_output",
+        "ReductionAlgebra.empty_components"
+      ],
+      "remaining_mathematical_partitions": [
+        "Window sample geometry must establish the empty contribution list or empty output, not just an empty original input.",
+        "Tuple-of-tensors versus tensor-of-whole-state packing and window initializer/padding semantics."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "singleton_fibers",
+      "benchmark_ids": [
+        "HandleReduce/same-element-count",
+        "ReplaceReduceWithReshape/single",
+        "ReplaceReduceWithReshape/tuple"
+      ],
+      "mathematical_target": "Equal-count Reduce is an equal-count row-major reshape, including component projections.",
+      "declared_premises": [
+        "Whole-state reducer initializer is a left identity; bounded recursive keep/reduce axis plan; same input/output element count."
+      ],
+      "core_evidence": [
+        "Pilot.Reduction.reduceTensor_sameCount",
+        "ReductionAlgebra.sameCount_components"
+      ],
+      "remaining_mathematical_partitions": [
+        "Mathematical tuple packaging and all admitted scalar/reducer profiles; physical representation is a separate observation partition."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "constant_idempotent",
+      "benchmark_ids": [
+        "HandleReduce/scalar-broadcast-and",
+        "HandleReduce/scalar-broadcast-or",
+        "HandleReduce/scalar-broadcast-minimum",
+        "HandleReduce/scalar-broadcast-maximum"
+      ],
+      "mathematical_target": "A constant nonempty reduction fiber equals op(value, initializer).",
+      "declared_premises": [
+        "Strictly positive fiber count; Boolean and/or or linear-order min/max, with the actual initializer retained."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.constant_and",
+        "ReductionAlgebra.constant_or",
+        "ReductionAlgebra.constant_min",
+        "ReductionAlgebra.constant_max"
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero reduced extent is a separate branch; floating min/max NaN and signed-zero observations do not inherit LinearOrder.",
+        "Scalar broadcast coordinate adapter and any finite-width bitwise profile not instantiated here."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "broadcast_axes",
+      "benchmark_ids": [
+        "HandleReduce/broadcast-base-axes",
+        "HandleReduce/broadcast-replicated-axes"
+      ],
+      "mathematical_target": "Split broadcast axes into mapped base axes and replicated axes; reduce base fibers and count repetitions of each value.",
+      "declared_premises": [
+        "Injective bounded broadcast axis map and compatible extents; derived output-axis renumbering; exact additive monoid with one initializer for repeated addition."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.constant_add",
+        "ReductionAlgebra.coordinate_sum"
+      ],
+      "remaining_mathematical_partitions": [
+        "Derive broadcast/reduction fiber factorization and multiplicities from the bounded axis maps.",
+        "Initializer placement across nested fibers; rounded count conversion and accumulation observation."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "concatenation",
+      "benchmark_ids": [
+        "HandleReduce/concat"
+      ],
+      "mathematical_target": "Reducing contiguous concatenated fibers equals the ordered combination of per-block reductions.",
+      "declared_premises": [
+        "Exact AddMonoid with neutral zero initializer; preserve original block and element order."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.concat_add"
+      ],
+      "remaining_mathematical_partitions": [
+        "Bounded Concat axis/output-fiber adapter; non-reduced concatenation axes require a distinct output construction.",
+        "Arbitrary reducer monoid laws, nonneutral initializers and rounded/nonassociative profiles."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "dot_reduce",
+      "benchmark_ids": [
+        "HandleReduce/dot-batch-all-batch",
+        "HandleReduce/dot-batch-residual-reduce",
+        "HandleReduce/dot-reorder-delegation",
+        "ReorderReduceDotToDotReduce/profitable"
+      ],
+      "mathematical_target": "Move selected batch reductions into contraction coordinates, or factor independent operand reductions and retain the remaining output reduction.",
+      "declared_premises": [
+        "Explicit disjoint batch/free/contract axes and bounded shape equalities; exact semiring multiplication/addition with zero initializers."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.coordinate_sum",
+        "ReductionAlgebra.sum_reduction",
+        "FiniteSum.sum_swap"
+      ],
+      "remaining_mathematical_partitions": [
+        "Derive each Dot dimension-number transformation and residual output renumbering; delegated target must be a precise mathematical expression.",
+        "Floating accumulation/reassociation, conversion and precision observations; result shape and empty dimensions."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "merge_reductions",
+      "benchmark_ids": [
+        "HandleReduce/merge-delegation",
+        "MergeReduces/combined-axes"
+      ],
+      "mathematical_target": "Compose two axis plans and compare nested fibers with the combined axis plan, including their actual initializer multiplicities.",
+      "declared_premises": [
+        "Exact associative addition with neutral zero; derived partition of retained and twice-reduced axes."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.concat_add",
+        "ReductionAlgebra.sum_reduction"
+      ],
+      "remaining_mathematical_partitions": [
+        "General partial outer-axis plan composition is not proved by the all-remaining-axes sum theorem.",
+        "Nonzero initializers and nonassociative reducers require an alternate contract or validated refutation."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "negation",
+      "benchmark_ids": [
+        "HandleReduce/negate-sum"
+      ],
+      "mathematical_target": "Zero-initialized sum of pointwise negatives equals pointwise negative of the sum.",
+      "declared_premises": [
+        "Exact AddCommGroup; zero initializer; existing recursive axis plan."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.negate_sum"
+      ],
+      "remaining_mathematical_partitions": [
+        "Rounded finite-format negation/addition, signed zero, NaN policy and permitted reduction orders; no group structure is supplied for IEEE addition."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "reshape_axes",
+      "benchmark_ids": [
+        "HandleReduce/reshape-output-axes",
+        "HandleReduce/reshape-reduced-axes"
+      ],
+      "mathematical_target": "An equal-count reshape that preserves the designated output or reduced blocks induces a per-output reduction-fiber equivalence.",
+      "declared_premises": [
+        "Equal element counts; explicit output-coordinate bijection and derived reduced-block partition; exact commutative additive monoid for reordering."
+      ],
+      "core_evidence": [
+        "ReductionFiber.splitEquiv",
+        "ReductionAlgebra.coordinate_sum"
+      ],
+      "remaining_mathematical_partitions": [
+        "Derive the bounded per-output fiber equivalence from block boundaries rather than assume the desired equation.",
+        "Ordered versus reassociated fibers and scalar/representation partitions."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "argmin_argmax",
+      "benchmark_ids": [
+        "HandleReduce/argmax-constant",
+        "HandleReduce/argmin-constant",
+        "HandleReduce/reuse-argmax",
+        "HandleReduce/reuse-argmin"
+      ],
+      "mathematical_target": "Arg-extremum value projection agrees with scalar extremum reduction; a constant nonempty fiber selects index zero only under a declared tie/initializer policy.",
+      "declared_premises": [
+        "Bounded index domain; explicit value/index pair comparison, tie-breaking and initial pair; representable zero and nonempty fibers for the constant branch."
+      ],
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Define coupled arg-extremum reducer and derive value projection and index selection, including empty fibers.",
+        "Finite-width index representability, NaNs, signed zero and mathematical tie-breaking policy; reuse needs the same declared value observation."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "singleton_tuple_wrapper",
+      "benchmark_ids": [
+        "HandleReduce/singleton-tuple",
+        "HandleReduceWindow/singleton-tuple"
+      ],
+      "mathematical_target": "A one-component tuple wrapper transports the whole reducer state and initializer through an explicit singleton-tuple isomorphism.",
+      "declared_premises": [
+        "Pure reducer; same contribution order and conjugated whole-state operation; explicit initializer mapping."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.map_reduction"
+      ],
+      "remaining_mathematical_partitions": [
+        "Instantiate and prove the singleton-tuple isomorphism and reducer conjugacy; window version still needs its sample geometry."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "transpose_axes",
+      "benchmark_ids": [
+        "HandleReduce/transpose-permute-result",
+        "HandleReduce/transpose-sorted"
+      ],
+      "mathematical_target": "Permute input axes and reduce the mapped axes; derive the surviving output-axis permutation or prove it is identity.",
+      "declared_premises": [
+        "Extent-preserving axis permutation with inverse; exact commutative addition if reduced-axis order changes."
+      ],
+      "core_evidence": [
+        "ReductionFiber.splitEquiv",
+        "ReductionAlgebra.coordinate_sum"
+      ],
+      "remaining_mathematical_partitions": [
+        "Derive the kept/reduced permutation restrictions and output renumbering; do not supply the target equality as a premise.",
+        "Ordered numerical observations when the permutation changes contribution order."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_cumsum",
+      "benchmark_ids": [
+        "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+        "HandleReduceWindow/cumsum-i32-reuse-literal",
+        "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+        "HandleReduceWindow/cumsum-i64-reuse-literal"
+      ],
+      "mathematical_target": "A cumulative window over a uniform value contains output_position+1 valid samples; exact additive result is that count times the value.",
+      "declared_premises": [
+        "Derived prefix-window sampling/count; zero additive initializer; explicit count-conversion width and scalar conversion semantics."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.constant_add"
+      ],
+      "remaining_mathematical_partitions": [
+        "Define window geometry and prove the valid-sample count, including low/high bounds and empty dimensions.",
+        "Count overflow and conversion-before/after-multiplication; rounded literal conversion and cumulative addition are not replaced by a real-number equation."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_full",
+      "benchmark_ids": [
+        "HandleReduceWindow/full-dimensions"
+      ],
+      "mathematical_target": "A full-span window enumerates exactly the designated Reduce fiber after an output reshape.",
+      "declared_premises": [
+        "Derived full-span geometry, dilation/stride/padding conditions; explicit sample order or exact commutative reducer."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.coordinate_sum"
+      ],
+      "remaining_mathematical_partitions": [
+        "Define bounded window sampler and derive its equivalence with the reduction plan, including padding samples and init multiplicity.",
+        "Variadic reducer, output reshape and numerical order profiles."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_pad_broadcast",
+      "benchmark_ids": [
+        "HandleReduceWindow/pad-broadcast-convert-combined",
+        "HandleReduceWindow/pad-broadcast-convert-existing",
+        "HandleReduceWindow/pad-broadcast-direct-combined",
+        "HandleReduceWindow/pad-broadcast-direct-existing"
+      ],
+      "mathematical_target": "A padded/broadcast window is replaced by a sequence of bounded broadcasts only after deriving all surviving sample coordinates and initializer effects.",
+      "declared_premises": [
+        "Explicit input padding/broadcast/window composition and scalar conversion placement."
+      ],
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "No typed window/pad/broadcast-sequence composition theorem exists yet; retained helper wording is not an operator definition.",
+        "Derive occupied samples, zero/negative extents, initializer contribution law and conversion behavior."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_pad_fold",
+      "benchmark_ids": [
+        "HandleReduceWindow/pad-fold-convert",
+        "HandleReduceWindow/pad-fold-direct"
+      ],
+      "mathematical_target": "Compose explicit Pad coordinates into window low/high padding and base dilation while preserving each observed contribution.",
+      "declared_premises": [
+        "Bounded signed-padding/interior-padding maps; same whole-state initializer, invalid-sample policy and contribution order."
+      ],
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Derive composed signed geometry and output extent; show equality of valid/invalid sample sequences.",
+        "Conversion of explicit pad values versus implicit initializer padding; scalar domain and overflow profiles."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_scalar",
+      "benchmark_ids": [
+        "HandleReduceWindow/scalar-single",
+        "HandleReduceWindow/scalar-tuple"
+      ],
+      "mathematical_target": "A scalar/unit window produces op(initial, input); elimination additionally requires that actual initializer to be a whole-state left identity.",
+      "declared_premises": [
+        "Derived singleton valid sample and scalar output correspondence; explicit left-identity law if returning the original input."
+      ],
+      "core_evidence": [
+        "ReductionAlgebra.map_reduction"
+      ],
+      "remaining_mathematical_partitions": [
+        "Define scalar window and tuple packing, prove sample count and initializer law for each retained reducer profile."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_singleton",
+      "benchmark_ids": [
+        "HandleReduceWindow/singleton-add-no-pad-no-crop",
+        "HandleReduceWindow/singleton-add-no-pad-crop",
+        "HandleReduceWindow/singleton-add-pad-no-crop",
+        "HandleReduceWindow/singleton-add-pad-crop",
+        "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+        "HandleReduceWindow/singleton-minimum-no-pad-crop",
+        "HandleReduceWindow/singleton-minimum-pad-no-crop",
+        "HandleReduceWindow/singleton-minimum-pad-crop",
+        "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+        "HandleReduceWindow/singleton-maximum-no-pad-crop",
+        "HandleReduceWindow/singleton-maximum-pad-no-crop",
+        "HandleReduceWindow/singleton-maximum-pad-crop"
+      ],
+      "mathematical_target": "A unit window becomes pointwise op(initial, input), restricted by crop coordinates and extended by padding where needed.",
+      "declared_premises": [
+        "Derived crop/pad coordinate maps and output extents; commutation if replacement flips operand order; op(initial,initial)=initial for implicit/explicit padding agreement."
+      ],
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "No typed unit-window/crop/pad equivalence is proved; distinguish invalid sample from a sample of the initializer.",
+        "Linear-order extrema versus exceptional floating min/max; additive initializer, signed-zero and rounded observations."
+      ],
+      "whole_record_closed": false
+    },
+    {
+      "classification": "window_crop_all",
+      "benchmark_ids": [
+        "HandleReduceWindow/singleton-crop-all-add",
+        "HandleReduceWindow/singleton-crop-all-maximum",
+        "HandleReduceWindow/singleton-crop-all-minimum"
+      ],
+      "mathematical_target": "When cropping removes every valid input sample, every remaining output is the declared padding/initializer observation.",
+      "declared_premises": [
+        "Derived absence of valid samples; exact invalid-sample semantics and op(initial,initial)=initial if padding contributes a value."
+      ],
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Prove all-samples-invalid condition from signed crop bounds and valid output geometry.",
+        "Initializer/padding algebra and scalar numerical observation; empty output equality is a separate vacuous branch."
+      ],
+      "whole_record_closed": false
+    }
+  ]
+}

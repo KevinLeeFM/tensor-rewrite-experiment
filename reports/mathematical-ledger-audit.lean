@@ -699,6 +699,60 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.LogicalFamily.word_count
 #check @TensorRewrite.Theory.LogicalFamily.word_keys_uniform
 #print axioms TensorRewrite.Theory.LogicalFamily.word_keys_uniform
+#check @TensorRewrite.Theory.ReductionAlgebra.concat_add
+#print axioms TensorRewrite.Theory.ReductionAlgebra.concat_add
+#check @TensorRewrite.Theory.ReductionAlgebra.constant_absorb
+#print axioms TensorRewrite.Theory.ReductionAlgebra.constant_absorb
+#check @TensorRewrite.Theory.ReductionAlgebra.constant_add
+#print axioms TensorRewrite.Theory.ReductionAlgebra.constant_add
+#check @TensorRewrite.Theory.ReductionAlgebra.constant_and
+#print axioms TensorRewrite.Theory.ReductionAlgebra.constant_and
+#check @TensorRewrite.Theory.ReductionAlgebra.constant_max
+#print axioms TensorRewrite.Theory.ReductionAlgebra.constant_max
+#check @TensorRewrite.Theory.ReductionAlgebra.constant_min
+#print axioms TensorRewrite.Theory.ReductionAlgebra.constant_min
+#check @TensorRewrite.Theory.ReductionAlgebra.constant_or
+#print axioms TensorRewrite.Theory.ReductionAlgebra.constant_or
+#check @TensorRewrite.Theory.ReductionAlgebra.coordinate_sum
+#print axioms TensorRewrite.Theory.ReductionAlgebra.coordinate_sum
+#check @TensorRewrite.Theory.ReductionAlgebra.empty_components
+#print axioms TensorRewrite.Theory.ReductionAlgebra.empty_components
+#check @TensorRewrite.Theory.ReductionAlgebra.empty_constant_refuted
+#print axioms TensorRewrite.Theory.ReductionAlgebra.empty_constant_refuted
+#check @TensorRewrite.Theory.ReductionAlgebra.map_reduction
+#print axioms TensorRewrite.Theory.ReductionAlgebra.map_reduction
+#check @TensorRewrite.Theory.ReductionAlgebra.negate_sum
+#print axioms TensorRewrite.Theory.ReductionAlgebra.negate_sum
+#check @TensorRewrite.Theory.ReductionAlgebra.nonassociative_regrouping_refuted
+#print axioms TensorRewrite.Theory.ReductionAlgebra.nonassociative_regrouping_refuted
+#check @TensorRewrite.Theory.ReductionAlgebra.repeated_initializer_refuted
+#print axioms TensorRewrite.Theory.ReductionAlgebra.repeated_initializer_refuted
+#check @TensorRewrite.Theory.ReductionAlgebra.sameCount_components
+#print axioms TensorRewrite.Theory.ReductionAlgebra.sameCount_components
+#check @TensorRewrite.Theory.ReductionAlgebra.sum_reduction
+#print axioms TensorRewrite.Theory.ReductionAlgebra.sum_reduction
+#check @TensorRewrite.Theory.ReductionFiber.elementCount_shape
+#print axioms TensorRewrite.Theory.ReductionFiber.elementCount_shape
+#check @TensorRewrite.Theory.ReductionFiber.fiberValues_constant
+#print axioms TensorRewrite.Theory.ReductionFiber.fiberValues_constant
+#check @TensorRewrite.Theory.ReductionFiber.fiberValues_map
+#print axioms TensorRewrite.Theory.ReductionFiber.fiberValues_map
+#check @TensorRewrite.Theory.ReductionFiber.fiberValues_sum
+#print axioms TensorRewrite.Theory.ReductionFiber.fiberValues_sum
+#check @TensorRewrite.Theory.ReductionFiber.foldl_map_hom
+#print axioms TensorRewrite.Theory.ReductionFiber.foldl_map_hom
+#check @TensorRewrite.Theory.ReductionFiber.foldl_replicate_absorb
+#print axioms TensorRewrite.Theory.ReductionFiber.foldl_replicate_absorb
+#check @TensorRewrite.Theory.ReductionFiber.merge_split
+#print axioms TensorRewrite.Theory.ReductionFiber.merge_split
+#check @TensorRewrite.Theory.ReductionFiber.output_merge
+#print axioms TensorRewrite.Theory.ReductionFiber.output_merge
+#check @TensorRewrite.Theory.ReductionFiber.reduced_merge
+#print axioms TensorRewrite.Theory.ReductionFiber.reduced_merge
+#check @TensorRewrite.Theory.ReductionFiber.sum_flatMap
+#print axioms TensorRewrite.Theory.ReductionFiber.sum_flatMap
+#check @TensorRewrite.Theory.ReductionFiber.sum_head_tail
+#print axioms TensorRewrite.Theory.ReductionFiber.sum_head_tail
 #check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
 #print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
 #check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff

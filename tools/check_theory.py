@@ -9,6 +9,8 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ReductionFiber': ['elementCount_shape', 'output_merge', 'reduced_merge', 'merge_split', 'fiberValues_map', 'fiberValues_constant', 'foldl_replicate_absorb', 'sum_head_tail', 'sum_flatMap', 'fiberValues_sum', 'foldl_map_hom'],
+    'ReductionAlgebra': ['constant_absorb', 'constant_and', 'constant_or', 'constant_min', 'constant_max', 'constant_add', 'negate_sum', 'concat_add', 'coordinate_sum', 'sum_reduction', 'map_reduction', 'empty_components', 'sameCount_components', 'empty_constant_refuted', 'repeated_initializer_refuted', 'nonassociative_regrouping_refuted'],
     'ScalarDomains': ['complex_square_sqrt', 'complex_sqrt_square_ofReal',
                       'real_log_exp', 'real_sqrt_square', 'real_log_sqrt_pos',
                       'complex_log_exp_iff', 'complex_sqrt_square_iff_real',
@@ -79,6 +81,10 @@ def main():
             assert axioms <= ALLOWED, (full_name, axioms)
             dependencies[full_name] = sorted(axioms)
     categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
+                  'TensorRewrite/Theory/ReductionFiber.lean': 'S',
+                  'TensorRewrite/Theory/ReductionFiberLemmas.lean': 'H',
+                  'TensorRewrite/Theory/ReductionAlgebra.lean': 'R',
+                  'TensorRewrite/Theory/ReductionCounterexamples.lean': 'C',
                   'TensorRewrite/Theory/ScalarDomainLemmas.lean': 'H',
                   'TensorRewrite/Theory/ScalarDomains.lean': 'R',
                   'TensorRewrite/Theory/ScalarDomainCounterexamples.lean': 'C',
@@ -144,7 +150,14 @@ def main():
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('exact real and principal-complex values; real log/exp all inputs; '
+                      name: ('bounded recursive reduction axis plans with derived kept/reduced '
+                             'coordinate inverses and actual fiber-sum bridge; constant fibers '
+                             'retain the initializer and nonempty premise for absorption; exact '
+                             'AddMonoid/AddCommMonoid/AddCommGroup or Boolean/LinearOrder laws '
+                             'are explicit; tuple reducers use whole-state initializer laws; '
+                             'no IEEE algebra, windows or full-family closure'
+                             if '.ReductionFiber.' in name or '.ReductionAlgebra.' in name else
+                             'exact real and principal-complex values; real log/exp all inputs; '
                              'real log/sqrt restricted to positive inputs; complex log/exp iff '
                              '-pi < imaginary part <= pi; complex sqrt-square/magnitude iff real '
                              'axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math '

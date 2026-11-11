@@ -169,7 +169,23 @@ def evidence(root=ROOT):
             elif name.endswith(('complex_sqrt_square_tensor_iff',
                                 'complex_sqrt_square_counterexample')):
                 labels=['HandleSqrt/square-complex']
-        kind=('scalar_domain_counterexample' if '.ScalarDomains.' in name
+        if '.ReductionAlgebra.' in name:
+            suffix=name.rsplit('.',1)[1]
+            labels={
+                'constant_and':['HandleReduce/scalar-broadcast-and'],
+                'constant_or':['HandleReduce/scalar-broadcast-or'],
+                'constant_min':['HandleReduce/scalar-broadcast-minimum'],
+                'constant_max':['HandleReduce/scalar-broadcast-maximum'],
+                'constant_add':['HandleReduce/broadcast-replicated-axes'],
+                'negate_sum':['HandleReduce/negate-sum'],
+                'concat_add':['HandleReduce/concat','HandleReduce/merge-delegation'],
+                'sum_reduction':['MergeReduces/combined-axes'],
+                'empty_components':['BroadcastReduce/tuple','HandleReduce/empty-delegation'],
+                'sameCount_components':['ReplaceReduceWithReshape/tuple',
+                                        'HandleReduce/same-element-count']}.get(suffix,[])
+        kind=('reduction_contract_refutation' if '.ReductionAlgebra.' in name
+              and name.endswith('_refuted') else
+              'scalar_domain_counterexample' if '.ScalarDomains.' in name
               and name.endswith('_counterexample') else
               'numerical_contract_refutation' if '.ConvolutionFloat.' in name
               and name.endswith('_refuted') else 'library_backed_theory')
@@ -321,6 +337,19 @@ def mathematical_models(root=ROOT):
                        domain_profiles=scalar['profiles'],rounded_transcendentals_modeled=False,
                        independent_statement_review='pending',manifest=scalar['manifest'],
                        manifest_sha256=scalar['manifest_sha256']))
+    from check_reduction_algebra import check_inputs as reduction_inputs
+    from check_reduction_algebra import validate_result as validate_reduction
+    reduction=read('reports/reduction-algebra.json',root);validate_reduction(reduction)
+    extension=reduction_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ReductionFiber.' in name or '.ReductionAlgebra.' in name}
+    assert reduction['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['axis_contract'],
+                       scalar_contract=reduction['scalar_contract'],status=reduction['status'],
+                       checked_theorem_count=27,full_family_complete=False,
+                       actual_ordered_fiber_to_coordinate_sum_proved=True,
+                       window_geometry_proved=False,independent_statement_review='pending',
+                       manifest=reduction['manifest'],manifest_sha256=reduction['manifest_sha256']))
     return models
 
 

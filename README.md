@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 103 checked mathematical statements; custom Lean totals **4,283**.
+The theory target now has 130 checked mathematical statements; custom Lean totals **4,598**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -954,3 +954,18 @@ declarations. The four integration theorems remain separate. The old89-statement
 independent review does not cover these14 additions; their review remains open.
 All488 records remain, with401 unformulated/75 partial/12 declared logical-family
 records and zero whole records closed. Code correspondence remains future work.
+
+
+## Bounded reduction algebra
+
+The actual ordered reduction now equals a sum over derived bounded reduced
+coordinates, with inverse kept/reduced coordinate maps. Constant, negation,
+regrouping and whole-state tuple laws add27 checked statements and315 Lean lines;
+three separate certificates refute missing nonemptiness/initializer/algebra laws.
+Nine profiles give20 oracle-agreeing output observations. All60 retained reduction
+records have a mathematical formulation/dependency diagnosis across19 groups;
+window, arg-extremum, axis-adapter and numerical gaps remain explicit.
+See [the reduction guide](docs/reduction-algebra.md). All38 focused tests pass.
+Current totals are130 theory statements,390 ledger declarations and4598 custom
+Lean lines, with four integration theorems separate. The41 statements added after
+the old89-statement review await independent review. Whole-workload closure is open.

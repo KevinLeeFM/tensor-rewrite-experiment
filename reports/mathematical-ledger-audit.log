@@ -2475,6 +2475,172 @@ TensorRewrite.Theory.LogicalFamily.word_keys_uniform : ∀ (width : ℕ),
     List.map TensorRewrite.Theory.LogicalFamily.Rule.key
       (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word 0))
 'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms
+@TensorRewrite.Theory.ReductionAlgebra.concat_add : ∀ {α : Type} [inst : AddMonoid α] (blocks : List (List α)),
+  List.foldl (fun x1 x2 => x1 + x2) 0 blocks.flatten =
+    List.foldl (fun x1 x2 => x1 + x2) 0 (List.map (fun block => List.foldl (fun x1 x2 => x1 + x2) 0 block) blocks)
+'TensorRewrite.Theory.ReductionAlgebra.concat_add' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.constant_absorb : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : α → α → α) (initial value : α),
+  0 < plan.fiberCount →
+    (∀ (accumulator : α), operation (operation accumulator value) value = operation accumulator value) →
+      TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial (TensorRewrite.Pilot.Tensor.constant value) =
+        TensorRewrite.Pilot.Tensor.constant (operation initial value)
+'TensorRewrite.Theory.ReductionAlgebra.constant_absorb' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.constant_add : ∀ {α : Type} [inst : AddMonoid α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (initial value : α),
+  TensorRewrite.Pilot.Reduction.reduceTensor plan (fun x1 x2 => x1 + x2) initial
+      (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.constant (initial + plan.fiberCount • value)
+'TensorRewrite.Theory.ReductionAlgebra.constant_add' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionAlgebra.constant_and : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (initial value : Bool),
+  0 < plan.fiberCount →
+    TensorRewrite.Pilot.Reduction.reduceTensor plan and initial (TensorRewrite.Pilot.Tensor.constant value) =
+      TensorRewrite.Pilot.Tensor.constant (value && initial)
+'TensorRewrite.Theory.ReductionAlgebra.constant_and' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.constant_max : ∀ {α : Type} [inst : LinearOrder α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (initial value : α),
+  0 < plan.fiberCount →
+    TensorRewrite.Pilot.Reduction.reduceTensor plan max initial (TensorRewrite.Pilot.Tensor.constant value) =
+      TensorRewrite.Pilot.Tensor.constant (max value initial)
+'TensorRewrite.Theory.ReductionAlgebra.constant_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.constant_min : ∀ {α : Type} [inst : LinearOrder α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (initial value : α),
+  0 < plan.fiberCount →
+    TensorRewrite.Pilot.Reduction.reduceTensor plan min initial (TensorRewrite.Pilot.Tensor.constant value) =
+      TensorRewrite.Pilot.Tensor.constant (min value initial)
+'TensorRewrite.Theory.ReductionAlgebra.constant_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ReductionAlgebra.constant_or : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (initial value : Bool),
+  0 < plan.fiberCount →
+    TensorRewrite.Pilot.Reduction.reduceTensor plan or initial (TensorRewrite.Pilot.Tensor.constant value) =
+      TensorRewrite.Pilot.Tensor.constant (value || initial)
+'TensorRewrite.Theory.ReductionAlgebra.constant_or' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.coordinate_sum : ∀ {α : Type} [inst : AddCommMonoid α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.Reduction.reduceTensor plan (fun x1 x2 => x1 + x2) initial input output =
+    initial + ∑ reduced, input (TensorRewrite.Theory.ReductionFiber.mergeIndex plan output reduced)
+'TensorRewrite.Theory.ReductionAlgebra.coordinate_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.empty_components : ∀ {components : Type} {α : components → Type}
+  (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : ((c : components) → α c) → ((c : components) → α c) → (c : components) → α c)
+  (initial : (c : components) → α c) (input : TensorRewrite.Pilot.Tensor plan.inputShape ((c : components) → α c)),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    ∀ (component : components),
+      TensorRewrite.Pilot.Tensor.map (fun state => state component)
+          (TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input) =
+        TensorRewrite.Pilot.Tensor.constant (initial component)
+'TensorRewrite.Theory.ReductionAlgebra.empty_components' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionAlgebra.empty_constant_refuted : (TensorRewrite.Pilot.Reduction.reduceTensor
+      (TensorRewrite.Pilot.Reduction.Plan.reduce 0 TensorRewrite.Pilot.Reduction.Plan.scalar) Nat.max 1
+      (TensorRewrite.Pilot.Tensor.constant 9) fun axis => axis.elim0) =
+    1 ∧
+  1 ≠ 9
+'TensorRewrite.Theory.ReductionAlgebra.empty_constant_refuted' depends on axioms: [propext]
+@TensorRewrite.Theory.ReductionAlgebra.map_reduction : ∀ {α β : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (f : α → β) (operation : α → α → α) (target : β → β → β),
+  (∀ (a b : α), target (f a) (f b) = f (operation a b)) →
+    ∀ (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+      TensorRewrite.Pilot.Reduction.reduceTensor plan target (f initial) (TensorRewrite.Pilot.Tensor.map f input) =
+        TensorRewrite.Pilot.Tensor.map f (TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input)
+'TensorRewrite.Theory.ReductionAlgebra.map_reduction' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.negate_sum : ∀ {α : Type} [inst : AddCommGroup α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.Reduction.reduceTensor plan (fun x1 x2 => x1 + x2) 0
+      (TensorRewrite.Pilot.Tensor.map Neg.neg input) =
+    TensorRewrite.Pilot.Tensor.map Neg.neg
+      (TensorRewrite.Pilot.Reduction.reduceTensor plan (fun x1 x2 => x1 + x2) 0 input)
+'TensorRewrite.Theory.ReductionAlgebra.negate_sum' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionAlgebra.nonassociative_regrouping_refuted : List.foldl (fun a b => 2 * a + b) 0
+      (List.map (fun block => List.foldl (fun a b => 2 * a + b) 0 block) [[1, 2], [3, 4]]) =
+    18 ∧
+  List.foldl (fun a b => 2 * a + b) 0 [1, 2, 3, 4] = 26 ∧ 18 ≠ 26
+'TensorRewrite.Theory.ReductionAlgebra.nonassociative_regrouping_refuted' does not depend on any axioms
+TensorRewrite.Theory.ReductionAlgebra.repeated_initializer_refuted : List.foldl (fun x1 x2 => x1 + x2) 7
+      (List.map (fun block => List.foldl (fun x1 x2 => x1 + x2) 7 block) [[1], [2]]) =
+    24 ∧
+  List.foldl (fun x1 x2 => x1 + x2) 7 [1, 2] = 10 ∧ 24 ≠ 10
+'TensorRewrite.Theory.ReductionAlgebra.repeated_initializer_refuted' does not depend on any axioms
+@TensorRewrite.Theory.ReductionAlgebra.sameCount_components : ∀ {components : Type} {α : components → Type}
+  (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : ((c : components) → α c) → ((c : components) → α c) → (c : components) → α c)
+  (initial : (c : components) → α c),
+  (∀ (state : (c : components) → α c), operation initial state = state) →
+    ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape ((c : components) → α c))
+      (sameCount :
+        TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+          TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape)
+      (component : components),
+      TensorRewrite.Pilot.Tensor.map (fun state => state component)
+          (TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input) =
+        TensorRewrite.Pilot.Reshape.reshapeTensor (TensorRewrite.Pilot.Tensor.map (fun state => state component) input)
+          plan.outputShape sameCount
+'TensorRewrite.Theory.ReductionAlgebra.sameCount_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionAlgebra.sum_reduction : ∀ {α : Type} [inst : AddCommMonoid α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  ∑ output, TensorRewrite.Pilot.Reduction.reduceTensor plan (fun x1 x2 => x1 + x2) 0 input output = ∑ index, input index
+'TensorRewrite.Theory.ReductionAlgebra.sum_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ReductionFiber.elementCount_shape : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.ReductionFiber.shape plan) = plan.fiberCount
+'TensorRewrite.Theory.ReductionFiber.elementCount_shape' depends on axioms: [propext]
+@TensorRewrite.Theory.ReductionFiber.fiberValues_constant : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (value : α) (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.Reduction.fiberValues plan (TensorRewrite.Pilot.Tensor.constant value) output =
+    List.replicate plan.fiberCount value
+'TensorRewrite.Theory.ReductionFiber.fiberValues_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionFiber.fiberValues_map : ∀ {α β : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (f : α → β) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.Reduction.fiberValues plan (TensorRewrite.Pilot.Tensor.map f input) output =
+    List.map f (TensorRewrite.Pilot.Reduction.fiberValues plan input output)
+'TensorRewrite.Theory.ReductionFiber.fiberValues_map' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionFiber.fiberValues_sum : ∀ {α : Type} [inst : AddCommMonoid α]
+  (plan : TensorRewrite.Pilot.Reduction.Plan) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  (TensorRewrite.Pilot.Reduction.fiberValues plan input output).sum =
+    ∑ reduced, input (TensorRewrite.Theory.ReductionFiber.mergeIndex plan output reduced)
+'TensorRewrite.Theory.ReductionFiber.fiberValues_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionFiber.foldl_map_hom : ∀ {α β : Type} (f : α → β) (operation : α → α → α)
+  (target : β → β → β),
+  (∀ (a b : α), target (f a) (f b) = f (operation a b)) →
+    ∀ (values : List α) (initial : α),
+      List.foldl target (f initial) (List.map f values) = f (List.foldl operation initial values)
+'TensorRewrite.Theory.ReductionFiber.foldl_map_hom' does not depend on any axioms
+@TensorRewrite.Theory.ReductionFiber.foldl_replicate_absorb : ∀ {α : Type} (operation : α → α → α) (value : α),
+  (∀ (initial : α), operation (operation initial value) value = operation initial value) →
+    ∀ (count : ℕ),
+      0 < count → ∀ (initial : α), List.foldl operation initial (List.replicate count value) = operation initial value
+'TensorRewrite.Theory.ReductionFiber.foldl_replicate_absorb' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ReductionFiber.merge_split : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (input : TensorRewrite.Pilot.Index plan.inputShape),
+  TensorRewrite.Theory.ReductionFiber.mergeIndex plan (TensorRewrite.Theory.ReductionFiber.outputIndex plan input)
+      (TensorRewrite.Theory.ReductionFiber.reducedIndex plan input) =
+    input
+'TensorRewrite.Theory.ReductionFiber.merge_split' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionFiber.output_merge : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (output : TensorRewrite.Pilot.Index plan.outputShape)
+  (reduced : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ReductionFiber.shape plan)),
+  TensorRewrite.Theory.ReductionFiber.outputIndex plan
+      (TensorRewrite.Theory.ReductionFiber.mergeIndex plan output reduced) =
+    output
+'TensorRewrite.Theory.ReductionFiber.output_merge' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionFiber.reduced_merge : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (output : TensorRewrite.Pilot.Index plan.outputShape)
+  (reduced : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ReductionFiber.shape plan)),
+  TensorRewrite.Theory.ReductionFiber.reducedIndex plan
+      (TensorRewrite.Theory.ReductionFiber.mergeIndex plan output reduced) =
+    reduced
+'TensorRewrite.Theory.ReductionFiber.reduced_merge' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionFiber.sum_flatMap : ∀ {α β : Type} [inst : AddMonoid β] (values : List α)
+  (blocks : α → List β), (List.flatMap blocks values).sum = (List.map (fun value => (blocks value).sum) values).sum
+'TensorRewrite.Theory.ReductionFiber.sum_flatMap' depends on axioms: [propext]
+@TensorRewrite.Theory.ReductionFiber.sum_head_tail : ∀ {α : Type} [inst : AddCommMonoid α] {tailRank : ℕ} (extent : ℕ)
+  (tailShape : TensorRewrite.Pilot.Shape tailRank)
+  (input : TensorRewrite.Pilot.Tensor (fun i => Fin.cases extent tailShape i) α),
+  ∑ index, input index =
+    ∑ head, ∑ tail, input ((TensorRewrite.Theory.ReductionFiber.headTailEquiv extent tailShape).symm (head, tail))
+'TensorRewrite.Theory.ReductionFiber.sum_head_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample : Complex.log
     (Complex.exp (2 * ↑Real.pi * Complex.I)) ≠
   2 * ↑Real.pi * Complex.I
