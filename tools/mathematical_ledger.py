@@ -60,6 +60,20 @@ def corpus(root=ROOT):
     return rows
 
 
+
+def retained_declaration_refs(value,path='pilot'):
+    result={}
+    def visit(item,origin):
+        if isinstance(item,dict):
+            for key,entry in item.items():visit(entry,origin+'.'+key)
+        elif isinstance(item,list):
+            for index,entry in enumerate(item):visit(entry,origin+'['+str(index)+']')
+        elif isinstance(item,str) and item.startswith('TensorRewrite.'):
+            result.setdefault(item,[]).append(origin)
+    visit(value,path)
+    return result
+
+
 def evidence(root=ROOT):
     pilot=read('census/pilot-value-proofs.json',root); result={}
     def add(name,kind,profile,labels=()):
@@ -93,6 +107,34 @@ def evidence(root=ROOT):
         if group.get('case_id'):labels=[group['case_id']]
         for name in group.get('refutation_theorems',group.get('certificates',[])):
             add(name,'refutation_or_diagnostic_certificate',group.get('profile',group.get('scope','')),labels)
+    # Every explicitly retained declaration reference is inventoried, including diagnostic
+    # witnesses/consistency/repair certificates. No native evidence validator is invoked.
+    kinds={'bridge_theorems':'mathematical_guard_bridge',
+           'consistency_theorems':'model_consistency_certificate',
+           'witness_theorems':'concrete_witness_certificate','witness_theorem':'concrete_witness_certificate',
+           'diagnostic_certificates':'diagnostic_certificate',
+           'evaluator_profile_certificates':'index_value_profile_certificate',
+           'repair_certificates':'fixed_schedule_repair_certificate',
+           'certificates':'fixed_schedule_or_diagnostic_certificate'}
+    retained_profiles={
+        'constant_guard':'Pure predicate tensor DAG with mathematical IsAll constant-recognition premise',
+        'numerical_refutation':'Consistency of a partial encoded exceptional-product relation; not full IEEE arithmetic',
+        'shape_refutation':'Bounded static shape/stride witness consistency and endpoint mismatch',
+        'algebraic_refutation':'Concrete nonfinite predicate-product witnesses in the declared partial value relation',
+        'index_oracle_diagnostic':'Unsigned64 decoded-index versus declared signed-decoding alternative; no source equivalence',
+        'nested_slice':'Bounded nested-slice unsigned64 index-profile diagnostics; no source equivalence',
+        'control_order_diagnostic':'Validity and traces of schedules in the declared effectful DAG observation model',
+        'boolean_control_family':'Fixed-schedule control-order repair in the declared effectful DAG observation model',
+        'contraction':'Partial zero-MAC sign/initializer behavior relation; not a complete IEEE convolution or Dot specification'}
+    for name,origins in retained_declaration_refs(pilot).items():
+        if name not in result:
+            group_name=origins[0].split('.')[1].split('[')[0]
+            field=next((key for key in kinds if any('.'+key in origin for origin in origins)),None)
+            group=pilot.get(group_name,{})
+            profile=retained_profiles.get(group_name,group.get('profile',group.get('scope',
+                group.get('logical_profile','Declared mathematical premises/conclusion in the checked Lean type; retained '+group_name))))
+            add(name,kinds.get(field,'retained_mathematical_declaration'),profile)
+        result[name]['retained_manifest_paths']=sorted(origins)
     theory=read('reports/theory-progress.json',root)
     for name in theory['axiom_dependencies']:
         labels=['HandleNegate/involution'] if name.endswith('FloatNegation.tensor_involution') else []

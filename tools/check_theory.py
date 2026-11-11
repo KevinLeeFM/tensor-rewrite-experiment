@@ -25,6 +25,31 @@ THEOREMS = {
 }
 
 
+
+def measure_file(name,category,root=ROOT,overrides=None):
+    path=root/name;source=path.read_text();lines=source.splitlines(keepends=True)
+    digest=hashlib.sha256(path.read_bytes()).hexdigest()
+    if overrides is None:
+        overrides=json.loads((root/'census/lean-category-overrides-v1.json').read_text())['files']
+    override=next((r for r in overrides if r['path']==name),None)
+    if override is None:
+        return [dict(path=name,category=category,sha256=digest,**count_source(source))]
+    assert digest==override['sha256'],name
+    rows=[];cursor=1
+    for region in override['regions']:
+        first=region['first'];last=region['last']
+        assert first==cursor and first<=last<=len(lines),region
+        assert region['category'] in {'S','H','R','A','C'}
+        fragment=''.join(lines[first-1:last])
+        rows.append(dict(path=name,category=region['category'],sha256=digest,
+                         source_region=dict(first=first,last=last),
+                         **count_source(fragment)))
+        cursor=last+1
+    assert cursor==len(lines)+1
+    assert sum(r['code_lines'] for r in rows)==count_source(source)['code_lines']
+    return rows
+
+
 def main():
     build = subprocess.run(['lake', 'build'], cwd=ROOT, text=True, capture_output=True)
     (ROOT / 'reports/theory-build.log').write_text(build.stdout + build.stderr)
@@ -71,18 +96,24 @@ def main():
                   'TensorRewriteTheory.lean': 'A'}
     rows = []
     for name, category in categories.items():
-        path = ROOT / name
-        rows.append(dict(path=name, category=category,
-                         sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-                         **count_source(path.read_text())))
+        rows.extend(measure_file(name,category))
     integration = json.loads((ROOT / 'reports/library-setup.json').read_text())
+    baseline = json.loads((ROOT / 'reports/pilot-values.json').read_text())
+    category_lines = {c: sum(r['code_lines'] for r in rows if r['category'] == c)
+                      for c in ('S', 'H', 'R', 'A', 'C')}
+    total_categories = {c: baseline['category_lines'][c] + category_lines[c]
+                        for c in category_lines}
+    total_categories['A'] += integration['new_integration_code_lines']
     count = sum(r['code_lines'] for r in rows)
+    assert sum(total_categories.values()) == 2796 + count
     report = dict(status='kernel_checked_mathematical_theory', new_theorem_count=len(dependencies),
                   code_correspondence_performed=False, code_correspondence_future_work=True,
                   source_rewrite_acceptance_claimed=False, mathematical_workload_denominator=None,
                   independently_reviewed_statements=False, build_exit_code=build.returncode,
                   audit_exit_code=audit.returncode, axiom_dependencies=dependencies,
                   files=rows, new_theory_lines=count, previous_custom_lean_lines=2796,
+                  category_override_manifest='census/lean-category-overrides-v1.json',
+                  category_lines=category_lines, total_custom_category_lines=total_categories,
                   total_custom_lean_lines=2796+count, dependency_packages=integration['packages'],
                   proof_reuse={'FloatNegation.scalar_involution': 'FloatLib Model.neg_neg',
                                'FiniteSum.sum_reshape': 'Mathlib Equiv.sum_comp plus existing index theory',

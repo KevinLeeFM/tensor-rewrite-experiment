@@ -1,5 +1,10 @@
 # Ordered convolution: a binary32 proof and numerical boundary evidence
 
+**Accounting correction:** The original counts below are retained for history.
+MF-01/MF-02 supersede the ledger subtotal and R/C split; see
+[the correction record](mathematical-review-corrections-v1.md) and
+`census/convolution-ordered-accounting-v1.json`. No Lean statement changed.
+
 Pointwise convolution now equals the existing matrix Dot under an explicit
 ordered scalar contract. The proof establishes equality of complete contribution
 lists at the same numeric positions, then preserves the same fold, initializer,

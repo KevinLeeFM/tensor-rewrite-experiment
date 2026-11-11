@@ -933,7 +933,10 @@ and nine complete JSON results reproduced. Ten pinned dependency source/compiled
 caches were reused with clean tracked sources. The standalone Pilot audit also
 passes. Three additional review/replay integrity tests pass.
 
-A268-file mathematical-only packet is ready for separate review; reviewer
-authorization is pending. This does not replace independent semantic review or
-close the full workload. See [the review/replay guide](docs/mathematical-review.md)
+The user-authorized independent reviewer inspected the 268-file packet and found
+no false statement in the inspected 89-statement foundation. Two bookkeeping
+findings require correction: 30 omitted retained declarations and 12 refutation
+lines misclassified as correctness proofs. The response registers 349 declarations
+and corrects R/C attribution without changing Lean statements or the total.
+Correction recheck and full-workload review remain open. See [the review/replay guide](docs/mathematical-review.md)
 and `reports/mathematical-clean-replay-v1.md`. Custom Lean remains4165 lines.

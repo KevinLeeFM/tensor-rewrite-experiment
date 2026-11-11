@@ -63,6 +63,8 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.BooleanDag.and_rhs_false
 #check @TensorRewrite.Pilot.BooleanDag.and_rhs_true
 #print axioms TensorRewrite.Pilot.BooleanDag.and_rhs_true
+#check @TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll
+#print axioms TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll
 #check @TensorRewrite.Pilot.BooleanDag.not_not
 #print axioms TensorRewrite.Pilot.BooleanDag.not_not
 #check @TensorRewrite.Pilot.BooleanDag.or_lhs_false
@@ -109,6 +111,30 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.Contraction.terms_length
 #check @TensorRewrite.Pilot.Contraction.terms_no_contract
 #print axioms TensorRewrite.Pilot.Contraction.terms_no_contract
+#check @TensorRewrite.Pilot.ControlOrder.original_forward_trace
+#print axioms TensorRewrite.Pilot.ControlOrder.original_forward_trace
+#check @TensorRewrite.Pilot.ControlOrder.original_forward_valid
+#print axioms TensorRewrite.Pilot.ControlOrder.original_forward_valid
+#check @TensorRewrite.Pilot.ControlOrder.original_requires_forward
+#print axioms TensorRewrite.Pilot.ControlOrder.original_requires_forward
+#check @TensorRewrite.Pilot.ControlOrder.original_reverse_impossible
+#print axioms TensorRewrite.Pilot.ControlOrder.original_reverse_impossible
+#check @TensorRewrite.Pilot.ControlOrder.repaired_forward_trace
+#print axioms TensorRewrite.Pilot.ControlOrder.repaired_forward_trace
+#check @TensorRewrite.Pilot.ControlOrder.repaired_forward_valid
+#print axioms TensorRewrite.Pilot.ControlOrder.repaired_forward_valid
+#check @TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement
+#print axioms TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement
+#check @TensorRewrite.Pilot.ControlOrder.repaired_requires_forward
+#print axioms TensorRewrite.Pilot.ControlOrder.repaired_requires_forward
+#check @TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible
+#print axioms TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible
+#check @TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse
+#print axioms TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse
+#check @TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace
+#print axioms TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace
+#check @TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid
+#print axioms TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid
 #check @TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs
 #print axioms TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs
 #check @TensorRewrite.Pilot.Dag.Node.eval_mapRefs
@@ -175,6 +201,12 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue
 #check @TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose
 #print axioms TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose
+#check @TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees
+#print axioms TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees
+#check @TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees
+#print axioms TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees
+#check @TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal
+#print axioms TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal
 #check @TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false
 #print axioms TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false
 #check @TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true
@@ -211,6 +243,8 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.FiniteProduct.row_join
 #check @TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects
 #print axioms TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects
+#check @TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed
+#print axioms TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed
 #check @TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs
 #print axioms TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs
 #check @TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes
@@ -289,6 +323,14 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast
 #check @TensorRewrite.Pilot.ModularArithmetic.sub_add_constant
 #print axioms TensorRewrite.Pilot.ModularArithmetic.sub_add_constant
+#check @TensorRewrite.Pilot.NestedUnsigned64.both_high_changes
+#print axioms TensorRewrite.Pilot.NestedUnsigned64.both_high_changes
+#check @TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes
+#print axioms TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes
+#check @TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving
+#print axioms TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving
+#check @TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes
+#print axioms TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes
 #check @TensorRewrite.Pilot.OperandOrder.map₂_eq
 #print axioms TensorRewrite.Pilot.OperandOrder.map₂_eq
 #check @TensorRewrite.Pilot.OrderedCompareProfile.false_consistent
@@ -411,22 +453,32 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes
 #check @TensorRewrite.Pilot.SelectContraction.branchContraction_eq
 #print axioms TensorRewrite.Pilot.SelectContraction.branchContraction_eq
+#check @TensorRewrite.Pilot.SelectContraction.false_witness
+#print axioms TensorRewrite.Pilot.SelectContraction.false_witness
 #check @TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq
 #print axioms TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq
 #check @TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes
 #print axioms TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes
 #check @TensorRewrite.Pilot.SelectContraction.not_universally_valid
 #print axioms TensorRewrite.Pilot.SelectContraction.not_universally_valid
+#check @TensorRewrite.Pilot.SelectContraction.true_witness
+#print axioms TensorRewrite.Pilot.SelectContraction.true_witness
 #check @TensorRewrite.Pilot.SliceShape.coordinate_bounds
 #print axioms TensorRewrite.Pilot.SliceShape.coordinate_bounds
+#check @TensorRewrite.Pilot.SliceShape.empty_witness_well_formed
+#print axioms TensorRewrite.Pilot.SliceShape.empty_witness_well_formed
 #check @TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving
 #print axioms TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving
 #check @TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes
 #print axioms TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes
+#check @TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness
+#print axioms TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness
 #check @TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving
 #print axioms TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving
 #check @TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes
 #print axioms TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes
+#check @TensorRewrite.Pilot.SliceShape.reorder_reverse_witness
+#print axioms TensorRewrite.Pilot.SliceShape.reorder_reverse_witness
 #check @TensorRewrite.Pilot.Subtract.add_sub_self_left
 #print axioms TensorRewrite.Pilot.Subtract.add_sub_self_left
 #check @TensorRewrite.Pilot.Subtract.add_sub_self_right
@@ -461,6 +513,14 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.Transpose.transpose_constant
 #check @TensorRewrite.Pilot.Transpose.transpose_identity
 #print axioms TensorRewrite.Pilot.Transpose.transpose_identity
+#check @TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible
+#print axioms TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible
+#check @TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive
+#print axioms TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive
+#check @TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent
+#print axioms TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent
+#check @TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ
+#print axioms TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_right

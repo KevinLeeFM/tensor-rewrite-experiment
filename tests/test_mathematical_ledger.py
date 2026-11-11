@@ -32,6 +32,21 @@ class MathematicalLedgerTests(unittest.TestCase):
         self.assertTrue(all(not r['whole_record_mathematically_closed'] for r in result['benchmark_records']))
         self.assertFalse(result['code_correspondence_performed'])
 
+    def test_every_explicit_retained_declaration_reference_is_registered(self):
+        pilot=ledger.read('census/pilot-value-proofs.json')
+        references=ledger.retained_declaration_refs(pilot)
+        evidence={row['theorem']:row for row in ledger.evidence()}
+        self.assertEqual(len(references),260)
+        self.assertFalse(set(references)-set(evidence))
+        for name,origins in references.items():
+            self.assertEqual(evidence[name]['retained_manifest_paths'],sorted(origins))
+        for name in ('TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll',
+                     'TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ'):
+            self.assertIn(name,evidence)
+        newly_added=['TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll',
+                     'TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ']
+        self.assertTrue(all(not evidence[n]['label_correspondence_certified'] for n in newly_added))
+
     def test_unknown_benchmark_label_is_rejected(self):
         proof=copy.deepcopy(ledger.evidence()[0])
         proof['mathematical_acceptance']='kernel_checked_in_declared_model'

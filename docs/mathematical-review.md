@@ -42,10 +42,16 @@ statements,319 registered declarations,4165 custom Lean lines,488 benchmark
 records and zero whole records closed. Mathematical N/F, the diverse reviewed
 pilot, full campaign and residual diagnosis remain open.
 
-Reviewer dispatch is pending explicit authorization for this new mathematical
-packet. The earlier reviewer authorization covered the separate census/pilot
-packet. The clean replay was performed by the integrator and is not recorded as
-independent statement review.
+The user authorized the mathematical reviewer, whose independent result is
+`reviews/results/mathematical-foundation-v1-review.md` (and JSON companion).
+The reviewer found no false statement in the inspected 89-statement foundation,
+but requested two bookkeeping corrections: MF-01 (30 omitted retained declaration
+references) and MF-02 (12 counterexample lines misclassified as correctness proofs).
+See `reports/mathematical-review-corrections-v1.md` for the response and limits.
+The reviewer separately replayed all 12 stages and probed 2,160 geometries with
+5,968 sample comparisons. Raw logs and scratch sources are preserved in
+`reviews/results/mathematical-foundation-v1-evidence.zip` with a hash manifest.
+The original packet and integrator replay remain immutable historical evidence.
 
 ## Verify the frozen evidence
 

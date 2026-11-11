@@ -1,0 +1,1139 @@
+{
+  "schema": 1,
+  "packet": "mathematical-foundation-v1",
+  "outcome": "issues requiring correction",
+  "review_kind": "independent subagent mathematical inspection; not a trusted oracle",
+  "target_revision": "9bcd44756cbf5261a0c690e05651e96fa162319a",
+  "archive_sha256": "13fe06df530361d295f70127eeaf8d2de48d6b0393385b88e687943a2b67e435",
+  "manifest_sha256": "52006ae61a174033ec8584540279ea03082686618393b05886a87ee4cd40a4b6",
+  "descriptor_sha256": "006f4b40fda640cfdaa3ff2b74b50cf286469dec740298a41f58e11aae422c6d",
+  "integrity": {
+    "archive_hash_verified": true,
+    "manifest_hash_verified": true,
+    "member_size_and_hash_matches": 268,
+    "zip_members_exactly_match_manifest": true,
+    "committed_member_blobs_match_target_revision": 267,
+    "extra_review_brief_members": 1,
+    "all_frozen_extracted_members_byte_identical_after_replay": true
+  },
+  "extraction_directory": "/tmp/math-foundation-review-otji_e3w",
+  "dependency_reuse": {
+    "packages_symlink": "/tmp/math-foundation-review-otji_e3w/.lake/packages",
+    "target": "/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.lake/packages",
+    "all_ten_manifest_revisions_verified": true,
+    "tracked_sources_clean_before_and_after": true,
+    "dependency_compiled_cache_reused": true,
+    "project_build_outputs_reused": false,
+    "verification": [
+      {
+        "name": "floatlib",
+        "revision": "acba2057e452f32f4ed4f06bb0adbeda5342ba92",
+        "tracked_clean": true
+      },
+      {
+        "name": "mathlib",
+        "revision": "56a005855ea17e0b0958f73ec801ae140b0a1679",
+        "tracked_clean": true
+      },
+      {
+        "name": "plausible",
+        "revision": "dfa4f38190d07c37e315953e08b90fe2d95b3c24",
+        "tracked_clean": true
+      },
+      {
+        "name": "LeanSearchClient",
+        "revision": "d6b4c7be5be75ec4917c873ac50c756dc1436372",
+        "tracked_clean": true
+      },
+      {
+        "name": "importGraph",
+        "revision": "a41f0e9a4dea23188ea9cc1c41ac9f8bbafe0b93",
+        "tracked_clean": true
+      },
+      {
+        "name": "proofwidgets",
+        "revision": "df72b022e558978a1c50264cfc4d7fec86fa8e04",
+        "tracked_clean": true
+      },
+      {
+        "name": "aesop",
+        "revision": "4a174c490d8707121c4a9290800489f105d85e07",
+        "tracked_clean": true
+      },
+      {
+        "name": "Qq",
+        "revision": "dce0ad79c486cb1fb504af04f953c3466b0c6db8",
+        "tracked_clean": true
+      },
+      {
+        "name": "batteries",
+        "revision": "66e469188fe07963e5cf666c7d4433f45b8131c5",
+        "tracked_clean": true
+      },
+      {
+        "name": "Cli",
+        "revision": "c24fe6078c630e89b489bffe59b3e20ac30d12c8",
+        "tracked_clean": true
+      }
+    ],
+    "limitation": "Upstream compiled caches and installed Lean toolchain reused; not a full rebuild or independent semantic audit of upstream libraries."
+  },
+  "scope": {
+    "mathematical_definitions_proofs_observations": true,
+    "compiler_sources_opened": false,
+    "native_or_source_analysis_tools_run": false,
+    "code_correspondence_certified": false,
+    "benchmark_label_correspondence_certified": false,
+    "global_workload_verdict": "open",
+    "whole_records_closed": 0
+  },
+  "findings": [
+    {
+      "id": "MF-01",
+      "priority": "P2",
+      "classification": "bookkeeping_issue",
+      "requires_correction": true,
+      "mathematical_statement_false": false,
+      "title": "Thirty retained mathematical declarations disappear from the ledger inventory",
+      "locations": [
+        {
+          "file": "tools/mathematical_ledger.py",
+          "line": 77
+        },
+        {
+          "file": "tools/mathematical_ledger.py",
+          "line": 83
+        },
+        {
+          "file": "tools/mathematical_ledger.py",
+          "line": 89
+        },
+        {
+          "file": "census/pilot-value-proofs.json",
+          "line": 956
+        },
+        {
+          "file": "census/pilot-value-proofs.json",
+          "line": 1831
+        }
+      ],
+      "explanation": "evidence() reads selected pilot lists and only refutation_theorems/certificates for selected groups. It omits explicitly retained bridge, consistency, witness, index-diagnostic, nested evaluator-profile, control-order/repair and zero-MAC certificates. All 30 omitted names are present in the frozen Lean environment and explicitly referenced in the pilot manifest. The registered subtotal 319 is accurate, but is not a complete inventory of retained mathematical evidence.",
+      "minimal_example": "pilot.constant_guard.bridge_theorems contains TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll (GuardedBooleanDag.lean:15), but this name is absent from evidence() and the generated ledger audit. Likewise contraction.diagnostic_certificates contains four ZeroMacProfile certificates, none registered.",
+      "affected_declarations": {
+        "TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed": [
+          "pilot.numerical_refutation.consistency_theorems[0]"
+        ],
+        "TensorRewrite.Pilot.SliceShape.empty_witness_well_formed": [
+          "pilot.shape_refutation.consistency_theorems[0]"
+        ],
+        "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness": [
+          "pilot.shape_refutation.witness_theorems[0]",
+          "pilot.shape_refutation.targets[0].witness_theorem"
+        ],
+        "TensorRewrite.Pilot.SliceShape.reorder_reverse_witness": [
+          "pilot.shape_refutation.witness_theorems[1]",
+          "pilot.shape_refutation.targets[1].witness_theorem"
+        ],
+        "TensorRewrite.Pilot.SelectContraction.true_witness": [
+          "pilot.algebraic_refutation.witness_theorems[0]"
+        ],
+        "TensorRewrite.Pilot.SelectContraction.false_witness": [
+          "pilot.algebraic_refutation.witness_theorems[1]"
+        ],
+        "TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll": [
+          "pilot.constant_guard.bridge_theorems[0]"
+        ],
+        "TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees": [
+          "pilot.index_oracle_diagnostic.diagnostic_certificates[0]"
+        ],
+        "TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees": [
+          "pilot.index_oracle_diagnostic.diagnostic_certificates[1]"
+        ],
+        "TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal": [
+          "pilot.index_oracle_diagnostic.diagnostic_certificates[2]"
+        ],
+        "TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes": [
+          "pilot.nested_slice.evaluator_profile_certificates[0]"
+        ],
+        "TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes": [
+          "pilot.nested_slice.evaluator_profile_certificates[1]"
+        ],
+        "TensorRewrite.Pilot.NestedUnsigned64.both_high_changes": [
+          "pilot.nested_slice.evaluator_profile_certificates[2]"
+        ],
+        "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving": [
+          "pilot.nested_slice.evaluator_profile_certificates[3]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.original_forward_valid": [
+          "pilot.control_order_diagnostic.certificates[0]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.original_requires_forward": [
+          "pilot.control_order_diagnostic.certificates[1]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.original_reverse_impossible": [
+          "pilot.control_order_diagnostic.certificates[2]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid": [
+          "pilot.control_order_diagnostic.certificates[3]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace": [
+          "pilot.control_order_diagnostic.certificates[4]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.original_forward_trace": [
+          "pilot.control_order_diagnostic.certificates[5]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse": [
+          "pilot.control_order_diagnostic.certificates[6]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.repaired_forward_valid": [
+          "pilot.boolean_control_family.repair_certificates[0]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.repaired_requires_forward": [
+          "pilot.boolean_control_family.repair_certificates[1]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible": [
+          "pilot.boolean_control_family.repair_certificates[2]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement": [
+          "pilot.boolean_control_family.repair_certificates[3]"
+        ],
+        "TensorRewrite.Pilot.ControlOrder.repaired_forward_trace": [
+          "pilot.boolean_control_family.repair_certificates[4]"
+        ],
+        "TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent": [
+          "pilot.contraction.diagnostic_certificates[0]"
+        ],
+        "TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive": [
+          "pilot.contraction.diagnostic_certificates[1]"
+        ],
+        "TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible": [
+          "pilot.contraction.diagnostic_certificates[2]"
+        ],
+        "TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ": [
+          "pilot.contraction.diagnostic_certificates[3]"
+        ]
+      },
+      "independent_check": "All 30 omitted declarations separately #checked and #print axioms audited in ReviewMissingAudit.lean; only propext, Quot.sound and Classical.choice occur.",
+      "requested_correction": "Register the retained mathematical evidence with its precise profile and kind, or publish an explicit exclusion partition and narrow the inventory claim. Do not infer benchmark-label correspondence or close records. Keep the four library-integration theorems separately audited and avoid duplicate counting.",
+      "impact": "Evidence/audit completeness and declaration counts; no counterexample to an inspected theorem and no current unauthorized whole-record promotion."
+    },
+    {
+      "id": "MF-02",
+      "priority": "P2",
+      "classification": "bookkeeping_issue",
+      "requires_correction": true,
+      "mathematical_statement_false": false,
+      "title": "The two binary32 counterexample certificates are charged to correctness-proof R",
+      "locations": [
+        {
+          "file": "tools/check_theory.py",
+          "line": 70
+        },
+        {
+          "file": "TensorRewrite/Theory/ConvolutionFloat.lean",
+          "line": 56
+        },
+        {
+          "file": "TensorRewrite/Theory/ConvolutionFloat.lean",
+          "line": 59
+        },
+        {
+          "file": "TensorRewrite/Theory/ConvolutionFloat.lean",
+          "line": 66
+        },
+        {
+          "file": "docs/lean-size-protocol.md",
+          "line": 76
+        },
+        {
+          "file": "reports/ordered-convolution-numerics.md",
+          "line": 35
+        },
+        {
+          "file": "census/convolution-ordered-v2.json",
+          "json_pointer": "/new_category_lines"
+        }
+      ],
+      "explanation": "The entire ConvolutionFloat.lean module is category R, including two numerical refutation theorems. The size protocol requires Lean counterexample certificates to have their own subtotal rather than correctness-proof R. The final report leaves C at its historical 337 while charging the new certificates to R.",
+      "minimal_example": "binary32_fold_omission_refuted occupies five code lines (59-63), binary32_reversal_refuted six (66-71), and their exclusive local bit-literal notation one (56): 12 certificate/support lines currently charged to R.",
+      "requested_correction": "Separate or explicitly account for numerical certificates/support in C and regenerate category totals/manifests/reports without altering the frozen packet. A module split may add import/scaffold lines; recalculate those rather than assuming unchanged physical source size.",
+      "impact": "Category attribution, not total source omission. The current 4165 lexical code-line total reconciles exactly."
+    }
+  ],
+  "false_mathematical_statements_found": [],
+  "mathematical_blockers_found_in_inspected_foundation": [],
+  "inspected": {
+    "theory_files_full_semantics_and_proofs": [
+      "TensorRewrite/Theory/ContractionAlgebra.lean",
+      "TensorRewrite/Theory/Convolution.lean",
+      "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "TensorRewrite/Theory/ConvolutionDot.lean",
+      "TensorRewrite/Theory/ConvolutionDotLemmas.lean",
+      "TensorRewrite/Theory/ConvolutionDotProof.lean",
+      "TensorRewrite/Theory/ConvolutionFloat.lean",
+      "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "TensorRewrite/Theory/ConvolutionOrdered.lean",
+      "TensorRewrite/Theory/ConvolutionOrderedLemmas.lean",
+      "TensorRewrite/Theory/ConvolutionOrderedProof.lean",
+      "TensorRewrite/Theory/ConvolutionPointwise.lean",
+      "TensorRewrite/Theory/ConvolutionPointwiseAlgebra.lean",
+      "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "TensorRewrite/Theory/ConvolutionSeparable.lean",
+      "TensorRewrite/Theory/ConvolutionSeparableLemmas.lean",
+      "TensorRewrite/Theory/ConvolutionSeparableProof.lean",
+      "TensorRewrite/Theory/ConvolutionSeparableReindex.lean",
+      "TensorRewrite/Theory/FiniteSum.lean",
+      "TensorRewrite/Theory/FloatNegation.lean",
+      "TensorRewrite/Theory/LogicalFamily.lean",
+      "TensorRewrite/Theory/LogicalFamilyProof.lean"
+    ],
+    "theory_declarations": [
+      "TensorRewrite.Theory.ContractionAlgebra.dot_add_left",
+      "TensorRewrite.Theory.ContractionAlgebra.dot_add_right",
+      "TensorRewrite.Theory.Convolution.basePosition_reverse",
+      "TensorRewrite.Theory.Convolution.convolve_bias_scale",
+      "TensorRewrite.Theory.Convolution.convolve_empty_fiber",
+      "TensorRewrite.Theory.Convolution.convolve_empty_kernel",
+      "TensorRewrite.Theory.Convolution.convolve_empty_spatial_input",
+      "TensorRewrite.Theory.Convolution.convolve_input_add",
+      "TensorRewrite.Theory.Convolution.convolve_kernel_add",
+      "TensorRewrite.Theory.Convolution.convolve_kernel_scale",
+      "TensorRewrite.Theory.Convolution.convolve_no_channels",
+      "TensorRewrite.Theory.Convolution.convolve_zero_input",
+      "TensorRewrite.Theory.Convolution.convolve_zero_kernel",
+      "TensorRewrite.Theory.Convolution.inputIndex?_negative",
+      "TensorRewrite.Theory.Convolution.inputIndex?_position",
+      "TensorRewrite.Theory.Convolution.spatialInput?_empty",
+      "TensorRewrite.Theory.Convolution.term_empty_spatial_input",
+      "TensorRewrite.Theory.Convolution.term_input_add",
+      "TensorRewrite.Theory.Convolution.term_kernel_add",
+      "TensorRewrite.Theory.Convolution.term_kernel_scale",
+      "TensorRewrite.Theory.Convolution.term_zero_input",
+      "TensorRewrite.Theory.Convolution.term_zero_kernel",
+      "TensorRewrite.Theory.ConvolutionDot.convolution_output_dot_output",
+      "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
+      "TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum",
+      "TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve",
+      "TensorRewrite.Theory.ConvolutionDot.dot_output_convolution_output",
+      "TensorRewrite.Theory.ConvolutionDot.lhs_index_channel",
+      "TensorRewrite.Theory.ConvolutionDot.lhs_index_row",
+      "TensorRewrite.Theory.ConvolutionDot.matrix_output_feature",
+      "TensorRewrite.Theory.ConvolutionDot.matrix_output_row",
+      "TensorRewrite.Theory.ConvolutionDot.rhs_index_channel",
+      "TensorRewrite.Theory.ConvolutionDot.rhs_index_feature",
+      "TensorRewrite.Theory.ConvolutionDot.sum_contract_positions",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted",
+      "TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq",
+      "TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq",
+      "TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot",
+      "TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring",
+      "TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel",
+      "TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve",
+      "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast",
+      "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton",
+      "TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product",
+      "TensorRewrite.Theory.ConvolutionOrdered.term_pointwise",
+      "TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms",
+      "TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.base_position_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum",
+      "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel",
+      "TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one",
+      "TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit",
+      "TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one",
+      "TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique",
+      "TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions",
+      "TensorRewrite.Theory.ConvolutionPointwise.term_pointwise",
+      "TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq",
+      "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction",
+      "TensorRewrite.Theory.ConvolutionSeparable.derive_geometry",
+      "TensorRewrite.Theory.ConvolutionSeparable.expand_project",
+      "TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula",
+      "TensorRewrite.Theory.ConvolutionSeparable.project_expand",
+      "TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply",
+      "TensorRewrite.Theory.ConvolutionSeparable.reverse_involution",
+      "TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq",
+      "TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq",
+      "TensorRewrite.Theory.ConvolutionSeparable.term_reduced",
+      "TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum",
+      "TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum",
+      "TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply",
+      "TensorRewrite.Theory.FiniteSum.sum_add",
+      "TensorRewrite.Theory.FiniteSum.sum_reshape",
+      "TensorRewrite.Theory.FiniteSum.sum_swap",
+      "TensorRewrite.Theory.FloatNegation.reindex_neg",
+      "TensorRewrite.Theory.FloatNegation.reverse_neg",
+      "TensorRewrite.Theory.FloatNegation.scalar_involution",
+      "TensorRewrite.Theory.FloatNegation.tensor_involution",
+      "TensorRewrite.Theory.LogicalFamily.allRules_complete",
+      "TensorRewrite.Theory.LogicalFamily.allRules_nodup",
+      "TensorRewrite.Theory.LogicalFamily.predicate_count",
+      "TensorRewrite.Theory.LogicalFamily.rewrite_sound",
+      "TensorRewrite.Theory.LogicalFamily.word_count",
+      "TensorRewrite.Theory.LogicalFamily.word_keys_uniform"
+    ],
+    "selected_pilot_definitions_and_statements": [
+      "TensorRewrite/Pilot/Tensor.lean",
+      "TensorRewrite/Pilot/Indexing.lean",
+      "TensorRewrite/Pilot/FiniteProduct.lean",
+      "TensorRewrite/Pilot/FiniteProductLemmas.lean",
+      "TensorRewrite/Pilot/LinearIndex.lean",
+      "TensorRewrite/Pilot/LinearIndexLemmas.lean",
+      "TensorRewrite/Pilot/Contraction.lean",
+      "TensorRewrite/Pilot/ContractionLemmas.lean",
+      "TensorRewrite/Pilot/ContractionRules.lean",
+      "TensorRewrite/Pilot/Reduction.lean",
+      "TensorRewrite/Pilot/ReductionRules.lean",
+      "TensorRewrite/Pilot/DynamicIndexValue.lean",
+      "TensorRewrite/Pilot/DynamicSliceComposition.lean",
+      "TensorRewrite/Pilot/SliceShape.lean",
+      "TensorRewrite/Pilot/ConstantGuard.lean",
+      "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+      "TensorRewrite/Pilot/GuardedBooleanDag.lean",
+      "TensorRewrite/Pilot/Float32Exceptional.lean",
+      "TensorRewrite/Pilot/PredMulRefutation.lean",
+      "TensorRewrite/Pilot/ZeroMacProfile.lean",
+      "TensorRewrite/Pilot/OrderedCompareProfile.lean"
+    ],
+    "library_project_files": [
+      "TensorRewrite/Libraries/Arithmetic.lean",
+      "TensorRewrite/Libraries/FloatingPoint.lean"
+    ],
+    "checker_files": [
+      "tools/check_convolution_dot.py",
+      "tools/check_convolution_model.py",
+      "tools/check_convolution_ordered.py",
+      "tools/check_convolution_pointwise.py",
+      "tools/check_convolution_separable.py",
+      "tools/check_libraries.py",
+      "tools/check_logical_family.py",
+      "tools/check_theory.py",
+      "tools/convolution_examples.py",
+      "tools/lean_size.py",
+      "tools/mathematical_ledger.py",
+      "tools/ordered_float_examples.py"
+    ],
+    "control_and_unit_test_files": [
+      "tests/__pycache__/test_convolution_dot.cpython-312.pyc",
+      "tests/__pycache__/test_convolution_model.cpython-312.pyc",
+      "tests/__pycache__/test_convolution_ordered.cpython-312.pyc",
+      "tests/__pycache__/test_convolution_pointwise.cpython-312.pyc",
+      "tests/__pycache__/test_convolution_separable.cpython-312.pyc",
+      "tests/__pycache__/test_logical_family.cpython-312.pyc",
+      "tests/__pycache__/test_mathematical_ledger.cpython-312.pyc",
+      "tests/fixtures/ConvolutionControls.lean",
+      "tests/fixtures/ConvolutionDotControls.lean",
+      "tests/fixtures/ConvolutionOrderedControls.lean",
+      "tests/fixtures/ConvolutionPointwiseControls.lean",
+      "tests/fixtures/ConvolutionSeparableControls.lean",
+      "tests/fixtures/InvalidConvolutionFloatSemiring.lean",
+      "tests/fixtures/InvalidConvolutionStride.lean",
+      "tests/fixtures/InvalidLogicalWordTrue.lean",
+      "tests/fixtures/InvalidLogicalXorEqual.lean",
+      "tests/fixtures/LibraryAudit.lean",
+      "tests/fixtures/LogicalFamilyAudit.lean",
+      "tests/fixtures/TheoryAudit.lean",
+      "tests/test_convolution_dot.py",
+      "tests/test_convolution_model.py",
+      "tests/test_convolution_ordered.py",
+      "tests/test_convolution_pointwise.py",
+      "tests/test_convolution_separable.py",
+      "tests/test_logical_family.py",
+      "tests/test_mathematical_ledger.py"
+    ],
+    "registered_audited_declarations": [
+      "TensorRewrite.Pilot.AxisArray.composeLoop_eq_compose",
+      "TensorRewrite.Pilot.AxisArray.composePrefix_get",
+      "TensorRewrite.Pilot.AxisArray.composePrefix_size",
+      "TensorRewrite.Pilot.AxisArray.compose_get",
+      "TensorRewrite.Pilot.AxisArray.decode_preserves",
+      "TensorRewrite.Pilot.AxisArray.ofPermutation_comp",
+      "TensorRewrite.Pilot.AxisArray.ofPermutation_get",
+      "TensorRewrite.Pilot.Bitwise.and_lhs_zero",
+      "TensorRewrite.Pilot.Bitwise.and_rhs_zero",
+      "TensorRewrite.Pilot.Bitwise.not_not",
+      "TensorRewrite.Pilot.Bitwise.or_lhs_zero",
+      "TensorRewrite.Pilot.Bitwise.or_rhs_zero",
+      "TensorRewrite.Pilot.Bitwise.xor_lhs_zero",
+      "TensorRewrite.Pilot.Bitwise.xor_rhs_zero",
+      "TensorRewrite.Pilot.Bitwise.xor_self",
+      "TensorRewrite.Pilot.Boolean.and_lhs_false",
+      "TensorRewrite.Pilot.Boolean.and_lhs_true",
+      "TensorRewrite.Pilot.Boolean.and_rhs_false",
+      "TensorRewrite.Pilot.Boolean.and_rhs_true",
+      "TensorRewrite.Pilot.Boolean.not_not",
+      "TensorRewrite.Pilot.Boolean.or_lhs_false",
+      "TensorRewrite.Pilot.Boolean.or_lhs_true",
+      "TensorRewrite.Pilot.Boolean.or_rhs_false",
+      "TensorRewrite.Pilot.Boolean.or_rhs_true",
+      "TensorRewrite.Pilot.Boolean.xor_lhs_zero",
+      "TensorRewrite.Pilot.Boolean.xor_rhs_zero",
+      "TensorRewrite.Pilot.Boolean.xor_self",
+      "TensorRewrite.Pilot.BooleanDag.and_lhs_false",
+      "TensorRewrite.Pilot.BooleanDag.and_lhs_true",
+      "TensorRewrite.Pilot.BooleanDag.and_rhs_false",
+      "TensorRewrite.Pilot.BooleanDag.and_rhs_true",
+      "TensorRewrite.Pilot.BooleanDag.not_not",
+      "TensorRewrite.Pilot.BooleanDag.or_lhs_false",
+      "TensorRewrite.Pilot.BooleanDag.or_lhs_true",
+      "TensorRewrite.Pilot.BooleanDag.or_rhs_false",
+      "TensorRewrite.Pilot.BooleanDag.or_rhs_true",
+      "TensorRewrite.Pilot.BooleanDag.xor_lhs_false",
+      "TensorRewrite.Pilot.BooleanDag.xor_rhs_false",
+      "TensorRewrite.Pilot.BooleanDag.xor_self",
+      "TensorRewrite.Pilot.ConstantGuard.DenseLiteral.matchesAll_sound",
+      "TensorRewrite.Pilot.ConstantGuard.View.isAll_sound",
+      "TensorRewrite.Pilot.ConstantGuard.matchesAll_all",
+      "TensorRewrite.Pilot.Contraction.contract_count_zero_of_lhs_empty",
+      "TensorRewrite.Pilot.Contraction.contract_count_zero_of_rhs_empty",
+      "TensorRewrite.Pilot.Contraction.dot_empty_contract",
+      "TensorRewrite.Pilot.Contraction.dot_empty_lhs",
+      "TensorRewrite.Pilot.Contraction.dot_empty_output",
+      "TensorRewrite.Pilot.Contraction.dot_empty_rhs",
+      "TensorRewrite.Pilot.Contraction.dot_no_contract",
+      "TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity",
+      "TensorRewrite.Pilot.Contraction.firstIndex_appendIndex",
+      "TensorRewrite.Pilot.Contraction.secondIndex_appendIndex",
+      "TensorRewrite.Pilot.Contraction.terms_length",
+      "TensorRewrite.Pilot.Contraction.terms_no_contract",
+      "TensorRewrite.Pilot.Dag.Node.evalEffectful_mapRefs",
+      "TensorRewrite.Pilot.Dag.Node.eval_mapRefs",
+      "TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_equal",
+      "TensorRewrite.Pilot.Dag.Program.evalEffectful_delete_unused",
+      "TensorRewrite.Pilot.Dag.Program.evalEffectful_mapInputs",
+      "TensorRewrite.Pilot.Dag.Program.evalEffectful_replace_equal",
+      "TensorRewrite.Pilot.Dag.Program.eval_delete_equal",
+      "TensorRewrite.Pilot.Dag.Program.eval_mapInputs",
+      "TensorRewrite.Pilot.Dag.Program.eval_replace_equal",
+      "TensorRewrite.Pilot.Dag.extend_liftRefs",
+      "TensorRewrite.Pilot.DenseLayout.address_transpose_val",
+      "TensorRewrite.Pilot.DenseLayout.fromOrdered_toOrdered",
+      "TensorRewrite.Pilot.DenseLayout.linearize_cast_val",
+      "TensorRewrite.Pilot.DenseLayout.minorOrderMatches_axis",
+      "TensorRewrite.Pilot.DenseLayout.minorOrderMatches_of_axis",
+      "TensorRewrite.Pilot.DenseLayout.orderedShape_transpose",
+      "TensorRewrite.Pilot.DenseLayout.read_write",
+      "TensorRewrite.Pilot.DenseLayout.toOrdered_fromOrdered",
+      "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast",
+      "TensorRewrite.Pilot.DenseLayout.transpose_extents",
+      "TensorRewrite.Pilot.DenseLayout.write_read",
+      "TensorRewrite.Pilot.DependencyOrder.Graph.isSchedule_of_predecessor_inclusion",
+      "TensorRewrite.Pilot.DependencyOrder.Graph.isTrace_of_predecessor_inclusion",
+      "TensorRewrite.Pilot.DynamicIndex.clampStart_bounds",
+      "TensorRewrite.Pilot.DynamicIndex.clampStart_combined",
+      "TensorRewrite.Pilot.DynamicIndex.clampStart_full_extent",
+      "TensorRewrite.Pilot.DynamicIndex.combinedStart_bounds",
+      "TensorRewrite.Pilot.DynamicIndex.coordinate_bounds",
+      "TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_compose",
+      "TensorRewrite.Pilot.DynamicIndex.dynamicSliceIndex_val",
+      "TensorRewrite.Pilot.DynamicIndex.dynamicSliceView_constant",
+      "TensorRewrite.Pilot.DynamicIndex.signedValue_eq_unsignedValue",
+      "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_false",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.and_lhs_true",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_false",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.and_rhs_true",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.eval_delete_of_pure",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.eval_replace_of_pure",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.not_not",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_false",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.or_lhs_true",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_false",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.or_rhs_true",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.xor_lhs_false",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.xor_rhs_false",
+      "TensorRewrite.Pilot.EffectfulBooleanDag.xor_self",
+      "TensorRewrite.Pilot.FiniteProduct.column_join",
+      "TensorRewrite.Pilot.FiniteProduct.join_row_column",
+      "TensorRewrite.Pilot.FiniteProduct.row_join",
+      "TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects",
+      "TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs",
+      "TensorRewrite.Pilot.Float32Exceptional.false_inf_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.false_nan_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.false_neg_inf_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.false_nonfinite_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.inf_false_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes",
+      "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid",
+      "TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes",
+      "TensorRewrite.Pilot.IndexMaps.broadcastIndex_val",
+      "TensorRewrite.Pilot.IndexMaps.broadcastView_constant",
+      "TensorRewrite.Pilot.IndexMaps.sliceIndex_val",
+      "TensorRewrite.Pilot.IndexMaps.sliceView_constant",
+      "TensorRewrite.Pilot.LinearIndex.delinearize_linearize",
+      "TensorRewrite.Pilot.LinearIndex.linearize_delinearize",
+      "TensorRewrite.Pilot.ModularArithmetic.add_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.add_comm",
+      "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left",
+      "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right",
+      "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.factor_left",
+      "TensorRewrite.Pilot.ModularArithmetic.factor_right",
+      "TensorRewrite.Pilot.ModularArithmetic.four_factors",
+      "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one",
+      "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero",
+      "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast",
+      "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant",
+      "TensorRewrite.Pilot.OperandOrder.map\u2082_eq",
+      "TensorRewrite.Pilot.OrderedCompareProfile.false_consistent",
+      "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan",
+      "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes",
+      "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes",
+      "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan",
+      "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.narrow_ofInt",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_add",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_mul",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_neg",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.promoted_sub",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.signed_cast_narrow",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.signed_promotion_exact",
+      "TensorRewrite.Pilot.PromotedWordArithmetic.tensor_signed_decode_injective",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original",
+      "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
+      "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
+      "TensorRewrite.Pilot.Reduction.elementCount_eq_of_units",
+      "TensorRewrite.Pilot.Reduction.elementCount_factor",
+      "TensorRewrite.Pilot.Reduction.fiberCount_one_of_sameCount",
+      "TensorRewrite.Pilot.Reduction.fiberValues_length",
+      "TensorRewrite.Pilot.Reduction.fiberValues_unit",
+      "TensorRewrite.Pilot.Reduction.length_flatMap_constant",
+      "TensorRewrite.Pilot.Reduction.reduceTensor_empty_input",
+      "TensorRewrite.Pilot.Reduction.reduceTensor_empty_output",
+      "TensorRewrite.Pilot.Reduction.reduceTensor_sameCount",
+      "TensorRewrite.Pilot.Reduction.unitIndex_eq_reshapeIndex",
+      "TensorRewrite.Pilot.Reduction.unitIndex_linearize_val",
+      "TensorRewrite.Pilot.Reduction.unitReducedAxes_of_fiberCount_one",
+      "TensorRewrite.Pilot.Reshape.reshapeIndex_compose",
+      "TensorRewrite.Pilot.Reshape.reshapeTensor_compose",
+      "TensorRewrite.Pilot.Reshape.reshapeTensor_empty",
+      "TensorRewrite.Pilot.Reshape.reshapeTensor_identity",
+      "TensorRewrite.Pilot.Reshape.reshapeView_constant",
+      "TensorRewrite.Pilot.Reshape.tensor_eq_of_empty",
+      "TensorRewrite.Pilot.Reverse.reverse_axisMask_trivial",
+      "TensorRewrite.Pilot.Reverse.reverse_binary_constant_lhs",
+      "TensorRewrite.Pilot.Reverse.reverse_binary_constant_rhs",
+      "TensorRewrite.Pilot.Reverse.reverse_comp",
+      "TensorRewrite.Pilot.Reverse.reverse_constant",
+      "TensorRewrite.Pilot.Reverse.reverse_map\u2082",
+      "TensorRewrite.Pilot.Reverse.reverse_reverse",
+      "TensorRewrite.Pilot.Reverse.reverse_trivial",
+      "TensorRewrite.Pilot.ScaledNestedSlice.changes_of_not_fixed",
+      "TensorRewrite.Pilot.ScaledNestedSlice.multiplier_seven_changes",
+      "TensorRewrite.Pilot.ScaledNestedSlice.negative_multiplier_changes",
+      "TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving",
+      "TensorRewrite.Pilot.ScaledNestedSlice.original_witness",
+      "TensorRewrite.Pilot.ScaledNestedSlice.rewritten_witness",
+      "TensorRewrite.Pilot.ScaledNestedSlice.zero_multiplier_changes",
+      "TensorRewrite.Pilot.SelectContraction.branchContraction_eq",
+      "TensorRewrite.Pilot.SelectContraction.hoistedContraction_eq",
+      "TensorRewrite.Pilot.SelectContraction.nonzero_sum_refutes",
+      "TensorRewrite.Pilot.SelectContraction.not_universally_valid",
+      "TensorRewrite.Pilot.SliceShape.coordinate_bounds",
+      "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+      "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes",
+      "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+      "TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes",
+      "TensorRewrite.Pilot.Subtract.add_sub_self_left",
+      "TensorRewrite.Pilot.Subtract.add_sub_self_right",
+      "TensorRewrite.Pilot.Subtract.neg_neg",
+      "TensorRewrite.Pilot.Subtract.sub_add_self_left",
+      "TensorRewrite.Pilot.Subtract.sub_add_self_right",
+      "TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg",
+      "TensorRewrite.Pilot.Subtract.sub_eq_add_neg",
+      "TensorRewrite.Pilot.Subtract.sub_self",
+      "TensorRewrite.Pilot.Subtract.sub_sub_self",
+      "TensorRewrite.Pilot.Subtract.sub_zero",
+      "TensorRewrite.Pilot.Tensor.reindex_constant",
+      "TensorRewrite.Pilot.Tensor.reindex_map\u2082",
+      "TensorRewrite.Pilot.Tensor.reverseIndex_comp",
+      "TensorRewrite.Pilot.Tensor.reverseIndex_reverseIndex",
+      "TensorRewrite.Pilot.Transpose.transpose_comp",
+      "TensorRewrite.Pilot.Transpose.transpose_constant",
+      "TensorRewrite.Pilot.Transpose.transpose_identity",
+      "TensorRewrite.Theory.ContractionAlgebra.dot_add_left",
+      "TensorRewrite.Theory.ContractionAlgebra.dot_add_right",
+      "TensorRewrite.Theory.Convolution.basePosition_reverse",
+      "TensorRewrite.Theory.Convolution.convolve_bias_scale",
+      "TensorRewrite.Theory.Convolution.convolve_empty_fiber",
+      "TensorRewrite.Theory.Convolution.convolve_empty_kernel",
+      "TensorRewrite.Theory.Convolution.convolve_empty_spatial_input",
+      "TensorRewrite.Theory.Convolution.convolve_input_add",
+      "TensorRewrite.Theory.Convolution.convolve_kernel_add",
+      "TensorRewrite.Theory.Convolution.convolve_kernel_scale",
+      "TensorRewrite.Theory.Convolution.convolve_no_channels",
+      "TensorRewrite.Theory.Convolution.convolve_zero_input",
+      "TensorRewrite.Theory.Convolution.convolve_zero_kernel",
+      "TensorRewrite.Theory.Convolution.inputIndex?_negative",
+      "TensorRewrite.Theory.Convolution.inputIndex?_position",
+      "TensorRewrite.Theory.Convolution.spatialInput?_empty",
+      "TensorRewrite.Theory.Convolution.term_empty_spatial_input",
+      "TensorRewrite.Theory.Convolution.term_input_add",
+      "TensorRewrite.Theory.Convolution.term_kernel_add",
+      "TensorRewrite.Theory.Convolution.term_kernel_scale",
+      "TensorRewrite.Theory.Convolution.term_zero_input",
+      "TensorRewrite.Theory.Convolution.term_zero_kernel",
+      "TensorRewrite.Theory.ConvolutionDot.convolution_output_dot_output",
+      "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
+      "TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum",
+      "TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve",
+      "TensorRewrite.Theory.ConvolutionDot.dot_output_convolution_output",
+      "TensorRewrite.Theory.ConvolutionDot.lhs_index_channel",
+      "TensorRewrite.Theory.ConvolutionDot.lhs_index_row",
+      "TensorRewrite.Theory.ConvolutionDot.matrix_output_feature",
+      "TensorRewrite.Theory.ConvolutionDot.matrix_output_row",
+      "TensorRewrite.Theory.ConvolutionDot.rhs_index_channel",
+      "TensorRewrite.Theory.ConvolutionDot.rhs_index_feature",
+      "TensorRewrite.Theory.ConvolutionDot.sum_contract_positions",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq",
+      "TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted",
+      "TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq",
+      "TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq",
+      "TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot",
+      "TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring",
+      "TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel",
+      "TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve",
+      "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast",
+      "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton",
+      "TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product",
+      "TensorRewrite.Theory.ConvolutionOrdered.term_pointwise",
+      "TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms",
+      "TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.base_position_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum",
+      "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel",
+      "TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one",
+      "TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit",
+      "TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one",
+      "TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique",
+      "TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq",
+      "TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions",
+      "TensorRewrite.Theory.ConvolutionPointwise.term_pointwise",
+      "TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq",
+      "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction",
+      "TensorRewrite.Theory.ConvolutionSeparable.derive_geometry",
+      "TensorRewrite.Theory.ConvolutionSeparable.expand_project",
+      "TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula",
+      "TensorRewrite.Theory.ConvolutionSeparable.project_expand",
+      "TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply",
+      "TensorRewrite.Theory.ConvolutionSeparable.reverse_involution",
+      "TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq",
+      "TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq",
+      "TensorRewrite.Theory.ConvolutionSeparable.term_reduced",
+      "TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum",
+      "TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum",
+      "TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply",
+      "TensorRewrite.Theory.FiniteSum.sum_add",
+      "TensorRewrite.Theory.FiniteSum.sum_reshape",
+      "TensorRewrite.Theory.FiniteSum.sum_swap",
+      "TensorRewrite.Theory.FloatNegation.reindex_neg",
+      "TensorRewrite.Theory.FloatNegation.reverse_neg",
+      "TensorRewrite.Theory.FloatNegation.scalar_involution",
+      "TensorRewrite.Theory.FloatNegation.tensor_involution",
+      "TensorRewrite.Theory.LogicalFamily.allRules_complete",
+      "TensorRewrite.Theory.LogicalFamily.allRules_nodup",
+      "TensorRewrite.Theory.LogicalFamily.predicate_count",
+      "TensorRewrite.Theory.LogicalFamily.rewrite_sound",
+      "TensorRewrite.Theory.LogicalFamily.word_count",
+      "TensorRewrite.Theory.LogicalFamily.word_keys_uniform"
+    ],
+    "additional_retained_declarations_audited": {
+      "TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed": [],
+      "TensorRewrite.Pilot.SliceShape.empty_witness_well_formed": [],
+      "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness": [],
+      "TensorRewrite.Pilot.SliceShape.reorder_reverse_witness": [],
+      "TensorRewrite.Pilot.SelectContraction.true_witness": [],
+      "TensorRewrite.Pilot.SelectContraction.false_witness": [],
+      "TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll": [
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees": [],
+      "TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees": [],
+      "TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal": [],
+      "TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes": [
+        "propext"
+      ],
+      "TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes": [
+        "propext"
+      ],
+      "TensorRewrite.Pilot.NestedUnsigned64.both_high_changes": [
+        "propext"
+      ],
+      "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving": [
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.original_forward_valid": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.original_requires_forward": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.original_reverse_impossible": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace": [
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.original_forward_trace": [
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.repaired_forward_valid": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.repaired_requires_forward": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ControlOrder.repaired_forward_trace": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent": [],
+      "TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive": [],
+      "TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible": [],
+      "TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ": []
+    },
+    "documents": [
+      "AGENTS.md",
+      "README.md",
+      "docs/theory-scope.md",
+      "docs/dependencies.md",
+      "docs/experiment-plan.md",
+      "docs/lean-size-protocol.md",
+      "docs/agent-campaign-protocol.md",
+      "docs/mathematical-families.md",
+      "docs/convolution-model.md",
+      "docs/convolution-pointwise.md",
+      "docs/convolution-dot.md",
+      "docs/convolution-separable.md",
+      "docs/convolution-ordered.md",
+      "reports/ordered-convolution-numerics.md"
+    ],
+    "snapshot_history": "snapshots/convolution-ordered-v1.zip"
+  },
+  "commands_actually_run": [
+    {
+      "command": [
+        "python3",
+        "tools/check_libraries.py"
+      ],
+      "exit_code": 0,
+      "seconds": 28.82206082344055,
+      "log": "review-replay/00.log",
+      "log_sha256": "61a5dcf61021679ba6fcde94f31d092468df74431e8e00f93c6b3347f044716b",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_theory.py"
+      ],
+      "exit_code": 0,
+      "seconds": 7.1815407276153564,
+      "log": "review-replay/01.log",
+      "log_sha256": "f3799c3b84aabb5045c713346b95348e2a9be00009cedb63253fed5d6524f6fa",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_logical_family.py"
+      ],
+      "exit_code": 0,
+      "seconds": 14.912915468215942,
+      "log": "review-replay/02.log",
+      "log_sha256": "44d63c0d65a66949c391e3b063b5efe7a21aef7f283ec505e9b5759b4fc65708",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_convolution_model.py"
+      ],
+      "exit_code": 0,
+      "seconds": 14.668428182601929,
+      "log": "review-replay/03.log",
+      "log_sha256": "443355195f8867ce2ceb04f0b1003242b5902fede713eee5cb14dd369e190168",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_convolution_pointwise.py"
+      ],
+      "exit_code": 0,
+      "seconds": 6.51487398147583,
+      "log": "review-replay/04.log",
+      "log_sha256": "325075b5e23df16db6d6819e6cdd698a05e28faf8dc1b291e175355739c3f08b",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_convolution_dot.py"
+      ],
+      "exit_code": 0,
+      "seconds": 6.971756458282471,
+      "log": "review-replay/05.log",
+      "log_sha256": "4d28a4366463c30dc8c983e05cfe81c993b5bd8c89803afd5260ced18780f15f",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_convolution_separable.py"
+      ],
+      "exit_code": 0,
+      "seconds": 6.957642078399658,
+      "log": "review-replay/06.log",
+      "log_sha256": "54effd28755db8751bc2e7d8f2d0a48f01f2dd52c821b0dd0b79c24ff2483a23",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_convolution_ordered.py"
+      ],
+      "exit_code": 0,
+      "seconds": 9.399069786071777,
+      "log": "review-replay/07.log",
+      "log_sha256": "44dc1c394a95db95887a6676f4590d7abe9994f3e837cdd8cc9f73ed7f504fae",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/mathematical_ledger.py"
+      ],
+      "exit_code": 0,
+      "seconds": 8.046682834625244,
+      "log": "review-replay/08.log",
+      "log_sha256": "5b915fe4d45bbd1c2e41952862d5ebe4b4d56a4b546e4471009b369f60d1e870",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_convolution*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.667576789855957,
+      "log": "review-replay/09.log",
+      "log_sha256": "016755e821495344df676860f121f52765e4bd1a842f1b6188372fe2d1beb0a0",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_logical_family.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.14444899559020996,
+      "log": "review-replay/10.log",
+      "log_sha256": "4790eae3acb72a1d91267b336178b89f833fedb0d68bfb63bff40dc842841b00",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_mathematical_ledger.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.15639901161193848,
+      "log": "review-replay/11.log",
+      "log_sha256": "c5367f7616b33bfb9fa02b6bf4416b7915b0c7e8b402fc130010594bd7ada233",
+      "working_directory": "/tmp/math-foundation-review-otji_e3w"
+    }
+  ],
+  "additional_lean_commands_actually_run": [
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "ReviewInventory.lean"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/math-foundation-review-otji_e3w/review-replay/declaration-inventory.log",
+      "log_sha256": "8e4ab2597907e30c5b0f32a57f280c4248c8153da56d349eab9ca2e2669f13e0"
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "ReviewGeometry.lean"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/math-foundation-review-otji_e3w/review-replay/geometry.log",
+      "log_sha256": "4fe90359363c53b1b393ae540e86a78854e87f18280176148541de4931a44df5"
+    },
+    {
+      "command": [
+        "lake",
+        "env",
+        "lean",
+        "ReviewMissingAudit.lean"
+      ],
+      "exit_code": 0,
+      "log": "/tmp/math-foundation-review-otji_e3w/review-replay/missing-audit.log",
+      "log_sha256": "df43daa434f63ff44da998d5d0d7cad3e0d036ec5dc45dba285ada855b626607"
+    }
+  ],
+  "additional_python_checks_actually_run": [
+    "zip SHA256/member hash/size/path validation and fresh extraction",
+    "git show target-revision:path for all 267 committed members, comparing SHA256",
+    "git rev-parse HEAD and git status --porcelain --untracked-files=no for all ten manifest packages before and after replay",
+    "lean_size.count_source over all 106 custom Lean files, excluding Pilot/Audit.lean as a separately reported audit",
+    "ordered-v1 internal hashes and source diff against v2",
+    "parse complete Lean environment theorem inventory; compare registry and recursively collect pilot manifest theorem references",
+    "occupied-coordinate/translated-window-containment oracle comparison for ReviewGeometry.lean",
+    "parse and allowlist the 30 additional #print axioms reports",
+    "recheck all 268 frozen extracted member hashes after replay"
+  ],
+  "additional_geometry_probe": {
+    "axis_profiles": 2160,
+    "sample_comparisons": 5968,
+    "result": "passed",
+    "oracle": "occupied-coordinate lookup and translated-window containment inequality; no division/modulo in oracle"
+  },
+  "probe_sources": {
+    "ReviewGeometry.lean": "import TensorRewriteTheory\nopen TensorRewrite.Theory.Convolution\nprivate def mkAxis (n k s b d : Nat) (lo hi : Int) (rev : Bool)\n    (sp : 0 < s) (bp : 0 < b) (dp : 0 < d) : Axis :=\n  \u27e8n,k,s,b,d,lo,hi,rev,sp,bp,dp\u27e9\n#eval do\n  let mut id := 0\n  for n in List.range 3 do\n    for k in List.range 3 do\n      for s in [1,2] do\n        for b in [1,2] do\n          for d in [1,2] do\n            for lo in [-2,-1,0,1,2] do\n              for hi in [-1,0,1] do\n                for rev in [false,true] do\n                  if sp : 0 < s then\n                    if bp : 0 < b then\n                      if dp : 0 < d then\n                        let axis := mkAxis n k s b d lo hi rev sp bp dp\n                        let samples := (List.range (axis.outputExtent+2)).map fun o =>\n                          (List.finRange k).map fun x =>\n                            match axis.inputIndex? o x with\n                            | none => -1\n                            | some i => (i.val : Int)\n                        IO.println s!\"GEO {id} {axis.outputExtent} {repr samples}\"\n                  id := id+1\n",
+    "ReviewInventory.lean": "import TensorRewrite\nimport TensorRewriteTheory\nimport Lean\nopen Lean Elab Command\nrun_cmd do\n  let env \u2190 getEnv\n  for (name, info) in env.constants.toList do\n    if (name.toString.splitOn \"TensorRewrite.\").length > 1 then\n      match info with\n      | .thmInfo _ => logInfo m!\"PROJECT_THEOREM {name}\"\n      | .axiomInfo _ => logInfo m!\"PROJECT_AXIOM {name}\"\n      | _ => pure ()\n",
+    "ReviewMissingAudit.lean": "import TensorRewrite\n#check @TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll\n#print axioms TensorRewrite.Pilot.BooleanDag.and_rhs_true_of_isAll\n#check @TensorRewrite.Pilot.ControlOrder.original_forward_trace\n#print axioms TensorRewrite.Pilot.ControlOrder.original_forward_trace\n#check @TensorRewrite.Pilot.ControlOrder.original_forward_valid\n#print axioms TensorRewrite.Pilot.ControlOrder.original_forward_valid\n#check @TensorRewrite.Pilot.ControlOrder.original_requires_forward\n#print axioms TensorRewrite.Pilot.ControlOrder.original_requires_forward\n#check @TensorRewrite.Pilot.ControlOrder.original_reverse_impossible\n#print axioms TensorRewrite.Pilot.ControlOrder.original_reverse_impossible\n#check @TensorRewrite.Pilot.ControlOrder.repaired_forward_trace\n#print axioms TensorRewrite.Pilot.ControlOrder.repaired_forward_trace\n#check @TensorRewrite.Pilot.ControlOrder.repaired_forward_valid\n#print axioms TensorRewrite.Pilot.ControlOrder.repaired_forward_valid\n#check @TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement\n#print axioms TensorRewrite.Pilot.ControlOrder.repaired_refines_replacement\n#check @TensorRewrite.Pilot.ControlOrder.repaired_requires_forward\n#print axioms TensorRewrite.Pilot.ControlOrder.repaired_requires_forward\n#check @TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible\n#print axioms TensorRewrite.Pilot.ControlOrder.repaired_reverse_impossible\n#check @TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse\n#print axioms TensorRewrite.Pilot.ControlOrder.replacement_admits_reverse\n#check @TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace\n#print axioms TensorRewrite.Pilot.ControlOrder.replacement_reverse_trace\n#check @TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid\n#print axioms TensorRewrite.Pilot.ControlOrder.replacement_reverse_valid\n#check @TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees\n#print axioms TensorRewrite.Pilot.DynamicIndex.unsigned64_high_bit_disagrees\n#check @TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees\n#print axioms TensorRewrite.Pilot.DynamicIndex.unsigned64_max_disagrees\n#check @TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal\n#print axioms TensorRewrite.Pilot.DynamicIndex.unsigned64_not_universally_equal\n#check @TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed\n#print axioms TensorRewrite.Pilot.Float32Exceptional.canonical_nan_allowed\n#check @TensorRewrite.Pilot.NestedUnsigned64.both_high_changes\n#print axioms TensorRewrite.Pilot.NestedUnsigned64.both_high_changes\n#check @TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes\n#print axioms TensorRewrite.Pilot.NestedUnsigned64.inner_high_changes\n#check @TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving\n#print axioms TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving\n#check @TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes\n#print axioms TensorRewrite.Pilot.NestedUnsigned64.outer_high_changes\n#check @TensorRewrite.Pilot.SelectContraction.false_witness\n#print axioms TensorRewrite.Pilot.SelectContraction.false_witness\n#check @TensorRewrite.Pilot.SelectContraction.true_witness\n#print axioms TensorRewrite.Pilot.SelectContraction.true_witness\n#check @TensorRewrite.Pilot.SliceShape.empty_witness_well_formed\n#print axioms TensorRewrite.Pilot.SliceShape.empty_witness_well_formed\n#check @TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness\n#print axioms TensorRewrite.Pilot.SliceShape.remove_redundant_stride_witness\n#check @TensorRewrite.Pilot.SliceShape.reorder_reverse_witness\n#print axioms TensorRewrite.Pilot.SliceShape.reorder_reverse_witness\n#check @TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible\n#print axioms TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible\n#check @TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive\n#print axioms TensorRewrite.Pilot.ZeroMacProfile.one_mac_positive\n#check @TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent\n#print axioms TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent\n#check @TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ\n#print axioms TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ\n"
+  },
+  "tests": {
+    "convolution": 16,
+    "logical_family": 4,
+    "ledger": 3,
+    "total": 23,
+    "all_passed": true
+  },
+  "accounting": {
+    "theory_registered_statements": 89,
+    "ledger_registered_declarations": 319,
+    "omitted_explicit_pilot_manifest_declarations": 30,
+    "separately_audited_library_integration_theorems": 4,
+    "project_lean_files": 106,
+    "all_project_lexical_lean_lines": 4426,
+    "separately_excluded_pilot_audit_lines": 261,
+    "custom_development_including_certificates": 4165,
+    "baseline": 2763,
+    "library_adapter_lines": 33,
+    "theory_extension_lines": 1369,
+    "theory_extension_categories_as_frozen": {
+      "S": 355,
+      "H": 571,
+      "R": 433,
+      "A": 10
+    },
+    "category_error": "At least 11 refutation declaration lines plus one certificate-only local-notation line assigned to R; see MF-02.",
+    "accepted_proof_only_L_certified": false
+  },
+  "review_observations": [
+    "Logical family: 12 predicate and 8 universally quantified word profile units; width zero admitted. Enumeration is complete and duplicate-free relative to the explicitly closed Rule vocabulary. xorEqual requires equality of the two tensor values. These are profiles, not 20 newly discovered rewrites or distinct maps at width zero.",
+    "Exact convolution: all spatial ranks and natural extents/group counts; strictly positive stride/base/kernel dilation; signed low/high padding. Output count uses Euclidean integer division by positive stride and truncates negative counts at zero. Sampling returns bounded indices only at occupied input positions. Grouping is an explicit factored mathematical model, not a normalization theorem for another operator.",
+    "Empty input/kernel and no-channel cases are distinguished. An empty kernel can leave nonempty output positions with an empty sum. Spatial rank zero has one coordinate, not zero. Zero groups/features/batches may make the output type empty; equalities then state value equality over that empty type.",
+    "Pointwise: output/input shape equality and unit kernel count are derived. channelSum has no window loop or optional sampler; the domain really changes from Fin(C*kernelCount) to Fin C. Single-channel bare-product corollary uses Semiring laws.",
+    "Dot: matrix A[B*S,C], W[O,C], output[B*S,O], at each existing group pair. Batch/spatial row is b*S+linearize(x). Both coordinate round trips and both value directions are proved. Bounded coordinates exclude zero divisors where decoding is actually called; no hidden global positivity premise is needed.",
+    "Mixed-window: IsSeparable requires unit stride and both dilations, zero padding, and unit-kernel or output-one on every axis, plus one input channel. Spanning kernel=input extent is derived. ReducedIndex removes unit axes and the sole channel, with full composed equivalence including selected reversal. Kernel multiplication order is preserved; sum reindexing uses commutative addition from Semiring. No rounded reversal theorem is inferred.",
+    "Ordered: L/R/Acc/Result are independently quantified types, product L -> R -> Acc, addition Acc -> Acc -> Acc, explicit initializer/padding contribution and finish Acc -> Result. term_eq_dot_product aligns equal numeric list positions; terms_eq_dot_terms gives actual list equality. Both value directions preserve the same operations and fold. One channel yields finish(add(initial,multiply(...))), not merely multiply(...).",
+    "Binary32: positive theorem is stored-value equality for the same separate product/add schedule and identity finish, including all modeled encodings. Reference equality reuses pinned FloatLib scalar refinement theorems. Numerical witnesses distinguish +0 from -0 and fold order [2^24,1,-2^24] from its reversal. They are scalar/fold certificates, not source-rewrite or external-implementation counterexamples.",
+    "Finite controls: 22 exact-model vectors; pointwise 8 profiles/78 outputs; Dot 11 profiles/220 bidirectional comparisons; mixed-window 11 profiles/123 outputs; ordered 12 rank-zero binary32 profiles plus heterogeneous nonassociative fold. Lean evaluates both actual definitions; Python supplies independently implemented expected values, so duplicated expected columns are not themselves a circular proof. These remain finite controls.",
+    "Rational oracle: nearest-even rounding and explicit signed-zero handling; rejects nonfinite decoding and does not model NaN propagation, exception flags, or folds after an overflowing intermediate. Current finite profiles stay inside its domain. Arbitrary exceptional-value equality comes from identical operation preservation, not this oracle.",
+    "History: ordered-v1 archive hash verified, its internal source manifest verified, and every nonchecker source matches v2. Checker differences are manifest version plus one-group regex strings versus tuples and corresponding int indexing. The original checker was not rerun as an accepted result.",
+    "All 319 registered declarations and 4 library integrations replayed their axiom audits; all 89 theory statements received definition/type/proof inspection. No project axioms or custom unsafe/extern/implemented_by declarations were found. No false mathematical statement or hidden strengthened-premise promotion was found among the inspected foundation statements."
+  ],
+  "uninspected_boundaries": [
+    "No complete semantic rereview of every older pilot declaration or every retained abstract benchmark recipe; all registered names were mechanically #checked and axiom audited.",
+    "No independent proof of FloatLib/Mathlib semantic adequacy, cache provenance or installed Lean compiler correctness. Selected binary32 carrier/configuration and library refinement interfaces inspected, not complete upstream proofs.",
+    "No adopted padded binary32 operator specification, flags/FMA/changed-cast equivalence, arbitrary backend schedules, physical layout normalization or external compiler correspondence.",
+    "The 488 benchmark records are retained abstract provenance; final mathematical obligation/family partitions and full campaign remain open.",
+    "Historical native/source claims in README and retained JSON were treated as data and not verified."
+  ],
+  "acceptance_statuses_modified": false,
+  "packet_inputs_modified": false
+}
