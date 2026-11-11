@@ -56,10 +56,10 @@ class WindowTupleFamilyTests(unittest.TestCase):
 
     def test_complete_value_profile_still_leaves_full_record_and_verdict_open(self):
         families = ledger.formulated_families()
-        self.assertEqual({f['family']: f['profile_unit_count'] for f in families
-                          if f['family'] != 'typed_pure_control_values_v1'},
-                         {'typed_logical_values_v1': 20, 'singleton_window_tuple_values_v1': 1,
-                          'typed_commutative_ring_values_v1': 172, 'typed_linear_order_values_v1': 176})
+        legacy = {'typed_logical_values_v1': 20, 'singleton_window_tuple_values_v1': 1,
+                  'typed_commutative_ring_values_v1': 172, 'typed_linear_order_values_v1': 176}
+        actual = {f['family']: f['profile_unit_count'] for f in families}
+        self.assertEqual({name: actual[name] for name in legacy}, legacy)
         proofs = ledger.evidence()
         for p in proofs: p['mathematical_acceptance'] = 'kernel_checked_in_declared_model'
         result = ledger.assemble(ledger.corpus(), proofs, {}, families)

@@ -9,7 +9,10 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
-    'Concatenation': ['shape_eq_iff', 'concatenate_all_empty_first_iff', 'empty_first_shape_refuted', 'empty_filter_shape_refuted', 'operand_order_refuted', 'slice_offset_refuted', 'position_withPosition', 'withPosition_withPosition', 'withPosition_position', 'withPosition_zero', 'rest_withPosition', 'rest_insert', 'insert_rest_position', 'total_append', 'readAt_append_left', 'readAt_append_right', 'total_filterZero', 'readAt_filterZero', 'hasElements_iff_positive', 'hasElements_iff_index', 'hasElements_iff_extent', 'filterEmpty_eq_filterZero', 'filterEmpty_of_nonempty', 'readAt_live_operand', 'read_pack', 'total_flatten', 'readAt_flatten', 'castTensor_refl', 'castTensor_trans', 'total_filterEmpty', 'no_index_of_all_empty', 'readAt_unary', 'readAt_congr', 'readAt_middle', 'slice_full', 'slice_castTensor', 'concatenate_unary', 'concatenate_filterZero', 'concatenate_filterEmpty', 'concatenate_filtered', 'concatenate_only_nonempty', 'concatenate_all_empty', 'concatenate_all_empty_first', 'concatenate_flatten', 'slice_selected', 'slice_unary', 'slice_single_piece', 'slice_exact_piece'],
+    'ConcatenationFamily': ['gapped_slices_refuted', 'padding_side_refuted', 'padding_fill_refuted', 'nonunit_delete_refuted'],
+    'UnitAxis': ['axis_unit', 'target_one', 'count', 'linearize_insert', 'reshape_index', 'axes_decode', 'axes_extent', 'axes_increasing', 'projectIndex_value', 'broadcast_index', 'sourceIndex_value', 'axis_ofAxis', 'target_ofAxis', 'input_ofAxis', 'sequence_value'],
+    'ShapeTransport': ['indexAlong_value', 'indexAlong_refl', 'tensorAlong_refl', 'tensorAlong_trans'],
+    'Concatenation': ['slice_merge_run', 'block_eq_of_values', 'pack_unary', 'pack_flatten', 'pack_group_context', 'cast_concatenate_value', 'constantBlock_values', 'axis_valid_inferred', 'merged_axis_count', 'merged_axis_valid', 'adjacent_coordinate', 'edgePadding_shape', 'adjacent_slices_pair', 'adjacent_slices_context', 'edgePadding_inside_iff', 'edgePadding_value', 'concatenate_pad_low', 'concatenate_pad_high', 'total_replicate_unit', 'readAt_replicate_unit', 'repeatTarget_value', 'concatenate_repeated', 'shape_eq_iff', 'concatenate_all_empty_first_iff', 'empty_first_shape_refuted', 'empty_filter_shape_refuted', 'operand_order_refuted', 'slice_offset_refuted', 'position_withPosition', 'withPosition_withPosition', 'withPosition_position', 'withPosition_zero', 'rest_withPosition', 'rest_insert', 'insert_rest_position', 'total_append', 'readAt_append_left', 'readAt_append_right', 'total_filterZero', 'readAt_filterZero', 'hasElements_iff_positive', 'hasElements_iff_index', 'hasElements_iff_extent', 'filterEmpty_eq_filterZero', 'filterEmpty_of_nonempty', 'readAt_live_operand', 'read_pack', 'total_flatten', 'readAt_flatten', 'castTensor_refl', 'castTensor_trans', 'total_filterEmpty', 'no_index_of_all_empty', 'readAt_unary', 'readAt_congr', 'readAt_middle', 'slice_full', 'slice_castTensor', 'concatenate_unary', 'concatenate_filterZero', 'concatenate_filterEmpty', 'concatenate_filtered', 'concatenate_only_nonempty', 'concatenate_all_empty', 'concatenate_all_empty_first', 'concatenate_flatten', 'slice_selected', 'slice_unary', 'slice_single_piece', 'slice_exact_piece'],
     'ControlValues': ['select_equal', 'select_true', 'select_false', 'select_not', 'select_true_false', 'select_false_true', 'broadcast_select', 'broadcast_constant', 'select_true_false_broadcast', 'select_false_true_broadcast', 'select_compare_lt', 'select_compare_le', 'select_compare_gt', 'select_compare_ge', 'select_compare_eq', 'select_compare_ne', 'map_parameter', 'map_constant', 'map_scalar_constant', 'map_constant_broadcast', 'map_elementwise', 'conditional_convert', 'select_direction_refuted', 'map_parameter_order_refuted', 'select_effect_drop_refuted', 'select_effect_swap_refuted', 'map_effect_drop_refuted', 'conditional_branch_order_refuted'],
     'DynamicUpdate': ['start_bounds', 'embed_value', 'locate_embed', 'embed_locate', 'locate_eq_some_iff', 'embed_compose', 'locate_compose', 'full_start', 'full_embed', 'full_locate', 'zero_full_start', 'zero_full_embed', 'zero_full_locate', 'slice_eq_existing', 'slice_compose', 'slice_full', 'slice_scalar', 'slice_zero_full_axes', 'update_full', 'update_empty', 'slice_update', 'update_slice_self', 'slice_update_inside', 'update_nested', 'map_update', 'update_zero_full_axes', 'select_update_false', 'select_update_true', 'select_scalar_false', 'select_scalar_true', 'add_update_right', 'add_update_left', 'static_axis_count', 'static_axes_valid', 'static_index', 'slice_static', 'static_slice_update', 'static_slice_update_inside', 'decoded_signedness_refuted', 'raw_nested_sum_refuted', 'binary32_add_update_refuted'],
     'OrderFamily': ['eval_minOrder', 'eval_maxOrder', 'rewrite_sound', 'condition_admitted', 'rewrite_in_context', 'allRules_complete', 'allRuleKeys_nodup', 'rule_count', 'integer_family', 'real_family', 'unsigned_family', 'signed_family', 'unsigned_nonnegative', 'unsigned_zero', 'reversed_bounds_refuted', 'signedness_refuted', 'binary32_nan_self_refuted', 'binary32_zero_observation_refuted'],
@@ -151,6 +154,20 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/ShapeTransport.lean': 'S',
+        'TensorRewrite/Theory/ShapeTransportLemmas.lean': 'H',
+        'TensorRewrite/Theory/ConcatenationGraphs.lean': 'S',
+        'TensorRewrite/Theory/ConcatenationMerge.lean': 'S',
+        'TensorRewrite/Theory/ConcatenationGraphLemmas.lean': 'H',
+        'TensorRewrite/Theory/ConcatenationAdjacent.lean': 'R',
+        'TensorRewrite/Theory/ConcatenationPadLemmas.lean': 'H',
+        'TensorRewrite/Theory/ConcatenationPad.lean': 'R',
+        'TensorRewrite/Theory/UnitAxis.lean': 'S',
+        'TensorRewrite/Theory/UnitAxisLemmas.lean': 'H',
+        'TensorRewrite/Theory/UnitAxisTarget.lean': 'S',
+        'TensorRewrite/Theory/UnitAxisTargetLemmas.lean': 'H',
+        'TensorRewrite/Theory/ConcatenationRepeat.lean': 'R',
+        'TensorRewrite/Theory/ConcatenationGraphCounterexamples.lean': 'C',
         'TensorRewrite/Theory/Concatenation.lean': 'S',
         'TensorRewrite/Theory/ConcatenationLemmas.lean': 'H',
         'TensorRewrite/Theory/ConcatenationProof.lean': 'R',
@@ -510,14 +527,15 @@ def main():
                              '-pi < imaginary part <= pi; complex sqrt-square/magnitude iff real '
                              'axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math '
                              'semantics' if '.ScalarDomains.' in name else
-                             'pure arbitrary-axis, arbitrary-arity concatenation; actual bounded '
-                             'segment selection, grouped flattening and zero-extent filtering; '
-                             'actual-empty filtering requires a derived nonempty frame witness; '
-                             'all-empty first replacement also requires explicit output shape equality; '
-                             'legal unit-stride selected-group Slice with derived prefix offsets; '
-                             'no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic '
-                             'shape, physical-layout or whole-record closure claim'
-                             if '.Concatenation.' in name else
+                             'pure static arbitrary-rank Concat, bounded Slice, boundary Pad and '
+                             'ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact '
+                             'full shapes and ordered operands; filtering needs actual nonempty '
+                             'kept-list witness, all-empty first needs exact shape iff; merged '
+                             'Slices need shared positive stride and exact sampled adjacency; '
+                             'non-axis crops/strides legal and identical; no effects, dynamic '
+                             'shape, layout, machine overflow or whole-record closure claim'
+                             if any('.'+group+'.' in name for group in
+                                    ('Concatenation','ConcatenationFamily','ShapeTransport','UnitAxis')) else
                              'pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous '
                              'Map at arbitrary finite shapes; exact Boolean order false0/true1; '
                              'exact typed branch dispatch with arbitrary result observations; '

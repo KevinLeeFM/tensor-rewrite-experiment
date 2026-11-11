@@ -1,0 +1,395 @@
+{
+  "schema": 1,
+  "family": "pure_static_concatenation_values_v1",
+  "base_revision": "0a13eee5d4fe84c96bc552857bd778eb72f03729",
+  "profile_unit_count": 9,
+  "profile_unit_kind": "universal guarded pure static graph schemas; not dtype instances or whole retained records",
+  "profiles": [
+    {
+      "id": "HandleConcatenate/adjacent-slices",
+      "benchmark_id": "HandleConcatenate/adjacent-slices",
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_merge_run",
+      "domain": "finite guarded merges; same input and legal other crops; shared positive stride; exact sampled adjacency",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/filter-all-empty",
+      "benchmark_id": "HandleConcatenate/filter-all-empty",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff",
+      "domain": "all actual operands empty; first replacement iff complete output shape equals first shape",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/filter-many-nonempty",
+      "benchmark_id": "HandleConcatenate/filter-many-nonempty",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_filtered",
+      "domain": "actual filtered list nonempty; shape equality derived",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/filter-one-nonempty",
+      "benchmark_id": "HandleConcatenate/filter-one-nonempty",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty",
+      "domain": "exactly one actual nonempty operand",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/flatten",
+      "benchmark_id": "HandleConcatenate/flatten",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_flatten",
+      "domain": "arbitrary finite ordered operand groups",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/pad-high",
+      "benchmark_id": "HandleConcatenate/pad-high",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_pad_high",
+      "domain": "trailing actual scalar Broadcast; same fill; nonnegative high padding",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/pad-low",
+      "benchmark_id": "HandleConcatenate/pad-low",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_pad_low",
+      "domain": "leading actual scalar Broadcast; same fill; nonnegative low padding",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/repeat-unit-axis",
+      "benchmark_id": "HandleConcatenate/repeat-unit-axis",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_repeated",
+      "domain": "repeated identical input with selected extent one; ordinary delete-axis Reshape then signed-axis Broadcast",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    },
+    {
+      "id": "HandleConcatenate/unary",
+      "benchmark_id": "HandleConcatenate/unary",
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_unary",
+      "domain": "one operand; every finite extent",
+      "quantifiers": "all admitted finite ranks, extents and pure data; zero dimensions/copies included"
+    }
+  ],
+  "certificates": [
+    "TensorRewrite.Theory.Concatenation.empty_first_shape_refuted",
+    "TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted",
+    "TensorRewrite.Theory.Concatenation.operand_order_refuted",
+    "TensorRewrite.Theory.Concatenation.slice_offset_refuted",
+    "TensorRewrite.Theory.Concatenation.shape_eq_iff",
+    "TensorRewrite.Theory.Concatenation.position_withPosition",
+    "TensorRewrite.Theory.Concatenation.withPosition_withPosition",
+    "TensorRewrite.Theory.Concatenation.withPosition_position",
+    "TensorRewrite.Theory.Concatenation.withPosition_zero",
+    "TensorRewrite.Theory.Concatenation.rest_withPosition",
+    "TensorRewrite.Theory.Concatenation.rest_insert",
+    "TensorRewrite.Theory.Concatenation.insert_rest_position",
+    "TensorRewrite.Theory.Concatenation.total_append",
+    "TensorRewrite.Theory.Concatenation.readAt_append_left",
+    "TensorRewrite.Theory.Concatenation.readAt_append_right",
+    "TensorRewrite.Theory.Concatenation.total_filterZero",
+    "TensorRewrite.Theory.Concatenation.readAt_filterZero",
+    "TensorRewrite.Theory.Concatenation.hasElements_iff_positive",
+    "TensorRewrite.Theory.Concatenation.hasElements_iff_index",
+    "TensorRewrite.Theory.Concatenation.hasElements_iff_extent",
+    "TensorRewrite.Theory.Concatenation.filterEmpty_eq_filterZero",
+    "TensorRewrite.Theory.Concatenation.filterEmpty_of_nonempty",
+    "TensorRewrite.Theory.Concatenation.readAt_live_operand",
+    "TensorRewrite.Theory.Concatenation.read_pack",
+    "TensorRewrite.Theory.Concatenation.total_flatten",
+    "TensorRewrite.Theory.Concatenation.readAt_flatten",
+    "TensorRewrite.Theory.Concatenation.castTensor_refl",
+    "TensorRewrite.Theory.Concatenation.castTensor_trans",
+    "TensorRewrite.Theory.Concatenation.total_filterEmpty",
+    "TensorRewrite.Theory.Concatenation.no_index_of_all_empty",
+    "TensorRewrite.Theory.Concatenation.readAt_unary",
+    "TensorRewrite.Theory.Concatenation.readAt_congr",
+    "TensorRewrite.Theory.Concatenation.readAt_middle",
+    "TensorRewrite.Theory.Concatenation.slice_full",
+    "TensorRewrite.Theory.Concatenation.slice_castTensor",
+    "TensorRewrite.Theory.Concatenation.concatenate_unary",
+    "TensorRewrite.Theory.Concatenation.concatenate_filterZero",
+    "TensorRewrite.Theory.Concatenation.concatenate_filterEmpty",
+    "TensorRewrite.Theory.Concatenation.concatenate_filtered",
+    "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty",
+    "TensorRewrite.Theory.Concatenation.concatenate_all_empty",
+    "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first",
+    "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff",
+    "TensorRewrite.Theory.Concatenation.concatenate_flatten",
+    "TensorRewrite.Theory.Concatenation.slice_selected",
+    "TensorRewrite.Theory.Concatenation.slice_unary",
+    "TensorRewrite.Theory.Concatenation.slice_single_piece",
+    "TensorRewrite.Theory.Concatenation.slice_exact_piece",
+    "TensorRewrite.Theory.ShapeTransport.indexAlong_value",
+    "TensorRewrite.Theory.ShapeTransport.indexAlong_refl",
+    "TensorRewrite.Theory.ShapeTransport.tensorAlong_refl",
+    "TensorRewrite.Theory.ShapeTransport.tensorAlong_trans",
+    "TensorRewrite.Theory.Concatenation.block_eq_of_values",
+    "TensorRewrite.Theory.Concatenation.pack_unary",
+    "TensorRewrite.Theory.Concatenation.pack_flatten",
+    "TensorRewrite.Theory.Concatenation.pack_group_context",
+    "TensorRewrite.Theory.Concatenation.cast_concatenate_value",
+    "TensorRewrite.Theory.Concatenation.constantBlock_values",
+    "TensorRewrite.Theory.Concatenation.axis_valid_inferred",
+    "TensorRewrite.Theory.Concatenation.merged_axis_count",
+    "TensorRewrite.Theory.Concatenation.merged_axis_valid",
+    "TensorRewrite.Theory.Concatenation.adjacent_coordinate",
+    "TensorRewrite.Theory.Concatenation.edgePadding_shape",
+    "TensorRewrite.Theory.Concatenation.adjacent_slices_pair",
+    "TensorRewrite.Theory.Concatenation.adjacent_slices_context",
+    "TensorRewrite.Theory.Concatenation.edgePadding_inside_iff",
+    "TensorRewrite.Theory.Concatenation.edgePadding_value",
+    "TensorRewrite.Theory.Concatenation.concatenate_pad_low",
+    "TensorRewrite.Theory.Concatenation.concatenate_pad_high",
+    "TensorRewrite.Theory.UnitAxis.axis_unit",
+    "TensorRewrite.Theory.UnitAxis.target_one",
+    "TensorRewrite.Theory.UnitAxis.count",
+    "TensorRewrite.Theory.UnitAxis.linearize_insert",
+    "TensorRewrite.Theory.UnitAxis.reshape_index",
+    "TensorRewrite.Theory.UnitAxis.axes_decode",
+    "TensorRewrite.Theory.UnitAxis.axes_extent",
+    "TensorRewrite.Theory.UnitAxis.axes_increasing",
+    "TensorRewrite.Theory.UnitAxis.projectIndex_value",
+    "TensorRewrite.Theory.UnitAxis.broadcast_index",
+    "TensorRewrite.Theory.UnitAxis.sourceIndex_value",
+    "TensorRewrite.Theory.UnitAxis.axis_ofAxis",
+    "TensorRewrite.Theory.UnitAxis.target_ofAxis",
+    "TensorRewrite.Theory.UnitAxis.input_ofAxis",
+    "TensorRewrite.Theory.UnitAxis.sequence_value",
+    "TensorRewrite.Theory.Concatenation.total_replicate_unit",
+    "TensorRewrite.Theory.Concatenation.readAt_replicate_unit",
+    "TensorRewrite.Theory.Concatenation.repeatTarget_value",
+    "TensorRewrite.Theory.Concatenation.concatenate_repeated",
+    "TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted",
+    "TensorRewrite.Theory.Concatenation.slice_merge_run"
+  ],
+  "new_certificates": [
+    "TensorRewrite.Theory.ShapeTransport.indexAlong_value",
+    "TensorRewrite.Theory.ShapeTransport.indexAlong_refl",
+    "TensorRewrite.Theory.ShapeTransport.tensorAlong_refl",
+    "TensorRewrite.Theory.ShapeTransport.tensorAlong_trans",
+    "TensorRewrite.Theory.Concatenation.block_eq_of_values",
+    "TensorRewrite.Theory.Concatenation.pack_unary",
+    "TensorRewrite.Theory.Concatenation.pack_flatten",
+    "TensorRewrite.Theory.Concatenation.pack_group_context",
+    "TensorRewrite.Theory.Concatenation.cast_concatenate_value",
+    "TensorRewrite.Theory.Concatenation.constantBlock_values",
+    "TensorRewrite.Theory.Concatenation.axis_valid_inferred",
+    "TensorRewrite.Theory.Concatenation.merged_axis_count",
+    "TensorRewrite.Theory.Concatenation.merged_axis_valid",
+    "TensorRewrite.Theory.Concatenation.adjacent_coordinate",
+    "TensorRewrite.Theory.Concatenation.edgePadding_shape",
+    "TensorRewrite.Theory.Concatenation.adjacent_slices_pair",
+    "TensorRewrite.Theory.Concatenation.adjacent_slices_context",
+    "TensorRewrite.Theory.Concatenation.edgePadding_inside_iff",
+    "TensorRewrite.Theory.Concatenation.edgePadding_value",
+    "TensorRewrite.Theory.Concatenation.concatenate_pad_low",
+    "TensorRewrite.Theory.Concatenation.concatenate_pad_high",
+    "TensorRewrite.Theory.UnitAxis.axis_unit",
+    "TensorRewrite.Theory.UnitAxis.target_one",
+    "TensorRewrite.Theory.UnitAxis.count",
+    "TensorRewrite.Theory.UnitAxis.linearize_insert",
+    "TensorRewrite.Theory.UnitAxis.reshape_index",
+    "TensorRewrite.Theory.UnitAxis.axes_decode",
+    "TensorRewrite.Theory.UnitAxis.axes_extent",
+    "TensorRewrite.Theory.UnitAxis.axes_increasing",
+    "TensorRewrite.Theory.UnitAxis.projectIndex_value",
+    "TensorRewrite.Theory.UnitAxis.broadcast_index",
+    "TensorRewrite.Theory.UnitAxis.sourceIndex_value",
+    "TensorRewrite.Theory.UnitAxis.axis_ofAxis",
+    "TensorRewrite.Theory.UnitAxis.target_ofAxis",
+    "TensorRewrite.Theory.UnitAxis.input_ofAxis",
+    "TensorRewrite.Theory.UnitAxis.sequence_value",
+    "TensorRewrite.Theory.Concatenation.total_replicate_unit",
+    "TensorRewrite.Theory.Concatenation.readAt_replicate_unit",
+    "TensorRewrite.Theory.Concatenation.repeatTarget_value",
+    "TensorRewrite.Theory.Concatenation.concatenate_repeated",
+    "TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted",
+    "TensorRewrite.Theory.Concatenation.slice_merge_run"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted",
+    "TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted"
+  ],
+  "candidate_benchmark_labels": [
+    "HandleConcatenate/adjacent-slices",
+    "HandleConcatenate/filter-all-empty",
+    "HandleConcatenate/filter-many-nonempty",
+    "HandleConcatenate/filter-one-nonempty",
+    "HandleConcatenate/flatten",
+    "HandleConcatenate/pad-high",
+    "HandleConcatenate/pad-low",
+    "HandleConcatenate/repeat-unit-axis",
+    "HandleConcatenate/unary"
+  ],
+  "candidate_benchmark_bindings": {
+    "TensorRewrite.Theory.Concatenation.concatenate_unary": [
+      "HandleConcatenate/unary"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff": [
+      "HandleConcatenate/filter-all-empty"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty": [
+      "HandleConcatenate/filter-one-nonempty"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_filtered": [
+      "HandleConcatenate/filter-many-nonempty"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_flatten": [
+      "HandleConcatenate/flatten"
+    ],
+    "TensorRewrite.Theory.Concatenation.slice_merge_run": [
+      "HandleConcatenate/adjacent-slices"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_pad_low": [
+      "HandleConcatenate/pad-low"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_pad_high": [
+      "HandleConcatenate/pad-high"
+    ],
+    "TensorRewrite.Theory.Concatenation.concatenate_repeated": [
+      "HandleConcatenate/repeat-unit-axis"
+    ]
+  },
+  "domain_worksheet": "census/concatenation-graph-domains-v1.json",
+  "data_contract": "all pure data types, arbitrary values; no numerical law or default data",
+  "observations": "complete static tensor shapes and every logical data value",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ShapeTransport.lean",
+      "sha256": "1aef1fe73bf3692cb26a5c7ed91e059b0f91384c8df0ea606b09ee018926c5ca"
+    },
+    {
+      "path": "TensorRewrite/Theory/ShapeTransportLemmas.lean",
+      "sha256": "f32d24c6ebfc2c8d23e2221060dcd65d8d00764e9dd3ffb6579e27a54ac31b7d"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationGraphs.lean",
+      "sha256": "142c1f68b6b1b649ac133a5523aef56c32d49574112e3e6f2fae94c80ff8e098"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationGraphLemmas.lean",
+      "sha256": "43466a31ccce8dc1d54da469f3f25b45f0da70083d133b21ed05c8480050802b"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationAdjacent.lean",
+      "sha256": "bf42003a686bf5d555ac5c523e7da9eb5a5f026c0d483a9e07578daaae2120df"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationPadLemmas.lean",
+      "sha256": "05de6e3f0c1cfa4bc2ef0a25486ada82b78b72f6a4a127e1b2c096101b9dea10"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationPad.lean",
+      "sha256": "b5e02ff17e8b4b463d6ac3836a6499281f8756ba115c82f5fe909761da4f0fb6"
+    },
+    {
+      "path": "TensorRewrite/Theory/UnitAxis.lean",
+      "sha256": "ddcada83b616c58d2b7e4f5bc8cf427c9c0a3ea13aa0e1e9792615109e74d105"
+    },
+    {
+      "path": "TensorRewrite/Theory/UnitAxisLemmas.lean",
+      "sha256": "3d01666eea62b7515bfbbf5ec80d205643da6355770302ed308a06652823dd5b"
+    },
+    {
+      "path": "TensorRewrite/Theory/UnitAxisTarget.lean",
+      "sha256": "dfb87b3d7545d2586bb738069c9ff433eab3f87336ac104bce4e66992bf09b43"
+    },
+    {
+      "path": "TensorRewrite/Theory/UnitAxisTargetLemmas.lean",
+      "sha256": "617538fdcdf5c05a70f52dc6eb86d43d028d8ae7a95bc67661bdbb7ceb707a1a"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationRepeat.lean",
+      "sha256": "1cf9d84693cecf69671904d35cd904a43961ba132b7da8feef0cded33f461ee1"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationGraphCounterexamples.lean",
+      "sha256": "9815ffb7b20563df231840444df7b91cdcc38a028f86812df1eed50c6697dd9c"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationMerge.lean",
+      "sha256": "286dee0166e20cde8825931b0a4c41024290bf768449602a7a2b354ba92fa2d2"
+    },
+    {
+      "path": "tests/fixtures/ConcatenationGraphControls.lean",
+      "sha256": "2c39354a2570e4e142c4e1feb6f4b0fb5c3f6b812c63c3b1162bc537f950ec78"
+    },
+    {
+      "path": "tests/fixtures/InvalidConcatenationGraphs.lean",
+      "sha256": "3a30f4f50d83bfdfb722e802bf53ce70c6f9f6f9ec60ee83fada250706633e97"
+    },
+    {
+      "path": "tools/concatenation_graph_examples.py",
+      "sha256": "08134438e899ad3e7b5a4f46d347bf04cd39cf99e08bdd0da774073696f3f06f"
+    },
+    {
+      "path": "tools/check_concatenation_family.py",
+      "sha256": "e88395320eb14064178b9a7c217b45572569c42f3a2244d02a1dbc6207a1ae2c"
+    },
+    {
+      "path": "tools/replay_concatenation_base.py",
+      "sha256": "bc6156b293410c305e8d52a9a476efdc04360e7e305c77f4fba96cfd8dc4adf0"
+    },
+    {
+      "path": "census/concatenation-graph-domains-v1.json",
+      "sha256": "5e0fb93d8b8945b62a18393a7812fd43efcf1dc3e9521c18f5383cc4eb0cb511"
+    },
+    {
+      "path": "census/concatenation-v1.json",
+      "sha256": "ad776c597335ba60397307e15ede9073298c02f7bcd0f3c7a4520446a2a5609d"
+    },
+    {
+      "path": "TensorRewrite/Theory/SlicePad.lean",
+      "sha256": "2856e59ff9980581b9a1dc834c9119d817bc44a2a48e2b76dbb051bc30a154b0"
+    },
+    {
+      "path": "TensorRewrite/Theory/SlicePadLemmas.lean",
+      "sha256": "66ddd5040fdc82a109d72fbfe7088f399638452f34af1793c7b161c8d8a3789b"
+    },
+    {
+      "path": "TensorRewrite/Theory/ControlValues.lean",
+      "sha256": "ccb0b5f40f3d0143391460345ac03c44262a4d63bbd9cd07caf1b35ef0655830"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reshape.lean",
+      "sha256": "542164be841d856e88f310b37e70b2a98ccdd19ea18239bcfc3f35a99ca3bc2d"
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReshapeLemmas.lean",
+      "sha256": "5615961108dc75baa7daca9748b8b2c2a434ef8cfe2b51bbe978c1e6fe0e9731"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndexLemmas.lean",
+      "sha256": "f5850dd78c05d62837a026f7fed3c73c0206e916fa2b57148b1e4f1c597118ff"
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMaps.lean",
+      "sha256": "4e5980165487d76cc7c4d798ef7acc33bc724bc9b74b8b0e032dbfb8508c75e1"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedCoordinates.lean",
+      "sha256": "67765b42b750f3b07ffafeadb4994362d198c70bd6b7d52b4baff6a38a186d91"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "base_manifest": "census/concatenation-v1.json",
+  "base_manifest_sha256": "ad776c597335ba60397307e15ede9073298c02f7bcd0f3c7a4520446a2a5609d",
+  "imported_rewrite_proofs": [],
+  "library_reuse": "existing Std/Mathlib finite-index and division facts; existing project Slice/Pad/Reshape/Broadcast maps; no new dependency",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "whole_workload_complete": false,
+  "snapshot_stage": "post-development accepted snapshot at first Git commit; not preregistered discovery"
+}

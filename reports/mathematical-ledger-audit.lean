@@ -611,10 +611,22 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.BroadcastWindow.sequence_value
 #check @TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
 #print axioms TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
+#check @TensorRewrite.Theory.Concatenation.adjacent_coordinate
+#print axioms TensorRewrite.Theory.Concatenation.adjacent_coordinate
+#check @TensorRewrite.Theory.Concatenation.adjacent_slices_context
+#print axioms TensorRewrite.Theory.Concatenation.adjacent_slices_context
+#check @TensorRewrite.Theory.Concatenation.adjacent_slices_pair
+#print axioms TensorRewrite.Theory.Concatenation.adjacent_slices_pair
+#check @TensorRewrite.Theory.Concatenation.axis_valid_inferred
+#print axioms TensorRewrite.Theory.Concatenation.axis_valid_inferred
+#check @TensorRewrite.Theory.Concatenation.block_eq_of_values
+#print axioms TensorRewrite.Theory.Concatenation.block_eq_of_values
 #check @TensorRewrite.Theory.Concatenation.castTensor_refl
 #print axioms TensorRewrite.Theory.Concatenation.castTensor_refl
 #check @TensorRewrite.Theory.Concatenation.castTensor_trans
 #print axioms TensorRewrite.Theory.Concatenation.castTensor_trans
+#check @TensorRewrite.Theory.Concatenation.cast_concatenate_value
+#print axioms TensorRewrite.Theory.Concatenation.cast_concatenate_value
 #check @TensorRewrite.Theory.Concatenation.concatenate_all_empty
 #print axioms TensorRewrite.Theory.Concatenation.concatenate_all_empty
 #check @TensorRewrite.Theory.Concatenation.concatenate_all_empty_first
@@ -631,8 +643,22 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Concatenation.concatenate_flatten
 #check @TensorRewrite.Theory.Concatenation.concatenate_only_nonempty
 #print axioms TensorRewrite.Theory.Concatenation.concatenate_only_nonempty
+#check @TensorRewrite.Theory.Concatenation.concatenate_pad_high
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_pad_high
+#check @TensorRewrite.Theory.Concatenation.concatenate_pad_low
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_pad_low
+#check @TensorRewrite.Theory.Concatenation.concatenate_repeated
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_repeated
 #check @TensorRewrite.Theory.Concatenation.concatenate_unary
 #print axioms TensorRewrite.Theory.Concatenation.concatenate_unary
+#check @TensorRewrite.Theory.Concatenation.constantBlock_values
+#print axioms TensorRewrite.Theory.Concatenation.constantBlock_values
+#check @TensorRewrite.Theory.Concatenation.edgePadding_inside_iff
+#print axioms TensorRewrite.Theory.Concatenation.edgePadding_inside_iff
+#check @TensorRewrite.Theory.Concatenation.edgePadding_shape
+#print axioms TensorRewrite.Theory.Concatenation.edgePadding_shape
+#check @TensorRewrite.Theory.Concatenation.edgePadding_value
+#print axioms TensorRewrite.Theory.Concatenation.edgePadding_value
 #check @TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted
 #print axioms TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted
 #check @TensorRewrite.Theory.Concatenation.empty_first_shape_refuted
@@ -649,10 +675,20 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Concatenation.hasElements_iff_positive
 #check @TensorRewrite.Theory.Concatenation.insert_rest_position
 #print axioms TensorRewrite.Theory.Concatenation.insert_rest_position
+#check @TensorRewrite.Theory.Concatenation.merged_axis_count
+#print axioms TensorRewrite.Theory.Concatenation.merged_axis_count
+#check @TensorRewrite.Theory.Concatenation.merged_axis_valid
+#print axioms TensorRewrite.Theory.Concatenation.merged_axis_valid
 #check @TensorRewrite.Theory.Concatenation.no_index_of_all_empty
 #print axioms TensorRewrite.Theory.Concatenation.no_index_of_all_empty
 #check @TensorRewrite.Theory.Concatenation.operand_order_refuted
 #print axioms TensorRewrite.Theory.Concatenation.operand_order_refuted
+#check @TensorRewrite.Theory.Concatenation.pack_flatten
+#print axioms TensorRewrite.Theory.Concatenation.pack_flatten
+#check @TensorRewrite.Theory.Concatenation.pack_group_context
+#print axioms TensorRewrite.Theory.Concatenation.pack_group_context
+#check @TensorRewrite.Theory.Concatenation.pack_unary
+#print axioms TensorRewrite.Theory.Concatenation.pack_unary
 #check @TensorRewrite.Theory.Concatenation.position_withPosition
 #print axioms TensorRewrite.Theory.Concatenation.position_withPosition
 #check @TensorRewrite.Theory.Concatenation.readAt_append_left
@@ -669,10 +705,14 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Concatenation.readAt_live_operand
 #check @TensorRewrite.Theory.Concatenation.readAt_middle
 #print axioms TensorRewrite.Theory.Concatenation.readAt_middle
+#check @TensorRewrite.Theory.Concatenation.readAt_replicate_unit
+#print axioms TensorRewrite.Theory.Concatenation.readAt_replicate_unit
 #check @TensorRewrite.Theory.Concatenation.readAt_unary
 #print axioms TensorRewrite.Theory.Concatenation.readAt_unary
 #check @TensorRewrite.Theory.Concatenation.read_pack
 #print axioms TensorRewrite.Theory.Concatenation.read_pack
+#check @TensorRewrite.Theory.Concatenation.repeatTarget_value
+#print axioms TensorRewrite.Theory.Concatenation.repeatTarget_value
 #check @TensorRewrite.Theory.Concatenation.rest_insert
 #print axioms TensorRewrite.Theory.Concatenation.rest_insert
 #check @TensorRewrite.Theory.Concatenation.rest_withPosition
@@ -685,6 +725,8 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Concatenation.slice_exact_piece
 #check @TensorRewrite.Theory.Concatenation.slice_full
 #print axioms TensorRewrite.Theory.Concatenation.slice_full
+#check @TensorRewrite.Theory.Concatenation.slice_merge_run
+#print axioms TensorRewrite.Theory.Concatenation.slice_merge_run
 #check @TensorRewrite.Theory.Concatenation.slice_offset_refuted
 #print axioms TensorRewrite.Theory.Concatenation.slice_offset_refuted
 #check @TensorRewrite.Theory.Concatenation.slice_selected
@@ -701,12 +743,22 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Concatenation.total_filterZero
 #check @TensorRewrite.Theory.Concatenation.total_flatten
 #print axioms TensorRewrite.Theory.Concatenation.total_flatten
+#check @TensorRewrite.Theory.Concatenation.total_replicate_unit
+#print axioms TensorRewrite.Theory.Concatenation.total_replicate_unit
 #check @TensorRewrite.Theory.Concatenation.withPosition_position
 #print axioms TensorRewrite.Theory.Concatenation.withPosition_position
 #check @TensorRewrite.Theory.Concatenation.withPosition_withPosition
 #print axioms TensorRewrite.Theory.Concatenation.withPosition_withPosition
 #check @TensorRewrite.Theory.Concatenation.withPosition_zero
 #print axioms TensorRewrite.Theory.Concatenation.withPosition_zero
+#check @TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted
+#print axioms TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted
+#check @TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted
+#print axioms TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted
+#check @TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted
+#print axioms TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted
+#check @TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted
+#print axioms TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_right
@@ -1745,6 +1797,14 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScatterLayout.update_coordinate
 #check @TensorRewrite.Theory.ScatterLayout.word_translate_distinct
 #print axioms TensorRewrite.Theory.ScatterLayout.word_translate_distinct
+#check @TensorRewrite.Theory.ShapeTransport.indexAlong_refl
+#print axioms TensorRewrite.Theory.ShapeTransport.indexAlong_refl
+#check @TensorRewrite.Theory.ShapeTransport.indexAlong_value
+#print axioms TensorRewrite.Theory.ShapeTransport.indexAlong_value
+#check @TensorRewrite.Theory.ShapeTransport.tensorAlong_refl
+#print axioms TensorRewrite.Theory.ShapeTransport.tensorAlong_refl
+#check @TensorRewrite.Theory.ShapeTransport.tensorAlong_trans
+#print axioms TensorRewrite.Theory.ShapeTransport.tensorAlong_trans
 #check @TensorRewrite.Theory.SlicePad.attributes_count
 #print axioms TensorRewrite.Theory.SlicePad.attributes_count
 #check @TensorRewrite.Theory.SlicePad.attributes_valid
@@ -1803,6 +1863,36 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.SlicePad.valid_interval
 #check @TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted
 #print axioms TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted
+#check @TensorRewrite.Theory.UnitAxis.axes_decode
+#print axioms TensorRewrite.Theory.UnitAxis.axes_decode
+#check @TensorRewrite.Theory.UnitAxis.axes_extent
+#print axioms TensorRewrite.Theory.UnitAxis.axes_extent
+#check @TensorRewrite.Theory.UnitAxis.axes_increasing
+#print axioms TensorRewrite.Theory.UnitAxis.axes_increasing
+#check @TensorRewrite.Theory.UnitAxis.axis_ofAxis
+#print axioms TensorRewrite.Theory.UnitAxis.axis_ofAxis
+#check @TensorRewrite.Theory.UnitAxis.axis_unit
+#print axioms TensorRewrite.Theory.UnitAxis.axis_unit
+#check @TensorRewrite.Theory.UnitAxis.broadcast_index
+#print axioms TensorRewrite.Theory.UnitAxis.broadcast_index
+#check @TensorRewrite.Theory.UnitAxis.count
+#print axioms TensorRewrite.Theory.UnitAxis.count
+#check @TensorRewrite.Theory.UnitAxis.input_ofAxis
+#print axioms TensorRewrite.Theory.UnitAxis.input_ofAxis
+#check @TensorRewrite.Theory.UnitAxis.linearize_insert
+#print axioms TensorRewrite.Theory.UnitAxis.linearize_insert
+#check @TensorRewrite.Theory.UnitAxis.projectIndex_value
+#print axioms TensorRewrite.Theory.UnitAxis.projectIndex_value
+#check @TensorRewrite.Theory.UnitAxis.reshape_index
+#print axioms TensorRewrite.Theory.UnitAxis.reshape_index
+#check @TensorRewrite.Theory.UnitAxis.sequence_value
+#print axioms TensorRewrite.Theory.UnitAxis.sequence_value
+#check @TensorRewrite.Theory.UnitAxis.sourceIndex_value
+#print axioms TensorRewrite.Theory.UnitAxis.sourceIndex_value
+#check @TensorRewrite.Theory.UnitAxis.target_ofAxis
+#print axioms TensorRewrite.Theory.UnitAxis.target_ofAxis
+#check @TensorRewrite.Theory.UnitAxis.target_one
+#print axioms TensorRewrite.Theory.UnitAxis.target_one
 #check @TensorRewrite.Theory.WindowTransport.contribution_map
 #print axioms TensorRewrite.Theory.WindowTransport.contribution_map
 #check @TensorRewrite.Theory.WindowTransport.reduce_equiv

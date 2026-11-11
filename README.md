@@ -4,10 +4,10 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 575 checked mathematical statements; custom Lean totals **10,497**.
+The theory target now has 696 checked mathematical statements; custom Lean totals **12,027**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including244 covered only by
-unreviewed proposals after the Scatter, numerical, order and update refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
+All488 retained records now have domain/dependency worksheets, including213 covered only by
+unreviewed proposals after the latest typed mathematical refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1233,3 +1233,16 @@ condition, with two shape refutations. Eight records gain typed partial evidence
 This adds 535 Lean lines; core totals are 651 statements and 11,228 lines. Complete
 family-profile units remain 388, and 217 records remain proposal-only. Whole-record
 closure, global N/F and independent review remain open.
+
+
+## Complete declared pure static Concat profiles
+
+All nine retained Concat labels now have complete declared pure static shape/value
+profiles, including finite guarded adjacent-Slice merge runs, actual scalar-Broadcast
+Pad graphs and ordinary unit-axis deletion by Reshape followed by Broadcast. Exact
+all-empty shape iff domains remain explicit. See [the family guide](docs/concatenation-family.md).
+Forty-five statements add799 Lean lines; totals696 theory/956 ledger and12027 lines.
+Six families have397 profile units, while213 retained records remain proposal-only.
+Independent arrays agree on11544 new rows across1044 profiles; four false goals
+are rejected normally; all143 curated mathematical tests pass. Whole-record closure stays zero, N/F remains unfrozen and
+the final verdict remains open. Code correspondence stays future work.

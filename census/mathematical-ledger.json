@@ -9,9 +9,9 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 226,
-    "partial_model_evidence_requires_partition_review": 149,
-    "declared_value_family_complete_full_record_partitions_open": 113
+    "needs_formal_statement_and_domain_partition": 222,
+    "partial_model_evidence_requires_partition_review": 144,
+    "declared_value_family_complete_full_record_partitions_open": 122
   },
   "batch_counts": {
     "dot-cases": 44,
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 911,
+  "distinct_checked_declarations": 956,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,10 +39,11 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 593,
+    "library_backed_theory": 634,
     "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
     "concatenation_contract_refutation": 4,
+    "concatenation_graph_contract_refutation": 4,
     "control_value_contract_refutation": 6,
     "numerical_contract_refutation": 2,
     "dynamic_update_contract_refutation": 3,
@@ -236,6 +237,28 @@
         "HandleSelect/true",
         "HandleSelect/true-false-broadcast",
         "HandleSelect/true-false-direct"
+      ],
+      "label_correspondence_certified": false
+    },
+    {
+      "family": "pure_static_concatenation_values_v1",
+      "profile_unit_count": 9,
+      "profile_unit_kind": "universal guarded pure static graph schemas; not dtype instances or whole retained records",
+      "kernel_status": "kernel_complete_declared_mathematical_value_family",
+      "independent_statement_review": "pending",
+      "observations": "complete static tensor shapes and every logical data value",
+      "manifest": "census/concatenation-values-family-v1.json",
+      "manifest_sha256": "deda233f97734e250e4df324ebd576556b923766516a6f825d857c13552eb27e",
+      "candidate_benchmark_labels": [
+        "HandleConcatenate/adjacent-slices",
+        "HandleConcatenate/filter-all-empty",
+        "HandleConcatenate/filter-many-nonempty",
+        "HandleConcatenate/filter-one-nonempty",
+        "HandleConcatenate/flatten",
+        "HandleConcatenate/pad-high",
+        "HandleConcatenate/pad-low",
+        "HandleConcatenate/repeat-unit-axis",
+        "HandleConcatenate/unary"
       ],
       "label_correspondence_certified": false
     }
@@ -1286,15 +1309,15 @@
       "manifest_sha256": "ad776c597335ba60397307e15ede9073298c02f7bcd0f3c7a4520446a2a5609d"
     }
   ],
-  "kernel_complete_family_profile_count": 388,
+  "kernel_complete_family_profile_count": 397,
   "count_policy": "declaration kinds can overlap; benchmark labels are retained candidates, not certified correspondence; no proof-count/488 coverage fraction",
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "6649f7b1e17fae94f92305b0c39f8650f10d8da1b0254db9c47eca2dacc747c9",
+    "sha256": "d07fda3c85d808521ae9b87cac301081564956bb93c1e4d44c23e6619781bf58",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "a44147b3f2ee0dbbb4a2d7e8c0bd8a579dc0c1a9983940df44a4b33c20b26b7a"
+    "output_sha256": "b3b74c8dd2928bb4fdc5a90deea6fab8322882ab1151b7edd61b670139bcd97e"
   },
   "proofs": [
     {
@@ -7808,12 +7831,97 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.Concatenation.adjacent_coordinate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.adjacent_slices_context",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.adjacent_slices_pair",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.axis_valid_inferred",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.block_eq_of_values",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.Concatenation.castTensor_refl",
       "kinds": [
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -7830,7 +7938,24 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.cast_concatenate_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -7847,7 +7972,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -7864,7 +7989,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -7881,7 +8006,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleConcatenate/filter-all-empty"
@@ -7900,7 +8025,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -7918,7 +8043,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -7935,7 +8060,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleConcatenate/filter-many-nonempty"
@@ -7955,7 +8080,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleConcatenate/flatten"
@@ -7974,10 +8099,70 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleConcatenate/filter-one-nonempty"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_pad_high",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/pad-high"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_pad_low",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/pad-low"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_repeated",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/repeat-unit-axis"
       ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
@@ -7994,7 +8179,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleConcatenate/unary"
@@ -8008,12 +8193,82 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.Concatenation.constantBlock_values",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.edgePadding_inside_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.edgePadding_shape",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.edgePadding_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted",
       "kinds": [
         "concatenation_contract_refutation"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8029,7 +8284,7 @@
         "concatenation_contract_refutation"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8045,7 +8300,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8063,7 +8318,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8081,7 +8336,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8098,7 +8353,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8115,7 +8370,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8132,7 +8387,41 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.merged_axis_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.merged_axis_valid",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8149,7 +8438,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8166,7 +8455,58 @@
         "concatenation_contract_refutation"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.pack_flatten",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.pack_group_context",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.pack_unary",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8183,7 +8523,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8200,7 +8540,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8217,7 +8557,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8234,7 +8574,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8251,7 +8591,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8268,7 +8608,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8285,7 +8625,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8302,7 +8642,24 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_replicate_unit",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8319,7 +8676,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8336,7 +8693,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8348,12 +8705,30 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.Concatenation.repeatTarget_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.Concatenation.rest_insert",
       "kinds": [
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8370,7 +8745,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8387,7 +8762,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8403,7 +8778,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8420,7 +8795,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleSlice/concat-exact-piece"
@@ -8439,9 +8814,28 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_merge_run",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/adjacent-slices"
+      ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
@@ -8456,7 +8850,7 @@
         "concatenation_contract_refutation"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8473,7 +8867,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleSlice/concat-subrange-multi"
@@ -8492,7 +8886,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleSlice/concat-subrange-single"
@@ -8511,7 +8905,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8528,7 +8922,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8544,7 +8938,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8562,7 +8956,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8579,7 +8973,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8591,12 +8985,28 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.Concatenation.total_replicate_unit",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.Concatenation.withPosition_position",
       "kinds": [
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8613,7 +9023,7 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -8630,7 +9040,74 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted",
+      "kinds": [
+        "concatenation_graph_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted",
+      "kinds": [
+        "concatenation_graph_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted",
+      "kinds": [
+        "concatenation_graph_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted",
+      "kinds": [
+        "concatenation_graph_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -18271,6 +18748,64 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.ShapeTransport.indexAlong_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ShapeTransport.indexAlong_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ShapeTransport.tensorAlong_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ShapeTransport.tensorAlong_trans",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.SlicePad.attributes_count",
       "kinds": [
         "library_backed_theory"
@@ -18808,6 +19343,260 @@
       "independent_statement_review": "pending",
       "axiom_dependencies": [
         "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.axes_decode",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.axes_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.axes_increasing",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.axis_ofAxis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.axis_unit",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.broadcast_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.input_ofAxis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.linearize_insert",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.projectIndex_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.reshape_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.sequence_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.sourceIndex_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.target_ofAxis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.UnitAxis.target_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure static arbitrary-rank Concat, bounded Slice, boundary Pad and ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact full shapes and ordered operands; filtering needs actual nonempty kept-list witness, all-empty first needs exact shape iff; merged Slices need shared positive stride and exact sampled adjacency; non-axis crops/strides legal and identical; no effects, dynamic shape, layout, machine overflow or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
         "Quot.sound",
         "propext"
       ]
@@ -20398,10 +21187,15 @@
       "retained_lhs": "Concat(...,Slice(x),Slice(x),...)",
       "retained_rhs": "Concat(...,merged Slice(x),...)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; merge loop finds >=2 consecutive unstrided Slices sharing x; adjacent concat-axis limits/starts; other-axis starts equal; new operand count smaller; compatibility succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_merge_run"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/filter-all-empty",
@@ -20409,12 +21203,15 @@
       "retained_lhs": "Concat(xs)",
       "retained_rhs": "original first operand",
       "unreviewed_benchmark_notes_not_assumptions": "at least one operand zero-element; selected nonempty count 0; compatibility succeeds",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/filter-many-nonempty",
@@ -20422,12 +21219,15 @@
       "retained_lhs": "Concat(xs)",
       "retained_rhs": "cloned Concat of nonempty operands",
       "unreviewed_benchmark_notes_not_assumptions": "at least one operand zero-element; selected nonempty count >1; compatibility succeeds",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Theory.Concatenation.concatenate_filtered"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/filter-one-nonempty",
@@ -20435,12 +21235,15 @@
       "retained_lhs": "Concat(xs)",
       "retained_rhs": "only nonempty operand",
       "unreviewed_benchmark_notes_not_assumptions": "at least one operand zero-element; selected nonempty count 1; compatibility succeeds",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/flatten",
@@ -20448,12 +21251,15 @@
       "retained_lhs": "Concat(xs with nested Concat on same axis)",
       "retained_rhs": "Concat(unnested operands)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; unnested operand count differs from original count",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Theory.Concatenation.concatenate_flatten"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/pad-high",
@@ -20461,10 +21267,15 @@
       "retained_lhs": "binary Concat of x and scalar Broadcast",
       "retained_rhs": "Pad(other operand,scalar,padding on concat axis high)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; exactly two operands; operand0 not scalar Broadcast; operand1 scalar Broadcast",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_pad_high"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/pad-low",
@@ -20472,10 +21283,15 @@
       "retained_lhs": "binary Concat of x and scalar Broadcast",
       "retained_rhs": "Pad(other operand,scalar,padding on concat axis low)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; exactly two operands; operand0 scalar Broadcast (takes priority even if both match)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_pad_low"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/repeat-unit-axis",
@@ -20483,10 +21299,15 @@
       "retained_lhs": "Concat(x,x,...,axis)",
       "retained_rhs": "Broadcast(Reshape(x,delete axis),all other axes)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; all operand pointers same; x extent on concat axis ==1",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_repeated"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConcatenate/unary",
@@ -20494,12 +21315,15 @@
       "retained_lhs": "Concat(x)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "one operand; compatibility succeeds",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Theory.Concatenation.concatenate_unary"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "pure_static_concatenation_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConditional/predicate-convert",

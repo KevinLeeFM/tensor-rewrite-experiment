@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_declared_pure_static_concat_profiles_remaining_observations_open",
+  "retained_batches": [
+    {
+      "path": "census/tensor-index-cases.json",
+      "sha256": "91fefd43fd3426227bbe44a3633febac9a6ca935d1b1bfa199ee8fac33a0b5de"
+    }
+  ],
+  "mathematical_model_manifest": "census/concatenation-values-family-v1.json",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleConcatenate/adjacent-slices",
+      "retained_lhs": "Concat(...,Slice(x),Slice(x),...)",
+      "retained_rhs": "Concat(...,merged Slice(x),...)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_merge_run"
+      ],
+      "declared_profile": "HandleConcatenate/adjacent-slices",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "finite guarded merges; same input and legal other crops; shared positive stride; exact sampled adjacency",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/filter-all-empty",
+      "retained_lhs": "Concat(xs)",
+      "retained_rhs": "original first operand",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff"
+      ],
+      "declared_profile": "HandleConcatenate/filter-all-empty",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "all actual operands empty; first replacement iff complete output shape equals first shape",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/filter-many-nonempty",
+      "retained_lhs": "Concat(xs)",
+      "retained_rhs": "cloned Concat of nonempty operands",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_filtered"
+      ],
+      "declared_profile": "HandleConcatenate/filter-many-nonempty",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "actual filtered list nonempty; shape equality derived",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/filter-one-nonempty",
+      "retained_lhs": "Concat(xs)",
+      "retained_rhs": "only nonempty operand",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty"
+      ],
+      "declared_profile": "HandleConcatenate/filter-one-nonempty",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "exactly one actual nonempty operand",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/flatten",
+      "retained_lhs": "Concat(xs with nested Concat on same axis)",
+      "retained_rhs": "Concat(unnested operands)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_flatten"
+      ],
+      "declared_profile": "HandleConcatenate/flatten",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "arbitrary finite ordered operand groups",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/pad-high",
+      "retained_lhs": "binary Concat of x and scalar Broadcast",
+      "retained_rhs": "Pad(other operand,scalar,padding on concat axis high)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_pad_high"
+      ],
+      "declared_profile": "HandleConcatenate/pad-high",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "trailing actual scalar Broadcast; same fill; nonnegative high padding",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/pad-low",
+      "retained_lhs": "binary Concat of x and scalar Broadcast",
+      "retained_rhs": "Pad(other operand,scalar,padding on concat axis low)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_pad_low"
+      ],
+      "declared_profile": "HandleConcatenate/pad-low",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "leading actual scalar Broadcast; same fill; nonnegative low padding",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/repeat-unit-axis",
+      "retained_lhs": "Concat(x,x,...,axis)",
+      "retained_rhs": "Broadcast(Reshape(x,delete axis),all other axes)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_repeated"
+      ],
+      "declared_profile": "HandleConcatenate/repeat-unit-axis",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "repeated identical input with selected extent one; ordinary delete-axis Reshape then signed-axis Broadcast",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/unary",
+      "retained_lhs": "Concat(x)",
+      "retained_rhs": "x",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_unary"
+      ],
+      "declared_profile": "HandleConcatenate/unary",
+      "mathematical_premises": [
+        "Static shapes and legal selected axis; all other extents agree by type; arbitrary pure data.",
+        "one operand; every finite extent",
+        "Actual bounded Slice, Pad and ordinary Reshape/Broadcast maps are used where indicated; guards contain no desired data equality."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations need separate models.",
+        "Independent statement review and complete retained-case partition review remain open; source guards are not adopted as proof assumptions.",
+        "For all-empty first replacement, full-shape equality is an exact necessary/sufficient domain; emptiness alone does not imply it."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}

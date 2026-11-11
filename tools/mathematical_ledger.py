@@ -208,6 +208,8 @@ def evidence(root=ROOT):
         if '.Concatenation.' in name:
             manifest=read('census/concatenation-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
+            extension=read('census/concatenation-values-family-v1.json',root)
+            labels=sorted(set(labels)|set(extension['candidate_benchmark_bindings'].get(name,[])))
         if '.ControlValues.' in name:
             manifest=read('census/control-values-family-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -260,7 +262,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('concatenation_contract_refutation' if '.Concatenation.' in name
+        kind=('concatenation_graph_contract_refutation' if '.ConcatenationFamily.' in name
+              and name.endswith('_refuted') else 'concatenation_contract_refutation' if '.Concatenation.' in name
               and name.endswith('_refuted') else 'control_value_contract_refutation' if '.ControlValues.' in name
               and name.endswith('_refuted') else 'dynamic_update_contract_refutation' if '.DynamicUpdate.' in name
               and name.endswith('_refuted') else 'exact_order_domain_refutation' if '.OrderFamily.' in name
@@ -393,6 +396,17 @@ def formulated_families(root=ROOT):
               if '.ControlValues.' in name}
     assert len(expected)==28 and family['certificate_axioms']==expected
     families.append(dict(family=frozen['family'],profile_unit_count=19,
+                         profile_unit_kind=frozen['profile_unit_kind'],kernel_status=family['status'],
+                         independent_statement_review='pending',observations=family['observations'],
+                         manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
+                         candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],
+                         label_correspondence_certified=False))
+    from check_concatenation_family import validate_result as validate_concat_family
+    family=read('reports/concatenation-values-family.json',root);validate_concat_family(family,root)
+    frozen=read(family['manifest'],root)
+    expected={name:theory['axiom_dependencies'][name] for name in frozen['certificates']}
+    assert len(expected)==93 and family['certificate_axioms']==expected
+    families.append(dict(family=frozen['family'],profile_unit_count=9,
                          profile_unit_kind=frozen['profile_unit_kind'],kernel_status=family['status'],
                          independent_statement_review='pending',observations=family['observations'],
                          manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
@@ -768,7 +782,7 @@ def mathematical_models(root=ROOT):
     concat=read('reports/concatenation.json',root);validate_concat(concat,root)
     extension=concat_inputs(root)
     expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
-              if '.Concatenation.' in name}
+              if name in extension['certificates']}
     assert len(expected)==48 and concat['certificate_axioms']==expected
     models.append(dict(model=extension['model'],status=concat['status'],checked_theorem_count=48,
                        scope=extension['observation_contract'],value_contract=extension['data_contract'],

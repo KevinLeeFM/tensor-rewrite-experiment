@@ -2186,6 +2186,54 @@ TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted : ¬TensorRewrite.
 'TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
+@TensorRewrite.Theory.Concatenation.adjacent_coordinate : ∀ {firstLength : ℕ}
+  (first second : TensorRewrite.Pilot.SliceShape.Axis),
+  second.stride = first.stride →
+    second.start = first.start + ↑firstLength * first.stride →
+      ∀ (position : ℕ),
+        firstLength ≤ position →
+          second.start + second.stride * ↑(position - firstLength) = first.start + first.stride * ↑position
+'TensorRewrite.Theory.Concatenation.adjacent_coordinate' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.adjacent_slices_context : ∀ {rank extent firstLength secondLength : ℕ}
+  {inputFrame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (crop : TensorRewrite.Theory.Concatenation.Crop inputFrame)
+  (input : TensorRewrite.Pilot.Tensor (inputFrame.shape extent) α) (first second : TensorRewrite.Pilot.SliceShape.Axis)
+  (firstValid : TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑firstLength) first)
+  (secondValid : TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑secondLength) second)
+  (sameStride : second.stride = first.stride) (adjacent : second.start = first.start + ↑firstLength * first.stride)
+  (leading trailing : List (TensorRewrite.Theory.Concatenation.Block crop.outputFrame α)),
+  TensorRewrite.Theory.Concatenation.pack
+      (leading ++
+        ([crop.blockWith input first firstLength firstValid, crop.blockWith input second secondLength secondValid] ++
+          trailing)) =
+    TensorRewrite.Theory.Concatenation.pack
+      (leading ++
+        crop.blockWith input (TensorRewrite.Theory.Concatenation.mergeAxis first second) (firstLength + secondLength)
+            ⋯ ::
+          trailing)
+'TensorRewrite.Theory.Concatenation.adjacent_slices_context' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.adjacent_slices_pair : ∀ {rank extent firstLength secondLength : ℕ}
+  {inputFrame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (crop : TensorRewrite.Theory.Concatenation.Crop inputFrame)
+  (input : TensorRewrite.Pilot.Tensor (inputFrame.shape extent) α) (first second : TensorRewrite.Pilot.SliceShape.Axis)
+  (firstValid : TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑firstLength) first)
+  (secondValid : TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑secondLength) second)
+  (sameStride : second.stride = first.stride) (adjacent : second.start = first.start + ↑firstLength * first.stride),
+  TensorRewrite.Theory.Concatenation.pack
+      [crop.blockWith input first firstLength firstValid, crop.blockWith input second secondLength secondValid] =
+    crop.blockWith input (TensorRewrite.Theory.Concatenation.mergeAxis first second) (firstLength + secondLength) ⋯
+'TensorRewrite.Theory.Concatenation.adjacent_slices_pair' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.Concatenation.axis_valid_inferred : ∀ (extent : ℕ) (axis : TensorRewrite.Pilot.SliceShape.Axis),
+  0 ≤ axis.start →
+    axis.start ≤ axis.limit →
+      axis.limit ≤ ↑extent →
+        0 < axis.stride → TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑axis.elementCount.toNat) axis
+'TensorRewrite.Theory.Concatenation.axis_valid_inferred' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.block_eq_of_values : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (left right : TensorRewrite.Theory.Concatenation.Block frame α) (same : left.extent = right.extent),
+  frame.castTensor same left.values = right.values → left = right
+'TensorRewrite.Theory.Concatenation.block_eq_of_values' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.Concatenation.castTensor_refl : ∀ {rank extent : ℕ} {α : Type}
   (frame : TensorRewrite.Theory.Concatenation.Frame rank) (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α),
   frame.castTensor ⋯ input = input
@@ -2195,6 +2243,14 @@ TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted : ¬TensorRewrite.
   (input : TensorRewrite.Pilot.Tensor (frame.shape first) α),
   frame.castTensor secondSame (frame.castTensor firstSame input) = frame.castTensor ⋯ input
 'TensorRewrite.Theory.Concatenation.castTensor_trans' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.cast_concatenate_value : ∀ {rank outputExtent : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (same : TensorRewrite.Theory.Concatenation.total blocks = outputExtent)
+  (index : TensorRewrite.Pilot.Index (frame.shape outputExtent)),
+  frame.castTensor same (TensorRewrite.Theory.Concatenation.concatenate blocks) index =
+    TensorRewrite.Theory.Concatenation.readAt blocks (frame.rest index) ↑(frame.position index) ⋯
+'TensorRewrite.Theory.Concatenation.cast_concatenate_value' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.Concatenation.concatenate_all_empty : ∀ {rank : ℕ}
   {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
   (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
@@ -2262,11 +2318,61 @@ TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted : ¬TensorRewrite.
 'TensorRewrite.Theory.Concatenation.concatenate_only_nonempty' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_pad_high : ∀ {rank extent : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (high : ℕ) (fill : α)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α),
+  frame.castTensor ⋯
+      (TensorRewrite.Theory.Concatenation.concatenate
+        [{ extent := extent, values := input }, TensorRewrite.Theory.Concatenation.constantBlock high fill]) =
+    TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯ ((frame.edgePadding 0 high).tensor fill input)
+'TensorRewrite.Theory.Concatenation.concatenate_pad_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_pad_low : ∀ {rank extent : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (low : ℕ) (fill : α)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α),
+  frame.castTensor ⋯
+      (TensorRewrite.Theory.Concatenation.concatenate
+        [TensorRewrite.Theory.Concatenation.constantBlock low fill, { extent := extent, values := input }]) =
+    TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯ ((frame.edgePadding low 0).tensor fill input)
+'TensorRewrite.Theory.Concatenation.concatenate_pad_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_repeated : ∀ {rank : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame (rank + 1)) (copies : ℕ)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape 1) α),
+  frame.castTensor ⋯
+      (TensorRewrite.Theory.Concatenation.concatenate (List.replicate copies { extent := 1, values := input })) =
+    TensorRewrite.Theory.Concatenation.repeatTarget frame copies input
+'TensorRewrite.Theory.Concatenation.concatenate_repeated' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.Concatenation.concatenate_unary : ∀ {rank : ℕ}
   {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
   (block : TensorRewrite.Theory.Concatenation.Block frame α),
   frame.castTensor ⋯ (TensorRewrite.Theory.Concatenation.concatenate [block]) = block.values
 'TensorRewrite.Theory.Concatenation.concatenate_unary' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.constantBlock_values : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type} (extent : ℕ) (value : α),
+  (TensorRewrite.Theory.Concatenation.constantBlock extent value).values = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Theory.Concatenation.constantBlock_values' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.edgePadding_inside_iff : ∀ {rank extent : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (low high : ℕ)
+  (index : TensorRewrite.Pilot.Index (frame.shape (low + extent + high))),
+  (∀ (axis : Fin rank),
+      (TensorRewrite.Theory.ReductionWindow.boundedIndex? (frame.shape extent axis)
+            (↑↑(TensorRewrite.Theory.ShapeTransport.indexAlong ⋯ index axis) -
+              ↑((frame.edgePadding low high).low axis))).isSome =
+        true) ↔
+    low ≤ ↑(frame.position index) ∧ ↑(frame.position index) < low + extent
+'TensorRewrite.Theory.Concatenation.edgePadding_inside_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.edgePadding_shape : ∀ {rank extent : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (low high : ℕ),
+  (frame.edgePadding low high).outputShape (frame.shape extent) = frame.shape (low + extent + high)
+'TensorRewrite.Theory.Concatenation.edgePadding_shape' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.edgePadding_value : ∀ {rank extent : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (low high : ℕ) (fill : α)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α)
+  (index : TensorRewrite.Pilot.Index (frame.shape (low + extent + high))),
+  TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯ ((frame.edgePadding low high).tensor fill input) index =
+    if inside : low ≤ ↑(frame.position index) ∧ ↑(frame.position index) < low + extent then
+      input (frame.withPosition index ⟨↑(frame.position index) - low, ⋯⟩)
+    else fill
+'TensorRewrite.Theory.Concatenation.edgePadding_value' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted : TensorRewrite.Theory.Concatenation.emptyOtherFrame.shape
     (TensorRewrite.Theory.Concatenation.total
       (TensorRewrite.Theory.Concatenation.filterEmpty TensorRewrite.Theory.Concatenation.emptyOtherBlocks))
@@ -2313,6 +2419,23 @@ TensorRewrite.Theory.Concatenation.empty_first_shape_refuted : (∀
   (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape extent)),
   frame.withPosition (frame.rest index) (frame.position index) = index
 'TensorRewrite.Theory.Concatenation.insert_rest_position' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.merged_axis_count : ∀ {extent firstLength secondLength : ℕ}
+  (first second : TensorRewrite.Pilot.SliceShape.Axis),
+  TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑firstLength) first →
+    TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑secondLength) second →
+      second.stride = first.stride →
+        second.start = first.start + ↑firstLength * first.stride →
+          (TensorRewrite.Theory.Concatenation.mergeAxis first second).elementCount = ↑(firstLength + secondLength)
+'TensorRewrite.Theory.Concatenation.merged_axis_count' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.merged_axis_valid : ∀ {extent firstLength secondLength : ℕ}
+  (first second : TensorRewrite.Pilot.SliceShape.Axis),
+  TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑firstLength) first →
+    TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑secondLength) second →
+      second.stride = first.stride →
+        second.start = first.start + ↑firstLength * first.stride →
+          TensorRewrite.Pilot.SliceShape.IsWellFormed (↑extent) (↑firstLength + ↑secondLength)
+            (TensorRewrite.Theory.Concatenation.mergeAxis first second)
+'TensorRewrite.Theory.Concatenation.merged_axis_valid' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.Concatenation.no_index_of_all_empty : ∀ {rank : ℕ}
   {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
   (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
@@ -2328,6 +2451,21 @@ TensorRewrite.Theory.Concatenation.operand_order_refuted : TensorRewrite.Theory.
       { extent := 1, values := TensorRewrite.Pilot.Tensor.constant 7 }]
     (TensorRewrite.Theory.Concatenation.lineIndex 0)
 'TensorRewrite.Theory.Concatenation.operand_order_refuted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.pack_flatten : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (groups : List (List (TensorRewrite.Theory.Concatenation.Block frame α))),
+  TensorRewrite.Theory.Concatenation.pack (List.map TensorRewrite.Theory.Concatenation.pack groups) =
+    TensorRewrite.Theory.Concatenation.pack groups.flatten
+'TensorRewrite.Theory.Concatenation.pack_flatten' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.pack_group_context : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (leading group trailing : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  TensorRewrite.Theory.Concatenation.pack (leading ++ (group ++ trailing)) =
+    TensorRewrite.Theory.Concatenation.pack (leading ++ TensorRewrite.Theory.Concatenation.pack group :: trailing)
+'TensorRewrite.Theory.Concatenation.pack_group_context' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.pack_unary : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (block : TensorRewrite.Theory.Concatenation.Block frame α),
+  TensorRewrite.Theory.Concatenation.pack [block] = block
+'TensorRewrite.Theory.Concatenation.pack_unary' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.Concatenation.position_withPosition : ∀ {rank inputExtent outputExtent : ℕ}
   (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape inputExtent))
   (position : Fin outputExtent), frame.position (frame.withPosition index position) = position
@@ -2399,6 +2537,16 @@ TensorRewrite.Theory.Concatenation.operand_order_refuted : TensorRewrite.Theory.
       (TensorRewrite.Theory.Concatenation.total leading + position) bound =
     TensorRewrite.Theory.Concatenation.readAt selected rest position before
 'TensorRewrite.Theory.Concatenation.readAt_middle' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_replicate_unit : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (input : TensorRewrite.Pilot.Tensor (frame.shape 1) α) (copies : ℕ) (rest : TensorRewrite.Pilot.Index (frame.shape 1))
+  (position : ℕ)
+  (bound :
+    position < TensorRewrite.Theory.Concatenation.total (List.replicate copies { extent := 1, values := input })),
+  TensorRewrite.Theory.Concatenation.readAt (List.replicate copies { extent := 1, values := input }) rest position
+      bound =
+    input rest
+'TensorRewrite.Theory.Concatenation.readAt_replicate_unit' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.Concatenation.readAt_unary : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
   {α : Type} (block : TensorRewrite.Theory.Concatenation.Block frame α)
   (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ) (bound : position < block.extent)
@@ -2413,6 +2561,11 @@ TensorRewrite.Theory.Concatenation.operand_order_refuted : TensorRewrite.Theory.
   (TensorRewrite.Theory.Concatenation.pack blocks).values (frame.withPosition rest ⟨position, bound⟩) =
     TensorRewrite.Theory.Concatenation.readAt blocks rest position bound
 'TensorRewrite.Theory.Concatenation.read_pack' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.repeatTarget_value : ∀ {rank : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame (rank + 1)) (copies : ℕ)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape 1) α) (index : TensorRewrite.Pilot.Index (frame.shape copies)),
+  TensorRewrite.Theory.Concatenation.repeatTarget frame copies input index = input (frame.rest index)
+'TensorRewrite.Theory.Concatenation.repeatTarget_value' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.Concatenation.rest_insert : ∀ {rank extent : ℕ}
   (frame : TensorRewrite.Theory.Concatenation.Frame rank) (rest : TensorRewrite.Pilot.Index (frame.shape 1))
   (position : Fin extent), frame.rest (frame.withPosition rest position) = rest
@@ -2442,6 +2595,14 @@ TensorRewrite.Theory.Concatenation.operand_order_refuted : TensorRewrite.Theory.
   {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
   (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α), frame.slice input 0 extent ⋯ = input
 'TensorRewrite.Theory.Concatenation.slice_full' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.slice_merge_run : ∀ {rank extent : ℕ}
+  {inputFrame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  {crop : TensorRewrite.Theory.Concatenation.Crop inputFrame}
+  {input : TensorRewrite.Pilot.Tensor (inputFrame.shape extent) α}
+  {first last : List (TensorRewrite.Theory.Concatenation.Block crop.outputFrame α)},
+  TensorRewrite.Theory.Concatenation.SliceMergeRun crop input first last →
+    TensorRewrite.Theory.Concatenation.pack first = TensorRewrite.Theory.Concatenation.pack last
+'TensorRewrite.Theory.Concatenation.slice_merge_run' depends on axioms: [propext, Quot.sound]
 TensorRewrite.Theory.Concatenation.slice_offset_refuted : let first :=
   { extent := 2, values := TensorRewrite.Pilot.Tensor.constant 7 };
 let second := { extent := 2, values := TensorRewrite.Pilot.Tensor.constant 9 };
@@ -2495,6 +2656,11 @@ TensorRewrite.Theory.Concatenation.lineFrame.slice (TensorRewrite.Theory.Concate
   TensorRewrite.Theory.Concatenation.total (List.map TensorRewrite.Theory.Concatenation.pack groups) =
     TensorRewrite.Theory.Concatenation.total groups.flatten
 'TensorRewrite.Theory.Concatenation.total_flatten' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.total_replicate_unit : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (input : TensorRewrite.Pilot.Tensor (frame.shape 1) α) (copies : ℕ),
+  TensorRewrite.Theory.Concatenation.total (List.replicate copies { extent := 1, values := input }) = copies
+'TensorRewrite.Theory.Concatenation.total_replicate_unit' depends on axioms: [propext]
 @TensorRewrite.Theory.Concatenation.withPosition_position : ∀ {rank extent : ℕ}
   (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape extent)),
   frame.withPosition index (frame.position index) = index
@@ -2508,6 +2674,39 @@ TensorRewrite.Theory.Concatenation.lineFrame.slice (TensorRewrite.Theory.Concate
   (frame : TensorRewrite.Theory.Concatenation.Frame rank) (rest : TensorRewrite.Pilot.Index (frame.shape 1)),
   frame.withPosition rest 0 = rest
 'TensorRewrite.Theory.Concatenation.withPosition_zero' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted : TensorRewrite.Theory.Concatenation.concatenate
+    [TensorRewrite.Theory.ConcatenationFamily.diagnosticCrop.blockWith
+        TensorRewrite.Theory.ConcatenationFamily.coordinateData { start := 0, limit := 1, stride := 1 } 1
+        TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted._proof_1,
+      TensorRewrite.Theory.ConcatenationFamily.diagnosticCrop.blockWith
+        TensorRewrite.Theory.ConcatenationFamily.coordinateData { start := 2, limit := 3, stride := 1 } 1
+        TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted._proof_2]
+    (TensorRewrite.Theory.Concatenation.lineIndex 1) ≠
+  (TensorRewrite.Theory.ConcatenationFamily.diagnosticCrop.blockWith
+        TensorRewrite.Theory.ConcatenationFamily.coordinateData { start := 0, limit := 3, stride := 1 } 3
+        TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted._proof_3).values
+    (TensorRewrite.Theory.Concatenation.lineIndex 1)
+'TensorRewrite.Theory.ConcatenationFamily.gapped_slices_refuted' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted : TensorRewrite.Pilot.LinearIndex.elementCount
+    (TensorRewrite.Theory.Concatenation.lineFrame.shape 2) ≠
+  TensorRewrite.Pilot.LinearIndex.elementCount Fin.elim0
+'TensorRewrite.Theory.ConcatenationFamily.nonunit_delete_refuted' depends on axioms: [propext]
+TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted : TensorRewrite.Theory.Concatenation.concatenate
+    [TensorRewrite.Theory.Concatenation.constantBlock 1 7,
+      { extent := 1, values := TensorRewrite.Pilot.Tensor.constant 9 }]
+    (TensorRewrite.Theory.Concatenation.lineIndex 0) ≠
+  TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯
+    ((TensorRewrite.Theory.Concatenation.lineFrame.edgePadding 1 0).tensor 8 (TensorRewrite.Pilot.Tensor.constant 9))
+    (TensorRewrite.Theory.Concatenation.lineIndex 0)
+'TensorRewrite.Theory.ConcatenationFamily.padding_fill_refuted' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted : TensorRewrite.Theory.Concatenation.concatenate
+    [TensorRewrite.Theory.Concatenation.constantBlock 1 7,
+      { extent := 1, values := TensorRewrite.Pilot.Tensor.constant 9 }]
+    (TensorRewrite.Theory.Concatenation.lineIndex 0) ≠
+  TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯
+    ((TensorRewrite.Theory.Concatenation.lineFrame.edgePadding 0 1).tensor 7 (TensorRewrite.Pilot.Tensor.constant 9))
+    (TensorRewrite.Theory.Concatenation.lineIndex 0)
+'TensorRewrite.Theory.ConcatenationFamily.padding_side_refuted' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.ContractionAlgebra.dot_add_left : ∀ {α : Type} [inst : Semiring α]
   {batch left right contracting : ℕ} (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting)
   (x y : TensorRewrite.Pilot.Tensor plan.lhsShape α) (z : TensorRewrite.Pilot.Tensor plan.rhsShape α),
@@ -6179,6 +6378,24 @@ have updates := fun raw =>
           (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second)
           (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) separate base) indices updates
 'TensorRewrite.Theory.ScatterLayout.word_translate_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ShapeTransport.indexAlong_refl : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (index : TensorRewrite.Pilot.Index shape), TensorRewrite.Theory.ShapeTransport.indexAlong ⋯ index = index
+'TensorRewrite.Theory.ShapeTransport.indexAlong_refl' does not depend on any axioms
+@TensorRewrite.Theory.ShapeTransport.indexAlong_value : ∀ {rank : ℕ}
+  {inputShape outputShape : TensorRewrite.Pilot.Shape rank} (same : inputShape = outputShape)
+  (index : TensorRewrite.Pilot.Index outputShape) (axis : Fin rank),
+  ↑(TensorRewrite.Theory.ShapeTransport.indexAlong same index axis) = ↑(index axis)
+'TensorRewrite.Theory.ShapeTransport.indexAlong_value' does not depend on any axioms
+@TensorRewrite.Theory.ShapeTransport.tensorAlong_refl : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (input : TensorRewrite.Pilot.Tensor shape α), TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯ input = input
+'TensorRewrite.Theory.ShapeTransport.tensorAlong_refl' does not depend on any axioms
+@TensorRewrite.Theory.ShapeTransport.tensorAlong_trans : ∀ {rank : ℕ}
+  {first middle last : TensorRewrite.Pilot.Shape rank} {α : Type} (firstSame : first = middle)
+  (secondSame : middle = last) (input : TensorRewrite.Pilot.Tensor first α),
+  TensorRewrite.Theory.ShapeTransport.tensorAlong secondSame
+      (TensorRewrite.Theory.ShapeTransport.tensorAlong firstSame input) =
+    TensorRewrite.Theory.ShapeTransport.tensorAlong ⋯ input
+'TensorRewrite.Theory.ShapeTransport.tensorAlong_trans' depends on axioms: [Quot.sound]
 TensorRewrite.Theory.SlicePad.attributes_count : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
   axis.attributes.elementCount = ↑axis.count
 'TensorRewrite.Theory.SlicePad.attributes_count' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -6340,6 +6557,64 @@ TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted : (List.foldl F
 'TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
+@TensorRewrite.Theory.UnitAxis.axes_decode : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  (axis : Fin rank), plan.broadcastAxes.decode axis = plan.axesMap axis
+'TensorRewrite.Theory.UnitAxis.axes_decode' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.axes_extent : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank) (copies : ℕ)
+  (axis : Fin rank), plan.outputShape axis = plan.targetShape copies (plan.axesMap axis)
+'TensorRewrite.Theory.UnitAxis.axes_extent' depends on axioms: [propext]
+@TensorRewrite.Theory.UnitAxis.axes_increasing : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  (first second : Fin rank), first < second → plan.axesMap first < plan.axesMap second
+'TensorRewrite.Theory.UnitAxis.axes_increasing' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.axis_ofAxis : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape (rank + 1))
+  (axis : Fin (rank + 1)), (TensorRewrite.Theory.UnitAxis.ofAxis shape axis).axis = axis
+'TensorRewrite.Theory.UnitAxis.axis_ofAxis' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.axis_unit : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank),
+  plan.inputShape plan.axis = 1
+'TensorRewrite.Theory.UnitAxis.axis_unit' depends on axioms: [propext]
+@TensorRewrite.Theory.UnitAxis.broadcast_index : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  {copies : ℕ} (index : TensorRewrite.Pilot.Index (plan.targetShape copies)),
+  TensorRewrite.Pilot.IndexMaps.broadcastIndex plan.broadcastAxes ⋯ index = plan.projectIndex index
+'TensorRewrite.Theory.UnitAxis.broadcast_index' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.count : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape
+'TensorRewrite.Theory.UnitAxis.count' depends on axioms: [propext]
+@TensorRewrite.Theory.UnitAxis.input_ofAxis : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape (rank + 1))
+  (axis : Fin (rank + 1)),
+  (TensorRewrite.Theory.UnitAxis.ofAxis shape axis).inputShape = fun dimension =>
+    if dimension = axis then 1 else shape dimension
+'TensorRewrite.Theory.UnitAxis.input_ofAxis' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.linearize_insert : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  (index : TensorRewrite.Pilot.Index plan.outputShape),
+  ↑(TensorRewrite.Pilot.LinearIndex.linearize plan.inputShape (plan.insertIndex index)) =
+    ↑(TensorRewrite.Pilot.LinearIndex.linearize plan.outputShape index)
+'TensorRewrite.Theory.UnitAxis.linearize_insert' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.projectIndex_value : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  {copies : ℕ} (index : TensorRewrite.Pilot.Index (plan.targetShape copies)) (axis : Fin rank),
+  ↑(plan.projectIndex index axis) = ↑(index (plan.axesMap axis))
+'TensorRewrite.Theory.UnitAxis.projectIndex_value' depends on axioms: [propext]
+@TensorRewrite.Theory.UnitAxis.reshape_index : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  (index : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Pilot.Reshape.reshapeIndex plan.inputShape plan.outputShape ⋯ index = plan.insertIndex index
+'TensorRewrite.Theory.UnitAxis.reshape_index' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.sequence_value : ∀ {rank : ℕ} {α : Type} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  (copies : ℕ) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (index : TensorRewrite.Pilot.Index (plan.targetShape copies)),
+  TensorRewrite.Theory.UnitAxis.sequence plan copies input index = input (plan.insertIndex (plan.projectIndex index))
+'TensorRewrite.Theory.UnitAxis.sequence_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.sourceIndex_value : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank)
+  {copies : ℕ} (index : TensorRewrite.Pilot.Index (plan.targetShape copies)) (axis : Fin (rank + 1)),
+  ↑(plan.insertIndex (plan.projectIndex index) axis) = if axis = plan.axis then 0 else ↑(index axis)
+'TensorRewrite.Theory.UnitAxis.sourceIndex_value' depends on axioms: [propext]
+@TensorRewrite.Theory.UnitAxis.target_ofAxis : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape (rank + 1))
+  (axis : Fin (rank + 1)) (copies : ℕ),
+  (TensorRewrite.Theory.UnitAxis.ofAxis shape axis).targetShape copies = fun dimension =>
+    if dimension = axis then copies else shape dimension
+'TensorRewrite.Theory.UnitAxis.target_ofAxis' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.UnitAxis.target_one : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.UnitAxis.Plan rank),
+  plan.targetShape 1 = plan.inputShape
+'TensorRewrite.Theory.UnitAxis.target_one' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.WindowTransport.contribution_map : ∀ {rank : ℕ} {α β : Type}
   (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (map : α → β) (padding : α)
   (input : TensorRewrite.Pilot.Tensor plan.inputShape α) (output : TensorRewrite.Pilot.Index plan.outputShape)
