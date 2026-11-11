@@ -121,3 +121,12 @@ input after its Lean build/axiom audit passed. V1 remains preserved as incomplet
 packaging. The v2 packet adds the report with unchanged41 statements/Lean sources;
 use `tools/freeze_mathematical_extensions_review_v2.py --verify` for v2.
 This is an infrastructure correction, not a mathematical refutation.
+
+V2 isolated replay passed: all35 packet tests and five complete JSON result
+comparisons match the frozen snapshot. Project build outputs were absent at
+start; the cold compiler transcript is preserved with the report. Ten dependency
+source/compiled caches were reused with matching revisions and clean tracked
+sources before/after; upstream libraries were not rebuilt. This is an integrator
+reproduction, not independent semantic review. Exact commands, hashes and limits
+are in `reports/mathematical-extensions-preflight-v2.json`. The41-statement
+review scope is unchanged from the authorization request; dispatch remains pending.
