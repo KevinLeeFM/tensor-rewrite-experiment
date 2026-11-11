@@ -120,7 +120,6 @@ def evidence(root=ROOT):
         'constant_guard':'Pure predicate tensor DAG with mathematical IsAll constant-recognition premise',
         'numerical_refutation':'Consistency of a partial encoded exceptional-product relation; not full IEEE arithmetic',
         'shape_refutation':'Bounded static shape/stride witness consistency and endpoint mismatch',
-        'algebraic_refutation':'Concrete nonfinite predicate-product witnesses in the declared partial value relation',
         'index_oracle_diagnostic':'Unsigned64 decoded-index versus declared signed-decoding alternative; no source equivalence',
         'nested_slice':'Bounded nested-slice unsigned64 index-profile diagnostics; no source equivalence',
         'control_order_diagnostic':'Validity and traces of schedules in the declared effectful DAG observation model',

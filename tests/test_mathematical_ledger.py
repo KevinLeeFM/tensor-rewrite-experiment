@@ -47,6 +47,14 @@ class MathematicalLedgerTests(unittest.TestCase):
                      'TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ']
         self.assertTrue(all(not evidence[n]['label_correspondence_certified'] for n in newly_added))
 
+    def test_integer_select_witnesses_keep_their_retained_mathematical_profile(self):
+        group=ledger.read('census/pilot-value-proofs.json')['algebraic_refutation']
+        proofs={row['theorem']:row for row in ledger.evidence()}
+        for name in group['witness_theorems']:
+            self.assertEqual(proofs[name]['profile_descriptions'],[group['profile']])
+            self.assertEqual(proofs[name]['kinds'],['concrete_witness_certificate'])
+            self.assertFalse(proofs[name]['historical_candidate_benchmark_labels'])
+
     def test_unknown_benchmark_label_is_rejected(self):
         proof=copy.deepcopy(ledger.evidence()[0])
         proof['mathematical_acceptance']='kernel_checked_in_declared_model'
