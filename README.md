@@ -923,3 +923,17 @@ agrees. All23 mathematical accounting tests pass. See
 [the ordered contract](docs/convolution-ordered.md), `reports/convolution-ordered.json`
 and the preserved failed-v1/corrected-v2 checker history. Full workload closure
 and independent semantic review remain open.
+
+
+## Frozen mathematical review and clean replay
+
+The mathematical snapshot at `9bcd447` passes a clean project replay:105 project
+modules rebuilt, all12 replay stages and23 mathematical accounting tests passed,
+and nine complete JSON results reproduced. Ten pinned dependency source/compiled
+caches were reused with clean tracked sources. The standalone Pilot audit also
+passes. Three additional review/replay integrity tests pass.
+
+A268-file mathematical-only packet is ready for separate review; reviewer
+authorization is pending. This does not replace independent semantic review or
+close the full workload. See [the review/replay guide](docs/mathematical-review.md)
+and `reports/mathematical-clean-replay-v1.md`. Custom Lean remains4165 lines.
