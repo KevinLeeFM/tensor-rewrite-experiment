@@ -16,3 +16,5 @@ public import TensorRewrite.Theory.SlicePadCounterexamples
 public import TensorRewrite.Theory.FullSpanWindowProof
 public import TensorRewrite.Theory.PadWindowCounterexamples
 public import TensorRewrite.Theory.PrefixWindowCounterexamples
+public import TensorRewrite.Theory.BroadcastWindowCounterexamples
+public import TensorRewrite.Theory.WindowTupleFloat

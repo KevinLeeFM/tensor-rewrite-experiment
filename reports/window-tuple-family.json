@@ -1,0 +1,44 @@
+{
+  "status": "kernel_complete_declared_mathematical_value_family",
+  "manifest": "census/window-tuple-family-v1.json",
+  "manifest_sha256": "8c8b216a4bffc3f491ce7eb905877c88abd0eef0d8c5d4deaf78af35e223b9e4",
+  "profile_unit_count": 1,
+  "profile_units": [
+    {
+      "id": "all_pure_value_types/singleton",
+      "rule": "singleton",
+      "tuple_arity": 1,
+      "source_input_count": 1,
+      "target_output_tuple_count": 1,
+      "domain": "all_pure_value_types",
+      "side_condition": "True",
+      "observation": "tuple_of_tensor_values",
+      "candidate_benchmark_label": "HandleReduceWindow/singleton-tuple",
+      "label_correspondence_certified": false,
+      "geometry": "arbitrary modeled static finite rank/extents and window geometry",
+      "reducer": "arbitrary pure singleton-state operation; actual initializer and padding"
+    }
+  ],
+  "enumerated_rules": [
+    "singleton"
+  ],
+  "observations": "outer singleton tuple of component tensor values; original fold order, initializer and padding retained; no effects, layout, exception flags or backend schedule claims",
+  "certificate_axioms": {
+    "TensorRewrite.Theory.WindowTupleFamily.rewrite_sound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.WindowTupleFamily.allRules_complete": [
+      "propext"
+    ],
+    "TensorRewrite.Theory.WindowTupleFamily.allRules_nodup": []
+  },
+  "covered_candidate_benchmark_labels": [
+    "HandleReduceWindow/singleton-tuple"
+  ],
+  "code_correspondence_performed": false,
+  "code_correspondence_future_work": true,
+  "whole_benchmark_records_closed": 0,
+  "independent_statement_review": "pending"
+}

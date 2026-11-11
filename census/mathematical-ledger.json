@@ -9,9 +9,9 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 364,
-    "partial_model_evidence_requires_partition_review": 112,
-    "declared_value_family_complete_full_record_partitions_open": 12
+    "needs_formal_statement_and_domain_partition": 361,
+    "partial_model_evidence_requires_partition_review": 114,
+    "declared_value_family_complete_full_record_partitions_open": 13
   },
   "batch_counts": {
     "dot-cases": 44,
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 524,
+  "distinct_checked_declarations": 560,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,8 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 248,
+    "library_backed_theory": 281,
+    "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "pad_window_contract_refutation": 2,
     "prefix_window_contract_refutation": 3,
@@ -70,6 +71,19 @@
         "HandleXor/equal-inputs",
         "HandleXor/lhs-zero",
         "HandleXor/rhs-zero"
+      ],
+      "label_correspondence_certified": false
+    },
+    {
+      "family": "singleton_window_tuple_values_v1",
+      "profile_unit_count": 1,
+      "kernel_status": "kernel_complete_declared_mathematical_value_family",
+      "independent_statement_review": "pending",
+      "observations": "outer singleton tuple of component tensor values; original fold order, initializer and padding retained; no effects, layout, exception flags or backend schedule claims",
+      "manifest": "census/window-tuple-family-v1.json",
+      "manifest_sha256": "8c8b216a4bffc3f491ce7eb905877c88abd0eef0d8c5d4deaf78af35e223b9e4",
+      "candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-tuple"
       ],
       "label_correspondence_certified": false
     }
@@ -276,17 +290,36 @@
       "independent_statement_review": "pending",
       "manifest": "census/prefix-window-v1.json",
       "manifest_sha256": "45c5d3f78e56934c1e2190ae9790f890ed520c08c18164721bda3f97d53ef347"
+    },
+    {
+      "model": "covered_singleton_window_broadcast_v1",
+      "scope": "singleton expansions: kernel dilation1, arbitrary positive stride/base dilation and reversal, signed padding; explicit first/last covering inequalities or empty output; other axes pointwise",
+      "scalar_contract": "two-sided identity initializer, also actual padding; no associativity assumption",
+      "status": "kernel_checked_covered_singleton_broadcast_and_state_transport",
+      "checked_theorem_count": 36,
+      "full_family_complete": false,
+      "actual_reshape_broadcast_graph": true,
+      "shape_and_axes_derived": true,
+      "associativity_assumed": false,
+      "two_sided_identity_required": true,
+      "state_initial_padding_transport": true,
+      "binary32_tuple_stored_bits": true,
+      "combined_pad_broadcast_composition_proved": false,
+      "window_domain_worksheet": "census/reduction-window-domains-v4.json",
+      "independent_statement_review": "pending",
+      "manifest": "census/broadcast-window-v1.json",
+      "manifest_sha256": "92af803295beaf6cfb189123eed102519f797e2470e0ed08ffe110a7c1b146f4"
     }
   ],
-  "kernel_complete_family_profile_count": 20,
+  "kernel_complete_family_profile_count": 21,
   "count_policy": "declaration kinds can overlap; benchmark labels are retained candidates, not certified correspondence; no proof-count/488 coverage fraction",
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "99be79f3b22458df70e4154b3738517330ea5106d1961902007f988b6b0e6dd3",
+    "sha256": "852bbc424121e8de0ac59e2166d4dc58785617818c7ddf2bc60ca332f1ff159f",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "46736330eb74d2d38b490a55674e9230c1964ce84875c275c03d04165b08c241"
+    "output_sha256": "8b9ba0b35c9b2337d6bfa398db72684eb06d4473029d26cdf4c6d56877b655db"
   },
   "proofs": [
     {
@@ -5797,6 +5830,471 @@
       "axiom_dependencies": []
     },
     {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.axes_decode",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.axes_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.axis_kernel_unique",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.broadcast_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.compact_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.compact_index_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.contribution_at_position",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.coupled_projection_refuted",
+      "kinds": [
+        "broadcast_state_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure two-component coupled state on a scalar window; dropping the second component changes the observed first result1 to0"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.covered_offset",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.expansion_live_position",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.expansion_sample",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.expansion_unique",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.foldl_single_live",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.linearize_expand",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.live_axis_sample",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.nonneutral_reducer_refuted",
+      "kinds": [
+        "broadcast_state_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "Nat addition with actual initializer/padding1 and input5; a covered pair window returns7 while reshape/Broadcast returns5"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.reduce_converted_sequence",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-broadcast-convert-existing"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.reduce_sequence",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-broadcast-direct-existing"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.reduce_source",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.reshape_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.sample_if",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.sample_live",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.sequence_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.sequence_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure singleton-input covering windows and pointwise retained axes; coverage derived from integer attributes; real reshape and signed-axis Broadcast with derived counts/ordered axes/index maps; exactly one live contribution in the original order; two explicit initializer identities; no associativity, rounded identity, Pad fusion or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted",
+      "kinds": [
+        "broadcast_state_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "neutral Nat addition on a singleton window whose first output misses the input; coverage false and actual output0"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.ContractionAlgebra.dot_add_left",
       "kinds": [
         "library_backed_theory"
@@ -10536,6 +11034,183 @@
         "Quot.sound",
         "propext"
       ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTransport.contribution_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTransport.reduce_equiv",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTransport.reduce_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTransport.singleton_reduce",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-tuple"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTransport.values_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTupleFamily.allRules_complete",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTupleFamily.allRules_nodup",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTupleFamily.rewrite_sound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "all-rank/all-modeled-window pure state transport; operation homomorphism requires actual mapped initializer/padding; arbitrary reducer under an equivalence; complete singleton tuple-of-tensors value family; no larger coupled tuple projection, effects/layout or source cloning claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-tuple"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTupleFloat.binary32_tuple",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual FloatLib binary32 addition; same ordered singleton/scalar folds with actual initializer/padding; identical stored values/bits including exceptional encodings; no flags or changed-schedule claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.WindowTupleFloat.binary32_tuple_bits",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual FloatLib binary32 addition; same ordered singleton/scalar folds with actual initializer/padding; identical stored values/bits including exceptional encodings; no flags or changed-schedule claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     }
   ],
   "benchmark_records": [
@@ -14161,8 +14836,10 @@
       "retained_lhs": "ReduceWindow(Convert(Pad(x)))",
       "retained_rhs": "CreateBroadcastSequence of selected operand",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=True; combined test false; existing window test true",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BroadcastWindow.reduce_converted_sequence"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -14183,8 +14860,10 @@
       "retained_lhs": "ReduceWindow(Pad(x))",
       "retained_rhs": "CreateBroadcastSequence of selected operand",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=False; combined test false; existing window test true",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BroadcastWindow.reduce_sequence"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -14472,10 +15151,16 @@
       "retained_lhs": "one-input tuple ReduceWindow",
       "retained_rhs": "Tuple(single-output ReduceWindow with cloned untupled reducer)",
       "unreviewed_benchmark_notes_not_assumptions": "multi-output; input_count1; reducer root Tuple; earlier empty/scalar paths did not return",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.WindowTransport.singleton_reduce",
+        "TensorRewrite.Theory.WindowTupleFamily.rewrite_sound"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "singleton_window_tuple_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleRemainder/iota-add-lhs",

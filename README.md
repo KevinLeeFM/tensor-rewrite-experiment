@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 264 checked mathematical statements; custom Lean totals **6,429**.
+The theory target now has 300 checked mathematical statements; custom Lean totals **7,065**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -1044,3 +1044,20 @@ Window worksheet v3 retains31 records,26 with partial core associations. All488
 records remain364 unformulated/112 partial/12 logical-family; zero whole records
 close. Rounded products, width/wrapper conversions, broadcast/tuple cases and
 independent review remain open. Code correspondence and the final verdict remain open.
+
+
+## Covered singleton broadcasts and singleton tuple values
+
+Covered singleton windows now equal a derived logical Reshape/Broadcast graph,
+with actual ordered samples and explicit two-sided initializer/padding identities;
+associativity is unnecessary. An arbitrary pure singleton-tuple window has a closed
+value-family proof, including a FloatLib binary32 stored-bit instance. See the
+[broadcast and tuple guide](docs/broadcast-window-and-tuples.md).
+Thirty-six statements add636 Lean lines; total7065, theory300/ledger560, four
+integration results separate. All66 focused tests pass;3780 axis configurations,
+1277 tensor profiles/440 outputs,10 tuple and eight finite binary32 outputs agree
+with independent oracles. Worksheet v4 retains31 records,29 with core evidence;
+the two combined Pad/broadcast compositions remain open. Complete declared value
+profiles total21. All488 records remain361 unformulated/114 partial/13 carrying
+value families; zero whole records close. Statement review, the full campaign and
+its verdict remain open; code correspondence stays future work.

@@ -77,3 +77,13 @@ uses those to derive necessary/sufficient complex domains and pointwise tensor
 lifts, with two explicit counterexamples. No additional dependency or toolchain
 change was needed; see [the exact scalar-domain guide](scalar-domains.md).
 These analysis functions do not model rounded executable transcendental functions.
+
+
+## Reuse for singleton state transport
+
+The covered-window/singleton-tuple milestone reuses the same pins. Generic state
+transport and the outer tuple proof need no scalar algebra law; FloatLib supplies
+actual binary32 addition and stored-bit observations without changing fold order.
+Mathlib supplies finite-index and coordinate reasoning for the explicit Reshape/
+Broadcast graph. See [the proof scope and controls](broadcast-window-and-tuples.md).
+No additional SSA framework is installed or implied by this reuse.

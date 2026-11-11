@@ -521,6 +521,58 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent
 #check @TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ
 #print axioms TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ
+#check @TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono
+#print axioms TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono
+#check @TensorRewrite.Theory.BroadcastWindow.axes_decode
+#print axioms TensorRewrite.Theory.BroadcastWindow.axes_decode
+#check @TensorRewrite.Theory.BroadcastWindow.axes_extent
+#print axioms TensorRewrite.Theory.BroadcastWindow.axes_extent
+#check @TensorRewrite.Theory.BroadcastWindow.axis_kernel_unique
+#print axioms TensorRewrite.Theory.BroadcastWindow.axis_kernel_unique
+#check @TensorRewrite.Theory.BroadcastWindow.broadcast_index
+#print axioms TensorRewrite.Theory.BroadcastWindow.broadcast_index
+#check @TensorRewrite.Theory.BroadcastWindow.compact_count
+#print axioms TensorRewrite.Theory.BroadcastWindow.compact_count
+#check @TensorRewrite.Theory.BroadcastWindow.compact_index_value
+#print axioms TensorRewrite.Theory.BroadcastWindow.compact_index_value
+#check @TensorRewrite.Theory.BroadcastWindow.contribution_at_position
+#print axioms TensorRewrite.Theory.BroadcastWindow.contribution_at_position
+#check @TensorRewrite.Theory.BroadcastWindow.coupled_projection_refuted
+#print axioms TensorRewrite.Theory.BroadcastWindow.coupled_projection_refuted
+#check @TensorRewrite.Theory.BroadcastWindow.covered_offset
+#print axioms TensorRewrite.Theory.BroadcastWindow.covered_offset
+#check @TensorRewrite.Theory.BroadcastWindow.expansion_live_position
+#print axioms TensorRewrite.Theory.BroadcastWindow.expansion_live_position
+#check @TensorRewrite.Theory.BroadcastWindow.expansion_sample
+#print axioms TensorRewrite.Theory.BroadcastWindow.expansion_sample
+#check @TensorRewrite.Theory.BroadcastWindow.expansion_unique
+#print axioms TensorRewrite.Theory.BroadcastWindow.expansion_unique
+#check @TensorRewrite.Theory.BroadcastWindow.foldl_single_live
+#print axioms TensorRewrite.Theory.BroadcastWindow.foldl_single_live
+#check @TensorRewrite.Theory.BroadcastWindow.linearize_expand
+#print axioms TensorRewrite.Theory.BroadcastWindow.linearize_expand
+#check @TensorRewrite.Theory.BroadcastWindow.live_axis_sample
+#print axioms TensorRewrite.Theory.BroadcastWindow.live_axis_sample
+#check @TensorRewrite.Theory.BroadcastWindow.nonneutral_reducer_refuted
+#print axioms TensorRewrite.Theory.BroadcastWindow.nonneutral_reducer_refuted
+#check @TensorRewrite.Theory.BroadcastWindow.reduce_converted_sequence
+#print axioms TensorRewrite.Theory.BroadcastWindow.reduce_converted_sequence
+#check @TensorRewrite.Theory.BroadcastWindow.reduce_sequence
+#print axioms TensorRewrite.Theory.BroadcastWindow.reduce_sequence
+#check @TensorRewrite.Theory.BroadcastWindow.reduce_source
+#print axioms TensorRewrite.Theory.BroadcastWindow.reduce_source
+#check @TensorRewrite.Theory.BroadcastWindow.reshape_index
+#print axioms TensorRewrite.Theory.BroadcastWindow.reshape_index
+#check @TensorRewrite.Theory.BroadcastWindow.sample_if
+#print axioms TensorRewrite.Theory.BroadcastWindow.sample_if
+#check @TensorRewrite.Theory.BroadcastWindow.sample_live
+#print axioms TensorRewrite.Theory.BroadcastWindow.sample_live
+#check @TensorRewrite.Theory.BroadcastWindow.sequence_map
+#print axioms TensorRewrite.Theory.BroadcastWindow.sequence_map
+#check @TensorRewrite.Theory.BroadcastWindow.sequence_value
+#print axioms TensorRewrite.Theory.BroadcastWindow.sequence_value
+#check @TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
+#print axioms TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_right
@@ -1049,3 +1101,23 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.SlicePad.unit_window_min
 #check @TensorRewrite.Theory.SlicePad.valid_interval
 #print axioms TensorRewrite.Theory.SlicePad.valid_interval
+#check @TensorRewrite.Theory.WindowTransport.contribution_map
+#print axioms TensorRewrite.Theory.WindowTransport.contribution_map
+#check @TensorRewrite.Theory.WindowTransport.reduce_equiv
+#print axioms TensorRewrite.Theory.WindowTransport.reduce_equiv
+#check @TensorRewrite.Theory.WindowTransport.reduce_map
+#print axioms TensorRewrite.Theory.WindowTransport.reduce_map
+#check @TensorRewrite.Theory.WindowTransport.singleton_reduce
+#print axioms TensorRewrite.Theory.WindowTransport.singleton_reduce
+#check @TensorRewrite.Theory.WindowTransport.values_map
+#print axioms TensorRewrite.Theory.WindowTransport.values_map
+#check @TensorRewrite.Theory.WindowTupleFamily.allRules_complete
+#print axioms TensorRewrite.Theory.WindowTupleFamily.allRules_complete
+#check @TensorRewrite.Theory.WindowTupleFamily.allRules_nodup
+#print axioms TensorRewrite.Theory.WindowTupleFamily.allRules_nodup
+#check @TensorRewrite.Theory.WindowTupleFamily.rewrite_sound
+#print axioms TensorRewrite.Theory.WindowTupleFamily.rewrite_sound
+#check @TensorRewrite.Theory.WindowTupleFloat.binary32_tuple
+#print axioms TensorRewrite.Theory.WindowTupleFloat.binary32_tuple
+#check @TensorRewrite.Theory.WindowTupleFloat.binary32_tuple_bits
+#print axioms TensorRewrite.Theory.WindowTupleFloat.binary32_tuple_bits

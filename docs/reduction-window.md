@@ -135,3 +135,9 @@ precise signed/unsigned count-observation domains. The current domain worksheet
 is `census/reduction-window-domains-v3.json`: all31 records remain,26 with partial
 core associations. Four broadcast alternatives, one singleton tuple and full
 per-record partitions/observations remain open; earlier frozen worksheets remain.
+
+
+The later [covered broadcast and singleton tuple milestone](broadcast-window-and-tuples.md)
+adds terminal Reshape/Broadcast proofs and a complete declared pure singleton tuple
+value profile. The two combined Pad/broadcast compositions still remain open;
+worksheet v4 preserves the earlier worksheets.

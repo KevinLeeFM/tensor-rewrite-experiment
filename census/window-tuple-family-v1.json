@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "family": "singleton_window_tuple_values_v1",
+  "profile_unit_count": 1,
+  "profile_units": [
+    {
+      "id": "all_pure_value_types/singleton",
+      "rule": "singleton",
+      "tuple_arity": 1,
+      "source_input_count": 1,
+      "target_output_tuple_count": 1,
+      "domain": "all_pure_value_types",
+      "side_condition": "True",
+      "observation": "tuple_of_tensor_values",
+      "candidate_benchmark_label": "HandleReduceWindow/singleton-tuple",
+      "label_correspondence_certified": false,
+      "geometry": "arbitrary modeled static finite rank/extents and window geometry",
+      "reducer": "arbitrary pure singleton-state operation; actual initializer and padding"
+    }
+  ],
+  "model_files": [
+    {
+      "path": "TensorRewrite/Theory/WindowTransport.lean",
+      "sha256": "53c85e4aca364d0283fc2711fa24e182532dff8153805cab12478527e84c1e01"
+    },
+    {
+      "path": "TensorRewrite/Theory/WindowTransportLemmas.lean",
+      "sha256": "14563a5fe66c22d1e6f28539c155965223cb5afa6baa49385bdb37bf4c65fded"
+    },
+    {
+      "path": "TensorRewrite/Theory/WindowTransportProof.lean",
+      "sha256": "ceb53a08622b6ad222ae9b022366933cd4a12e50af8edf3d57a1077f3a392ccb"
+    },
+    {
+      "path": "TensorRewrite/Theory/WindowTupleFamily.lean",
+      "sha256": "d598a708320d4a694d40804d52ee8bc71be751c26ac34162df396b020bdd9bd7"
+    },
+    {
+      "path": "TensorRewrite/Theory/WindowTupleFamilyProof.lean",
+      "sha256": "3daa2158a3b87d9f5f30e961d986f076493a63a356c71d367d7dfd479711de4f"
+    },
+    {
+      "path": "TensorRewrite/Theory/WindowTupleFloat.lean",
+      "sha256": "7e6a6ce56ca2bf0d587c7ae38e947f2477cf1dd40743b1ab729ed58abe0b84e0"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindow.lean",
+      "sha256": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindowLemmas.lean",
+      "sha256": "1f8ee46d7b4a711a028f3bf8226e4dd015174753d2398faca974022e3589c146"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiberLemmas.lean",
+      "sha256": "a71056600ecf1eb98c95d9469c22549903e5285683f0c1a131c88f6beda70cb7"
+    },
+    {
+      "path": "TensorRewrite/Libraries/FloatingPoint.lean",
+      "sha256": "a95adc7fbb3d4afb0f4a2812637ced0cf97d81b2f1f7b2972b60d2fd513a2bde"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Tensor.lean",
+      "sha256": "c1b41d38bee3d55c4a63df7333c7f0d23ea5917e4260062e2efad97edbeab122"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "certificates": [
+    "TensorRewrite.Theory.WindowTupleFamily.rewrite_sound",
+    "TensorRewrite.Theory.WindowTupleFamily.allRules_complete",
+    "TensorRewrite.Theory.WindowTupleFamily.allRules_nodup"
+  ],
+  "observations": "outer singleton tuple of component tensor values; original fold order, initializer and padding retained; no effects, layout, exception flags or backend schedule claims",
+  "mathematical_family_denominator_frozen": true,
+  "full_mathematical_workload_denominator_frozen": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work"
+}

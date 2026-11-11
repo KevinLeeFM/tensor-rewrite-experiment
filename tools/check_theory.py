@@ -9,6 +9,11 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'WindowTransport': ['contribution_map', 'values_map', 'reduce_map', 'reduce_equiv', 'singleton_reduce'],
+    'WindowTupleFamily': ['rewrite_sound', 'allRules_complete', 'allRules_nodup'],
+    'WindowTupleFloat': ['binary32_tuple', 'binary32_tuple_bits'],
+    'BroadcastWindow': ['covered_offset', 'expansion_live_position', 'expansion_sample', 'expansion_unique', 'axes_decode', 'axes_extent', 'compact_count', 'axesMap_strictMono', 'compact_index_value', 'broadcast_index', 'linearize_expand', 'reshape_index', 'sequence_value', 'live_axis_sample', 'sample_live', 'axis_kernel_unique', 'sample_if', 'foldl_single_live', 'contribution_at_position', 'reduce_source', 'reduce_sequence', 'sequence_map', 'reduce_converted_sequence', 'nonneutral_reducer_refuted', 'uncovered_output_refuted', 'coupled_projection_refuted'],
+
     'PrefixWindow': ['retained_output_extent', 'retained_bound', 'retained_sample', 'prefix_output_extent', 'unit_enumerate_map', 'kernel_enumerate', 'values_scan_range', 'padding_partition', 'sample_axis', 'sample_valid', 'negative_axis', 'sample_invalid', 'map_finRange_add', 'split_kernel_range', 'word_replicate_fold', 'unsigned_count_exact_iff', 'signed_count_exact_iff', 'values_prefix', 'reduce_prefix', 'prefix_length', 'prefix_constant', 'additive_prefix', 'constant_additive_prefix', 'natural_prefix_count', 'semiring_prefix_product', 'word_prefix_product', 'word_prefix_count', 'word_prefix_unsigned_iff', 'word_prefix_signed_iff', 'i32_prefix_product', 'i64_prefix_product', 'nonfixed_padding_refuted', 'word_count_overflow_refuted', 'signed_width_boundary_refuted'],
 
     'LatticeIndex': ['decode_eq_some_iff', 'window_eq_some_iff', 'assemble_eq_some_iff', 'assemble_bind'],
@@ -129,6 +134,21 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/WindowTransport.lean': 'S',
+        'TensorRewrite/Theory/WindowTransportLemmas.lean': 'H',
+        'TensorRewrite/Theory/WindowTransportProof.lean': 'R',
+        'TensorRewrite/Theory/WindowTupleFamily.lean': 'S',
+        'TensorRewrite/Theory/WindowTupleFamilyProof.lean': 'R',
+        'TensorRewrite/Theory/WindowTupleFloat.lean': 'R',
+        'TensorRewrite/Theory/BroadcastWindow.lean': 'S',
+        'TensorRewrite/Theory/BroadcastWindowGeometry.lean': 'H',
+        'TensorRewrite/Theory/BroadcastWindowTarget.lean': 'S',
+        'TensorRewrite/Theory/BroadcastWindowIndex.lean': 'H',
+        'TensorRewrite/Theory/BroadcastWindowSampling.lean': 'H',
+        'TensorRewrite/Theory/BroadcastWindowFold.lean': 'H',
+        'TensorRewrite/Theory/BroadcastWindowProof.lean': 'R',
+        'TensorRewrite/Theory/BroadcastWindowCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/PrefixWindow.lean': 'S',
         'TensorRewrite/Theory/PrefixWindowStride.lean': 'H',
         'TensorRewrite/Theory/PrefixWindowTarget.lean': 'S',
@@ -185,7 +205,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='ordered cumulative windows, exact/modular Iota products and count-conversion domains; '
+                  scope='covered singleton-window reshape/Broadcast and complete pure singleton tuple family; '
+                        'ordered cumulative windows, exact/modular Iota products and count-conversion domains; '
                         'Pad/window fusion with derived empty-safe geometry and converted fill; '
                         'canonical full-span ordered window/reduction/reshape; '
                         'derived Map/Slice/Pad shape and index factorization; '
@@ -195,7 +216,34 @@ def main():
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('one cumulative axis at any position with arbitrary retained positive strides; '
+                      name: ({
+                          'nonneutral_reducer_refuted':
+                              'Nat addition with actual initializer/padding1 and input5; '
+                              'a covered pair window returns7 while reshape/Broadcast returns5',
+                          'uncovered_output_refuted':
+                              'neutral Nat addition on a singleton window whose first output '
+                              'misses the input; coverage false and actual output0',
+                          'coupled_projection_refuted':
+                              'pure two-component coupled state on a scalar window; dropping '
+                              'the second component changes the observed first result1 to0'
+                             }[name.rsplit('.',1)[1]]
+                             if '.BroadcastWindow.' in name and name.endswith('_refuted') else
+                             'pure singleton-input covering windows and pointwise retained axes; '
+                             'coverage derived from integer attributes; real reshape and signed-axis '
+                             'Broadcast with derived counts/ordered axes/index maps; exactly one live '
+                             'contribution in the original order; two explicit initializer identities; '
+                             'no associativity, rounded identity, Pad fusion or whole-record closure'
+                             if '.BroadcastWindow.' in name else
+                             'all-rank/all-modeled-window pure state transport; operation homomorphism '
+                             'requires actual mapped initializer/padding; arbitrary reducer under an '
+                             'equivalence; complete singleton tuple-of-tensors value family; no larger '
+                             'coupled tuple projection, effects/layout or source cloning claim'
+                             if '.WindowTransport.' in name or '.WindowTupleFamily.' in name else
+                             'actual FloatLib binary32 addition; same ordered singleton/scalar folds '
+                             'with actual initializer/padding; identical stored values/bits including '
+                             'exceptional encodings; no flags or changed-schedule claim'
+                             if '.WindowTupleFloat.' in name else
+                             'one cumulative axis at any position with arbitrary retained positive strides; '
                              'derived output bounds and exact leading-padding/prefix lists; '
                              'initializer fixed point only when dropping leading padding; '
                              'AddMonoid/Semiring laws only where stated; all-width BitVec modular '
