@@ -1,0 +1,824 @@
+{
+  "reviewed_revision": "9bcd44756cbf5261a0c690e05651e96fa162319a",
+  "base_revision": "5549a86b284ba3f0d57ecf331ff4f69cd5a42dbe",
+  "selected_count": 44,
+  "reviewed_foundation_count": 89,
+  "targets": [
+    {
+      "id": "case_000",
+      "original": "TensorRewrite.Theory.FloatNegation.scalar_involution",
+      "namespace": "TensorRewrite.Theory.FloatNegation",
+      "opens": [
+        "FloatLib.Floats.Formats.BinaryInterchange"
+      ],
+      "source": "TensorRewrite/Theory/FloatNegation.lean",
+      "header": "theorem scalar_involution {format : FloatFormat} (x : Model format) :\n    Model.neg (Model.neg x) = x",
+      "goal": "\u2200 {format : FloatFormat} (x : Model format),\n    Model.neg (Model.neg x) = x",
+      "statement": "TensorRewrite.Theory.FloatNegation.case_000",
+      "reviewed_header_identical": true,
+      "reference_body": "Model.neg_neg x",
+      "reference_declaration": "theorem scalar_involution {format : FloatFormat} (x : Model format) :\n    Model.neg (Model.neg x) = x :=\n  Model.neg_neg x"
+    },
+    {
+      "id": "case_001",
+      "original": "TensorRewrite.Theory.FloatNegation.tensor_involution",
+      "namespace": "TensorRewrite.Theory.FloatNegation",
+      "opens": [
+        "FloatLib.Floats.Formats.BinaryInterchange"
+      ],
+      "source": "TensorRewrite/Theory/FloatNegation.lean",
+      "header": "theorem tensor_involution {rank : Nat} {shape : Pilot.Shape rank} {format : FloatFormat}\n    (x : Pilot.Tensor shape (Model format)) :\n    Pilot.Tensor.map Model.neg (Pilot.Tensor.map Model.neg x) = x",
+      "goal": "\u2200 {rank : Nat} {shape : Pilot.Shape rank} {format : FloatFormat}\n    (x : Pilot.Tensor shape (Model format)),\n    Pilot.Tensor.map Model.neg (Pilot.Tensor.map Model.neg x) = x",
+      "statement": "TensorRewrite.Theory.FloatNegation.case_001",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext index\n  exact scalar_involution (x index)",
+      "reference_declaration": "theorem tensor_involution {rank : Nat} {shape : Pilot.Shape rank} {format : FloatFormat}\n    (x : Pilot.Tensor shape (Model format)) :\n    Pilot.Tensor.map Model.neg (Pilot.Tensor.map Model.neg x) = x := by\n  funext index\n  exact scalar_involution (x index)"
+    },
+    {
+      "id": "case_002",
+      "original": "TensorRewrite.Theory.FloatNegation.reindex_neg",
+      "namespace": "TensorRewrite.Theory.FloatNegation",
+      "opens": [
+        "FloatLib.Floats.Formats.BinaryInterchange"
+      ],
+      "source": "TensorRewrite/Theory/FloatNegation.lean",
+      "header": "theorem reindex_neg {inputRank outputRank : Nat}\n    {inputShape : Pilot.Shape inputRank} {outputShape : Pilot.Shape outputRank}\n    {format : FloatFormat} (indices : Pilot.Index outputShape \u2192 Pilot.Index inputShape)\n    (x : Pilot.Tensor inputShape (Model format)) :\n    Pilot.Tensor.reindex indices (Pilot.Tensor.map Model.neg x) =\n      Pilot.Tensor.map Model.neg (Pilot.Tensor.reindex indices x)",
+      "goal": "\u2200 {inputRank outputRank : Nat}\n    {inputShape : Pilot.Shape inputRank} {outputShape : Pilot.Shape outputRank}\n    {format : FloatFormat} (indices : Pilot.Index outputShape \u2192 Pilot.Index inputShape)\n    (x : Pilot.Tensor inputShape (Model format)),\n    Pilot.Tensor.reindex indices (Pilot.Tensor.map Model.neg x) =\n      Pilot.Tensor.map Model.neg (Pilot.Tensor.reindex indices x)",
+      "statement": "TensorRewrite.Theory.FloatNegation.case_002",
+      "reviewed_header_identical": true,
+      "reference_body": "rfl",
+      "reference_declaration": "theorem reindex_neg {inputRank outputRank : Nat}\n    {inputShape : Pilot.Shape inputRank} {outputShape : Pilot.Shape outputRank}\n    {format : FloatFormat} (indices : Pilot.Index outputShape \u2192 Pilot.Index inputShape)\n    (x : Pilot.Tensor inputShape (Model format)) :\n    Pilot.Tensor.reindex indices (Pilot.Tensor.map Model.neg x) =\n      Pilot.Tensor.map Model.neg (Pilot.Tensor.reindex indices x) := rfl"
+    },
+    {
+      "id": "case_003",
+      "original": "TensorRewrite.Theory.FloatNegation.reverse_neg",
+      "namespace": "TensorRewrite.Theory.FloatNegation",
+      "opens": [
+        "FloatLib.Floats.Formats.BinaryInterchange"
+      ],
+      "source": "TensorRewrite/Theory/FloatNegation.lean",
+      "header": "theorem reverse_neg {rank : Nat} {shape : Pilot.Shape rank} {format : FloatFormat}\n    (axes : Fin rank \u2192 Bool) (x : Pilot.Tensor shape (Model format)) :\n    Pilot.Tensor.reverse axes (Pilot.Tensor.map Model.neg x) =\n      Pilot.Tensor.map Model.neg (Pilot.Tensor.reverse axes x)",
+      "goal": "\u2200 {rank : Nat} {shape : Pilot.Shape rank} {format : FloatFormat}\n    (axes : Fin rank \u2192 Bool) (x : Pilot.Tensor shape (Model format)),\n    Pilot.Tensor.reverse axes (Pilot.Tensor.map Model.neg x) =\n      Pilot.Tensor.map Model.neg (Pilot.Tensor.reverse axes x)",
+      "statement": "TensorRewrite.Theory.FloatNegation.case_003",
+      "reviewed_header_identical": true,
+      "reference_body": "rfl",
+      "reference_declaration": "theorem reverse_neg {rank : Nat} {shape : Pilot.Shape rank} {format : FloatFormat}\n    (axes : Fin rank \u2192 Bool) (x : Pilot.Tensor shape (Model format)) :\n    Pilot.Tensor.reverse axes (Pilot.Tensor.map Model.neg x) =\n      Pilot.Tensor.map Model.neg (Pilot.Tensor.reverse axes x) := rfl"
+    },
+    {
+      "id": "case_004",
+      "original": "TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum",
+      "namespace": "TensorRewrite.Theory.FiniteSum",
+      "opens": [
+        "Pilot",
+        "Pilot.LinearIndex"
+      ],
+      "source": "TensorRewrite/Theory/FiniteSum.lean",
+      "header": "theorem foldl_add_eq_sum {\u03b1 : Type} [AddMonoid \u03b1] (values : List \u03b1) (initial : \u03b1) :\n    values.foldl (\u00b7 + \u00b7) initial = initial + values.sum",
+      "goal": "\u2200 {\u03b1 : Type} [AddMonoid \u03b1] (values : List \u03b1) (initial : \u03b1),\n    values.foldl (\u00b7 + \u00b7) initial = initial + values.sum",
+      "statement": "TensorRewrite.Theory.FiniteSum.case_004",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  induction values generalizing initial with\n  | nil => simp\n  | cons value values ih =>\n    simp only [List.foldl_cons, List.sum_cons]\n    rw [ih, add_assoc]",
+      "reference_declaration": "theorem foldl_add_eq_sum {\u03b1 : Type} [AddMonoid \u03b1] (values : List \u03b1) (initial : \u03b1) :\n    values.foldl (\u00b7 + \u00b7) initial = initial + values.sum := by\n  induction values generalizing initial with\n  | nil => simp\n  | cons value values ih =>\n    simp only [List.foldl_cons, List.sum_cons]\n    rw [ih, add_assoc]"
+    },
+    {
+      "id": "case_005",
+      "original": "TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum",
+      "namespace": "TensorRewrite.Theory.FiniteSum",
+      "opens": [
+        "Pilot",
+        "Pilot.LinearIndex"
+      ],
+      "source": "TensorRewrite/Theory/FiniteSum.lean",
+      "header": "theorem reduce_add_eq_fiber_sum {\u03b1 : Type} [AddMonoid \u03b1] (plan : Reduction.Plan)\n    (input : Tensor plan.inputShape \u03b1) :\n    Reduction.reduceTensor plan (\u00b7 + \u00b7) 0 input =\n      fun output => (Reduction.fiberValues plan input output).sum",
+      "goal": "\u2200 {\u03b1 : Type} [AddMonoid \u03b1] (plan : Reduction.Plan)\n    (input : Tensor plan.inputShape \u03b1),\n    Reduction.reduceTensor plan (\u00b7 + \u00b7) 0 input =\n      fun output => (Reduction.fiberValues plan input output).sum",
+      "statement": "TensorRewrite.Theory.FiniteSum.case_005",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  exact (foldl_add_eq_sum _ 0).trans (zero_add _)",
+      "reference_declaration": "theorem reduce_add_eq_fiber_sum {\u03b1 : Type} [AddMonoid \u03b1] (plan : Reduction.Plan)\n    (input : Tensor plan.inputShape \u03b1) :\n    Reduction.reduceTensor plan (\u00b7 + \u00b7) 0 input =\n      fun output => (Reduction.fiberValues plan input output).sum := by\n  funext output\n  exact (foldl_add_eq_sum _ 0).trans (zero_add _)"
+    },
+    {
+      "id": "case_006",
+      "original": "TensorRewrite.Theory.FiniteSum.sum_swap",
+      "namespace": "TensorRewrite.Theory.FiniteSum",
+      "opens": [
+        "Pilot",
+        "Pilot.LinearIndex"
+      ],
+      "source": "TensorRewrite/Theory/FiniteSum.lean",
+      "header": "theorem sum_swap {\u03b1 I J : Type} [AddCommMonoid \u03b1] [Fintype I] [Fintype J]\n    (input : I \u2192 J \u2192 \u03b1) : (\u2211 i, \u2211 j, input i j) = \u2211 j, \u2211 i, input i j",
+      "goal": "\u2200 {\u03b1 I J : Type} [AddCommMonoid \u03b1] [Fintype I] [Fintype J]\n    (input : I \u2192 J \u2192 \u03b1),\n    (\u2211 i, \u2211 j, input i j) = \u2211 j, \u2211 i, input i j",
+      "statement": "TensorRewrite.Theory.FiniteSum.case_006",
+      "reviewed_header_identical": true,
+      "reference_body": "Finset.sum_comm",
+      "reference_declaration": "theorem sum_swap {\u03b1 I J : Type} [AddCommMonoid \u03b1] [Fintype I] [Fintype J]\n    (input : I \u2192 J \u2192 \u03b1) : (\u2211 i, \u2211 j, input i j) = \u2211 j, \u2211 i, input i j :=\n  Finset.sum_comm"
+    },
+    {
+      "id": "case_007",
+      "original": "TensorRewrite.Theory.FiniteSum.sum_add",
+      "namespace": "TensorRewrite.Theory.FiniteSum",
+      "opens": [
+        "Pilot",
+        "Pilot.LinearIndex"
+      ],
+      "source": "TensorRewrite/Theory/FiniteSum.lean",
+      "header": "theorem sum_add {\u03b1 I : Type} [AddCommMonoid \u03b1] [Fintype I] (x y : I \u2192 \u03b1) :\n    (\u2211 i, x i) + (\u2211 i, y i) = \u2211 i, (x i + y i)",
+      "goal": "\u2200 {\u03b1 I : Type} [AddCommMonoid \u03b1] [Fintype I] (x y : I \u2192 \u03b1),\n    (\u2211 i, x i) + (\u2211 i, y i) = \u2211 i, (x i + y i)",
+      "statement": "TensorRewrite.Theory.FiniteSum.case_007",
+      "reviewed_header_identical": true,
+      "reference_body": "(Finset.sum_add_distrib).symm",
+      "reference_declaration": "theorem sum_add {\u03b1 I : Type} [AddCommMonoid \u03b1] [Fintype I] (x y : I \u2192 \u03b1) :\n    (\u2211 i, x i) + (\u2211 i, y i) = \u2211 i, (x i + y i) :=\n  (Finset.sum_add_distrib).symm"
+    },
+    {
+      "id": "case_008",
+      "original": "TensorRewrite.Theory.Convolution.inputIndex?_negative",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem inputIndex?_negative (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent)\n    (negative : axis.basePosition output kernel < 0) :\n    axis.inputIndex? output kernel = none",
+      "goal": "\u2200 (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent)\n    (negative : axis.basePosition output kernel < 0),\n    axis.inputIndex? output kernel = none",
+      "statement": "TensorRewrite.Theory.Convolution.case_008",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  simp [Axis.inputIndex?, not_le.mpr negative]",
+      "reference_declaration": "theorem inputIndex?_negative (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent)\n    (negative : axis.basePosition output kernel < 0) :\n    axis.inputIndex? output kernel = none := by\n  simp [Axis.inputIndex?, not_le.mpr negative]"
+    },
+    {
+      "id": "case_009",
+      "original": "TensorRewrite.Theory.Convolution.basePosition_reverse",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem basePosition_reverse (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent) :\n    Axis.basePosition { axis with reversed := !axis.reversed } output kernel.rev =\n      axis.basePosition output kernel",
+      "goal": "\u2200 (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent),\n    Axis.basePosition { axis with reversed := !axis.reversed } output kernel.rev =\n      axis.basePosition output kernel",
+      "statement": "TensorRewrite.Theory.Convolution.case_009",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  cases reversed : axis.reversed <;> simp [Axis.basePosition, reversed]",
+      "reference_declaration": "theorem basePosition_reverse (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent) :\n    Axis.basePosition { axis with reversed := !axis.reversed } output kernel.rev =\n      axis.basePosition output kernel := by\n  cases reversed : axis.reversed <;> simp [Axis.basePosition, reversed]"
+    },
+    {
+      "id": "case_010",
+      "original": "TensorRewrite.Theory.Convolution.inputIndex?_position",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem inputIndex?_position (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent)\n    (index : Fin axis.inputExtent) (sample : axis.inputIndex? output kernel = some index) :\n    (index.val : Int) * axis.baseDilation = axis.basePosition output kernel",
+      "goal": "\u2200 (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent)\n    (index : Fin axis.inputExtent) (sample : axis.inputIndex? output kernel = some index),\n    (index.val : Int) * axis.baseDilation = axis.basePosition output kernel",
+      "statement": "TensorRewrite.Theory.Convolution.case_010",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  unfold Axis.inputIndex? at sample\n  dsimp only at sample\n  split at sample\n  next valid =>\n    have values := congrArg Fin.val (Option.some.inj sample)\n    dsimp only at values\n    have nonnegative : 0 \u2264 axis.basePosition output kernel / (axis.baseDilation : Int) :=\n      Int.ediv_nonneg valid.1 (by have := axis.baseDilation_pos; omega)\n    have cast : (index.val : Int) = axis.basePosition output kernel / axis.baseDilation := by\n      have castValues : ((axis.basePosition output kernel / axis.baseDilation).toNat : Int) =\n          (index.val : Int) := congrArg (fun value : Nat => (value : Int)) values\n      rw [Int.toNat_of_nonneg nonnegative] at castValues\n      exact castValues.symm\n    rw [cast]\n    simpa only [valid.2.1, add_zero] using\n      Int.ediv_mul_add_emod (axis.basePosition output kernel) (axis.baseDilation : Int)\n  next invalid => contradiction",
+      "reference_declaration": "theorem inputIndex?_position (axis : Axis) (output : Nat) (kernel : Fin axis.kernelExtent)\n    (index : Fin axis.inputExtent) (sample : axis.inputIndex? output kernel = some index) :\n    (index.val : Int) * axis.baseDilation = axis.basePosition output kernel := by\n  unfold Axis.inputIndex? at sample\n  dsimp only at sample\n  split at sample\n  next valid =>\n    have values := congrArg Fin.val (Option.some.inj sample)\n    dsimp only at values\n    have nonnegative : 0 \u2264 axis.basePosition output kernel / (axis.baseDilation : Int) :=\n      Int.ediv_nonneg valid.1 (by have := axis.baseDilation_pos; omega)\n    have cast : (index.val : Int) = axis.basePosition output kernel / axis.baseDilation := by\n      have castValues : ((axis.basePosition output kernel / axis.baseDilation).toNat : Int) =\n          (index.val : Int) := congrArg (fun value : Nat => (value : Int)) values\n      rw [Int.toNat_of_nonneg nonnegative] at castValues\n      exact castValues.symm\n    rw [cast]\n    simpa only [valid.2.1, add_zero] using\n      Int.ediv_mul_add_emod (axis.basePosition output kernel) (axis.baseDilation : Int)\n  next invalid => contradiction"
+    },
+    {
+      "id": "case_011",
+      "original": "TensorRewrite.Theory.Convolution.term_zero_kernel",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem term_zero_kernel {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan input (fun _ _ _ _ _ => 0) output position = 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)),\n    term plan input (fun _ _ _ _ _ => 0) output position = 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_011",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  dsimp only [term]\n  split <;> simp",
+      "reference_declaration": "theorem term_zero_kernel {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan input (fun _ _ _ _ _ => 0) output position = 0 := by\n  dsimp only [term]\n  split <;> simp"
+    },
+    {
+      "id": "case_012",
+      "original": "TensorRewrite.Theory.Convolution.term_zero_input",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem term_zero_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan (fun _ _ _ => 0) kernel output position = 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)),\n    term plan (fun _ _ _ => 0) kernel output position = 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_012",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  dsimp only [term]\n  split <;> simp",
+      "reference_declaration": "theorem term_zero_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan (fun _ _ _ => 0) kernel output position = 0 := by\n  dsimp only [term]\n  split <;> simp"
+    },
+    {
+      "id": "case_013",
+      "original": "TensorRewrite.Theory.Convolution.convolve_zero_kernel",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem convolve_zero_kernel {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) : convolve plan input (fun _ _ _ _ _ => 0) = fun _ => 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1),\n    convolve plan input (fun _ _ _ _ _ => 0) = fun _ => 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_013",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  change (List.map (term plan input (fun _ _ _ _ _ => 0) output) _).sum = 0\n  rw [show term plan input (fun _ _ _ _ _ => (0 : \u03b1)) output = fun _ => 0 by\n    funext position; exact term_zero_kernel plan input output position]\n  simp",
+      "reference_declaration": "theorem convolve_zero_kernel {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) : convolve plan input (fun _ _ _ _ _ => 0) = fun _ => 0 := by\n  funext output\n  change (List.map (term plan input (fun _ _ _ _ _ => 0) output) _).sum = 0\n  rw [show term plan input (fun _ _ _ _ _ => (0 : \u03b1)) output = fun _ => 0 by\n    funext position; exact term_zero_kernel plan input output position]\n  simp"
+    },
+    {
+      "id": "case_014",
+      "original": "TensorRewrite.Theory.Convolution.convolve_zero_input",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem convolve_zero_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (kernel : Kernel plan \u03b1) : convolve plan (fun _ _ _ => 0) kernel = fun _ => 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (kernel : Kernel plan \u03b1),\n    convolve plan (fun _ _ _ => 0) kernel = fun _ => 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_014",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  change (List.map (term plan (fun _ _ _ => 0) kernel output) _).sum = 0\n  rw [show term plan (fun _ _ _ => (0 : \u03b1)) kernel output = fun _ => 0 by\n    funext position; exact term_zero_input plan kernel output position]\n  simp",
+      "reference_declaration": "theorem convolve_zero_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (kernel : Kernel plan \u03b1) : convolve plan (fun _ _ _ => 0) kernel = fun _ => 0 := by\n  funext output\n  change (List.map (term plan (fun _ _ _ => 0) kernel output) _).sum = 0\n  rw [show term plan (fun _ _ _ => (0 : \u03b1)) kernel output = fun _ => 0 by\n    funext position; exact term_zero_input plan kernel output position]\n  simp"
+    },
+    {
+      "id": "case_015",
+      "original": "TensorRewrite.Theory.Convolution.convolve_empty_fiber",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem convolve_empty_fiber {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape = 0) :\n    convolve plan input kernel = fun _ => 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape = 0),\n    convolve plan input kernel = fun _ => 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_015",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  have noPositions : List.finRange\n      (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape) = [] :=\n    List.eq_nil_of_length_eq_zero (List.length_finRange.trans empty)\n  change (List.map (term plan input kernel output) _).sum = 0\n  rw [noPositions]\n  rfl",
+      "reference_declaration": "theorem convolve_empty_fiber {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape = 0) :\n    convolve plan input kernel = fun _ => 0 := by\n  funext output\n  have noPositions : List.finRange\n      (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape) = [] :=\n    List.eq_nil_of_length_eq_zero (List.length_finRange.trans empty)\n  change (List.map (term plan input kernel output) _).sum = 0\n  rw [noPositions]\n  rfl"
+    },
+    {
+      "id": "case_016",
+      "original": "TensorRewrite.Theory.Convolution.spatialInput?_empty",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem spatialInput?_empty {rank : Nat} (plan : Plan rank)\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0)\n    (output : Pilot.Index plan.outputShape) (kernel : Pilot.Index plan.kernelShape) :\n    spatialInput? plan output kernel = none",
+      "goal": "\u2200 {rank : Nat} (plan : Plan rank)\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0)\n    (output : Pilot.Index plan.outputShape) (kernel : Pilot.Index plan.kernelShape),\n    spatialInput? plan output kernel = none",
+      "statement": "TensorRewrite.Theory.Convolution.case_016",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  cases sample : spatialInput? plan output kernel with\n  | none => rfl\n  | some coordinates =>\n    have bound := (Pilot.LinearIndex.linearize plan.inputShape coordinates).isLt\n    omega",
+      "reference_declaration": "theorem spatialInput?_empty {rank : Nat} (plan : Plan rank)\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0)\n    (output : Pilot.Index plan.outputShape) (kernel : Pilot.Index plan.kernelShape) :\n    spatialInput? plan output kernel = none := by\n  cases sample : spatialInput? plan output kernel with\n  | none => rfl\n  | some coordinates =>\n    have bound := (Pilot.LinearIndex.linearize plan.inputShape coordinates).isLt\n    omega"
+    },
+    {
+      "id": "case_017",
+      "original": "TensorRewrite.Theory.Convolution.term_empty_spatial_input",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem term_empty_spatial_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape))\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0) :\n    term plan input kernel output position = 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape))\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0),\n    term plan input kernel output position = 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_017",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  dsimp only [term]\n  rw [spatialInput?_empty plan empty]",
+      "reference_declaration": "theorem term_empty_spatial_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape))\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0) :\n    term plan input kernel output position = 0 := by\n  dsimp only [term]\n  rw [spatialInput?_empty plan empty]"
+    },
+    {
+      "id": "case_018",
+      "original": "TensorRewrite.Theory.Convolution.convolve_empty_spatial_input",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem convolve_empty_spatial_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0) :\n    convolve plan input kernel = fun _ => 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0),\n    convolve plan input kernel = fun _ => 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_018",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  change (List.map (term plan input kernel output) _).sum = 0\n  rw [show term plan input kernel output = fun _ => (0 : \u03b1) by\n    funext position; exact term_empty_spatial_input plan input kernel output position empty]\n  simp",
+      "reference_declaration": "theorem convolve_empty_spatial_input {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : Pilot.LinearIndex.elementCount plan.inputShape = 0) :\n    convolve plan input kernel = fun _ => 0 := by\n  funext output\n  change (List.map (term plan input kernel output) _).sum = 0\n  rw [show term plan input kernel output = fun _ => (0 : \u03b1) by\n    funext position; exact term_empty_spatial_input plan input kernel output position empty]\n  simp"
+    },
+    {
+      "id": "case_019",
+      "original": "TensorRewrite.Theory.Convolution.convolve_empty_kernel",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem convolve_empty_kernel {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : Pilot.LinearIndex.elementCount plan.kernelShape = 0) :\n    convolve plan input kernel = fun _ => 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : Pilot.LinearIndex.elementCount plan.kernelShape = 0),\n    convolve plan input kernel = fun _ => 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_019",
+      "reviewed_header_identical": true,
+      "reference_body": "convolve_empty_fiber plan input kernel (by rw [empty, Nat.mul_zero])",
+      "reference_declaration": "theorem convolve_empty_kernel {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (empty : Pilot.LinearIndex.elementCount plan.kernelShape = 0) :\n    convolve plan input kernel = fun _ => 0 :=\n  convolve_empty_fiber plan input kernel (by rw [empty, Nat.mul_zero])"
+    },
+    {
+      "id": "case_020",
+      "original": "TensorRewrite.Theory.Convolution.convolve_no_channels",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "header": "theorem convolve_no_channels {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (empty : plan.inputFeaturesPerGroup = 0) :\n    convolve plan input kernel = fun _ => 0",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (empty : plan.inputFeaturesPerGroup = 0),\n    convolve plan input kernel = fun _ => 0",
+      "statement": "TensorRewrite.Theory.Convolution.case_020",
+      "reviewed_header_identical": true,
+      "reference_body": "convolve_empty_fiber plan input kernel (by rw [empty, Nat.zero_mul])",
+      "reference_declaration": "theorem convolve_no_channels {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (empty : plan.inputFeaturesPerGroup = 0) :\n    convolve plan input kernel = fun _ => 0 :=\n  convolve_empty_fiber plan input kernel (by rw [empty, Nat.zero_mul])"
+    },
+    {
+      "id": "case_021",
+      "original": "TensorRewrite.Theory.Convolution.term_kernel_add",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem term_kernel_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (f g : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan input (fun b h o c s => f b h o c s + g b h o c s) output position =\n      term plan input f output position + term plan input g output position",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (f g : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)),\n    term plan input (fun b h o c s => f b h o c s + g b h o c s) output position =\n      term plan input f output position + term plan input g output position",
+      "statement": "TensorRewrite.Theory.Convolution.case_021",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  dsimp only [term]\n  split <;> simp [mul_add]",
+      "reference_declaration": "theorem term_kernel_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (f g : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan input (fun b h o c s => f b h o c s + g b h o c s) output position =\n      term plan input f output position + term plan input g output position := by\n  dsimp only [term]\n  split <;> simp [mul_add]"
+    },
+    {
+      "id": "case_022",
+      "original": "TensorRewrite.Theory.Convolution.term_input_add",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem term_input_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (x y : Input plan \u03b1) (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan (fun b c s => x b c s + y b c s) kernel output position =\n      term plan x kernel output position + term plan y kernel output position",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (x y : Input plan \u03b1) (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)),\n    term plan (fun b c s => x b c s + y b c s) kernel output position =\n      term plan x kernel output position + term plan y kernel output position",
+      "statement": "TensorRewrite.Theory.Convolution.case_022",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  dsimp only [term]\n  split <;> simp [add_mul]",
+      "reference_declaration": "theorem term_input_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (x y : Input plan \u03b1) (kernel : Kernel plan \u03b1) (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan (fun b c s => x b c s + y b c s) kernel output position =\n      term plan x kernel output position + term plan y kernel output position := by\n  dsimp only [term]\n  split <;> simp [add_mul]"
+    },
+    {
+      "id": "case_023",
+      "original": "TensorRewrite.Theory.Convolution.term_kernel_scale",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem term_kernel_scale {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (weights : Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1)\n    (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan input (fun b h o c s => kernel b h o c s * weights b h o)\n      output position =\n      term plan input kernel output position *\n        weights output.batchGroup output.featureGroup output.feature",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (weights : Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1)\n    (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)),\n    term plan input (fun b h o c s => kernel b h o c s * weights b h o)\n      output position =\n      term plan input kernel output position *\n        weights output.batchGroup output.featureGroup output.feature",
+      "statement": "TensorRewrite.Theory.Convolution.case_023",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  dsimp only [term]\n  split <;> simp [mul_assoc]",
+      "reference_declaration": "theorem term_kernel_scale {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (weights : Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1)\n    (output : OutputIndex plan)\n    (position :\n      Fin (plan.inputFeaturesPerGroup * Pilot.LinearIndex.elementCount plan.kernelShape)) :\n    term plan input (fun b h o c s => kernel b h o c s * weights b h o)\n      output position =\n      term plan input kernel output position *\n        weights output.batchGroup output.featureGroup output.feature := by\n  dsimp only [term]\n  split <;> simp [mul_assoc]"
+    },
+    {
+      "id": "case_024",
+      "original": "TensorRewrite.Theory.Convolution.convolve_kernel_add",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem convolve_kernel_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (f g : Kernel plan \u03b1) :\n    convolve plan input (fun b h o c s => f b h o c s + g b h o c s) =\n      fun output => convolve plan input f output + convolve plan input g output",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (f g : Kernel plan \u03b1),\n    convolve plan input (fun b h o c s => f b h o c s + g b h o c s) =\n      fun output => convolve plan input f output + convolve plan input g output",
+      "statement": "TensorRewrite.Theory.Convolution.case_024",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  change (List.map (term plan input (fun b h o c s => f b h o c s + g b h o c s) output) _).sum =\n    (List.map (term plan input f output) _).sum + (List.map (term plan input g output) _).sum\n  rw [show term plan input (fun b h o c s => f b h o c s + g b h o c s) output =\n      fun position => term plan input f output position + term plan input g output position by\n    funext position; exact term_kernel_add plan input f g output position]\n  exact List.sum_map_add",
+      "reference_declaration": "theorem convolve_kernel_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (f g : Kernel plan \u03b1) :\n    convolve plan input (fun b h o c s => f b h o c s + g b h o c s) =\n      fun output => convolve plan input f output + convolve plan input g output := by\n  funext output\n  change (List.map (term plan input (fun b h o c s => f b h o c s + g b h o c s) output) _).sum =\n    (List.map (term plan input f output) _).sum + (List.map (term plan input g output) _).sum\n  rw [show term plan input (fun b h o c s => f b h o c s + g b h o c s) output =\n      fun position => term plan input f output position + term plan input g output position by\n    funext position; exact term_kernel_add plan input f g output position]\n  exact List.sum_map_add"
+    },
+    {
+      "id": "case_025",
+      "original": "TensorRewrite.Theory.Convolution.convolve_input_add",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem convolve_input_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (x y : Input plan \u03b1) (kernel : Kernel plan \u03b1) :\n    convolve plan (fun b c s => x b c s + y b c s) kernel =\n      fun output => convolve plan x kernel output + convolve plan y kernel output",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (x y : Input plan \u03b1) (kernel : Kernel plan \u03b1),\n    convolve plan (fun b c s => x b c s + y b c s) kernel =\n      fun output => convolve plan x kernel output + convolve plan y kernel output",
+      "statement": "TensorRewrite.Theory.Convolution.case_025",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  change (List.map (term plan (fun b c s => x b c s + y b c s) kernel output) _).sum =\n    (List.map (term plan x kernel output) _).sum + (List.map (term plan y kernel output) _).sum\n  rw [show term plan (fun b c s => x b c s + y b c s) kernel output =\n      fun position => term plan x kernel output position + term plan y kernel output position by\n    funext position; exact term_input_add plan x y kernel output position]\n  exact List.sum_map_add",
+      "reference_declaration": "theorem convolve_input_add {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (x y : Input plan \u03b1) (kernel : Kernel plan \u03b1) :\n    convolve plan (fun b c s => x b c s + y b c s) kernel =\n      fun output => convolve plan x kernel output + convolve plan y kernel output := by\n  funext output\n  change (List.map (term plan (fun b c s => x b c s + y b c s) kernel output) _).sum =\n    (List.map (term plan x kernel output) _).sum + (List.map (term plan y kernel output) _).sum\n  rw [show term plan (fun b c s => x b c s + y b c s) kernel output =\n      fun position => term plan x kernel output position + term plan y kernel output position by\n    funext position; exact term_input_add plan x y kernel output position]\n  exact List.sum_map_add"
+    },
+    {
+      "id": "case_026",
+      "original": "TensorRewrite.Theory.Convolution.convolve_kernel_scale",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem convolve_kernel_scale {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (weights :\n      Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1) :\n    convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) =\n      fun output => convolve plan input kernel output *\n        weights output.batchGroup output.featureGroup output.feature",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (weights :\n      Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1),\n    convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) =\n      fun output => convolve plan input kernel output *\n        weights output.batchGroup output.featureGroup output.feature",
+      "statement": "TensorRewrite.Theory.Convolution.case_026",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  change (List.map\n      (term plan input (fun b h o c s => kernel b h o c s * weights b h o) output) _).sum =\n    (List.map (term plan input kernel output) _).sum *\n      weights output.batchGroup output.featureGroup output.feature\n  rw [show term plan input (fun b h o c s => kernel b h o c s * weights b h o) output =\n      fun position => term plan input kernel output position *\n        weights output.batchGroup output.featureGroup output.feature by\n    funext position; exact term_kernel_scale plan input kernel weights output position]\n  exact List.sum_map_mul_right _ _ _",
+      "reference_declaration": "theorem convolve_kernel_scale {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1)\n    (weights :\n      Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1) :\n    convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) =\n      fun output => convolve plan input kernel output *\n        weights output.batchGroup output.featureGroup output.feature := by\n  funext output\n  change (List.map\n      (term plan input (fun b h o c s => kernel b h o c s * weights b h o) output) _).sum =\n    (List.map (term plan input kernel output) _).sum *\n      weights output.batchGroup output.featureGroup output.feature\n  rw [show term plan input (fun b h o c s => kernel b h o c s * weights b h o) output =\n      fun position => term plan input kernel output position *\n        weights output.batchGroup output.featureGroup output.feature by\n    funext position; exact term_kernel_scale plan input kernel weights output position]\n  exact List.sum_map_mul_right _ _ _"
+    },
+    {
+      "id": "case_027",
+      "original": "TensorRewrite.Theory.Convolution.convolve_bias_scale",
+      "namespace": "TensorRewrite.Theory.Convolution",
+      "opens": [],
+      "source": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "header": "theorem convolve_bias_scale {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (bias : OutputIndex plan \u2192 \u03b1)\n    (weights : Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1)\n    (output : OutputIndex plan) :\n    (convolve plan input kernel output + bias output) *\n        weights output.batchGroup output.featureGroup output.feature =\n      convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) output +\n        bias output * weights output.batchGroup output.featureGroup output.feature",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (bias : OutputIndex plan \u2192 \u03b1)\n    (weights : Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1)\n    (output : OutputIndex plan),\n    (convolve plan input kernel output + bias output) *\n        weights output.batchGroup output.featureGroup output.feature =\n      convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) output +\n        bias output * weights output.batchGroup output.featureGroup output.feature",
+      "statement": "TensorRewrite.Theory.Convolution.case_027",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  rw [convolve_kernel_scale]\n  exact add_mul _ _ _",
+      "reference_declaration": "theorem convolve_bias_scale {rank : Nat} {\u03b1 : Type} [Semiring \u03b1] (plan : Plan rank)\n    (input : Input plan \u03b1) (kernel : Kernel plan \u03b1) (bias : OutputIndex plan \u2192 \u03b1)\n    (weights : Fin plan.batchGroups \u2192 Fin plan.featureGroups \u2192 Fin plan.outputFeaturesPerGroup \u2192 \u03b1)\n    (output : OutputIndex plan) :\n    (convolve plan input kernel output + bias output) *\n        weights output.batchGroup output.featureGroup output.feature =\n      convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) output +\n        bias output * weights output.batchGroup output.featureGroup output.feature := by\n  rw [convolve_kernel_scale]\n  exact add_mul _ _ _"
+    },
+    {
+      "id": "case_028",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem dilatedExtent_one (extent : Nat) : dilatedExtent extent 1 = extent",
+      "goal": "\u2200 (extent : Nat),\n    dilatedExtent extent 1 = extent",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_028",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  unfold dilatedExtent\n  split <;> omega",
+      "reference_declaration": "theorem dilatedExtent_one (extent : Nat) : dilatedExtent extent 1 = extent := by\n  unfold dilatedExtent\n  split <;> omega"
+    },
+    {
+      "id": "case_029",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem output_extent_eq (axis : Axis) (pointwise : IsPointwiseAxis axis) :\n    axis.outputExtent = axis.inputExtent",
+      "goal": "\u2200 (axis : Axis) (pointwise : IsPointwiseAxis axis),\n    axis.outputExtent = axis.inputExtent",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_029",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  unfold Axis.outputExtent\n  rw [pointwise.unitKernel, pointwise.unitStride, pointwise.unitBaseDilation,\n    pointwise.noLowPadding, pointwise.noHighPadding, dilatedExtent_one]\n  simp [dilatedExtent]",
+      "reference_declaration": "theorem output_extent_eq (axis : Axis) (pointwise : IsPointwiseAxis axis) :\n    axis.outputExtent = axis.inputExtent := by\n  unfold Axis.outputExtent\n  rw [pointwise.unitKernel, pointwise.unitStride, pointwise.unitBaseDilation,\n    pointwise.noLowPadding, pointwise.noHighPadding, dilatedExtent_one]\n  simp [dilatedExtent]"
+    },
+    {
+      "id": "case_030",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem output_shape_eq {rank : Nat} (plan : Plan rank) (pointwise : IsPointwise plan) :\n    plan.outputShape = plan.inputShape",
+      "goal": "\u2200 {rank : Nat} (plan : Plan rank) (pointwise : IsPointwise plan),\n    plan.outputShape = plan.inputShape",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_030",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext axis\n  exact output_extent_eq (plan.window axis) (pointwise axis)",
+      "reference_declaration": "theorem output_shape_eq {rank : Nat} (plan : Plan rank) (pointwise : IsPointwise plan) :\n    plan.outputShape = plan.inputShape := by\n  funext axis\n  exact output_extent_eq (plan.window axis) (pointwise axis)"
+    },
+    {
+      "id": "case_031",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem elementCount_unit {rank : Nat} (shape : Shape rank) (unit : \u2200 axis, shape axis = 1) :\n    LinearIndex.elementCount shape = 1",
+      "goal": "\u2200 {rank : Nat} (shape : Shape rank) (unit : \u2200 axis, shape axis = 1),\n    LinearIndex.elementCount shape = 1",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_031",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  induction rank with\n  | zero => rfl\n  | succ rank ih =>\n    simp only [LinearIndex.elementCount]\n    rw [unit, ih _ (fun axis => unit axis.succ), Nat.one_mul]",
+      "reference_declaration": "theorem elementCount_unit {rank : Nat} (shape : Shape rank) (unit : \u2200 axis, shape axis = 1) :\n    LinearIndex.elementCount shape = 1 := by\n  induction rank with\n  | zero => rfl\n  | succ rank ih =>\n    simp only [LinearIndex.elementCount]\n    rw [unit, ih _ (fun axis => unit axis.succ), Nat.one_mul]"
+    },
+    {
+      "id": "case_032",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem kernel_count_eq_one {rank : Nat} (plan : Plan rank) (pointwise : IsPointwise plan) :\n    LinearIndex.elementCount plan.kernelShape = 1",
+      "goal": "\u2200 {rank : Nat} (plan : Plan rank) (pointwise : IsPointwise plan),\n    LinearIndex.elementCount plan.kernelShape = 1",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_032",
+      "reviewed_header_identical": true,
+      "reference_body": "elementCount_unit plan.kernelShape (fun axis => (pointwise axis).unitKernel)",
+      "reference_declaration": "theorem kernel_count_eq_one {rank : Nat} (plan : Plan rank) (pointwise : IsPointwise plan) :\n    LinearIndex.elementCount plan.kernelShape = 1 :=\n  elementCount_unit plan.kernelShape (fun axis => (pointwise axis).unitKernel)"
+    },
+    {
+      "id": "case_033",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem kernel_index_unique {rank : Nat} (plan : Plan rank)\n    (unitKernel : \u2200 axis, plan.kernelShape axis = 1) (index : Index plan.kernelShape) :\n    index = kernelIndex plan unitKernel",
+      "goal": "\u2200 {rank : Nat} (plan : Plan rank)\n    (unitKernel : \u2200 axis, plan.kernelShape axis = 1) (index : Index plan.kernelShape),\n    index = kernelIndex plan unitKernel",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_033",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext axis\n  apply Fin.ext\n  have bound := (index axis).isLt\n  have unit := unitKernel axis\n  change (index axis).val = 0\n  omega",
+      "reference_declaration": "theorem kernel_index_unique {rank : Nat} (plan : Plan rank)\n    (unitKernel : \u2200 axis, plan.kernelShape axis = 1) (index : Index plan.kernelShape) :\n    index = kernelIndex plan unitKernel := by\n  funext axis\n  apply Fin.ext\n  have bound := (index axis).isLt\n  have unit := unitKernel axis\n  change (index axis).val = 0\n  omega"
+    },
+    {
+      "id": "case_034",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.base_position_eq",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "header": "theorem base_position_eq (axis : Axis) (pointwise : IsPointwiseAxis axis)\n    (output : Nat) (kernel : Fin axis.kernelExtent) :\n    axis.basePosition output kernel = output",
+      "goal": "\u2200 (axis : Axis) (pointwise : IsPointwiseAxis axis)\n    (output : Nat) (kernel : Fin axis.kernelExtent),\n    axis.basePosition output kernel = output",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_034",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  have unit := pointwise.unitKernel\n  have value : kernel.val = 0 := by have := kernel.isLt; omega\n  simp [Axis.basePosition, pointwise.unitStride, pointwise.noLowPadding, unit, value]",
+      "reference_declaration": "theorem base_position_eq (axis : Axis) (pointwise : IsPointwiseAxis axis)\n    (output : Nat) (kernel : Fin axis.kernelExtent) :\n    axis.basePosition output kernel = output := by\n  have unit := pointwise.unitKernel\n  have value : kernel.val = 0 := by have := kernel.isLt; omega\n  simp [Axis.basePosition, pointwise.unitStride, pointwise.noLowPadding, unit, value]"
+    },
+    {
+      "id": "case_035",
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions",
+      "namespace": "TensorRewrite.Theory.ConvolutionPointwise",
+      "opens": [
+        "Pilot",
+        "Convolution"
+      ],
+      "source": "TensorRewrite/Theory/ConvolutionPointwiseAlgebra.lean",
+      "header": "theorem sum_kernel_positions {rank : Nat} {\u03b1 : Type} [AddCommMonoid \u03b1] (plan : Plan rank)\n    (pointwise : IsPointwise plan) (value : Fin plan.inputFeaturesPerGroup \u2192 \u03b1) :\n    (\u2211 position : Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape),\n      value (FiniteProduct.row position)) = \u2211 channel, value channel",
+      "goal": "\u2200 {rank : Nat} {\u03b1 : Type} [AddCommMonoid \u03b1] (plan : Plan rank)\n    (pointwise : IsPointwise plan) (value : Fin plan.inputFeaturesPerGroup \u2192 \u03b1),\n    (\u2211 position : Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape),\n      value (FiniteProduct.row position)) = \u2211 channel, value channel",
+      "statement": "TensorRewrite.Theory.ConvolutionPointwise.case_035",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  let equivalence :\n      Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape) \u2243\n        Fin plan.inputFeaturesPerGroup :=\n    finCongr (by rw [kernel_count_eq_one plan pointwise, Nat.mul_one])\n  have row_eq (position :\n      Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape)) :\n      FiniteProduct.row position = equivalence position := by\n    apply Fin.ext\n    simp [FiniteProduct.row, equivalence, kernel_count_eq_one plan pointwise]\n  calc\n    _ = \u2211 position, value (equivalence position) := by\n      apply Finset.sum_congr rfl\n      intro position _\n      rw [row_eq]\n    _ = _ := Equiv.sum_comp equivalence value",
+      "reference_declaration": "theorem sum_kernel_positions {rank : Nat} {\u03b1 : Type} [AddCommMonoid \u03b1] (plan : Plan rank)\n    (pointwise : IsPointwise plan) (value : Fin plan.inputFeaturesPerGroup \u2192 \u03b1) :\n    (\u2211 position : Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape),\n      value (FiniteProduct.row position)) = \u2211 channel, value channel := by\n  let equivalence :\n      Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape) \u2243\n        Fin plan.inputFeaturesPerGroup :=\n    finCongr (by rw [kernel_count_eq_one plan pointwise, Nat.mul_one])\n  have row_eq (position :\n      Fin (plan.inputFeaturesPerGroup * LinearIndex.elementCount plan.kernelShape)) :\n      FiniteProduct.row position = equivalence position := by\n    apply Fin.ext\n    simp [FiniteProduct.row, equivalence, kernel_count_eq_one plan pointwise]\n  calc\n    _ = \u2211 position, value (equivalence position) := by\n      apply Finset.sum_congr rfl\n      intro position _\n      rw [row_eq]\n    _ = _ := Equiv.sum_comp equivalence value"
+    },
+    {
+      "id": "case_036",
+      "original": "TensorRewrite.Theory.LogicalFamily.rewrite_sound",
+      "namespace": "TensorRewrite.Theory.LogicalFamily",
+      "opens": [
+        "Pilot"
+      ],
+      "source": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "header": "theorem rewrite_sound {domain : Domain} {rank : Nat} {shape : Shape rank}\n    (rule : Rule domain) (inputs : Nat \u2192 Tensor shape domain.Value)\n    (condition : rule.Condition inputs) : rule.lhs.eval inputs = rule.rhs.eval inputs",
+      "goal": "\u2200 {domain : Domain} {rank : Nat} {shape : Shape rank}\n    (rule : Rule domain) (inputs : Nat \u2192 Tensor shape domain.Value)\n    (condition : rule.Condition inputs),\n    rule.lhs.eval inputs = rule.rhs.eval inputs",
+      "statement": "TensorRewrite.Theory.LogicalFamily.case_036",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  cases domain with\n  | predicate =>\n    cases rule <;> funext index <;>\n      simp_all [Rule.Condition, Rule.lhs, Rule.rhs, Expr.eval, Tensor.map, Tensor.map\u2082,\n        Tensor.constant, Domain.not, Domain.and, Domain.or, Domain.xor, Domain.zero]\n  | word width =>\n    cases rule <;> funext index <;>\n      simp_all [Rule.Condition, Rule.lhs, Rule.rhs, Expr.eval, Tensor.map, Tensor.map\u2082,\n        Tensor.constant, Domain.not, Domain.and, Domain.or, Domain.xor, Domain.zero]",
+      "reference_declaration": "theorem rewrite_sound {domain : Domain} {rank : Nat} {shape : Shape rank}\n    (rule : Rule domain) (inputs : Nat \u2192 Tensor shape domain.Value)\n    (condition : rule.Condition inputs) : rule.lhs.eval inputs = rule.rhs.eval inputs := by\n  cases domain with\n  | predicate =>\n    cases rule <;> funext index <;>\n      simp_all [Rule.Condition, Rule.lhs, Rule.rhs, Expr.eval, Tensor.map, Tensor.map\u2082,\n        Tensor.constant, Domain.not, Domain.and, Domain.or, Domain.xor, Domain.zero]\n  | word width =>\n    cases rule <;> funext index <;>\n      simp_all [Rule.Condition, Rule.lhs, Rule.rhs, Expr.eval, Tensor.map, Tensor.map\u2082,\n        Tensor.constant, Domain.not, Domain.and, Domain.or, Domain.xor, Domain.zero]"
+    },
+    {
+      "id": "case_037",
+      "original": "TensorRewrite.Theory.LogicalFamily.allRules_complete",
+      "namespace": "TensorRewrite.Theory.LogicalFamily",
+      "opens": [
+        "Pilot"
+      ],
+      "source": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "header": "theorem allRules_complete {domain : Domain} (rule : Rule domain) : rule \u2208 allRules domain",
+      "goal": "\u2200 {domain : Domain} (rule : Rule domain),\n    rule \u2208 allRules domain",
+      "statement": "TensorRewrite.Theory.LogicalFamily.case_037",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  cases domain <;> cases rule <;> simp [allRules]",
+      "reference_declaration": "theorem allRules_complete {domain : Domain} (rule : Rule domain) : rule \u2208 allRules domain := by\n  cases domain <;> cases rule <;> simp [allRules]"
+    },
+    {
+      "id": "case_038",
+      "original": "TensorRewrite.Theory.LogicalFamily.allRules_nodup",
+      "namespace": "TensorRewrite.Theory.LogicalFamily",
+      "opens": [
+        "Pilot"
+      ],
+      "source": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "header": "theorem allRules_nodup (domain : Domain) : (allRules domain).Nodup",
+      "goal": "\u2200 (domain : Domain),\n    (allRules domain).Nodup",
+      "statement": "TensorRewrite.Theory.LogicalFamily.case_038",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  cases domain <;> simp [allRules]",
+      "reference_declaration": "theorem allRules_nodup (domain : Domain) : (allRules domain).Nodup := by\n  cases domain <;> simp [allRules]"
+    },
+    {
+      "id": "case_039",
+      "original": "TensorRewrite.Theory.LogicalFamily.word_keys_uniform",
+      "namespace": "TensorRewrite.Theory.LogicalFamily",
+      "opens": [
+        "Pilot"
+      ],
+      "source": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "header": "theorem word_keys_uniform (width : Nat) :\n    (allRules (.word width)).map Rule.key = (allRules (.word 0)).map Rule.key",
+      "goal": "\u2200 (width : Nat),\n    (allRules (.word width)).map Rule.key = (allRules (.word 0)).map Rule.key",
+      "statement": "TensorRewrite.Theory.LogicalFamily.case_039",
+      "reviewed_header_identical": true,
+      "reference_body": "rfl",
+      "reference_declaration": "theorem word_keys_uniform (width : Nat) :\n    (allRules (.word width)).map Rule.key = (allRules (.word 0)).map Rule.key := rfl"
+    },
+    {
+      "id": "case_040",
+      "original": "TensorRewrite.Theory.LogicalFamily.predicate_count",
+      "namespace": "TensorRewrite.Theory.LogicalFamily",
+      "opens": [
+        "Pilot"
+      ],
+      "source": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "header": "theorem predicate_count : (allRules .predicate).length = 12",
+      "goal": "(allRules .predicate).length = 12",
+      "statement": "TensorRewrite.Theory.LogicalFamily.case_040",
+      "reviewed_header_identical": true,
+      "reference_body": "rfl",
+      "reference_declaration": "theorem predicate_count : (allRules .predicate).length = 12 := rfl"
+    },
+    {
+      "id": "case_041",
+      "original": "TensorRewrite.Theory.LogicalFamily.word_count",
+      "namespace": "TensorRewrite.Theory.LogicalFamily",
+      "opens": [
+        "Pilot"
+      ],
+      "source": "TensorRewrite/Theory/LogicalFamilyProof.lean",
+      "header": "theorem word_count (width : Nat) : (allRules (.word width)).length = 8",
+      "goal": "\u2200 (width : Nat),\n    (allRules (.word width)).length = 8",
+      "statement": "TensorRewrite.Theory.LogicalFamily.case_041",
+      "reviewed_header_identical": true,
+      "reference_body": "rfl",
+      "reference_declaration": "theorem word_count (width : Nat) : (allRules (.word width)).length = 8 := rfl"
+    },
+    {
+      "id": "case_042",
+      "original": "TensorRewrite.Theory.ContractionAlgebra.dot_add_left",
+      "namespace": "TensorRewrite.Theory.ContractionAlgebra",
+      "opens": [
+        "Pilot",
+        "Pilot.Contraction"
+      ],
+      "source": "TensorRewrite/Theory/ContractionAlgebra.lean",
+      "header": "theorem dot_add_left {\u03b1 : Type} [Semiring \u03b1] {batch left right contracting : Nat}\n    (plan : Plan batch left right contracting)\n    (x y : Tensor plan.lhsShape \u03b1) (z : Tensor plan.rhsShape \u03b1) :\n    dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id (Tensor.map\u2082 (\u00b7 + \u00b7) x y) z =\n      Tensor.map\u2082 (\u00b7 + \u00b7) (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x z)\n        (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id y z)",
+      "goal": "\u2200 {\u03b1 : Type} [Semiring \u03b1] {batch left right contracting : Nat}\n    (plan : Plan batch left right contracting)\n    (x y : Tensor plan.lhsShape \u03b1) (z : Tensor plan.rhsShape \u03b1),\n    dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id (Tensor.map\u2082 (\u00b7 + \u00b7) x y) z =\n      Tensor.map\u2082 (\u00b7 + \u00b7) (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x z)\n        (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id y z)",
+      "statement": "TensorRewrite.Theory.ContractionAlgebra.case_042",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  simp only [dotTensor, terms, Tensor.map\u2082, id_eq,\n    FiniteSum.foldl_add_eq_sum, zero_add, add_mul]\n  exact List.sum_map_add",
+      "reference_declaration": "theorem dot_add_left {\u03b1 : Type} [Semiring \u03b1] {batch left right contracting : Nat}\n    (plan : Plan batch left right contracting)\n    (x y : Tensor plan.lhsShape \u03b1) (z : Tensor plan.rhsShape \u03b1) :\n    dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id (Tensor.map\u2082 (\u00b7 + \u00b7) x y) z =\n      Tensor.map\u2082 (\u00b7 + \u00b7) (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x z)\n        (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id y z) := by\n  funext output\n  simp only [dotTensor, terms, Tensor.map\u2082, id_eq,\n    FiniteSum.foldl_add_eq_sum, zero_add, add_mul]\n  exact List.sum_map_add"
+    },
+    {
+      "id": "case_043",
+      "original": "TensorRewrite.Theory.ContractionAlgebra.dot_add_right",
+      "namespace": "TensorRewrite.Theory.ContractionAlgebra",
+      "opens": [
+        "Pilot",
+        "Pilot.Contraction"
+      ],
+      "source": "TensorRewrite/Theory/ContractionAlgebra.lean",
+      "header": "theorem dot_add_right {\u03b1 : Type} [Semiring \u03b1] {batch left right contracting : Nat}\n    (plan : Plan batch left right contracting)\n    (x : Tensor plan.lhsShape \u03b1) (y z : Tensor plan.rhsShape \u03b1) :\n    dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x (Tensor.map\u2082 (\u00b7 + \u00b7) y z) =\n      Tensor.map\u2082 (\u00b7 + \u00b7) (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x y)\n        (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x z)",
+      "goal": "\u2200 {\u03b1 : Type} [Semiring \u03b1] {batch left right contracting : Nat}\n    (plan : Plan batch left right contracting)\n    (x : Tensor plan.lhsShape \u03b1) (y z : Tensor plan.rhsShape \u03b1),\n    dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x (Tensor.map\u2082 (\u00b7 + \u00b7) y z) =\n      Tensor.map\u2082 (\u00b7 + \u00b7) (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x y)\n        (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x z)",
+      "statement": "TensorRewrite.Theory.ContractionAlgebra.case_043",
+      "reviewed_header_identical": true,
+      "reference_body": "by\n  funext output\n  simp only [dotTensor, terms, Tensor.map\u2082, id_eq,\n    FiniteSum.foldl_add_eq_sum, zero_add, mul_add]\n  exact List.sum_map_add",
+      "reference_declaration": "theorem dot_add_right {\u03b1 : Type} [Semiring \u03b1] {batch left right contracting : Nat}\n    (plan : Plan batch left right contracting)\n    (x : Tensor plan.lhsShape \u03b1) (y z : Tensor plan.rhsShape \u03b1) :\n    dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x (Tensor.map\u2082 (\u00b7 + \u00b7) y z) =\n      Tensor.map\u2082 (\u00b7 + \u00b7) (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x y)\n        (dotTensor plan (\u00b7 + \u00b7) 0 (\u00b7 * \u00b7) id x z) := by\n  funext output\n  simp only [dotTensor, terms, Tensor.map\u2082, id_eq,\n    FiniteSum.foldl_add_eq_sum, zero_add, mul_add]\n  exact List.sum_map_add"
+    }
+  ],
+  "exclusions": [
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.convolution_output_dot_output",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.dot_output_convolution_output",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.lhs_index_channel",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.lhs_index_row",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.matrix_output_feature",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.matrix_output_row",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.rhs_index_channel",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.rhs_index_feature",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionDot.sum_contract_positions",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.term_pointwise",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionPointwise.term_pointwise",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.derive_geometry",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.expand_project",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.project_expand",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.reverse_involution",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.ConvolutionSeparable.term_reduced",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    },
+    {
+      "original": "TensorRewrite.Theory.FiniteSum.sum_reshape",
+      "reason": "not restatable from selected definitions-only basis without additional project support or proof-valued type dependencies"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "heartbeats": 400000,
+  "max_rec_depth": 4096,
+  "per_process_timeout_seconds": 45,
+  "parallel_processes": 2,
+  "policies": [
+    {
+      "id": "rfl",
+      "script": "rfl"
+    },
+    {
+      "id": "simp",
+      "script": "fixed_simp"
+    },
+    {
+      "id": "funext_simp",
+      "script": "fixed_funext_simp"
+    },
+    {
+      "id": "aesop",
+      "script": "fixed_aesop"
+    }
+  ],
+  "definition_unfolding": [
+    "TensorRewrite.Pilot.Tensor.constant",
+    "TensorRewrite.Pilot.Tensor.map",
+    "TensorRewrite.Pilot.Tensor.map\u2082",
+    "TensorRewrite.Pilot.Tensor.reindex",
+    "TensorRewrite.Pilot.Tensor.reverseIndex",
+    "TensorRewrite.Pilot.Tensor.reverse",
+    "TensorRewrite.Pilot.Tensor.axisMask",
+    "TensorRewrite.Pilot.Contraction.appendShape",
+    "TensorRewrite.Pilot.Contraction.appendIndex",
+    "TensorRewrite.Pilot.Contraction.firstIndex",
+    "TensorRewrite.Pilot.Contraction.secondIndex",
+    "TensorRewrite.Pilot.Contraction.Plan.outputShape",
+    "TensorRewrite.Pilot.Contraction.Plan.lhsShape",
+    "TensorRewrite.Pilot.Contraction.Plan.rhsShape",
+    "TensorRewrite.Pilot.Contraction.Plan.lhsIndex",
+    "TensorRewrite.Pilot.Contraction.Plan.rhsIndex",
+    "TensorRewrite.Pilot.Contraction.terms",
+    "TensorRewrite.Pilot.Contraction.dotTensor",
+    "TensorRewrite.Pilot.Contraction.outerTensor",
+    "TensorRewrite.Pilot.Reduction.Plan.inputRank",
+    "TensorRewrite.Pilot.Reduction.Plan.outputRank",
+    "TensorRewrite.Pilot.Reduction.Plan.inputShape",
+    "TensorRewrite.Pilot.Reduction.Plan.outputShape",
+    "TensorRewrite.Pilot.Reduction.Plan.fiberCount",
+    "TensorRewrite.Pilot.Reduction.Plan.UnitReducedAxes",
+    "TensorRewrite.Pilot.Reduction.Plan.unitIndex",
+    "TensorRewrite.Pilot.Reduction.fiberValues",
+    "TensorRewrite.Pilot.Reduction.reduceTensor",
+    "TensorRewrite.Theory.Convolution.dilatedExtent",
+    "TensorRewrite.Theory.Convolution.Axis.outputExtent",
+    "TensorRewrite.Theory.Convolution.Axis.basePosition",
+    "TensorRewrite.Theory.Convolution.Axis.inputIndex?",
+    "TensorRewrite.Theory.Convolution.Plan.inputShape",
+    "TensorRewrite.Theory.Convolution.Plan.kernelShape",
+    "TensorRewrite.Theory.Convolution.Plan.outputShape",
+    "TensorRewrite.Theory.Convolution.spatialInput?",
+    "TensorRewrite.Theory.Convolution.term",
+    "TensorRewrite.Theory.Convolution.convolve",
+    "TensorRewrite.Theory.ConvolutionPointwise.IsPointwise",
+    "TensorRewrite.Theory.ConvolutionPointwise.kernelIndex",
+    "TensorRewrite.Theory.ConvolutionPointwise.inputIndex",
+    "TensorRewrite.Theory.ConvolutionPointwise.channelSum",
+    "TensorRewrite.Theory.LogicalFamily.Domain.zero",
+    "TensorRewrite.Theory.LogicalFamily.Domain.not",
+    "TensorRewrite.Theory.LogicalFamily.Domain.and",
+    "TensorRewrite.Theory.LogicalFamily.Domain.or",
+    "TensorRewrite.Theory.LogicalFamily.Domain.xor",
+    "TensorRewrite.Theory.LogicalFamily.Expr.eval",
+    "TensorRewrite.Theory.LogicalFamily.Rule.key",
+    "TensorRewrite.Theory.LogicalFamily.Rule.lhs",
+    "TensorRewrite.Theory.LogicalFamily.Rule.rhs",
+    "TensorRewrite.Theory.LogicalFamily.Rule.Condition",
+    "TensorRewrite.Theory.LogicalFamily.allRules"
+  ],
+  "stopping": "one fresh independent process per target/policy; no target-specific repair; successes require kernel/axiom audit",
+  "comparison_boundary": "historical solution-informed agent replay versus fixed tactics at equal definitions-only imported basis; not a blinded agent-discovery trial"
+}

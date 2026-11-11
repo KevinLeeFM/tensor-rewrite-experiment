@@ -1,0 +1,5 @@
+import TensorRewrite.Comparisons.FixedTacticsGuard
+
+import TensorRewriteTheory
+
+run_cmd TensorRewrite.Comparisons.FixedTactics.noCampaignProofs
