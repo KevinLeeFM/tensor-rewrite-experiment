@@ -959,6 +959,42 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Numerical.real_sqrt_square_iff
 #check @TensorRewrite.Theory.Numerical.real_sqrt_square_refuted
 #print axioms TensorRewrite.Theory.Numerical.real_sqrt_square_refuted
+#check @TensorRewrite.Theory.OrderFamily.allRuleKeys_nodup
+#print axioms TensorRewrite.Theory.OrderFamily.allRuleKeys_nodup
+#check @TensorRewrite.Theory.OrderFamily.allRules_complete
+#print axioms TensorRewrite.Theory.OrderFamily.allRules_complete
+#check @TensorRewrite.Theory.OrderFamily.binary32_nan_self_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.binary32_nan_self_refuted
+#check @TensorRewrite.Theory.OrderFamily.binary32_zero_observation_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.binary32_zero_observation_refuted
+#check @TensorRewrite.Theory.OrderFamily.condition_admitted
+#print axioms TensorRewrite.Theory.OrderFamily.condition_admitted
+#check @TensorRewrite.Theory.OrderFamily.eval_maxOrder
+#print axioms TensorRewrite.Theory.OrderFamily.eval_maxOrder
+#check @TensorRewrite.Theory.OrderFamily.eval_minOrder
+#print axioms TensorRewrite.Theory.OrderFamily.eval_minOrder
+#check @TensorRewrite.Theory.OrderFamily.integer_family
+#print axioms TensorRewrite.Theory.OrderFamily.integer_family
+#check @TensorRewrite.Theory.OrderFamily.real_family
+#print axioms TensorRewrite.Theory.OrderFamily.real_family
+#check @TensorRewrite.Theory.OrderFamily.reversed_bounds_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.reversed_bounds_refuted
+#check @TensorRewrite.Theory.OrderFamily.rewrite_in_context
+#print axioms TensorRewrite.Theory.OrderFamily.rewrite_in_context
+#check @TensorRewrite.Theory.OrderFamily.rewrite_sound
+#print axioms TensorRewrite.Theory.OrderFamily.rewrite_sound
+#check @TensorRewrite.Theory.OrderFamily.rule_count
+#print axioms TensorRewrite.Theory.OrderFamily.rule_count
+#check @TensorRewrite.Theory.OrderFamily.signed_family
+#print axioms TensorRewrite.Theory.OrderFamily.signed_family
+#check @TensorRewrite.Theory.OrderFamily.signedness_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.signedness_refuted
+#check @TensorRewrite.Theory.OrderFamily.unsigned_family
+#print axioms TensorRewrite.Theory.OrderFamily.unsigned_family
+#check @TensorRewrite.Theory.OrderFamily.unsigned_nonnegative
+#print axioms TensorRewrite.Theory.OrderFamily.unsigned_nonnegative
+#check @TensorRewrite.Theory.OrderFamily.unsigned_zero
+#print axioms TensorRewrite.Theory.OrderFamily.unsigned_zero
 #check @TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
 #print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
 #check @TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons

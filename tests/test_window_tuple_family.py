@@ -58,11 +58,11 @@ class WindowTupleFamilyTests(unittest.TestCase):
         families = ledger.formulated_families()
         self.assertEqual({f['family']: f['profile_unit_count'] for f in families},
                          {'typed_logical_values_v1': 20, 'singleton_window_tuple_values_v1': 1,
-                          'typed_commutative_ring_values_v1': 172})
+                          'typed_commutative_ring_values_v1': 172, 'typed_linear_order_values_v1': 176})
         proofs = ledger.evidence()
         for p in proofs: p['mathematical_acceptance'] = 'kernel_checked_in_declared_model'
         result = ledger.assemble(ledger.corpus(), proofs, {}, families)
-        self.assertEqual(result['kernel_complete_family_profile_count'], 193)
+        self.assertEqual(result['kernel_complete_family_profile_count'], 369)
         self.assertEqual(result['whole_benchmark_records_closed'], 0)
         self.assertIsNone(result['mathematical_obligation_denominator'])
         row = next(r for r in result['benchmark_records']

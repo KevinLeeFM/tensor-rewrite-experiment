@@ -533,3 +533,22 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Numerical.real_power_denominator_refuted
 #print axioms TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted
 #print axioms TensorRewrite.Theory.Numerical.complex_power_exp_refuted
+
+#print axioms TensorRewrite.Theory.OrderFamily.eval_minOrder
+#print axioms TensorRewrite.Theory.OrderFamily.eval_maxOrder
+#print axioms TensorRewrite.Theory.OrderFamily.rewrite_sound
+#print axioms TensorRewrite.Theory.OrderFamily.condition_admitted
+#print axioms TensorRewrite.Theory.OrderFamily.rewrite_in_context
+#print axioms TensorRewrite.Theory.OrderFamily.allRules_complete
+#print axioms TensorRewrite.Theory.OrderFamily.allRuleKeys_nodup
+#print axioms TensorRewrite.Theory.OrderFamily.rule_count
+#print axioms TensorRewrite.Theory.OrderFamily.integer_family
+#print axioms TensorRewrite.Theory.OrderFamily.real_family
+#print axioms TensorRewrite.Theory.OrderFamily.unsigned_family
+#print axioms TensorRewrite.Theory.OrderFamily.signed_family
+#print axioms TensorRewrite.Theory.OrderFamily.unsigned_nonnegative
+#print axioms TensorRewrite.Theory.OrderFamily.unsigned_zero
+#print axioms TensorRewrite.Theory.OrderFamily.reversed_bounds_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.signedness_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.binary32_nan_self_refuted
+#print axioms TensorRewrite.Theory.OrderFamily.binary32_zero_observation_refuted

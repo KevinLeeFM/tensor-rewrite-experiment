@@ -3234,6 +3234,121 @@ TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted : (√((-1) ^ (
 'TensorRewrite.Theory.Numerical.real_sqrt_square_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.Numerical.real_sqrt_square_refuted : √(-1) * √(-1) ≠ -1
 'TensorRewrite.Theory.Numerical.real_sqrt_square_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.OrderFamily.allRuleKeys_nodup : (List.map TensorRewrite.Theory.OrderFamily.Rule.key
+    TensorRewrite.Theory.OrderFamily.allRules).Nodup
+'TensorRewrite.Theory.OrderFamily.allRuleKeys_nodup' depends on axioms: [propext]
+TensorRewrite.Theory.OrderFamily.allRules_complete : ∀ (rule : TensorRewrite.Theory.OrderFamily.Rule),
+  rule ∈ TensorRewrite.Theory.OrderFamily.allRules
+'TensorRewrite.Theory.OrderFamily.allRules_complete' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.OrderFamily.binary32_nan_self_refuted : have nan :=
+  FloatLib.Floats.ExecFloat.Binary.ofNatBits 2143289344;
+FloatLib.Floats.ExecFloat.compareEqual nan nan = false ∧
+  FloatLib.Floats.ExecFloat.compareLessEqual nan nan = false ∧
+    FloatLib.Floats.ExecFloat.compareGreaterEqual nan nan = false
+'TensorRewrite.Theory.OrderFamily.binary32_nan_self_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.OrderFamily.binary32_zero_observation_refuted : have positive :=
+  FloatLib.Floats.ExecFloat.Binary.ofNatBits 0;
+have negative := FloatLib.Floats.ExecFloat.Binary.ofNatBits 2147483648;
+FloatLib.Floats.ExecFloat.compareEqual positive negative = true ∧ positive ≠ negative
+'TensorRewrite.Theory.OrderFamily.binary32_zero_observation_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.OrderFamily.condition_admitted : ∀ {α : Type} [inst : LinearOrder α] [inst_1 : Zero α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (rule : TensorRewrite.Theory.OrderFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α),
+  rule.Condition inputs ↔ ∀ (i : TensorRewrite.Pilot.Index shape), (rule.admittedAt fun n => inputs n i) = true
+'TensorRewrite.Theory.OrderFamily.condition_admitted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.eval_maxOrder : ∀ {α : Type} [inst : LinearOrder α] [inst_1 : Zero α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α) (reverse : Bool)
+  (left right : TensorRewrite.Theory.OrderFamily.Expr),
+  TensorRewrite.Theory.OrderFamily.Expr.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs
+      (TensorRewrite.Theory.OrderFamily.Expr.maxOrder reverse left right) =
+    TensorRewrite.Pilot.Tensor.map₂ max
+      (TensorRewrite.Theory.OrderFamily.Expr.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs left)
+      (TensorRewrite.Theory.OrderFamily.Expr.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs right)
+'TensorRewrite.Theory.OrderFamily.eval_maxOrder' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.eval_minOrder : ∀ {α : Type} [inst : LinearOrder α] [inst_1 : Zero α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α) (reverse : Bool)
+  (left right : TensorRewrite.Theory.OrderFamily.Expr),
+  TensorRewrite.Theory.OrderFamily.Expr.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs
+      (TensorRewrite.Theory.OrderFamily.Expr.minOrder reverse left right) =
+    TensorRewrite.Pilot.Tensor.map₂ min
+      (TensorRewrite.Theory.OrderFamily.Expr.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs left)
+      (TensorRewrite.Theory.OrderFamily.Expr.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs right)
+'TensorRewrite.Theory.OrderFamily.eval_minOrder' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.integer_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (rule : TensorRewrite.Theory.OrderFamily.Rule) (inputs : ℕ → TensorRewrite.Pilot.Tensor shape ℤ),
+  rule.Condition inputs →
+    TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact ℤ) inputs rule.lhs =
+      TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact ℤ) inputs rule.rhs
+'TensorRewrite.Theory.OrderFamily.integer_family' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.real_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (rule : TensorRewrite.Theory.OrderFamily.Rule) (inputs : ℕ → TensorRewrite.Pilot.Tensor shape ℝ),
+  rule.Condition inputs →
+    TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact ℝ) inputs rule.lhs =
+      TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact ℝ) inputs rule.rhs
+'TensorRewrite.Theory.OrderFamily.real_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.OrderFamily.reversed_bounds_refuted : max 2 (min 0 1) ≠ min (max 0 2) 1
+'TensorRewrite.Theory.OrderFamily.reversed_bounds_refuted' does not depend on any axioms
+@TensorRewrite.Theory.OrderFamily.rewrite_in_context : ∀ {α β : Type} [inst : LinearOrder α] [inst_1 : Zero α]
+  {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} (rule : TensorRewrite.Theory.OrderFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α),
+  rule.Condition inputs →
+    ∀ (context : TensorRewrite.Pilot.Tensor shape α ⊕ TensorRewrite.Pilot.Tensor shape Bool → β),
+      context
+          (TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs
+            rule.lhs) =
+        context
+          (TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs
+            rule.rhs)
+'TensorRewrite.Theory.OrderFamily.rewrite_in_context' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.rewrite_sound : ∀ {α : Type} [inst : LinearOrder α] [inst_1 : Zero α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (rule : TensorRewrite.Theory.OrderFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α),
+  rule.Condition inputs →
+    TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs rule.lhs =
+      TensorRewrite.Theory.OrderFamily.Graph.eval (TensorRewrite.Theory.OrderFamily.Operations.exact α) inputs rule.rhs
+'TensorRewrite.Theory.OrderFamily.rewrite_sound' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.OrderFamily.rule_count : TensorRewrite.Theory.OrderFamily.allRules.length = 44
+'TensorRewrite.Theory.OrderFamily.rule_count' does not depend on any axioms
+@TensorRewrite.Theory.OrderFamily.signed_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} (width : ℕ)
+  (rule : TensorRewrite.Theory.OrderFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape (TensorRewrite.Theory.OrderFamily.Word true width)),
+  rule.Condition inputs →
+    TensorRewrite.Theory.OrderFamily.Graph.eval
+        (TensorRewrite.Theory.OrderFamily.Operations.exact (TensorRewrite.Theory.OrderFamily.Word true width)) inputs
+        rule.lhs =
+      TensorRewrite.Theory.OrderFamily.Graph.eval
+        (TensorRewrite.Theory.OrderFamily.Operations.exact (TensorRewrite.Theory.OrderFamily.Word true width)) inputs
+        rule.rhs
+'TensorRewrite.Theory.OrderFamily.signed_family' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.OrderFamily.signedness_refuted : (max { bits := 0#8 } { bits := 255#8 }).bits ≠
+  (max { bits := 0#8 } { bits := 255#8 }).bits
+'TensorRewrite.Theory.OrderFamily.signedness_refuted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.unsigned_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} (width : ℕ)
+  (rule : TensorRewrite.Theory.OrderFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape (TensorRewrite.Theory.OrderFamily.Word false width)),
+  rule.Condition inputs →
+    TensorRewrite.Theory.OrderFamily.Graph.eval
+        (TensorRewrite.Theory.OrderFamily.Operations.exact (TensorRewrite.Theory.OrderFamily.Word false width)) inputs
+        rule.lhs =
+      TensorRewrite.Theory.OrderFamily.Graph.eval
+        (TensorRewrite.Theory.OrderFamily.Operations.exact (TensorRewrite.Theory.OrderFamily.Word false width)) inputs
+        rule.rhs
+'TensorRewrite.Theory.OrderFamily.unsigned_family' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.unsigned_nonnegative : ∀ {width : ℕ}
+  (value : TensorRewrite.Theory.OrderFamily.Word false width), 0 ≤ value
+'TensorRewrite.Theory.OrderFamily.unsigned_nonnegative' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderFamily.unsigned_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} (width : ℕ)
+  (direction : TensorRewrite.Theory.OrderFamily.ZeroComparison)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape (TensorRewrite.Theory.OrderFamily.Word false width)),
+  TensorRewrite.Theory.OrderFamily.Graph.eval
+      (TensorRewrite.Theory.OrderFamily.Operations.exact (TensorRewrite.Theory.OrderFamily.Word false width)) inputs
+      (TensorRewrite.Theory.OrderFamily.Rule.compareZero direction).lhs =
+    TensorRewrite.Theory.OrderFamily.Graph.eval
+      (TensorRewrite.Theory.OrderFamily.Operations.exact (TensorRewrite.Theory.OrderFamily.Word false width)) inputs
+      (TensorRewrite.Theory.OrderFamily.Rule.compareZero direction).rhs
+'TensorRewrite.Theory.OrderFamily.unsigned_zero' depends on axioms: [propext, Quot.sound]
 TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar : ∀ (shape : TensorRewrite.Pilot.Shape 0),
   TensorRewrite.Theory.OrderedCoordinates.enumerate shape = [fun axis => axis.elim0]
 'TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]

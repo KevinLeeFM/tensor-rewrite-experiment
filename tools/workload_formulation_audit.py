@@ -6,7 +6,7 @@ from pathlib import Path
 import mathematical_ledger as ledger
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = 'census/workload-formulation-catalog-v5.json'
+CATALOG = 'census/workload-formulation-catalog-v6.json'
 
 
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()

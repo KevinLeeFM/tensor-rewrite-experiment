@@ -9,9 +9,9 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 315,
-    "partial_model_evidence_requires_partition_review": 127,
-    "declared_value_family_complete_full_record_partitions_open": 46
+    "needs_formal_statement_and_domain_partition": 269,
+    "partial_model_evidence_requires_partition_review": 125,
+    "declared_value_family_complete_full_record_partitions_open": 94
   },
   "batch_counts": {
     "dot-cases": 44,
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 776,
+  "distinct_checked_declarations": 794,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,11 +39,12 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 475,
+    "library_backed_theory": 489,
     "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "exact_numerical_domain_refutation": 5,
+    "exact_order_domain_refutation": 4,
     "ordered_scatter_contract_refutation": 4,
     "pad_broadcast_contract_refutation": 3,
     "pad_window_contract_refutation": 2,
@@ -139,6 +140,67 @@
         "HandleSubtract/sub-add-self-right",
         "HandleSubtract/sub-sub-self",
         "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false
+    },
+    {
+      "family": "typed_linear_order_values_v1",
+      "profile_unit_count": 176,
+      "rule_order_instance_count": 44,
+      "kernel_status": "kernel_complete_declared_mathematical_value_family",
+      "independent_statement_review": "pending",
+      "observations": "pure exact ordered values or Boolean predicates; words preserve actual bits; no IEEE totality",
+      "manifest": "census/order-values-family-v1.json",
+      "manifest_sha256": "ddd53873a558e01cd2666a19f8532fda45789c3c3d0444d25ab8015611e3fd71",
+      "candidate_benchmark_labels": [
+        "HandleClamp/idempotent",
+        "HandleClamp/runtime-id",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleMaximum/clamp-lhs-lhs",
+        "HandleMaximum/clamp-lhs-rhs",
+        "HandleMaximum/clamp-lower-lhs",
+        "HandleMaximum/clamp-lower-rhs",
+        "HandleMaximum/clamp-rhs-lhs",
+        "HandleMaximum/clamp-rhs-rhs",
+        "HandleMaximum/lhs-extreme",
+        "HandleMaximum/nested-left-lhs",
+        "HandleMaximum/nested-left-rhs",
+        "HandleMaximum/nested-right-first",
+        "HandleMaximum/nested-right-second",
+        "HandleMaximum/rhs-extreme",
+        "HandleMaximum/self",
+        "HandleMinimum/clamp-lhs-lhs",
+        "HandleMinimum/clamp-lhs-rhs",
+        "HandleMinimum/clamp-rhs-lhs",
+        "HandleMinimum/clamp-rhs-rhs",
+        "HandleMinimum/lhs-extreme",
+        "HandleMinimum/nested-left-lhs",
+        "HandleMinimum/nested-left-rhs",
+        "HandleMinimum/nested-right-first",
+        "HandleMinimum/nested-right-second",
+        "HandleMinimum/rhs-extreme",
+        "HandleMinimum/self",
+        "TrySimplifyTautologicalCompare/Gt-Gt",
+        "TrySimplifyTautologicalCompare/Gt-Lt",
+        "TrySimplifyTautologicalCompare/Lt-Gt",
+        "TrySimplifyTautologicalCompare/Lt-Lt"
       ],
       "label_correspondence_certified": false
     }
@@ -1153,15 +1215,15 @@
       "manifest_sha256": "9aa89947845d0dd7bc31245f5898578e1a38fbd1d3b7725b1aa77e0ecd46187b"
     }
   ],
-  "kernel_complete_family_profile_count": 193,
+  "kernel_complete_family_profile_count": 369,
   "count_policy": "declaration kinds can overlap; benchmark labels are retained candidates, not certified correspondence; no proof-count/488 coverage fraction",
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "c097df09cb212602eac43094edde4ab6c1a2a8cc17faf15b5448d3f808f47428",
+    "sha256": "db260abdc1d96bafc1341148caa59d45f655fc93bec441d382125a767e3a9c2c",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "d00f0232cc12fff5ffc7c5c60194fee477923452a120dce23d8846afccbccced"
+    "output_sha256": "bf0754e6d22203b994255c3a8dd588938ff0de846620aaa5eb9a9c2f2472f1ae"
   },
   "proofs": [
     {
@@ -10842,6 +10904,558 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.OrderFamily.allRuleKeys_nodup",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.allRules_complete",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.binary32_nan_self_refuted",
+      "kinds": [
+        "exact_order_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.binary32_zero_observation_refuted",
+      "kinds": [
+        "exact_order_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.condition_admitted",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.eval_maxOrder",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.eval_minOrder",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.integer_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleClamp/idempotent",
+        "HandleClamp/runtime-id",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleMaximum/clamp-lhs-lhs",
+        "HandleMaximum/clamp-lhs-rhs",
+        "HandleMaximum/clamp-lower-lhs",
+        "HandleMaximum/clamp-lower-rhs",
+        "HandleMaximum/clamp-rhs-lhs",
+        "HandleMaximum/clamp-rhs-rhs",
+        "HandleMaximum/lhs-extreme",
+        "HandleMaximum/nested-left-lhs",
+        "HandleMaximum/nested-left-rhs",
+        "HandleMaximum/nested-right-first",
+        "HandleMaximum/nested-right-second",
+        "HandleMaximum/rhs-extreme",
+        "HandleMaximum/self",
+        "HandleMinimum/clamp-lhs-lhs",
+        "HandleMinimum/clamp-lhs-rhs",
+        "HandleMinimum/clamp-rhs-lhs",
+        "HandleMinimum/clamp-rhs-rhs",
+        "HandleMinimum/lhs-extreme",
+        "HandleMinimum/nested-left-lhs",
+        "HandleMinimum/nested-left-rhs",
+        "HandleMinimum/nested-right-first",
+        "HandleMinimum/nested-right-second",
+        "HandleMinimum/rhs-extreme",
+        "HandleMinimum/self",
+        "TrySimplifyTautologicalCompare/Gt-Gt",
+        "TrySimplifyTautologicalCompare/Gt-Lt",
+        "TrySimplifyTautologicalCompare/Lt-Gt",
+        "TrySimplifyTautologicalCompare/Lt-Lt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.real_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleClamp/idempotent",
+        "HandleClamp/runtime-id",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleMaximum/clamp-lhs-lhs",
+        "HandleMaximum/clamp-lhs-rhs",
+        "HandleMaximum/clamp-lower-lhs",
+        "HandleMaximum/clamp-lower-rhs",
+        "HandleMaximum/clamp-rhs-lhs",
+        "HandleMaximum/clamp-rhs-rhs",
+        "HandleMaximum/lhs-extreme",
+        "HandleMaximum/nested-left-lhs",
+        "HandleMaximum/nested-left-rhs",
+        "HandleMaximum/nested-right-first",
+        "HandleMaximum/nested-right-second",
+        "HandleMaximum/rhs-extreme",
+        "HandleMaximum/self",
+        "HandleMinimum/clamp-lhs-lhs",
+        "HandleMinimum/clamp-lhs-rhs",
+        "HandleMinimum/clamp-rhs-lhs",
+        "HandleMinimum/clamp-rhs-rhs",
+        "HandleMinimum/lhs-extreme",
+        "HandleMinimum/nested-left-lhs",
+        "HandleMinimum/nested-left-rhs",
+        "HandleMinimum/nested-right-first",
+        "HandleMinimum/nested-right-second",
+        "HandleMinimum/rhs-extreme",
+        "HandleMinimum/self",
+        "TrySimplifyTautologicalCompare/Gt-Gt",
+        "TrySimplifyTautologicalCompare/Gt-Lt",
+        "TrySimplifyTautologicalCompare/Lt-Gt",
+        "TrySimplifyTautologicalCompare/Lt-Lt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.reversed_bounds_refuted",
+      "kinds": [
+        "exact_order_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_in_context",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleClamp/idempotent",
+        "HandleClamp/runtime-id",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleMaximum/clamp-lhs-lhs",
+        "HandleMaximum/clamp-lhs-rhs",
+        "HandleMaximum/clamp-lower-lhs",
+        "HandleMaximum/clamp-lower-rhs",
+        "HandleMaximum/clamp-rhs-lhs",
+        "HandleMaximum/clamp-rhs-rhs",
+        "HandleMaximum/lhs-extreme",
+        "HandleMaximum/nested-left-lhs",
+        "HandleMaximum/nested-left-rhs",
+        "HandleMaximum/nested-right-first",
+        "HandleMaximum/nested-right-second",
+        "HandleMaximum/rhs-extreme",
+        "HandleMaximum/self",
+        "HandleMinimum/clamp-lhs-lhs",
+        "HandleMinimum/clamp-lhs-rhs",
+        "HandleMinimum/clamp-rhs-lhs",
+        "HandleMinimum/clamp-rhs-rhs",
+        "HandleMinimum/lhs-extreme",
+        "HandleMinimum/nested-left-lhs",
+        "HandleMinimum/nested-left-rhs",
+        "HandleMinimum/nested-right-first",
+        "HandleMinimum/nested-right-second",
+        "HandleMinimum/rhs-extreme",
+        "HandleMinimum/self",
+        "TrySimplifyTautologicalCompare/Gt-Gt",
+        "TrySimplifyTautologicalCompare/Gt-Lt",
+        "TrySimplifyTautologicalCompare/Lt-Gt",
+        "TrySimplifyTautologicalCompare/Lt-Lt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.rule_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.signed_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleClamp/idempotent",
+        "HandleClamp/runtime-id",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleMaximum/clamp-lhs-lhs",
+        "HandleMaximum/clamp-lhs-rhs",
+        "HandleMaximum/clamp-lower-lhs",
+        "HandleMaximum/clamp-lower-rhs",
+        "HandleMaximum/clamp-rhs-lhs",
+        "HandleMaximum/clamp-rhs-rhs",
+        "HandleMaximum/lhs-extreme",
+        "HandleMaximum/nested-left-lhs",
+        "HandleMaximum/nested-left-rhs",
+        "HandleMaximum/nested-right-first",
+        "HandleMaximum/nested-right-second",
+        "HandleMaximum/rhs-extreme",
+        "HandleMaximum/self",
+        "HandleMinimum/clamp-lhs-lhs",
+        "HandleMinimum/clamp-lhs-rhs",
+        "HandleMinimum/clamp-rhs-lhs",
+        "HandleMinimum/clamp-rhs-rhs",
+        "HandleMinimum/lhs-extreme",
+        "HandleMinimum/nested-left-lhs",
+        "HandleMinimum/nested-left-rhs",
+        "HandleMinimum/nested-right-first",
+        "HandleMinimum/nested-right-second",
+        "HandleMinimum/rhs-extreme",
+        "HandleMinimum/self",
+        "TrySimplifyTautologicalCompare/Gt-Gt",
+        "TrySimplifyTautologicalCompare/Gt-Lt",
+        "TrySimplifyTautologicalCompare/Lt-Gt",
+        "TrySimplifyTautologicalCompare/Lt-Lt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.signedness_refuted",
+      "kinds": [
+        "exact_order_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.unsigned_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleClamp/idempotent",
+        "HandleClamp/runtime-id",
+        "HandleCompare/integral-self-eq",
+        "HandleCompare/integral-self-ge",
+        "HandleCompare/integral-self-gt",
+        "HandleCompare/integral-self-le",
+        "HandleCompare/integral-self-lt",
+        "HandleCompare/integral-self-ne",
+        "HandleCompare/maximum-first",
+        "HandleCompare/maximum-second",
+        "HandleCompare/minimum-first",
+        "HandleCompare/minimum-second",
+        "HandleCompare/nonnegative-ge",
+        "HandleCompare/nonnegative-gt",
+        "HandleCompare/nonnegative-le",
+        "HandleCompare/nonnegative-lt",
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le",
+        "HandleMaximum/clamp-lhs-lhs",
+        "HandleMaximum/clamp-lhs-rhs",
+        "HandleMaximum/clamp-lower-lhs",
+        "HandleMaximum/clamp-lower-rhs",
+        "HandleMaximum/clamp-rhs-lhs",
+        "HandleMaximum/clamp-rhs-rhs",
+        "HandleMaximum/lhs-extreme",
+        "HandleMaximum/nested-left-lhs",
+        "HandleMaximum/nested-left-rhs",
+        "HandleMaximum/nested-right-first",
+        "HandleMaximum/nested-right-second",
+        "HandleMaximum/rhs-extreme",
+        "HandleMaximum/self",
+        "HandleMinimum/clamp-lhs-lhs",
+        "HandleMinimum/clamp-lhs-rhs",
+        "HandleMinimum/clamp-rhs-lhs",
+        "HandleMinimum/clamp-rhs-rhs",
+        "HandleMinimum/lhs-extreme",
+        "HandleMinimum/nested-left-lhs",
+        "HandleMinimum/nested-left-rhs",
+        "HandleMinimum/nested-right-first",
+        "HandleMinimum/nested-right-second",
+        "HandleMinimum/rhs-extreme",
+        "HandleMinimum/self",
+        "TrySimplifyTautologicalCompare/Gt-Gt",
+        "TrySimplifyTautologicalCompare/Gt-Lt",
+        "TrySimplifyTautologicalCompare/Lt-Gt",
+        "TrySimplifyTautologicalCompare/Lt-Lt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.unsigned_nonnegative",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderFamily.unsigned_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed exact linear-order family:44 rule/order/direction instances; integer/real and signed/unsigned actual words at all widths; explicit pointwise bound/nonnegative/range conditions with executable admission equivalence; pure whole-tensor result tags and contexts; actual IEEE NaN/signed-zero observations separate; no full record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleCompare/unsigned-ge-zero",
+        "HandleCompare/unsigned-lt-zero",
+        "HandleCompare/unsigned-zero-gt",
+        "HandleCompare/unsigned-zero-le"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar",
       "kinds": [
         "library_backed_theory"
@@ -17148,10 +17762,19 @@
       "retained_lhs": "Clamp(a,Clamp(a,x,b),b)",
       "retained_rhs": "Clamp(a,x,b)",
       "unreviewed_benchmark_notes_not_assumptions": "both bound operand pointers match; ReplaceInstructionIfCompatible succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleClamp/runtime-id",
@@ -17159,10 +17782,19 @@
       "retained_lhs": "Clamp(0,PartitionId/ReplicaId,upper)",
       "retained_rhs": "PartitionId/ReplicaId",
       "unreviewed_benchmark_notes_not_assumptions": "ID opcode; lower ConstantScalar(0U); upper ConstantScalar; read upper as uint32; module bound != 1 and bound <= upper+1",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/causal-mask",
@@ -17181,10 +17813,19 @@
       "retained_lhs": "Eq(x,x)",
       "retained_rhs": "MakeScalarLike(compare,True)",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers; lhs type integral; direction Eq",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/integral-self-ge",
@@ -17192,10 +17833,19 @@
       "retained_lhs": "Ge(x,x)",
       "retained_rhs": "MakeScalarLike(compare,True)",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers; lhs type integral; direction Ge",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/integral-self-gt",
@@ -17203,10 +17853,19 @@
       "retained_lhs": "Gt(x,x)",
       "retained_rhs": "MakeScalarLike(compare,False)",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers; lhs type integral; direction Gt",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/integral-self-le",
@@ -17214,10 +17873,19 @@
       "retained_lhs": "Le(x,x)",
       "retained_rhs": "MakeScalarLike(compare,True)",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers; lhs type integral; direction Le",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/integral-self-lt",
@@ -17225,10 +17893,19 @@
       "retained_lhs": "Lt(x,x)",
       "retained_rhs": "MakeScalarLike(compare,False)",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers; lhs type integral; direction Lt",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/integral-self-ne",
@@ -17236,10 +17913,19 @@
       "retained_lhs": "Ne(x,x)",
       "retained_rhs": "MakeScalarLike(compare,False)",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers; lhs type integral; direction Ne",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/maximum-first",
@@ -17247,10 +17933,19 @@
       "retained_lhs": "Gt(Maximum(a,b),a)",
       "retained_rhs": "Gt(b,a)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Gt; lhs Maximum; rhs pointer == a",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/maximum-second",
@@ -17258,10 +17953,19 @@
       "retained_lhs": "Gt(Maximum(a,b),b)",
       "retained_rhs": "Gt(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Gt; lhs Maximum; rhs pointer == b; prior rhs==a branch excluded",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/minimum-first",
@@ -17269,10 +17973,19 @@
       "retained_lhs": "Gt(a,Minimum(a,b))",
       "retained_rhs": "Gt(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Gt; lhs Maximum matcher fails; rhs Minimum; lhs pointer == a",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/minimum-second",
@@ -17280,10 +17993,19 @@
       "retained_lhs": "Gt(b,Minimum(a,b))",
       "retained_rhs": "Gt(b,a)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Gt; lhs Maximum matcher fails; rhs Minimum; lhs pointer == b; prior lhs==a branch excluded",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/nonnegative-ge",
@@ -17291,17 +18013,25 @@
       "retained_lhs": "Ge(x,0)",
       "retained_rhs": "MakeScalarLike(compare,true)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Ge; IsNonNegative(lhs,options); IsAll(rhs,0)",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.OrderedCompareProfile.false_consistent",
         "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan",
         "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes",
         "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes",
         "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan",
-        "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan"
+        "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan",
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/nonnegative-gt",
@@ -17309,10 +18039,19 @@
       "retained_lhs": "Gt(0,x)",
       "retained_rhs": "MakeScalarLike(compare,false)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Gt; IsAll(lhs,0); IsNonNegative(rhs,options)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/nonnegative-le",
@@ -17320,17 +18059,25 @@
       "retained_lhs": "Le(0,x)",
       "retained_rhs": "MakeScalarLike(compare,true)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Le; IsAll(lhs,0); IsNonNegative(rhs,options)",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.OrderedCompareProfile.false_consistent",
         "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_is_nan",
         "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes",
         "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes",
         "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_left_nan",
-        "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan"
+        "TensorRewrite.Pilot.OrderedCompareProfile.true_incompatible_of_right_nan",
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/nonnegative-lt",
@@ -17338,10 +18085,19 @@
       "retained_lhs": "Lt(x,0)",
       "retained_rhs": "MakeScalarLike(compare,false)",
       "unreviewed_benchmark_notes_not_assumptions": "direction Lt; IsNonNegative(lhs,options); IsAll(rhs,0)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/predicate-eq-lhs",
@@ -17393,10 +18149,20 @@
       "retained_lhs": "Ge(x,0)",
       "retained_rhs": "MakeScalarLike(compare,true)",
       "unreviewed_benchmark_notes_not_assumptions": "lhs element type unsigned integral; direction Ge; IsAll(rhs,0)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_zero"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/unsigned-lt-zero",
@@ -17404,10 +18170,20 @@
       "retained_lhs": "Lt(x,0)",
       "retained_rhs": "MakeScalarLike(compare,false)",
       "unreviewed_benchmark_notes_not_assumptions": "lhs element type unsigned integral; direction Lt; IsAll(rhs,0)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_zero"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/unsigned-zero-gt",
@@ -17415,10 +18191,20 @@
       "retained_lhs": "Gt(0,x)",
       "retained_rhs": "MakeScalarLike(compare,false)",
       "unreviewed_benchmark_notes_not_assumptions": "lhs element type unsigned integral; direction Gt; IsAll(lhs,0)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_zero"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleCompare/unsigned-zero-le",
@@ -17426,10 +18212,20 @@
       "retained_lhs": "Le(0,x)",
       "retained_rhs": "MakeScalarLike(compare,true)",
       "unreviewed_benchmark_notes_not_assumptions": "lhs element type unsigned integral; direction Le; IsAll(lhs,0)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_zero"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleComplex/components",
@@ -18824,10 +19620,19 @@
       "retained_lhs": "Maximum(lower,Minimum(x,upper))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at lhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/clamp-lhs-rhs",
@@ -18835,10 +19640,19 @@
       "retained_lhs": "Maximum(lower,Minimum(x,upper))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at lhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/clamp-lower-lhs",
@@ -18846,10 +19660,19 @@
       "retained_lhs": "Maximum(lower,Clamp(lower,x,upper)) with Clamp at lhs",
       "retained_rhs": "matched Clamp",
       "unreviewed_benchmark_notes_not_assumptions": "max operand pointer equals clamp lower bound; compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/clamp-lower-rhs",
@@ -18857,10 +19680,19 @@
       "retained_lhs": "Maximum(lower,Clamp(lower,x,upper)) with Clamp at rhs",
       "retained_rhs": "matched Clamp",
       "unreviewed_benchmark_notes_not_assumptions": "max operand pointer equals clamp lower bound; compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/clamp-rhs-lhs",
@@ -18868,10 +19700,19 @@
       "retained_lhs": "Maximum(lower,Minimum(x,upper))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at rhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/clamp-rhs-rhs",
@@ -18879,10 +19720,19 @@
       "retained_lhs": "Maximum(lower,Minimum(x,upper))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at rhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/lhs-extreme",
@@ -18890,10 +19740,19 @@
       "retained_lhs": "Maximum(x,extreme) with extreme at lhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MinValue(extreme operand type); remaining operand element type equals result type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/nested-left-lhs",
@@ -18901,10 +19760,19 @@
       "retained_lhs": "Maximum(Maximum(x,y),repeated_operand)",
       "retained_rhs": "inner Maximum(x,y)",
       "unreviewed_benchmark_notes_not_assumptions": "outer lhs opcode same min/max; outer rhs pointer equals inner lhs operand",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/nested-left-rhs",
@@ -18912,10 +19780,19 @@
       "retained_lhs": "Maximum(Maximum(x,y),repeated_operand)",
       "retained_rhs": "inner Maximum(x,y)",
       "unreviewed_benchmark_notes_not_assumptions": "outer lhs opcode same min/max; outer rhs pointer equals inner rhs operand",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/nested-right-first",
@@ -18923,10 +19800,19 @@
       "retained_lhs": "Maximum(x,Maximum(x,y))",
       "retained_rhs": "inner Maximum(x,y)",
       "unreviewed_benchmark_notes_not_assumptions": "inner lhs pointer equals outer lhs",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/nested-right-second",
@@ -18934,10 +19820,19 @@
       "retained_lhs": "Maximum(y,Maximum(x,y))",
       "retained_rhs": "Maximum(y,x)",
       "unreviewed_benchmark_notes_not_assumptions": "inner rhs pointer equals outer lhs; mutate outer operand1 to inner operand0",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/rhs-extreme",
@@ -18945,10 +19840,19 @@
       "retained_lhs": "Maximum(x,extreme) with extreme at rhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MinValue(extreme operand type); remaining operand element type equals result type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/self",
@@ -18956,10 +19860,19 @@
       "retained_lhs": "Maximum(x,x)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/sink-cbrt",
@@ -19011,10 +19924,19 @@
       "retained_lhs": "Minimum(upper,Maximum(x,lower))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at lhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/clamp-lhs-rhs",
@@ -19022,10 +19944,19 @@
       "retained_lhs": "Minimum(upper,Maximum(x,lower))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at lhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/clamp-rhs-lhs",
@@ -19033,10 +19964,19 @@
       "retained_lhs": "Minimum(upper,Maximum(x,lower))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at rhs; inner bound at lhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/clamp-rhs-rhs",
@@ -19044,10 +19984,19 @@
       "retained_lhs": "Minimum(upper,Maximum(x,lower))",
       "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
       "unreviewed_benchmark_notes_not_assumptions": "outer bound at rhs; inner bound at rhs; both bounds Broadcast(ConstantEffectiveScalar); MinMaxToClamp returns nonnull after literal scalar reshape and evaluator lower<upper",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/lhs-extreme",
@@ -19055,10 +20004,19 @@
       "retained_lhs": "Minimum(x,extreme) with extreme at lhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MaxValue(extreme operand type); remaining operand element type equals result type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/nested-left-lhs",
@@ -19066,10 +20024,19 @@
       "retained_lhs": "Minimum(Minimum(x,y),repeated_operand)",
       "retained_rhs": "inner Minimum(x,y)",
       "unreviewed_benchmark_notes_not_assumptions": "outer lhs opcode same min/max; outer rhs pointer equals inner lhs operand",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/nested-left-rhs",
@@ -19077,10 +20044,19 @@
       "retained_lhs": "Minimum(Minimum(x,y),repeated_operand)",
       "retained_rhs": "inner Minimum(x,y)",
       "unreviewed_benchmark_notes_not_assumptions": "outer lhs opcode same min/max; outer rhs pointer equals inner rhs operand",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/nested-right-first",
@@ -19088,10 +20064,19 @@
       "retained_lhs": "Minimum(x,Minimum(x,y))",
       "retained_rhs": "inner Minimum(x,y)",
       "unreviewed_benchmark_notes_not_assumptions": "inner lhs pointer equals outer lhs",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/nested-right-second",
@@ -19099,10 +20084,19 @@
       "retained_lhs": "Minimum(y,Minimum(x,y))",
       "retained_rhs": "Minimum(y,x)",
       "unreviewed_benchmark_notes_not_assumptions": "inner rhs pointer equals outer lhs; mutate outer operand1 to inner operand0",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/rhs-extreme",
@@ -19110,10 +20104,19 @@
       "retained_lhs": "Minimum(x,extreme) with extreme at rhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "integral output OR (floating output AND minmax_propagate_nan); extreme is LiteralUtil::MaxValue(extreme operand type); remaining operand element type equals result type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMinimum/self",
@@ -19121,10 +20124,19 @@
       "retained_lhs": "Minimum(x,x)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "same operand pointers",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/abs-square",
@@ -22341,10 +23353,19 @@
       "retained_lhs": "And(Gt(c1,x),Gt(c2,x))",
       "retained_rhs": "Lt(x,min(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "both constants effective scalars of type S32; both variable pointers identical",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "TrySimplifyTautologicalCompare/Gt-Lt",
@@ -22352,10 +23373,19 @@
       "retained_lhs": "And(Gt(c1,x),Lt(x,c2))",
       "retained_rhs": "Lt(x,min(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "both constants effective scalars of type S32; both variable pointers identical",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "TrySimplifyTautologicalCompare/Lt-Gt",
@@ -22363,10 +23393,19 @@
       "retained_lhs": "And(Lt(x,c1),Gt(c2,x))",
       "retained_rhs": "Lt(x,min(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "both constants effective scalars of type S32; both variable pointers identical",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "TrySimplifyTautologicalCompare/Lt-Lt",
@@ -22374,10 +23413,19 @@
       "retained_lhs": "And(Lt(x,c1),Lt(x,c2))",
       "retained_rhs": "Lt(x,min(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "both constants effective scalars of type S32; both variable pointers identical",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.OrderFamily.integer_family",
+        "TensorRewrite.Theory.OrderFamily.real_family",
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound",
+        "TensorRewrite.Theory.OrderFamily.signed_family",
+        "TensorRewrite.Theory.OrderFamily.unsigned_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_linear_order_values_v1"
+      ]
     },
     {
       "benchmark_id": "TryToReorderConvAddMultiply/order-lhs-lhs",

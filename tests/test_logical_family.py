@@ -14,7 +14,7 @@ class LogicalFamilyTests(unittest.TestCase):
     def test_compiled_profile_enumeration(self):
         result=ledger.read('reports/logical-values-family.json')
         self.assertEqual(family.profile_rows(result['audit_stdout']),result['profile_units'])
-        self.assertEqual(len(ledger.formulated_families()),3)
+        self.assertEqual(len(ledger.formulated_families()),4)
         self.assertEqual(ledger.formulated_families()[0]['profile_unit_count'],20)
         self.assertTrue(all(c['exit_code']!=0 for c in result['negative_controls'].values()))
 
@@ -43,7 +43,7 @@ class LogicalFamilyTests(unittest.TestCase):
         proofs=ledger.evidence()
         for proof in proofs:proof['mathematical_acceptance']='kernel_checked_in_declared_model'
         result=ledger.assemble(ledger.corpus(),proofs,{},ledger.formulated_families())
-        self.assertEqual(result['kernel_complete_family_profile_count'],193)
+        self.assertEqual(result['kernel_complete_family_profile_count'],369)
         self.assertEqual(result['whole_benchmark_records_closed'],0)
         self.assertIsNone(result['mathematical_obligation_denominator'])
         self.assertEqual(result['positive_or_negative_workflow_verdict'],'unresolved_full_campaign_required')

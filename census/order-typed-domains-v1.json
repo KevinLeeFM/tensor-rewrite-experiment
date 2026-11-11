@@ -1,0 +1,1802 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_declared_order_value_family_remaining_partitions_open",
+  "retained_batches": [
+    {
+      "path": "census/simple-cases.json",
+      "sha256": "89285c0fb18b2e42d29c3e78c9d800b4b16354a0c0d0cd53ecca9843d3177e05"
+    },
+    {
+      "path": "census/arithmetic-cases.json",
+      "sha256": "a3df5f4aa5d8c122fda52db44d920e625b5f38be15b68eaaeaa06fb3c82037f7"
+    },
+    {
+      "path": "census/scalar-control-cases.json",
+      "sha256": "905974b8c88743cef12ce689f7aaca918dc635955d987eaa237d13f4e85c0c14"
+    }
+  ],
+  "typed_family_manifest": "census/order-values-family-v1.json",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleClamp/idempotent",
+      "retained_lhs": "Clamp(a,Clamp(a,x,b),b)",
+      "retained_rhs": "Clamp(a,x,b)",
+      "typed_profile_refs": [
+        "integer/clamp_idempotent",
+        "real/clamp_idempotent",
+        "unsigned_all_widths/clamp_idempotent",
+        "signed_all_widths/clamp_idempotent"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "clamp_idempotent",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleClamp/runtime-id",
+      "retained_lhs": "Clamp(0,PartitionId/ReplicaId,upper)",
+      "retained_rhs": "PartitionId/ReplicaId",
+      "typed_profile_refs": [
+        "integer/clamp_range",
+        "real/clamp_range",
+        "unsigned_all_widths/clamp_range",
+        "signed_all_widths/clamp_range"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "clamp_range",
+          "pointwise_condition": "range"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/integral-self-eq",
+      "retained_lhs": "Eq(x,x)",
+      "retained_rhs": "MakeScalarLike(compare,True)",
+      "typed_profile_refs": [
+        "integer/compare_self_eq",
+        "real/compare_self_eq",
+        "unsigned_all_widths/compare_self_eq",
+        "signed_all_widths/compare_self_eq"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_self_eq",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/integral-self-ge",
+      "retained_lhs": "Ge(x,x)",
+      "retained_rhs": "MakeScalarLike(compare,True)",
+      "typed_profile_refs": [
+        "integer/compare_self_ge",
+        "real/compare_self_ge",
+        "unsigned_all_widths/compare_self_ge",
+        "signed_all_widths/compare_self_ge"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_self_ge",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/integral-self-gt",
+      "retained_lhs": "Gt(x,x)",
+      "retained_rhs": "MakeScalarLike(compare,False)",
+      "typed_profile_refs": [
+        "integer/compare_self_gt",
+        "real/compare_self_gt",
+        "unsigned_all_widths/compare_self_gt",
+        "signed_all_widths/compare_self_gt"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_self_gt",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/integral-self-le",
+      "retained_lhs": "Le(x,x)",
+      "retained_rhs": "MakeScalarLike(compare,True)",
+      "typed_profile_refs": [
+        "integer/compare_self_le",
+        "real/compare_self_le",
+        "unsigned_all_widths/compare_self_le",
+        "signed_all_widths/compare_self_le"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_self_le",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/integral-self-lt",
+      "retained_lhs": "Lt(x,x)",
+      "retained_rhs": "MakeScalarLike(compare,False)",
+      "typed_profile_refs": [
+        "integer/compare_self_lt",
+        "real/compare_self_lt",
+        "unsigned_all_widths/compare_self_lt",
+        "signed_all_widths/compare_self_lt"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_self_lt",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/integral-self-ne",
+      "retained_lhs": "Ne(x,x)",
+      "retained_rhs": "MakeScalarLike(compare,False)",
+      "typed_profile_refs": [
+        "integer/compare_self_ne",
+        "real/compare_self_ne",
+        "unsigned_all_widths/compare_self_ne",
+        "signed_all_widths/compare_self_ne"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_self_ne",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/maximum-first",
+      "retained_lhs": "Gt(Maximum(a,b),a)",
+      "retained_rhs": "Gt(b,a)",
+      "typed_profile_refs": [
+        "integer/max_compare_first",
+        "real/max_compare_first",
+        "unsigned_all_widths/max_compare_first",
+        "signed_all_widths/max_compare_first"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_compare_first",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/maximum-second",
+      "retained_lhs": "Gt(Maximum(a,b),b)",
+      "retained_rhs": "Gt(a,b)",
+      "typed_profile_refs": [
+        "integer/max_compare_second",
+        "real/max_compare_second",
+        "unsigned_all_widths/max_compare_second",
+        "signed_all_widths/max_compare_second"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_compare_second",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/minimum-first",
+      "retained_lhs": "Gt(a,Minimum(a,b))",
+      "retained_rhs": "Gt(a,b)",
+      "typed_profile_refs": [
+        "integer/min_compare_first",
+        "real/min_compare_first",
+        "unsigned_all_widths/min_compare_first",
+        "signed_all_widths/min_compare_first"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_compare_first",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/minimum-second",
+      "retained_lhs": "Gt(b,Minimum(a,b))",
+      "retained_rhs": "Gt(b,a)",
+      "typed_profile_refs": [
+        "integer/min_compare_second",
+        "real/min_compare_second",
+        "unsigned_all_widths/min_compare_second",
+        "signed_all_widths/min_compare_second"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_compare_second",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/nonnegative-ge",
+      "retained_lhs": "Ge(x,0)",
+      "retained_rhs": "MakeScalarLike(compare,true)",
+      "typed_profile_refs": [
+        "integer/compare_zero_input_ge_zero",
+        "real/compare_zero_input_ge_zero",
+        "unsigned_all_widths/compare_zero_input_ge_zero",
+        "signed_all_widths/compare_zero_input_ge_zero"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_input_ge_zero",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/nonnegative-gt",
+      "retained_lhs": "Gt(0,x)",
+      "retained_rhs": "MakeScalarLike(compare,false)",
+      "typed_profile_refs": [
+        "integer/compare_zero_zero_gt_input",
+        "real/compare_zero_zero_gt_input",
+        "unsigned_all_widths/compare_zero_zero_gt_input",
+        "signed_all_widths/compare_zero_zero_gt_input"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_zero_gt_input",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/nonnegative-le",
+      "retained_lhs": "Le(0,x)",
+      "retained_rhs": "MakeScalarLike(compare,true)",
+      "typed_profile_refs": [
+        "integer/compare_zero_zero_le_input",
+        "real/compare_zero_zero_le_input",
+        "unsigned_all_widths/compare_zero_zero_le_input",
+        "signed_all_widths/compare_zero_zero_le_input"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_zero_le_input",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/nonnegative-lt",
+      "retained_lhs": "Lt(x,0)",
+      "retained_rhs": "MakeScalarLike(compare,false)",
+      "typed_profile_refs": [
+        "integer/compare_zero_input_lt_zero",
+        "real/compare_zero_input_lt_zero",
+        "unsigned_all_widths/compare_zero_input_lt_zero",
+        "signed_all_widths/compare_zero_input_lt_zero"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_input_lt_zero",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/unsigned-ge-zero",
+      "retained_lhs": "Ge(x,0)",
+      "retained_rhs": "MakeScalarLike(compare,true)",
+      "typed_profile_refs": [
+        "integer/compare_zero_input_ge_zero",
+        "real/compare_zero_input_ge_zero",
+        "unsigned_all_widths/compare_zero_input_ge_zero",
+        "signed_all_widths/compare_zero_input_ge_zero"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_input_ge_zero",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/unsigned-lt-zero",
+      "retained_lhs": "Lt(x,0)",
+      "retained_rhs": "MakeScalarLike(compare,false)",
+      "typed_profile_refs": [
+        "integer/compare_zero_input_lt_zero",
+        "real/compare_zero_input_lt_zero",
+        "unsigned_all_widths/compare_zero_input_lt_zero",
+        "signed_all_widths/compare_zero_input_lt_zero"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_input_lt_zero",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/unsigned-zero-gt",
+      "retained_lhs": "Gt(0,x)",
+      "retained_rhs": "MakeScalarLike(compare,false)",
+      "typed_profile_refs": [
+        "integer/compare_zero_zero_gt_input",
+        "real/compare_zero_zero_gt_input",
+        "unsigned_all_widths/compare_zero_zero_gt_input",
+        "signed_all_widths/compare_zero_zero_gt_input"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_zero_gt_input",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleCompare/unsigned-zero-le",
+      "retained_lhs": "Le(0,x)",
+      "retained_rhs": "MakeScalarLike(compare,true)",
+      "typed_profile_refs": [
+        "integer/compare_zero_zero_le_input",
+        "real/compare_zero_zero_le_input",
+        "unsigned_all_widths/compare_zero_zero_le_input",
+        "signed_all_widths/compare_zero_zero_le_input"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "compare_zero_zero_le_input",
+          "pointwise_condition": "nonnegative"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/clamp-lhs-lhs",
+      "retained_lhs": "Maximum(lower,Minimum(x,upper))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/max_min_clamp_00",
+        "integer/max_min_clamp_01",
+        "integer/max_min_clamp_10",
+        "integer/max_min_clamp_11",
+        "real/max_min_clamp_00",
+        "real/max_min_clamp_01",
+        "real/max_min_clamp_10",
+        "real/max_min_clamp_11",
+        "unsigned_all_widths/max_min_clamp_00",
+        "unsigned_all_widths/max_min_clamp_01",
+        "unsigned_all_widths/max_min_clamp_10",
+        "unsigned_all_widths/max_min_clamp_11",
+        "signed_all_widths/max_min_clamp_00",
+        "signed_all_widths/max_min_clamp_01",
+        "signed_all_widths/max_min_clamp_10",
+        "signed_all_widths/max_min_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_min_clamp_00",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_01",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_10",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_11",
+          "pointwise_condition": "bounds"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/clamp-lhs-rhs",
+      "retained_lhs": "Maximum(lower,Minimum(x,upper))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/max_min_clamp_00",
+        "integer/max_min_clamp_01",
+        "integer/max_min_clamp_10",
+        "integer/max_min_clamp_11",
+        "real/max_min_clamp_00",
+        "real/max_min_clamp_01",
+        "real/max_min_clamp_10",
+        "real/max_min_clamp_11",
+        "unsigned_all_widths/max_min_clamp_00",
+        "unsigned_all_widths/max_min_clamp_01",
+        "unsigned_all_widths/max_min_clamp_10",
+        "unsigned_all_widths/max_min_clamp_11",
+        "signed_all_widths/max_min_clamp_00",
+        "signed_all_widths/max_min_clamp_01",
+        "signed_all_widths/max_min_clamp_10",
+        "signed_all_widths/max_min_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_min_clamp_00",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_01",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_10",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_11",
+          "pointwise_condition": "bounds"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/clamp-lower-lhs",
+      "retained_lhs": "Maximum(lower,Clamp(lower,x,upper)) with Clamp at lhs",
+      "retained_rhs": "matched Clamp",
+      "typed_profile_refs": [
+        "integer/max_clamp_lower_1",
+        "real/max_clamp_lower_1",
+        "unsigned_all_widths/max_clamp_lower_1",
+        "signed_all_widths/max_clamp_lower_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_clamp_lower_1",
+          "pointwise_condition": "bounds"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/clamp-lower-rhs",
+      "retained_lhs": "Maximum(lower,Clamp(lower,x,upper)) with Clamp at rhs",
+      "retained_rhs": "matched Clamp",
+      "typed_profile_refs": [
+        "integer/max_clamp_lower_0",
+        "real/max_clamp_lower_0",
+        "unsigned_all_widths/max_clamp_lower_0",
+        "signed_all_widths/max_clamp_lower_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_clamp_lower_0",
+          "pointwise_condition": "bounds"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/clamp-rhs-lhs",
+      "retained_lhs": "Maximum(lower,Minimum(x,upper))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/max_min_clamp_00",
+        "integer/max_min_clamp_01",
+        "integer/max_min_clamp_10",
+        "integer/max_min_clamp_11",
+        "real/max_min_clamp_00",
+        "real/max_min_clamp_01",
+        "real/max_min_clamp_10",
+        "real/max_min_clamp_11",
+        "unsigned_all_widths/max_min_clamp_00",
+        "unsigned_all_widths/max_min_clamp_01",
+        "unsigned_all_widths/max_min_clamp_10",
+        "unsigned_all_widths/max_min_clamp_11",
+        "signed_all_widths/max_min_clamp_00",
+        "signed_all_widths/max_min_clamp_01",
+        "signed_all_widths/max_min_clamp_10",
+        "signed_all_widths/max_min_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_min_clamp_00",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_01",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_10",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_11",
+          "pointwise_condition": "bounds"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/clamp-rhs-rhs",
+      "retained_lhs": "Maximum(lower,Minimum(x,upper))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/max_min_clamp_00",
+        "integer/max_min_clamp_01",
+        "integer/max_min_clamp_10",
+        "integer/max_min_clamp_11",
+        "real/max_min_clamp_00",
+        "real/max_min_clamp_01",
+        "real/max_min_clamp_10",
+        "real/max_min_clamp_11",
+        "unsigned_all_widths/max_min_clamp_00",
+        "unsigned_all_widths/max_min_clamp_01",
+        "unsigned_all_widths/max_min_clamp_10",
+        "unsigned_all_widths/max_min_clamp_11",
+        "signed_all_widths/max_min_clamp_00",
+        "signed_all_widths/max_min_clamp_01",
+        "signed_all_widths/max_min_clamp_10",
+        "signed_all_widths/max_min_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_min_clamp_00",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_01",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_10",
+          "pointwise_condition": "bounds"
+        },
+        {
+          "rule": "max_min_clamp_11",
+          "pointwise_condition": "bounds"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/lhs-extreme",
+      "retained_lhs": "Maximum(x,extreme) with extreme at lhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/max_extreme_1",
+        "real/max_extreme_1",
+        "unsigned_all_widths/max_extreme_1",
+        "signed_all_widths/max_extreme_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_extreme_1",
+          "pointwise_condition": "lower"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/nested-left-lhs",
+      "retained_lhs": "Maximum(Maximum(x,y),repeated_operand)",
+      "retained_rhs": "inner Maximum(x,y)",
+      "typed_profile_refs": [
+        "integer/max_nested_left_1",
+        "real/max_nested_left_1",
+        "unsigned_all_widths/max_nested_left_1",
+        "signed_all_widths/max_nested_left_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_nested_left_1",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/nested-left-rhs",
+      "retained_lhs": "Maximum(Maximum(x,y),repeated_operand)",
+      "retained_rhs": "inner Maximum(x,y)",
+      "typed_profile_refs": [
+        "integer/max_nested_left_0",
+        "real/max_nested_left_0",
+        "unsigned_all_widths/max_nested_left_0",
+        "signed_all_widths/max_nested_left_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_nested_left_0",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/nested-right-first",
+      "retained_lhs": "Maximum(x,Maximum(x,y))",
+      "retained_rhs": "inner Maximum(x,y)",
+      "typed_profile_refs": [
+        "integer/max_nested_right_1",
+        "real/max_nested_right_1",
+        "unsigned_all_widths/max_nested_right_1",
+        "signed_all_widths/max_nested_right_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_nested_right_1",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/nested-right-second",
+      "retained_lhs": "Maximum(y,Maximum(x,y))",
+      "retained_rhs": "Maximum(y,x)",
+      "typed_profile_refs": [
+        "integer/max_nested_right_0",
+        "real/max_nested_right_0",
+        "unsigned_all_widths/max_nested_right_0",
+        "signed_all_widths/max_nested_right_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_nested_right_0",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/rhs-extreme",
+      "retained_lhs": "Maximum(x,extreme) with extreme at rhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/max_extreme_0",
+        "real/max_extreme_0",
+        "unsigned_all_widths/max_extreme_0",
+        "signed_all_widths/max_extreme_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_extreme_0",
+          "pointwise_condition": "lower"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMaximum/self",
+      "retained_lhs": "Maximum(x,x)",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/max_self",
+        "real/max_self",
+        "unsigned_all_widths/max_self",
+        "signed_all_widths/max_self"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "max_self",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/clamp-lhs-lhs",
+      "retained_lhs": "Minimum(upper,Maximum(x,lower))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/min_max_clamp_00",
+        "integer/min_max_clamp_01",
+        "integer/min_max_clamp_10",
+        "integer/min_max_clamp_11",
+        "real/min_max_clamp_00",
+        "real/min_max_clamp_01",
+        "real/min_max_clamp_10",
+        "real/min_max_clamp_11",
+        "unsigned_all_widths/min_max_clamp_00",
+        "unsigned_all_widths/min_max_clamp_01",
+        "unsigned_all_widths/min_max_clamp_10",
+        "unsigned_all_widths/min_max_clamp_11",
+        "signed_all_widths/min_max_clamp_00",
+        "signed_all_widths/min_max_clamp_01",
+        "signed_all_widths/min_max_clamp_10",
+        "signed_all_widths/min_max_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_max_clamp_00",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_01",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_10",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_11",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/clamp-lhs-rhs",
+      "retained_lhs": "Minimum(upper,Maximum(x,lower))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/min_max_clamp_00",
+        "integer/min_max_clamp_01",
+        "integer/min_max_clamp_10",
+        "integer/min_max_clamp_11",
+        "real/min_max_clamp_00",
+        "real/min_max_clamp_01",
+        "real/min_max_clamp_10",
+        "real/min_max_clamp_11",
+        "unsigned_all_widths/min_max_clamp_00",
+        "unsigned_all_widths/min_max_clamp_01",
+        "unsigned_all_widths/min_max_clamp_10",
+        "unsigned_all_widths/min_max_clamp_11",
+        "signed_all_widths/min_max_clamp_00",
+        "signed_all_widths/min_max_clamp_01",
+        "signed_all_widths/min_max_clamp_10",
+        "signed_all_widths/min_max_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_max_clamp_00",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_01",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_10",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_11",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/clamp-rhs-lhs",
+      "retained_lhs": "Minimum(upper,Maximum(x,lower))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/min_max_clamp_00",
+        "integer/min_max_clamp_01",
+        "integer/min_max_clamp_10",
+        "integer/min_max_clamp_11",
+        "real/min_max_clamp_00",
+        "real/min_max_clamp_01",
+        "real/min_max_clamp_10",
+        "real/min_max_clamp_11",
+        "unsigned_all_widths/min_max_clamp_00",
+        "unsigned_all_widths/min_max_clamp_01",
+        "unsigned_all_widths/min_max_clamp_10",
+        "unsigned_all_widths/min_max_clamp_11",
+        "signed_all_widths/min_max_clamp_00",
+        "signed_all_widths/min_max_clamp_01",
+        "signed_all_widths/min_max_clamp_10",
+        "signed_all_widths/min_max_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_max_clamp_00",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_01",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_10",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_11",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/clamp-rhs-rhs",
+      "retained_lhs": "Minimum(upper,Maximum(x,lower))",
+      "retained_rhs": "Clamp(lower_broadcast,x,upper_broadcast)",
+      "typed_profile_refs": [
+        "integer/min_max_clamp_00",
+        "integer/min_max_clamp_01",
+        "integer/min_max_clamp_10",
+        "integer/min_max_clamp_11",
+        "real/min_max_clamp_00",
+        "real/min_max_clamp_01",
+        "real/min_max_clamp_10",
+        "real/min_max_clamp_11",
+        "unsigned_all_widths/min_max_clamp_00",
+        "unsigned_all_widths/min_max_clamp_01",
+        "unsigned_all_widths/min_max_clamp_10",
+        "unsigned_all_widths/min_max_clamp_11",
+        "signed_all_widths/min_max_clamp_00",
+        "signed_all_widths/min_max_clamp_01",
+        "signed_all_widths/min_max_clamp_10",
+        "signed_all_widths/min_max_clamp_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_max_clamp_00",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_01",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_10",
+          "pointwise_condition": "true"
+        },
+        {
+          "rule": "min_max_clamp_11",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/lhs-extreme",
+      "retained_lhs": "Minimum(x,extreme) with extreme at lhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/min_extreme_1",
+        "real/min_extreme_1",
+        "unsigned_all_widths/min_extreme_1",
+        "signed_all_widths/min_extreme_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_extreme_1",
+          "pointwise_condition": "upper"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/nested-left-lhs",
+      "retained_lhs": "Minimum(Minimum(x,y),repeated_operand)",
+      "retained_rhs": "inner Minimum(x,y)",
+      "typed_profile_refs": [
+        "integer/min_nested_left_1",
+        "real/min_nested_left_1",
+        "unsigned_all_widths/min_nested_left_1",
+        "signed_all_widths/min_nested_left_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_nested_left_1",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/nested-left-rhs",
+      "retained_lhs": "Minimum(Minimum(x,y),repeated_operand)",
+      "retained_rhs": "inner Minimum(x,y)",
+      "typed_profile_refs": [
+        "integer/min_nested_left_0",
+        "real/min_nested_left_0",
+        "unsigned_all_widths/min_nested_left_0",
+        "signed_all_widths/min_nested_left_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_nested_left_0",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/nested-right-first",
+      "retained_lhs": "Minimum(x,Minimum(x,y))",
+      "retained_rhs": "inner Minimum(x,y)",
+      "typed_profile_refs": [
+        "integer/min_nested_right_1",
+        "real/min_nested_right_1",
+        "unsigned_all_widths/min_nested_right_1",
+        "signed_all_widths/min_nested_right_1"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_nested_right_1",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/nested-right-second",
+      "retained_lhs": "Minimum(y,Minimum(x,y))",
+      "retained_rhs": "Minimum(y,x)",
+      "typed_profile_refs": [
+        "integer/min_nested_right_0",
+        "real/min_nested_right_0",
+        "unsigned_all_widths/min_nested_right_0",
+        "signed_all_widths/min_nested_right_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_nested_right_0",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/rhs-extreme",
+      "retained_lhs": "Minimum(x,extreme) with extreme at rhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/min_extreme_0",
+        "real/min_extreme_0",
+        "unsigned_all_widths/min_extreme_0",
+        "signed_all_widths/min_extreme_0"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_extreme_0",
+          "pointwise_condition": "upper"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMinimum/self",
+      "retained_lhs": "Minimum(x,x)",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/min_self",
+        "real/min_self",
+        "unsigned_all_widths/min_self",
+        "signed_all_widths/min_self"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "min_self",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "TrySimplifyTautologicalCompare/Gt-Gt",
+      "retained_lhs": "And(Gt(c1,x),Gt(c2,x))",
+      "retained_rhs": "Lt(x,min(c1,c2))",
+      "typed_profile_refs": [
+        "integer/tautological_11",
+        "real/tautological_11",
+        "unsigned_all_widths/tautological_11",
+        "signed_all_widths/tautological_11"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "tautological_11",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "TrySimplifyTautologicalCompare/Gt-Lt",
+      "retained_lhs": "And(Gt(c1,x),Lt(x,c2))",
+      "retained_rhs": "Lt(x,min(c1,c2))",
+      "typed_profile_refs": [
+        "integer/tautological_10",
+        "real/tautological_10",
+        "unsigned_all_widths/tautological_10",
+        "signed_all_widths/tautological_10"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "tautological_10",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "TrySimplifyTautologicalCompare/Lt-Gt",
+      "retained_lhs": "And(Lt(x,c1),Gt(c2,x))",
+      "retained_rhs": "Lt(x,min(c1,c2))",
+      "typed_profile_refs": [
+        "integer/tautological_01",
+        "real/tautological_01",
+        "unsigned_all_widths/tautological_01",
+        "signed_all_widths/tautological_01"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "tautological_01",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "TrySimplifyTautologicalCompare/Lt-Lt",
+      "retained_lhs": "And(Lt(x,c1),Lt(x,c2))",
+      "retained_rhs": "Lt(x,min(c1,c2))",
+      "typed_profile_refs": [
+        "integer/tautological_00",
+        "real/tautological_00",
+        "unsigned_all_widths/tautological_00",
+        "signed_all_widths/tautological_00"
+      ],
+      "mathematical_domains": [
+        {
+          "rule": "tautological_00",
+          "pointwise_condition": "true"
+        }
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.OrderFamily.rewrite_sound"
+      ],
+      "mathematical_premises": [
+        "Actual selected linear order, explicit zero and typed original/replacement trees; all pointwise rule conditions are part of the declared mathematical profiles.",
+        "Bounds are mathematical value comparisons, not assumed consequences of source recognition; zero is not globally minimal in signed/real/integer tracks.",
+        "Unsigned zero-comparison premises are independently discharged over actual words at every width."
+      ],
+      "remaining_partitions": [
+        "IEEE numerical comparisons, NaNs, signed-zero ties and actual Min/Max observation policies require separate profiles.",
+        "Runtime ID encodings, participant counts and finite-width bounds/overflow remain unproved; clampRange only assumes an independent mathematical value interval.",
+        "Concrete extreme-literal recognition, effects, dynamic/physical observations and complete workload admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}

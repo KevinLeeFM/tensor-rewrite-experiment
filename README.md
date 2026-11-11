@@ -4,10 +4,10 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 516 checked mathematical statements; custom Lean totals **9,772**.
+The theory target now has 534 checked mathematical statements; custom Lean totals **10,098**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including309 covered only by
-unreviewed proposals after the Scatter and typed-numerical refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
+All488 retained records now have domain/dependency worksheets, including261 covered only by
+unreviewed proposals after the Scatter, numerical and order refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1177,4 +1177,14 @@ custom Lean lines, including five sign/branch counterexamples. It proves exact
 field division and real/principal-complex Exp, Power, Sqrt/Rsqrt and Log-Power
 graphs with explicit sufficient or iff domains. Thirty-one records gain typed
 partial evidence. Machine division, rounded transcendentals, remaining numerical
-partitions and independent review stay open; the complete family count remains193.
+partitions and independent review stay open; this extension is a partial numerical model.
+
+
+## Exact order family
+
+The [order family](docs/order-family.md) checks44 rule/order/direction instances
+across integer, real and all-width signed/unsigned words:176 complete declared
+profiles under explicit mathematical bound/range conditions. Eighteen statements
+add326 custom Lean lines, including four bound/signedness/IEEE observation controls.
+Forty-eight records gain value-family evidence; the four families now total369
+profiles. Full records, global N/F, remaining observations and review stay open.

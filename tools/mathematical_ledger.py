@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.OrderFamily.' in name:
+            manifest=read('census/order-values-family-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.Numerical.' in name:
             manifest=read('census/numerical-values-v2.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -248,7 +251,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('exact_numerical_domain_refutation' if '.Numerical.' in name
+        kind=('exact_order_domain_refutation' if '.OrderFamily.' in name
+              and name.endswith('_refuted') else 'exact_numerical_domain_refutation' if '.Numerical.' in name
               and name.endswith('_refuted') else 'arithmetic_ieee_profile_refutation' if '.ArithmeticFamily.' in name
               and name.endswith('_refuted') else
               'paired_scatter_batching_contract_refutation'
@@ -354,6 +358,18 @@ def formulated_families(root=ROOT):
     assert len(expected)==19 and family['certificate_axioms']==expected
     families.append(dict(family=frozen['family'],profile_unit_count=172,
                          rule_order_instance_count=43,kernel_status=family['status'],
+                         independent_statement_review='pending',observations=family['observations'],
+                         manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
+                         candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],
+                         label_correspondence_certified=False))
+    from check_order_family import validate_result as validate_order
+    family=read('reports/order-values-family.json',root);validate_order(family,root)
+    frozen=read(family['manifest'],root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.OrderFamily.' in name}
+    assert len(expected)==18 and family['certificate_axioms']==expected
+    families.append(dict(family=frozen['family'],profile_unit_count=176,
+                         rule_order_instance_count=44,kernel_status=family['status'],
                          independent_statement_review='pending',observations=family['observations'],
                          manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
                          candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],

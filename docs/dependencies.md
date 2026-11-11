@@ -109,3 +109,14 @@ refutations. Real negative-base power follows Mathlib's explicitly disclosed
 real-part convention. Rounded machine division and transcendental implementations
 remain separate. No additional library or toolchain change was needed; a controlled
 library ablation has not yet measured the size benefit of this reuse.
+
+
+## Reuse for exact order and comparison
+
+The same pins provide Mathlib linear-order reasoning and actual BitVec decoding,
+plus FloatLib's numerical comparison of configured binary values. The [order family](order-family.md)
+keeps signed/unsigned words distinct and isolates actual IEEE NaN/signed-zero
+observations. Its generated finite-type route failed in this import closure;
+explicit constructor enumeration repairs it without a dependency/toolchain change.
+The original failing source and compiler log are preserved; no library ablation
+or whole-workload result follows from that repaired infrastructure failure.
