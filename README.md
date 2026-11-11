@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 159 checked mathematical statements; custom Lean totals **4,920**.
+The theory target now has 187 checked mathematical statements; custom Lean totals **5,261**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -985,3 +985,17 @@ declarations,4920 custom Lean lines; four integration theorems separate.
 All31 window records remain in a domain map, with partial core evidence for19.
 No whole record is closed. These29 additions await review separately from the
 unchanged41-statement packet. Code correspondence and the full verdict remain open.
+
+
+## Constructed Slice/Pad factorization
+
+The fused unit-window gather is now equal to an actual Map -> Slice -> Pad graph
+with derived ordinary Slice bounds/count, nonnegative padding and exact output
+shape. The window corollary retains the original unit/undilated/padding conditions.
+Twenty-eight statements add341 Lean lines; total5261, theory187/ledger447.
+All46 focused tests pass, including675 independent axis profiles and15 tensor
+profiles/45 outputs. Two certificates reject incorrect rounding/clipping.
+See [the graph construction guide](docs/slice-pad-factorization.md). This closes
+the earlier canonical mathematical graph gap; numerical/full-span/composition
+partitions and independent review remain open. No whole benchmark record closes
+from this alone; code correspondence and the full-workload verdict remain open.

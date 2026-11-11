@@ -186,7 +186,18 @@ def evidence(root=ROOT):
         if '.ReductionWindow.' in name:
             domains=read('census/reduction-window-domains-v1.json',root)
             labels=[r['benchmark_id'] for r in domains['records'] if name in r['core_evidence']]
-        kind=('window_contract_refutation' if '.ReductionWindow.' in name
+        if '.SlicePad.' in name:
+            manifest=read('census/slice-pad-v1.json',root)
+            suffix=name.rsplit('.',1)[1]
+            if suffix in ('unit_window_graph','unit_window_add_zero','unit_window_min','unit_window_max'):
+                labels=[label for label in manifest['candidate_benchmark_labels']
+                        if suffix=='unit_window_graph' or
+                        ('singleton-add-' in label if suffix=='unit_window_add_zero' else
+                         'singleton-minimum-' in label if suffix=='unit_window_min' else
+                         'singleton-maximum-' in label)]
+        kind=('slice_pad_geometry_refutation' if '.SlicePad.' in name
+              and name.endswith('_refuted') else
+              'window_contract_refutation' if '.ReductionWindow.' in name
               and name.endswith('_refuted') else
               'reduction_contract_refutation' if '.ReductionAlgebra.' in name
               and name.endswith('_refuted') else
@@ -369,6 +380,21 @@ def mathematical_models(root=ROOT):
                        separate_slice_pad_graph_equivalence_proved=False,
                        independent_statement_review='pending',manifest=window['manifest'],
                        manifest_sha256=window['manifest_sha256']))
+    from check_slice_pad import check_inputs as factor_inputs, validate_result as validate_factor
+    factor=read('reports/slice-pad.json',root);validate_factor(factor)
+    extension=factor_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.SlicePad.' in name}
+    assert factor['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['arithmetic_domain'],
+                       scalar_contract='arbitrary pure scalar map; original unit-window padding law retained',
+                       status=factor['status'],checked_theorem_count=28,full_family_complete=False,
+                       separate_slice_pad_graph_equivalence_proved=True,
+                       slice_attributes_well_formed=True,output_shape_equality_derived=True,
+                       base_window_manifest=window['manifest'],
+                       base_window_manifest_sha256=window['manifest_sha256'],
+                       independent_statement_review='pending',manifest=factor['manifest'],
+                       manifest_sha256=factor['manifest_sha256']))
     return models
 
 

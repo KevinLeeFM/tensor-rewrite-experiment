@@ -97,3 +97,11 @@ The29 additions await independent review. They are outside the already frozen
 and the earlier89-statement review are unchanged. Mathematical N/F, the full
 campaign and the final positive/negative workflow verdict remain open. Code
 correspondence stays user-deferred future work.
+
+## Later graph refinement
+
+The initial milestone's separate graph gap above is now closed for its canonical
+unit/undilated profile by [the constructed Slice/Pad extension](slice-pad-factorization.md).
+That extension derives actual ordinary Slice attributes and output shape, retaining
+the initializer/padding law. The original window model and its historical result
+are unchanged. Other numerical/full-span/composition partitions remain open.

@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 419,
+  "distinct_checked_declarations": 447,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,11 +39,12 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 150,
+    "library_backed_theory": 176,
     "numerical_contract_refutation": 2,
     "reduction_contract_refutation": 3,
     "window_contract_refutation": 2,
-    "scalar_domain_counterexample": 2
+    "scalar_domain_counterexample": 2,
+    "slice_pad_geometry_refutation": 2
   },
   "formulated_mathematical_families": [
     {
@@ -203,6 +204,22 @@
       "independent_statement_review": "pending",
       "manifest": "census/reduction-window-v1.json",
       "manifest_sha256": "2d9caefc54c3055930f524d57fb31ff5566dbf105219a109453c670410b867d7"
+    },
+    {
+      "model": "derived_map_slice_pad_v1",
+      "scope": "unbounded mathematical Nat/Int attributes; arbitrary positive stride, signed low padding and output extent",
+      "scalar_contract": "arbitrary pure scalar map; original unit-window padding law retained",
+      "status": "kernel_checked_constructed_slice_pad_factorization",
+      "checked_theorem_count": 28,
+      "full_family_complete": false,
+      "separate_slice_pad_graph_equivalence_proved": true,
+      "slice_attributes_well_formed": true,
+      "output_shape_equality_derived": true,
+      "base_window_manifest": "census/reduction-window-v1.json",
+      "base_window_manifest_sha256": "2d9caefc54c3055930f524d57fb31ff5566dbf105219a109453c670410b867d7",
+      "independent_statement_review": "pending",
+      "manifest": "census/slice-pad-v1.json",
+      "manifest_sha256": "36f0531fea9a17e51daaec8e4646ecd1366160734d775fa90fd1cd91147a454b"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -210,10 +227,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "850ee04363f6d926568170639b4a01617bf42b30759c0f3c7506ee359dadbae6",
+    "sha256": "86dff58efc9e83d62b4ef4a1a30742b67df32e7e2626f6f36d10b4564fd16014",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "f8c07bb47ad3680d5eaffe032723248331f165f54a695b241d2efa715dcbb52c"
+    "output_sha256": "cc886c2344d879a4b39ac0a617f42ecebcf339b0487459c01429d8244b441c0c"
   },
   "proofs": [
     {
@@ -8585,6 +8602,528 @@
         "Quot.sound",
         "propext"
       ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.attributes_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.attributes_valid",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.bounded_isSome",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.bounded_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.ceil_le_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.ceil_mono",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.coordinate_after_pad",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.first_le_last",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.graph_gather",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.graph_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.graph_shape",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.last_le_output",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.limit_le_input",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.pad_interval",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.padded_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.padding_admission",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.rounded_start_refuted",
+      "kinds": [
+        "slice_pad_geometry_refutation"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.slice_bounded",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.slice_coordinate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.start_cast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.start_le_input",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.start_le_limit",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.unclipped_shape_refuted",
+      "kinds": [
+        "slice_pad_geometry_refutation"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.unit_window_add_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-add-no-pad-crop",
+        "HandleReduceWindow/singleton-add-no-pad-no-crop",
+        "HandleReduceWindow/singleton-add-pad-crop",
+        "HandleReduceWindow/singleton-add-pad-no-crop"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.unit_window_graph",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-add-no-pad-crop",
+        "HandleReduceWindow/singleton-add-no-pad-no-crop",
+        "HandleReduceWindow/singleton-add-pad-crop",
+        "HandleReduceWindow/singleton-add-pad-no-crop",
+        "HandleReduceWindow/singleton-crop-all-add",
+        "HandleReduceWindow/singleton-crop-all-maximum",
+        "HandleReduceWindow/singleton-crop-all-minimum",
+        "HandleReduceWindow/singleton-maximum-no-pad-crop",
+        "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+        "HandleReduceWindow/singleton-maximum-pad-crop",
+        "HandleReduceWindow/singleton-maximum-pad-no-crop",
+        "HandleReduceWindow/singleton-minimum-no-pad-crop",
+        "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+        "HandleReduceWindow/singleton-minimum-pad-crop",
+        "HandleReduceWindow/singleton-minimum-pad-no-crop"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.unit_window_max",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-maximum-no-pad-crop",
+        "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+        "HandleReduceWindow/singleton-maximum-pad-crop",
+        "HandleReduceWindow/singleton-maximum-pad-no-crop"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.unit_window_min",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/singleton-minimum-no-pad-crop",
+        "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+        "HandleReduceWindow/singleton-minimum-pad-crop",
+        "HandleReduceWindow/singleton-minimum-pad-no-crop"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.SlicePad.valid_interval",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling valid interval, legal ordinary Slice attributes and reconstructed output shape; arbitrary affine output extent, positive stride and signed low padding; arbitrary scalar maps; window corollaries require unit kernel/undilated input and padding law; exact AddZeroClass or LinearOrder only where stated; no IEEE identity/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     }
   ],
   "benchmark_records": [
@@ -12278,7 +12817,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=False; negative padding=True; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12291,7 +12832,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=False; negative padding=False; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12304,7 +12847,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=True; negative padding=True; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12317,7 +12862,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Add; positive padding=True; negative padding=False; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12331,7 +12878,8 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
-        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all"
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12345,7 +12893,8 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
-        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all"
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12359,7 +12908,8 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
-        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all"
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12372,7 +12922,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=False; negative padding=True; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_max"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_max"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12385,7 +12937,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=False; negative padding=False; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_max"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_max"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12398,7 +12952,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=True; negative padding=True; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_max"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_max"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12411,7 +12967,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Maximum; positive padding=True; negative padding=False; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_max"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_max"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12424,7 +12982,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=False; negative padding=True; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_min"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_min"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12437,7 +12997,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=False; negative padding=False; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_min"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_min"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12450,7 +13012,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=True; negative padding=True; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_min"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_min"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12463,7 +13027,9 @@
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; every window size/stride/dilations1 and no reversal; reducer Add/Minimum/Maximum of parameters0/1; reducer Minimum; positive padding=True; negative padding=False; if cropping, operand static and no full-axis crop",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ReductionWindow.unit_gather_min"
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph",
+        "TensorRewrite.Theory.SlicePad.unit_window_min"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"

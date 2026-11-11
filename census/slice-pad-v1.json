@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "model": "derived_map_slice_pad_v1",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/SlicePad.lean",
+      "sha256": "2856e59ff9980581b9a1dc834c9119d817bc44a2a48e2b76dbb051bc30a154b0"
+    },
+    {
+      "path": "TensorRewrite/Theory/SlicePadLemmas.lean",
+      "sha256": "66ddd5040fdc82a109d72fbfe7088f399638452f34af1793c7b161c8d8a3789b"
+    },
+    {
+      "path": "TensorRewrite/Theory/SlicePadFactor.lean",
+      "sha256": "2bbe197544b7eaac27cc627c57648192c6e0813d2079b3d45f7e50522677ac54"
+    },
+    {
+      "path": "TensorRewrite/Theory/SlicePadCounterexamples.lean",
+      "sha256": "107cab8e35a7c4a37d2511757eb676f034265fa321b13d11344177fbac08436d"
+    },
+    {
+      "path": "tests/fixtures/SlicePadControls.lean",
+      "sha256": "5bd16c807ebcecf1449fbcf05a42fd182bdc9279ff4acc2ed804bf0bcb75c3b6"
+    },
+    {
+      "path": "tools/slice_pad_examples.py",
+      "sha256": "ae5fa534d4fbf303a44df70e22112f7ed7beb4e2baa244ecefc3d7c489bef369"
+    },
+    {
+      "path": "tools/check_slice_pad.py",
+      "sha256": "a39bd66c14c461cbaa135dae8f0745d21f70a53243980b39fc0f678a1924a31b"
+    },
+    {
+      "path": "tools/reduction_window_examples.py",
+      "sha256": "f5a6aa5118200b00bab7ae8c29408cc8645d4e306f0b16b2120006bd156aa776"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindow.lean",
+      "sha256": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindowAlgebra.lean",
+      "sha256": "ef0ca5475a48bbcbd22b88684d152b5b3c1ba0878d79d0a2b0b3cdf2e9ae6313"
+    },
+    {
+      "path": "TensorRewrite/Pilot/SliceShape.lean",
+      "sha256": "94b8b41aabc6c75182fca18d1b45f9a0e623a4468247de03f0da650a43c7b7f8"
+    },
+    {
+      "path": "TensorRewrite/Pilot/SliceIndexBounds.lean",
+      "sha256": "274dabb6a95babeae1dd07aec41fbb6cc2d09afcf687b23f7ada1753e475c280"
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMaps.lean",
+      "sha256": "4e5980165487d76cc7c4d798ef7acc33bc724bc9b74b8b0e032dbfb8508c75e1"
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMapLemmas.lean",
+      "sha256": "d499dcd95d963cc7e280c735c760fbdedc590aa408ab87507529272b31e74606"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "certificates": [
+    "TensorRewrite.Theory.SlicePad.ceil_le_iff",
+    "TensorRewrite.Theory.SlicePad.ceil_mono",
+    "TensorRewrite.Theory.SlicePad.first_le_last",
+    "TensorRewrite.Theory.SlicePad.last_le_output",
+    "TensorRewrite.Theory.SlicePad.valid_interval",
+    "TensorRewrite.Theory.SlicePad.start_le_input",
+    "TensorRewrite.Theory.SlicePad.start_cast",
+    "TensorRewrite.Theory.SlicePad.slice_coordinate",
+    "TensorRewrite.Theory.SlicePad.slice_bounded",
+    "TensorRewrite.Theory.SlicePad.padded_extent",
+    "TensorRewrite.Theory.SlicePad.start_le_limit",
+    "TensorRewrite.Theory.SlicePad.limit_le_input",
+    "TensorRewrite.Theory.SlicePad.attributes_count",
+    "TensorRewrite.Theory.SlicePad.attributes_valid",
+    "TensorRewrite.Theory.SlicePad.bounded_isSome",
+    "TensorRewrite.Theory.SlicePad.bounded_value",
+    "TensorRewrite.Theory.SlicePad.pad_interval",
+    "TensorRewrite.Theory.SlicePad.coordinate_after_pad",
+    "TensorRewrite.Theory.SlicePad.graph_shape",
+    "TensorRewrite.Theory.SlicePad.padding_admission",
+    "TensorRewrite.Theory.SlicePad.graph_index",
+    "TensorRewrite.Theory.SlicePad.graph_gather",
+    "TensorRewrite.Theory.SlicePad.unit_window_graph",
+    "TensorRewrite.Theory.SlicePad.unit_window_add_zero",
+    "TensorRewrite.Theory.SlicePad.unit_window_min",
+    "TensorRewrite.Theory.SlicePad.unit_window_max",
+    "TensorRewrite.Theory.SlicePad.rounded_start_refuted",
+    "TensorRewrite.Theory.SlicePad.unclipped_shape_refuted"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.SlicePad.rounded_start_refuted",
+    "TensorRewrite.Theory.SlicePad.unclipped_shape_refuted"
+  ],
+  "unit_window_conditions": "unit kernel; undilated input; op(initial,padding)=padding",
+  "slice_count_inferred_from_ordinary_attributes": true,
+  "shape_or_index_equivalence_postulated": false,
+  "arithmetic_domain": "unbounded mathematical Nat/Int attributes; arbitrary positive stride, signed low padding and output extent",
+  "graph": "Map arbitrary scalar function; ordinary well-formed Slice; nonnegative Pad with derived shape",
+  "initializers": "original unit-window initializer/padding law retained; exact AddZeroClass/LinearOrder only where stated",
+  "candidate_benchmark_labels": [
+    "HandleReduceWindow/singleton-crop-all-add",
+    "HandleReduceWindow/singleton-add-no-pad-no-crop",
+    "HandleReduceWindow/singleton-add-no-pad-crop",
+    "HandleReduceWindow/singleton-add-pad-no-crop",
+    "HandleReduceWindow/singleton-add-pad-crop",
+    "HandleReduceWindow/singleton-crop-all-minimum",
+    "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+    "HandleReduceWindow/singleton-minimum-no-pad-crop",
+    "HandleReduceWindow/singleton-minimum-pad-no-crop",
+    "HandleReduceWindow/singleton-minimum-pad-crop",
+    "HandleReduceWindow/singleton-crop-all-maximum",
+    "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+    "HandleReduceWindow/singleton-maximum-no-pad-crop",
+    "HandleReduceWindow/singleton-maximum-pad-no-crop",
+    "HandleReduceWindow/singleton-maximum-pad-crop"
+  ],
+  "benchmark_correspondence_certified": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work",
+  "full_window_family_complete": false
+}

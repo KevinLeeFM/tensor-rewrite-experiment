@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'SlicePad': ['ceil_le_iff', 'ceil_mono', 'first_le_last', 'last_le_output', 'valid_interval', 'start_le_input', 'start_cast', 'slice_coordinate', 'slice_bounded', 'padded_extent', 'start_le_limit', 'limit_le_input', 'attributes_count', 'attributes_valid', 'bounded_isSome', 'bounded_value', 'pad_interval', 'coordinate_after_pad', 'graph_shape', 'padding_admission', 'graph_index', 'graph_gather', 'unit_window_graph', 'unit_window_add_zero', 'unit_window_min', 'unit_window_max', 'rounded_start_refuted', 'unclipped_shape_refuted'],
     'ReductionWindow': ['values_length', 'sample_empty_input', 'values_empty_input', 'unit_count', 'unit_index_unique', 'values_unit', 'axis_unit_position', 'axis_unit_sample', 'sample_unit_affine', 'foldl_replicate_fixed', 'bounded_none_of_outside', 'affine_none_of_axis', 'reduce_empty_kernel', 'reduce_empty_input', 'reduce_empty_input_fixed', 'reduce_empty_output', 'reduce_unit', 'unit_gather', 'unit_gather_initial', 'unit_gather_add_zero', 'unit_gather_min', 'unit_gather_max', 'pointwise', 'pointwise_eliminate', 'unit_crop_all', 'unit_crop_low_all', 'empty_input_components', 'padding_fixed_refuted', 'padding_skip_refuted'],
     'ReductionFiber': ['elementCount_shape', 'output_merge', 'reduced_merge', 'merge_split', 'fiberValues_map', 'fiberValues_constant', 'foldl_replicate_absorb', 'sum_head_tail', 'sum_flatMap', 'fiberValues_sum', 'foldl_map_hom'],
     'ReductionAlgebra': ['constant_absorb', 'constant_and', 'constant_or', 'constant_min', 'constant_max', 'constant_add', 'negate_sum', 'concat_add', 'coordinate_sum', 'sum_reduction', 'map_reduction', 'empty_components', 'sameCount_components', 'empty_constant_refuted', 'repeated_initializer_refuted', 'nonassociative_regrouping_refuted'],
@@ -82,6 +83,10 @@ def main():
             assert axioms <= ALLOWED, (full_name, axioms)
             dependencies[full_name] = sorted(axioms)
     categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
+                  'TensorRewrite/Theory/SlicePad.lean': 'S',
+                  'TensorRewrite/Theory/SlicePadLemmas.lean': 'H',
+                  'TensorRewrite/Theory/SlicePadFactor.lean': 'R',
+                  'TensorRewrite/Theory/SlicePadCounterexamples.lean': 'C',
                   'TensorRewrite/Theory/ReductionWindow.lean': 'S',
                   'TensorRewrite/Theory/ReductionWindowLemmas.lean': 'H',
                   'TensorRewrite/Theory/ReductionWindowAlgebra.lean': 'R',
@@ -150,13 +155,21 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='ordered window folds and unit-window affine gathers; '
+                  scope='derived Map/Slice/Pad shape and index factorization; '
+                        'ordered window folds and unit-window affine gathers; '
                         'exact real and principal-complex log/sqrt domains; '
                         'format-general floating negation; exact finite sums and semiring '
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('ordered window folds with explicit initializer and every invalid '
+                      name: ('pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling '
+                             'valid interval, legal ordinary Slice attributes and reconstructed '
+                             'output shape; arbitrary affine output extent, positive stride and '
+                             'signed low padding; arbitrary scalar maps; window corollaries require '
+                             'unit kernel/undilated input and padding law; exact AddZeroClass or '
+                             'LinearOrder only where stated; no IEEE identity/flags/layout claim'
+                             if '.SlicePad.' in name else
+                             'ordered window folds with explicit initializer and every invalid '
                              'sample contribution; bounded convolution axis geometry; arbitrary '
                              'scalar/whole-state operations; unit kernel/undilated input for '
                              'affine crop-stride gather; explicit padding fixed-point and '

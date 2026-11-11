@@ -839,3 +839,59 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square
 #check @TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
 #print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
+#check @TensorRewrite.Theory.SlicePad.attributes_count
+#print axioms TensorRewrite.Theory.SlicePad.attributes_count
+#check @TensorRewrite.Theory.SlicePad.attributes_valid
+#print axioms TensorRewrite.Theory.SlicePad.attributes_valid
+#check @TensorRewrite.Theory.SlicePad.bounded_isSome
+#print axioms TensorRewrite.Theory.SlicePad.bounded_isSome
+#check @TensorRewrite.Theory.SlicePad.bounded_value
+#print axioms TensorRewrite.Theory.SlicePad.bounded_value
+#check @TensorRewrite.Theory.SlicePad.ceil_le_iff
+#print axioms TensorRewrite.Theory.SlicePad.ceil_le_iff
+#check @TensorRewrite.Theory.SlicePad.ceil_mono
+#print axioms TensorRewrite.Theory.SlicePad.ceil_mono
+#check @TensorRewrite.Theory.SlicePad.coordinate_after_pad
+#print axioms TensorRewrite.Theory.SlicePad.coordinate_after_pad
+#check @TensorRewrite.Theory.SlicePad.first_le_last
+#print axioms TensorRewrite.Theory.SlicePad.first_le_last
+#check @TensorRewrite.Theory.SlicePad.graph_gather
+#print axioms TensorRewrite.Theory.SlicePad.graph_gather
+#check @TensorRewrite.Theory.SlicePad.graph_index
+#print axioms TensorRewrite.Theory.SlicePad.graph_index
+#check @TensorRewrite.Theory.SlicePad.graph_shape
+#print axioms TensorRewrite.Theory.SlicePad.graph_shape
+#check @TensorRewrite.Theory.SlicePad.last_le_output
+#print axioms TensorRewrite.Theory.SlicePad.last_le_output
+#check @TensorRewrite.Theory.SlicePad.limit_le_input
+#print axioms TensorRewrite.Theory.SlicePad.limit_le_input
+#check @TensorRewrite.Theory.SlicePad.pad_interval
+#print axioms TensorRewrite.Theory.SlicePad.pad_interval
+#check @TensorRewrite.Theory.SlicePad.padded_extent
+#print axioms TensorRewrite.Theory.SlicePad.padded_extent
+#check @TensorRewrite.Theory.SlicePad.padding_admission
+#print axioms TensorRewrite.Theory.SlicePad.padding_admission
+#check @TensorRewrite.Theory.SlicePad.rounded_start_refuted
+#print axioms TensorRewrite.Theory.SlicePad.rounded_start_refuted
+#check @TensorRewrite.Theory.SlicePad.slice_bounded
+#print axioms TensorRewrite.Theory.SlicePad.slice_bounded
+#check @TensorRewrite.Theory.SlicePad.slice_coordinate
+#print axioms TensorRewrite.Theory.SlicePad.slice_coordinate
+#check @TensorRewrite.Theory.SlicePad.start_cast
+#print axioms TensorRewrite.Theory.SlicePad.start_cast
+#check @TensorRewrite.Theory.SlicePad.start_le_input
+#print axioms TensorRewrite.Theory.SlicePad.start_le_input
+#check @TensorRewrite.Theory.SlicePad.start_le_limit
+#print axioms TensorRewrite.Theory.SlicePad.start_le_limit
+#check @TensorRewrite.Theory.SlicePad.unclipped_shape_refuted
+#print axioms TensorRewrite.Theory.SlicePad.unclipped_shape_refuted
+#check @TensorRewrite.Theory.SlicePad.unit_window_add_zero
+#print axioms TensorRewrite.Theory.SlicePad.unit_window_add_zero
+#check @TensorRewrite.Theory.SlicePad.unit_window_graph
+#print axioms TensorRewrite.Theory.SlicePad.unit_window_graph
+#check @TensorRewrite.Theory.SlicePad.unit_window_max
+#print axioms TensorRewrite.Theory.SlicePad.unit_window_max
+#check @TensorRewrite.Theory.SlicePad.unit_window_min
+#print axioms TensorRewrite.Theory.SlicePad.unit_window_min
+#check @TensorRewrite.Theory.SlicePad.valid_interval
+#print axioms TensorRewrite.Theory.SlicePad.valid_interval

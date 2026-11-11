@@ -2923,3 +2923,153 @@ TensorRewrite.Theory.ScalarDomains.real_sqrt_square : ∀ (x : ℝ), √(x * x) 
   (input : TensorRewrite.Pilot.Tensor shape ℝ),
   TensorRewrite.Pilot.Tensor.map (fun x => √(x * x)) input = TensorRewrite.Pilot.Tensor.map (fun x => |x|) input
 'TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.attributes_count : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  axis.attributes.elementCount = ↑axis.count
+'TensorRewrite.Theory.SlicePad.attributes_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.attributes_valid : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  TensorRewrite.Pilot.SliceShape.IsWellFormed (↑axis.inputExtent) (↑axis.count) axis.attributes
+'TensorRewrite.Theory.SlicePad.attributes_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.bounded_isSome : ∀ (extent : ℕ) (position : ℤ),
+  (TensorRewrite.Theory.ReductionWindow.boundedIndex? extent position).isSome = true ↔ 0 ≤ position ∧ position < ↑extent
+'TensorRewrite.Theory.SlicePad.bounded_isSome' depends on axioms: [propext]
+TensorRewrite.Theory.SlicePad.bounded_value : ∀ (extent : ℕ) (position : ℤ)
+  (valid : (TensorRewrite.Theory.ReductionWindow.boundedIndex? extent position).isSome = true),
+  ↑↑((TensorRewrite.Theory.ReductionWindow.boundedIndex? extent position).get valid) = position
+'TensorRewrite.Theory.SlicePad.bounded_value' depends on axioms: [propext]
+TensorRewrite.Theory.SlicePad.ceil_le_iff : ∀ (position : ℤ) (stride : ℕ),
+  0 < stride → ∀ (index : ℤ), TensorRewrite.Theory.SlicePad.ceilDiv position stride ≤ index ↔ position ≤ index * ↑stride
+'TensorRewrite.Theory.SlicePad.ceil_le_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.ceil_mono : ∀ (left right : ℤ) (stride : ℕ),
+  0 < stride →
+    left ≤ right →
+      TensorRewrite.Theory.SlicePad.ceilDiv left stride ≤ TensorRewrite.Theory.SlicePad.ceilDiv right stride
+'TensorRewrite.Theory.SlicePad.ceil_mono' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.coordinate_after_pad : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis)
+  (output : Fin axis.outputExtent),
+  axis.first ≤ ↑output ∧ ↑output < axis.last →
+    ↑axis.start + ↑axis.stride * (↑↑output - ↑axis.first) = ↑↑output * ↑axis.stride - axis.low
+'TensorRewrite.Theory.SlicePad.coordinate_after_pad' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.first_le_last : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis), axis.first ≤ axis.last
+'TensorRewrite.Theory.SlicePad.first_le_last' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.graph_gather : ∀ {rank : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (fill : β) (f : α → β)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Theory.SlicePad.graph plan fill f input =
+    TensorRewrite.Theory.ReductionWindow.gatherMap plan fill f input
+'TensorRewrite.Theory.SlicePad.graph_gather' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.graph_index : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.ReductionWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  Option.map (TensorRewrite.Pilot.IndexMaps.sliceIndex (TensorRewrite.Theory.SlicePad.slicePlan plan).axes ⋯)
+      ((TensorRewrite.Theory.SlicePad.paddingPlan plan).input?
+        (TensorRewrite.Theory.SlicePad.slicePlan plan).outputShape
+        (TensorRewrite.Theory.SlicePad.outputIndex plan output)) =
+    TensorRewrite.Theory.ReductionWindow.affineInput? plan output
+'TensorRewrite.Theory.SlicePad.graph_index' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.graph_shape : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  (TensorRewrite.Theory.SlicePad.paddingPlan plan).outputShape
+      (TensorRewrite.Theory.SlicePad.slicePlan plan).outputShape =
+    plan.outputShape
+'TensorRewrite.Theory.SlicePad.graph_shape' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.last_le_output : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  axis.last ≤ axis.outputExtent
+'TensorRewrite.Theory.SlicePad.last_le_output' depends on axioms: [propext]
+TensorRewrite.Theory.SlicePad.limit_le_input : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  axis.limit ≤ axis.inputExtent
+'TensorRewrite.Theory.SlicePad.limit_le_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.pad_interval : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis)
+  (output : Fin axis.outputExtent),
+  (TensorRewrite.Theory.ReductionWindow.boundedIndex? axis.count (↑↑output - ↑axis.first)).isSome = true ↔
+    axis.first ≤ ↑output ∧ ↑output < axis.last
+'TensorRewrite.Theory.SlicePad.pad_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.padded_extent : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  axis.first + axis.count + (axis.outputExtent - axis.last) = axis.outputExtent
+'TensorRewrite.Theory.SlicePad.padded_extent' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.padding_admission : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.ReductionWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  (∀ (axis : Fin rank),
+      (TensorRewrite.Theory.ReductionWindow.boundedIndex?
+            ((TensorRewrite.Theory.SlicePad.slicePlan plan).outputShape axis)
+            (↑↑(TensorRewrite.Theory.SlicePad.outputIndex plan output axis) -
+              ↑((TensorRewrite.Theory.SlicePad.paddingPlan plan).low axis))).isSome =
+        true) ↔
+    ∀ (axis : Fin rank),
+      (TensorRewrite.Theory.ReductionWindow.boundedIndex? (plan.window axis).inputExtent
+            (TensorRewrite.Theory.ReductionWindow.affinePosition plan output axis)).isSome =
+        true
+'TensorRewrite.Theory.SlicePad.padding_admission' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.rounded_start_refuted : have input := fun index => ↑(index 0) + 1;
+TensorRewrite.Theory.SlicePad.graph TensorRewrite.Theory.SlicePad.fractionalPlan 0 id input
+      TensorRewrite.Theory.SlicePad.fractionalOutput =
+    2 ∧
+  ({ low := fun x => 1, high := fun x => 0 }.tensor 0 (TensorRewrite.Theory.SlicePad.wrongStart.tensor input) fun x =>
+        ⟨1, ⋯⟩) =
+      1 ∧
+    2 ≠ 1
+'TensorRewrite.Theory.SlicePad.rounded_start_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.slice_bounded : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis) (index : Fin axis.count),
+  axis.start + ↑index * axis.stride < axis.inputExtent
+'TensorRewrite.Theory.SlicePad.slice_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.slice_coordinate : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis) (index : Fin axis.count),
+  ↑(axis.start + ↑index * axis.stride) = ↑(axis.first + ↑index) * ↑axis.stride - axis.low
+'TensorRewrite.Theory.SlicePad.slice_coordinate' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.start_cast : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  0 < axis.count → ↑axis.start = ↑axis.first * ↑axis.stride - axis.low
+'TensorRewrite.Theory.SlicePad.start_cast' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.start_le_input : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
+  axis.start ≤ axis.inputExtent
+'TensorRewrite.Theory.SlicePad.start_le_input' depends on axioms: [propext]
+TensorRewrite.Theory.SlicePad.start_le_limit : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis), axis.start ≤ axis.limit
+'TensorRewrite.Theory.SlicePad.start_le_limit' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.SlicePad.unclipped_shape_refuted : have axis :=
+  { inputExtent := 1, outputExtent := 2, stride := 2, low := 7,
+    stride_pos := TensorRewrite.Theory.SlicePad.fractionalPlan._proof_1 };
+axis.first = 2 ∧
+  axis.last = 2 ∧
+    axis.count = 0 ∧
+      (TensorRewrite.Theory.SlicePad.ceilDiv axis.low axis.stride).toNat = 4 ∧
+        axis.first + axis.count + (axis.outputExtent - axis.last) = 2 ∧
+          (TensorRewrite.Theory.SlicePad.ceilDiv axis.low axis.stride).toNat + axis.count +
+                (axis.outputExtent -
+                  (TensorRewrite.Theory.SlicePad.ceilDiv (axis.low + ↑axis.inputExtent) axis.stride).toNat) =
+              4 ∧
+            2 ≠ 4
+'TensorRewrite.Theory.SlicePad.unclipped_shape_refuted' does not depend on any axioms
+@TensorRewrite.Theory.SlicePad.unit_window_add_zero : ∀ {rank : ℕ} {α : Type} [inst : AddZeroClass α]
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce plan (fun x1 x2 => x1 + x2) 0 0 input =
+          TensorRewrite.Theory.SlicePad.graph plan 0 id input
+'TensorRewrite.Theory.SlicePad.unit_window_add_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.unit_window_graph : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (operation : α → α → α) (initial padding : α),
+        operation initial padding = padding →
+          ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+            TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+              TensorRewrite.Theory.SlicePad.graph plan padding (operation initial) input
+'TensorRewrite.Theory.SlicePad.unit_window_graph' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.unit_window_max : ∀ {rank : ℕ} {α : Type} [inst : LinearOrder α]
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce plan max initial initial input =
+          TensorRewrite.Theory.SlicePad.graph plan initial (fun x => max x initial) input
+'TensorRewrite.Theory.SlicePad.unit_window_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.SlicePad.unit_window_min : ∀ {rank : ℕ} {α : Type} [inst : LinearOrder α]
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce plan min initial initial input =
+          TensorRewrite.Theory.SlicePad.graph plan initial (fun x => min x initial) input
+'TensorRewrite.Theory.SlicePad.unit_window_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.SlicePad.valid_interval : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis)
+  (output : Fin axis.outputExtent),
+  axis.first ≤ ↑output ∧ ↑output < axis.last ↔
+    0 ≤ ↑↑output * ↑axis.stride - axis.low ∧ ↑↑output * ↑axis.stride - axis.low < ↑axis.inputExtent
+'TensorRewrite.Theory.SlicePad.valid_interval' depends on axioms: [propext, Classical.choice, Quot.sound]

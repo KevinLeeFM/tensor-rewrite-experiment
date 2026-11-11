@@ -12,3 +12,4 @@ public import TensorRewrite.Theory.ConvolutionFloat
 public import TensorRewrite.Theory.ScalarDomainCounterexamples
 public import TensorRewrite.Theory.ReductionCounterexamples
 public import TensorRewrite.Theory.ReductionWindowCounterexamples
+public import TensorRewrite.Theory.SlicePadCounterexamples
