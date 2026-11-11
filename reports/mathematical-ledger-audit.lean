@@ -521,6 +521,44 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent
 #check @TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ
 #print axioms TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ
+#check @TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants
+#print axioms TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants
+#check @TensorRewrite.Theory.ArithmeticFamily.allRuleKeys_nodup
+#print axioms TensorRewrite.Theory.ArithmeticFamily.allRuleKeys_nodup
+#check @TensorRewrite.Theory.ArithmeticFamily.allRules_complete
+#print axioms TensorRewrite.Theory.ArithmeticFamily.allRules_complete
+#check @TensorRewrite.Theory.ArithmeticFamily.binary32_add_assoc_refuted
+#print axioms TensorRewrite.Theory.ArithmeticFamily.binary32_add_assoc_refuted
+#check @TensorRewrite.Theory.ArithmeticFamily.binary32_mul_assoc_refuted
+#print axioms TensorRewrite.Theory.ArithmeticFamily.binary32_mul_assoc_refuted
+#check @TensorRewrite.Theory.ArithmeticFamily.binary32_mul_zero_refuted
+#print axioms TensorRewrite.Theory.ArithmeticFamily.binary32_mul_zero_refuted
+#check @TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor
+#print axioms TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor
+#check @TensorRewrite.Theory.ArithmeticFamily.complex_family
+#print axioms TensorRewrite.Theory.ArithmeticFamily.complex_family
+#check @TensorRewrite.Theory.ArithmeticFamily.eval_addOrder
+#print axioms TensorRewrite.Theory.ArithmeticFamily.eval_addOrder
+#check @TensorRewrite.Theory.ArithmeticFamily.eval_mulOrder
+#print axioms TensorRewrite.Theory.ArithmeticFamily.eval_mulOrder
+#check @TensorRewrite.Theory.ArithmeticFamily.integer_family
+#print axioms TensorRewrite.Theory.ArithmeticFamily.integer_family
+#check @TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants
+#print axioms TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants
+#check @TensorRewrite.Theory.ArithmeticFamily.real_family
+#print axioms TensorRewrite.Theory.ArithmeticFamily.real_family
+#check @TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context
+#print axioms TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context
+#check @TensorRewrite.Theory.ArithmeticFamily.rewrite_sound
+#print axioms TensorRewrite.Theory.ArithmeticFamily.rewrite_sound
+#check @TensorRewrite.Theory.ArithmeticFamily.rule_count
+#print axioms TensorRewrite.Theory.ArithmeticFamily.rule_count
+#check @TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants
+#print axioms TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants
+#check @TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast
+#print axioms TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast
+#check @TensorRewrite.Theory.ArithmeticFamily.word_family
+#print axioms TensorRewrite.Theory.ArithmeticFamily.word_family
 #check @TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono
 #print axioms TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono
 #check @TensorRewrite.Theory.BroadcastWindow.axes_decode

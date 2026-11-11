@@ -4,10 +4,10 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 444 checked mathematical statements; custom Lean totals **9,134**.
+The theory target now has 463 checked mathematical statements; custom Lean totals **9,447**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including374 covered only by
-unreviewed proposals after the six-record Scatter refinement; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
+All488 retained records now have domain/dependency worksheets, including340 covered only by
+unreviewed proposals after the Scatter and typed-arithmetic refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1159,3 +1159,12 @@ Exact target/event/state equivalence follows from derived canonical starts.
 Twenty-two statements add360 custom Lean lines. A checked example gives separate
 slices[1,2] versus[12,0] when batching is forgotten. General graph/observation
 bridges and the full campaign remain open.
+
+## Typed exact-arithmetic family
+
+The [arithmetic family](docs/arithmetic-family.md) checks43 rule/order instances
+across exact integer/real/complex and all-width modular-word values:172 declared
+profiles, with five actual Broadcast corollaries and three separate IEEE tree
+refutations. Nineteen statements add313 custom Lean lines. Thirty-three records
+carry these complete declared value profiles;34 records gain typed refinements.
+Global N/F, remaining numerical/graph/effect/layout partitions and review stay open.

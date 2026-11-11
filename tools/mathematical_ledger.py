@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.ArithmeticFamily.' in name:
+            manifest=read('census/arithmetic-values-family-v2.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.ScatterBatching.' in name:
             manifest=read('census/scatter-batching-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -242,7 +245,9 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('paired_scatter_batching_contract_refutation'
+        kind=('arithmetic_ieee_profile_refutation' if '.ArithmeticFamily.' in name
+              and name.endswith('_refuted') else
+              'paired_scatter_batching_contract_refutation'
               if name.endswith('.ScatterBatching.forgetting_batching_refuted') else
               'raw_index_tensor_contract_counterexample'
               if name.endswith('.ScatterIndices.empty_index_tensor_not_single_map') else
@@ -335,6 +340,18 @@ def formulated_families(root=ROOT):
                          kernel_status=family['status'],independent_statement_review='pending',
                          observations=family['observations'],manifest=family['manifest'],
                          manifest_sha256=family['manifest_sha256'],
+                         candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],
+                         label_correspondence_certified=False))
+    from check_arithmetic_family import validate_result as validate_arithmetic
+    family=read('reports/arithmetic-values-family.json',root);validate_arithmetic(family)
+    frozen=read(family['manifest'],root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ArithmeticFamily.' in name}
+    assert len(expected)==19 and family['certificate_axioms']==expected
+    families.append(dict(family=frozen['family'],profile_unit_count=172,
+                         rule_order_instance_count=43,kernel_status=family['status'],
+                         independent_statement_review='pending',observations=family['observations'],
+                         manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
                          candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],
                          label_correspondence_certified=False))
     return families

@@ -8,7 +8,7 @@ from arithmetic_examples import expected, labels, DOMAINS
 from ordered_float_examples import add, multiply
 
 ROOT=Path(__file__).resolve().parents[1]
-MANIFEST='census/arithmetic-values-family-v1.json'
+MANIFEST='census/arithmetic-values-family-v2.json'
 TRUE_FIELDS=('all_rule_orders_enumerated','complete_duplicate_free_family',
              'integer_real_complex_and_all_width_word_instances','arbitrary_finite_tensor_shapes',
              'actual_bounded_broadcast_graphs','concrete_ieee_counterexamples_checked')
@@ -87,7 +87,8 @@ def validate_result(result):
     assert nan['key']=='mul_zero_right' and nan['rhs']==0
     assert nan['lhs']&0x7f800000==0x7f800000 and nan['lhs']&0x7fffff!=0
     assert result['negative_float_ring']['exit_code']!=0
-    assert 'CommRing' in result['negative_float_ring']['output']
+    assert all(token in result['negative_float_ring']['output']
+               for token in ('CommRing','Binary32','failed to synthesize'))
     for key in TRUE_FIELDS:assert result[key] is True,key
     for key in FALSE_FIELDS:assert result[key] is False,key
     assert result['whole_benchmark_records_closed']==0
@@ -102,7 +103,8 @@ def main():
     controls=parse_controls(run.stdout)
     negative=subprocess.run(['lake','env','lean','tests/fixtures/InvalidArithmeticFloatRing.lean'],
                             cwd=ROOT,text=True,capture_output=True)
-    assert negative.returncode!=0 and 'error:' in negative.stdout,negative.stdout+negative.stderr
+    diagnostic=negative.stdout+negative.stderr
+    assert negative.returncode!=0 and re.search(r'error(?:\(|:)',diagnostic),diagnostic
     theory=json.loads((ROOT/'reports/theory-progress.json').read_text())
     for row in theory['files']:assert digest(ROOT/row['path'])==row['sha256']
     axioms={n:a for n,a in theory['axiom_dependencies'].items() if '.ArithmeticFamily.' in n}

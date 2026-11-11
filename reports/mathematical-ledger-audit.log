@@ -1813,6 +1813,182 @@ TensorRewrite.Pilot.ZeroMacProfile.positive_zero_consistent : TensorRewrite.Pilo
 TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ : TensorRewrite.Pilot.ZeroMacProfile.positiveZero ≠
   TensorRewrite.Pilot.ZeroMacProfile.negativeZero
 'TensorRewrite.Pilot.ZeroMacProfile.zero_bits_differ' does not depend on any axioms
+@TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants : ∀ {α : Type} [inst : CommRing α] {smallRank rank : ℕ}
+  {smallShape : TensorRewrite.Pilot.Shape smallRank} {shape : TensorRewrite.Pilot.Shape rank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis)) (inner outer : Bool)
+  (input : TensorRewrite.Pilot.Tensor shape α) (first second : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 + x2) outer
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 + x2) inner input
+        (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) first))
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) second) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) input
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) first second))
+'TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ArithmeticFamily.allRuleKeys_nodup : (List.map TensorRewrite.Theory.ArithmeticFamily.Rule.key
+    TensorRewrite.Theory.ArithmeticFamily.allRules).Nodup
+'TensorRewrite.Theory.ArithmeticFamily.allRuleKeys_nodup' depends on axioms: [propext]
+TensorRewrite.Theory.ArithmeticFamily.allRules_complete : ∀ (rule : TensorRewrite.Theory.ArithmeticFamily.Rule),
+  rule ∈ TensorRewrite.Theory.ArithmeticFamily.allRules
+'TensorRewrite.Theory.ArithmeticFamily.allRules_complete' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ArithmeticFamily.binary32_add_assoc_refuted : have values := fun number =>
+  if number = 0 then 1266679808 else if number = 1 then 1065353216 else 3414163456;
+TensorRewrite.Theory.ArithmeticFamily.binary32Bits (TensorRewrite.Theory.ArithmeticFamily.Rule.addAssoc false false).lhs
+      values =
+    0 ∧
+  TensorRewrite.Theory.ArithmeticFamily.binary32Bits
+      (TensorRewrite.Theory.ArithmeticFamily.Rule.addAssoc false false).rhs values =
+    1065353216
+'TensorRewrite.Theory.ArithmeticFamily.binary32_add_assoc_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ArithmeticFamily.binary32_mul_assoc_refuted : have values := fun number =>
+  if number = 0 then 1 else if number = 1 then 1056964608 else 1073741824;
+TensorRewrite.Theory.ArithmeticFamily.binary32Bits (TensorRewrite.Theory.ArithmeticFamily.Rule.mulAssoc false false).lhs
+      values =
+    0 ∧
+  TensorRewrite.Theory.ArithmeticFamily.binary32Bits
+      (TensorRewrite.Theory.ArithmeticFamily.Rule.mulAssoc false false).rhs values =
+    1
+'TensorRewrite.Theory.ArithmeticFamily.binary32_mul_assoc_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ArithmeticFamily.binary32_mul_zero_refuted : (TensorRewrite.Theory.ArithmeticFamily.binary32Bits
+    TensorRewrite.Theory.ArithmeticFamily.Rule.mulZeroRight.lhs fun x => 2139095040) ≠
+  TensorRewrite.Theory.ArithmeticFamily.binary32Bits TensorRewrite.Theory.ArithmeticFamily.Rule.mulZeroRight.rhs
+    fun x => 2139095040
+'TensorRewrite.Theory.ArithmeticFamily.binary32_mul_zero_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor : ∀ {α : Type} [inst : CommRing α] {smallRank rank : ℕ}
+  {smallShape : TensorRewrite.Pilot.Shape smallRank} {shape : TensorRewrite.Pilot.Shape rank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis)) (inner outer : Bool)
+  (input : TensorRewrite.Pilot.Tensor shape α) (small : TensorRewrite.Pilot.Tensor smallShape α) (factor : α),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) outer
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) inner input
+        (TensorRewrite.Pilot.Tensor.constant factor))
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) small) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) input
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) small (TensorRewrite.Pilot.Tensor.constant factor)))
+'TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.complex_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (rule : TensorRewrite.Theory.ArithmeticFamily.Rule) (inputs : ℕ → TensorRewrite.Pilot.Tensor shape ℂ)
+  (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact ℂ) inputs
+      predicates rule.lhs =
+    TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact ℂ) inputs
+      predicates rule.rhs
+'TensorRewrite.Theory.ArithmeticFamily.complex_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.eval_addOrder : ∀ {α : Type} [inst : CommRing α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α)
+  (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool) (reverse : Bool)
+  (left right : TensorRewrite.Theory.ArithmeticFamily.Expr),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+      predicates (TensorRewrite.Theory.ArithmeticFamily.Expr.addOrder reverse left right) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+        predicates left)
+      (TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+        predicates right)
+'TensorRewrite.Theory.ArithmeticFamily.eval_addOrder' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.eval_mulOrder : ∀ {α : Type} [inst : CommRing α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α)
+  (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool) (reverse : Bool)
+  (left right : TensorRewrite.Theory.ArithmeticFamily.Expr),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+      predicates (TensorRewrite.Theory.ArithmeticFamily.Expr.mulOrder reverse left right) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2)
+      (TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+        predicates left)
+      (TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+        predicates right)
+'TensorRewrite.Theory.ArithmeticFamily.eval_mulOrder' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.integer_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (rule : TensorRewrite.Theory.ArithmeticFamily.Rule) (inputs : ℕ → TensorRewrite.Pilot.Tensor shape ℤ)
+  (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact ℤ) inputs
+      predicates rule.lhs =
+    TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact ℤ) inputs
+      predicates rule.rhs
+'TensorRewrite.Theory.ArithmeticFamily.integer_family' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants : ∀ {α : Type} [inst : CommRing α]
+  {smallRank rank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank} {shape : TensorRewrite.Pilot.Shape rank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis)) (inner outer : Bool)
+  (input : TensorRewrite.Pilot.Tensor shape α) (first second : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) outer
+      (TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 * x2) inner input
+        (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) first))
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) second) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) input
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) first second))
+'TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.real_family : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (rule : TensorRewrite.Theory.ArithmeticFamily.Rule) (inputs : ℕ → TensorRewrite.Pilot.Tensor shape ℝ)
+  (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact ℝ) inputs
+      predicates rule.lhs =
+    TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact ℝ) inputs
+      predicates rule.rhs
+'TensorRewrite.Theory.ArithmeticFamily.real_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context : ∀ {α β : Type} [inst : CommRing α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (rule : TensorRewrite.Theory.ArithmeticFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α) (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool)
+  (context : TensorRewrite.Pilot.Tensor shape α → β),
+  context
+      (TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+        predicates rule.lhs) =
+    context
+      (TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+        predicates rule.rhs)
+'TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.rewrite_sound : ∀ {α : Type} [inst : CommRing α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (rule : TensorRewrite.Theory.ArithmeticFamily.Rule)
+  (inputs : ℕ → TensorRewrite.Pilot.Tensor shape α) (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+      predicates rule.lhs =
+    TensorRewrite.Theory.ArithmeticFamily.Expr.eval (TensorRewrite.Theory.ArithmeticFamily.Operations.exact α) inputs
+      predicates rule.rhs
+'TensorRewrite.Theory.ArithmeticFamily.rewrite_sound' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ArithmeticFamily.rule_count : TensorRewrite.Theory.ArithmeticFamily.allRules.length = 43
+'TensorRewrite.Theory.ArithmeticFamily.rule_count' does not depend on any axioms
+@TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants : ∀ {α : Type} [inst : CommRing α]
+  {smallRank rank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank} {shape : TensorRewrite.Pilot.Shape rank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis)) (outer : Bool)
+  (input : TensorRewrite.Pilot.Tensor shape α) (first second : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 + x2) outer
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2)
+        (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) first) input)
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) second) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2)
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) first second))
+      input
+'TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast : ∀ {α : Type} [inst : CommRing α] {smallRank rank : ℕ}
+  {smallShape : TensorRewrite.Pilot.Shape smallRank} {shape : TensorRewrite.Pilot.Shape rank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis))
+  (input : TensorRewrite.Pilot.Tensor shape α) (small : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 - x2) input
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) small) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) input
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map (fun x => -x) small))
+'TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ArithmeticFamily.word_family : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (rule : TensorRewrite.Theory.ArithmeticFamily.Rule) (inputs : ℕ → TensorRewrite.Pilot.Tensor shape (BitVec width))
+  (predicates : ℕ → TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ArithmeticFamily.Expr.eval
+      (TensorRewrite.Theory.ArithmeticFamily.Operations.exact (BitVec width)) inputs predicates rule.lhs =
+    TensorRewrite.Theory.ArithmeticFamily.Expr.eval
+      (TensorRewrite.Theory.ArithmeticFamily.Operations.exact (BitVec width)) inputs predicates rule.rhs
+'TensorRewrite.Theory.ArithmeticFamily.word_family' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono : ∀ (plan : TensorRewrite.Theory.BroadcastWindow.Plan),
   StrictMono (TensorRewrite.Theory.BroadcastWindow.axesMap plan)
 'TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]

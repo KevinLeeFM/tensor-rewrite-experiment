@@ -9,9 +9,9 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 347,
-    "partial_model_evidence_requires_partition_review": 128,
-    "declared_value_family_complete_full_record_partitions_open": 13
+    "needs_formal_statement_and_domain_partition": 346,
+    "partial_model_evidence_requires_partition_review": 96,
+    "declared_value_family_complete_full_record_partitions_open": 46
   },
   "batch_counts": {
     "dot-cases": 44,
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 704,
+  "distinct_checked_declarations": 723,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,8 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 411,
+    "library_backed_theory": 427,
+    "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "ordered_scatter_contract_refutation": 4,
@@ -91,6 +92,52 @@
       "manifest_sha256": "8c8b216a4bffc3f491ce7eb905877c88abd0eef0d8c5d4deaf78af35e223b9e4",
       "candidate_benchmark_labels": [
         "HandleReduceWindow/singleton-tuple"
+      ],
+      "label_correspondence_certified": false
+    },
+    {
+      "family": "typed_commutative_ring_values_v1",
+      "profile_unit_count": 172,
+      "rule_order_instance_count": 43,
+      "kernel_status": "kernel_complete_declared_mathematical_value_family",
+      "independent_statement_review": "pending",
+      "observations": "exact commutative-ring pure tensor values; actual shared-axis Broadcast corollaries; IEEE/effects/layout partitions remain separate",
+      "manifest": "census/arithmetic-values-family-v2.json",
+      "manifest_sha256": "0f11516fcef3df60cffc9137771bd9a037355f2c5d67d2f1c4ba1d8096522430",
+      "candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
       ],
       "label_correspondence_certified": false
     }
@@ -464,15 +511,15 @@
       "manifest_sha256": "9c140d4c15f280a9515dcda598c2c767ec12628968a02dc4a3b70b3049e9e136"
     }
   ],
-  "kernel_complete_family_profile_count": 21,
+  "kernel_complete_family_profile_count": 193,
   "count_policy": "declaration kinds can overlap; benchmark labels are retained candidates, not certified correspondence; no proof-count/488 coverage fraction",
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "3770e69cc3681271d43a560990f1de024c735a65998059c201a45463b8d80af0",
+    "sha256": "f8fcd57622d51d2c45474496027bc4a5e3d13d573f87d07ba2b70c92598aa88e",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "64f4a3da331e3b7c88f9b96b8289fe2ad24d80766a4bfe4aedd6584e3ad1ca93"
+    "output_sha256": "7fe771f320112f8ea629bb0e5768ed816ceb09a26c2c862afa1188a202695662"
   },
   "proofs": [
     {
@@ -5979,6 +6026,546 @@
         "pilot.contraction.diagnostic_certificates[3]"
       ],
       "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/constant-sum-broadcast-scalars"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.allRuleKeys_nodup",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.allRules_complete",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.binary32_add_assoc_refuted",
+      "kinds": [
+        "arithmetic_ieee_profile_refutation"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.binary32_mul_assoc_refuted",
+      "kinds": [
+        "arithmetic_ieee_profile_refutation"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.binary32_mul_zero_refuted",
+      "kinds": [
+        "arithmetic_ieee_profile_refutation"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/broadcast-factor"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.eval_addOrder",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.eval_mulOrder",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/legacy-constant-product-broadcast-scalars"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.real_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.rule_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/constant-subtract-broadcast-scalars"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSubtract/broadcast-constant"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ArithmeticFamily.word_family",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "closed pure arithmetic trees:43 rule/order instances; actual CommRing for Int/Real/Complex/all-width BitVec; shared input identity and Boolean conversion/selection explicit; complete unique enumeration and context congruence; actual bounded Broadcast sum/product/subtraction rebuilding, uniform scalar factor only where stated; separate actual binary32 tree refutations of add/product associativity and zero annihilation; no IEEE ring, flags/effects/layout or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/cancel-subtract-lhs",
+        "HandleAdd/cancel-subtract-rhs",
+        "HandleAdd/constant-right",
+        "HandleAdd/constant-subtract-broadcast-scalars",
+        "HandleAdd/constant-subtract-direct-constants",
+        "HandleAdd/constant-sum-broadcast-scalars",
+        "HandleAdd/constant-sum-direct-constants",
+        "HandleAdd/factor-lhs-lhs",
+        "HandleAdd/factor-lhs-rhs",
+        "HandleAdd/factor-rhs-lhs",
+        "HandleAdd/factor-rhs-rhs",
+        "HandleAdd/lhs-zero",
+        "HandleAdd/rhs-zero",
+        "HandleMultiply/constant-product",
+        "HandleMultiply/four-factors",
+        "HandleMultiply/legacy-constant-product-broadcast-scalars",
+        "HandleMultiply/legacy-constant-product-direct",
+        "HandleMultiply/lhs-one",
+        "HandleMultiply/lhs-zero",
+        "HandleMultiply/negated-operands",
+        "HandleMultiply/predicate-convert",
+        "HandleMultiply/rhs-one",
+        "HandleMultiply/rhs-zero",
+        "HandleNegate/involution",
+        "HandleSubtract/add-sub-self-left",
+        "HandleSubtract/add-sub-self-right",
+        "HandleSubtract/broadcast-constant",
+        "HandleSubtract/constant",
+        "HandleSubtract/self",
+        "HandleSubtract/sub-add-self-left",
+        "HandleSubtract/sub-add-self-right",
+        "HandleSubtract/sub-sub-self",
+        "HandleSubtract/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     },
     {
       "theorem": "TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono",
@@ -14063,12 +14650,21 @@
       "retained_lhs": "Add(x,Subtract(y,x)) with Subtract at lhs",
       "retained_rhs": "y",
       "unreviewed_benchmark_notes_not_assumptions": "AddAnyOrder matcher; same x pointer; integral output OR enable_fast_math; compatibility succeeds",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left"
+        "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_left",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/cancel-subtract-rhs",
@@ -14076,12 +14672,21 @@
       "retained_lhs": "Add(x,Subtract(y,x)) with Subtract at rhs",
       "retained_rhs": "y",
       "unreviewed_benchmark_notes_not_assumptions": "AddAnyOrder matcher; same x pointer; integral output OR enable_fast_math; compatibility succeeds",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right"
+        "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/constant-right",
@@ -14089,12 +14694,21 @@
       "retained_lhs": "Add(Constant(c),NonConstant(x))",
       "retained_rhs": "Add(x,c)",
       "unreviewed_benchmark_notes_not_assumptions": "exact direct-Constant matcher",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_comm"
+        "TensorRewrite.Pilot.ModularArithmetic.add_comm",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/constant-subtract-broadcast-scalars",
@@ -14102,12 +14716,22 @@
       "retained_lhs": "Add(Subtract(c1,a),c2) with broadcast-scalars",
       "retained_rhs": "Subtract(Add(c1,c2),a), rebroadcasting scalar constant sum if needed",
       "unreviewed_benchmark_notes_not_assumptions": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast"
+        "TensorRewrite.Pilot.ModularArithmetic.sub_add_broadcast",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/constant-subtract-direct-constants",
@@ -14115,12 +14739,21 @@
       "retained_lhs": "Add(Subtract(c1,a),c2) with direct-constants",
       "retained_rhs": "Subtract(Add(c1,c2),a), rebroadcasting scalar constant sum if needed",
       "unreviewed_benchmark_notes_not_assumptions": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant"
+        "TensorRewrite.Pilot.ModularArithmetic.sub_add_constant",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/constant-sum-broadcast-scalars",
@@ -14128,12 +14761,22 @@
       "retained_lhs": "Add(Add(a,c1),c2) with broadcast-scalars",
       "retained_rhs": "Add(a,Add(c1,c2)), rebroadcasting constant sum when scalar result and nonscalar output",
       "unreviewed_benchmark_notes_not_assumptions": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc"
+        "TensorRewrite.Pilot.ModularArithmetic.add_broadcast_assoc",
+        "TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/constant-sum-direct-constants",
@@ -14141,12 +14784,21 @@
       "retained_lhs": "Add(Add(a,c1),c2) with direct-constants",
       "retained_rhs": "Add(a,Add(c1,c2)), rebroadcasting constant sum when scalar result and nonscalar output",
       "unreviewed_benchmark_notes_not_assumptions": "output neither floating nor complex OR enable_fast_math; a NonConstant; exact selected direct/broadcast Constant match",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_assoc"
+        "TensorRewrite.Pilot.ModularArithmetic.add_assoc",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/factor-lhs-lhs",
@@ -14154,13 +14806,22 @@
       "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at lhs/lhs",
       "retained_rhs": "Multiply(Add(a,b),c)",
       "unreviewed_benchmark_notes_not_assumptions": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
-        "TensorRewrite.Pilot.ModularArithmetic.factor_left"
+        "TensorRewrite.Pilot.ModularArithmetic.factor_left",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/factor-lhs-rhs",
@@ -14168,12 +14829,21 @@
       "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at lhs/rhs",
       "retained_rhs": "Multiply(Add(a,b),c)",
       "unreviewed_benchmark_notes_not_assumptions": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.factor_any_order"
+        "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/factor-rhs-lhs",
@@ -14181,12 +14851,21 @@
       "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at rhs/lhs",
       "retained_rhs": "Multiply(Add(a,b),c)",
       "unreviewed_benchmark_notes_not_assumptions": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.factor_any_order"
+        "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/factor-rhs-rhs",
@@ -14194,13 +14873,22 @@
       "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at rhs/rhs",
       "retained_rhs": "Multiply(Add(a,b),c)",
       "unreviewed_benchmark_notes_not_assumptions": "shared c pointer; both Multiply nodes one user; integral output OR enable_floats_are_real OR IsAllFpConstantPowerOf2(c)",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.ModularArithmetic.factor_any_order",
-        "TensorRewrite.Pilot.ModularArithmetic.factor_right"
+        "TensorRewrite.Pilot.ModularArithmetic.factor_right",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/lhs-zero",
@@ -14208,12 +14896,21 @@
       "retained_lhs": "Add(x,0) with zero at lhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(lhs,0); compatibility replacement succeeds; no local fast-math guard",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero"
+        "TensorRewrite.Pilot.ModularArithmetic.add_lhs_zero",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/partial-update-lhs",
@@ -14243,12 +14940,21 @@
       "retained_lhs": "Add(x,0) with zero at rhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(rhs,0); compatibility replacement succeeds; no local fast-math guard",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero"
+        "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleAdd/scatter-concat",
@@ -16709,7 +17415,8 @@
       "unreviewed_benchmark_notes_not_assumptions": "output is neither floating nor complex OR fast math; a NonConstant; c scalar direct/broadcast Constant; b NonConstant; c broadcast to b shape if needed",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order"
+        "TensorRewrite.Pilot.ModularArithmetic.broadcast_factor_any_order",
+        "TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -16720,13 +17427,22 @@
       "retained_lhs": "Multiply(Multiply(a,c1),c2) with AnyOrder matchers",
       "retained_rhs": "Multiply(a,Multiply(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "output is neither floating nor complex OR fast math; a NonConstant; c1,c2 Constant; scalar product rebroadcast as needed",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.ModularArithmetic.mul_assoc",
-        "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_assoc_any_order",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/conv-reorder-delegation",
@@ -16756,13 +17472,22 @@
       "retained_lhs": "Multiply(Multiply(a,c1),Multiply(b,c2)) with AnyOrder matchers",
       "retained_rhs": "Multiply(Multiply(a,b),Multiply(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "output is neither floating nor complex OR fast math; a,b NonConstant; c1,c2 Constant; constant product broadcast if scalar",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.ModularArithmetic.four_factors",
-        "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order"
+        "TensorRewrite.Pilot.ModularArithmetic.four_factors_any_order",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/legacy-constant-product-broadcast-scalars",
@@ -16770,12 +17495,22 @@
       "retained_lhs": "Multiply(Multiply(a,c1),c2) in broadcast-scalars pattern",
       "retained_rhs": "Multiply(a,Multiply(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "output is neither floating nor complex OR fast math; exact legacy matcher; constant product broadcast if needed",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_broadcast_assoc",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/legacy-constant-product-direct",
@@ -16783,10 +17518,20 @@
       "retained_lhs": "Multiply(Multiply(a,c1),c2) in direct pattern",
       "retained_rhs": "Multiply(a,Multiply(c1,c2))",
       "unreviewed_benchmark_notes_not_assumptions": "output is neither floating nor complex OR fast math; exact legacy matcher; constant product broadcast if needed",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/lhs-one",
@@ -16794,12 +17539,21 @@
       "retained_lhs": "Multiply(x,1) with 1 at lhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(lhs,1); successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_one",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/lhs-zero",
@@ -16807,12 +17561,21 @@
       "retained_lhs": "Multiply(x,0) with 0 at lhs",
       "retained_rhs": "matched zero operand",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(lhs,0); integral type OR fast math; successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_lhs_zero",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/negated-operands",
@@ -16820,12 +17583,21 @@
       "retained_lhs": "Multiply(Negate(a),Negate(b))",
       "retained_rhs": "Multiply(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "nested matcher succeeds; both operand replacements succeed in source order",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/predicate-convert",
@@ -16833,7 +17605,7 @@
       "retained_lhs": "Multiply(Convert(pred),x) in either operand order",
       "retained_rhs": "Select(pred,x,BroadcastZeros)",
       "unreviewed_benchmark_notes_not_assumptions": "Convert input PRED; no local finite or fast-math guard",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects",
         "TensorRewrite.Pilot.Float32Exceptional.every_compliant_mul_differs",
@@ -16845,10 +17617,19 @@
         "TensorRewrite.Pilot.Float32Exceptional.nan_false_refutes",
         "TensorRewrite.Pilot.Float32Exceptional.neg_inf_false_refutes",
         "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid",
-        "TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes"
+        "TensorRewrite.Pilot.Float32Exceptional.scalar_tensor_refutes",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/rhs-one",
@@ -16856,12 +17637,21 @@
       "retained_lhs": "Multiply(x,1) with 1 at rhs",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(rhs,1); successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/rhs-zero",
@@ -16869,12 +17659,21 @@
       "retained_lhs": "Multiply(x,0) with 0 at rhs",
       "retained_rhs": "matched zero operand",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(rhs,0); integral type OR fast math; successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero"
+        "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMultiply/rsqrt-square",
@@ -16904,13 +17703,22 @@
       "retained_lhs": "Negate(Negate(x))",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "nested Negate matcher; successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.Subtract.neg_neg",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family",
         "TensorRewrite.Theory.FloatNegation.tensor_involution"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleNot/involution",
@@ -18737,12 +19545,21 @@
       "retained_lhs": "Subtract(Add(x,y),x) with x at left",
       "retained_rhs": "y",
       "unreviewed_benchmark_notes_not_assumptions": "integral output element type OR enable_fast_math; rhs pointer equals a matched add operand; selected remaining operand passes compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.add_sub_self_left"
+        "TensorRewrite.Pilot.Subtract.add_sub_self_left",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/add-sub-self-right",
@@ -18750,12 +19567,21 @@
       "retained_lhs": "Subtract(Add(x,y),x) with x at right",
       "retained_rhs": "y",
       "unreviewed_benchmark_notes_not_assumptions": "integral output element type OR enable_fast_math; rhs pointer equals a matched add operand; selected remaining operand passes compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.add_sub_self_right"
+        "TensorRewrite.Pilot.Subtract.add_sub_self_right",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/broadcast-constant",
@@ -18763,13 +19589,23 @@
       "retained_lhs": "Subtract(nonconstant x,broadcast-constant)",
       "retained_rhs": "Add(x,Negate(constant)) with broadcast rebuilt if present",
       "unreviewed_benchmark_notes_not_assumptions": "matcher selects direct or broadcast Constant; x is NonConstant; no fast-math guard on this branch",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
         "TensorRewrite.Pilot.Subtract.sub_broadcast_eq_add_neg",
-        "TensorRewrite.Pilot.Subtract.sub_eq_add_neg"
+        "TensorRewrite.Pilot.Subtract.sub_eq_add_neg",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/constant",
@@ -18777,12 +19613,21 @@
       "retained_lhs": "Subtract(nonconstant x,constant)",
       "retained_rhs": "Add(x,Negate(constant)) with broadcast rebuilt if present",
       "unreviewed_benchmark_notes_not_assumptions": "matcher selects direct or broadcast Constant; x is NonConstant; no fast-math guard on this branch",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.sub_eq_add_neg"
+        "TensorRewrite.Pilot.Subtract.sub_eq_add_neg",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/self",
@@ -18790,12 +19635,21 @@
       "retained_lhs": "Subtract(x,x)",
       "retained_rhs": "MakeScalarLike(old,0)",
       "unreviewed_benchmark_notes_not_assumptions": "integral output element type OR enable_fast_math; operand pointer identity",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.sub_self"
+        "TensorRewrite.Pilot.Subtract.sub_self",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/sub-add-self-left",
@@ -18803,12 +19657,21 @@
       "retained_lhs": "Subtract(x,Add(x,y)) with x at left",
       "retained_rhs": "Negate(y)",
       "unreviewed_benchmark_notes_not_assumptions": "integral output element type OR enable_fast_math; AddAnyOrder matches x pointer",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.sub_add_self_left"
+        "TensorRewrite.Pilot.Subtract.sub_add_self_left",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/sub-add-self-right",
@@ -18816,12 +19679,21 @@
       "retained_lhs": "Subtract(x,Add(x,y)) with x at right",
       "retained_rhs": "Negate(y)",
       "unreviewed_benchmark_notes_not_assumptions": "integral output element type OR enable_fast_math; AddAnyOrder matches x pointer",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.sub_add_self_right"
+        "TensorRewrite.Pilot.Subtract.sub_add_self_right",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/sub-sub-self",
@@ -18829,12 +19701,21 @@
       "retained_lhs": "Subtract(x,Subtract(x,y))",
       "retained_rhs": "y",
       "unreviewed_benchmark_notes_not_assumptions": "integral output element type OR enable_fast_math; nested matcher uses same x pointer; successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.sub_sub_self"
+        "TensorRewrite.Pilot.Subtract.sub_sub_self",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSubtract/zero",
@@ -18842,12 +19723,21 @@
       "retained_lhs": "Subtract(x,zero)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(rhs,0); successful compatibility replacement",
-      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
       "evidence": [
-        "TensorRewrite.Pilot.Subtract.sub_zero"
+        "TensorRewrite.Pilot.Subtract.sub_zero",
+        "TensorRewrite.Theory.ArithmeticFamily.complex_family",
+        "TensorRewrite.Theory.ArithmeticFamily.integer_family",
+        "TensorRewrite.Theory.ArithmeticFamily.real_family",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_in_context",
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.word_family"
       ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_commutative_ring_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleTranspose/broadcast-delegation",
