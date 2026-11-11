@@ -116,3 +116,10 @@ formulation/domain partitions,124 have partial evidence and13 carry declared val
 families. Whole-record closure is zero. The252 theory statements after the original
 reviewed89 still await review. Mathematical N/F and the final positive/negative
 workflow verdict remain unresolved; code correspondence is user-deferred future work.
+
+
+The later [whole-workload proposal milestone](workload-formulation-proposals.md)
+preserves the108/380 audit above under catalog v1 and introduces catalog v2 with
+all488 records covered by worksheets. Its380 new rows are unreviewed proposals,
+not new accepted Lean statements or whole-record proofs. The theoretical/proof
+counts above do not increase merely from adding those worksheets.

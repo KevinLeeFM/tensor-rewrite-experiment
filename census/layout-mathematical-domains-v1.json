@@ -1,0 +1,933 @@
+{
+  "schema": 1,
+  "status": "unreviewed_mathematical_formulation_proposals_not_frozen_N_or_F",
+  "retained_batch": "census/layout-cases.json",
+  "retained_batch_sha256": "6add1829272874e0b549c41b6c458e713b8c9585c31ef74b4f5dcf55ea73bfac",
+  "benchmark_record_count": 30,
+  "base_revision": "22cb0da0897299ea0cff4662fa205705062677c0",
+  "evidence_baseline": "census/formulation-evidence-baseline-v1.json",
+  "domain_proposals": "census/mathematical-domain-proposals-v1.json",
+  "mathematical_obligation_denominator": null,
+  "mathematical_denominator_frozen": false,
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "all_workload_attempts_complete": false,
+  "records": [
+    {
+      "benchmark_id": "HandleBitcast/unary-sandwich",
+      "retained_lhs": "Bitcast(Unary(Bitcast(x)))",
+      "retained_rhs": "Bitcast(cloned Unary(x))",
+      "classification": "bitcast_value_maps",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "pure_nary_map"
+      ],
+      "proposed_mathematical_target": "Define actual physical bitcast byte/index maps and prove the retained unary/chain/identity/Broadcast graph with derived output shape.",
+      "explicit_mathematical_premises": [
+        "Explicit element encodings, legal equal-storage shapes, layout orders/tiles and scalar operation where present."
+      ],
+      "remaining_mathematical_partitions": [
+        "Byte equality and logical equal-count reshape are distinct; memory/alias/transfer and control observations require their own contracts."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/compose-stage",
+      "retained_lhs": "Bitcast(Bitcast(x))",
+      "retained_rhs": "Bitcast(x)",
+      "classification": "bitcast_value_maps",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "pure_nary_map"
+      ],
+      "proposed_mathematical_target": "Define actual physical bitcast byte/index maps and prove the retained unary/chain/identity/Broadcast graph with derived output shape.",
+      "explicit_mathematical_premises": [
+        "Explicit element encodings, legal equal-storage shapes, layout orders/tiles and scalar operation where present."
+      ],
+      "remaining_mathematical_partitions": [
+        "Byte equality and logical equal-count reshape are distinct; memory/alias/transfer and control observations require their own contracts."
+      ],
+      "mathematical_risks": [],
+      "record_role": "transformation_stage",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/compatible-stage",
+      "retained_lhs": "current Bitcast(x)",
+      "retained_rhs": "current operand x",
+      "classification": "bitcast_value_maps",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "pure_nary_map"
+      ],
+      "proposed_mathematical_target": "Define actual physical bitcast byte/index maps and prove the retained unary/chain/identity/Broadcast graph with derived output shape.",
+      "explicit_mathematical_premises": [
+        "Explicit element encodings, legal equal-storage shapes, layout orders/tiles and scalar operation where present."
+      ],
+      "remaining_mathematical_partitions": [
+        "Byte equality and logical equal-count reshape are distinct; memory/alias/transfer and control observations require their own contracts."
+      ],
+      "mathematical_risks": [],
+      "record_role": "transformation_stage",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/recursive-inner",
+      "retained_lhs": "Bitcast(Bitcast(x))",
+      "retained_rhs": "inner handler-dependent graph",
+      "classification": "bitcast_helper_target",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index"
+      ],
+      "proposed_mathematical_target": "Select the actual concrete inner, chain or Concatenate replacement expression and define its independent physical map.",
+      "explicit_mathematical_premises": [
+        "A unique mathematical replacement graph and input/output encoding/layout parameters."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained handler/helper-dependent rhs is not a fixed expression; a successful change flag is not a semantic target."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/chain-delegation",
+      "retained_lhs": "current rebound node",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "bitcast_helper_target",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index"
+      ],
+      "proposed_mathematical_target": "Select the actual concrete inner, chain or Concatenate replacement expression and define its independent physical map.",
+      "explicit_mathematical_premises": [
+        "A unique mathematical replacement graph and input/output encoding/layout parameters."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained handler/helper-dependent rhs is not a fixed expression; a successful change flag is not a semantic target."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/broadcast-delegation",
+      "retained_lhs": "Bitcast(Broadcast(x))",
+      "retained_rhs": "Broadcast(x,remapped dims)",
+      "classification": "bitcast_value_maps",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "pure_nary_map"
+      ],
+      "proposed_mathematical_target": "Define actual physical bitcast byte/index maps and prove the retained unary/chain/identity/Broadcast graph with derived output shape.",
+      "explicit_mathematical_premises": [
+        "Explicit element encodings, legal equal-storage shapes, layout orders/tiles and scalar operation where present."
+      ],
+      "remaining_mathematical_partitions": [
+        "Byte equality and logical equal-count reshape are distinct; memory/alias/transfer and control observations require their own contracts."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/compose",
+      "retained_lhs": "BitcastConvert(BitcastConvert(x))",
+      "retained_rhs": "BitcastConvert(x,final shape)",
+      "classification": "bitcast_convert",
+      "candidate_domains": [
+        "bit_encoding",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define bit-preserving scalar/lane reinterpretation and prove the actual composition or physical-Bitcast/identity target, including shape and storage width.",
+      "explicit_mathematical_premises": [
+        "Explicit bitstream order, element widths, sub-byte packing, contiguous axis convention and total source/target storage bits."
+      ],
+      "remaining_mathematical_partitions": [
+        "Endianness, padding bits, tiles and zero-size arrays require precise definitions; equal numerical element counts do not establish bit-preserving conversion."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/concat-delegation",
+      "retained_lhs": "BitcastConvert(Concat(...))",
+      "retained_rhs": "helper-dependent Concat",
+      "classification": "bitcast_helper_target",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index"
+      ],
+      "proposed_mathematical_target": "Select the actual concrete inner, chain or Concatenate replacement expression and define its independent physical map.",
+      "explicit_mathematical_premises": [
+        "A unique mathematical replacement graph and input/output encoding/layout parameters."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained handler/helper-dependent rhs is not a fixed expression; a successful change flag is not a semantic target."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/same-physical-shape",
+      "retained_lhs": "BitcastConvert(x)",
+      "retained_rhs": "Bitcast(x)",
+      "classification": "bitcast_convert",
+      "candidate_domains": [
+        "bit_encoding",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define bit-preserving scalar/lane reinterpretation and prove the actual composition or physical-Bitcast/identity target, including shape and storage width.",
+      "explicit_mathematical_premises": [
+        "Explicit bitstream order, element widths, sub-byte packing, contiguous axis convention and total source/target storage bits."
+      ],
+      "remaining_mathematical_partitions": [
+        "Endianness, padding bits, tiles and zero-size arrays require precise definitions; equal numerical element counts do not establish bit-preserving conversion."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/last-contiguous-axis",
+      "retained_lhs": "BitcastConvert(x)",
+      "retained_rhs": "Bitcast(x)",
+      "classification": "bitcast_convert",
+      "candidate_domains": [
+        "bit_encoding",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define bit-preserving scalar/lane reinterpretation and prove the actual composition or physical-Bitcast/identity target, including shape and storage width.",
+      "explicit_mathematical_premises": [
+        "Explicit bitstream order, element widths, sub-byte packing, contiguous axis convention and total source/target storage bits."
+      ],
+      "remaining_mathematical_partitions": [
+        "Endianness, padding bits, tiles and zero-size arrays require precise definitions; equal numerical element counts do not establish bit-preserving conversion."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/compatible",
+      "retained_lhs": "BitcastConvert(x)",
+      "retained_rhs": "x",
+      "classification": "bitcast_convert",
+      "candidate_domains": [
+        "bit_encoding",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define bit-preserving scalar/lane reinterpretation and prove the actual composition or physical-Bitcast/identity target, including shape and storage width.",
+      "explicit_mathematical_premises": [
+        "Explicit bitstream order, element widths, sub-byte packing, contiguous axis convention and total source/target storage bits."
+      ],
+      "remaining_mathematical_partitions": [
+        "Endianness, padding bits, tiles and zero-size arrays require precise definitions; equal numerical element counts do not establish bit-preserving conversion."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/swap-delegation",
+      "retained_lhs": "Copy(Bitcast*(Copy(x)))",
+      "retained_rhs": "helper-dependent reordered copies/bitcast",
+      "classification": "bitcast_helper_target",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index"
+      ],
+      "proposed_mathematical_target": "Select the actual concrete inner, chain or Concatenate replacement expression and define its independent physical map.",
+      "explicit_mathematical_premises": [
+        "A unique mathematical replacement graph and input/output encoding/layout parameters."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained handler/helper-dependent rhs is not a fixed expression; a successful change flag is not a semantic target."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/compose-identity",
+      "retained_lhs": "Copy(Copy(x))",
+      "retained_rhs": "x",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/compose-copy",
+      "retained_lhs": "Copy(Copy(x))",
+      "retained_rhs": "Copy(x,outer shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/compatible",
+      "retained_lhs": "Copy(x)",
+      "retained_rhs": "x",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/chain-bitcast",
+      "retained_lhs": "Copy(copy/reshape chain)",
+      "retained_rhs": "Bitcast(selected ancestor)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/reshape-clone",
+      "retained_lhs": "Copy(Reshape(x))",
+      "retained_rhs": "Reshape(x,copy shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/reshape-reorder-new-copy-reshape",
+      "retained_lhs": "Copy(Reshape(optional Copy(x)))",
+      "retained_rhs": "Reshape(Copy(reshape_operand,aligned shape),output shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/reshape-reorder-new-copy-bitcast",
+      "retained_lhs": "Copy(Reshape(optional Copy(x)))",
+      "retained_rhs": "Bitcast(Copy(reshape_operand,aligned shape),output shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/reshape-reorder-omit-copy-reshape",
+      "retained_lhs": "Copy(Reshape(optional Copy(x)))",
+      "retained_rhs": "Reshape(x,output shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCopy/reshape-reorder-omit-copy-bitcast",
+      "retained_lhs": "Copy(Reshape(optional Copy(x)))",
+      "retained_rhs": "Bitcast(x,output shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "SwapCopyBitcastCopy/move-bitcast",
+      "retained_lhs": "Copy(Bitcast*(Copy(x)))",
+      "retained_rhs": "Copy(Bitcast(x,new shape),output shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "SwapCopyBitcastCopy/move-copy",
+      "retained_lhs": "Copy(Bitcast*(Copy(x)))",
+      "retained_rhs": "Bitcast(Copy(x,new shape),output shape)",
+      "classification": "copy_layout_algebra",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Derive the exact logical/physical coordinate maps of the retained Copy/Reshape/Bitcast composition and its actual chosen target.",
+      "explicit_mathematical_premises": [
+        "Explicit endpoint/intermediate layouts, memory spaces, tiles, element encodings and observation of transfers/allocation/aliasing."
+      ],
+      "remaining_mathematical_partitions": [
+        "A pure Copy-as-identity model omits observed storage/transfer behavior; profitability and allocation estimates are not semantic proofs.",
+        "Ancestor selection, tile validity and optional omitted copies remain concrete mathematical conditions to derive, not helper-name axioms."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TrySimplifyTautologicalBitcastConvert/concat",
+      "retained_lhs": "BitcastConvert(Concat(BitcastConvert(xs)))",
+      "retained_rhs": "Concat(xs,original axis)",
+      "classification": "bitcast_concat_inverse",
+      "candidate_domains": [
+        "bit_encoding",
+        "physical_layout",
+        "bounded_index"
+      ],
+      "proposed_mathematical_target": "Prove inverse bitcast-conversion around actual Concatenate restores the retained original-lane Concatenate bitstream and shape.",
+      "explicit_mathematical_premises": [
+        "Explicit inverse source/destination encodings, lane widths, concatenation axis and legal storage-size equations."
+      ],
+      "remaining_mathematical_partitions": [
+        "Lane boundary alignment, endianness, padding bits and empty pieces require separate proofs; a source-type match alone is insufficient."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConstant/tuple",
+      "retained_lhs": "Constant(literal)",
+      "retained_rhs": "recursive Tuple of leaf constants",
+      "classification": "literal_structure",
+      "candidate_domains": [
+        "pure_tuple",
+        "literal_values",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define actual literal values and prove equality with the retained recursive tuple, scalar Broadcast or same-width Iota/product construction.",
+      "explicit_mathematical_premises": [
+        "Explicit tuple arities, leaf shapes/encodings and exact uniform/stride/Iota numerical predicates."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty/zero-element and TOKEN domains, signed/unsigned stride wrapping, NaN/zero-bit equality and host literal recognition remain distinct mathematical partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConstant/uniform",
+      "retained_lhs": "Constant(literal)",
+      "retained_rhs": "Broadcast(first scalar literal,original shape)",
+      "classification": "literal_structure",
+      "candidate_domains": [
+        "pure_tuple",
+        "literal_values",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define actual literal values and prove equality with the retained recursive tuple, scalar Broadcast or same-width Iota/product construction.",
+      "explicit_mathematical_premises": [
+        "Explicit tuple arities, leaf shapes/encodings and exact uniform/stride/Iota numerical predicates."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty/zero-element and TOKEN domains, signed/unsigned stride wrapping, NaN/zero-bit equality and host literal recognition remain distinct mathematical partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConstant/iota",
+      "retained_lhs": "Constant(literal)",
+      "retained_rhs": "Iota(original shape,axis0)",
+      "classification": "literal_structure",
+      "candidate_domains": [
+        "pure_tuple",
+        "literal_values",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define actual literal values and prove equality with the retained recursive tuple, scalar Broadcast or same-width Iota/product construction.",
+      "explicit_mathematical_premises": [
+        "Explicit tuple arities, leaf shapes/encodings and exact uniform/stride/Iota numerical predicates."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty/zero-element and TOKEN domains, signed/unsigned stride wrapping, NaN/zero-bit equality and host literal recognition remain distinct mathematical partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConstant/strided-iota",
+      "retained_lhs": "Constant(literal)",
+      "retained_rhs": "Multiply(Iota(original shape,axis0),MakeScalarLike(stride))",
+      "classification": "literal_structure",
+      "candidate_domains": [
+        "pure_tuple",
+        "literal_values",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define actual literal values and prove equality with the retained recursive tuple, scalar Broadcast or same-width Iota/product construction.",
+      "explicit_mathematical_premises": [
+        "Explicit tuple arities, leaf shapes/encodings and exact uniform/stride/Iota numerical predicates."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty/zero-element and TOKEN domains, signed/unsigned stride wrapping, NaN/zero-bit equality and host literal recognition remain distinct mathematical partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleOptimizationBarrier/prune-producer",
+      "retained_lhs": "OptimizationBarrier(tuple-valued operand) and its GTE users",
+      "retained_rhs": "same barrier with projected operand tuple and shape; every GTE tuple index remapped",
+      "classification": "barrier_tuple_projection",
+      "candidate_domains": [
+        "pure_tuple",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define the typed tuple projection and inverse remapping of every surviving consumer, then preserve actual barrier/value/control observations.",
+      "explicit_mathematical_premises": [
+        "A bounded retained-component selection and total remapping of all observed tuple projections; explicit token/effect semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "Removing unused values can change evaluation/effects; preserving direct tokens alone is not a full trace theorem.",
+        "Barrier semantics, component dependencies and retained multiple-user/root observations remain open independent contracts."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleOptimizationBarrier/prune-tuple",
+      "retained_lhs": "OptimizationBarrier(tuple-valued operand) and its GTE users",
+      "retained_rhs": "same barrier with projected operand tuple and shape; every GTE tuple index remapped",
+      "classification": "barrier_tuple_projection",
+      "candidate_domains": [
+        "pure_tuple",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define the typed tuple projection and inverse remapping of every surviving consumer, then preserve actual barrier/value/control observations.",
+      "explicit_mathematical_premises": [
+        "A bounded retained-component selection and total remapping of all observed tuple projections; explicit token/effect semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "Removing unused values can change evaluation/effects; preserving direct tokens alone is not a full trace theorem.",
+        "Barrier semantics, component dependencies and retained multiple-user/root observations remain open independent contracts."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    }
+  ]
+}

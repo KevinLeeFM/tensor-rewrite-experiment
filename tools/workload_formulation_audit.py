@@ -6,7 +6,7 @@ from pathlib import Path
 import mathematical_ledger as ledger
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = 'census/workload-formulation-catalog-v1.json'
+CATALOG = 'census/workload-formulation-catalog-v2.json'
 
 
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -18,8 +18,9 @@ def worksheet_ids(document):
     return {name for family in document['families'] for name in family['benchmark_ids']}
 
 
-def read_catalog():
-    catalog = ledger.read(CATALOG)
+def read_catalog(path=CATALOG):
+    catalog = ledger.read(path)
+    catalog = dict(catalog, _catalog_path=path)
     assert catalog['mathematical_denominator_frozen'] is False
     for row in catalog['worksheets']:
         assert digest(ROOT / row['path']) == row['sha256'], row['path']
@@ -37,8 +38,13 @@ def assemble(cases, progress, catalog):
     assert progress['mathematical_obligation_denominator'] is None
     assert not any(r['whole_record_mathematically_closed'] for r in records)
     references = {name:[] for name in cases}
+    nonproposal_worksheet_ids = set()
     for row in catalog['worksheets']:
-        for name in worksheet_ids(ledger.read(row['path'])):
+        worksheet = ledger.read(row['path'])
+        names = worksheet_ids(worksheet)
+        if worksheet['status'] != 'unreviewed_mathematical_formulation_proposals_not_frozen_N_or_F':
+            nonproposal_worksheet_ids.update(names)
+        for name in names:
             assert name in references, name
             references[name].append(row['path'])
     output = []
@@ -53,9 +59,13 @@ def assemble(cases, progress, catalog):
     evidence_only = [r['benchmark_id'] for r in output if r['checked_declaration_references']
                      and not r['worksheet_references']]
     batches = sorted({r['batch'] for r in output})
+    catalog_path = catalog.get('_catalog_path', CATALOG)
     return dict(status='whole_retained_corpus_formulation_audit_not_proof_coverage',
-                corpus_manifest=ledger.MANIFEST,catalog=CATALOG,catalog_sha256=digest(ROOT / CATALOG),
+                corpus_manifest=ledger.MANIFEST,catalog=catalog_path,catalog_sha256=digest(ROOT / catalog_path),
                 retained_benchmark_records=488,records_with_domain_worksheets=488-len(missing),
+                records_with_only_unreviewed_proposal_worksheets=sum(
+                    bool(r['worksheet_references']) and r['benchmark_id'] not in nonproposal_worksheet_ids
+                    for r in output),
                 records_without_domain_worksheets=missing,
                 records_with_evidence_but_no_domain_worksheet=evidence_only,
                 batch_counts={batch:dict(retained=sum(r['batch']==batch for r in output),

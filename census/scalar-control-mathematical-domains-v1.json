@@ -1,0 +1,1693 @@
+{
+  "schema": 1,
+  "status": "unreviewed_mathematical_formulation_proposals_not_frozen_N_or_F",
+  "retained_batch": "census/scalar-control-cases.json",
+  "retained_batch_sha256": "905974b8c88743cef12ce689f7aaca918dc635955d987eaa237d13f4e85c0c14",
+  "benchmark_record_count": 55,
+  "base_revision": "22cb0da0897299ea0cff4662fa205705062677c0",
+  "evidence_baseline": "census/formulation-evidence-baseline-v1.json",
+  "domain_proposals": "census/mathematical-domain-proposals-v1.json",
+  "mathematical_obligation_denominator": null,
+  "mathematical_denominator_frozen": false,
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "all_workload_attempts_complete": false,
+  "records": [
+    {
+      "benchmark_id": "HandleAbs/nonnegative",
+      "retained_lhs": "Abs(x)",
+      "retained_rhs": "x",
+      "classification": "absolute_nonnegative",
+      "candidate_domains": [
+        "linear_ordered_ring",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Prove Abs(x)=x on an independently specified nonnegative domain, including the actual tensor shape.",
+      "explicit_mathematical_premises": [
+        "A declared scalar absolute value and a proved semantic nonnegativity premise."
+      ],
+      "remaining_mathematical_partitions": [
+        "Signed minimum and NaN/negative-zero stored bits or status do not inherit a real absolute-value theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleClamp/idempotent",
+      "retained_lhs": "Clamp(a,Clamp(a,x,b),b)",
+      "retained_rhs": "Clamp(a,x,b)",
+      "classification": "clamp_idempotence",
+      "candidate_domains": [
+        "linear_order",
+        "bounded_runtime_id",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Prove retained clamp idempotence, or runtime-ID clamp elimination using the independently bounded integer ID range.",
+      "explicit_mathematical_premises": [
+        "The actual clamp definition and bound values; runtime ID lies in the finite participant/partition interval."
+      ],
+      "remaining_mathematical_partitions": [
+        "Module/participant count and finite-width upper+1 overflow are mathematical bounds to prove, not imported guard assumptions; floating ties/NaNs remain separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleClamp/runtime-id",
+      "retained_lhs": "Clamp(0,PartitionId/ReplicaId,upper)",
+      "retained_rhs": "PartitionId/ReplicaId",
+      "classification": "clamp_idempotence",
+      "candidate_domains": [
+        "linear_order",
+        "bounded_runtime_id",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Prove retained clamp idempotence, or runtime-ID clamp elimination using the independently bounded integer ID range.",
+      "explicit_mathematical_premises": [
+        "The actual clamp definition and bound values; runtime ID lies in the finite participant/partition interval."
+      ],
+      "remaining_mathematical_partitions": [
+        "Module/participant count and finite-width upper+1 overflow are mathematical bounds to prove, not imported guard assumptions; floating ties/NaNs remain separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleLog/exp",
+      "retained_lhs": "Log(Exp(a))",
+      "retained_rhs": "a",
+      "classification": "logarithm_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Formulate the retained logarithm equation with actual real/principal-complex exp, power, sqrt or reciprocal-sqrt operations and independently derived domains.",
+      "explicit_mathematical_premises": [
+        "For each branch, explicitly quantify the base/exponent and define power at zero and negative/complex bases; principal argument ranges are part of the mathematical domain."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing exact log/exp and sqrt domain theorems cover only stated profiles; branch cuts, zero and complex powers must not be erased.",
+        "Rounded transcendental implementations and numerical permission/refinement remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
+        "TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff",
+        "TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleLog/power-real",
+      "retained_lhs": "Log(Power(a,b))",
+      "retained_rhs": "Select(b == 0,0,Multiply(Log(Abs(a)),b))",
+      "classification": "logarithm_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Formulate the retained logarithm equation with actual real/principal-complex exp, power, sqrt or reciprocal-sqrt operations and independently derived domains.",
+      "explicit_mathematical_premises": [
+        "For each branch, explicitly quantify the base/exponent and define power at zero and negative/complex bases; principal argument ranges are part of the mathematical domain."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing exact log/exp and sqrt domain theorems cover only stated profiles; branch cuts, zero and complex powers must not be erased.",
+        "Rounded transcendental implementations and numerical permission/refinement remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleLog/power-complex",
+      "retained_lhs": "Log(Power(a,b))",
+      "retained_rhs": "Select(b == 0,0,Multiply(Log(a),b))",
+      "classification": "logarithm_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Formulate the retained logarithm equation with actual real/principal-complex exp, power, sqrt or reciprocal-sqrt operations and independently derived domains.",
+      "explicit_mathematical_premises": [
+        "For each branch, explicitly quantify the base/exponent and define power at zero and negative/complex bases; principal argument ranges are part of the mathematical domain."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing exact log/exp and sqrt domain theorems cover only stated profiles; branch cuts, zero and complex powers must not be erased.",
+        "Rounded transcendental implementations and numerical permission/refinement remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleLog/sqrt",
+      "retained_lhs": "Log(Sqrt(a))",
+      "retained_rhs": "Multiply(Log(a),0.5)",
+      "classification": "logarithm_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Formulate the retained logarithm equation with actual real/principal-complex exp, power, sqrt or reciprocal-sqrt operations and independently derived domains.",
+      "explicit_mathematical_premises": [
+        "For each branch, explicitly quantify the base/exponent and define power at zero and negative/complex bases; principal argument ranges are part of the mathematical domain."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing exact log/exp and sqrt domain theorems cover only stated profiles; branch cuts, zero and complex powers must not be erased.",
+        "Rounded transcendental implementations and numerical permission/refinement remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleLog/rsqrt",
+      "retained_lhs": "Log(Rsqrt(a))",
+      "retained_rhs": "Multiply(Log(a),-0.5)",
+      "classification": "logarithm_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Formulate the retained logarithm equation with actual real/principal-complex exp, power, sqrt or reciprocal-sqrt operations and independently derived domains.",
+      "explicit_mathematical_premises": [
+        "For each branch, explicitly quantify the base/exponent and define power at zero and negative/complex bases; principal argument ranges are part of the mathematical domain."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing exact log/exp and sqrt domain theorems cover only stated profiles; branch cuts, zero and complex powers must not be erased.",
+        "Rounded transcendental implementations and numerical permission/refinement remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConvert/same-type",
+      "retained_lhs": "Convert(x,T)",
+      "retained_rhs": "x",
+      "classification": "conversion_roundtrip",
+      "candidate_domains": [
+        "scalar_conversion",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define each source/destination scalar conversion and prove the retained identity, roundtrip or literal-value equality in its independently specified domain.",
+      "explicit_mathematical_premises": [
+        "Explicit source/intermediate/destination formats, signedness, rounding/saturation rules and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Value preservation of the roundtrip is a theorem obligation, not an assumed meaning of a helper name; NaN payloads, flags and out-of-range behavior remain explicit."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConvert/noop-pair",
+      "retained_lhs": "Convert(Convert(x,U),T)",
+      "retained_rhs": "x",
+      "classification": "conversion_roundtrip",
+      "candidate_domains": [
+        "scalar_conversion",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define each source/destination scalar conversion and prove the retained identity, roundtrip or literal-value equality in its independently specified domain.",
+      "explicit_mathematical_premises": [
+        "Explicit source/intermediate/destination formats, signedness, rounding/saturation rules and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Value preservation of the roundtrip is a theorem obligation, not an assumed meaning of a helper name; NaN payloads, flags and out-of-range behavior remain explicit."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConvert/constant-fold",
+      "retained_lhs": "Convert(Constant(c),T)",
+      "retained_rhs": "Constant(Literal.Convert(c,T))",
+      "classification": "conversion_roundtrip",
+      "candidate_domains": [
+        "scalar_conversion",
+        "arbitrary_width_bitvector",
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define each source/destination scalar conversion and prove the retained identity, roundtrip or literal-value equality in its independently specified domain.",
+      "explicit_mathematical_premises": [
+        "Explicit source/intermediate/destination formats, signedness, rounding/saturation rules and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Value preservation of the roundtrip is a theorem obligation, not an assumed meaning of a helper name; NaN payloads, flags and out-of-range behavior remain explicit."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConvert/binary-surround-delegation",
+      "retained_lhs": "Convert(Binary(Convert(a),Convert(b)))",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "binary_conversion_delegation",
+      "candidate_domains": [
+        "scalar_conversion",
+        "arbitrary_width_bitvector"
+      ],
+      "proposed_mathematical_target": "Select the concrete narrow/wide binary conversion graph, then state the actual operation-specific roundtrip equation.",
+      "explicit_mathematical_premises": [
+        "An explicit replacement operator and source/intermediate/result scalar formats."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent graph does not determine a unique mathematical target; arithmetic quotient and modular operations cannot be merged."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCustomCall/dynamic-roundtrip-raw-size",
+      "retained_lhs": "SliceToDynamic(GTE(PadToStatic(x),0),GTE(PadToStatic(x),1))",
+      "retained_rhs": "x",
+      "classification": "dynamic_shape_roundtrip",
+      "candidate_domains": [
+        "dynamic_shape",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Define PadToStatic and SliceToDynamic on values and runtime extents, then prove the actual raw or clamped size tuple roundtrip.",
+      "explicit_mathematical_premises": [
+        "Rank-one bounded runtime extent, actual static capacity, shared value/size provenance and explicit clamp semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "Static tensor equality alone does not specify dynamic size observations; custom-call effects, error/status and memory/layout observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCustomCall/dynamic-roundtrip-clamped-size",
+      "retained_lhs": "SliceToDynamic(GTE(PadToStatic(x),0),Clamp(0,GTE(PadToStatic(x),1),bound))",
+      "retained_rhs": "x",
+      "classification": "dynamic_shape_roundtrip",
+      "candidate_domains": [
+        "dynamic_shape",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Define PadToStatic and SliceToDynamic on values and runtime extents, then prove the actual raw or clamped size tuple roundtrip.",
+      "explicit_mathematical_premises": [
+        "Rank-one bounded runtime extent, actual static capacity, shared value/size provenance and explicit clamp semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "Static tensor equality alone does not specify dynamic size observations; custom-call effects, error/status and memory/layout observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCustomCall/layout-identity",
+      "retained_lhs": "LayoutConstraint(x)",
+      "retained_rhs": "x",
+      "classification": "custom_layout_constraint",
+      "candidate_domains": [
+        "physical_layout",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Give LayoutConstraint and Copy independent value/layout/effect meanings and compare the exact retained identity/copy target.",
+      "explicit_mathematical_premises": [
+        "Explicit logical shape, storage map and observable memory/layout/transfer behavior."
+      ],
+      "remaining_mathematical_partitions": [
+        "Treating both custom calls as identity on a pure tensor would omit the layout and effect observation contract."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleCustomCall/layout-copy",
+      "retained_lhs": "LayoutConstraint(x)",
+      "retained_rhs": "Copy(x,output shape)",
+      "classification": "custom_layout_constraint",
+      "candidate_domains": [
+        "physical_layout",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Give LayoutConstraint and Copy independent value/layout/effect meanings and compare the exact retained identity/copy target.",
+      "explicit_mathematical_premises": [
+        "Explicit logical shape, storage map and observable memory/layout/transfer behavior."
+      ],
+      "remaining_mathematical_partitions": [
+        "Treating both custom calls as identity on a pure tensor would omit the layout and effect observation contract."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/zero",
+      "retained_lhs": "Power(a,0)",
+      "retained_rhs": "MakeScalarLike(output,1)",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/one",
+      "retained_lhs": "Power(a,1)",
+      "retained_rhs": "a",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/exp-base",
+      "retained_lhs": "Power(Exp(a),b)",
+      "retained_rhs": "Exp(Multiply(a,b))",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/two",
+      "retained_lhs": "Power(a,2)",
+      "retained_rhs": "Multiply(a,a)",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/three",
+      "retained_lhs": "Power(a,3)",
+      "retained_rhs": "Multiply(a,Multiply(a,a))",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/minus-one",
+      "retained_lhs": "Power(a,-1)",
+      "retained_rhs": "Divide(1,a)",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandlePower/half",
+      "retained_lhs": "Power(a,0.5)",
+      "retained_rhs": "Sqrt(a)",
+      "classification": "power_special_exponent",
+      "candidate_domains": [
+        "exact_ring",
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Define the chosen power operation and prove the actual retained exponent specialization, multiplication order, reciprocal or exp-base graph.",
+      "explicit_mathematical_premises": [
+        "Explicit exponent representation and power convention; independently stated base domains, including nonnegative half-power and nonzero reciprocal cases where required."
+      ],
+      "remaining_mathematical_partitions": [
+        "Integer power, real rpow and principal complex power differ at zero/negative bases; they need distinct statements.",
+        "Rounded power is not definitionally repeated multiplication or sqrt; signed zero, overflow/underflow and branch/status observations remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleRsqrt/inverse-square",
+      "retained_lhs": "Rsqrt(Power(a,-2))",
+      "retained_rhs": "a",
+      "classification": "reciprocal_sqrt_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Compare the retained reciprocal-sqrt graph using independently defined reciprocal, power and sqrt operations.",
+      "explicit_mathematical_premises": [
+        "Explicit nonnegative/positive base conditions and chosen total/partial zero behavior."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero and infinity, principal complex branches, rounded reciprocal/sqrt composition and flags require separate partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleRsqrt/reciprocal",
+      "retained_lhs": "Rsqrt(Divide(1,a))",
+      "retained_rhs": "Sqrt(a)",
+      "classification": "reciprocal_sqrt_domains",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Compare the retained reciprocal-sqrt graph using independently defined reciprocal, power and sqrt operations.",
+      "explicit_mathematical_premises": [
+        "Explicit nonnegative/positive base conditions and chosen total/partial zero behavior."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero and infinity, principal complex branches, rounded reciprocal/sqrt composition and flags require separate partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReducePrecision/full-width",
+      "retained_lhs": "ReducePrecision(x,e,m)",
+      "retained_rhs": "x",
+      "classification": "precision_identity",
+      "candidate_domains": [
+        "binary_float_bits"
+      ],
+      "proposed_mathematical_target": "Define precision reduction on actual floating encodings and prove full exponent/significand precision leaves all declared observations unchanged.",
+      "explicit_mathematical_premises": [
+        "Exact format widths, rounding/canonicalization and subnormal rules."
+      ],
+      "remaining_mathematical_partitions": [
+        "NaN payload/quieting, signaling flags and signed zero remain to be checked; matching width numbers alone is not a proof."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/equal-values",
+      "retained_lhs": "Select(p,x,x)",
+      "retained_rhs": "x",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/true",
+      "retained_lhs": "Select(true,x,y)",
+      "retained_rhs": "x",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/false",
+      "retained_lhs": "Select(false,x,y)",
+      "retained_rhs": "y",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/not-predicate",
+      "retained_lhs": "Select(Not(p),x,y)",
+      "retained_rhs": "Select(p,y,x)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/true-false-direct",
+      "retained_lhs": "Select(p,true,false)",
+      "retained_rhs": "p",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/true-false-broadcast",
+      "retained_lhs": "Select(p,true,false)",
+      "retained_rhs": "Broadcast(p)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/false-true-direct",
+      "retained_lhs": "Select(p,false,true)",
+      "retained_rhs": "Not(p)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/false-true-broadcast",
+      "retained_lhs": "Select(p,false,true)",
+      "retained_rhs": "Broadcast(Not(p))",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-gt",
+      "retained_lhs": "Select(Compare(a,b,Gt),a,b)",
+      "retained_rhs": "Or(a,b)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-ge",
+      "retained_lhs": "Select(Compare(a,b,Ge),a,b)",
+      "retained_rhs": "Or(a,b)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-lt",
+      "retained_lhs": "Select(Compare(a,b,Lt),a,b)",
+      "retained_rhs": "And(a,b)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-le",
+      "retained_lhs": "Select(Compare(a,b,Le),a,b)",
+      "retained_rhs": "And(a,b)",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-eq",
+      "retained_lhs": "Select(Compare(a,b,Eq),a,b)",
+      "retained_rhs": "b",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-ne",
+      "retained_lhs": "Select(Compare(a,b,Ne),a,b)",
+      "retained_rhs": "a",
+      "classification": "pure_select",
+      "candidate_domains": [
+        "predicate",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Prove the exact retained Select/Not/Boolean-comparison expression pointwise and derive any scalar-predicate Broadcast target.",
+      "explicit_mathematical_premises": [
+        "Actual predicate shape and Boolean ordering; repeated branches are equal values and the data tensors have compatible shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Whole-graph evaluation/effect/control prerequisites are distinct from pointwise selection; dropping a branch is not automatically effect-preserving."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-false-tensor-pred",
+      "retained_lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
+      "classification": "select_dynamic_update",
+      "candidate_domains": [
+        "bounded_dynamic_index",
+        "predicate",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove each oriented Select/DynamicUpdateSlice equation by deriving clamped update membership and the sliced local predicate/data coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal base/update extents, actual shared clamped indices and scalar versus tensor predicate shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Index decoders and conversion representability require actual word domains; mathematical graph effects and external admission remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-false-scalar-pred",
+      "retained_lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
+      "classification": "select_dynamic_update",
+      "candidate_domains": [
+        "bounded_dynamic_index",
+        "predicate",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove each oriented Select/DynamicUpdateSlice equation by deriving clamped update membership and the sliced local predicate/data coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal base/update extents, actual shared clamped indices and scalar versus tensor predicate shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Index decoders and conversion representability require actual word domains; mathematical graph effects and external admission remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-true-tensor-pred",
+      "retained_lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
+      "classification": "select_dynamic_update",
+      "candidate_domains": [
+        "bounded_dynamic_index",
+        "predicate",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove each oriented Select/DynamicUpdateSlice equation by deriving clamped update membership and the sliced local predicate/data coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal base/update extents, actual shared clamped indices and scalar versus tensor predicate shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Index decoders and conversion representability require actual word domains; mathematical graph effects and external admission remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-true-scalar-pred",
+      "retained_lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
+      "classification": "select_dynamic_update",
+      "candidate_domains": [
+        "bounded_dynamic_index",
+        "predicate",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove each oriented Select/DynamicUpdateSlice equation by deriving clamped update membership and the sliced local predicate/data coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal base/update extents, actual shared clamped indices and scalar versus tensor predicate shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Index decoders and conversion representability require actual word domains; mathematical graph effects and external admission remain open."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleScatter/empty-updates",
+      "retained_lhs": "Scatter(bases,indices,updates)",
+      "retained_rhs": "bases (or tuple)",
+      "classification": "empty_scatter",
+      "candidate_domains": [
+        "ordered_scatter",
+        "pure_tuple"
+      ],
+      "proposed_mathematical_target": "Specify Scatter update iteration and prove either empty-update identity or the exact empty-index coordinate mapping to Map, preserving tuple packaging.",
+      "explicit_mathematical_premises": [
+        "Actual update/index shapes and dimension attributes; no invented implication that empty indices always mean no updates."
+      ],
+      "remaining_mathematical_partitions": [
+        "Index-vector-dimension and rank-zero index behavior, reducer coupling, duplicate/out-of-bounds policy and effects remain to be formalized."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleScatter/empty-indices",
+      "retained_lhs": "Scatter(base,empty_indices,update)",
+      "retained_rhs": "Map(base,update,to_apply)",
+      "classification": "empty_scatter",
+      "candidate_domains": [
+        "ordered_scatter",
+        "pure_tuple"
+      ],
+      "proposed_mathematical_target": "Specify Scatter update iteration and prove either empty-update identity or the exact empty-index coordinate mapping to Map, preserving tuple packaging.",
+      "explicit_mathematical_premises": [
+        "Actual update/index shapes and dimension attributes; no invented implication that empty indices always mean no updates."
+      ],
+      "remaining_mathematical_partitions": [
+        "Index-vector-dimension and rank-zero index behavior, reducer coupling, duplicate/out-of-bounds policy and effects remain to be formalized."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSort/trivial-single",
+      "retained_lhs": "Sort(operands,axis)",
+      "retained_rhs": "operand0",
+      "classification": "trivial_sort",
+      "candidate_domains": [
+        "ordered_sort",
+        "pure_tuple",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define axis Sort and prove empty/extent-at-most-one tensors preserve component values and tuple packaging.",
+      "explicit_mathematical_premises": [
+        "Legal axis and compatible operand shapes; explicit comparator call and stability semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "Comparator effects, NaN/tie semantics, output shape and layout/observation partitions remain separate even when a pure permutation is trivial."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSort/trivial-tuple",
+      "retained_lhs": "Sort(operands,axis)",
+      "retained_rhs": "Tuple(operands)",
+      "classification": "trivial_sort",
+      "candidate_domains": [
+        "ordered_sort",
+        "pure_tuple",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define axis Sort and prove empty/extent-at-most-one tensors preserve component values and tuple packaging.",
+      "explicit_mathematical_premises": [
+        "Legal axis and compatible operand shapes; explicit comparator call and stability semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "Comparator effects, NaN/tie semantics, output shape and layout/observation partitions remain separate even when a pure permutation is trivial."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSqrt/square-complex",
+      "retained_lhs": "Sqrt(Multiply(a,a))",
+      "retained_rhs": "Convert(Abs(a),complex type)",
+      "classification": "square_root_square",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Prove or refute the retained sqrt(a*a)=Abs(a) or complex embedding of Abs(a) under explicitly derived principal-branch domains.",
+      "explicit_mathematical_premises": [
+        "Exact real versus complex definitions and actual modulus embedding; domains must be independent of the desired equation."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing complex counterexamples and necessary/sufficient exact domains must be retained; rounded multiplication/sqrt and overflow are separate."
+      ],
+      "mathematical_risks": [
+        "principal_branch_counterexample_partition"
+      ],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample",
+        "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSqrt/square-real",
+      "retained_lhs": "Sqrt(Multiply(a,a))",
+      "retained_rhs": "Abs(a)",
+      "classification": "square_root_square",
+      "candidate_domains": [
+        "exact_real",
+        "principal_complex",
+        "rounded_transcendental"
+      ],
+      "proposed_mathematical_target": "Prove or refute the retained sqrt(a*a)=Abs(a) or complex embedding of Abs(a) under explicitly derived principal-branch domains.",
+      "explicit_mathematical_premises": [
+        "Exact real versus complex definitions and actual modulus embedding; domains must be independent of the desired equation."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing complex counterexamples and necessary/sufficient exact domains must be retained; rounded multiplication/sqrt and overflow are separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleMap/parameter-root",
+      "retained_lhs": "Map(operands,Parameter(k))",
+      "retained_rhs": "operands[k]",
+      "classification": "map_root_evaluation",
+      "candidate_domains": [
+        "pure_nary_map",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define n-ary pointwise Map with bounded parameter selection and prove the retained parameter/constant/elementwise-root evaluation graph.",
+      "explicit_mathematical_premises": [
+        "Legal parameter indices, scalar operation arity, input/output shapes and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Tuple results, effects, scalar-versus-Broadcast output and external expression admission need explicit partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleMap/constant-root-scalar",
+      "retained_lhs": "Map(operands,Constant(c))",
+      "retained_rhs": "cloned Constant(c)",
+      "classification": "map_root_evaluation",
+      "candidate_domains": [
+        "pure_nary_map",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define n-ary pointwise Map with bounded parameter selection and prove the retained parameter/constant/elementwise-root evaluation graph.",
+      "explicit_mathematical_premises": [
+        "Legal parameter indices, scalar operation arity, input/output shapes and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Tuple results, effects, scalar-versus-Broadcast output and external expression admission need explicit partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleMap/constant-root-broadcast",
+      "retained_lhs": "Map(operands,Constant(c))",
+      "retained_rhs": "Broadcast(cloned Constant(c),output shape)",
+      "classification": "map_root_evaluation",
+      "candidate_domains": [
+        "pure_nary_map",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define n-ary pointwise Map with bounded parameter selection and prove the retained parameter/constant/elementwise-root evaluation graph.",
+      "explicit_mathematical_premises": [
+        "Legal parameter indices, scalar operation arity, input/output shapes and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Tuple results, effects, scalar-versus-Broadcast output and external expression admission need explicit partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleMap/elementwise-root",
+      "retained_lhs": "Map(operands,Elementwise(Parameter(k0),...))",
+      "retained_rhs": "clone Elementwise with output shape and selected operands[kj]",
+      "classification": "map_root_evaluation",
+      "candidate_domains": [
+        "pure_nary_map",
+        "pure_tensor",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define n-ary pointwise Map with bounded parameter selection and prove the retained parameter/constant/elementwise-root evaluation graph.",
+      "explicit_mathematical_premises": [
+        "Legal parameter indices, scalar operation arity, input/output shapes and actual constant values."
+      ],
+      "remaining_mathematical_partitions": [
+        "Tuple results, effects, scalar-versus-Broadcast output and external expression admission need explicit partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleConditional/predicate-convert",
+      "retained_lhs": "Conditional(Convert(p),arg0,branch0,arg1,branch1)",
+      "retained_rhs": "Conditional(p,true_arg=arg1,true_branch=branch1,false_arg=arg0,false_branch=branch0)",
+      "classification": "conditional_boolean_conversion",
+      "candidate_domains": [
+        "predicate",
+        "pure_branch",
+        "effect_graph"
+      ],
+      "proposed_mathematical_target": "Define indexed two-branch Conditional and predicate conversion; prove exact argument/branch swap with observed selected-branch result.",
+      "explicit_mathematical_premises": [
+        "Conversion maps false/true to the explicit branch indices, and each branch/argument has a typed common output observation."
+      ],
+      "remaining_mathematical_partitions": [
+        "Branch execution, exceptions, effects and control dependencies must be specified; pointwise Select is not by itself a Conditional execution proof."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    }
+  ]
+}

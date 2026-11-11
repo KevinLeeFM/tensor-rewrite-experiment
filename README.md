@@ -6,6 +6,8 @@ Historical source/native evidence is preserved and does not gate mathematical ac
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
 The theory target now has 341 checked mathematical statements; custom Lean totals **7,547**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
+All488 retained records now have domain/dependency worksheets, including380 new unreviewed
+proposals; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1093,3 +1095,18 @@ without;73 records have evidence but no such worksheet. These are formulation ga
 not a frozen N/F or proof-coverage fraction. All488 records remain351 unformulated,
 124 partial and13 carrying value families; whole-record closure stays zero.
 The full mathematical campaign/review/verdict remain open; code correspondence is future work.
+
+
+## Whole-workload proposal worksheets
+
+All380 previously missing records now have explicit mathematical target/domain
+proposals in seven immutable worksheets. The successor catalog covers all488
+retained IDs;380 have only the new unreviewed proposal worksheets. Four support
+schemas, two stages and23 unspecified-target risks remain visible. See
+[the formulation scope and remaining gates](docs/workload-formulation-proposals.md).
+No new Lean statement or line is accepted: totals remain341 theory/601 ledger and7547
+custom Lean lines, with21 complete declared value profiles and zero whole records
+closed. All80 focused tests pass. Record proof statuses stay351 needing formal
+statement/domain work,124 partial and13 carrying value families. Worksheet presence
+is not completed formulation, all-case attempts or a frozen N/F. The full campaign,
+independent reviews and final verdict remain open; code correspondence is future work.

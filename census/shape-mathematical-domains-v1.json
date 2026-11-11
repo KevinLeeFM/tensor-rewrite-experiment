@@ -1,0 +1,1773 @@
+{
+  "schema": 1,
+  "status": "unreviewed_mathematical_formulation_proposals_not_frozen_N_or_F",
+  "retained_batch": "census/shape-cases.json",
+  "retained_batch_sha256": "71920defc8575dabdcdea5479fbd03ea4366d9e05667b23cc4cceba6125ccf4f",
+  "benchmark_record_count": 58,
+  "base_revision": "22cb0da0897299ea0cff4662fa205705062677c0",
+  "evidence_baseline": "census/formulation-evidence-baseline-v1.json",
+  "domain_proposals": "census/mathematical-domain-proposals-v1.json",
+  "mathematical_obligation_denominator": null,
+  "mathematical_denominator_frozen": false,
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "all_workload_attempts_complete": false,
+  "records": [
+    {
+      "benchmark_id": "HandleReshape/empty",
+      "retained_lhs": "Reshape(x,target)",
+      "retained_rhs": "empty constant with updated layout",
+      "classification": "logical_reshape",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define logical equal-count row-major reshape and prove the retained empty/identity/composition graph including derived output shape and bounded coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal shapes with the required actual element counts; any physical layout observation is an additional independent contract."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero dimensions and count-zero linearization need separate bounds; a layout-preserving physical bitcast is not implied by logical reshape."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reshape.reshapeTensor_empty"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/identity",
+      "retained_lhs": "Reshape(x,target)",
+      "retained_rhs": "x",
+      "classification": "logical_reshape",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define logical equal-count row-major reshape and prove the retained empty/identity/composition graph including derived output shape and bounded coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal shapes with the required actual element counts; any physical layout observation is an additional independent contract."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero dimensions and count-zero linearization need separate bounds; a layout-preserving physical bitcast is not implied by logical reshape."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reshape.reshapeTensor_identity"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/compose",
+      "retained_lhs": "Reshape(Reshape(x,s),t)",
+      "retained_rhs": "Reshape(x,t)",
+      "classification": "logical_reshape",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define logical equal-count row-major reshape and prove the retained empty/identity/composition graph including derived output shape and bounded coordinates.",
+      "explicit_mathematical_premises": [
+        "Legal shapes with the required actual element counts; any physical layout observation is an additional independent contract."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero dimensions and count-zero linearization need separate bounds; a layout-preserving physical bitcast is not implied by logical reshape."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reshape.reshapeTensor_compose"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/rng-shape",
+      "retained_lhs": "Reshape(Rng(...),target)",
+      "retained_rhs": "Rng(...) mutated to target shape",
+      "classification": "random_shape_change",
+      "candidate_domains": [
+        "random_distribution",
+        "stateful_rng"
+      ],
+      "proposed_mathematical_target": "Specify whether changing RNG result shape preserves distribution, a common flattened sample stream, state transition or all of these, then compare the retained graph.",
+      "explicit_mathematical_premises": [
+        "An independent random generator/state/sampling contract with actual element count, indexing order and output shape."
+      ],
+      "remaining_mathematical_partitions": [
+        "No probability/stateful RNG model is presently instantiated; equal element count does not prove identical seeded samples, state consumption or joint distributions."
+      ],
+      "mathematical_risks": [
+        "rng_observation_contract_missing"
+      ],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReverse/trivial-dimensions",
+      "retained_lhs": "Reverse(x,dims)",
+      "retained_rhs": "x",
+      "classification": "reverse_algebra",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive bounded reversal coordinates, normalize repeated legal axes and prove the retained identity or symmetric-difference tensor graph.",
+      "explicit_mathematical_premises": [
+        "Legal axis lists and exact finite shape extents; extent-one and empty axis-list cases explicit."
+      ],
+      "remaining_mathematical_partitions": [
+        "Axis-list multiplicity, zero extents and physical/effect observations require distinct admission proofs; existing mask/axis models cover only their declared conventions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reverse.reverse_axisMask_trivial",
+        "TensorRewrite.Pilot.Reverse.reverse_trivial"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReverse/cancel",
+      "retained_lhs": "Reverse(Reverse(x,a),b)",
+      "retained_rhs": "x",
+      "classification": "reverse_algebra",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive bounded reversal coordinates, normalize repeated legal axes and prove the retained identity or symmetric-difference tensor graph.",
+      "explicit_mathematical_premises": [
+        "Legal axis lists and exact finite shape extents; extent-one and empty axis-list cases explicit."
+      ],
+      "remaining_mathematical_partitions": [
+        "Axis-list multiplicity, zero extents and physical/effect observations require distinct admission proofs; existing mask/axis models cover only their declared conventions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reverse.reverse_reverse"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReverse/symmetric-difference",
+      "retained_lhs": "Reverse(Reverse(x,a),b)",
+      "retained_rhs": "Reverse(x,a symmetric_difference b)",
+      "classification": "reverse_algebra",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive bounded reversal coordinates, normalize repeated legal axes and prove the retained identity or symmetric-difference tensor graph.",
+      "explicit_mathematical_premises": [
+        "Legal axis lists and exact finite shape extents; extent-one and empty axis-list cases explicit."
+      ],
+      "remaining_mathematical_partitions": [
+        "Axis-list multiplicity, zero extents and physical/effect observations require distinct admission proofs; existing mask/axis models cover only their declared conventions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reverse.reverse_comp"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReverse/binary-scalar-0",
+      "retained_lhs": "Reverse(Binary(x,y),dims)",
+      "retained_rhs": "Binary with operand 1 reversed",
+      "classification": "reverse_elementwise",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_nary_map"
+      ],
+      "proposed_mathematical_target": "Prove reversal commutes with the actual pure binary operation when the other operand is a scalar Broadcast, preserving operand orientation.",
+      "explicit_mathematical_premises": [
+        "The same coordinate map applies to nonconstant data and the scalar Broadcast is constant on every output index."
+      ],
+      "remaining_mathematical_partitions": [
+        "Actual binary scalar operation admission and effects are independent of pure map naturality."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reverse.reverse_binary_constant_lhs"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReverse/binary-scalar-1",
+      "retained_lhs": "Reverse(Binary(x,y),dims)",
+      "retained_rhs": "Binary with operand 0 reversed",
+      "classification": "reverse_elementwise",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_nary_map"
+      ],
+      "proposed_mathematical_target": "Prove reversal commutes with the actual pure binary operation when the other operand is a scalar Broadcast, preserving operand orientation.",
+      "explicit_mathematical_premises": [
+        "The same coordinate map applies to nonconstant data and the scalar Broadcast is constant on every output index."
+      ],
+      "remaining_mathematical_partitions": [
+        "Actual binary scalar operation admission and effects are independent of pure map naturality."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Reverse.reverse_binary_constant_rhs"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReverse/inserted-unit-dimensions",
+      "retained_lhs": "Reverse(Reshape(x),dims)",
+      "retained_rhs": "Reshape(Reverse(x,remapped_dims))",
+      "classification": "unit_dimension_reindex",
+      "candidate_domains": [
+        "bounded_index",
+        "bounded_dynamic_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive insertion/deletion of unit axes and prove the retained Reverse or DynamicUpdateSlice remapping with actual new axes/indices.",
+      "explicit_mathematical_premises": [
+        "Explicit unit-axis descriptor, bounded inverse coordinate maps and legal clamped update extents/indices."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero extents, deleted versus inserted dimensions, scalar ranks and finite-width index conversions must be discharged rather than assumed through a shape descriptor."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/identity",
+      "retained_lhs": "Slice(x,starts,limits,strides)",
+      "retained_rhs": "x",
+      "classification": "slice_basic",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive legal ordinary Slice output extents and bounded sampling; prove the exact identity or translated unstrided composition.",
+      "explicit_mathematical_premises": [
+        "Valid starts/limits/positive strides and explicit input/output extents; legality of each transformed Slice is a conclusion obligation."
+      ],
+      "remaining_mathematical_partitions": [
+        "Equal output extents alone need not specify every Slice map without using legality; empty intervals and finite attribute arithmetic remain explicit."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/padding-only",
+      "retained_lhs": "Slice(Pad(x,v),starts,limits,strides)",
+      "retained_rhs": "Broadcast(v,output_shape)",
+      "classification": "slice_pad",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Compose independent Pad occupancy and Slice sampling; derive the retained fill, inverse-Pad or translated inner-Slice graph and its shape.",
+      "explicit_mathematical_premises": [
+        "Actual Pad low/high/interior attributes and legal Slice bounds; original fill and stride semantics retained."
+      ],
+      "remaining_mathematical_partitions": [
+        "Negative edges, interior holes, empty inputs/outputs and exact transformed limits require separate partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/undo-pad",
+      "retained_lhs": "Slice(Pad(x,v),starts,limits,strides)",
+      "retained_rhs": "x",
+      "classification": "slice_pad",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Compose independent Pad occupancy and Slice sampling; derive the retained fill, inverse-Pad or translated inner-Slice graph and its shape.",
+      "explicit_mathematical_premises": [
+        "Actual Pad low/high/interior attributes and legal Slice bounds; original fill and stride semantics retained."
+      ],
+      "remaining_mathematical_partitions": [
+        "Negative edges, interior holes, empty inputs/outputs and exact transformed limits require separate partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/inside-pad",
+      "retained_lhs": "Slice(Pad(x,v),starts,limits,strides)",
+      "retained_rhs": "Slice(x,starts-low,limits-low,strides)",
+      "classification": "slice_pad",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Compose independent Pad occupancy and Slice sampling; derive the retained fill, inverse-Pad or translated inner-Slice graph and its shape.",
+      "explicit_mathematical_premises": [
+        "Actual Pad low/high/interior attributes and legal Slice bounds; original fill and stride semantics retained."
+      ],
+      "remaining_mathematical_partitions": [
+        "Negative edges, interior holes, empty inputs/outputs and exact transformed limits require separate partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/identity",
+      "retained_lhs": "Transpose(x,permutation)",
+      "retained_rhs": "x",
+      "classification": "transpose_algebra",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove the exact decoded permutation identity/composition with bounded indices and derived output extents.",
+      "explicit_mathematical_premises": [
+        "A legal bijective permutation with actual composition order and input/output shape relationship."
+      ],
+      "remaining_mathematical_partitions": [
+        "Sorted-legal implies identity only after legality; physical bitcast layout, effects and any external array decoding remain separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Transpose.transpose_identity"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/compose",
+      "retained_lhs": "Transpose(Transpose(x,p),q)",
+      "retained_rhs": "Transpose(x,ComposePermutations(p,q))",
+      "classification": "transpose_algebra",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove the exact decoded permutation identity/composition with bounded indices and derived output extents.",
+      "explicit_mathematical_premises": [
+        "A legal bijective permutation with actual composition order and input/output shape relationship."
+      ],
+      "remaining_mathematical_partitions": [
+        "Sorted-legal implies identity only after legality; physical bitcast layout, effects and any external array decoding remain separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.Transpose.transpose_comp"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/copy-reorder",
+      "retained_lhs": "Reshape(Copy(x))",
+      "retained_rhs": "aligned Reshape/Bitcast(x), optionally followed by Copy",
+      "classification": "reshape_copy_layout",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define the exact chosen chain ancestor or aligned reshape/copy target, then derive logical and physical coordinate/byte-map equivalence.",
+      "explicit_mathematical_premises": [
+        "Explicit shapes, storage layout maps, tiles, memory-space observation and the selected concrete target."
+      ],
+      "remaining_mathematical_partitions": [
+        "A profitability test is not a semantic premise; logical equal-count reshape does not establish physical allocation/transfer or alias observations."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/broadcast",
+      "retained_lhs": "Reshape(Broadcast(x,dims))",
+      "retained_rhs": "Broadcast(x,remapped_dims)",
+      "classification": "reshape_broadcast",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive which input Broadcast dimensions survive the logical reshape and prove the retained remapped Broadcast graph.",
+      "explicit_mathematical_premises": [
+        "Explicit legal shapes, Broadcast dimensions and reshape factor boundaries; count and map equalities must be proved."
+      ],
+      "remaining_mathematical_partitions": [
+        "Unit/zero axes and mixed factor groups need an actual inverse index construction; no shape helper result is treated as the desired map theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/iota-mixed-radix",
+      "retained_lhs": "Reshape(Iota(s,axis),t)",
+      "retained_rhs": "mixed-radix sum of output Iotas",
+      "classification": "reshape_iota_mixed_radix",
+      "candidate_domains": [
+        "bounded_index",
+        "exact_integer",
+        "arbitrary_width_bitvector"
+      ],
+      "proposed_mathematical_target": "Derive the source Iota coordinate from output mixed-radix coordinates and prove the retained sum/product of actual same-width output Iotas.",
+      "explicit_mathematical_premises": [
+        "Explicit factor boundaries and legal reshape counts; actual term coefficients and coordinate-conversion widths."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero factors, division/remainder-by-zero, wrapped Iota arithmetic and coefficient representability remain independent partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/dynamic-update-unit-dims",
+      "retained_lhs": "Reshape(DynamicUpdateSlice(base,update,indices))",
+      "retained_rhs": "DynamicUpdateSlice(Reshape(base),Reshape(update),remapped_indices)",
+      "classification": "unit_dimension_reindex",
+      "candidate_domains": [
+        "bounded_index",
+        "bounded_dynamic_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive insertion/deletion of unit axes and prove the retained Reverse or DynamicUpdateSlice remapping with actual new axes/indices.",
+      "explicit_mathematical_premises": [
+        "Explicit unit-axis descriptor, bounded inverse coordinate maps and legal clamped update extents/indices."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero extents, deleted versus inserted dimensions, scalar ranks and finite-width index conversions must be discharged rather than assumed through a shape descriptor."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/bitcast-chain",
+      "retained_lhs": "Reshape(copy/reshape chain)",
+      "retained_rhs": "Bitcast(selected ancestor)",
+      "classification": "reshape_copy_layout",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Define the exact chosen chain ancestor or aligned reshape/copy target, then derive logical and physical coordinate/byte-map equivalence.",
+      "explicit_mathematical_premises": [
+        "Explicit shapes, storage layout maps, tiles, memory-space observation and the selected concrete target."
+      ],
+      "remaining_mathematical_partitions": [
+        "A profitability test is not a semantic premise; logical equal-count reshape does not establish physical allocation/transfer or alias observations."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/transpose-chain-delegation",
+      "retained_lhs": "Reshape(transpose/reshape/bitcast chain)",
+      "retained_rhs": "helper-dependent replacement",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleReshape/transpose-hoist-delegation",
+      "retained_lhs": "Reshape(transpose chain)",
+      "retained_rhs": "helper-dependent hoisted graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryRemovingBitcastOrReshapeTransposeChain/layout-identity",
+      "retained_lhs": "transpose/reshape/bitcast chain",
+      "retained_rhs": "ancestor",
+      "classification": "unit_chain_composition",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Compose the actual finite sequence of unit-axis reshape, transpose and bitcast maps and derive the retained ancestor or final bitcast target.",
+      "explicit_mathematical_premises": [
+        "An explicit well-formed chain and independently specified logical/physical maps for every node."
+      ],
+      "remaining_mathematical_partitions": [
+        "An accumulated permutation being identity does not by itself prove byte-map or effect equivalence; zero/unit axes and final target shape remain proof obligations."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryRemovingBitcastOrReshapeTransposeChain/layout-bitcast",
+      "retained_lhs": "transpose/reshape/bitcast chain",
+      "retained_rhs": "Bitcast(ancestor,output shape)",
+      "classification": "unit_chain_composition",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Compose the actual finite sequence of unit-axis reshape, transpose and bitcast maps and derive the retained ancestor or final bitcast target.",
+      "explicit_mathematical_premises": [
+        "An explicit well-formed chain and independently specified logical/physical maps for every node."
+      ],
+      "remaining_mathematical_partitions": [
+        "An accumulated permutation being identity does not by itself prove byte-map or effect equivalence; zero/unit axes and final target shape remain proof obligations."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryRemovingBitcastOrReshapeTransposeChain/logical-identity",
+      "retained_lhs": "transpose/reshape/bitcast chain",
+      "retained_rhs": "ancestor",
+      "classification": "unit_chain_composition",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Compose the actual finite sequence of unit-axis reshape, transpose and bitcast maps and derive the retained ancestor or final bitcast target.",
+      "explicit_mathematical_premises": [
+        "An explicit well-formed chain and independently specified logical/physical maps for every node."
+      ],
+      "remaining_mathematical_partitions": [
+        "An accumulated permutation being identity does not by itself prove byte-map or effect equivalence; zero/unit axes and final target shape remain proof obligations."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryHoistTransposeOfReshape/contiguous-chunks",
+      "retained_lhs": "Reshape(Transpose(Reshape(x)))",
+      "retained_rhs": "Transpose(Reshape(x,new chunk sizes),new chunk permutation)",
+      "classification": "transpose_contiguous_chunks",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive contiguous factor chunks, their order and the exact new reshape/permutation maps for the retained transpose hoist.",
+      "explicit_mathematical_premises": [
+        "Legal input/intermediate/output shapes and an explicit sorted chunk decomposition with product equations."
+      ],
+      "remaining_mathematical_partitions": [
+        "Chunk coverage, zero products, split/merged axis boundaries and actual bounded coordinate roundtrips remain to be proved."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/exact-dynamic-update",
+      "retained_lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
+      "retained_rhs": "update",
+      "classification": "slice_dynamic_update",
+      "candidate_domains": [
+        "bounded_dynamic_index",
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove that a legal ordinary Slice lies exactly within the independently clamped update region, deriving the returned update or translated Slice of it.",
+      "explicit_mathematical_premises": [
+        "Explicit original index decoder, clamped starts, legal extents and ordinary Slice bounds/strides."
+      ],
+      "remaining_mathematical_partitions": [
+        "Signed/unsigned index conversion, empty updates and physical/effect observations remain separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/inside-dynamic-update",
+      "retained_lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
+      "retained_rhs": "Slice(update,s-c,l-c,strides)",
+      "classification": "slice_dynamic_update",
+      "candidate_domains": [
+        "bounded_dynamic_index",
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Prove that a legal ordinary Slice lies exactly within the independently clamped update region, deriving the returned update or translated Slice of it.",
+      "explicit_mathematical_premises": [
+        "Explicit original index decoder, clamped starts, legal extents and ordinary Slice bounds/strides."
+      ],
+      "remaining_mathematical_partitions": [
+        "Signed/unsigned index conversion, empty updates and physical/effect observations remain separate."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/compose-unstrided",
+      "retained_lhs": "Slice(Slice(x,a,b,1),s,l,1)",
+      "retained_rhs": "Slice(x,s+a,l+a,1)",
+      "classification": "slice_basic",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive legal ordinary Slice output extents and bounded sampling; prove the exact identity or translated unstrided composition.",
+      "explicit_mathematical_premises": [
+        "Valid starts/limits/positive strides and explicit input/output extents; legality of each transformed Slice is a conclusion obligation."
+      ],
+      "remaining_mathematical_partitions": [
+        "Equal output extents alone need not specify every Slice map without using legality; empty intervals and finite attribute arithmetic remain explicit."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/broadcast-only-dims",
+      "retained_lhs": "Slice(Broadcast(x,dims),s,l,strides)",
+      "retained_rhs": "Broadcast(x,dims,output shape)",
+      "classification": "slice_broadcast",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Project actual Slice starts/limits/strides onto mapped Broadcast axes and derive either unchanged small input or its smaller Slice.",
+      "explicit_mathematical_premises": [
+        "A legal Broadcast axis map and ordinary Slice attributes; transformed output shapes and ceiling counts are derived."
+      ],
+      "remaining_mathematical_partitions": [
+        "Slicing only replicated dimensions, arbitrary striding, unit/empty axes and transformed attribute legality need distinct index arguments."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/broadcast-sink",
+      "retained_lhs": "Slice(Broadcast(x,dims),s,l,strides)",
+      "retained_rhs": "Broadcast(Slice(x,s[dims],l[dims],strides[dims]),dims)",
+      "classification": "slice_broadcast",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Project actual Slice starts/limits/strides onto mapped Broadcast axes and derive either unchanged small input or its smaller Slice.",
+      "explicit_mathematical_premises": [
+        "A legal Broadcast axis map and ordinary Slice attributes; transformed output shapes and ceiling counts are derived."
+      ],
+      "remaining_mathematical_partitions": [
+        "Slicing only replicated dimensions, arbitrary striding, unit/empty axes and transformed attribute legality need distinct index arguments."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/dot-operands",
+      "retained_lhs": "Slice(Dot(lhs,rhs,dnums),s,l,strides)",
+      "retained_rhs": "Dot(selected slices of lhs/rhs,dnums)",
+      "classification": "slice_dot",
+      "candidate_domains": [
+        "bounded_index",
+        "exact_contraction",
+        "ordered_float_contraction"
+      ],
+      "proposed_mathematical_target": "Move output Slice coordinates into the corresponding free/batch Dot operand coordinates while preserving the contracted fiber and output shape.",
+      "explicit_mathematical_premises": [
+        "Explicit Dot batch/contracting/free axis maps, legal Slice bounds and unchanged contraction geometry."
+      ],
+      "remaining_mathematical_partitions": [
+        "Precision/conversion/initializer/ordered accumulation and legal transformed dimension lists must be handled separately."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/concat-exact-piece",
+      "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "retained_rhs": "xs[selected]",
+      "classification": "slice_concatenation",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive prefix-sum piece selection, translated bounds and retained element order for the exact/subrange/scalar Slice of Concatenate graph.",
+      "explicit_mathematical_premises": [
+        "Compatible piece shapes, actual concatenation axis and legal Slice interval/stride; transformed Slice bounds proved."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty pieces, boundary-equal intervals and empty output must not be hidden by prefix selection; rank-one scalar helper is not a general-rank theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/concat-subrange-single",
+      "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "retained_rhs": "Slice(selected piece,s-concat_start,adjusted_l,1)",
+      "classification": "slice_concatenation",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive prefix-sum piece selection, translated bounds and retained element order for the exact/subrange/scalar Slice of Concatenate graph.",
+      "explicit_mathematical_premises": [
+        "Compatible piece shapes, actual concatenation axis and legal Slice interval/stride; transformed Slice bounds proved."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty pieces, boundary-equal intervals and empty output must not be hidden by prefix selection; rank-one scalar helper is not a general-rank theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/concat-subrange-multi",
+      "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "retained_rhs": "Slice(Concat(selected pieces,axis),s-concat_start,adjusted_l,1)",
+      "classification": "slice_concatenation",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive prefix-sum piece selection, translated bounds and retained element order for the exact/subrange/scalar Slice of Concatenate graph.",
+      "explicit_mathematical_premises": [
+        "Compatible piece shapes, actual concatenation axis and legal Slice interval/stride; transformed Slice bounds proved."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty pieces, boundary-equal intervals and empty output must not be hidden by prefix selection; rank-one scalar helper is not a general-rank theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/reduce-window",
+      "retained_lhs": "Slice(ReduceWindow(x,init,window,f),s,l,1)",
+      "retained_rhs": "Reshape(Reduce(x,init,effective_dims,f),output shape)",
+      "classification": "slice_full_window",
+      "candidate_domains": [
+        "bounded_index",
+        "ordered_reduction",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Compose the actual output Slice with an ordered window and derive the corresponding Reduction/Reshape graph and complete contribution sequence.",
+      "explicit_mathematical_premises": [
+        "Explicit original window/padding, Slice bounds and selected effective reduction axes; actual reducer/initializer retained."
+      ],
+      "remaining_mathematical_partitions": [
+        "Contribution order, implicit padding, mixed kept/reduced axes and the exact output-bound relation need a separate proof from a canonical full-span model."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/scalar-slice-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/reshape-reorder-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/reverse-reorder-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleSlice/stride-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/dot-canonical",
+      "retained_lhs": "Transpose(Dot(a,b),p)",
+      "retained_rhs": "Dot(b,a,swapped_contracting_dims,swapped_precision)",
+      "classification": "transpose_dot_swap",
+      "candidate_domains": [
+        "bounded_index",
+        "exact_contraction",
+        "ordered_float_contraction"
+      ],
+      "proposed_mathematical_target": "Derive actual swapped Dot operands, batch/free/contracting axis lists and the output permutation; prove the retained tensor equation.",
+      "explicit_mathematical_premises": [
+        "Legal Dot dimension maps and actual scalar product/accumulation contract with operand-specific precision."
+      ],
+      "remaining_mathematical_partitions": [
+        "Multiplication order for noncommutative/rounded domains, precision swapping and fiber enumeration order must be justified independently."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/dot-general",
+      "retained_lhs": "Transpose(Dot(a,b),p)",
+      "retained_rhs": "Dot(b,a,new_dnums,swapped_precision)",
+      "classification": "transpose_dot_swap",
+      "candidate_domains": [
+        "bounded_index",
+        "exact_contraction",
+        "ordered_float_contraction"
+      ],
+      "proposed_mathematical_target": "Derive actual swapped Dot operands, batch/free/contracting axis lists and the output permutation; prove the retained tensor equation.",
+      "explicit_mathematical_premises": [
+        "Legal Dot dimension maps and actual scalar product/accumulation contract with operand-specific precision."
+      ],
+      "remaining_mathematical_partitions": [
+        "Multiplication order for noncommutative/rounded domains, precision swapping and fiber enumeration order must be justified independently."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/degenerate-reshape",
+      "retained_lhs": "Transpose(x,p)",
+      "retained_rhs": "Reshape(x,output shape)",
+      "classification": "transpose_to_reshape",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive that the legal permutation only moves unit axes and equals the actual logical Reshape map.",
+      "explicit_mathematical_premises": [
+        "A legal permutation and explicit nonunit-axis order with compatible product shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero extents, all-unit/scalar shapes and physical layout equivalence require independent partitions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/rng-shape",
+      "retained_lhs": "Transpose(Rng(...),p)",
+      "retained_rhs": "Rng(...) mutated to output shape",
+      "classification": "random_shape_change",
+      "candidate_domains": [
+        "random_distribution",
+        "stateful_rng"
+      ],
+      "proposed_mathematical_target": "Specify whether changing RNG result shape preserves distribution, a common flattened sample stream, state transition or all of these, then compare the retained graph.",
+      "explicit_mathematical_premises": [
+        "An independent random generator/state/sampling contract with actual element count, indexing order and output shape."
+      ],
+      "remaining_mathematical_partitions": [
+        "No probability/stateful RNG model is presently instantiated; equal element count does not prove identical seeded samples, state consumption or joint distributions."
+      ],
+      "mathematical_risks": [
+        "rng_observation_contract_missing"
+      ],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/layout-bitcast",
+      "retained_lhs": "Transpose(x,p)",
+      "retained_rhs": "Bitcast(x,output shape)",
+      "classification": "transpose_physical_bitcast",
+      "candidate_domains": [
+        "physical_layout",
+        "bounded_index"
+      ],
+      "proposed_mathematical_target": "Prove the actual transpose coordinate-to-byte map equals the retained physical bitcast, including valid output shape.",
+      "explicit_mathematical_premises": [
+        "Explicit storage layout/order, element encoding, tiles and memory-space observations."
+      ],
+      "remaining_mathematical_partitions": [
+        "A virtual bitcast predicate result cannot substitute for a byte-map theorem; logical coordinate equality alone does not close this profile."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/space-depth-user-mutation",
+      "retained_lhs": "Reshape(Transpose(Reshape(x)))",
+      "retained_rhs": "Reshape(Concat(Slice(x,chunk_i),concat_axis))",
+      "classification": "space_depth_slices",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive the split-axis reshape/transpose/reshape map and show the actual finite Slice/Concatenate target preserves every output coordinate.",
+      "explicit_mathematical_premises": [
+        "Explicit chunk count, chunk extent, axis positions, product equations and legal slice/concat attributes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero chunk count, empty dimensions, unsplit axes and output shape must be proved; user replacement effects are outside the pure tensor equation."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/scatter-fold-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/chain-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "HandleTranspose/broadcast-delegation",
+      "retained_lhs": "caller graph",
+      "retained_rhs": "helper-dependent graph",
+      "classification": "shape_helper_target",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout"
+      ],
+      "proposed_mathematical_target": "Choose the concrete mathematical replacement expression for the retained delegation and derive its shape and coordinate relation.",
+      "explicit_mathematical_premises": [
+        "An explicit helper-result graph, not merely a changed/success status."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained helper-dependent rhs does not determine a single expression; related explicit helper schemas may supply candidate targets but correspondence is not presumed."
+      ],
+      "mathematical_risks": [
+        "retained_target_not_explicit"
+      ],
+      "record_role": "delegated_or_unspecified_target",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TrySimplifyScalarSlice/concat-piece",
+      "retained_lhs": "effective scalar Slice(Concat(xs),s,l,stride)",
+      "retained_rhs": "selected concat operand",
+      "classification": "slice_concatenation",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive prefix-sum piece selection, translated bounds and retained element order for the exact/subrange/scalar Slice of Concatenate graph.",
+      "explicit_mathematical_premises": [
+        "Compatible piece shapes, actual concatenation axis and legal Slice interval/stride; transformed Slice bounds proved."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty pieces, boundary-equal intervals and empty output must not be hidden by prefix selection; rank-one scalar helper is not a general-rank theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TrySimplifyScalarSlice/concat-slice",
+      "retained_lhs": "effective scalar Slice(Concat(xs),s,l,stride)",
+      "retained_rhs": "Slice(selected operand,s-prefix,s-prefix+1,stride)",
+      "classification": "slice_concatenation",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive prefix-sum piece selection, translated bounds and retained element order for the exact/subrange/scalar Slice of Concatenate graph.",
+      "explicit_mathematical_premises": [
+        "Compatible piece shapes, actual concatenation axis and legal Slice interval/stride; transformed Slice bounds proved."
+      ],
+      "remaining_mathematical_partitions": [
+        "Empty pieces, boundary-equal intervals and empty output must not be hidden by prefix selection; rank-one scalar helper is not a general-rank theorem."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryToReorderSliceAndReshape/leading-slice",
+      "retained_lhs": "Slice(Reshape(x),s,l,1)",
+      "retained_rhs": "Reshape(Slice(x,new_starts,new_limits,1),output shape)",
+      "classification": "slice_reshape_commute",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive the leading Slice interval in source mixed-radix coordinates and prove the exact Slice/Reshape target with legal new limits.",
+      "explicit_mathematical_premises": [
+        "Explicit nonzero suffix products, divisibility, no-spill factor conditions and legal input/output shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Zero factors and empty intervals require separate domains rather than division by an assumed nonzero product; transformed bounds remain proof conclusions."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryToReorderSliceAndReverse/commute",
+      "retained_lhs": "Slice(Reverse(x,dims),s,l,stride)",
+      "retained_rhs": "Reverse(Slice(x,new_s,new_l,stride),dims)",
+      "classification": "slice_reverse_commute",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Compare the actual retained reverse/Slice transformed bounds and output order using the chosen signed integer division convention.",
+      "explicit_mathematical_premises": [
+        "All legal original Slice intervals, including empty ones, and legal reversed axes; do not assume original nonempty unless studying a clearly partial profile."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing empty-slice certificates show the literal transformed formula can change zero output extent; positive repaired statements and the original counterexample must stay distinct."
+      ],
+      "mathematical_risks": [
+        "known_empty_shape_counterexample_partition"
+      ],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+        "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes",
+        "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+        "TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "RemoveRedundantStride/single-element-axes",
+      "retained_lhs": "Slice(x,s,l,stride)",
+      "retained_rhs": "Slice(x,s,new_l,new_stride) with original output shape",
+      "classification": "slice_stride_removal",
+      "candidate_domains": [
+        "bounded_index",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive output counts under the actual retained start+1 and stride1 replacement, including shape legality and zero/one-element partitions.",
+      "explicit_mathematical_premises": [
+        "Legal original Slice attributes and the explicit selected-axis inequalities; no invented start<limit premise for the whole record."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing empty-interval certificates refute unrestricted retained-shape preservation; any nonempty repaired domain remains a partial result."
+      ],
+      "mathematical_risks": [
+        "known_empty_shape_counterexample_partition"
+      ],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [
+        "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+        "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes",
+        "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+        "TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes"
+      ],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "TryFoldTransposeIntoScatter/simplified-scatter",
+      "retained_lhs": "Transpose(Scatter(base,indices,updates),p)",
+      "retained_rhs": "Scatter(Transpose(base,p),indices,Transpose(updates,[0]+(p+1)),new_dnums)",
+      "classification": "transpose_scatter",
+      "candidate_domains": [
+        "bounded_index",
+        "ordered_scatter"
+      ],
+      "proposed_mathematical_target": "Derive the exact operand/update transposes and remapped Scatter dimension numbers, then preserve the actual indexed update trace.",
+      "explicit_mathematical_premises": [
+        "A precisely defined simplified Scatter, legal permutation and explicit index/update/batch dimension maps."
+      ],
+      "remaining_mathematical_partitions": [
+        "Repeated updates, out-of-bounds indices, tuple reducers, order/precision and effect observations require independent handling."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "SimplifyTransposeOfBroadcast/mapped-dims-logical",
+      "retained_lhs": "view(Broadcast(x,dims),p)",
+      "retained_rhs": "Broadcast(x,inverse(p)[dims],output shape)",
+      "classification": "transpose_broadcast",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive inverse-permutation mapped Broadcast dimensions, their legality/order and the actual output coordinate map.",
+      "explicit_mathematical_premises": [
+        "Legal original Broadcast axes and permutation/view attributes; explicit output layout if observed."
+      ],
+      "remaining_mathematical_partitions": [
+        "Logical versus physical view semantics, unit/empty dimensions and layout-sort predicates must be proved in their own models."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    },
+    {
+      "benchmark_id": "SimplifyTransposeOfBroadcast/mapped-dims-layout",
+      "retained_lhs": "view(Broadcast(x,dims),p)",
+      "retained_rhs": "Broadcast(x,inverse(p)[dims],output shape)",
+      "classification": "transpose_broadcast",
+      "candidate_domains": [
+        "bounded_index",
+        "physical_layout",
+        "pure_tensor"
+      ],
+      "proposed_mathematical_target": "Derive inverse-permutation mapped Broadcast dimensions, their legality/order and the actual output coordinate map.",
+      "explicit_mathematical_premises": [
+        "Legal original Broadcast axes and permutation/view attributes; explicit output layout if observed."
+      ],
+      "remaining_mathematical_partitions": [
+        "Logical versus physical view semantics, unit/empty dimensions and layout-sort predicates must be proved in their own models."
+      ],
+      "mathematical_risks": [],
+      "record_role": "candidate_transformation_schema",
+      "denominator_review_action": "review whether this record is a distinct rewrite, a partition, support or a stage; do not count it as one obligation automatically",
+      "existing_candidate_evidence_at_base": [],
+      "proposal_kind": "mathematical_target_and_domain_proposal_not_an_accepted_Lean_statement",
+      "quantifiers": "arbitrary legal static ranks/extents and all input values in each explicitly selected profile; dynamic/effect/physical observations require their named models",
+      "shape_obligation": "derive target well-formedness, output shape and bounded maps; do not postulate sample equivalence",
+      "source_guards_adopted_as_proof_assumptions": false,
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work",
+      "complete_proof_attempt_for_all_partitions_claimed": false
+    }
+  ]
+}
