@@ -114,3 +114,14 @@ kept/full-span window equal to ordered reduction and the derived logical reshape
 It preserves arbitrary operations and initializers. The original window model
 and frozen evidence above remain unchanged; compositions, numerical partitions
 and full-family formulation/review remain open.
+
+
+## Later Pad fusion and current domain worksheet
+
+[The Pad/window extension](pad-window-fusion.md) defines independent nonnegative
+edge/interior Pad and derives the composed window geometry, including empty input,
+with identical complete ordered lists and pure converted-fill preservation.
+The immutable v1 worksheet above is superseded for current mathematical tracking
+by `census/reduction-window-domains-v2.json`: all31 records remain,22 with partial
+core associations after Slice/Pad, full-span and Pad-fusion extensions. Broadcast,
+cumulative/tuple and whole-record partitions remain open.

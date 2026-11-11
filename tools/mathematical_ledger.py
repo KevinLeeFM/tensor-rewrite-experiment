@@ -188,6 +188,9 @@ def evidence(root=ROOT):
             labels=[r['benchmark_id'] for r in domains['records'] if name in r['core_evidence']]
         if name.endswith(('FullSpanWindow.reduce_reshape','FullSpanWindow.original_reduce_reshape')):
             labels=read('census/full-span-window-v1.json',root)['candidate_benchmark_labels']
+        if '.PadWindow.' in name:
+            manifest=read('census/pad-window-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
         if '.SlicePad.' in name:
             manifest=read('census/slice-pad-v1.json',root)
             suffix=name.rsplit('.',1)[1]
@@ -197,7 +200,9 @@ def evidence(root=ROOT):
                         ('singleton-add-' in label if suffix=='unit_window_add_zero' else
                          'singleton-minimum-' in label if suffix=='unit_window_min' else
                          'singleton-maximum-' in label)]
-        kind=('slice_pad_geometry_refutation' if '.SlicePad.' in name
+        kind=('pad_window_contract_refutation' if '.PadWindow.' in name
+              and name.endswith('_refuted') else
+              'slice_pad_geometry_refutation' if '.SlicePad.' in name
               and name.endswith('_refuted') else
               'window_contract_refutation' if '.ReductionWindow.' in name
               and name.endswith('_refuted') else
@@ -413,6 +418,22 @@ def mathematical_models(root=ROOT):
                        base_window_manifest_sha256=window['manifest_sha256'],
                        independent_statement_review='pending',manifest=full['manifest'],
                        manifest_sha256=full['manifest_sha256']))
+    from check_pad_window import check_inputs as pad_inputs
+    from check_pad_window import validate_result as validate_pad
+    padded=read('reports/pad-window.json',root);validate_pad(padded)
+    extension=pad_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.PadWindow.' in name or '.LatticeIndex.' in name}
+    assert padded['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['conditions'],
+                       scalar_contract=extension['scalar_contract'],status=padded['status'],
+                       checked_theorem_count=23,full_family_complete=False,
+                       independent_pad_operator=True,empty_safe_geometry_derived=True,
+                       ordered_contribution_lists_equal=True,initializer_retained=True,
+                       converted_fill_retained=True,broadcast_sequence_proved=False,
+                       window_domain_worksheet=extension['window_domain_worksheet'],
+                       independent_statement_review='pending',manifest=padded['manifest'],
+                       manifest_sha256=padded['manifest_sha256']))
     return models
 
 

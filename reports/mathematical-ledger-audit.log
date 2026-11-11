@@ -2543,6 +2543,27 @@ TensorRewrite.Theory.FullSpanWindow.sample_valid : ∀ (plan : TensorRewrite.Pil
       (fun index => input (TensorRewrite.Theory.FullSpanWindow.inputIndex plan index))
       (TensorRewrite.Theory.FullSpanWindow.outputIndex plan output)
 'TensorRewrite.Theory.FullSpanWindow.values_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.LatticeIndex.assemble_bind : ∀ {rank : ℕ} {first second : TensorRewrite.Pilot.Shape rank}
+  (outer : (axis : Fin rank) → Option (Fin (first axis)))
+  (inner : (axis : Fin rank) → Fin (first axis) → Option (Fin (second axis))),
+  ((TensorRewrite.Theory.LatticeIndex.assemble? outer).bind fun index =>
+      TensorRewrite.Theory.LatticeIndex.assemble? fun axis => inner axis (index axis)) =
+    TensorRewrite.Theory.LatticeIndex.assemble? fun axis => (outer axis).bind (inner axis)
+'TensorRewrite.Theory.LatticeIndex.assemble_bind' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.LatticeIndex.assemble_eq_some_iff : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (samples : (axis : Fin rank) → Option (Fin (shape axis))) (index : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Theory.LatticeIndex.assemble? samples = some index ↔
+    ∀ (axis : Fin rank), samples axis = some (index axis)
+'TensorRewrite.Theory.LatticeIndex.assemble_eq_some_iff' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.LatticeIndex.decode_eq_some_iff : ∀ (extent spacing : ℕ) (positive : 0 < spacing) (position : ℤ)
+  (index : Fin extent),
+  TensorRewrite.Theory.LatticeIndex.decode? extent spacing positive position = some index ↔
+    position = ↑↑index * ↑spacing
+'TensorRewrite.Theory.LatticeIndex.decode_eq_some_iff' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.LatticeIndex.window_eq_some_iff : ∀ (axis : TensorRewrite.Theory.Convolution.Axis) (output : ℕ)
+  (kernel : Fin axis.kernelExtent) (index : Fin axis.inputExtent),
+  axis.inputIndex? output kernel = some index ↔ axis.basePosition output kernel = ↑↑index * ↑axis.baseDilation
+'TensorRewrite.Theory.LatticeIndex.window_eq_some_iff' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.LogicalFamily.allRules_complete : ∀ {domain : TensorRewrite.Theory.LogicalFamily.Domain}
   (rule : TensorRewrite.Theory.LogicalFamily.Rule domain), rule ∈ TensorRewrite.Theory.LogicalFamily.allRules domain
 'TensorRewrite.Theory.LogicalFamily.allRules_complete' depends on axioms: [propext]
@@ -2599,6 +2620,133 @@ TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar : ∀ (shape : TensorRe
         List.map (fun column => value (TensorRewrite.Pilot.FiniteProduct.join row column)) (List.finRange columns))
       (List.finRange rows)
 'TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadWindow.axis_compose : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (window : TensorRewrite.Theory.Convolution.Axis) (output : ℕ) (kernel : Fin window.kernelExtent),
+  ((TensorRewrite.Theory.PadWindow.outerAxis padding window).inputIndex? output kernel).bind padding.sample? =
+    (TensorRewrite.Theory.PadWindow.fusedAxis padding window).inputIndex? output kernel
+'TensorRewrite.Theory.PadWindow.axis_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadWindow.contribution_fusion : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PadWindow.Plan rank) (fill : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PadWindow.outerWindow plan).outputShape)
+  (kernel : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PadWindow.outerWindow plan).kernelShape),
+  TensorRewrite.Theory.ReductionWindow.contribution (TensorRewrite.Theory.PadWindow.outerWindow plan) fill
+      (TensorRewrite.Theory.PadWindow.pad plan fill input) output kernel =
+    TensorRewrite.Theory.ReductionWindow.contribution (TensorRewrite.Theory.PadWindow.fusedWindow plan) fill input
+      (TensorRewrite.Theory.PadWindow.outputIndex plan output) kernel
+'TensorRewrite.Theory.PadWindow.contribution_fusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadWindow.convert_initial_fusion : ∀ {rank : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.PadWindow.Plan rank) (convert : α → β) (operation : β → β → β) (initial : β) (fill : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  convert fill = initial →
+    TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PadWindow.outerWindow plan) operation initial
+        initial (TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.PadWindow.pad plan fill input)) =
+      fun output =>
+      TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PadWindow.fusedWindow plan) operation initial
+        initial (TensorRewrite.Pilot.Tensor.map convert input) (TensorRewrite.Theory.PadWindow.outputIndex plan output)
+'TensorRewrite.Theory.PadWindow.convert_initial_fusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadWindow.convert_reduce_fusion : ∀ {rank : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.PadWindow.Plan rank) (convert : α → β) (operation : β → β → β) (initial : β) (fill : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PadWindow.outerWindow plan) operation initial
+      (convert fill) (TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.PadWindow.pad plan fill input)) =
+    fun output =>
+    TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PadWindow.fusedWindow plan) operation initial
+      (convert fill) (TensorRewrite.Pilot.Tensor.map convert input)
+      (TensorRewrite.Theory.PadWindow.outputIndex plan output)
+'TensorRewrite.Theory.PadWindow.convert_reduce_fusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PadWindow.dilated_extent_nonempty : ∀ (extent spacing : ℕ),
+  0 < extent → ↑(TensorRewrite.Theory.Convolution.dilatedExtent extent spacing) = (↑extent - 1) * ↑spacing + 1
+'TensorRewrite.Theory.PadWindow.dilated_extent_nonempty' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadWindow.empty_high_formula_refuted : (TensorRewrite.Theory.PadWindow.outerAxis
+        TensorRewrite.Theory.PadWindow.emptyPadding TensorRewrite.Theory.PadWindow.dilatedWindow).outputExtent =
+    3 ∧
+  (TensorRewrite.Theory.PadWindow.fusedAxis TensorRewrite.Theory.PadWindow.emptyPadding
+          TensorRewrite.Theory.PadWindow.dilatedWindow).outputExtent =
+      3 ∧
+    (have __src :=
+          TensorRewrite.Theory.PadWindow.fusedAxis TensorRewrite.Theory.PadWindow.emptyPadding
+            TensorRewrite.Theory.PadWindow.dilatedWindow;
+        { inputExtent := __src.inputExtent, kernelExtent := __src.kernelExtent, stride := __src.stride,
+          baseDilation := __src.baseDilation, kernelDilation := __src.kernelDilation, paddingLow := __src.paddingLow,
+          paddingHigh := 2, reversed := __src.reversed, stride_pos := ⋯, baseDilation_pos := ⋯,
+          kernelDilation_pos := ⋯ }).outputExtent =
+      4
+'TensorRewrite.Theory.PadWindow.empty_high_formula_refuted' does not depend on any axioms
+TensorRewrite.Theory.PadWindow.fused_high_nonempty : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (window : TensorRewrite.Theory.Convolution.Axis),
+  0 < padding.inputExtent →
+    TensorRewrite.Theory.PadWindow.fusedHigh padding window = window.paddingHigh + ↑padding.high * ↑window.baseDilation
+'TensorRewrite.Theory.PadWindow.fused_high_nonempty' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadWindow.fused_high_unit_base : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (window : TensorRewrite.Theory.Convolution.Axis),
+  window.baseDilation = 1 → TensorRewrite.Theory.PadWindow.fusedHigh padding window = window.paddingHigh + ↑padding.high
+'TensorRewrite.Theory.PadWindow.fused_high_unit_base' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadWindow.fused_output_extent : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (window : TensorRewrite.Theory.Convolution.Axis),
+  (TensorRewrite.Theory.PadWindow.outerAxis padding window).outputExtent =
+    (TensorRewrite.Theory.PadWindow.fusedAxis padding window).outputExtent
+'TensorRewrite.Theory.PadWindow.fused_output_extent' depends on axioms: [propext]
+TensorRewrite.Theory.PadWindow.fused_position : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (window : TensorRewrite.Theory.Convolution.Axis) (output : ℕ) (kernel : Fin window.kernelExtent),
+  (TensorRewrite.Theory.PadWindow.fusedAxis padding window).basePosition output kernel =
+    (TensorRewrite.Theory.PadWindow.outerAxis padding window).basePosition output kernel -
+      ↑padding.low * ↑window.baseDilation
+'TensorRewrite.Theory.PadWindow.fused_position' depends on axioms: [propext]
+@TensorRewrite.Theory.PadWindow.map_pad : ∀ {rank : ℕ} {α β : Type} (plan : TensorRewrite.Theory.PadWindow.Plan rank)
+  (convert : α → β) (fill : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.PadWindow.pad plan fill input) =
+    TensorRewrite.Theory.PadWindow.pad plan (convert fill) (TensorRewrite.Pilot.Tensor.map convert input)
+'TensorRewrite.Theory.PadWindow.map_pad' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadWindow.occupied_bound : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (index : Fin padding.inputExtent), padding.low + ↑index * padding.spacing < padding.outputExtent
+'TensorRewrite.Theory.PadWindow.occupied_bound' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PadWindow.output_shape : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PadWindow.Plan rank),
+  (TensorRewrite.Theory.PadWindow.outerWindow plan).outputShape =
+    (TensorRewrite.Theory.PadWindow.fusedWindow plan).outputShape
+'TensorRewrite.Theory.PadWindow.output_shape' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadWindow.pad_sample_iff : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (output : Fin padding.outputExtent) (index : Fin padding.inputExtent),
+  padding.sample? output = some index ↔ ↑↑output = ↑padding.low + ↑↑index * ↑padding.spacing
+'TensorRewrite.Theory.PadWindow.pad_sample_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadWindow.reduce_fusion : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PadWindow.Plan rank) (operation : α → α → α) (initial fill : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PadWindow.outerWindow plan) operation initial fill
+      (TensorRewrite.Theory.PadWindow.pad plan fill input) =
+    fun output =>
+    TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PadWindow.fusedWindow plan) operation initial fill
+      input (TensorRewrite.Theory.PadWindow.outputIndex plan output)
+'TensorRewrite.Theory.PadWindow.reduce_fusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadWindow.sample_compose : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PadWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PadWindow.outerWindow plan).outputShape)
+  (kernel : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PadWindow.outerWindow plan).kernelShape),
+  (TensorRewrite.Theory.ReductionWindow.sample? (TensorRewrite.Theory.PadWindow.outerWindow plan) output kernel).bind
+      (TensorRewrite.Theory.PadWindow.padIndex? plan) =
+    TensorRewrite.Theory.ReductionWindow.sample? (TensorRewrite.Theory.PadWindow.fusedWindow plan)
+      (TensorRewrite.Theory.PadWindow.outputIndex plan output) kernel
+'TensorRewrite.Theory.PadWindow.sample_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PadWindow.sample_embedded : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
+  (index : Fin padding.inputExtent),
+  padding.sample? (TensorRewrite.Theory.PadWindow.embeddedIndex padding index) = some index
+'TensorRewrite.Theory.PadWindow.sample_embedded' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PadWindow.unequal_fill_refuted : (TensorRewrite.Theory.ReductionWindow.contribution
+      (TensorRewrite.Theory.PadWindow.outerWindow TensorRewrite.Theory.PadWindow.unequalFillPlan) 2
+      (TensorRewrite.Theory.PadWindow.pad TensorRewrite.Theory.PadWindow.unequalFillPlan 5 fun x => 3) (fun x => ⟨1, ⋯⟩)
+      fun x => ⟨0, ⋯⟩) =
+    5 ∧
+  (TensorRewrite.Theory.ReductionWindow.contribution
+      (TensorRewrite.Theory.PadWindow.fusedWindow TensorRewrite.Theory.PadWindow.unequalFillPlan) 2 (fun x => 3)
+      (fun x => ⟨1, ⋯⟩) fun x => ⟨0, ⋯⟩) =
+    2
+'TensorRewrite.Theory.PadWindow.unequal_fill_refuted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PadWindow.values_fusion : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PadWindow.Plan rank) (fill : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PadWindow.outerWindow plan).outputShape),
+  TensorRewrite.Theory.ReductionWindow.values (TensorRewrite.Theory.PadWindow.outerWindow plan) fill
+      (TensorRewrite.Theory.PadWindow.pad plan fill input) output =
+    TensorRewrite.Theory.ReductionWindow.values (TensorRewrite.Theory.PadWindow.fusedWindow plan) fill input
+      (TensorRewrite.Theory.PadWindow.outputIndex plan output)
+'TensorRewrite.Theory.PadWindow.values_fusion' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.ReductionAlgebra.concat_add : ∀ {α : Type} [inst : AddMonoid α] (blocks : List (List α)),
   List.foldl (fun x1 x2 => x1 + x2) 0 blocks.flatten =
     List.foldl (fun x1 x2 => x1 + x2) 0 (List.map (fun block => List.foldl (fun x1 x2 => x1 + x2) 0 block) blocks)

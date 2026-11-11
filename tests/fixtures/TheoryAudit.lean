@@ -212,3 +212,27 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.FullSpanWindow.values_fiber
 #print axioms TensorRewrite.Theory.FullSpanWindow.reduce_reshape
 #print axioms TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape
+
+#print axioms TensorRewrite.Theory.LatticeIndex.decode_eq_some_iff
+#print axioms TensorRewrite.Theory.LatticeIndex.window_eq_some_iff
+#print axioms TensorRewrite.Theory.LatticeIndex.assemble_eq_some_iff
+#print axioms TensorRewrite.Theory.LatticeIndex.assemble_bind
+#print axioms TensorRewrite.Theory.PadWindow.occupied_bound
+#print axioms TensorRewrite.Theory.PadWindow.pad_sample_iff
+#print axioms TensorRewrite.Theory.PadWindow.sample_embedded
+#print axioms TensorRewrite.Theory.PadWindow.fused_position
+#print axioms TensorRewrite.Theory.PadWindow.fused_output_extent
+#print axioms TensorRewrite.Theory.PadWindow.dilated_extent_nonempty
+#print axioms TensorRewrite.Theory.PadWindow.fused_high_nonempty
+#print axioms TensorRewrite.Theory.PadWindow.fused_high_unit_base
+#print axioms TensorRewrite.Theory.PadWindow.axis_compose
+#print axioms TensorRewrite.Theory.PadWindow.output_shape
+#print axioms TensorRewrite.Theory.PadWindow.sample_compose
+#print axioms TensorRewrite.Theory.PadWindow.contribution_fusion
+#print axioms TensorRewrite.Theory.PadWindow.values_fusion
+#print axioms TensorRewrite.Theory.PadWindow.reduce_fusion
+#print axioms TensorRewrite.Theory.PadWindow.map_pad
+#print axioms TensorRewrite.Theory.PadWindow.convert_reduce_fusion
+#print axioms TensorRewrite.Theory.PadWindow.convert_initial_fusion
+#print axioms TensorRewrite.Theory.PadWindow.empty_high_formula_refuted
+#print axioms TensorRewrite.Theory.PadWindow.unequal_fill_refuted

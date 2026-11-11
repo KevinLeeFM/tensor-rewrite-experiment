@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "model": "ordered_pad_window_fusion_v1",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/LatticeIndex.lean",
+      "sha256": "474c3876e26e939de317e92da37f8c1ebe5fe67e6c62787ed05935b069ffd7b1"
+    },
+    {
+      "path": "TensorRewrite/Theory/PadWindow.lean",
+      "sha256": "f405f33a614c72bd3145e1490b134b337b28260ca38dbddafae46330f294c06b"
+    },
+    {
+      "path": "TensorRewrite/Theory/PadWindowLemmas.lean",
+      "sha256": "83934f05ba159d1282c37e6e491751a888d349b06f2b67b8d683059b7f2bd0c4"
+    },
+    {
+      "path": "TensorRewrite/Theory/PadWindowProof.lean",
+      "sha256": "b3a0bdb41ce03a3e73687154afb7c8967693fffe64e09453aa548f730df452a4"
+    },
+    {
+      "path": "TensorRewrite/Theory/PadWindowCounterexamples.lean",
+      "sha256": "0bddb61c31e4a4be7893ecc99ac250d2fafeaedb225e5ecfeeec9ad5a2cbad57"
+    },
+    {
+      "path": "tests/fixtures/PadWindowControls.lean",
+      "sha256": "478903998620f490457b1b70ba925064a4af784210bf8f6176143c74d8fb3e3a"
+    },
+    {
+      "path": "tools/pad_window_examples.py",
+      "sha256": "b9bc2dc1a961bca913bce9654c2faf122d1933294799493893a2d5ba26bbc6cf"
+    },
+    {
+      "path": "tools/check_pad_window.py",
+      "sha256": "203131d1446bf56d712a58e96e104691792bdb310998ee6f8d2257114a64e772"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindow.lean",
+      "sha256": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2"
+    },
+    {
+      "path": "TensorRewrite/Theory/Convolution.lean",
+      "sha256": "a8de43c44f6c77904afdde43afde33e771b51132244a327acc2db121fe39bfb4"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "sha256": "61db9787b4c2f5b632045de177889552ff281547bf76e9980f649cde48a64402"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Tensor.lean",
+      "sha256": "c1b41d38bee3d55c4a63df7333c7f0d23ea5917e4260062e2efad97edbeab122"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978"
+    },
+    {
+      "path": "census/reduction-window-domains-v2.json",
+      "sha256": "728772c2fea683e36a2c168708e527c0eebde77cac25416ee48ca8e6162c6e3b"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "certificates": [
+    "TensorRewrite.Theory.LatticeIndex.decode_eq_some_iff",
+    "TensorRewrite.Theory.LatticeIndex.window_eq_some_iff",
+    "TensorRewrite.Theory.LatticeIndex.assemble_eq_some_iff",
+    "TensorRewrite.Theory.LatticeIndex.assemble_bind",
+    "TensorRewrite.Theory.PadWindow.occupied_bound",
+    "TensorRewrite.Theory.PadWindow.pad_sample_iff",
+    "TensorRewrite.Theory.PadWindow.sample_embedded",
+    "TensorRewrite.Theory.PadWindow.fused_position",
+    "TensorRewrite.Theory.PadWindow.fused_output_extent",
+    "TensorRewrite.Theory.PadWindow.dilated_extent_nonempty",
+    "TensorRewrite.Theory.PadWindow.fused_high_nonempty",
+    "TensorRewrite.Theory.PadWindow.fused_high_unit_base",
+    "TensorRewrite.Theory.PadWindow.axis_compose",
+    "TensorRewrite.Theory.PadWindow.output_shape",
+    "TensorRewrite.Theory.PadWindow.sample_compose",
+    "TensorRewrite.Theory.PadWindow.contribution_fusion",
+    "TensorRewrite.Theory.PadWindow.values_fusion",
+    "TensorRewrite.Theory.PadWindow.reduce_fusion",
+    "TensorRewrite.Theory.PadWindow.map_pad",
+    "TensorRewrite.Theory.PadWindow.convert_reduce_fusion",
+    "TensorRewrite.Theory.PadWindow.convert_initial_fusion",
+    "TensorRewrite.Theory.PadWindow.empty_high_formula_refuted",
+    "TensorRewrite.Theory.PadWindow.unequal_fill_refuted"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.PadWindow.empty_high_formula_refuted",
+    "TensorRewrite.Theory.PadWindow.unequal_fill_refuted"
+  ],
+  "conditions": "nonnegative Pad low/high; positive interior spacing; arbitrary positive window stride/dilations, signed window padding and reversal; same explicit and implicit fill",
+  "scalar_contract": "arbitrary operation/initializer; pure heterogeneous conversion retains actual converted fill",
+  "shape_or_index_equivalence_postulated": false,
+  "window_domain_worksheet": "census/reduction-window-domains-v2.json",
+  "candidate_benchmark_bindings": {
+    "reduce_fusion": [
+      "HandleReduceWindow/pad-fold-direct"
+    ],
+    "convert_reduce_fusion": [
+      "HandleReduceWindow/pad-fold-convert"
+    ],
+    "convert_initial_fusion": [
+      "HandleReduceWindow/pad-fold-convert"
+    ]
+  },
+  "benchmark_correspondence_certified": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work",
+  "full_window_family_complete": false,
+  "broadcast_sequence_proved": false,
+  "residuals": [
+    "broadcast-sequence alternatives",
+    "cumulative counts",
+    "negative Pad outside this profile",
+    "converted fill equality where initializer substituted",
+    "representation/observation/tuple partitions",
+    "whole workload formulation, campaign and independent review"
+  ]
+}

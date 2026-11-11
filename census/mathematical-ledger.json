@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 370,
-    "partial_model_evidence_requires_partition_review": 106,
+    "needs_formal_statement_and_domain_partition": 368,
+    "partial_model_evidence_requires_partition_review": 108,
     "declared_value_family_complete_full_record_partitions_open": 12
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 467,
+  "distinct_checked_declarations": 490,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,8 +39,9 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 196,
+    "library_backed_theory": 217,
     "numerical_contract_refutation": 2,
+    "pad_window_contract_refutation": 2,
     "reduction_contract_refutation": 3,
     "window_contract_refutation": 2,
     "scalar_domain_counterexample": 2,
@@ -237,6 +238,24 @@
       "independent_statement_review": "pending",
       "manifest": "census/full-span-window-v1.json",
       "manifest_sha256": "370202d2a21752d5733bd0fa09cdb1d6c4efb58636a057edc5502c93c9dd2c25"
+    },
+    {
+      "model": "ordered_pad_window_fusion_v1",
+      "scope": "nonnegative Pad low/high; positive interior spacing; arbitrary positive window stride/dilations, signed window padding and reversal; same explicit and implicit fill",
+      "scalar_contract": "arbitrary operation/initializer; pure heterogeneous conversion retains actual converted fill",
+      "status": "kernel_checked_ordered_pad_window_fusion",
+      "checked_theorem_count": 23,
+      "full_family_complete": false,
+      "independent_pad_operator": true,
+      "empty_safe_geometry_derived": true,
+      "ordered_contribution_lists_equal": true,
+      "initializer_retained": true,
+      "converted_fill_retained": true,
+      "broadcast_sequence_proved": false,
+      "window_domain_worksheet": "census/reduction-window-domains-v2.json",
+      "independent_statement_review": "pending",
+      "manifest": "census/pad-window-v1.json",
+      "manifest_sha256": "a838908d33293aecdb6d8d1bebc0a220cb73c7488d15dc95735911545ba1a388"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -244,10 +263,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "0b3c91512c51cb81b19cd2879fdea60eeb7113e9ac1ecaa06c1571b1926ec3a3",
+    "sha256": "8d8b3e6d86506fa9570019ad5a3ec5b5ff54a6e972fcdc82329195cef212c8ce",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "29c0bf465ff76e2404b754a00f7e186f0c4e51f0ed3caaddfc43f57a7251568a"
+    "output_sha256": "1ea916c95ecab2d8fe7220d406ee72c2b18bb7eb4f51e5c2c4f87b138bc3dab8"
   },
   "proofs": [
     {
@@ -7519,6 +7538,75 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.LatticeIndex.assemble_bind",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.LatticeIndex.assemble_eq_some_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.LatticeIndex.decode_eq_some_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.LatticeIndex.window_eq_some_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.LogicalFamily.allRules_complete",
       "kinds": [
         "library_backed_theory"
@@ -7677,6 +7765,339 @@
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
       "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.axis_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.contribution_fusion",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.convert_initial_fusion",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-fold-convert"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.convert_reduce_fusion",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-fold-convert"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.dilated_extent_nonempty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.empty_high_formula_refuted",
+      "kinds": [
+        "pad_window_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.fused_high_nonempty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.fused_high_unit_base",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.fused_output_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.fused_position",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.map_pad",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.occupied_bound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.output_shape",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.pad_sample_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.reduce_fusion",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-fold-direct"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.sample_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.sample_embedded",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.unequal_fill_refuted",
+      "kinds": [
+        "pad_window_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadWindow.values_fusion",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "independent nonnegative-edge/interior Pad and arbitrary window geometry; derived fused spacings/low/high/output shape including empty inputs; identical complete ordered lists/folds with the same explicit/implicit fill; arbitrary operation/initializer and pure heterogeneous conversion retaining converted fill; no external IR admission/flags/layout claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
         "Quot.sound",
         "propext"
       ]
@@ -13138,8 +13559,11 @@
       "retained_lhs": "ReduceWindow(Convert(Pad(x)))",
       "retained_rhs": "ReduceWindow(Convert(x),init,composed window)",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=True; both effective-broadcast tests false",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PadWindow.convert_initial_fusion",
+        "TensorRewrite.Theory.PadWindow.convert_reduce_fusion"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -13149,8 +13573,10 @@
       "retained_lhs": "ReduceWindow(Pad(x))",
       "retained_rhs": "ReduceWindow(x,init,composed window)",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=False; both effective-broadcast tests false",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PadWindow.reduce_fusion"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

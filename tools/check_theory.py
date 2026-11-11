@@ -9,6 +9,9 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'LatticeIndex': ['decode_eq_some_iff', 'window_eq_some_iff', 'assemble_eq_some_iff', 'assemble_bind'],
+    'PadWindow': ['occupied_bound', 'pad_sample_iff', 'sample_embedded', 'fused_position', 'fused_output_extent', 'dilated_extent_nonempty', 'fused_high_nonempty', 'fused_high_unit_base', 'axis_compose', 'output_shape', 'sample_compose', 'contribution_fusion', 'values_fusion', 'reduce_fusion', 'map_pad', 'convert_reduce_fusion', 'convert_initial_fusion', 'empty_high_formula_refuted', 'unequal_fill_refuted'],
+
     'OrderedCoordinates': ['map_finRange_mul', 'enumerate_scalar', 'enumerate_uncons', 'enumerate_uncons_map'],
     'FullSpanWindow': ['kept_output_extent', 'reduced_output_extent', 'kept_sample', 'reduced_sample', 'input_shape', 'original_input', 'input_original', 'axis_sample', 'sample_valid', 'output_count', 'output_linearize', 'output_reshape', 'sampled_fiber', 'values_fiber', 'reduce_reshape', 'original_reduce_reshape'],
 
@@ -124,6 +127,12 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/LatticeIndex.lean': 'H',
+        'TensorRewrite/Theory/PadWindow.lean': 'S',
+        'TensorRewrite/Theory/PadWindowLemmas.lean': 'H',
+        'TensorRewrite/Theory/PadWindowProof.lean': 'R',
+        'TensorRewrite/Theory/PadWindowCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/OrderedCoordinates.lean': 'H',
         'TensorRewrite/Theory/FullSpanWindow.lean': 'S',
         'TensorRewrite/Theory/FullSpanWindowLemmas.lean': 'H',
@@ -164,7 +173,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='canonical full-span ordered window/reduction/reshape; '
+                  scope='Pad/window fusion with derived empty-safe geometry and converted fill; '
+                        'canonical full-span ordered window/reduction/reshape; '
                         'derived Map/Slice/Pad shape and index factorization; '
                         'ordered window folds and unit-window affine gathers; '
                         'exact real and principal-complex log/sqrt domains; '
@@ -172,7 +182,13 @@ def main():
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('canonical mixed kept/full-span window geometry; arbitrary ranks/extents; '
+                      name: ('independent nonnegative-edge/interior Pad and arbitrary window geometry; '
+                             'derived fused spacings/low/high/output shape including empty inputs; '
+                             'identical complete ordered lists/folds with the same explicit/implicit '
+                             'fill; arbitrary operation/initializer and pure heterogeneous conversion '
+                             'retaining converted fill; no external IR admission/flags/layout claim'
+                             if '.PadWindow.' in name or '.LatticeIndex.' in name else
+                             'canonical mixed kept/full-span window geometry; arbitrary ranks/extents; '
                              'ordered contribution list equals actual Reduction.fiberValues; '
                              'derived equal output counts and logical reshape; arbitrary scalar '
                              'type/operation/initializer/padding; no algebraic law, IEEE/FMA/flags, '

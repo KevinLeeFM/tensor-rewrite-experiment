@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 207 checked mathematical statements; custom Lean totals **5,576**.
+The theory target now has 230 checked mathematical statements; custom Lean totals **5,963**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -1013,3 +1013,18 @@ Totals:5576 lines,207 theory/467 ledger declarations, four integration theorems
 separate. All488 records remain370 unformulated/106 partial/12 logical-family;
 zero whole records closed. Compositions, numerical domains and the full campaign
 remain open. New statements await review; code correspondence stays future work.
+
+
+## Pad/window fusion and converted fill
+
+Independent edge/interior Pad now fuses into an ordered window with derived
+empty-safe geometry, complete contribution-list equality and the actual initializer.
+Pure heterogeneous conversion retains the actual converted fill. Twenty-three
+statements add387 Lean lines; total5963, theory230/ledger490 (four integration
+results separate). Two certificates expose incorrect empty-input high padding
+and unequal fill values. See [the fusion guide](docs/pad-window-fusion.md).
+All54 focused tests pass;655 profiles/3043 outputs match a materialized-Pad oracle.
+The successor window worksheet retains31 records,22 with partial core associations.
+All488 records remain368 unformulated/108 partial/12 logical-family; zero whole
+records close. Broadcast alternatives, cumulative counts, other partitions and
+independent review remain open. Code correspondence and the full verdict remain open.
