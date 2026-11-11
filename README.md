@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 402 checked mathematical statements; custom Lean totals **8,506**.
+The theory target now has 422 checked mathematical statements; custom Lean totals **8,774**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 All488 retained records now have domain/dependency worksheets, including374 covered only by
 unreviewed proposals after the six-record Scatter refinement; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
@@ -1141,3 +1141,12 @@ batch/window tensor reads and inserted singleton operand-window coordinates to
 the existing exact ordered event list. Sixteen statements add278 custom Lean lines.
 A checked counterexample distinguishes raw storage order from declared Scatter
 order. General dimension bridges and the whole-workload verdict remain open.
+
+## Actual raw index-vector representations
+
+The [index-tensor reader](docs/scatter-indices.md) now proves bounded coordinate and
+pack/read inverses for an explicit vector axis at any position or an implicit
+single-component vector. Actual vector-axis relayout preserves Scatter with its
+original update order. Twenty statements add268 custom Lean lines. A checked
+zero-vector counterexample distinguishes raw tensor emptiness from an empty batch
+or a single-update Map. General dimension/graph bridges and the full campaign remain open.

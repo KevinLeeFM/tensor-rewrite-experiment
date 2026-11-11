@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 662,
+  "distinct_checked_declarations": 682,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,7 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 371,
+    "library_backed_theory": 390,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "ordered_scatter_contract_refutation": 4,
@@ -50,6 +50,7 @@
     "window_contract_refutation": 2,
     "remainder_contract_refutation": 3,
     "scalar_domain_counterexample": 2,
+    "raw_index_tensor_contract_counterexample": 1,
     "scatter_layout_order_refutation": 1,
     "slice_pad_geometry_refutation": 2,
     "uniform_fixed_order_rounding_refutation": 1
@@ -414,6 +415,29 @@
       "independent_statement_review": "pending",
       "manifest": "census/scatter-layout-v1.json",
       "manifest_sha256": "f538be562ec00ac15154fd4f2611322be81aa9bbd20d74b195489fa13dc950bf"
+    },
+    {
+      "model": "explicit_implicit_raw_index_vectors_and_scatter_v1",
+      "scope": "one explicit vector axis at any raw position, or an implicit vector of exactly one component; relative batch order retained; actual bounded coordinate insertion/projection and lossless packing/relayout",
+      "scatter_contract": "actual raw index/update tensors; previous compact-window and singleton insertion profile; injective signed operand-axis map; batch/window order and per-element drop; no reducer algebra for input/relayout bridges",
+      "status": "kernel_checked_explicit_implicit_raw_indices_with_open_general_dimensions",
+      "checked_theorem_count": 20,
+      "full_family_complete": false,
+      "raw_index_reading_derived": true,
+      "explicit_vector_axis_all_positions": true,
+      "implicit_index_vector_layout_supported": true,
+      "implicit_vector_exactly_one_component": true,
+      "reader_pack_inverse_proved": true,
+      "vector_axis_relayout_proved": true,
+      "actual_raw_tensor_scatter_bridge": true,
+      "raw_index_emptiness_implies_no_events": false,
+      "signed_unsigned_decoders_identified": false,
+      "general_transpose_graph_bridge_proved": false,
+      "operand_index_batching_supported": false,
+      "all_scatter_dimension_numbers_supported": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/scatter-indices-v1.json",
+      "manifest_sha256": "f8cc3e410c521871e2603cd38c9cb2080b1a79f4bad0043a196cc78d9a8d5f1a"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -421,10 +445,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "28686169cfa587af6cf59023152dcdabb53730e6e7e9f58e0526051a8a2136a7",
+    "sha256": "1515065d8d68c9b951943608829f2b8a91695a075b27aef537d1a36a9f032836",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "034473bbb2fc338c76ce969a29f3b0cee551d23fc1aa0295e3ce69563e4c265e"
+    "output_sha256": "4b6b4f8a51db69cf2c865a14401feead043b316b099403b38f8a477a3eb4de66"
   },
   "proofs": [
     {
@@ -8159,6 +8183,206 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.IndexVector.batch_raw",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.component_raw",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.elementCount_raw",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.implicit_components",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.pack_read",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.raw_split",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.read_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.read_pack",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.read_relayout",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.relayout_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.relayout_trans",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.IndexVector.vectorAxis_bound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.LatticeIndex.assemble_bind",
       "kinds": [
         "library_backed_theory"
@@ -12152,6 +12376,155 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map",
+      "kinds": [
+        "raw_index_tensor_contract_counterexample"
+      ],
+      "profile_descriptions": [
+        "actual explicit zero-component raw index tensor with two batches: zero raw index elements but two events, decimal Scatter12 versus first-update Map1; no external guard or compiler behavior claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.entries_eq_layout",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.entries_length",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.scatter_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleScatter/empty-updates"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.scatter_eq_layout",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.scatter_eq_ordered",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.scatter_relayout_indices",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterIndices.word_translate_distinct",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw vector dimension at arbitrary position or implicit one-component vector; bounded coordinate and pack/read inverses; lossless vector-axis relayout; actual interleaved raw index/update Scatter bridge with explicit singleton window insertion and per-element drop; arbitrary state for input/relayout laws, distinct-role all-width word translation only; no decoder equivalence, operand/index batching, general transpose/permutation, IEEE algebra, external admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.ScatterLayout.adapt_expand",
       "kinds": [
         "library_backed_theory"
@@ -13509,6 +13882,7 @@
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
         "TensorRewrite.Theory.OrderedScatter.scatter_translate",
         "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+        "TensorRewrite.Theory.ScatterIndices.word_translate_distinct",
         "TensorRewrite.Theory.ScatterLayout.scatter_translate",
         "TensorRewrite.Theory.ScatterLayout.word_translate_distinct"
       ],
@@ -13531,6 +13905,7 @@
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
         "TensorRewrite.Theory.OrderedScatter.scatter_translate",
         "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+        "TensorRewrite.Theory.ScatterIndices.word_translate_distinct",
         "TensorRewrite.Theory.ScatterLayout.scatter_translate",
         "TensorRewrite.Theory.ScatterLayout.word_translate_distinct"
       ],
@@ -17464,6 +17839,7 @@
       "evidence": [
         "TensorRewrite.Theory.OrderedScatter.empty_components",
         "TensorRewrite.Theory.OrderedScatter.scatter_empty",
+        "TensorRewrite.Theory.ScatterIndices.scatter_empty",
         "TensorRewrite.Theory.ScatterLayout.scatter_empty"
       ],
       "whole_record_mathematically_closed": false,

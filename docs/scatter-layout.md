@@ -70,3 +70,8 @@ verdict. Exact current replay results are in `reports/scatter-layout-milestone-v
 All 93 curated mathematical tests pass. The five current-turn validation commands
 and exact outputs are archived in `reports/scatter-layout-validation-v1/`. The full
 Lake build and axiom audit cover the existing theory as well as this extension.
+
+The subsequent [raw index-reader bridge](scatter-indices.md) adds actual explicit
+and implicit vector representations and lossless coordinate relayout. The frozen
+v1 layout profile stays unchanged; operand/index batching and generic graph
+Transpose/Concat bridges remain open.

@@ -9,6 +9,9 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'IndexVector': ['batch_raw', 'component_raw', 'raw_split', 'vectorAxis_bound', 'implicit_components', 'elementCount_raw', 'read_pack', 'pack_read', 'read_map', 'read_relayout', 'relayout_refl', 'relayout_trans'],
+    'ScatterIndices': ['entries_eq_layout', 'scatter_eq_layout', 'scatter_eq_ordered', 'entries_length', 'scatter_relayout_indices', 'scatter_empty', 'word_translate_distinct', 'empty_index_tensor_not_single_map'],
+
     'ScatterLayout': ['project_expand', 'expand_project', 'enumerate_expand', 'elementCount_full', 'update_coordinate', 'adapt_expand', 'adapt_map', 'entries_eq_ordered', 'raw_storage_order_refuted', 'scatter_eq_ordered', 'entries_length', 'scatter_empty', 'scatter_map', 'scatter_translate', 'word_translate_distinct', 'scatter_combine_nested'],
     'ScatterConcat': ['concatenate_left', 'concatenate_right', 'enumerate_concatenate', 'entries_coordinates', 'target_rebatch', 'entries_concatenate', 'scatter_concatenate', 'scatter_combine', 'word_combine_distinct'],
     'OrderedScatter': ['repeated_parameter_refuted', 'duplicate_order_refuted', 'binary32_translate_refuted', 'clamping_refuted', 'entries_full_window', 'values_full_window', 'offset_mapped', 'offset_unmapped', 'target_eq_some_iff', 'entries_length', 'entries_empty_batch', 'entries_empty_window', 'empty_vector_offset', 'full_window_target', 'filterMap_finRange_single', 'scatter_map', 'empty_components', 'scatter_translate', 'word_translate_distinct', 'step_at', 'run_at', 'run_append', 'values_append', 'step_map', 'run_map', 'foldl_translate', 'foldl_combine', 'run_empty', 'scatter_empty', 'full_window_map', 'run_translate', 'run_combine', 'run_combine_nested', 'word_combine', 'entries_map', 'distinct_word_operation'],
@@ -141,6 +144,11 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/IndexVector.lean': 'S',
+        'TensorRewrite/Theory/IndexVectorLemmas.lean': 'H',
+        'TensorRewrite/Theory/ScatterIndices.lean': 'S',
+        'TensorRewrite/Theory/ScatterIndicesProof.lean': 'R',
+        'TensorRewrite/Theory/ScatterIndicesCounterexample.lean': 'C',
         'TensorRewrite/Theory/ScatterLayout.lean': 'S',
         'TensorRewrite/Theory/ScatterLayoutLemmas.lean': 'H',
         'TensorRewrite/Theory/ScatterLayoutProof.lean': 'R',
@@ -259,6 +267,18 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: (
+                             'actual explicit zero-component raw index tensor with two batches: '
+                             'zero raw index elements but two events, decimal Scatter12 versus first-update Map1; '
+                             'no external guard or compiler behavior claim'
+                             if name.endswith('.ScatterIndices.empty_index_tensor_not_single_map') else
+                             'raw vector dimension at arbitrary position or implicit one-component vector; '
+                             'bounded coordinate and pack/read inverses; lossless vector-axis relayout; '
+                             'actual interleaved raw index/update Scatter bridge with explicit singleton '
+                             'window insertion and per-element drop; arbitrary state for input/relayout '
+                             'laws, distinct-role all-width word translation only; no decoder equivalence, '
+                             'operand/index batching, general transpose/permutation, IEEE algebra, '
+                             'external admission or whole-record closure'
+                             if '.IndexVector.' in name or '.ScatterIndices.' in name else
                              'actual interleaved update tensor and compact/full window index inverses; '
                              'arbitrary singleton insertions; exact original batch/window event list; '
                              'arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm '

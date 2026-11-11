@@ -2740,6 +2740,68 @@ TensorRewrite.Theory.FullSpanWindow.sample_valid : ∀ (plan : TensorRewrite.Pil
       (fun index => input (TensorRewrite.Theory.FullSpanWindow.inputIndex plan index))
       (TensorRewrite.Theory.FullSpanWindow.outputIndex plan output)
 'TensorRewrite.Theory.FullSpanWindow.values_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.IndexVector.batch_raw : ∀ {components batchRank : ℕ} {shape : TensorRewrite.Pilot.Shape batchRank}
+  (layout : TensorRewrite.Theory.IndexVector.Layout components shape) (batch : TensorRewrite.Pilot.Index shape)
+  (component : Fin components), layout.batchIndex (layout.rawIndex batch component) = batch
+'TensorRewrite.Theory.IndexVector.batch_raw' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.component_raw : ∀ {components batchRank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} (layout : TensorRewrite.Theory.IndexVector.Layout components shape)
+  (batch : TensorRewrite.Pilot.Index shape) (component : Fin components),
+  layout.componentIndex (layout.rawIndex batch component) = component
+'TensorRewrite.Theory.IndexVector.component_raw' depends on axioms: [propext]
+@TensorRewrite.Theory.IndexVector.elementCount_raw : ∀ {components batchRank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} (layout : TensorRewrite.Theory.IndexVector.Layout components shape),
+  TensorRewrite.Pilot.LinearIndex.elementCount layout.rawShape =
+    TensorRewrite.Pilot.LinearIndex.elementCount shape * components
+'TensorRewrite.Theory.IndexVector.elementCount_raw' depends on axioms: [propext]
+@TensorRewrite.Theory.IndexVector.implicit_components : ∀ {components batchRank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} (layout : TensorRewrite.Theory.IndexVector.Layout components shape),
+  layout.vectorAxis? = none → components = 1
+'TensorRewrite.Theory.IndexVector.implicit_components' depends on axioms: [propext]
+@TensorRewrite.Theory.IndexVector.pack_read : ∀ {components batchRank : ℕ} {shape : TensorRewrite.Pilot.Shape batchRank}
+  {α : Type} (layout : TensorRewrite.Theory.IndexVector.Layout components shape)
+  (raw : TensorRewrite.Pilot.Tensor layout.rawShape α),
+  TensorRewrite.Theory.IndexVector.pack layout (TensorRewrite.Theory.IndexVector.read layout raw) = raw
+'TensorRewrite.Theory.IndexVector.pack_read' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.raw_split : ∀ {components batchRank : ℕ} {shape : TensorRewrite.Pilot.Shape batchRank}
+  (layout : TensorRewrite.Theory.IndexVector.Layout components shape) (raw : TensorRewrite.Pilot.Index layout.rawShape),
+  layout.rawIndex (layout.batchIndex raw) (layout.componentIndex raw) = raw
+'TensorRewrite.Theory.IndexVector.raw_split' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.read_map : ∀ {components batchRank : ℕ} {shape : TensorRewrite.Pilot.Shape batchRank}
+  {α β : Type} (layout : TensorRewrite.Theory.IndexVector.Layout components shape) (convert : α → β)
+  (raw : TensorRewrite.Pilot.Tensor layout.rawShape α),
+  TensorRewrite.Theory.IndexVector.read layout (TensorRewrite.Pilot.Tensor.map convert raw) = fun batch component =>
+    convert (TensorRewrite.Theory.IndexVector.read layout raw batch component)
+'TensorRewrite.Theory.IndexVector.read_map' depends on axioms: [propext]
+@TensorRewrite.Theory.IndexVector.read_pack : ∀ {components batchRank : ℕ} {shape : TensorRewrite.Pilot.Shape batchRank}
+  {α : Type} (layout : TensorRewrite.Theory.IndexVector.Layout components shape)
+  (values : TensorRewrite.Pilot.Tensor shape (Fin components → α)),
+  TensorRewrite.Theory.IndexVector.read layout (TensorRewrite.Theory.IndexVector.pack layout values) = values
+'TensorRewrite.Theory.IndexVector.read_pack' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.read_relayout : ∀ {components batchRank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} {α : Type}
+  (source target : TensorRewrite.Theory.IndexVector.Layout components shape)
+  (raw : TensorRewrite.Pilot.Tensor source.rawShape α),
+  TensorRewrite.Theory.IndexVector.read target (TensorRewrite.Theory.IndexVector.relayout source target raw) =
+    TensorRewrite.Theory.IndexVector.read source raw
+'TensorRewrite.Theory.IndexVector.read_relayout' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.relayout_refl : ∀ {components batchRank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} {α : Type}
+  (layout : TensorRewrite.Theory.IndexVector.Layout components shape)
+  (raw : TensorRewrite.Pilot.Tensor layout.rawShape α),
+  TensorRewrite.Theory.IndexVector.relayout layout layout raw = raw
+'TensorRewrite.Theory.IndexVector.relayout_refl' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.relayout_trans : ∀ {components batchRank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} {α : Type}
+  (first second third : TensorRewrite.Theory.IndexVector.Layout components shape)
+  (raw : TensorRewrite.Pilot.Tensor first.rawShape α),
+  TensorRewrite.Theory.IndexVector.relayout second third (TensorRewrite.Theory.IndexVector.relayout first second raw) =
+    TensorRewrite.Theory.IndexVector.relayout first third raw
+'TensorRewrite.Theory.IndexVector.relayout_trans' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.IndexVector.vectorAxis_bound : ∀ {components batchRank axis : ℕ}
+  {shape : TensorRewrite.Pilot.Shape batchRank} (layout : TensorRewrite.Theory.IndexVector.Layout components shape),
+  layout.vectorAxis? = some axis → axis < layout.rawRank
+'TensorRewrite.Theory.IndexVector.vectorAxis_bound' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.LatticeIndex.assemble_bind : ∀ {rank : ℕ} {first second : TensorRewrite.Pilot.Shape rank}
   (outer : (axis : Fin rank) → Option (Fin (first axis)))
   (inner : (axis : Fin rank) → Fin (first axis) → Option (Fin (second axis))),
@@ -4430,6 +4492,97 @@ TensorRewrite.Theory.ScalarDomains.real_sqrt_square : ∀ (x : ℝ), √(x * x) 
           (TensorRewrite.Theory.ScatterConcat.concatenate tail leftIndices rightIndices)
           (TensorRewrite.Theory.ScatterConcat.concatenate tail leftUpdates rightUpdates)
 'TensorRewrite.Theory.ScatterConcat.word_combine_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map : have updates := fun raw =>
+  ↑(raw ⟨0, TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map._proof_1⟩) + 1;
+TensorRewrite.Pilot.LinearIndex.elementCount TensorRewrite.Theory.ScatterIndices.emptyVectorLayout.rawShape = 0 ∧
+  (TensorRewrite.Theory.ScatterIndices.entries TensorRewrite.Theory.ScatterIndices.emptyVectorPlan
+          TensorRewrite.Theory.ScatterIndices.emptyVectorLayout TensorRewrite.Theory.ScatterIndices.emptyRawIndices
+          updates).length =
+      2 ∧
+    (TensorRewrite.Theory.ScatterIndices.scatter TensorRewrite.Theory.ScatterIndices.emptyVectorPlan
+          TensorRewrite.Theory.ScatterIndices.emptyVectorLayout (fun a b => 10 * a + b)
+          (TensorRewrite.Pilot.Tensor.constant 0) TensorRewrite.Theory.ScatterIndices.emptyRawIndices updates fun x =>
+          ⟨0, ⋯⟩) =
+        12 ∧
+      (TensorRewrite.Pilot.Tensor.map₂ (fun a b => 10 * a + b) (TensorRewrite.Pilot.Tensor.constant 0)
+          (TensorRewrite.Pilot.Tensor.constant 1) fun x => 0) =
+        1
+'TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.entries_eq_layout : ∀ {components : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (layout : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape)
+  (indices : TensorRewrite.Pilot.Tensor layout.rawShape ℤ)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterIndices.entries plan layout indices updates =
+    TensorRewrite.Theory.ScatterLayout.entries plan (TensorRewrite.Theory.IndexVector.read layout indices) updates
+'TensorRewrite.Theory.ScatterIndices.entries_eq_layout' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.entries_length : ∀ {components : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (layout : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape)
+  (indices : TensorRewrite.Pilot.Tensor layout.rawShape ℤ)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  (TensorRewrite.Theory.ScatterIndices.entries plan layout indices updates).length =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.updateAxes.outputShape *
+      TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.ReductionFiber.shape plan.updateAxes)
+'TensorRewrite.Theory.ScatterIndices.entries_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.scatter_empty : ∀ {components : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (layout : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.updateAxes.outputShape = 0 ∨
+      TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.ReductionFiber.shape plan.updateAxes) = 0 →
+    ∀ (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor layout.rawShape ℤ)
+      (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+      TensorRewrite.Theory.ScatterIndices.scatter plan layout operation base indices updates = base
+'TensorRewrite.Theory.ScatterIndices.scatter_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.scatter_eq_layout : ∀ {components : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (layout : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape) (operation : α → α → α)
+  (base : TensorRewrite.Pilot.Tensor plan.operandShape α) (indices : TensorRewrite.Pilot.Tensor layout.rawShape ℤ)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterIndices.scatter plan layout operation base indices updates =
+    TensorRewrite.Theory.ScatterLayout.scatter plan operation base
+      (TensorRewrite.Theory.IndexVector.read layout indices) updates
+'TensorRewrite.Theory.ScatterIndices.scatter_eq_layout' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.scatter_eq_ordered : ∀ {components : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (layout : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape) (operation : α → α → α)
+  (base : TensorRewrite.Pilot.Tensor plan.operandShape α) (indices : TensorRewrite.Pilot.Tensor layout.rawShape ℤ)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterIndices.scatter plan layout operation base indices updates =
+    TensorRewrite.Theory.OrderedScatter.scatter plan.toOrdered operation base
+      (TensorRewrite.Theory.IndexVector.read layout indices)
+      (TensorRewrite.Theory.ScatterLayout.adaptUpdates plan updates)
+'TensorRewrite.Theory.ScatterIndices.scatter_eq_ordered' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.scatter_relayout_indices : ∀ {components : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (source target : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape)
+  (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+  (indices : TensorRewrite.Pilot.Tensor source.rawShape ℤ)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterIndices.scatter plan target operation base
+      (TensorRewrite.Theory.IndexVector.relayout source target indices) updates =
+    TensorRewrite.Theory.ScatterIndices.scatter plan source operation base indices updates
+'TensorRewrite.Theory.ScatterIndices.scatter_relayout_indices' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ScatterIndices.word_translate_distinct : ∀ {components width : ℕ}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan components)
+  (layout : TensorRewrite.Theory.IndexVector.Layout components plan.updateAxes.outputShape) (order : Bool)
+  (first second : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+  first ≠ second →
+    ∀ (separate base : TensorRewrite.Pilot.Tensor plan.operandShape (BitVec width))
+      (indices : TensorRewrite.Pilot.Tensor layout.rawShape ℤ)
+      (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape (BitVec width)),
+      TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 + x2) order separate
+          (TensorRewrite.Theory.ScatterIndices.scatter plan layout
+            (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second) base indices updates) =
+        TensorRewrite.Theory.ScatterIndices.scatter plan layout
+          (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second)
+          (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) separate base) indices updates
+'TensorRewrite.Theory.ScatterIndices.word_translate_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.ScatterLayout.adapt_expand : ∀ {indexSize : ℕ} {α : Type}
   (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize)
   (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α)

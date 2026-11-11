@@ -29,3 +29,5 @@ public import TensorRewrite.Theory.OrderedScatterCounterexamples
 public import TensorRewrite.Theory.ScatterConcatProof
 
 public import TensorRewrite.Theory.ScatterLayoutCounterexample
+
+public import TensorRewrite.Theory.ScatterIndicesCounterexample

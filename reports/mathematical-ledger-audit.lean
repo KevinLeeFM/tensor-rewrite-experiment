@@ -771,6 +771,30 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.FullSpanWindow.sampled_fiber
 #check @TensorRewrite.Theory.FullSpanWindow.values_fiber
 #print axioms TensorRewrite.Theory.FullSpanWindow.values_fiber
+#check @TensorRewrite.Theory.IndexVector.batch_raw
+#print axioms TensorRewrite.Theory.IndexVector.batch_raw
+#check @TensorRewrite.Theory.IndexVector.component_raw
+#print axioms TensorRewrite.Theory.IndexVector.component_raw
+#check @TensorRewrite.Theory.IndexVector.elementCount_raw
+#print axioms TensorRewrite.Theory.IndexVector.elementCount_raw
+#check @TensorRewrite.Theory.IndexVector.implicit_components
+#print axioms TensorRewrite.Theory.IndexVector.implicit_components
+#check @TensorRewrite.Theory.IndexVector.pack_read
+#print axioms TensorRewrite.Theory.IndexVector.pack_read
+#check @TensorRewrite.Theory.IndexVector.raw_split
+#print axioms TensorRewrite.Theory.IndexVector.raw_split
+#check @TensorRewrite.Theory.IndexVector.read_map
+#print axioms TensorRewrite.Theory.IndexVector.read_map
+#check @TensorRewrite.Theory.IndexVector.read_pack
+#print axioms TensorRewrite.Theory.IndexVector.read_pack
+#check @TensorRewrite.Theory.IndexVector.read_relayout
+#print axioms TensorRewrite.Theory.IndexVector.read_relayout
+#check @TensorRewrite.Theory.IndexVector.relayout_refl
+#print axioms TensorRewrite.Theory.IndexVector.relayout_refl
+#check @TensorRewrite.Theory.IndexVector.relayout_trans
+#print axioms TensorRewrite.Theory.IndexVector.relayout_trans
+#check @TensorRewrite.Theory.IndexVector.vectorAxis_bound
+#print axioms TensorRewrite.Theory.IndexVector.vectorAxis_bound
 #check @TensorRewrite.Theory.LatticeIndex.assemble_bind
 #print axioms TensorRewrite.Theory.LatticeIndex.assemble_bind
 #check @TensorRewrite.Theory.LatticeIndex.assemble_eq_some_iff
@@ -1215,6 +1239,22 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScatterConcat.target_rebatch
 #check @TensorRewrite.Theory.ScatterConcat.word_combine_distinct
 #print axioms TensorRewrite.Theory.ScatterConcat.word_combine_distinct
+#check @TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map
+#print axioms TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map
+#check @TensorRewrite.Theory.ScatterIndices.entries_eq_layout
+#print axioms TensorRewrite.Theory.ScatterIndices.entries_eq_layout
+#check @TensorRewrite.Theory.ScatterIndices.entries_length
+#print axioms TensorRewrite.Theory.ScatterIndices.entries_length
+#check @TensorRewrite.Theory.ScatterIndices.scatter_empty
+#print axioms TensorRewrite.Theory.ScatterIndices.scatter_empty
+#check @TensorRewrite.Theory.ScatterIndices.scatter_eq_layout
+#print axioms TensorRewrite.Theory.ScatterIndices.scatter_eq_layout
+#check @TensorRewrite.Theory.ScatterIndices.scatter_eq_ordered
+#print axioms TensorRewrite.Theory.ScatterIndices.scatter_eq_ordered
+#check @TensorRewrite.Theory.ScatterIndices.scatter_relayout_indices
+#print axioms TensorRewrite.Theory.ScatterIndices.scatter_relayout_indices
+#check @TensorRewrite.Theory.ScatterIndices.word_translate_distinct
+#print axioms TensorRewrite.Theory.ScatterIndices.word_translate_distinct
 #check @TensorRewrite.Theory.ScatterLayout.adapt_expand
 #print axioms TensorRewrite.Theory.ScatterLayout.adapt_expand
 #check @TensorRewrite.Theory.ScatterLayout.adapt_map

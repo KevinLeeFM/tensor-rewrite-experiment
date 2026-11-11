@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.ScatterIndices.' in name:
+            manifest=read('census/scatter-indices-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.ScatterLayout.' in name:
             manifest=read('census/scatter-layout-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -236,7 +239,9 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('scatter_layout_order_refutation' if '.ScatterLayout.' in name
+        kind=('raw_index_tensor_contract_counterexample'
+              if name.endswith('.ScatterIndices.empty_index_tensor_not_single_map') else
+              'scatter_layout_order_refutation' if '.ScatterLayout.' in name
               and name.endswith('_refuted') else
               'ordered_scatter_contract_refutation' if '.OrderedScatter.' in name
               and name.endswith('_refuted') else
@@ -624,6 +629,27 @@ def mathematical_models(root=ROOT):
                        floating_associativity_assumed=False,
                        independent_statement_review='pending',manifest=layout['manifest'],
                        manifest_sha256=layout['manifest_sha256']))
+    from check_scatter_indices import check_inputs as indices_inputs, validate_result as validate_indices
+    indices=read('reports/scatter-indices.json',root);validate_indices(indices)
+    extension=indices_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.IndexVector.' in name or '.ScatterIndices.' in name}
+    assert len(expected)==20 and indices['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['reader_contract'],
+                       scatter_contract=extension['scatter_contract'],status=indices['status'],
+                       checked_theorem_count=20,full_family_complete=False,
+                       raw_index_reading_derived=True,explicit_vector_axis_all_positions=True,
+                       implicit_index_vector_layout_supported=True,
+                       implicit_vector_exactly_one_component=True,
+                       reader_pack_inverse_proved=True,vector_axis_relayout_proved=True,
+                       actual_raw_tensor_scatter_bridge=True,
+                       raw_index_emptiness_implies_no_events=False,
+                       signed_unsigned_decoders_identified=False,
+                       general_transpose_graph_bridge_proved=False,
+                       operand_index_batching_supported=False,
+                       all_scatter_dimension_numbers_supported=False,
+                       independent_statement_review='pending',manifest=indices['manifest'],
+                       manifest_sha256=indices['manifest_sha256']))
     return models
 
 
