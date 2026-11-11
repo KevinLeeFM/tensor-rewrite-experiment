@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 405,
-    "partial_model_evidence_requires_partition_review": 71,
+    "needs_formal_statement_and_domain_partition": 401,
+    "partial_model_evidence_requires_partition_review": 75,
     "declared_value_family_complete_full_record_partitions_open": 12
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 349,
+  "distinct_checked_declarations": 363,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,8 +39,9 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 87,
-    "numerical_contract_refutation": 2
+    "library_backed_theory": 99,
+    "numerical_contract_refutation": 2,
+    "scalar_domain_counterexample": 2
   },
   "formulated_mathematical_families": [
     {
@@ -129,6 +130,50 @@
       "independent_statement_review": "pending",
       "manifest": "census/convolution-ordered-v2.json",
       "manifest_sha256": "ad377f8de1390d260b3f363297dbfe33ffc365ee7089cb54709651c92b23c28c"
+    },
+    {
+      "model": "exact_scalar_domains_v2",
+      "scope": "exact real/principal-complex log/sqrt domains",
+      "scalar_contract": "exact_real_and_principal_complex",
+      "status": "kernel_checked_exact_real_and_principal_complex_domains",
+      "checked_theorem_count": 14,
+      "full_family_complete": false,
+      "domain_profiles": [
+        {
+          "name": "real_log_exp",
+          "candidate_benchmark_label": "HandleLog/exp",
+          "domain": "all_real_inputs",
+          "result": "pointwise_identity"
+        },
+        {
+          "name": "complex_log_exp",
+          "candidate_benchmark_label": "HandleLog/exp",
+          "domain": "-pi < imaginary_part <= pi",
+          "result": "pointwise_iff_domain_and_explicit_refutation_outside"
+        },
+        {
+          "name": "real_log_sqrt",
+          "candidate_benchmark_label": "HandleLog/sqrt",
+          "domain": "strictly_positive",
+          "result": "pointwise_identity_under_sufficient_domain"
+        },
+        {
+          "name": "real_sqrt_square",
+          "candidate_benchmark_label": "HandleSqrt/square-real",
+          "domain": "all_real_inputs",
+          "result": "pointwise_identity_to_absolute_value"
+        },
+        {
+          "name": "complex_sqrt_square",
+          "candidate_benchmark_label": "HandleSqrt/square-complex",
+          "domain": "imaginary_part_equals_zero",
+          "result": "pointwise_iff_domain_and_explicit_refutation_outside"
+        }
+      ],
+      "rounded_transcendentals_modeled": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/scalar-domains-v2.json",
+      "manifest_sha256": "ea6d2a2ef9b2d50f6ecca6b499706f14b3dbdf38b1693198022b27f1747d443c"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -136,10 +181,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "72b6f9bdea7decf4b418fb8c882206bd2060c371e75359845fc04a7e2a718898",
+    "sha256": "3cea06985f2be6b094c1810d4637d3885652577421600062a18f62753a37fa94",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "89e77a88b94d40c1c1306d39d87841bec656d9168d3e997100ca5f2904d167bc"
+    "output_sha256": "9baf9688ef6f60ee730f067d07fa308bb29fcbb047a3ff9b6fe4fc2b2af8c533"
   },
   "proofs": [
     {
@@ -7221,6 +7266,272 @@
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
       "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
+      "kinds": [
+        "scalar_domain_counterexample"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/exp"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/exp"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample",
+      "kinds": [
+        "scalar_domain_counterexample"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSqrt/square-complex"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSqrt/square-complex"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.complex_square_sqrt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.real_log_exp",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/exp"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/sqrt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.real_sqrt_square",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact real and principal-complex values; real log/exp all inputs; real log/sqrt restricted to positive inputs; complex log/exp iff -pi < imaginary part <= pi; complex sqrt-square/magnitude iff real axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math semantics"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSqrt/square-real"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
     }
   ],
   "benchmark_records": [
@@ -9532,8 +9843,12 @@
       "retained_lhs": "Log(Exp(a))",
       "retained_rhs": "a",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math; compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
+        "TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff",
+        "TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -9576,8 +9891,10 @@
       "retained_lhs": "Log(Sqrt(a))",
       "retained_rhs": "Multiply(Log(a),0.5)",
       "unreviewed_benchmark_notes_not_assumptions": "Sqrt matcher; no local fast-math or domain guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -11805,8 +12122,11 @@
       "retained_lhs": "Sqrt(Multiply(a,a))",
       "retained_rhs": "Convert(Abs(a),complex type)",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math; Multiply opcode; same operand pointers; element type complex",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample",
+        "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -11816,8 +12136,10 @@
       "retained_lhs": "Sqrt(Multiply(a,a))",
       "retained_rhs": "Abs(a)",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math; Multiply opcode; same operand pointers; element type not complex",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

@@ -9,6 +9,13 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ScalarDomains': ['complex_square_sqrt', 'complex_sqrt_square_ofReal',
+                      'real_log_exp', 'real_sqrt_square', 'real_log_sqrt_pos',
+                      'complex_log_exp_iff', 'complex_sqrt_square_iff_real',
+                      'complex_log_exp_counterexample', 'complex_sqrt_square_counterexample',
+                      'real_log_exp_tensor', 'complex_log_exp_tensor_iff',
+                      'complex_sqrt_square_tensor_iff', 'real_sqrt_square_tensor',
+                      'real_log_sqrt_tensor_pos'],
     'ConvolutionOrdered': ['map_finRange_cast', 'map_finRange_singleton', 'convolve_semiring', 'term_pointwise', 'contribution_count_eq', 'channel_position_eq', 'term_eq_dot_product', 'terms_eq_dot_terms', 'convolve_eq_dot', 'dot_eq_convolve', 'convolve_single_channel'],
     'ConvolutionFloat': ['binary32_pointwise_dot', 'binary32_reference_eq', 'binary32_fold_omission_refuted', 'binary32_reversal_refuted'],
 
@@ -72,6 +79,9 @@ def main():
             assert axioms <= ALLOWED, (full_name, axioms)
             dependencies[full_name] = sorted(axioms)
     categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
+                  'TensorRewrite/Theory/ScalarDomainLemmas.lean': 'H',
+                  'TensorRewrite/Theory/ScalarDomains.lean': 'R',
+                  'TensorRewrite/Theory/ScalarDomainCounterexamples.lean': 'C',
                   'TensorRewrite/Theory/FiniteSum.lean': 'H',
                   'TensorRewrite/Theory/ContractionAlgebra.lean': 'R',
                   'TensorRewrite/Theory/LogicalFamily.lean': 'S',
@@ -116,6 +126,12 @@ def main():
                   category_lines=category_lines, total_custom_category_lines=total_categories,
                   total_custom_lean_lines=2796+count, dependency_packages=integration['packages'],
                   proof_reuse={'FloatNegation.scalar_involution': 'FloatLib Model.neg_neg',
+                               'ScalarDomains.real_log_exp': 'Mathlib Real.log_exp',
+                               'ScalarDomains.real_sqrt_square': 'Mathlib Real.sqrt_mul_self_eq_abs',
+                               'ScalarDomains.complex_log_exp_iff':
+                                   'Mathlib Complex.log_exp and principal argument bounds',
+                               'ScalarDomains.complex_sqrt_square_iff_real':
+                                   'Mathlib principal complex sqrt and normSq; new domain derivation',
                                'FiniteSum.sum_reshape': 'Mathlib Equiv.sum_comp plus existing index theory',
                                'ConvolutionPointwise.convolve_eq_channelSum':
                                    'Mathlib Fin.sum_univ_def and Equiv.sum_comp; derived window geometry',
@@ -123,11 +139,17 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='format-general floating negation; exact finite sums and semiring '
+                  scope='exact real and principal-complex log/sqrt domains; '
+                        'format-general floating negation; exact finite sums and semiring '
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('all supported FloatLib value formats; bit-exact negation; '
+                      name: ('exact real and principal-complex values; real log/exp all inputs; '
+                             'real log/sqrt restricted to positive inputs; complex log/exp iff '
+                             '-pi < imaginary part <= pi; complex sqrt-square/magnitude iff real '
+                             'axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math '
+                             'semantics' if '.ScalarDomains.' in name else
+                             'all supported FloatLib value formats; bit-exact negation; '
                              'flags not observed' if '.FloatNegation.' in name else
                              'pure predicate/word tensor values; all ranks/extents/word widths; '
                              'equal-input xor requires value equality' if '.LogicalFamily.' in name else

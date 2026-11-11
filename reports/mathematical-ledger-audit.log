@@ -2475,3 +2475,60 @@ TensorRewrite.Theory.LogicalFamily.word_keys_uniform : ∀ (width : ℕ),
     List.map TensorRewrite.Theory.LogicalFamily.Rule.key
       (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word 0))
 'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms
+TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample : Complex.log
+    (Complex.exp (2 * ↑Real.pi * Complex.I)) ≠
+  2 * ↑Real.pi * Complex.I
+'TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff : ∀ (z : ℂ),
+  Complex.log (Complex.exp z) = z ↔ -Real.pi < z.im ∧ z.im ≤ Real.pi
+'TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (input : TensorRewrite.Pilot.Tensor shape ℂ),
+  TensorRewrite.Pilot.Tensor.map Complex.log (TensorRewrite.Pilot.Tensor.map Complex.exp input) = input ↔
+    ∀ (index : TensorRewrite.Pilot.Index shape), -Real.pi < (input index).im ∧ (input index).im ≤ Real.pi
+'TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample : (Complex.I * Complex.I).sqrt ≠ ↑‖Complex.I‖
+'TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real : ∀ (z : ℂ), (z * z).sqrt = ↑‖z‖ ↔ z.im = 0
+'TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal : ∀ (x : ℝ), (↑x * ↑x).sqrt = ↑|x|
+'TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff : ∀ {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (input : TensorRewrite.Pilot.Tensor shape ℂ),
+  TensorRewrite.Pilot.Tensor.map (fun z => (z * z).sqrt) input = TensorRewrite.Pilot.Tensor.map (fun z => ↑‖z‖) input ↔
+    ∀ (index : TensorRewrite.Pilot.Index shape), (input index).im = 0
+'TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.ScalarDomains.complex_square_sqrt : ∀ (z : ℂ), z.sqrt ^ 2 = z
+'TensorRewrite.Theory.ScalarDomains.complex_square_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ScalarDomains.real_log_exp : ∀ (x : ℝ), Real.log (Real.exp x) = x
+'TensorRewrite.Theory.ScalarDomains.real_log_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (input : TensorRewrite.Pilot.Tensor shape ℝ),
+  TensorRewrite.Pilot.Tensor.map Real.log (TensorRewrite.Pilot.Tensor.map Real.exp input) = input
+'TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos : ∀ (x : ℝ), 0 < x → Real.log √x = 1 / 2 * Real.log x
+'TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (input : TensorRewrite.Pilot.Tensor shape ℝ),
+  (∀ (index : TensorRewrite.Pilot.Index shape), 0 < input index) →
+    TensorRewrite.Pilot.Tensor.map (fun x => Real.log √x) input =
+      TensorRewrite.Pilot.Tensor.map (fun x => 1 / 2 * Real.log x) input
+'TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ScalarDomains.real_sqrt_square : ∀ (x : ℝ), √(x * x) = |x|
+'TensorRewrite.Theory.ScalarDomains.real_sqrt_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (input : TensorRewrite.Pilot.Tensor shape ℝ),
+  TensorRewrite.Pilot.Tensor.map (fun x => √(x * x)) input = TensorRewrite.Pilot.Tensor.map (fun x => |x|) input
+'TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -89,3 +89,18 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted
 #print axioms TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton
 #print axioms TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel
+
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_square_sqrt
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_exp
+#print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff
+#print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos

@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 89 checked mathematical statements; custom Lean totals **4,165**.
+The theory target now has 103 checked mathematical statements; custom Lean totals **4,283**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -940,3 +940,17 @@ lines misclassified as correctness proofs. The response registers 349 declaratio
 and corrects R/C attribution without changing Lean statements or the total.
 Correction recheck and full-workload review remain open. See [the review/replay guide](docs/mathematical-review.md)
 and `reports/mathematical-clean-replay-v1.md`. Custom Lean remains4165 lines.
+
+
+## Exact real and principal-complex domains
+
+Five explicit log/sqrt profiles now have14 checked declarations and eight symbolic
+branch/shape controls. Complex log(exp z)=z iff −π<Im(z)≤π; complex sqrt(z*z)
+equals the embedded magnitude iff z is real. Two explicit counterexamples refute
+the unguarded mathematical versions. These exact domains do not establish rounded
+transcendental or fast-math semantics. See [the domain guide](docs/scalar-domains.md).
+New Lean is118 lines (H20/R79/A1/C18), giving4283 total and103 theory/363 ledger
+declarations. The four integration theorems remain separate. The old89-statement
+independent review does not cover these14 additions; their review remains open.
+All488 records remain, with401 unformulated/75 partial/12 declared logical-family
+records and zero whole records closed. Code correspondence remains future work.

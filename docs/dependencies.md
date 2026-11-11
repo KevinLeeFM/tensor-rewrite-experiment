@@ -68,3 +68,12 @@ and recorded in `reports/theory-progress.json`.
 The planning protocols in this directory were copied from the original research
 notebook on 2026-11-10. Their historical notebook-relative links retain that context;
 README.md, this document and the checked-in tools provide standalone build guidance.
+
+## Reuse in exact scalar domains
+
+The existing Mathlib pin also supplies real log/exp/sqrt, principal complex
+logarithm/square root and norm-square identities. The scalar-domain milestone
+uses those to derive necessary/sufficient complex domains and pointwise tensor
+lifts, with two explicit counterexamples. No additional dependency or toolchain
+change was needed; see [the exact scalar-domain guide](scalar-domains.md).
+These analysis functions do not model rounded executable transcendental functions.

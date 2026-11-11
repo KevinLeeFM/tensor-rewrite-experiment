@@ -158,7 +158,20 @@ def evidence(root=ROOT):
             labels=['SimplifyConvToDot/pointwise-layout']
         if name.endswith('ConvolutionPointwise.convolve_single_channel'):
             labels=['SimplifyConvToMultiply/pointwise-000']
-        kind=('numerical_contract_refutation' if '.ConvolutionFloat.' in name
+        if '.ScalarDomains.' in name:
+            if name.endswith(('real_log_exp_tensor','complex_log_exp_tensor_iff',
+                              'complex_log_exp_counterexample')):
+                labels=['HandleLog/exp']
+            elif name.endswith('real_log_sqrt_tensor_pos'):
+                labels=['HandleLog/sqrt']
+            elif name.endswith('real_sqrt_square_tensor'):
+                labels=['HandleSqrt/square-real']
+            elif name.endswith(('complex_sqrt_square_tensor_iff',
+                                'complex_sqrt_square_counterexample')):
+                labels=['HandleSqrt/square-complex']
+        kind=('scalar_domain_counterexample' if '.ScalarDomains.' in name
+              and name.endswith('_counterexample') else
+              'numerical_contract_refutation' if '.ConvolutionFloat.' in name
               and name.endswith('_refuted') else 'library_backed_theory')
         add(name,kind,theory.get('theorem_profiles',{}).get(name,theory['scope']),labels)
     return sorted(result.values(),key=lambda row:row['theorem'])
@@ -295,6 +308,19 @@ def mathematical_models(root=ROOT):
                        external_backend_schedule_verified=False,
                        independent_statement_review='pending',manifest=ordered['manifest'],
                        manifest_sha256=ordered['manifest_sha256']))
+    from check_scalar_domains import check_inputs as scalar_inputs, validate_result as validate_scalar
+    scalar=read('reports/scalar-domains.json',root);validate_scalar(scalar)
+    assert digest(root/scalar['manifest'])==scalar['manifest_sha256']
+    scalar_manifest=scalar_inputs(root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ScalarDomains.' in name}
+    assert scalar['certificate_axioms']==expected
+    models.append(dict(model=scalar_manifest['model'],scope='exact real/principal-complex log/sqrt domains',
+                       scalar_contract=scalar['scalar_contract'],status=scalar['status'],
+                       checked_theorem_count=14,full_family_complete=False,
+                       domain_profiles=scalar['profiles'],rounded_transcendentals_modeled=False,
+                       independent_statement_review='pending',manifest=scalar['manifest'],
+                       manifest_sha256=scalar['manifest_sha256']))
     return models
 
 

@@ -699,3 +699,31 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.LogicalFamily.word_count
 #check @TensorRewrite.Theory.LogicalFamily.word_keys_uniform
 #print axioms TensorRewrite.Theory.LogicalFamily.word_keys_uniform
+#check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
+#check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff
+#check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff
+#check @TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample
+#check @TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real
+#check @TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal
+#check @TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff
+#check @TensorRewrite.Theory.ScalarDomains.complex_square_sqrt
+#print axioms TensorRewrite.Theory.ScalarDomains.complex_square_sqrt
+#check @TensorRewrite.Theory.ScalarDomains.real_log_exp
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_exp
+#check @TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor
+#check @TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos
+#check @TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos
+#print axioms TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos
+#check @TensorRewrite.Theory.ScalarDomains.real_sqrt_square
+#print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square
+#check @TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
+#print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor

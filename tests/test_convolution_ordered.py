@@ -51,7 +51,8 @@ class ConvolutionOrderedTests(unittest.TestCase):
                 return 'changed' if str(path).endswith(suffix) else original_digest(path)
             with patch.object(ordered,'digest',side_effect=changed_digest):
                 with self.assertRaises(AssertionError):ordered.check_inputs()
-        model=ledger.mathematical_models()[-1]
+        model=next(m for m in ledger.mathematical_models()
+                   if m.get('binary32_ordered_pointwise_proved'))
         self.assertTrue(model['binary32_ordered_pointwise_proved'])
         self.assertFalse(model['external_backend_schedule_verified'])
         self.assertFalse(model['full_family_complete'])

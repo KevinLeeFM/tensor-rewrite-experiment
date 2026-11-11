@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "model": "exact_scalar_domains_v1",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ScalarDomainLemmas.lean",
+      "sha256": "295debf7d0bdb23b5e866ee97cc59c82649abc159a7ec5a9710376f27a7ce224"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScalarDomains.lean",
+      "sha256": "cda670b994186ccddc8fbcba5ab3ca5305ab17120d9ccb0965995985a0b088ab"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScalarDomainCounterexamples.lean",
+      "sha256": "8d412696c53891101e673d0d96f83c7bf8f2b1ebe0d06704e0feb740f7418e3a"
+    },
+    {
+      "path": "tests/fixtures/ScalarDomainControls.lean",
+      "sha256": "4d5f1ea82b96e2ab590ee69482e897e4591c0f242b25de7ccf0dccb8298ea9cc"
+    },
+    {
+      "path": "tools/check_scalar_domains.py",
+      "sha256": "7d249d0ee34eaba439b82970a2c6ff38a03ff2bac5f04e12065fce81b6add715"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "certificates": [
+    "TensorRewrite.Theory.ScalarDomains.complex_square_sqrt",
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal",
+    "TensorRewrite.Theory.ScalarDomains.real_log_exp",
+    "TensorRewrite.Theory.ScalarDomains.real_sqrt_square",
+    "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos",
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff",
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real",
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample",
+    "TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor",
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff",
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff",
+    "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor",
+    "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample"
+  ],
+  "profiles": [
+    {
+      "name": "real_log_exp",
+      "candidate_benchmark_label": "HandleLog/exp",
+      "domain": "all_real_inputs",
+      "result": "pointwise_identity"
+    },
+    {
+      "name": "complex_log_exp",
+      "candidate_benchmark_label": "HandleLog/exp",
+      "domain": "-pi < imaginary_part <= pi",
+      "result": "pointwise_iff_domain_and_explicit_refutation_outside"
+    },
+    {
+      "name": "real_log_sqrt",
+      "candidate_benchmark_label": "HandleLog/sqrt",
+      "domain": "strictly_positive",
+      "result": "pointwise_identity_under_sufficient_domain"
+    },
+    {
+      "name": "real_sqrt_square",
+      "candidate_benchmark_label": "HandleSqrt/square-real",
+      "domain": "all_real_inputs",
+      "result": "pointwise_identity_to_absolute_value"
+    },
+    {
+      "name": "complex_sqrt_square",
+      "candidate_benchmark_label": "HandleSqrt/square-complex",
+      "domain": "imaginary_part_equals_zero",
+      "result": "pointwise_iff_domain_and_explicit_refutation_outside"
+    }
+  ],
+  "complex_branch_strip": {
+    "lower": "-pi",
+    "lower_strict": true,
+    "upper": "pi",
+    "upper_strict": false
+  },
+  "complex_sqrt_square_domain": "imaginary_part_equals_zero",
+  "real_log_sqrt_domain": "strictly_positive",
+  "complex_absolute_value": "real_norm_embedded_in_complex",
+  "log_zero_totalization_not_used_for_real_log_sqrt": true,
+  "tensor_rank_extent_general": true,
+  "rounded_transcendentals_modeled": false,
+  "fast_math_permissions_modeled": false,
+  "benchmark_correspondence_certified": false,
+  "full_scalar_control_family_complete": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work"
+}

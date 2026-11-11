@@ -1,0 +1,168 @@
+{
+  "status": "kernel_checked_exact_real_and_principal_complex_domains",
+  "manifest": "census/scalar-domains-v2.json",
+  "manifest_sha256": "ea6d2a2ef9b2d50f6ecca6b499706f14b3dbdf38b1693198022b27f1747d443c",
+  "scalar_contract": "exact_real_and_principal_complex",
+  "profiles": [
+    {
+      "name": "real_log_exp",
+      "candidate_benchmark_label": "HandleLog/exp",
+      "domain": "all_real_inputs",
+      "result": "pointwise_identity"
+    },
+    {
+      "name": "complex_log_exp",
+      "candidate_benchmark_label": "HandleLog/exp",
+      "domain": "-pi < imaginary_part <= pi",
+      "result": "pointwise_iff_domain_and_explicit_refutation_outside"
+    },
+    {
+      "name": "real_log_sqrt",
+      "candidate_benchmark_label": "HandleLog/sqrt",
+      "domain": "strictly_positive",
+      "result": "pointwise_identity_under_sufficient_domain"
+    },
+    {
+      "name": "real_sqrt_square",
+      "candidate_benchmark_label": "HandleSqrt/square-real",
+      "domain": "all_real_inputs",
+      "result": "pointwise_identity_to_absolute_value"
+    },
+    {
+      "name": "complex_sqrt_square",
+      "candidate_benchmark_label": "HandleSqrt/square-complex",
+      "domain": "imaginary_part_equals_zero",
+      "result": "pointwise_iff_domain_and_explicit_refutation_outside"
+    }
+  ],
+  "certificate_axioms": {
+    "TensorRewrite.Theory.ScalarDomains.complex_square_sqrt": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_ofReal": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.real_log_exp": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.real_sqrt_square": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_pos": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_iff_real": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_tensor_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ScalarDomains.real_log_sqrt_tensor_pos": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "checked_statement_count": 14,
+  "control_axioms": {
+    "ScalarDomainControls.imaginary_square_root": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.imaginary_magnitude": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.full_period_log": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.upper_branch_endpoint": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.lower_branch_endpoint": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.negative_real_square": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.empty_nonreal_tensor": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "ScalarDomainControls.scalar_nonreal_tensor": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "control_stdout": "'ScalarDomainControls.imaginary_square_root' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.imaginary_magnitude' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.full_period_log' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.upper_branch_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.lower_branch_endpoint' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.negative_real_square' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.empty_nonreal_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]\n'ScalarDomainControls.scalar_nonreal_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]\n",
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
+    "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample"
+  ],
+  "rounded_transcendentals_modeled": false,
+  "fast_math_permissions_modeled": false,
+  "full_scalar_control_family_complete": false,
+  "full_workload_complete": false,
+  "whole_benchmark_records_closed": 0,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed_statements": false,
+  "benchmark_correspondence_certified": false,
+  "code_correspondence_performed": false,
+  "code_correspondence_future_work": true
+}
