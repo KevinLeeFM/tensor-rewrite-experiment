@@ -1043,6 +1043,60 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ReductionWindow.values_length
 #check @TensorRewrite.Theory.ReductionWindow.values_unit
 #print axioms TensorRewrite.Theory.ReductionWindow.values_unit
+#check @TensorRewrite.Theory.Remainder.integer_nested
+#print axioms TensorRewrite.Theory.Remainder.integer_nested
+#check @TensorRewrite.Theory.Remainder.integer_nested_tensor
+#print axioms TensorRewrite.Theory.Remainder.integer_nested_tensor
+#check @TensorRewrite.Theory.Remainder.natural_add_msb_false
+#print axioms TensorRewrite.Theory.Remainder.natural_add_msb_false
+#check @TensorRewrite.Theory.Remainder.natural_add_toNat
+#print axioms TensorRewrite.Theory.Remainder.natural_add_toNat
+#check @TensorRewrite.Theory.Remainder.natural_msb_false
+#print axioms TensorRewrite.Theory.Remainder.natural_msb_false
+#check @TensorRewrite.Theory.Remainder.power_mask
+#print axioms TensorRewrite.Theory.Remainder.power_mask
+#check @TensorRewrite.Theory.Remainder.power_toNat
+#print axioms TensorRewrite.Theory.Remainder.power_toNat
+#check @TensorRewrite.Theory.Remainder.signed_correction_refuted
+#print axioms TensorRewrite.Theory.Remainder.signed_correction_refuted
+#check @TensorRewrite.Theory.Remainder.signed_iota
+#print axioms TensorRewrite.Theory.Remainder.signed_iota
+#check @TensorRewrite.Theory.Remainder.signed_iota_offset_lhs
+#print axioms TensorRewrite.Theory.Remainder.signed_iota_offset_lhs
+#check @TensorRewrite.Theory.Remainder.signed_iota_offset_rhs
+#print axioms TensorRewrite.Theory.Remainder.signed_iota_offset_rhs
+#check @TensorRewrite.Theory.Remainder.signed_mask_tensor
+#print axioms TensorRewrite.Theory.Remainder.signed_mask_tensor
+#check @TensorRewrite.Theory.Remainder.signed_nested
+#print axioms TensorRewrite.Theory.Remainder.signed_nested
+#check @TensorRewrite.Theory.Remainder.signed_nested_tensor
+#print axioms TensorRewrite.Theory.Remainder.signed_nested_tensor
+#check @TensorRewrite.Theory.Remainder.signed_offset
+#print axioms TensorRewrite.Theory.Remainder.signed_offset
+#check @TensorRewrite.Theory.Remainder.signed_power_mask
+#print axioms TensorRewrite.Theory.Remainder.signed_power_mask
+#check @TensorRewrite.Theory.Remainder.signed_power_msb
+#print axioms TensorRewrite.Theory.Remainder.signed_power_msb
+#check @TensorRewrite.Theory.Remainder.signed_wrap_refuted
+#print axioms TensorRewrite.Theory.Remainder.signed_wrap_refuted
+#check @TensorRewrite.Theory.Remainder.unsigned_iota
+#print axioms TensorRewrite.Theory.Remainder.unsigned_iota
+#check @TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs
+#print axioms TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs
+#check @TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs
+#print axioms TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs
+#check @TensorRewrite.Theory.Remainder.unsigned_mask_tensor
+#print axioms TensorRewrite.Theory.Remainder.unsigned_mask_tensor
+#check @TensorRewrite.Theory.Remainder.unsigned_nested
+#print axioms TensorRewrite.Theory.Remainder.unsigned_nested
+#check @TensorRewrite.Theory.Remainder.unsigned_nested_tensor
+#print axioms TensorRewrite.Theory.Remainder.unsigned_nested_tensor
+#check @TensorRewrite.Theory.Remainder.unsigned_offset
+#print axioms TensorRewrite.Theory.Remainder.unsigned_offset
+#check @TensorRewrite.Theory.Remainder.unsigned_power_mask
+#print axioms TensorRewrite.Theory.Remainder.unsigned_power_mask
+#check @TensorRewrite.Theory.Remainder.unsigned_wrap_refuted
+#print axioms TensorRewrite.Theory.Remainder.unsigned_wrap_refuted
 #check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
 #print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
 #check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff
@@ -1127,6 +1181,8 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.SlicePad.unit_window_min
 #check @TensorRewrite.Theory.SlicePad.valid_interval
 #print axioms TensorRewrite.Theory.SlicePad.valid_interval
+#check @TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted
+#print axioms TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted
 #check @TensorRewrite.Theory.WindowTransport.contribution_map
 #print axioms TensorRewrite.Theory.WindowTransport.contribution_map
 #check @TensorRewrite.Theory.WindowTransport.reduce_equiv

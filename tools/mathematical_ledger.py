@@ -211,7 +211,12 @@ def evidence(root=ROOT):
                         ('singleton-add-' in label if suffix=='unit_window_add_zero' else
                          'singleton-minimum-' in label if suffix=='unit_window_min' else
                          'singleton-maximum-' in label)]
-        kind=('pad_broadcast_contract_refutation' if '.PadBroadcast.' in name
+        remainder=read('census/remainder-v1.json',root)
+        labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
+        kind=('uniform_fixed_order_rounding_refutation' if '.UniformSum.' in name else
+              'remainder_contract_refutation' if '.Remainder.' in name
+              and name.endswith('_refuted') else
+              'pad_broadcast_contract_refutation' if '.PadBroadcast.' in name
               and name.endswith('_refuted') else
               'broadcast_state_contract_refutation' if '.BroadcastWindow.' in name
               and name.endswith('_refuted') else
@@ -517,6 +522,26 @@ def mathematical_models(root=ROOT):
                        window_domain_worksheet=extension['window_domain_worksheet'],
                        independent_statement_review='pending',manifest=composed['manifest'],
                        manifest_sha256=composed['manifest_sha256']))
+    from check_remainder import check_inputs as remainder_inputs, validate_result as validate_remainder
+    remainder=read('reports/remainder.json',root);validate_remainder(remainder)
+    extension=remainder_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.Remainder.' in name or '.UniformSum.' in name}
+    assert len(expected)==28 and remainder['certificate_axioms']==expected
+    assert remainder['reused_axioms']=={n:theory['axiom_dependencies'][n]
+                                       for n in extension['reused_certificates']}
+    models.append(dict(model=extension['model'],scope=extension['range_contract'],
+                       scalar_contract=extension['operator_contract'],status=remainder['status'],
+                       checked_theorem_count=28,reused_declaration_count=1,full_family_complete=False,
+                       actual_signed_select_negate_mask=True,bounded_axis_iota=True,
+                       zero_divisor_total_model_disclosed=True,
+                       floating_truncating_remainder_formalized=False,
+                       uniform_fixed_order_bit_equality_refuted=True,
+                       uniform_collective_refinement_refuted=False,
+                       collective_communication_model_complete=False,
+                       domain_worksheet=extension['domain_worksheet'],
+                       independent_statement_review='pending',manifest=remainder['manifest'],
+                       manifest_sha256=remainder['manifest_sha256']))
     return models
 
 

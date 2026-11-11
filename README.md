@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 313 checked mathematical statements; custom Lean totals **7,307**.
+The theory target now has 341 checked mathematical statements; custom Lean totals **7,547**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -1076,3 +1076,20 @@ numerical/observation partitions remain open. All488 records are359 unformulated
 116 partial and13 carrying declared value families; zero whole records close.
 Complete declared profiles remain21. Independent review and the full mathematical
 campaign/verdict remain open; code correspondence stays future work.
+
+
+## Word remainder domains and whole-corpus formulation audit
+
+All-width unsigned/signed remainder nesting, actual sign-corrected power masks and
+bounded Iota/offset graphs now have explicit range proofs and overflow certificates.
+A FloatLib binary32 certificate refutes fixed-order uniform fold/product bit equality;
+floating truncating remainder and collective permitted-behavior contracts remain open.
+See [the remainder and workload guide](docs/remainder-and-collective-domains.md).
+Twenty-eight statements add240 Lean lines; total7547, theory341/ledger601, four
+integration results separate. All75 focused tests pass:5461 word pairs,361 integers,
+2350 Iota profiles/2368 outputs and30 finite binary32 controls agree with independent
+oracles. A full retained-ID audit finds108 records with domain worksheets and380
+without;73 records have evidence but no such worksheet. These are formulation gaps,
+not a frozen N/F or proof-coverage fraction. All488 records remain351 unformulated,
+124 partial and13 carrying value families; whole-record closure stays zero.
+The full mathematical campaign/review/verdict remain open; code correspondence is future work.

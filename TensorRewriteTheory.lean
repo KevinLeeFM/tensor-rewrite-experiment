@@ -20,3 +20,6 @@ public import TensorRewrite.Theory.BroadcastWindowCounterexamples
 public import TensorRewrite.Theory.WindowTupleFloat
 
 public import TensorRewrite.Theory.PadBroadcastCounterexamples
+
+public import TensorRewrite.Theory.RemainderCounterexamples
+public import TensorRewrite.Theory.UniformSumCounterexample

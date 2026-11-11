@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 359,
-    "partial_model_evidence_requires_partition_review": 116,
+    "needs_formal_statement_and_domain_partition": 351,
+    "partial_model_evidence_requires_partition_review": 124,
     "declared_value_family_complete_full_record_partitions_open": 13
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 573,
+  "distinct_checked_declarations": 601,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,7 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 291,
+    "library_backed_theory": 315,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "pad_broadcast_contract_refutation": 3,
@@ -47,8 +47,10 @@
     "prefix_window_contract_refutation": 3,
     "reduction_contract_refutation": 3,
     "window_contract_refutation": 2,
+    "remainder_contract_refutation": 3,
     "scalar_domain_counterexample": 2,
-    "slice_pad_geometry_refutation": 2
+    "slice_pad_geometry_refutation": 2,
+    "uniform_fixed_order_rounding_refutation": 1
   },
   "formulated_mathematical_families": [
     {
@@ -329,6 +331,26 @@
       "independent_statement_review": "pending",
       "manifest": "census/pad-broadcast-v1.json",
       "manifest_sha256": "6420f35b2ebbb341ca907cfbcd6ef427c3b0963c43ce84e951776e3fdc9a5058"
+    },
+    {
+      "model": "exact_word_remainder_and_uniform_fold_diagnostics_v1",
+      "scope": "unsigned power exponent<width; signed power exponent+1<width; Iota axis extent<=decoded nonnegative divisor; offset sums strictly below unsigned modulus or nonnegative signed half",
+      "scalar_contract": "Nat-style unsigned remainder or BitVec.srem truncating signed remainder; exact Int.tmod; total encoded zero-divisor behavior disclosed; actual Select/Negate/And mask and same-width Iota",
+      "status": "kernel_checked_remainder_domains_and_uniform_sum_diagnostic",
+      "checked_theorem_count": 28,
+      "reused_declaration_count": 1,
+      "full_family_complete": false,
+      "actual_signed_select_negate_mask": true,
+      "bounded_axis_iota": true,
+      "zero_divisor_total_model_disclosed": true,
+      "floating_truncating_remainder_formalized": false,
+      "uniform_fixed_order_bit_equality_refuted": true,
+      "uniform_collective_refinement_refuted": false,
+      "collective_communication_model_complete": false,
+      "domain_worksheet": "census/collective-rotation-mathematical-domains-v1.json",
+      "independent_statement_review": "pending",
+      "manifest": "census/remainder-v1.json",
+      "manifest_sha256": "8b945473999a542ef242239e7691766010e3f3206d0c65609bd4052959657d62"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -336,10 +358,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "d74132643d12be2ee7a2670c82c38b960b50fa02ed61e5db297d772c73f70616",
+    "sha256": "f1f5c342e462138fa7948acac3f51cd3cf72fb2b1052915b210390935dffecc1",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "bbce2ebc1a3bb6d11e0d171b98dc7be3d98970e3814f25178620074d2f396e4c"
+    "output_sha256": "f7dfaf4aeb2e6d4526bcc8e927a50409714733eb7d53e9db5fd17fc0743dfe5e"
   },
   "proofs": [
     {
@@ -9459,9 +9481,11 @@
         "library_backed_theory"
       ],
       "profile_descriptions": [
-        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+        "ordered repeated modular addition for arbitrary count/width/initializer; same-width count cast and modular product; no replica geometry, communication, host literal or external schedule correspondence"
       ],
-      "historical_candidate_benchmark_labels": [],
+      "historical_candidate_benchmark_labels": [
+        "HandleAllReduceOrReduceScatter/sum-integral"
+      ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
@@ -10494,6 +10518,496 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.Remainder.integer_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.integer_nested_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.natural_add_msb_false",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.natural_add_toNat",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.natural_msb_false",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.power_mask",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.power_toNat",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_correction_refuted",
+      "kinds": [
+        "remainder_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "signed four-bit minus-five modulo positive four gives minus-one; unsigned mask without sign correction gives positive three"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_iota",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/iota-in-range"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_iota_offset_lhs",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/iota-add-lhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_iota_offset_rhs",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/iota-add-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_mask_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/power-two-signed"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_nested_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_offset",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_power_mask",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_power_msb",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.signed_wrap_refuted",
+      "kinds": [
+        "remainder_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "four-bit coordinate5 plus divisor3 fits unsigned yet crosses the sign bit; truncating remainder minus-two differs from positive two"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_iota",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/iota-in-range"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/iota-add-lhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/iota-add-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_mask_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/power-two-unsigned"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_nested_tensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRemainder/nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_offset",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_power_mask",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; explicit total divisor-zero behavior; signed Select/Negate/And and bounded same-width Iota with decoded divisor and no-wrap domains; arbitrary finite tensor rank/extents; no floating fmod, flags, external IR admission, source or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Remainder.unsigned_wrap_refuted",
+      "kinds": [
+        "remainder_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "unsigned four-bit Iota coordinate7 plus divisor10 wraps to1; remainder1 differs from original remainder7"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample",
       "kinds": [
         "scalar_domain_counterexample"
@@ -11282,6 +11796,26 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted",
+      "kinds": [
+        "uniform_fixed_order_rounding_refutation"
+      ],
+      "profile_descriptions": [
+        "actual FloatLib binary32 nearest-even stored bits; ten ordered additions of encoding0x3dcccccd from positive zero yield0x3f800001; multiplication by exact ten yields0x3f800000; no collective all-schedule/refinement refutation or source bug claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAllReduceOrReduceScatter/sum-floating"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.WindowTransport.contribution_map",
       "kinds": [
         "library_backed_theory"
@@ -11869,8 +12403,10 @@
       "retained_lhs": "AllReduce or ReduceScatter(uniform_literal,Add)",
       "retained_rhs": "uniform replacement of host-T literal (value * static_cast<T>(group_size))",
       "unreviewed_benchmark_notes_not_assumptions": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst; MatchReductionComputation SUM; GetReplicaGroupCountAndSize succeeds with value; output type floating; new literal initialized",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -11880,8 +12416,10 @@
       "retained_lhs": "AllReduce or ReduceScatter(uniform_literal,Add)",
       "retained_rhs": "uniform replacement of host-T literal (value * static_cast<T>(group_size))",
       "unreviewed_benchmark_notes_not_assumptions": "MatchUniformCollectiveOperand succeeds: array output, one operand, no control dependencies, not async computation or nested under any Conditional caller; not layout-sensitive host output; operand direct ConstantScalar OR Broadcast(ConstantScalar) OR nonempty Constant with IsAllFirst; MatchReductionComputation SUM; GetReplicaGroupCountAndSize succeeds with value; output type integral; new literal initialized",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PrefixWindow.word_replicate_fold"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -15418,8 +15956,11 @@
       "retained_lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at lhs",
       "retained_rhs": "Remainder(Iota,Broadcast(N))",
       "unreviewed_benchmark_notes_not_assumptions": "same addend/divisor ConstantEffectiveScalar pointer; GetFirstInteger positive; extent>0; extent-1 FitsInIntegralType; OverflowSafeAdd(N,extent-1) succeeds and result fits element type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Remainder.signed_iota_offset_lhs",
+        "TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -15429,8 +15970,11 @@
       "retained_lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at rhs",
       "retained_rhs": "Remainder(Iota,Broadcast(N))",
       "unreviewed_benchmark_notes_not_assumptions": "same addend/divisor ConstantEffectiveScalar pointer; GetFirstInteger positive; extent>0; extent-1 FitsInIntegralType; OverflowSafeAdd(N,extent-1) succeeds and result fits element type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Remainder.signed_iota_offset_rhs",
+        "TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -15440,8 +15984,11 @@
       "retained_lhs": "Remainder(Iota(axis),Broadcast(divisor))",
       "retained_rhs": "Iota(axis)",
       "unreviewed_benchmark_notes_not_assumptions": "divisor ConstantEffectiveScalar; GetFirstInteger succeeds; divisor>0 and divisor>=axis extent; extent==0 OR extent-1 FitsInIntegralType",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Remainder.signed_iota",
+        "TensorRewrite.Theory.Remainder.unsigned_iota"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -15451,8 +15998,12 @@
       "retained_lhs": "Remainder(Remainder(a,b),b)",
       "retained_rhs": "inner Remainder(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "denominator pointer identity; no local scalar-type/fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Remainder.integer_nested_tensor",
+        "TensorRewrite.Theory.Remainder.signed_nested_tensor",
+        "TensorRewrite.Theory.Remainder.unsigned_nested_tensor"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -15462,8 +16013,10 @@
       "retained_lhs": "Remainder(a,constant_power_two)",
       "retained_rhs": "Select(a<0,Negate(And(Select(a<0,Negate(a),a),b-1)),And(Select(a<0,Negate(a),a),b-1))",
       "unreviewed_benchmark_notes_not_assumptions": "integral primitive dispatch; denominator effective-scalar Constant direct or broadcast; signed denominator >0 and has_single_bit",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Remainder.signed_mask_tensor"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -15473,8 +16026,10 @@
       "retained_lhs": "Remainder(a,constant_power_two)",
       "retained_rhs": "And(a,b-1)",
       "unreviewed_benchmark_notes_not_assumptions": "integral primitive dispatch; denominator effective-scalar Constant direct or broadcast; unsigned denominator has_single_bit",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Remainder.unsigned_mask_tensor"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

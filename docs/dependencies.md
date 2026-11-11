@@ -87,3 +87,14 @@ actual binary32 addition and stored-bit observations without changing fold order
 Mathlib supplies finite-index and coordinate reasoning for the explicit Reshape/
 Broadcast graph. See [the proof scope and controls](broadcast-window-and-tuples.md).
 No additional SSA framework is installed or implied by this reuse.
+
+
+## Reuse and limits for remainder
+
+Lean/Std provides actual signed word remainder, its `Int.tmod` observation,
+power-of-two bit masks and modular arithmetic facts. The remainder milestone
+reuses these at arbitrary width and lifts them to arbitrary finite tensors.
+FloatLib add/mul supplies a checked uniform-fold rounding diagnostic. Its IEEE
+nearest-quotient `remainder` is not silently used as truncating floating remainder;
+that adapter and exceptional/flag domains remain unproved. See
+[the exact contracts and workload gaps](remainder-and-collective-domains.md).

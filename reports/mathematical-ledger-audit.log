@@ -3711,6 +3711,148 @@ TensorRewrite.Theory.ReductionWindow.padding_skip_refuted : TensorRewrite.Theory
     [TensorRewrite.Theory.ReductionWindow.contribution plan padding input output
         (TensorRewrite.Theory.ReductionWindow.unitIndex plan unit)]
 'TensorRewrite.Theory.ReductionWindow.values_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Remainder.integer_nested : ∀ (value divisor : ℤ),
+  TensorRewrite.Theory.Remainder.integer (TensorRewrite.Theory.Remainder.integer value divisor) divisor =
+    TensorRewrite.Theory.Remainder.integer value divisor
+'TensorRewrite.Theory.Remainder.integer_nested' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.integer_nested_tensor : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (value divisor : TensorRewrite.Pilot.Tensor shape ℤ),
+  TensorRewrite.Pilot.Tensor.map₂ TensorRewrite.Theory.Remainder.integer
+      (TensorRewrite.Pilot.Tensor.map₂ TensorRewrite.Theory.Remainder.integer value divisor) divisor =
+    TensorRewrite.Pilot.Tensor.map₂ TensorRewrite.Theory.Remainder.integer value divisor
+'TensorRewrite.Theory.Remainder.integer_nested_tensor' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.natural_add_msb_false : ∀ {width value : ℕ} (divisor : BitVec width),
+  2 * (value + divisor.toNat) < 2 ^ width → (BitVec.ofNat width value + divisor).msb = false
+'TensorRewrite.Theory.Remainder.natural_add_msb_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.natural_add_toNat : ∀ {width value : ℕ} (divisor : BitVec width),
+  value + divisor.toNat < 2 ^ width → (BitVec.ofNat width value + divisor).toNat = value + divisor.toNat
+'TensorRewrite.Theory.Remainder.natural_add_toNat' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.natural_msb_false : ∀ {width value : ℕ},
+  2 * value < 2 ^ width → (BitVec.ofNat width value).msb = false
+'TensorRewrite.Theory.Remainder.natural_msb_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.power_mask : ∀ {width exponent : ℕ},
+  exponent < width → BitVec.ofNat width (2 ^ exponent) - 1#width = BitVec.ofNat width (2 ^ exponent - 1)
+'TensorRewrite.Theory.Remainder.power_mask' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.power_toNat : ∀ {width exponent : ℕ},
+  exponent < width → (BitVec.ofNat width (2 ^ exponent)).toNat = 2 ^ exponent
+'TensorRewrite.Theory.Remainder.power_toNat' depends on axioms: [propext]
+TensorRewrite.Theory.Remainder.signed_correction_refuted : ((11#4).srem 4#4).toInt = -1 ∧ (11#4 &&& 4#4 - 1#4).toInt = 3
+'TensorRewrite.Theory.Remainder.signed_correction_refuted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_iota : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (axis : Fin rank) (divisor : BitVec width),
+  divisor.msb = false →
+    shape axis ≤ divisor.toNat →
+      TensorRewrite.Pilot.Tensor.map₂ BitVec.srem (TensorRewrite.Theory.Remainder.iota shape axis width)
+          (TensorRewrite.Pilot.Tensor.constant divisor) =
+        TensorRewrite.Theory.Remainder.iota shape axis width
+'TensorRewrite.Theory.Remainder.signed_iota' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_iota_offset_lhs : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (axis : Fin rank) (divisor : BitVec width),
+  divisor.msb = false →
+    (∀ (index : TensorRewrite.Pilot.Index shape), 2 * (↑(index axis) + divisor.toNat) < 2 ^ width) →
+      TensorRewrite.Pilot.Tensor.map₂ BitVec.srem
+          (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.constant divisor)
+            (TensorRewrite.Theory.Remainder.iota shape axis width))
+          (TensorRewrite.Pilot.Tensor.constant divisor) =
+        TensorRewrite.Pilot.Tensor.map₂ BitVec.srem (TensorRewrite.Theory.Remainder.iota shape axis width)
+          (TensorRewrite.Pilot.Tensor.constant divisor)
+'TensorRewrite.Theory.Remainder.signed_iota_offset_lhs' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_iota_offset_rhs : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (axis : Fin rank) (divisor : BitVec width),
+  divisor.msb = false →
+    (∀ (index : TensorRewrite.Pilot.Index shape), 2 * (↑(index axis) + divisor.toNat) < 2 ^ width) →
+      TensorRewrite.Pilot.Tensor.map₂ BitVec.srem
+          (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Theory.Remainder.iota shape axis width)
+            (TensorRewrite.Pilot.Tensor.constant divisor))
+          (TensorRewrite.Pilot.Tensor.constant divisor) =
+        TensorRewrite.Pilot.Tensor.map₂ BitVec.srem (TensorRewrite.Theory.Remainder.iota shape axis width)
+          (TensorRewrite.Pilot.Tensor.constant divisor)
+'TensorRewrite.Theory.Remainder.signed_iota_offset_rhs' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_mask_tensor : ∀ {rank width exponent : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (value : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  exponent + 1 < width →
+    TensorRewrite.Pilot.Tensor.map₂ BitVec.srem value
+        (TensorRewrite.Pilot.Tensor.constant (BitVec.ofNat width (2 ^ exponent))) =
+      TensorRewrite.Pilot.Tensor.map
+        (fun x => TensorRewrite.Theory.Remainder.signedMask x (BitVec.ofNat width (2 ^ exponent))) value
+'TensorRewrite.Theory.Remainder.signed_mask_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_nested : ∀ {width : ℕ} (value divisor : BitVec width),
+  (value.srem divisor).srem divisor = value.srem divisor
+'TensorRewrite.Theory.Remainder.signed_nested' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_nested_tensor : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (value divisor : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ BitVec.srem (TensorRewrite.Pilot.Tensor.map₂ BitVec.srem value divisor) divisor =
+    TensorRewrite.Pilot.Tensor.map₂ BitVec.srem value divisor
+'TensorRewrite.Theory.Remainder.signed_nested_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_offset : ∀ {width value : ℕ} (divisor : BitVec width),
+  divisor.msb = false →
+    2 * (value + divisor.toNat) < 2 ^ width →
+      (BitVec.ofNat width value + divisor).srem divisor = (BitVec.ofNat width value).srem divisor
+'TensorRewrite.Theory.Remainder.signed_offset' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_power_mask : ∀ {width exponent : ℕ} (value : BitVec width),
+  exponent + 1 < width →
+    value.srem (BitVec.ofNat width (2 ^ exponent)) =
+      TensorRewrite.Theory.Remainder.signedMask value (BitVec.ofNat width (2 ^ exponent))
+'TensorRewrite.Theory.Remainder.signed_power_mask' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.signed_power_msb : ∀ {width exponent : ℕ},
+  exponent + 1 < width → (BitVec.ofNat width (2 ^ exponent)).msb = false
+'TensorRewrite.Theory.Remainder.signed_power_msb' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Remainder.signed_wrap_refuted : 5 + 3 < 2 ^ 4 ∧
+  ((5#4 + 3#4).srem 3#4).toInt = -2 ∧ ((5#4).srem 3#4).toInt = 2
+'TensorRewrite.Theory.Remainder.signed_wrap_refuted' depends on axioms: [propext]
+@TensorRewrite.Theory.Remainder.unsigned_iota : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (axis : Fin rank) (divisor : BitVec width),
+  shape axis ≤ divisor.toNat →
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2) (TensorRewrite.Theory.Remainder.iota shape axis width)
+        (TensorRewrite.Pilot.Tensor.constant divisor) =
+      TensorRewrite.Theory.Remainder.iota shape axis width
+'TensorRewrite.Theory.Remainder.unsigned_iota' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (axis : Fin rank) (divisor : BitVec width),
+  (∀ (index : TensorRewrite.Pilot.Index shape), ↑(index axis) + divisor.toNat < 2 ^ width) →
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.constant divisor)
+          (TensorRewrite.Theory.Remainder.iota shape axis width))
+        (TensorRewrite.Pilot.Tensor.constant divisor) =
+      TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2) (TensorRewrite.Theory.Remainder.iota shape axis width)
+        (TensorRewrite.Pilot.Tensor.constant divisor)
+'TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (axis : Fin rank) (divisor : BitVec width),
+  (∀ (index : TensorRewrite.Pilot.Index shape), ↑(index axis) + divisor.toNat < 2 ^ width) →
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2)
+        (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (TensorRewrite.Theory.Remainder.iota shape axis width)
+          (TensorRewrite.Pilot.Tensor.constant divisor))
+        (TensorRewrite.Pilot.Tensor.constant divisor) =
+      TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2) (TensorRewrite.Theory.Remainder.iota shape axis width)
+        (TensorRewrite.Pilot.Tensor.constant divisor)
+'TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.unsigned_mask_tensor : ∀ {rank width exponent : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (value : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  exponent < width →
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2) value
+        (TensorRewrite.Pilot.Tensor.constant (BitVec.ofNat width (2 ^ exponent))) =
+      TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 &&& x2) value
+        (TensorRewrite.Pilot.Tensor.constant (BitVec.ofNat width (2 ^ exponent) - 1#width))
+'TensorRewrite.Theory.Remainder.unsigned_mask_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Remainder.unsigned_nested : ∀ {width : ℕ} (value divisor : BitVec width),
+  value % divisor % divisor = value % divisor
+'TensorRewrite.Theory.Remainder.unsigned_nested' depends on axioms: [propext]
+@TensorRewrite.Theory.Remainder.unsigned_nested_tensor : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (value divisor : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2) value divisor) divisor =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 % x2) value divisor
+'TensorRewrite.Theory.Remainder.unsigned_nested_tensor' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.unsigned_offset : ∀ {width value : ℕ} (divisor : BitVec width),
+  value + divisor.toNat < 2 ^ width →
+    (BitVec.ofNat width value + divisor) % divisor = BitVec.ofNat width value % divisor
+'TensorRewrite.Theory.Remainder.unsigned_offset' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Remainder.unsigned_power_mask : ∀ {width exponent : ℕ} (value : BitVec width),
+  exponent < width → value % BitVec.ofNat width (2 ^ exponent) = value &&& BitVec.ofNat width (2 ^ exponent) - 1#width
+'TensorRewrite.Theory.Remainder.unsigned_power_mask' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Remainder.unsigned_wrap_refuted : ((7#4 + 10#4) % 10#4).toNat = 1 ∧ (7#4 % 10#4).toNat = 7
+'TensorRewrite.Theory.Remainder.unsigned_wrap_refuted' depends on axioms: [propext]
 TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample : Complex.log
     (Complex.exp (2 * ↑Real.pi * Complex.I)) ≠
   2 * ↑Real.pi * Complex.I
@@ -3918,6 +4060,17 @@ TensorRewrite.Theory.SlicePad.valid_interval : ∀ (axis : TensorRewrite.Theory.
   axis.first ≤ ↑output ∧ ↑output < axis.last ↔
     0 ≤ ↑↑output * ↑axis.stride - axis.low ∧ ↑↑output * ↑axis.stride - axis.low < ↑axis.inputExtent
 'TensorRewrite.Theory.SlicePad.valid_interval' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted : (List.foldl FloatLib.Floats.ExecFloat.add
+        (FloatLib.Floats.ExecFloat.Binary.ofNatBits 0)
+        (List.replicate 10 (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1036831949))).toNatBits =
+    1065353217 ∧
+  FloatLib.Floats.ExecFloat.Binary.toNatBits
+      (FloatLib.Floats.ExecFloat.mul (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1036831949)
+        (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1092616192)) =
+    1065353216
+'TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
 @TensorRewrite.Theory.WindowTransport.contribution_map : ∀ {rank : ℕ} {α β : Type}
   (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (map : α → β) (padding : α)
   (input : TensorRewrite.Pilot.Tensor plan.inputShape α) (output : TensorRewrite.Pilot.Index plan.outputShape)

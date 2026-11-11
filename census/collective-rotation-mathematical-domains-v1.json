@@ -1,0 +1,393 @@
+{
+  "schema": 1,
+  "status": "mathematical_formulation_and_dependency_worksheet_not_frozen_N_or_F",
+  "retained_batch": "census/collective-rotation-cases.json",
+  "retained_batch_sha256": "2c110009515fa21818cc220da80b0d7c19e29cbaae3d916341ba6964b4d3134d",
+  "benchmark_record_count": 17,
+  "mathematical_obligation_denominator": null,
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "code_correspondence_future_work": true,
+  "all_workload_attempts_complete": false,
+  "records": [
+    {
+      "benchmark_id": "HandleAllGather/uniform",
+      "retained_lhs": "AllGather(uniform_literal)",
+      "retained_rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "classification": "uniform_communication_values",
+      "mathematical_target": "A constant-valued distributed input remains the same constant at every inferred communication output coordinate.",
+      "explicit_mathematical_premises": [
+        "An independently specified replica/group/index map and output shape; all actual communication observations declared."
+      ],
+      "remaining_mathematical_partitions": [
+        "No collective communication operator or participant/group/output-index model is currently defined in the Lean import closure.",
+        "Uniform tensor reindexing alone does not establish participation, tuple, memory/layout, dynamic-shape or effect observations."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleAllToAll/uniform",
+      "retained_lhs": "AllToAll(uniform_literal)",
+      "retained_rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "classification": "uniform_communication_values",
+      "mathematical_target": "A constant-valued distributed input remains the same constant at every inferred communication output coordinate.",
+      "explicit_mathematical_premises": [
+        "An independently specified replica/group/index map and output shape; all actual communication observations declared."
+      ],
+      "remaining_mathematical_partitions": [
+        "No collective communication operator or participant/group/output-index model is currently defined in the Lean import closure.",
+        "Uniform tensor reindexing alone does not establish participation, tuple, memory/layout, dynamic-shape or effect observations."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleAllReduceOrReduceScatter/min",
+      "retained_lhs": "AllReduce or ReduceScatter(uniform_literal,reducer MIN)",
+      "retained_rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "classification": "uniform_idempotent_collective",
+      "mathematical_target": "Nonempty uniform replica-group min/max returns the same value at every retained output coordinate.",
+      "explicit_mathematical_premises": [
+        "Independent nonempty replica-group fold/output map; an admitted scalar min/max and its initialization/tie policy."
+      ],
+      "remaining_mathematical_partitions": [
+        "Missing collective distribution/group/scatter model; generic scalar LinearOrder min/max lemmas do not supply it.",
+        "Floating NaNs, signed zero, initialization, tie and effect/observation domains require explicit partitions."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleAllReduceOrReduceScatter/max",
+      "retained_lhs": "AllReduce or ReduceScatter(uniform_literal,reducer MAX)",
+      "retained_rhs": "Constant scalar when output scalar and default-memory condition holds; otherwise scalar Broadcast with original output shape",
+      "classification": "uniform_idempotent_collective",
+      "mathematical_target": "Nonempty uniform replica-group min/max returns the same value at every retained output coordinate.",
+      "explicit_mathematical_premises": [
+        "Independent nonempty replica-group fold/output map; an admitted scalar min/max and its initialization/tie policy."
+      ],
+      "remaining_mathematical_partitions": [
+        "Missing collective distribution/group/scatter model; generic scalar LinearOrder min/max lemmas do not supply it.",
+        "Floating NaNs, signed zero, initialization, tie and effect/observation domains require explicit partitions."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleAllReduceOrReduceScatter/sum-integral",
+      "retained_lhs": "AllReduce or ReduceScatter(uniform_literal,Add)",
+      "retained_rhs": "uniform replacement of host-T literal (value * static_cast<T>(group_size))",
+      "classification": "uniform_modular_group_sum",
+      "mathematical_target": "A zero-initialized ordered list of group_size identical word values equals value times the same-width encoded group count.",
+      "explicit_mathematical_premises": [
+        "BitVec addition/multiplication and actual same-width count cast; arbitrary count/width/value."
+      ],
+      "remaining_mathematical_partitions": [
+        "The checked evidence is scalar/list-fold arithmetic only; collective group/output/index semantics are missing.",
+        "Actual host literal/count conversions and admitted signed arithmetic/observation domains are not established."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.PrefixWindow.word_replicate_fold"
+      ],
+      "declared_domains": [
+        "modular_word_uniform_list_fold"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleAllReduceOrReduceScatter/sum-floating",
+      "retained_lhs": "AllReduce or ReduceScatter(uniform_literal,Add)",
+      "retained_rhs": "uniform replacement of host-T literal (value * static_cast<T>(group_size))",
+      "classification": "uniform_rounded_group_sum",
+      "mathematical_target": "Compare repeated rounded uniform addition with multiplication by the converted count under an explicit schedule/observation relation.",
+      "explicit_mathematical_premises": [
+        "Diagnostic profile: actual FloatLib binary32 nearest-even operations, positive-zero initialized ordered fold, identical stored-bit observation."
+      ],
+      "remaining_mathematical_partitions": [
+        "The fixed-order bit-equality target is refuted: ten additions of encoding0x3dcccccd give0x3f800001; multiply by exact ten gives0x3f800000.",
+        "This is not an all-schedule/collective permitted-behavior refutation. Independent collective schedule/refinement, scalar literal/count conversion and flag/NaN domains remain open."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.UniformSum.binary32_uniform_product_refuted"
+      ],
+      "declared_domains": [
+        "fixed_order_binary32_diagnostic_not_collective_refutation"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleAllReduce/shared-handler",
+      "retained_lhs": "AllReduce(x)",
+      "retained_rhs": "shared handler-dependent graph",
+      "classification": "opaque_collective_wrapper_target",
+      "mathematical_target": "Formulate the mathematical replacement graph selected by the retained shared-handler delegation.",
+      "explicit_mathematical_premises": [
+        "An explicit replacement expression must be selected independently before a universal equality can be stated."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained rhs is helper-dependent, so it does not yet specify one mathematical target. No proof attempt on a fabricated target is claimed.",
+        "Code correspondence stays future work; independent collective operator/value/observation contracts remain missing."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceScatter/shared-handler",
+      "retained_lhs": "ReduceScatter(x)",
+      "retained_rhs": "shared handler-dependent graph",
+      "classification": "opaque_collective_wrapper_target",
+      "mathematical_target": "Formulate the mathematical replacement graph selected by the retained shared-handler delegation.",
+      "explicit_mathematical_premises": [
+        "An explicit replacement expression must be selected independently before a universal equality can be stated."
+      ],
+      "remaining_mathematical_partitions": [
+        "The retained rhs is helper-dependent, so it does not yet specify one mathematical target. No proof attempt on a fabricated target is claimed.",
+        "Code correspondence stays future work; independent collective operator/value/observation contracts remain missing."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleRemainder/nested",
+      "retained_lhs": "Remainder(Remainder(a,b),b)",
+      "retained_rhs": "inner Remainder(a,b)",
+      "classification": "truncating_remainder_nesting",
+      "mathematical_target": "Pointwise Rem(Rem(x,d),d)=Rem(x,d), with the same actual divisor tensor.",
+      "explicit_mathematical_premises": [
+        "Exact Int.tmod or total BitVec unsigned/signed truncating remainder; arbitrary finite tensor ranks/extents and widths."
+      ],
+      "remaining_mathematical_partitions": [
+        "Floating truncating remainder, NaNs, signed zero and exception observations require an independently admitted model; FloatLib IEEE nearest-quotient remainder is not a direct fmod model.",
+        "Encoded divisor-zero behavior is explicit in Lean; external undefined/trapping domains and representation admission remain outside this profile."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.Remainder.integer_nested_tensor",
+        "TensorRewrite.Theory.Remainder.unsigned_nested_tensor",
+        "TensorRewrite.Theory.Remainder.signed_nested_tensor"
+      ],
+      "declared_domains": [
+        "exact_integer_tmod",
+        "unsigned_word_all_widths",
+        "signed_word_all_widths",
+        "floating_truncating_remainder_model_missing"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleRemainder/power-two-unsigned",
+      "retained_lhs": "Remainder(a,constant_power_two)",
+      "retained_rhs": "And(a,b-1)",
+      "classification": "unsigned_power_mask",
+      "mathematical_target": "Unsigned word remainder by actual represented 2^k equals And(x,2^k-1), pointwise with a constant divisor tensor.",
+      "explicit_mathematical_premises": [
+        "Arbitrary width w and exponent k<w; actual divisor and mask use the same width; all word values and static shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "Literal construction/representation admission and observation partitions remain open; no host constant conversion or source correspondence claim."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.Remainder.unsigned_mask_tensor"
+      ],
+      "declared_domains": [
+        "unsigned_word_all_widths"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleRemainder/power-two-signed",
+      "retained_lhs": "Remainder(a,constant_power_two)",
+      "retained_rhs": "Select(a<0,Negate(And(Select(a<0,Negate(a),a),b-1)),And(Select(a<0,Negate(a),a),b-1))",
+      "classification": "signed_power_mask",
+      "mathematical_target": "Signed truncating word remainder equals the actual Select/Negate/magnitude-And/sign-correction graph.",
+      "explicit_mathematical_premises": [
+        "Positive signed represented power: k+1<w; modular magnitude negation is retained, including signed minimum; arbitrary static tensor shapes."
+      ],
+      "remaining_mathematical_partitions": [
+        "All primitive-format/literal/observation partitions need independent mathematical review; zero/negative divisor extensions are not adopted by this positive-power profile."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.Remainder.signed_mask_tensor"
+      ],
+      "declared_domains": [
+        "signed_word_all_widths"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleRemainder/iota-in-range",
+      "retained_lhs": "Remainder(Iota(axis),Broadcast(divisor))",
+      "retained_rhs": "Iota(axis)",
+      "classification": "bounded_iota_remainder",
+      "mathematical_target": "Remainder of the actual same-width axis-coordinate Iota by a constant divisor equals Iota.",
+      "explicit_mathematical_premises": [
+        "Axis extent<=divisor.toNat; signed case additionally divisor.msb=false; arbitrary ranks/extents, including empty axes. The bounds derive Iota representability."
+      ],
+      "remaining_mathematical_partitions": [
+        "External dtype/literal admission and any nonword mathematical profiles remain open; empty other axes may make local range obligations vacuous without asserting a value exists."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.Remainder.unsigned_iota",
+        "TensorRewrite.Theory.Remainder.signed_iota"
+      ],
+      "declared_domains": [
+        "unsigned_word_all_widths",
+        "signed_word_all_widths"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleRemainder/iota-add-lhs",
+      "retained_lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at lhs",
+      "retained_rhs": "Remainder(Iota,Broadcast(N))",
+      "classification": "iota_offset_lhs",
+      "mathematical_target": "Remove the same divisor addend from same-width Iota before taking remainder, preserving its actual operand orientation.",
+      "explicit_mathematical_premises": [
+        "Unsigned: every coordinate+divisor.toNat<2^w. Signed: divisor.msb=false and twice every coordinate+divisor.toNat<2^w."
+      ],
+      "remaining_mathematical_partitions": [
+        "Bounds are sufficient mathematical no-overflow conditions, not assumed implications from retained source guards; external host overflow/literal correspondence remains deferred."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs",
+        "TensorRewrite.Theory.Remainder.signed_iota_offset_lhs"
+      ],
+      "declared_domains": [
+        "unsigned_word_all_widths",
+        "signed_word_all_widths"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleRemainder/iota-add-rhs",
+      "retained_lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at rhs",
+      "retained_rhs": "Remainder(Iota,Broadcast(N))",
+      "classification": "iota_offset_rhs",
+      "mathematical_target": "Remove the same divisor addend from same-width Iota before taking remainder, preserving its actual operand orientation.",
+      "explicit_mathematical_premises": [
+        "Unsigned: every coordinate+divisor.toNat<2^w. Signed: divisor.msb=false and twice every coordinate+divisor.toNat<2^w."
+      ],
+      "remaining_mathematical_partitions": [
+        "Bounds are sufficient mathematical no-overflow conditions, not assumed implications from retained source guards; external host overflow/literal correspondence remains deferred."
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs",
+        "TensorRewrite.Theory.Remainder.signed_iota_offset_rhs"
+      ],
+      "declared_domains": [
+        "unsigned_word_all_widths",
+        "signed_word_all_widths"
+      ],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleShuffle/rotate-identity",
+      "retained_lhs": "Rotate chain(x)",
+      "retained_rhs": "base x",
+      "classification": "axis_rotation_composition",
+      "mathematical_target": "Compose actual per-axis cyclic coordinate shifts, remove identity shifts and canonicalize independent axes without changing tensor values.",
+      "explicit_mathematical_premises": [
+        "A bounded cyclic rotation operator with normalized signed shifts, axis extents and empty-axis semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "No rotation operator or signed modular shift-to-bounded-index bridge is currently instantiated in Lean.",
+        "Repeated axes, empty extents, modular attribute arithmetic and representation/effect observation partitions remain open."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleShuffle/rotate-canonical",
+      "retained_lhs": "Rotate chain(x)",
+      "retained_rhs": "Rotate(base,sorted new_dimensions,new_shifts)",
+      "classification": "axis_rotation_composition",
+      "mathematical_target": "Compose actual per-axis cyclic coordinate shifts, remove identity shifts and canonicalize independent axes without changing tensor values.",
+      "explicit_mathematical_premises": [
+        "A bounded cyclic rotation operator with normalized signed shifts, axis extents and empty-axis semantics."
+      ],
+      "remaining_mathematical_partitions": [
+        "No rotation operator or signed modular shift-to-bounded-index bridge is currently instantiated in Lean.",
+        "Repeated axes, empty extents, modular attribute arithmetic and representation/effect observation partitions remain open."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "TryToSinkBroadcastAfterElementwiseOps/eligible-user",
+      "retained_lhs": "Elementwise(Broadcast(x,dims), compatible broadcast operands)",
+      "retained_rhs": "Broadcast(cloned Elementwise of smaller operands,dims), replacing all uses of each eligible user",
+      "classification": "broadcast_elementwise_naturality",
+      "mathematical_target": "An explicit n-ary pure elementwise expression on common Broadcast maps equals one Broadcast of the smaller expression.",
+      "explicit_mathematical_premises": [
+        "An independently specified shared axis map, small/output shapes, scalar operation and all compatible operand projections."
+      ],
+      "remaining_mathematical_partitions": [
+        "Existing tensor reindex/map2 naturality is support, but the arbitrary-arity operation and mixed-operand coordinate graph are not instantiated.",
+        "Effect/observation and external IR admission remain outside generic pure function naturality."
+      ],
+      "core_evidence": [],
+      "declared_domains": [],
+      "whole_record_closed": false,
+      "attempt_scope": "mathematical formulation/dependency diagnosis; only referenced Lean statements are checked; not a completed whole-workload campaign",
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    }
+  ]
+}

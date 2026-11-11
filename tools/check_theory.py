@@ -9,6 +9,9 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'Remainder': ['power_toNat', 'power_mask', 'natural_msb_false', 'signed_power_msb', 'natural_add_toNat', 'natural_add_msb_false', 'integer_nested', 'unsigned_nested', 'signed_nested', 'unsigned_power_mask', 'signed_power_mask', 'unsigned_offset', 'signed_offset', 'integer_nested_tensor', 'unsigned_nested_tensor', 'signed_nested_tensor', 'unsigned_mask_tensor', 'signed_mask_tensor', 'unsigned_iota', 'signed_iota', 'unsigned_iota_offset_rhs', 'unsigned_iota_offset_lhs', 'signed_iota_offset_rhs', 'signed_iota_offset_lhs', 'signed_correction_refuted', 'unsigned_wrap_refuted', 'signed_wrap_refuted'],
+    'UniformSum': ['binary32_uniform_product_refuted'],
+
     'PadBroadcast': ['kept_pointwise', 'expansion_axis', 'expansion_output_extent', 'expansion_covers', 'fused_window', 'reduce_sequenceAlong', 'sequenceAlong_map', 'reduce_sequence', 'sequence_map', 'reduce_converted_sequence', 'unequal_fill_refuted', 'converted_fill_refuted', 'retained_spacing_refuted'],
     'WindowTransport': ['contribution_map', 'values_map', 'reduce_map', 'reduce_equiv', 'singleton_reduce'],
     'WindowTupleFamily': ['rewrite_sound', 'allRules_complete', 'allRules_nodup'],
@@ -135,6 +138,13 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/Remainder.lean': 'S',
+        'TensorRewrite/Theory/RemainderLemmas.lean': 'H',
+        'TensorRewrite/Theory/RemainderScalar.lean': 'R',
+        'TensorRewrite/Theory/RemainderProof.lean': 'R',
+        'TensorRewrite/Theory/RemainderCounterexamples.lean': 'C',
+        'TensorRewrite/Theory/UniformSumCounterexample.lean': 'C',
+
         'TensorRewrite/Theory/PadBroadcast.lean': 'S',
         'TensorRewrite/Theory/PadBroadcastPlan.lean': 'S',
         'TensorRewrite/Theory/PadBroadcastTarget.lean': 'S',
@@ -215,7 +225,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='derived raw Pad/window reshape/Broadcast composition and converted fill; '
+                  scope='exact and all-width remainder masks/Iota offsets; fixed-order uniform float diagnostic; '
+                        'derived raw Pad/window reshape/Broadcast composition and converted fill; '
                         'covered singleton-window reshape/Broadcast and complete pure singleton tuple family; '
                         'ordered cumulative windows, exact/modular Iota products and count-conversion domains; '
                         'Pad/window fusion with derived empty-safe geometry and converted fill; '
@@ -227,7 +238,34 @@ def main():
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ({
+                      name: ('ordered repeated modular addition for arbitrary count/width/initializer; '
+                             'same-width count cast and modular product; no replica geometry, '
+                             'communication, host literal or external schedule correspondence'
+                             if name.endswith('PrefixWindow.word_replicate_fold') else
+                             'actual FloatLib binary32 nearest-even stored bits; ten ordered '
+                             'additions of encoding0x3dcccccd from positive zero yield0x3f800001; '
+                             'multiplication by exact ten yields0x3f800000; no collective '
+                             'all-schedule/refinement refutation or source bug claim'
+                             if '.UniformSum.' in name else
+                             {
+                          'signed_correction_refuted':
+                              'signed four-bit minus-five modulo positive four gives minus-one; '
+                              'unsigned mask without sign correction gives positive three',
+                          'unsigned_wrap_refuted':
+                              'unsigned four-bit Iota coordinate7 plus divisor10 wraps to1; '
+                              'remainder1 differs from original remainder7',
+                          'signed_wrap_refuted':
+                              'four-bit coordinate5 plus divisor3 fits unsigned yet crosses the '
+                              'sign bit; truncating remainder minus-two differs from positive two'
+                             }[name.rsplit('.',1)[1]]
+                             if '.Remainder.' in name and name.endswith('_refuted') else
+                             'exact Int.tmod and arbitrary-width unsigned/modular signed BitVec.srem; '
+                             'explicit total divisor-zero behavior; signed Select/Negate/And and '
+                             'bounded same-width Iota with decoded divisor and no-wrap domains; '
+                             'arbitrary finite tensor rank/extents; no floating fmod, flags, '
+                             'external IR admission, source or whole-record closure claim'
+                             if '.Remainder.' in name else
+                             {
                           'unequal_fill_refuted':
                               'covered original singleton with explicit Pad fill2, implicit fill0 '
                               'and addition initializer0; source9 versus target5',
