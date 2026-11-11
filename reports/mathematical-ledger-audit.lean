@@ -1197,6 +1197,24 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square
 #check @TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
 #print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
+#check @TensorRewrite.Theory.ScatterConcat.concatenate_left
+#print axioms TensorRewrite.Theory.ScatterConcat.concatenate_left
+#check @TensorRewrite.Theory.ScatterConcat.concatenate_right
+#print axioms TensorRewrite.Theory.ScatterConcat.concatenate_right
+#check @TensorRewrite.Theory.ScatterConcat.entries_concatenate
+#print axioms TensorRewrite.Theory.ScatterConcat.entries_concatenate
+#check @TensorRewrite.Theory.ScatterConcat.entries_coordinates
+#print axioms TensorRewrite.Theory.ScatterConcat.entries_coordinates
+#check @TensorRewrite.Theory.ScatterConcat.enumerate_concatenate
+#print axioms TensorRewrite.Theory.ScatterConcat.enumerate_concatenate
+#check @TensorRewrite.Theory.ScatterConcat.scatter_combine
+#print axioms TensorRewrite.Theory.ScatterConcat.scatter_combine
+#check @TensorRewrite.Theory.ScatterConcat.scatter_concatenate
+#print axioms TensorRewrite.Theory.ScatterConcat.scatter_concatenate
+#check @TensorRewrite.Theory.ScatterConcat.target_rebatch
+#print axioms TensorRewrite.Theory.ScatterConcat.target_rebatch
+#check @TensorRewrite.Theory.ScatterConcat.word_combine_distinct
+#print axioms TensorRewrite.Theory.ScatterConcat.word_combine_distinct
 #check @TensorRewrite.Theory.SlicePad.attributes_count
 #print axioms TensorRewrite.Theory.SlicePad.attributes_count
 #check @TensorRewrite.Theory.SlicePad.attributes_valid

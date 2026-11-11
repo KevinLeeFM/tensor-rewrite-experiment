@@ -25,3 +25,5 @@ public import TensorRewrite.Theory.RemainderCounterexamples
 public import TensorRewrite.Theory.UniformSumCounterexample
 
 public import TensorRewrite.Theory.OrderedScatterCounterexamples
+
+public import TensorRewrite.Theory.ScatterConcatProof

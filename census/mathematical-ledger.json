@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 637,
+  "distinct_checked_declarations": 646,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,7 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 347,
+    "library_backed_theory": 356,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "ordered_scatter_contract_refutation": 4,
@@ -373,6 +373,25 @@
       "independent_statement_review": "pending",
       "manifest": "census/ordered-scatter-v1.json",
       "manifest_sha256": "c13086b6ce0ee34725da67a868d5b25699c7ae2a5c152b1ce431f1766811946f"
+    },
+    {
+      "model": "leading_batch_tensor_concat_scatter_v1",
+      "scope": "full-rank Scatter windows; common operand/window/index axes; concatenate actual indices and updates on the leading batch axis; arbitrary equal trailing batch dimensions; per-element drop; original batch/window order",
+      "scalar_contract": "none for exact trace or sequential composition; assoc+comm for combining two results; all-width word Add requires distinct reducer roles",
+      "status": "kernel_checked_leading_batch_tensor_concat_bridge",
+      "checked_theorem_count": 9,
+      "full_family_complete": false,
+      "actual_tensor_inputs_concatenated": true,
+      "leading_batch_axis_bridge_proved": true,
+      "arbitrary_shared_trailing_batch_dimensions": true,
+      "duplicate_order_preserved": true,
+      "whole_state_sequential_law_without_algebra": true,
+      "arbitrary_concat_axis_bridge_proved": false,
+      "all_scatter_dimension_numbers_supported": false,
+      "floating_associativity_assumed": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/scatter-concat-v1.json",
+      "manifest_sha256": "f04590d73347d5caeb19bcbc8203ccc3587b45ce7623061517adca0b57d47dff"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -380,10 +399,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "9faeb628cbf8c88b78a2d1aa2b64ab50f333a4ad1ee28ed03db70fb66ea6a015",
+    "sha256": "2fc6e98ea3998bc6a9504a694d9a0ea65f7dd910bfa3c8c703e90441c851068a",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "f6f2a322125f2263888d96aab7dcbba00914a17c50994e3c348507396931bac8"
+    "output_sha256": "bd0e36727184fa906de52d9bede859b7682bec1d268b03930ba3c14d601aad72"
   },
   "proofs": [
     {
@@ -11946,6 +11965,171 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.concatenate_left",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.concatenate_right",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.entries_concatenate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-concat"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.entries_coordinates",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.enumerate_concatenate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.scatter_combine",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-concat"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.scatter_concatenate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.target_rebatch",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterConcat.word_combine_distinct",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-concat"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.SlicePad.attributes_count",
       "kinds": [
         "library_backed_theory"
@@ -12972,7 +13156,10 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.OrderedScatter.run_combine",
-        "TensorRewrite.Theory.OrderedScatter.word_combine"
+        "TensorRewrite.Theory.OrderedScatter.word_combine",
+        "TensorRewrite.Theory.ScatterConcat.entries_concatenate",
+        "TensorRewrite.Theory.ScatterConcat.scatter_combine",
+        "TensorRewrite.Theory.ScatterConcat.word_combine_distinct"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"

@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 377 checked mathematical statements; custom Lean totals **8,027**.
+The theory target now has 386 checked mathematical statements; custom Lean totals **8,228**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 All488 retained records now have domain/dependency worksheets, including374 covered only by
 unreviewed proposals after the six-record Scatter refinement; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
@@ -1125,3 +1125,11 @@ oracles agree on2709 profiles/3354 events/2968 outputs,11872 role controls and f
 finite binary32 outputs. All86 focused tests pass. Catalog v3 refines six records, leaving374 covered only
 by unreviewed proposals. Whole-record closure stays0; full campaign/review/verdict
 remain open. Code correspondence remains user-deferred future work.
+
+## Leading-axis tensor-input Scatter bridge
+
+The [Concat bridge](docs/scatter-concat.md) now derives actual input-tensor concatenation
+to exact ordered Scatter events, with arbitrary shared trailing batch dimensions.
+Sequential composition needs no scalar laws; result fusion explicitly requires
+assoc/comm, with an arbitrary-width word Add instance. Nine statements add201
+custom Lean lines. General dimension layouts and the full campaign remain open.

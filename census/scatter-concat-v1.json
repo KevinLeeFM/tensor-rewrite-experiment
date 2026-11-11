@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "model": "leading_batch_tensor_concat_scatter_v1",
+  "geometry_contract": "full-rank Scatter windows; common operand/window/index axes; concatenate actual indices and updates on the leading batch axis; arbitrary equal trailing batch dimensions; per-element drop; original batch/window order",
+  "algebra_contract": "none for exact trace or sequential composition; assoc+comm for combining two results; all-width word Add requires distinct reducer roles",
+  "candidate_benchmark_labels": [
+    "HandleAdd/scatter-concat"
+  ],
+  "candidate_benchmark_bindings": {
+    "TensorRewrite.Theory.ScatterConcat.entries_concatenate": [
+      "HandleAdd/scatter-concat"
+    ],
+    "TensorRewrite.Theory.ScatterConcat.scatter_combine": [
+      "HandleAdd/scatter-concat"
+    ],
+    "TensorRewrite.Theory.ScatterConcat.word_combine_distinct": [
+      "HandleAdd/scatter-concat"
+    ]
+  },
+  "certificates": [
+    "TensorRewrite.Theory.ScatterConcat.concatenate_left",
+    "TensorRewrite.Theory.ScatterConcat.concatenate_right",
+    "TensorRewrite.Theory.ScatterConcat.enumerate_concatenate",
+    "TensorRewrite.Theory.ScatterConcat.entries_coordinates",
+    "TensorRewrite.Theory.ScatterConcat.target_rebatch",
+    "TensorRewrite.Theory.ScatterConcat.entries_concatenate",
+    "TensorRewrite.Theory.ScatterConcat.scatter_concatenate",
+    "TensorRewrite.Theory.ScatterConcat.scatter_combine",
+    "TensorRewrite.Theory.ScatterConcat.word_combine_distinct"
+  ],
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ScatterConcat.lean",
+      "sha256": "ed81f9b22d502facd9c39ceb7f99c5d2427d45cd89d80025c16e8c17f35ea842"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterConcatLemmas.lean",
+      "sha256": "ca78106d70801bd5aa3af45444c9fd5b5f570eb353f77487d3018c362decade1"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterConcatProof.lean",
+      "sha256": "afc21a88f63fc74ceb236d48419096b62b0e868c830033a61aee1cdf6ae0b71e"
+    },
+    {
+      "path": "tests/fixtures/ScatterConcatControls.lean",
+      "sha256": "b5c01636cb683ab3a029f547352f06f9e47c42ca9f8addc3432a58dfe465eb2b"
+    },
+    {
+      "path": "tools/scatter_concat_examples.py",
+      "sha256": "debda0d250b04adaeb9ef3ea60c3027d1e00a2464b5dc095d3477b17f803b570"
+    },
+    {
+      "path": "tools/check_scatter_concat.py",
+      "sha256": "08ae6f53f06a40af3163818d187215a3367a735febea7a5527b613cc13fa4415"
+    },
+    {
+      "path": "census/ordered-scatter-v1.json",
+      "sha256": "c13086b6ce0ee34725da67a868d5b25699c7ae2a5c152b1ce431f1766811946f"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatter.lean",
+      "sha256": "8c093aa92f64d4e52497fcbca8b19730719da8e43954579b77cb5472b5b33ce1"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterLemmas.lean",
+      "sha256": "89205746ef948334b66103949113811b21db86a9d9cb37d50c2fed3aebeb46cd"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterProof.lean",
+      "sha256": "8fc058869632fc802658f979dd2fee31602f13f7af609268ba947b2d8c578092"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterTransport.lean",
+      "sha256": "10f6a8fc80d8eca163986ec00b4603cdc0d8ffc260f6004a01235116586816d3"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterGraph.lean",
+      "sha256": "36bced8f40e8685ea07fb66bdf8663d3e44a8b1d26bc8cc97aaebdba053e4f14"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedCoordinates.lean",
+      "sha256": "67765b42b750f3b07ffafeadb4994362d198c70bd6b7d52b4baff6a38a186d91"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndexLemmas.lean",
+      "sha256": "f5850dd78c05d62837a026f7fed3c73c0206e916fa2b57148b1e4f1c597118ff"
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReducerIndex.lean",
+      "sha256": "10bd9cfa55c85042495a5e751cfae1a2b745298e5bb9790101ef3ad48aa95905"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "independent_statement_review": "pending",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "whole_benchmark_records_closed": 0,
+  "mathematical_obligation_denominator": null
+}

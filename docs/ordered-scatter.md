@@ -117,3 +117,8 @@ run is preserved under `reports/ordered-scatter-validation-v1-first-attempt/`.
 Unchanged successful model checks are reused with original log hashes; the audit
 and full focused suite pass after the reader fix. This infrastructure failure is
 not classified as mathematical proof difficulty or a refuted Scatter theorem.
+
+The subsequent [leading-axis input bridge](scatter-concat.md) derives actual tensor
+Concat to event append for arbitrary shared trailing batch dimensions. The frozen
+v1 report remains the earlier trace-only milestone; general dimension/layout
+bridges and whole-record closure remain open.

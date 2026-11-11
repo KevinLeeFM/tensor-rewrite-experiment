@@ -4254,6 +4254,182 @@ TensorRewrite.Theory.ScalarDomains.real_sqrt_square : ∀ (x : ℝ), √(x * x) 
   (input : TensorRewrite.Pilot.Tensor shape ℝ),
   TensorRewrite.Pilot.Tensor.map (fun x => √(x * x)) input = TensorRewrite.Pilot.Tensor.map (fun x => |x|) input
 'TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.concatenate_left : ∀ {rank first second : ℕ} {α : Type}
+  (tail : TensorRewrite.Pilot.Shape rank)
+  (left : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail) α)
+  (right : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail) α)
+  (index : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ScatterConcat.batchShape first tail)),
+  TensorRewrite.Theory.ScatterConcat.concatenate tail left right
+      (TensorRewrite.Theory.ScatterConcat.leftIndex second tail index) =
+    left index
+'TensorRewrite.Theory.ScatterConcat.concatenate_left' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.concatenate_right : ∀ {rank first second : ℕ} {α : Type}
+  (tail : TensorRewrite.Pilot.Shape rank)
+  (left : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail) α)
+  (right : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail) α)
+  (index : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ScatterConcat.batchShape second tail)),
+  TensorRewrite.Theory.ScatterConcat.concatenate tail left right
+      (TensorRewrite.Theory.ScatterConcat.rightIndex first tail index) =
+    right index
+'TensorRewrite.Theory.ScatterConcat.concatenate_right' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.entries_concatenate : ∀ {rank oldBatchRank tailRank indexSize first second : ℕ}
+  {α : Type} (geometry : TensorRewrite.Theory.OrderedScatter.Plan rank oldBatchRank indexSize)
+  (tail : TensorRewrite.Pilot.Shape tailRank)
+  (leftIndices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail) (Fin indexSize → ℤ))
+  (rightIndices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail) (Fin indexSize → ℤ))
+  (leftUpdates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail)
+      (TensorRewrite.Pilot.Tensor geometry.windowShape α))
+  (rightUpdates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail)
+      (TensorRewrite.Pilot.Tensor geometry.windowShape α)),
+  TensorRewrite.Theory.OrderedScatter.entries
+      (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+        (TensorRewrite.Theory.ScatterConcat.batchShape (first + second) tail))
+      (TensorRewrite.Theory.ScatterConcat.concatenate tail leftIndices rightIndices)
+      (TensorRewrite.Theory.ScatterConcat.concatenate tail leftUpdates rightUpdates) =
+    TensorRewrite.Theory.OrderedScatter.entries
+        (TensorRewrite.Theory.ScatterConcat.rebatch geometry (TensorRewrite.Theory.ScatterConcat.batchShape first tail))
+        leftIndices leftUpdates ++
+      TensorRewrite.Theory.OrderedScatter.entries
+        (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+          (TensorRewrite.Theory.ScatterConcat.batchShape second tail))
+        rightIndices rightUpdates
+'TensorRewrite.Theory.ScatterConcat.entries_concatenate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.entries_coordinates : ∀ {rank batchRank indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+  (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+  TensorRewrite.Theory.OrderedScatter.entries plan indices updates =
+    List.flatMap
+      (fun batch =>
+        List.map
+          (fun window =>
+            { target := TensorRewrite.Theory.OrderedScatter.target? plan indices batch window,
+              value := updates batch window })
+          (TensorRewrite.Theory.OrderedCoordinates.enumerate plan.windowShape))
+      (TensorRewrite.Theory.OrderedCoordinates.enumerate plan.batchShape)
+'TensorRewrite.Theory.ScatterConcat.entries_coordinates' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.enumerate_concatenate : ∀ {rank : ℕ} (first second : ℕ)
+  (tail : TensorRewrite.Pilot.Shape rank),
+  TensorRewrite.Theory.OrderedCoordinates.enumerate
+      (TensorRewrite.Theory.ScatterConcat.batchShape (first + second) tail) =
+    List.map (TensorRewrite.Theory.ScatterConcat.leftIndex second tail)
+        (TensorRewrite.Theory.OrderedCoordinates.enumerate
+          (TensorRewrite.Theory.ScatterConcat.batchShape first tail)) ++
+      List.map (TensorRewrite.Theory.ScatterConcat.rightIndex first tail)
+        (TensorRewrite.Theory.OrderedCoordinates.enumerate (TensorRewrite.Theory.ScatterConcat.batchShape second tail))
+'TensorRewrite.Theory.ScatterConcat.enumerate_concatenate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.scatter_combine : ∀ {rank oldBatchRank tailRank indexSize first second : ℕ}
+  {α : Type} (geometry : TensorRewrite.Theory.OrderedScatter.Plan rank oldBatchRank indexSize)
+  (tail : TensorRewrite.Pilot.Shape tailRank) (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    (∀ (a b : α), operation a b = operation b a) →
+      ∀ (leftBase rightBase : TensorRewrite.Pilot.Tensor geometry.operandShape α)
+        (leftIndices :
+          TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail) (Fin indexSize → ℤ))
+        (rightIndices :
+          TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail) (Fin indexSize → ℤ))
+        (leftUpdates :
+          TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail)
+            (TensorRewrite.Pilot.Tensor geometry.windowShape α))
+        (rightUpdates :
+          TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail)
+            (TensorRewrite.Pilot.Tensor geometry.windowShape α)),
+        TensorRewrite.Pilot.Tensor.map₂ operation
+            (TensorRewrite.Theory.OrderedScatter.scatter
+              (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+                (TensorRewrite.Theory.ScatterConcat.batchShape first tail))
+              operation leftBase leftIndices leftUpdates)
+            (TensorRewrite.Theory.OrderedScatter.scatter
+              (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+                (TensorRewrite.Theory.ScatterConcat.batchShape second tail))
+              operation rightBase rightIndices rightUpdates) =
+          TensorRewrite.Theory.OrderedScatter.scatter
+            (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+              (TensorRewrite.Theory.ScatterConcat.batchShape (first + second) tail))
+            operation (TensorRewrite.Pilot.Tensor.map₂ operation leftBase rightBase)
+            (TensorRewrite.Theory.ScatterConcat.concatenate tail leftIndices rightIndices)
+            (TensorRewrite.Theory.ScatterConcat.concatenate tail leftUpdates rightUpdates)
+'TensorRewrite.Theory.ScatterConcat.scatter_combine' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.scatter_concatenate : ∀ {rank oldBatchRank tailRank indexSize first second : ℕ}
+  {α : Type} (geometry : TensorRewrite.Theory.OrderedScatter.Plan rank oldBatchRank indexSize)
+  (tail : TensorRewrite.Pilot.Shape tailRank) (operation : α → α → α)
+  (base : TensorRewrite.Pilot.Tensor geometry.operandShape α)
+  (leftIndices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail) (Fin indexSize → ℤ))
+  (rightIndices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail) (Fin indexSize → ℤ))
+  (leftUpdates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail)
+      (TensorRewrite.Pilot.Tensor geometry.windowShape α))
+  (rightUpdates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail)
+      (TensorRewrite.Pilot.Tensor geometry.windowShape α)),
+  TensorRewrite.Theory.OrderedScatter.scatter
+      (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+        (TensorRewrite.Theory.ScatterConcat.batchShape (first + second) tail))
+      operation base (TensorRewrite.Theory.ScatterConcat.concatenate tail leftIndices rightIndices)
+      (TensorRewrite.Theory.ScatterConcat.concatenate tail leftUpdates rightUpdates) =
+    TensorRewrite.Theory.OrderedScatter.scatter
+      (TensorRewrite.Theory.ScatterConcat.rebatch geometry (TensorRewrite.Theory.ScatterConcat.batchShape second tail))
+      operation
+      (TensorRewrite.Theory.OrderedScatter.scatter
+        (TensorRewrite.Theory.ScatterConcat.rebatch geometry (TensorRewrite.Theory.ScatterConcat.batchShape first tail))
+        operation base leftIndices leftUpdates)
+      rightIndices rightUpdates
+'TensorRewrite.Theory.ScatterConcat.scatter_concatenate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.target_rebatch : ∀ {rank oldBatchRank leftRank rightRank indexSize : ℕ}
+  (geometry : TensorRewrite.Theory.OrderedScatter.Plan rank oldBatchRank indexSize)
+  (leftShape : TensorRewrite.Pilot.Shape leftRank) (rightShape : TensorRewrite.Pilot.Shape rightRank)
+  (left : TensorRewrite.Pilot.Tensor leftShape (Fin indexSize → ℤ))
+  (right : TensorRewrite.Pilot.Tensor rightShape (Fin indexSize → ℤ)) (leftBatch : TensorRewrite.Pilot.Index leftShape)
+  (rightBatch : TensorRewrite.Pilot.Index rightShape),
+  left leftBatch = right rightBatch →
+    ∀ (window : TensorRewrite.Pilot.Index geometry.windowShape),
+      TensorRewrite.Theory.OrderedScatter.target? (TensorRewrite.Theory.ScatterConcat.rebatch geometry leftShape) left
+          leftBatch window =
+        TensorRewrite.Theory.OrderedScatter.target? (TensorRewrite.Theory.ScatterConcat.rebatch geometry rightShape)
+          right rightBatch window
+'TensorRewrite.Theory.ScatterConcat.target_rebatch' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterConcat.word_combine_distinct : ∀
+  {rank oldBatchRank tailRank indexSize first second width : ℕ}
+  (geometry : TensorRewrite.Theory.OrderedScatter.Plan rank oldBatchRank indexSize)
+  (tail : TensorRewrite.Pilot.Shape tailRank)
+  (firstRole secondRole : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+  firstRole ≠ secondRole →
+    ∀ (leftBase rightBase : TensorRewrite.Pilot.Tensor geometry.operandShape (BitVec width))
+      (leftIndices :
+        TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail) (Fin indexSize → ℤ))
+      (rightIndices :
+        TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail) (Fin indexSize → ℤ))
+      (leftUpdates :
+        TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape first tail)
+          (TensorRewrite.Pilot.Tensor geometry.windowShape (BitVec width)))
+      (rightUpdates :
+        TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.ScatterConcat.batchShape second tail)
+          (TensorRewrite.Pilot.Tensor geometry.windowShape (BitVec width))),
+      TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+          (TensorRewrite.Theory.OrderedScatter.scatter
+            (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+              (TensorRewrite.Theory.ScatterConcat.batchShape first tail))
+            (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine firstRole secondRole) leftBase leftIndices
+            leftUpdates)
+          (TensorRewrite.Theory.OrderedScatter.scatter
+            (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+              (TensorRewrite.Theory.ScatterConcat.batchShape second tail))
+            (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine firstRole secondRole) rightBase rightIndices
+            rightUpdates) =
+        TensorRewrite.Theory.OrderedScatter.scatter
+          (TensorRewrite.Theory.ScatterConcat.rebatch geometry
+            (TensorRewrite.Theory.ScatterConcat.batchShape (first + second) tail))
+          (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine firstRole secondRole)
+          (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) leftBase rightBase)
+          (TensorRewrite.Theory.ScatterConcat.concatenate tail leftIndices rightIndices)
+          (TensorRewrite.Theory.ScatterConcat.concatenate tail leftUpdates rightUpdates)
+'TensorRewrite.Theory.ScatterConcat.word_combine_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.SlicePad.attributes_count : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
   axis.attributes.elementCount = ↑axis.count
 'TensorRewrite.Theory.SlicePad.attributes_count' depends on axioms: [propext, Classical.choice, Quot.sound]

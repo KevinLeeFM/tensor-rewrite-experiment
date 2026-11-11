@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.ScatterConcat.' in name:
+            manifest=read('census/scatter-concat-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.OrderedScatter.' in name:
             manifest=read('census/ordered-scatter-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
@@ -579,6 +582,23 @@ def mathematical_models(root=ROOT):
                        domain_worksheet=extension['domain_worksheet'],
                        independent_statement_review='pending',manifest=scatter['manifest'],
                        manifest_sha256=scatter['manifest_sha256']))
+    from check_scatter_concat import check_inputs as concat_inputs, validate_result as validate_concat
+    concatenation=read('reports/scatter-concat.json',root);validate_concat(concatenation)
+    extension=concat_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ScatterConcat.' in name}
+    assert len(expected)==9 and concatenation['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['geometry_contract'],
+                       scalar_contract=extension['algebra_contract'],status=concatenation['status'],
+                       checked_theorem_count=9,full_family_complete=False,
+                       actual_tensor_inputs_concatenated=True,leading_batch_axis_bridge_proved=True,
+                       arbitrary_shared_trailing_batch_dimensions=True,duplicate_order_preserved=True,
+                       whole_state_sequential_law_without_algebra=True,
+                       arbitrary_concat_axis_bridge_proved=False,
+                       all_scatter_dimension_numbers_supported=False,
+                       floating_associativity_assumed=False,
+                       independent_statement_review='pending',manifest=concatenation['manifest'],
+                       manifest_sha256=concatenation['manifest_sha256']))
     return models
 
 

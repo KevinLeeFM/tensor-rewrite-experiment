@@ -388,3 +388,13 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.OrderedScatter.word_combine
 #print axioms TensorRewrite.Theory.OrderedScatter.entries_map
 #print axioms TensorRewrite.Theory.OrderedScatter.distinct_word_operation
+
+#print axioms TensorRewrite.Theory.ScatterConcat.concatenate_left
+#print axioms TensorRewrite.Theory.ScatterConcat.concatenate_right
+#print axioms TensorRewrite.Theory.ScatterConcat.enumerate_concatenate
+#print axioms TensorRewrite.Theory.ScatterConcat.entries_coordinates
+#print axioms TensorRewrite.Theory.ScatterConcat.target_rebatch
+#print axioms TensorRewrite.Theory.ScatterConcat.entries_concatenate
+#print axioms TensorRewrite.Theory.ScatterConcat.scatter_concatenate
+#print axioms TensorRewrite.Theory.ScatterConcat.scatter_combine
+#print axioms TensorRewrite.Theory.ScatterConcat.word_combine_distinct
