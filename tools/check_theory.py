@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ArithmeticFamily': ['binary32_add_assoc_refuted', 'binary32_mul_assoc_refuted', 'binary32_mul_zero_refuted', 'subtract_broadcast', 'add_broadcast_constants', 'subtract_add_broadcast_constants', 'multiply_broadcast_constants', 'broadcast_uniform_factor', 'eval_addOrder', 'eval_mulOrder', 'rewrite_sound', 'rewrite_in_context', 'allRules_complete', 'allRuleKeys_nodup', 'rule_count', 'integer_family', 'real_family', 'complex_family', 'word_family'],
     'ScatterBatching': ['inserted_extent', 'rawBatchAxis_extent', 'rawIndex_batch_value', 'pairAt_mapped', 'pairAt_unmapped', 'window_paired_zero', 'batch_coordinate_bound', 'identityAxes_decode', 'canonical_offset', 'canonical_position', 'target_eq_canonical', 'target_eq_some_iff', 'target_no_pairs', 'target_batch_coordinate', 'forgetting_batching_refuted', 'entries_eq_canonical', 'run_eq_canonical', 'entries_length', 'run_empty', 'run_relayout_indices', 'word_translate_distinct', 'run_combine_nested'],
     'IndexVector': ['batch_raw', 'component_raw', 'raw_split', 'vectorAxis_bound', 'implicit_components', 'elementCount_raw', 'read_pack', 'pack_read', 'read_map', 'read_relayout', 'relayout_refl', 'relayout_trans'],
     'ScatterIndices': ['entries_eq_layout', 'scatter_eq_layout', 'scatter_eq_ordered', 'entries_length', 'scatter_relayout_indices', 'scatter_empty', 'word_translate_distinct', 'empty_index_tensor_not_single_map'],
@@ -145,6 +146,10 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/ArithmeticFamily.lean': 'S',
+        'TensorRewrite/Theory/ArithmeticFamilyProof.lean': 'R',
+        'TensorRewrite/Theory/ArithmeticBroadcast.lean': 'R',
+        'TensorRewrite/Theory/ArithmeticFloatCounterexamples.lean': 'C',
         'TensorRewrite/Theory/ScatterBatching.lean': 'S',
         'TensorRewrite/Theory/ScatterBatchingLemmas.lean': 'H',
         'TensorRewrite/Theory/ScatterBatchingProof.lean': 'R',
@@ -272,6 +277,14 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: (
+                             'closed pure arithmetic trees:43 rule/order instances; actual '
+                             'CommRing for Int/Real/Complex/all-width BitVec; shared input identity '
+                             'and Boolean conversion/selection explicit; complete unique enumeration '
+                             'and context congruence; actual bounded Broadcast sum/product/subtraction '
+                             'rebuilding, uniform scalar factor only where stated; separate actual '
+                             'binary32 tree refutations of add/product associativity and zero '
+                             'annihilation; no IEEE ring, flags/effects/layout or whole-record claim'
+                             if '.ArithmeticFamily.' in name else
                              'actual paired operand/index batching; equal extents and inserted '
                              'operand axes disjoint from original vector-indexed axes; arbitrary '
                              'pair ordering and subset of batch axes; actual raw axis projection; '

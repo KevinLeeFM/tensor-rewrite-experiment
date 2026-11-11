@@ -33,3 +33,6 @@ public import TensorRewrite.Theory.ScatterLayoutCounterexample
 public import TensorRewrite.Theory.ScatterIndicesCounterexample
 
 public import TensorRewrite.Theory.ScatterBatchingCounterexample
+
+public import TensorRewrite.Theory.ArithmeticBroadcast
+public import TensorRewrite.Theory.ArithmeticFloatCounterexamples

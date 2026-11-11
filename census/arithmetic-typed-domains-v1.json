@@ -1,0 +1,1005 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_exact_profiles_remaining_partitions_open",
+  "retained_batches": [
+    {
+      "path": "census/simple-cases.json",
+      "sha256": "89285c0fb18b2e42d29c3e78c9d800b4b16354a0c0d0cd53ecca9843d3177e05"
+    },
+    {
+      "path": "census/arithmetic-cases.json",
+      "sha256": "a3df5f4aa5d8c122fda52db44d920e625b5f38be15b68eaaeaa06fb3c82037f7"
+    }
+  ],
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "typed_family_manifest": "census/arithmetic-values-family-v1.json",
+  "records": [
+    {
+      "benchmark_id": "HandleAdd/cancel-subtract-lhs",
+      "retained_lhs": "Add(x,Subtract(y,x)) with Subtract at lhs",
+      "retained_rhs": "y",
+      "typed_profile_refs": [
+        "integer/add_cancel_left",
+        "real/add_cancel_left",
+        "complex/add_cancel_left",
+        "word_all_widths/add_cancel_left"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/cancel-subtract-rhs",
+      "retained_lhs": "Add(x,Subtract(y,x)) with Subtract at rhs",
+      "retained_rhs": "y",
+      "typed_profile_refs": [
+        "integer/add_cancel_right",
+        "real/add_cancel_right",
+        "complex/add_cancel_right",
+        "word_all_widths/add_cancel_right"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/constant-right",
+      "retained_lhs": "Add(Constant(c),NonConstant(x))",
+      "retained_rhs": "Add(x,c)",
+      "typed_profile_refs": [
+        "integer/add_comm",
+        "real/add_comm",
+        "complex/add_comm",
+        "word_all_widths/add_comm"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/constant-subtract-broadcast-scalars",
+      "retained_lhs": "Add(Subtract(c1,a),c2) with broadcast-scalars",
+      "retained_rhs": "Subtract(Add(c1,c2),a), rebroadcasting scalar constant sum if needed",
+      "typed_profile_refs": [
+        "integer/sub_add_constants_0",
+        "real/sub_add_constants_0",
+        "complex/sub_add_constants_0",
+        "word_all_widths/sub_add_constants_0",
+        "integer/sub_add_constants_1",
+        "real/sub_add_constants_1",
+        "complex/sub_add_constants_1",
+        "word_all_widths/sub_add_constants_1"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/constant-subtract-direct-constants",
+      "retained_lhs": "Add(Subtract(c1,a),c2) with direct-constants",
+      "retained_rhs": "Subtract(Add(c1,c2),a), rebroadcasting scalar constant sum if needed",
+      "typed_profile_refs": [
+        "integer/sub_add_constants_0",
+        "real/sub_add_constants_0",
+        "complex/sub_add_constants_0",
+        "word_all_widths/sub_add_constants_0",
+        "integer/sub_add_constants_1",
+        "real/sub_add_constants_1",
+        "complex/sub_add_constants_1",
+        "word_all_widths/sub_add_constants_1"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/constant-sum-broadcast-scalars",
+      "retained_lhs": "Add(Add(a,c1),c2) with broadcast-scalars",
+      "retained_rhs": "Add(a,Add(c1,c2)), rebroadcasting constant sum when scalar result and nonscalar output",
+      "typed_profile_refs": [
+        "integer/add_assoc_00",
+        "real/add_assoc_00",
+        "complex/add_assoc_00",
+        "word_all_widths/add_assoc_00",
+        "integer/add_assoc_01",
+        "real/add_assoc_01",
+        "complex/add_assoc_01",
+        "word_all_widths/add_assoc_01",
+        "integer/add_assoc_10",
+        "real/add_assoc_10",
+        "complex/add_assoc_10",
+        "word_all_widths/add_assoc_10",
+        "integer/add_assoc_11",
+        "real/add_assoc_11",
+        "complex/add_assoc_11",
+        "word_all_widths/add_assoc_11"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/constant-sum-direct-constants",
+      "retained_lhs": "Add(Add(a,c1),c2) with direct-constants",
+      "retained_rhs": "Add(a,Add(c1,c2)), rebroadcasting constant sum when scalar result and nonscalar output",
+      "typed_profile_refs": [
+        "integer/add_assoc_00",
+        "real/add_assoc_00",
+        "complex/add_assoc_00",
+        "word_all_widths/add_assoc_00",
+        "integer/add_assoc_01",
+        "real/add_assoc_01",
+        "complex/add_assoc_01",
+        "word_all_widths/add_assoc_01",
+        "integer/add_assoc_10",
+        "real/add_assoc_10",
+        "complex/add_assoc_10",
+        "word_all_widths/add_assoc_10",
+        "integer/add_assoc_11",
+        "real/add_assoc_11",
+        "complex/add_assoc_11",
+        "word_all_widths/add_assoc_11"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/factor-lhs-lhs",
+      "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at lhs/lhs",
+      "retained_rhs": "Multiply(Add(a,b),c)",
+      "typed_profile_refs": [
+        "integer/factor_11",
+        "real/factor_11",
+        "complex/factor_11",
+        "word_all_widths/factor_11"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/factor-lhs-rhs",
+      "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at lhs/rhs",
+      "retained_rhs": "Multiply(Add(a,b),c)",
+      "typed_profile_refs": [
+        "integer/factor_10",
+        "real/factor_10",
+        "complex/factor_10",
+        "word_all_widths/factor_10"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/factor-rhs-lhs",
+      "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at rhs/lhs",
+      "retained_rhs": "Multiply(Add(a,b),c)",
+      "typed_profile_refs": [
+        "integer/factor_01",
+        "real/factor_01",
+        "complex/factor_01",
+        "word_all_widths/factor_01"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/factor-rhs-rhs",
+      "retained_lhs": "Add(Multiply(a,c),Multiply(b,c)) with shared c at rhs/rhs",
+      "retained_rhs": "Multiply(Add(a,b),c)",
+      "typed_profile_refs": [
+        "integer/factor_00",
+        "real/factor_00",
+        "complex/factor_00",
+        "word_all_widths/factor_00"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/lhs-zero",
+      "retained_lhs": "Add(x,0) with zero at lhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/add_zero_left",
+        "real/add_zero_left",
+        "complex/add_zero_left",
+        "word_all_widths/add_zero_left"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/rhs-zero",
+      "retained_lhs": "Add(x,0) with zero at rhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/add_zero_right",
+        "real/add_zero_right",
+        "complex/add_zero_right",
+        "word_all_widths/add_zero_right"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/broadcast-factor",
+      "retained_lhs": "Multiply(Multiply(a,c),Broadcast(b)) in matched operand orders",
+      "retained_rhs": "Multiply(a,Broadcast(Multiply(b,c)))",
+      "typed_profile_refs": [],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/constant-product",
+      "retained_lhs": "Multiply(Multiply(a,c1),c2) with AnyOrder matchers",
+      "retained_rhs": "Multiply(a,Multiply(c1,c2))",
+      "typed_profile_refs": [
+        "integer/mul_assoc_00",
+        "real/mul_assoc_00",
+        "complex/mul_assoc_00",
+        "word_all_widths/mul_assoc_00",
+        "integer/mul_assoc_01",
+        "real/mul_assoc_01",
+        "complex/mul_assoc_01",
+        "word_all_widths/mul_assoc_01",
+        "integer/mul_assoc_10",
+        "real/mul_assoc_10",
+        "complex/mul_assoc_10",
+        "word_all_widths/mul_assoc_10",
+        "integer/mul_assoc_11",
+        "real/mul_assoc_11",
+        "complex/mul_assoc_11",
+        "word_all_widths/mul_assoc_11"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/four-factors",
+      "retained_lhs": "Multiply(Multiply(a,c1),Multiply(b,c2)) with AnyOrder matchers",
+      "retained_rhs": "Multiply(Multiply(a,b),Multiply(c1,c2))",
+      "typed_profile_refs": [
+        "integer/four_factors_000",
+        "real/four_factors_000",
+        "complex/four_factors_000",
+        "word_all_widths/four_factors_000",
+        "integer/four_factors_001",
+        "real/four_factors_001",
+        "complex/four_factors_001",
+        "word_all_widths/four_factors_001",
+        "integer/four_factors_010",
+        "real/four_factors_010",
+        "complex/four_factors_010",
+        "word_all_widths/four_factors_010",
+        "integer/four_factors_011",
+        "real/four_factors_011",
+        "complex/four_factors_011",
+        "word_all_widths/four_factors_011",
+        "integer/four_factors_100",
+        "real/four_factors_100",
+        "complex/four_factors_100",
+        "word_all_widths/four_factors_100",
+        "integer/four_factors_101",
+        "real/four_factors_101",
+        "complex/four_factors_101",
+        "word_all_widths/four_factors_101",
+        "integer/four_factors_110",
+        "real/four_factors_110",
+        "complex/four_factors_110",
+        "word_all_widths/four_factors_110",
+        "integer/four_factors_111",
+        "real/four_factors_111",
+        "complex/four_factors_111",
+        "word_all_widths/four_factors_111"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/legacy-constant-product-broadcast-scalars",
+      "retained_lhs": "Multiply(Multiply(a,c1),c2) in broadcast-scalars pattern",
+      "retained_rhs": "Multiply(a,Multiply(c1,c2))",
+      "typed_profile_refs": [
+        "integer/mul_assoc_00",
+        "real/mul_assoc_00",
+        "complex/mul_assoc_00",
+        "word_all_widths/mul_assoc_00",
+        "integer/mul_assoc_01",
+        "real/mul_assoc_01",
+        "complex/mul_assoc_01",
+        "word_all_widths/mul_assoc_01",
+        "integer/mul_assoc_10",
+        "real/mul_assoc_10",
+        "complex/mul_assoc_10",
+        "word_all_widths/mul_assoc_10",
+        "integer/mul_assoc_11",
+        "real/mul_assoc_11",
+        "complex/mul_assoc_11",
+        "word_all_widths/mul_assoc_11"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/legacy-constant-product-direct",
+      "retained_lhs": "Multiply(Multiply(a,c1),c2) in direct pattern",
+      "retained_rhs": "Multiply(a,Multiply(c1,c2))",
+      "typed_profile_refs": [
+        "integer/mul_assoc_00",
+        "real/mul_assoc_00",
+        "complex/mul_assoc_00",
+        "word_all_widths/mul_assoc_00",
+        "integer/mul_assoc_01",
+        "real/mul_assoc_01",
+        "complex/mul_assoc_01",
+        "word_all_widths/mul_assoc_01",
+        "integer/mul_assoc_10",
+        "real/mul_assoc_10",
+        "complex/mul_assoc_10",
+        "word_all_widths/mul_assoc_10",
+        "integer/mul_assoc_11",
+        "real/mul_assoc_11",
+        "complex/mul_assoc_11",
+        "word_all_widths/mul_assoc_11"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/lhs-one",
+      "retained_lhs": "Multiply(x,1) with 1 at lhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/mul_one_left",
+        "real/mul_one_left",
+        "complex/mul_one_left",
+        "word_all_widths/mul_one_left"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/lhs-zero",
+      "retained_lhs": "Multiply(x,0) with 0 at lhs",
+      "retained_rhs": "matched zero operand",
+      "typed_profile_refs": [
+        "integer/mul_zero_left",
+        "real/mul_zero_left",
+        "complex/mul_zero_left",
+        "word_all_widths/mul_zero_left"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/negated-operands",
+      "retained_lhs": "Multiply(Negate(a),Negate(b))",
+      "retained_rhs": "Multiply(a,b)",
+      "typed_profile_refs": [
+        "integer/mul_neg_both",
+        "real/mul_neg_both",
+        "complex/mul_neg_both",
+        "word_all_widths/mul_neg_both"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/predicate-convert",
+      "retained_lhs": "Multiply(Convert(pred),x) in either operand order",
+      "retained_rhs": "Select(pred,x,BroadcastZeros)",
+      "typed_profile_refs": [
+        "integer/predicate_multiply_0",
+        "real/predicate_multiply_0",
+        "complex/predicate_multiply_0",
+        "word_all_widths/predicate_multiply_0",
+        "integer/predicate_multiply_1",
+        "real/predicate_multiply_1",
+        "complex/predicate_multiply_1",
+        "word_all_widths/predicate_multiply_1"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/rhs-one",
+      "retained_lhs": "Multiply(x,1) with 1 at rhs",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/mul_one_right",
+        "real/mul_one_right",
+        "complex/mul_one_right",
+        "word_all_widths/mul_one_right"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/rhs-zero",
+      "retained_lhs": "Multiply(x,0) with 0 at rhs",
+      "retained_rhs": "matched zero operand",
+      "typed_profile_refs": [
+        "integer/mul_zero_right",
+        "real/mul_zero_right",
+        "complex/mul_zero_right",
+        "word_all_widths/mul_zero_right"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleNegate/involution",
+      "retained_lhs": "Negate(Negate(x))",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/neg_neg",
+        "real/neg_neg",
+        "complex/neg_neg",
+        "word_all_widths/neg_neg"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/add-sub-self-left",
+      "retained_lhs": "Subtract(Add(x,y),x) with x at left",
+      "retained_rhs": "y",
+      "typed_profile_refs": [
+        "integer/add_sub_same_left",
+        "real/add_sub_same_left",
+        "complex/add_sub_same_left",
+        "word_all_widths/add_sub_same_left"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/add-sub-self-right",
+      "retained_lhs": "Subtract(Add(x,y),x) with x at right",
+      "retained_rhs": "y",
+      "typed_profile_refs": [
+        "integer/add_sub_same_right",
+        "real/add_sub_same_right",
+        "complex/add_sub_same_right",
+        "word_all_widths/add_sub_same_right"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/broadcast-constant",
+      "retained_lhs": "Subtract(nonconstant x,broadcast-constant)",
+      "retained_rhs": "Add(x,Negate(constant)) with broadcast rebuilt if present",
+      "typed_profile_refs": [
+        "integer/sub_neg",
+        "real/sub_neg",
+        "complex/sub_neg",
+        "word_all_widths/sub_neg"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound",
+        "TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/constant",
+      "retained_lhs": "Subtract(nonconstant x,constant)",
+      "retained_rhs": "Add(x,Negate(constant)) with broadcast rebuilt if present",
+      "typed_profile_refs": [
+        "integer/sub_neg",
+        "real/sub_neg",
+        "complex/sub_neg",
+        "word_all_widths/sub_neg"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/self",
+      "retained_lhs": "Subtract(x,x)",
+      "retained_rhs": "MakeScalarLike(old,0)",
+      "typed_profile_refs": [
+        "integer/sub_self",
+        "real/sub_self",
+        "complex/sub_self",
+        "word_all_widths/sub_self"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/sub-add-self-left",
+      "retained_lhs": "Subtract(x,Add(x,y)) with x at left",
+      "retained_rhs": "Negate(y)",
+      "typed_profile_refs": [
+        "integer/sub_add_same_left",
+        "real/sub_add_same_left",
+        "complex/sub_add_same_left",
+        "word_all_widths/sub_add_same_left"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/sub-add-self-right",
+      "retained_lhs": "Subtract(x,Add(x,y)) with x at right",
+      "retained_rhs": "Negate(y)",
+      "typed_profile_refs": [
+        "integer/sub_add_same_right",
+        "real/sub_add_same_right",
+        "complex/sub_add_same_right",
+        "word_all_widths/sub_add_same_right"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/sub-sub-self",
+      "retained_lhs": "Subtract(x,Subtract(x,y))",
+      "retained_rhs": "y",
+      "typed_profile_refs": [
+        "integer/sub_sub_same",
+        "real/sub_sub_same",
+        "complex/sub_sub_same",
+        "word_all_widths/sub_sub_same"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSubtract/zero",
+      "retained_lhs": "Subtract(x,zero)",
+      "retained_rhs": "x",
+      "typed_profile_refs": [
+        "integer/sub_zero",
+        "real/sub_zero",
+        "complex/sub_zero",
+        "word_all_widths/sub_zero"
+      ],
+      "core_evidence": [
+        "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound"
+      ],
+      "observation": "pure tensor values in exact integer/real/complex or all-width modular word arithmetic",
+      "mathematical_premises": [
+        "selected actual CommRing instance; shared input tensors and typed original/replacement trees",
+        "Broadcast corollaries require actual bounded axes/extents; uniform-factor graph explicitly uses one scalar factor"
+      ],
+      "remaining_partitions": [
+        "IEEE rounded arithmetic and options are separate: three selected scalar profiles have counterexamples, remaining numerical profiles open",
+        "effect/control/physical observations and complete workload admission are open; no retained source guard is adopted"
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}
