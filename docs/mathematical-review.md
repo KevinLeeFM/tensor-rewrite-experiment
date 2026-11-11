@@ -93,3 +93,31 @@ The reviewed basis remains349 declarations/89 theory statements/4165 custom
 lines. The later scalar-domain milestone at `27937c1` raises current totals
 to363/103/4283; its14 new statements were excluded from the old review and
 await independent review. No whole retained record is closed by this review.
+
+## Scalar/reduction extension packet
+
+The separate packet `reviews/packets/mathematical-extensions-v1.md` freezes source
+commit `1714add` in a353-file mathematical-only archive with a per-file manifest.
+Its descriptor and archive were committed at `bb9b58d`. It requests inspection
+of the41 additions (14 scalar,27 reduction), their definitions/assumptions and
+the60-record reduction formulation worksheet. The original89-statement review
+does not cover these additions. New reviewer authorization has been requested
+under the session's subagent constraint; dispatch is pending. No other review
+status or full-workload acceptance follows from packaging.
+
+Verify the new packet against exact committed source bytes:
+
+```sh
+python3 tools/freeze_mathematical_extensions_review.py --verify
+```
+
+Current totals are130 theory statements/390 ledger declarations/4598 custom Lean
+lines, with four integration theorems separate. All38 focused worktree tests
+pass; the isolated packet needs35 of those tests (the three old packet-readiness
+tests remain historical evidence outside this new review).
+
+The v1 isolated preflight found a missing `reports/pilot-values.json` accounting
+input after its Lean build/axiom audit passed. V1 remains preserved as incomplete
+packaging. The v2 packet adds the report with unchanged41 statements/Lean sources;
+use `tools/freeze_mathematical_extensions_review_v2.py --verify` for v2.
+This is an infrastructure correction, not a mathematical refutation.
