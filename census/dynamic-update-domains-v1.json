@@ -1,0 +1,404 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_decoded_dynamic_update_profiles_remaining_partitions_open",
+  "retained_batches": [
+    {
+      "path": "census/shape-cases.json",
+      "sha256": "71920defc8575dabdcdea5479fbd03ea4366d9e05667b23cc4cceba6125ccf4f"
+    },
+    {
+      "path": "census/tensor-index-cases.json",
+      "sha256": "91fefd43fd3426227bbe44a3633febac9a6ca935d1b1bfa199ee8fac33a0b5de"
+    },
+    {
+      "path": "census/scalar-control-cases.json",
+      "sha256": "905974b8c88743cef12ce689f7aaca918dc635955d987eaa237d13f4e85c0c14"
+    },
+    {
+      "path": "census/arithmetic-cases.json",
+      "sha256": "a3df5f4aa5d8c122fda52db44d920e625b5f38be15b68eaaeaa06fb3c82037f7"
+    }
+  ],
+  "mathematical_model_manifest": "census/dynamic-update-v1.json",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleAdd/partial-update-lhs",
+      "retained_lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at lhs",
+      "retained_rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.add_update_left"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleAdd/partial-update-rhs",
+      "retained_lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at rhs",
+      "retained_rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.add_update_right"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicSlice/constant-indices",
+      "retained_lhs": "DynamicSlice(nonconstant x,constant indices)",
+      "retained_rhs": "Slice(x,clamped starts,starts+sizes,1)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_static"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicSlice/nested",
+      "retained_lhs": "DynamicSlice(DynamicSlice(x,inner),outer)",
+      "retained_rhs": "mutated DynamicSlice(x,Clamp(outer,0,inner_size-outer_size)+ConvertIfNeeded(Clamp(inner,0,input_size-inner_size)))",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_compose"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicSlice/same-shape",
+      "retained_lhs": "DynamicSlice(x,indices)",
+      "retained_rhs": "x",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_full"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicSlice/scalar",
+      "retained_lhs": "DynamicSlice(scalar,indices)",
+      "retained_rhs": "operand",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_scalar"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicSlice/zero-full-axis-indices",
+      "retained_lhs": "DynamicSlice(x,indices)",
+      "retained_rhs": "cloned DynamicSlice with full-axis indices zero",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicUpdateSlice/empty-update",
+      "retained_lhs": "DynamicUpdateSlice(base,empty,i)",
+      "retained_rhs": "base",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_empty"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicUpdateSlice/full-update",
+      "retained_lhs": "DynamicUpdateSlice(base,update,i)",
+      "retained_rhs": "update",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_full"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicUpdateSlice/nested",
+      "retained_lhs": "DUS(a,DUS(DS(a,id),c,inner),id)",
+      "retained_rhs": "mutated DUS(a,c,Clamp(id,0,base-inner_size)+ConvertIfNeeded(Clamp(inner,0,inner_size-update_size)))",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_nested"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDynamicUpdateSlice/zero-full-axis-indices",
+      "retained_lhs": "DynamicUpdateSlice(base,update,indices)",
+      "retained_rhs": "cloned DUS with full-axis indices zero",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-false-scalar-pred",
+      "retained_lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_scalar_false"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-false-tensor-pred",
+      "retained_lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_update_false"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-true-scalar-pred",
+      "retained_lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_scalar_true"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/update-true-tensor-pred",
+      "retained_lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+      "retained_rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_update_true"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSlice/exact-dynamic-update",
+      "retained_lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
+      "retained_rhs": "update",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.static_slice_update"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSlice/inside-dynamic-update",
+      "retained_lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
+      "retained_rhs": "Slice(update,s-c,l-c,strides)",
+      "core_evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside"
+      ],
+      "mathematical_premises": [
+        "Static same-rank shapes; update and nested update extents fit their containing shapes.",
+        "Each raw start is an explicitly decoded mathematical Int; per-axis clipping is computed, including nested independent clamps.",
+        "Pure arbitrary data for Slice/Update/Select; Add graphs additionally require actual AddZeroClass zero laws.",
+        "Static Slice corollaries construct legal unit-stride attributes from the bounded window; general positive strides are not admitted."
+      ],
+      "remaining_partitions": [
+        "Finite-width signed/unsigned decoders, conversions of combined starts and attribute overflow are not identified with the decoded Int model.",
+        "Binary32 Add graph refuted under stored-bit observations at negative zero; numerical permission/flag profiles remain open.",
+        "General strided contained slices, dynamic/physical/effect observations and full retained-case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}

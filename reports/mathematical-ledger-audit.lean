@@ -757,6 +757,88 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq
 #check @TensorRewrite.Theory.ConvolutionSeparable.term_reduced
 #print axioms TensorRewrite.Theory.ConvolutionSeparable.term_reduced
+#check @TensorRewrite.Theory.DynamicUpdate.add_update_left
+#print axioms TensorRewrite.Theory.DynamicUpdate.add_update_left
+#check @TensorRewrite.Theory.DynamicUpdate.add_update_right
+#print axioms TensorRewrite.Theory.DynamicUpdate.add_update_right
+#check @TensorRewrite.Theory.DynamicUpdate.binary32_add_update_refuted
+#print axioms TensorRewrite.Theory.DynamicUpdate.binary32_add_update_refuted
+#check @TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted
+#print axioms TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted
+#check @TensorRewrite.Theory.DynamicUpdate.embed_compose
+#print axioms TensorRewrite.Theory.DynamicUpdate.embed_compose
+#check @TensorRewrite.Theory.DynamicUpdate.embed_locate
+#print axioms TensorRewrite.Theory.DynamicUpdate.embed_locate
+#check @TensorRewrite.Theory.DynamicUpdate.embed_value
+#print axioms TensorRewrite.Theory.DynamicUpdate.embed_value
+#check @TensorRewrite.Theory.DynamicUpdate.full_embed
+#print axioms TensorRewrite.Theory.DynamicUpdate.full_embed
+#check @TensorRewrite.Theory.DynamicUpdate.full_locate
+#print axioms TensorRewrite.Theory.DynamicUpdate.full_locate
+#check @TensorRewrite.Theory.DynamicUpdate.full_start
+#print axioms TensorRewrite.Theory.DynamicUpdate.full_start
+#check @TensorRewrite.Theory.DynamicUpdate.locate_compose
+#print axioms TensorRewrite.Theory.DynamicUpdate.locate_compose
+#check @TensorRewrite.Theory.DynamicUpdate.locate_embed
+#print axioms TensorRewrite.Theory.DynamicUpdate.locate_embed
+#check @TensorRewrite.Theory.DynamicUpdate.locate_eq_some_iff
+#print axioms TensorRewrite.Theory.DynamicUpdate.locate_eq_some_iff
+#check @TensorRewrite.Theory.DynamicUpdate.map_update
+#print axioms TensorRewrite.Theory.DynamicUpdate.map_update
+#check @TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted
+#print axioms TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted
+#check @TensorRewrite.Theory.DynamicUpdate.select_scalar_false
+#print axioms TensorRewrite.Theory.DynamicUpdate.select_scalar_false
+#check @TensorRewrite.Theory.DynamicUpdate.select_scalar_true
+#print axioms TensorRewrite.Theory.DynamicUpdate.select_scalar_true
+#check @TensorRewrite.Theory.DynamicUpdate.select_update_false
+#print axioms TensorRewrite.Theory.DynamicUpdate.select_update_false
+#check @TensorRewrite.Theory.DynamicUpdate.select_update_true
+#print axioms TensorRewrite.Theory.DynamicUpdate.select_update_true
+#check @TensorRewrite.Theory.DynamicUpdate.slice_compose
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_compose
+#check @TensorRewrite.Theory.DynamicUpdate.slice_eq_existing
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_eq_existing
+#check @TensorRewrite.Theory.DynamicUpdate.slice_full
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_full
+#check @TensorRewrite.Theory.DynamicUpdate.slice_scalar
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_scalar
+#check @TensorRewrite.Theory.DynamicUpdate.slice_static
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_static
+#check @TensorRewrite.Theory.DynamicUpdate.slice_update
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_update
+#check @TensorRewrite.Theory.DynamicUpdate.slice_update_inside
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_update_inside
+#check @TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes
+#print axioms TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes
+#check @TensorRewrite.Theory.DynamicUpdate.start_bounds
+#print axioms TensorRewrite.Theory.DynamicUpdate.start_bounds
+#check @TensorRewrite.Theory.DynamicUpdate.static_axes_valid
+#print axioms TensorRewrite.Theory.DynamicUpdate.static_axes_valid
+#check @TensorRewrite.Theory.DynamicUpdate.static_axis_count
+#print axioms TensorRewrite.Theory.DynamicUpdate.static_axis_count
+#check @TensorRewrite.Theory.DynamicUpdate.static_index
+#print axioms TensorRewrite.Theory.DynamicUpdate.static_index
+#check @TensorRewrite.Theory.DynamicUpdate.static_slice_update
+#print axioms TensorRewrite.Theory.DynamicUpdate.static_slice_update
+#check @TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside
+#print axioms TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside
+#check @TensorRewrite.Theory.DynamicUpdate.update_empty
+#print axioms TensorRewrite.Theory.DynamicUpdate.update_empty
+#check @TensorRewrite.Theory.DynamicUpdate.update_full
+#print axioms TensorRewrite.Theory.DynamicUpdate.update_full
+#check @TensorRewrite.Theory.DynamicUpdate.update_nested
+#print axioms TensorRewrite.Theory.DynamicUpdate.update_nested
+#check @TensorRewrite.Theory.DynamicUpdate.update_slice_self
+#print axioms TensorRewrite.Theory.DynamicUpdate.update_slice_self
+#check @TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes
+#print axioms TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes
+#check @TensorRewrite.Theory.DynamicUpdate.zero_full_embed
+#print axioms TensorRewrite.Theory.DynamicUpdate.zero_full_embed
+#check @TensorRewrite.Theory.DynamicUpdate.zero_full_locate
+#print axioms TensorRewrite.Theory.DynamicUpdate.zero_full_locate
+#check @TensorRewrite.Theory.DynamicUpdate.zero_full_start
+#print axioms TensorRewrite.Theory.DynamicUpdate.zero_full_start
 #check @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #print axioms TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #check @TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum

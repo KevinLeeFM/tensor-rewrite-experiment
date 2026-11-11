@@ -4,10 +4,10 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 534 checked mathematical statements; custom Lean totals **10,098**.
+The theory target now has 575 checked mathematical statements; custom Lean totals **10,497**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including261 covered only by
-unreviewed proposals after the Scatter, numerical and order refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
+All488 retained records now have domain/dependency worksheets, including244 covered only by
+unreviewed proposals after the Scatter, numerical, order and update refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1188,3 +1188,13 @@ profiles under explicit mathematical bound/range conditions. Eighteen statements
 add326 custom Lean lines, including four bound/signedness/IEEE observation controls.
 Forty-eight records gain value-family evidence; the four families now total369
 profiles. Full records, global N/F, remaining observations and review stay open.
+
+
+## Bounded update and nested-window graphs
+
+The [DynamicUpdate model](docs/dynamic-update.md) now derives actual bounded
+membership and nested clamped coordinates, then proves empty/full updates,
+Select/Add transformations and legal static Slice corollaries. Forty-one statements
+add399 custom Lean lines;17 records gain typed partial evidence. Three certificates
+separate decoded signedness, raw versus clamped sums and binary32 retained-zero
+observations. Machine index conversions, general strides and whole records remain open.

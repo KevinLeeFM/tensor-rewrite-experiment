@@ -92,7 +92,7 @@ class NumericalTests(unittest.TestCase):
         progress = ledger.read('census/mathematical-ledger.json')
         result = audit.assemble(ledger.corpus(), progress, audit.read_catalog())
         self.assertEqual(result['retained_benchmark_records'], 488)
-        self.assertEqual(result['records_with_only_unreviewed_proposal_worksheets'], 261)
+        self.assertEqual(result['records_with_only_unreviewed_proposal_worksheets'], 244)
         self.assertEqual(progress['kernel_complete_family_profile_count'], 369)
         self.assertEqual(result['whole_benchmark_records_closed'], 0)
         self.assertIsNone(result['mathematical_obligation_denominator'])

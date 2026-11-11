@@ -40,3 +40,5 @@ public import TensorRewrite.Theory.ArithmeticFloatCounterexamples
 public import TensorRewrite.Theory.NumericalCounterexamples
 
 public import TensorRewrite.Theory.OrderCounterexamples
+
+public import TensorRewrite.Theory.DynamicUpdateCounterexamples

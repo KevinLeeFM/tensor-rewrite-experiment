@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 269,
-    "partial_model_evidence_requires_partition_review": 125,
+    "needs_formal_statement_and_domain_partition": 253,
+    "partial_model_evidence_requires_partition_review": 141,
     "declared_value_family_complete_full_record_partitions_open": 94
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 794,
+  "distinct_checked_declarations": 835,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,10 +39,11 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 489,
+    "library_backed_theory": 527,
     "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
+    "dynamic_update_contract_refutation": 3,
     "exact_numerical_domain_refutation": 5,
     "exact_order_domain_refutation": 4,
     "ordered_scatter_contract_refutation": 4,
@@ -1213,6 +1214,22 @@
       "independent_statement_review": "pending",
       "manifest": "census/numerical-values-v2.json",
       "manifest_sha256": "9aa89947845d0dd7bc31245f5898578e1a38fbd1d3b7725b1aa77e0ecd46187b"
+    },
+    {
+      "model": "decoded_bounded_dynamic_update_v1",
+      "scope": "actual same-rank bounded Slice/UpdateSlice, membership inverse, nested writes and pointwise graph rewrites",
+      "index_contract": "mathematical Int decoded starts, independently clamped per window and axis",
+      "value_contract": "arbitrary data types for pure Slice/Update/Select; AddZeroClass only for Add graphs",
+      "status": "kernel_checked_decoded_bounded_dynamic_update_graphs",
+      "checked_theorem_count": 41,
+      "full_family_complete": false,
+      "static_slice_contract": "derived legal unit-stride attributes; arbitrary positive strides not claimed",
+      "independently_clamped_nested_update_proved": true,
+      "all_machine_index_decoders_identified": false,
+      "floating_add_zero_laws_assumed": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/dynamic-update-v1.json",
+      "manifest_sha256": "f6555f895c2db604f113e18f1e33c34f55ff3978ee2b6bdcb63fe5c9ee4b327f"
     }
   ],
   "kernel_complete_family_profile_count": 369,
@@ -1220,10 +1237,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "db260abdc1d96bafc1341148caa59d45f655fc93bec441d382125a767e3a9c2c",
+    "sha256": "94e8823689c95afe4574307a5dc5b5bec0146678f7adc3e643db92c718e1fcc8",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "bf0754e6d22203b994255c3a8dd588938ff0de846620aaa5eb9a9c2f2472f1ae"
+    "output_sha256": "d0c0ba5f65986f4047b381d7233432a2b08460262a4b34bc20e6331b88a8c43e"
   },
   "proofs": [
     {
@@ -9038,6 +9055,774 @@
       "independent_statement_review": "pending",
       "axiom_dependencies": [
         "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_left",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/partial-update-lhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_right",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/partial-update-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.binary32_add_update_refuted",
+      "kinds": [
+        "dynamic_update_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted",
+      "kinds": [
+        "dynamic_update_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.embed_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.embed_locate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.embed_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.full_embed",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.full_locate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.full_start",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.locate_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.locate_embed",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.locate_eq_some_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.map_update",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted",
+      "kinds": [
+        "dynamic_update_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_false",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/update-false-scalar-pred"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_true",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/update-true-scalar-pred"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_false",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/update-false-tensor-pred"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_true",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/update-true-tensor-pred"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicSlice/nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_eq_existing",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_full",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicSlice/same-shape"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_scalar",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicSlice/scalar"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_static",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicSlice/constant-indices"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_update",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_update_inside",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicSlice/zero-full-axis-indices"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.start_bounds",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.static_axes_valid",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.static_axis_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.static_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.static_slice_update",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSlice/exact-dynamic-update"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSlice/inside-dynamic-update"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.update_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicUpdateSlice/empty-update"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.update_full",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicUpdateSlice/full-update"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.update_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicUpdateSlice/nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.update_slice_self",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDynamicUpdateSlice/zero-full-axis-indices"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.zero_full_embed",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.zero_full_locate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.DynamicUpdate.zero_full_start",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual decoded-Int bounded DynamicSlice/UpdateSlice windows; derived membership/embedding inverses, combined-clamp nested updates, empty/full and zero-full-axis laws; arbitrary-data Select/map, AddZeroClass additive graphs, derived legal unit-stride static Slice; signedness/raw-sum/binary32 negative-zero refutations separate; no machine conversion, arbitrary-stride, effect or physical closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
         "Quot.sound",
         "propext"
       ]
@@ -17219,8 +18004,10 @@
       "retained_lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at lhs",
       "retained_rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
       "unreviewed_benchmark_notes_not_assumptions": "AddAnyOrder matcher; DUS base Broadcast(ConstantEffectiveScalar(0)); no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.add_update_left"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17230,8 +18017,10 @@
       "retained_lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at rhs",
       "retained_rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
       "unreviewed_benchmark_notes_not_assumptions": "AddAnyOrder matcher; DUS base Broadcast(ConstantEffectiveScalar(0)); no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.add_update_right"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19120,8 +19909,10 @@
       "retained_lhs": "DynamicSlice(nonconstant x,constant indices)",
       "retained_rhs": "Slice(x,clamped starts,starts+sizes,1)",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; conversion not disabled; all offsets Constant integral; layout insensitive OR both layouts and equal memory spaces; every GetFirstInteger succeeds and is >=0",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_static"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19177,7 +19968,8 @@
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; original data operand DynamicSlice (direct-nested partition); every input-inner extent difference fits inner index type and input-outer difference fits outer index type",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose"
+        "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose",
+        "TensorRewrite.Theory.DynamicUpdate.slice_compose"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -19199,8 +19991,10 @@
       "retained_lhs": "DynamicSlice(x,indices)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; SameShape(x,result)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_full"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19210,8 +20004,10 @@
       "retained_lhs": "DynamicSlice(scalar,indices)",
       "retained_rhs": "operand",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; result shape scalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_scalar"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19243,8 +20039,10 @@
       "retained_lhs": "DynamicSlice(x,indices)",
       "retained_rhs": "cloned DynamicSlice with full-axis indices zero",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; at least one axis has input extent==result extent and index not (Constant AND IsAll(0))",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19254,8 +20052,10 @@
       "retained_lhs": "DynamicUpdateSlice(base,empty,i)",
       "retained_rhs": "base",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; update zero-element array",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_empty"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19265,8 +20065,10 @@
       "retained_lhs": "DynamicUpdateSlice(base,update,i)",
       "retained_rhs": "update",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; SameShape(result,update)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_full"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19276,8 +20078,10 @@
       "retained_lhs": "DUS(a,DUS(DS(a,id),c,inner),id)",
       "retained_rhs": "mutated DUS(a,c,Clamp(id,0,base-inner_size)+ConvertIfNeeded(Clamp(inner,0,inner_size-update_size)))",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; inner update base is DynamicSlice of same a; outer indices pointer-equal to that slice indices; every inner-update extent difference fits inner index type and base-update difference fits outer index type",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_nested"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19342,8 +20146,10 @@
       "retained_lhs": "DynamicUpdateSlice(base,update,indices)",
       "retained_rhs": "cloned DUS with full-axis indices zero",
       "unreviewed_benchmark_notes_not_assumptions": "not in async computation; at least one update extent equals output extent and index not (Constant AND IsAll(0))",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -22011,8 +22817,10 @@
       "retained_lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
       "retained_rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
       "unreviewed_benchmark_notes_not_assumptions": "update instruction has one use; shared base pointer; predicate scalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_scalar_false"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -22022,8 +22830,10 @@
       "retained_lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
       "retained_rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
       "unreviewed_benchmark_notes_not_assumptions": "update instruction has one use; shared base pointer; predicate nonscalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_update_false"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -22033,8 +22843,10 @@
       "retained_lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
       "retained_rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
       "unreviewed_benchmark_notes_not_assumptions": "update instruction has one use; shared base pointer; predicate scalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_scalar_true"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -22044,8 +22856,10 @@
       "retained_lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
       "retained_rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
       "unreviewed_benchmark_notes_not_assumptions": "update instruction has one use; shared base pointer; predicate nonscalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.select_update_true"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -22154,8 +22968,10 @@
       "retained_lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
       "retained_rhs": "update",
       "unreviewed_benchmark_notes_not_assumptions": "DUS operand_count == rank+2; all indices ConstantScalar with GetFirstInteger success; c=clamp(i,0,base_extent-update_extent); every s==c and l==c+update_extent; unstrided slice; compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.static_slice_update"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -22176,8 +22992,10 @@
       "retained_lhs": "Slice(DynamicUpdateSlice(base,update,i),s,l,strides)",
       "retained_rhs": "Slice(update,s-c,l-c,strides)",
       "unreviewed_benchmark_notes_not_assumptions": "same constant-index checks as exact-dynamic-update; every s>=c and l<=c+update_extent; layout insensitive OR output layout equals update layout",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

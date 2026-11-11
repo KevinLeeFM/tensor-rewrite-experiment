@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.DynamicUpdate.' in name:
+            manifest=read('census/dynamic-update-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.OrderFamily.' in name:
             manifest=read('census/order-values-family-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -251,7 +254,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('exact_order_domain_refutation' if '.OrderFamily.' in name
+        kind=('dynamic_update_contract_refutation' if '.DynamicUpdate.' in name
+              and name.endswith('_refuted') else 'exact_order_domain_refutation' if '.OrderFamily.' in name
               and name.endswith('_refuted') else 'exact_numerical_domain_refutation' if '.Numerical.' in name
               and name.endswith('_refuted') else 'arithmetic_ieee_profile_refutation' if '.ArithmeticFamily.' in name
               and name.endswith('_refuted') else
@@ -726,6 +730,20 @@ def mathematical_models(root=ROOT):
                        word_division_is_field_division=False,
                        independent_statement_review='pending',manifest=numerical['manifest'],
                        manifest_sha256=numerical['manifest_sha256']))
+    from check_dynamic_update import check_inputs as update_inputs, validate_result as validate_update
+    update=read('reports/dynamic-update.json',root);validate_update(update,root)
+    extension=update_inputs(root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.DynamicUpdate.' in name}
+    assert len(expected)==41 and update['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['scope'],
+                       index_contract=extension['index_contract'],value_contract=extension['value_contract'],
+                       status=update['status'],checked_theorem_count=41,full_family_complete=False,
+                       static_slice_contract=extension['static_slice_contract'],
+                       independently_clamped_nested_update_proved=True,
+                       all_machine_index_decoders_identified=False,floating_add_zero_laws_assumed=False,
+                       independent_statement_review='pending',manifest=update['manifest'],
+                       manifest_sha256=update['manifest_sha256']))
     return models
 
 

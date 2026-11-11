@@ -2764,6 +2764,240 @@ TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq : ∀ (axis : Tenso
         (TensorRewrite.Theory.ConvolutionSeparable.reverseKernel plan
           (TensorRewrite.Theory.ConvolutionSeparable.expandKernel plan reduced))
 'TensorRewrite.Theory.ConvolutionSeparable.term_reduced' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.add_update_left : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} [inst : AddZeroClass α] (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (window.update (TensorRewrite.Pilot.Tensor.constant 0) update)
+      base =
+    window.update base (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) update (window.slice base))
+'TensorRewrite.Theory.DynamicUpdate.add_update_left' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.add_update_right : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} [inst : AddZeroClass α] (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) base
+      (window.update (TensorRewrite.Pilot.Tensor.constant 0) update) =
+    window.update base (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) (window.slice base) update)
+'TensorRewrite.Theory.DynamicUpdate.add_update_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.DynamicUpdate.binary32_add_update_refuted : have window :=
+  TensorRewrite.Theory.DynamicUpdate.diagnosticLineWindow 2 1
+    TensorRewrite.Theory.DynamicUpdate.binary32_add_update_refuted._proof_1 1;
+have zero := FloatLib.Floats.ExecFloat.Binary.ofNatBits 0;
+have negativeZero := FloatLib.Floats.ExecFloat.Binary.ofNatBits 2147483648;
+have base := TensorRewrite.Pilot.Tensor.constant negativeZero;
+have update := TensorRewrite.Pilot.Tensor.constant zero;
+have left :=
+  TensorRewrite.Pilot.Tensor.map₂ FloatLib.Floats.ExecFloat.add base
+    (window.update (TensorRewrite.Pilot.Tensor.constant zero) update);
+have right :=
+  window.update base (TensorRewrite.Pilot.Tensor.map₂ FloatLib.Floats.ExecFloat.add (window.slice base) update);
+have index := fun x => 0;
+FloatLib.Floats.ExecFloat.Binary.toNatBits (left index) ≠ FloatLib.Floats.ExecFloat.Binary.toNatBits (right index)
+'TensorRewrite.Theory.DynamicUpdate.binary32_add_update_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted : have signed :=
+  TensorRewrite.Theory.DynamicUpdate.diagnosticLineWindow 3 1
+    TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted._proof_1 (255#8).toInt;
+have unsigned :=
+  TensorRewrite.Theory.DynamicUpdate.diagnosticLineWindow 3 1
+    TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted._proof_1 (Int.ofNat (255#8).toNat);
+have input := fun i => ↑(i 0);
+have index := fun x => 0;
+signed.slice input index ≠ unsigned.slice input index
+'TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.embed_compose : ∀ {rank : ℕ} {outer middle inner : TensorRewrite.Pilot.Shape rank}
+  (first : TensorRewrite.Theory.DynamicUpdate.Window outer middle)
+  (second : TensorRewrite.Theory.DynamicUpdate.Window middle inner) (index : TensorRewrite.Pilot.Index inner),
+  (first.compose second).embed index = first.embed (second.embed index)
+'TensorRewrite.Theory.DynamicUpdate.embed_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.embed_locate : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index outer)
+  (localIndex : TensorRewrite.Pilot.Index inner),
+  window.locate index = some localIndex → window.embed localIndex = index
+'TensorRewrite.Theory.DynamicUpdate.embed_locate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.embed_value : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index inner)
+  (axis : Fin rank), ↑(window.embed index axis) = window.start axis + ↑(index axis)
+'TensorRewrite.Theory.DynamicUpdate.embed_value' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.full_embed : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window shape shape) (index : TensorRewrite.Pilot.Index shape),
+  window.embed index = index
+'TensorRewrite.Theory.DynamicUpdate.full_embed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.full_locate : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window shape shape) (index : TensorRewrite.Pilot.Index shape),
+  window.locate index = some index
+'TensorRewrite.Theory.DynamicUpdate.full_locate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.full_start : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window shape shape) (axis : Fin rank), window.start axis = 0
+'TensorRewrite.Theory.DynamicUpdate.full_start' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.locate_compose : ∀ {rank : ℕ} {outer middle inner : TensorRewrite.Pilot.Shape rank}
+  (first : TensorRewrite.Theory.DynamicUpdate.Window outer middle)
+  (second : TensorRewrite.Theory.DynamicUpdate.Window middle inner) (index : TensorRewrite.Pilot.Index outer),
+  (first.compose second).locate index = (first.locate index).bind second.locate
+'TensorRewrite.Theory.DynamicUpdate.locate_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.locate_embed : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index inner),
+  window.locate (window.embed index) = some index
+'TensorRewrite.Theory.DynamicUpdate.locate_embed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.locate_eq_some_iff : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index outer)
+  (localIndex : TensorRewrite.Pilot.Index inner),
+  window.locate index = some localIndex ↔ window.embed localIndex = index
+'TensorRewrite.Theory.DynamicUpdate.locate_eq_some_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.map_update : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α β : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (f : α → β)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  TensorRewrite.Pilot.Tensor.map f (window.update base update) =
+    window.update (TensorRewrite.Pilot.Tensor.map f base) (TensorRewrite.Pilot.Tensor.map f update)
+'TensorRewrite.Theory.DynamicUpdate.map_update' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted : have first :=
+  TensorRewrite.Theory.DynamicUpdate.diagnosticLineWindow 5 3
+    TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted._proof_1 (-2);
+have second :=
+  TensorRewrite.Theory.DynamicUpdate.diagnosticLineWindow 3 1
+    TensorRewrite.Theory.DynamicUpdate.decoded_signedness_refuted._proof_1 100;
+have naive :=
+  TensorRewrite.Theory.DynamicUpdate.diagnosticLineWindow 5 1
+    TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted._proof_2 (-2 + 100);
+have input := fun i => ↑(i 0);
+have index := fun x => 0;
+(first.compose second).slice input index ≠ naive.slice input index
+'TensorRewrite.Theory.DynamicUpdate.raw_nested_sum_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.select_scalar_false : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (predicate : Bool)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  (fun i => if predicate = true then base i else window.update base update i) =
+    window.update base fun j => if predicate = true then window.slice base j else update j
+'TensorRewrite.Theory.DynamicUpdate.select_scalar_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.select_scalar_true : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (predicate : Bool)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  (fun i => if predicate = true then window.update base update i else base i) =
+    window.update base fun j => if predicate = true then update j else window.slice base j
+'TensorRewrite.Theory.DynamicUpdate.select_scalar_true' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.select_update_false : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (predicate : TensorRewrite.Pilot.Tensor outer Bool) (base : TensorRewrite.Pilot.Tensor outer α)
+  (update : TensorRewrite.Pilot.Tensor inner α),
+  (fun i => if predicate i = true then base i else window.update base update i) =
+    window.update base fun j => if window.slice predicate j = true then window.slice base j else update j
+'TensorRewrite.Theory.DynamicUpdate.select_update_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.select_update_true : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (predicate : TensorRewrite.Pilot.Tensor outer Bool) (base : TensorRewrite.Pilot.Tensor outer α)
+  (update : TensorRewrite.Pilot.Tensor inner α),
+  (fun i => if predicate i = true then window.update base update i else base i) =
+    window.update base fun j => if window.slice predicate j = true then update j else window.slice base j
+'TensorRewrite.Theory.DynamicUpdate.select_update_true' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_compose : ∀ {rank : ℕ} {outer middle inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (first : TensorRewrite.Theory.DynamicUpdate.Window outer middle)
+  (second : TensorRewrite.Theory.DynamicUpdate.Window middle inner) (input : TensorRewrite.Pilot.Tensor outer α),
+  second.slice (first.slice input) = (first.compose second).slice input
+'TensorRewrite.Theory.DynamicUpdate.slice_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_eq_existing : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (input : TensorRewrite.Pilot.Tensor outer α),
+  window.slice input = TensorRewrite.Pilot.DynamicIndex.sliceTensor input window.starts ⋯
+'TensorRewrite.Theory.DynamicUpdate.slice_eq_existing' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_full : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window shape shape) (input : TensorRewrite.Pilot.Tensor shape α),
+  window.slice input = input
+'TensorRewrite.Theory.DynamicUpdate.slice_full' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_scalar : ∀ {outer inner : TensorRewrite.Pilot.Shape 0} {α : Type}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (input : TensorRewrite.Pilot.Tensor outer α),
+  window.slice input = TensorRewrite.Pilot.Tensor.constant (input fun axis => axis.elim0)
+'TensorRewrite.Theory.DynamicUpdate.slice_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_static : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (input : TensorRewrite.Pilot.Tensor outer α),
+  window.slice input = fun i => input (TensorRewrite.Pilot.IndexMaps.sliceIndex window.staticAxes ⋯ i)
+'TensorRewrite.Theory.DynamicUpdate.slice_static' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_update : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  window.slice (window.update base update) = update
+'TensorRewrite.Theory.DynamicUpdate.slice_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_update_inside : ∀ {rank : ℕ}
+  {outer middle inner : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (first : TensorRewrite.Theory.DynamicUpdate.Window outer middle)
+  (second : TensorRewrite.Theory.DynamicUpdate.Window middle inner) (base : TensorRewrite.Pilot.Tensor outer α)
+  (update : TensorRewrite.Pilot.Tensor middle α),
+  (first.compose second).slice (first.update base update) = second.slice update
+'TensorRewrite.Theory.DynamicUpdate.slice_update_inside' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (input : TensorRewrite.Pilot.Tensor outer α), window.zeroFullAxes.slice input = window.slice input
+'TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.start_bounds : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (axis : Fin rank),
+  window.start axis + inner axis ≤ outer axis
+'TensorRewrite.Theory.DynamicUpdate.start_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.static_axes_valid : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (axis : Fin rank),
+  TensorRewrite.Pilot.SliceShape.IsWellFormed (↑(outer axis)) (↑(inner axis)) (window.staticAxes axis)
+'TensorRewrite.Theory.DynamicUpdate.static_axes_valid' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.static_axis_count : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (axis : Fin rank),
+  (window.staticAxes axis).elementCount = ↑(inner axis)
+'TensorRewrite.Theory.DynamicUpdate.static_axis_count' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.static_index : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index inner),
+  TensorRewrite.Pilot.IndexMaps.sliceIndex window.staticAxes ⋯ index = window.embed index
+'TensorRewrite.Theory.DynamicUpdate.static_index' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.static_slice_update : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  (fun i => window.update base update (TensorRewrite.Pilot.IndexMaps.sliceIndex window.staticAxes ⋯ i)) = update
+'TensorRewrite.Theory.DynamicUpdate.static_slice_update' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside : ∀ {rank : ℕ}
+  {outer middle inner : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (first : TensorRewrite.Theory.DynamicUpdate.Window outer middle)
+  (second : TensorRewrite.Theory.DynamicUpdate.Window middle inner) (base : TensorRewrite.Pilot.Tensor outer α)
+  (update : TensorRewrite.Pilot.Tensor middle α),
+  (fun i => first.update base update (TensorRewrite.Pilot.IndexMaps.sliceIndex (first.compose second).staticAxes ⋯ i)) =
+    second.slice update
+'TensorRewrite.Theory.DynamicUpdate.static_slice_update_inside' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.update_empty : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (axis : Fin rank),
+  inner axis = 0 →
+    ∀ (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+      window.update base update = base
+'TensorRewrite.Theory.DynamicUpdate.update_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.update_full : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window shape shape) (base update : TensorRewrite.Pilot.Tensor shape α),
+  window.update base update = update
+'TensorRewrite.Theory.DynamicUpdate.update_full' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.update_nested : ∀ {rank : ℕ} {outer middle inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (first : TensorRewrite.Theory.DynamicUpdate.Window outer middle)
+  (second : TensorRewrite.Theory.DynamicUpdate.Window middle inner) (base : TensorRewrite.Pilot.Tensor outer α)
+  (update : TensorRewrite.Pilot.Tensor inner α),
+  first.update base (second.update (first.slice base) update) = (first.compose second).update base update
+'TensorRewrite.Theory.DynamicUpdate.update_nested' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.update_slice_self : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (base : TensorRewrite.Pilot.Tensor outer α), window.update base (window.slice base) = base
+'TensorRewrite.Theory.DynamicUpdate.update_slice_self' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner)
+  (base : TensorRewrite.Pilot.Tensor outer α) (update : TensorRewrite.Pilot.Tensor inner α),
+  window.zeroFullAxes.update base update = window.update base update
+'TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.zero_full_embed : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index inner),
+  window.zeroFullAxes.embed index = window.embed index
+'TensorRewrite.Theory.DynamicUpdate.zero_full_embed' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.zero_full_locate : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (index : TensorRewrite.Pilot.Index outer),
+  window.zeroFullAxes.locate index = window.locate index
+'TensorRewrite.Theory.DynamicUpdate.zero_full_locate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.DynamicUpdate.zero_full_start : ∀ {rank : ℕ} {outer inner : TensorRewrite.Pilot.Shape rank}
+  (window : TensorRewrite.Theory.DynamicUpdate.Window outer inner) (axis : Fin rank),
+  window.zeroFullAxes.start axis = window.start axis
+'TensorRewrite.Theory.DynamicUpdate.zero_full_start' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum : ∀ {α : Type} [inst : AddMonoid α] (values : List α) (initial : α),
   List.foldl (fun x1 x2 => x1 + x2) initial values = initial + values.sum
 'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]

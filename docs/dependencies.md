@@ -120,3 +120,12 @@ observations. Its generated finite-type route failed in this import closure;
 explicit constructor enumeration repairs it without a dependency/toolchain change.
 The original failing source and compiler log are preserved; no library ablation
 or whole-workload result follows from that repaired infrastructure failure.
+
+
+## Reuse for concrete dynamic updates
+
+The [bounded update model](dynamic-update.md) reuses the existing project dynamic-
+index bounds/composition and static Slice theory. Its new membership decoder,
+nested-write and Select/Add proofs are counted separately. FloatLib supplies the
+actual binary32 negative-zero Add diagnostic. No library or toolchain pin changes
+are needed; decoded mathematical starts do not identify every finite index decoder.

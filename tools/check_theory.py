@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'DynamicUpdate': ['start_bounds', 'embed_value', 'locate_embed', 'embed_locate', 'locate_eq_some_iff', 'embed_compose', 'locate_compose', 'full_start', 'full_embed', 'full_locate', 'zero_full_start', 'zero_full_embed', 'zero_full_locate', 'slice_eq_existing', 'slice_compose', 'slice_full', 'slice_scalar', 'slice_zero_full_axes', 'update_full', 'update_empty', 'slice_update', 'update_slice_self', 'slice_update_inside', 'update_nested', 'map_update', 'update_zero_full_axes', 'select_update_false', 'select_update_true', 'select_scalar_false', 'select_scalar_true', 'add_update_right', 'add_update_left', 'static_axis_count', 'static_axes_valid', 'static_index', 'slice_static', 'static_slice_update', 'static_slice_update_inside', 'decoded_signedness_refuted', 'raw_nested_sum_refuted', 'binary32_add_update_refuted'],
     'OrderFamily': ['eval_minOrder', 'eval_maxOrder', 'rewrite_sound', 'condition_admitted', 'rewrite_in_context', 'allRules_complete', 'allRuleKeys_nodup', 'rule_count', 'integer_family', 'real_family', 'unsigned_family', 'signed_family', 'unsigned_nonnegative', 'unsigned_zero', 'reversed_bounds_refuted', 'signedness_refuted', 'binary32_nan_self_refuted', 'binary32_zero_observation_refuted'],
     'Numerical': ['divide_one', 'divide_as_product', 'divide_constant', 'divide_reciprocal', 'divide_fractions', 'divide_nested_numerator', 'divide_nested_denominator', 'divide_broadcast', 'divide_predicate_broadcast', 'real_exp_product', 'real_exp_quotient', 'real_exp_denominator', 'real_power_denominator', 'real_abs_square', 'real_sqrt_square_iff', 'real_rsqrt_square_iff', 'real_power_zero', 'real_power_one', 'real_power_two', 'real_power_three', 'real_power_minus_one', 'real_power_half', 'real_power_exp', 'real_log_power_pos', 'real_log_rsqrt_pos', 'real_rsqrt_inverse_square', 'real_rsqrt_inverse_square_iff', 'real_rsqrt_reciprocal', 'real_divide_sqrt', 'real_divide_rsqrt', 'real_exp_zero', 'complex_exp_zero', 'complex_exp_product', 'complex_exp_quotient', 'complex_exp_denominator', 'complex_power_denominator', 'complex_sqrt_square', 'complex_rsqrt_square', 'complex_power_zero', 'complex_power_one', 'complex_power_two', 'complex_power_three', 'complex_power_minus_one', 'complex_power_half', 'complex_power_exp_strip', 'complex_log_power_iff', 'complex_divide_sqrt', 'complex_divide_rsqrt', 'real_sqrt_square_refuted', 'real_rsqrt_inverse_square_refuted', 'real_power_denominator_refuted', 'complex_rsqrt_reciprocal_refuted', 'complex_power_exp_refuted'],
     'ArithmeticFamily': ['binary32_add_assoc_refuted', 'binary32_mul_assoc_refuted', 'binary32_mul_zero_refuted', 'subtract_broadcast', 'add_broadcast_constants', 'subtract_add_broadcast_constants', 'multiply_broadcast_constants', 'broadcast_uniform_factor', 'eval_addOrder', 'eval_mulOrder', 'rewrite_sound', 'rewrite_in_context', 'allRules_complete', 'allRuleKeys_nodup', 'rule_count', 'integer_family', 'real_family', 'complex_family', 'word_family'],
@@ -148,6 +149,12 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/DynamicUpdate.lean': 'S',
+        'TensorRewrite/Theory/DynamicUpdateLemmas.lean': 'H',
+        'TensorRewrite/Theory/DynamicUpdateProof.lean': 'R',
+        'TensorRewrite/Theory/DynamicUpdateStatic.lean': 'R',
+        'TensorRewrite/Theory/DynamicUpdateCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/OrderFamily.lean': 'S',
         'TensorRewrite/Theory/OrderWord.lean': 'S',
         'TensorRewrite/Theory/OrderFamilyProof.lean': 'R',
@@ -290,6 +297,13 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: (
+                             'actual decoded-Int bounded DynamicSlice/UpdateSlice windows; '
+                             'derived membership/embedding inverses, combined-clamp nested updates, '
+                             'empty/full and zero-full-axis laws; arbitrary-data Select/map, '
+                             'AddZeroClass additive graphs, derived legal unit-stride static Slice; '
+                             'signedness/raw-sum/binary32 negative-zero refutations separate; '
+                             'no machine conversion, arbitrary-stride, effect or physical closure'
+                             if '.DynamicUpdate.' in name else
                              'closed exact linear-order family:44 rule/order/direction instances; '
                              'integer/real and signed/unsigned actual words at all widths; '
                              'explicit pointwise bound/nonnegative/range conditions with executable '
