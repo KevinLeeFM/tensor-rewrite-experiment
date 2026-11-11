@@ -1,6 +1,6 @@
 {
   "status": "kernel_checked_mathematical_theory",
-  "new_theorem_count": 18,
+  "new_theorem_count": 38,
   "code_correspondence_performed": false,
   "code_correspondence_future_work": true,
   "source_rewrite_acceptance_claimed": false,
@@ -75,7 +75,102 @@
     ],
     "TensorRewrite.Theory.LogicalFamily.word_keys_uniform": [],
     "TensorRewrite.Theory.LogicalFamily.predicate_count": [],
-    "TensorRewrite.Theory.LogicalFamily.word_count": []
+    "TensorRewrite.Theory.LogicalFamily.word_count": [],
+    "TensorRewrite.Theory.Convolution.inputIndex?_negative": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.basePosition_reverse": [
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.inputIndex?_position": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.term_zero_kernel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.term_zero_input": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_zero_kernel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_zero_input": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_empty_fiber": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.spatialInput?_empty": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.term_empty_spatial_input": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_empty_spatial_input": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_empty_kernel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_no_channels": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.term_kernel_add": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.term_input_add": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.term_kernel_scale": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_kernel_add": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_input_add": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_kernel_scale": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.Convolution.convolve_bias_scale": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
   },
   "files": [
     {
@@ -114,16 +209,37 @@
       "code_lines": 27
     },
     {
+      "path": "TensorRewrite/Theory/Convolution.lean",
+      "category": "S",
+      "sha256": "a8de43c44f6c77904afdde43afde33e771b51132244a327acc2db121fe39bfb4",
+      "physical_lines": 129,
+      "code_lines": 89
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "category": "H",
+      "sha256": "9c6fd91a6c052bab60daf192bee5861ab9fd725cc0c5d0e3a2e689ac8c48169d",
+      "physical_lines": 142,
+      "code_lines": 108
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionAlgebra.lean",
+      "category": "R",
+      "sha256": "e03c089c6c71e275a007072c22239b526111c9a77927aea8ca6e8133ac89a476",
+      "physical_lines": 105,
+      "code_lines": 83
+    },
+    {
       "path": "TensorRewriteTheory.lean",
       "category": "A",
-      "sha256": "e77caae908aa9c52a0f7599fb188b44b26048698841f87607dc618d2bd0071f5",
-      "physical_lines": 6,
-      "code_lines": 5
+      "sha256": "2880530eb592bbaadceaafcd12428bea988ea96a4682f7bca3abdac217b03e28",
+      "physical_lines": 7,
+      "code_lines": 6
     }
   ],
-  "new_theory_lines": 241,
+  "new_theory_lines": 522,
   "previous_custom_lean_lines": 2796,
-  "total_custom_lean_lines": 3037,
+  "total_custom_lean_lines": 3318,
   "dependency_packages": [
     {
       "url": "https://github.com/lean-dojo/FloatLib.git",
@@ -252,7 +368,7 @@
     "FiniteSum.sum_swap": "Mathlib Finset.sum_comm",
     "FiniteSum.sum_add": "Mathlib Finset.sum_add_distrib"
   },
-  "scope": "format-general floating negation; exact finite sums and semiring contraction distributivity and typed logical family; no IEEE reassociation/distributivity claim",
+  "scope": "format-general floating negation; exact finite sums and semiring contraction/convolution exact algebra and typed logical family; no IEEE reassociation/distributivity claim",
   "theorem_profiles": {
     "TensorRewrite.Theory.FloatNegation.scalar_involution": "all supported FloatLib value formats; bit-exact negation; flags not observed",
     "TensorRewrite.Theory.FloatNegation.tensor_involution": "all supported FloatLib value formats; bit-exact negation; flags not observed",
@@ -271,7 +387,27 @@
     "TensorRewrite.Theory.LogicalFamily.allRules_nodup": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
     "TensorRewrite.Theory.LogicalFamily.word_keys_uniform": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
     "TensorRewrite.Theory.LogicalFamily.predicate_count": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
-    "TensorRewrite.Theory.LogicalFamily.word_count": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality"
+    "TensorRewrite.Theory.LogicalFamily.word_count": "pure predicate/word tensor values; all ranks/extents/word widths; equal-input xor requires value equality",
+    "TensorRewrite.Theory.Convolution.inputIndex?_negative": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.basePosition_reverse": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.inputIndex?_position": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.term_zero_kernel": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.term_zero_input": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_zero_kernel": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_zero_input": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_empty_fiber": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.spatialInput?_empty": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.term_empty_spatial_input": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_empty_spatial_input": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_empty_kernel": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_no_channels": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.term_kernel_add": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.term_input_add": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.term_kernel_scale": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_kernel_add": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_input_add": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_kernel_scale": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract",
+    "TensorRewrite.Theory.Convolution.convolve_bias_scale": "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract"
   },
-  "audit_stdout": "'TensorRewrite.Theory.FloatNegation.scalar_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reindex_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reverse_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]\n'TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_swap' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.LogicalFamily.rewrite_sound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.LogicalFamily.allRules_complete' depends on axioms: [propext]\n'TensorRewrite.Theory.LogicalFamily.allRules_nodup' depends on axioms: [propext]\n'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms\n'TensorRewrite.Theory.LogicalFamily.predicate_count' does not depend on any axioms\n'TensorRewrite.Theory.LogicalFamily.word_count' does not depend on any axioms\n"
+  "audit_stdout": "'TensorRewrite.Theory.FloatNegation.scalar_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reindex_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FloatNegation.reverse_neg' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]\n'TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.reshapeEquiv_apply' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_swap' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.FiniteSum.sum_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_left' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.LogicalFamily.rewrite_sound' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.LogicalFamily.allRules_complete' depends on axioms: [propext]\n'TensorRewrite.Theory.LogicalFamily.allRules_nodup' depends on axioms: [propext]\n'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms\n'TensorRewrite.Theory.LogicalFamily.predicate_count' does not depend on any axioms\n'TensorRewrite.Theory.LogicalFamily.word_count' does not depend on any axioms\n'TensorRewrite.Theory.Convolution.inputIndex?_negative' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.Convolution.basePosition_reverse' depends on axioms: [propext]\n'TensorRewrite.Theory.Convolution.inputIndex?_position' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.Convolution.term_zero_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.term_zero_input' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_zero_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_zero_input' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_empty_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.spatialInput?_empty' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Theory.Convolution.term_empty_spatial_input' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_empty_spatial_input' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_empty_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_no_channels' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.term_kernel_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.term_input_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.term_kernel_scale' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_kernel_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_input_add' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_kernel_scale' depends on axioms: [propext, Classical.choice, Quot.sound]\n'TensorRewrite.Theory.Convolution.convolve_bias_scale' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
 }

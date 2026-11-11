@@ -96,6 +96,12 @@ def evidence(root=ROOT):
     theory=read('reports/theory-progress.json',root)
     for name in theory['axiom_dependencies']:
         labels=['HandleNegate/involution'] if name.endswith('FloatNegation.tensor_involution') else []
+        if name.endswith(('Convolution.convolve_empty_spatial_input',
+                          'Convolution.convolve_empty_kernel','Convolution.convolve_no_channels')):
+            labels=['HandleConvolution/empty']
+        if name.endswith('Convolution.convolve_bias_scale'):
+            labels=['TryToReorderConvAddMultiply/order-'+side for side in
+                    ('lhs-lhs','lhs-rhs','rhs-lhs','rhs-rhs')]
         add(name,'library_backed_theory',theory.get('theorem_profiles',{}).get(name,theory['scope']),labels)
     return sorted(result.values(),key=lambda row:row['theorem'])
 
@@ -152,7 +158,24 @@ def formulated_families(root=ROOT):
                  label_correspondence_certified=False)]
 
 
-def assemble(cases,proofs,audit,families=()):
+def mathematical_models(root=ROOT):
+    from check_convolution_model import validate_result
+    model=read('reports/convolution-model.json',root);validate_result(model)
+    assert digest(root/model['manifest'])==model['manifest_sha256']
+    frozen=read(model['manifest'],root)
+    for file in frozen['model_files']:
+        assert digest(root/file['path'])==file['sha256']
+    theory=read('reports/theory-progress.json',root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.Convolution.' in name}
+    assert model['certificate_axioms']==expected
+    return [dict(model=frozen['model'],scope=frozen['geometry'],scalar_contract='exact_semiring',
+                 status=model['status'],checked_theorem_count=20,
+                 full_family_complete=False,independent_statement_review='pending',
+                 manifest=model['manifest'],manifest_sha256=model['manifest_sha256'])]
+
+
+def assemble(cases,proofs,audit,families=(),models=()):
     for proof in proofs:
         assert proof['mathematical_acceptance']=='kernel_checked_in_declared_model'
         for label in proof['historical_candidate_benchmark_labels']:
@@ -175,6 +198,7 @@ def assemble(cases,proofs,audit,families=()):
         distinct_checked_declarations=len(proofs),
         declaration_kind_counts=dict(Counter(k for p in proofs for k in p['kinds'])),
         formulated_mathematical_families=list(families),
+        partial_mathematical_models=list(models),
         kernel_complete_family_profile_count=sum(f['profile_unit_count'] for f in families),
         count_policy='declaration kinds can overlap; benchmark labels are retained candidates, '
                      'not certified correspondence; no proof-count/488 coverage fraction',
@@ -186,7 +210,7 @@ def main():
     args=parser.parse_args()
     if args.freeze_corpus:freeze()
     cases=corpus();proofs=evidence();audit=audit_theorems(proofs)
-    result=assemble(cases,proofs,audit,formulated_families())
+    result=assemble(cases,proofs,audit,formulated_families(),mathematical_models())
     (ROOT/'census/mathematical-ledger.json').write_text(json.dumps(result,indent=2)+'\n')
     print(str(result['benchmark_record_count'])+' benchmark records retained; '+
           str(result['distinct_checked_declarations'])+' mathematical declarations checked; '

@@ -15,6 +15,7 @@ THEOREMS = {
     'ContractionAlgebra': ['dot_add_left', 'dot_add_right'],
     'LogicalFamily': ['rewrite_sound', 'allRules_complete', 'allRules_nodup',
                       'word_keys_uniform', 'predicate_count', 'word_count'],
+    'Convolution': ['inputIndex?_negative', 'basePosition_reverse', 'inputIndex?_position', 'term_zero_kernel', 'term_zero_input', 'convolve_zero_kernel', 'convolve_zero_input', 'convolve_empty_fiber', 'spatialInput?_empty', 'term_empty_spatial_input', 'convolve_empty_spatial_input', 'convolve_empty_kernel', 'convolve_no_channels', 'term_kernel_add', 'term_input_add', 'term_kernel_scale', 'convolve_kernel_add', 'convolve_input_add', 'convolve_kernel_scale', 'convolve_bias_scale'],
 }
 
 
@@ -44,6 +45,9 @@ def main():
                   'TensorRewrite/Theory/ContractionAlgebra.lean': 'R',
                   'TensorRewrite/Theory/LogicalFamily.lean': 'S',
                   'TensorRewrite/Theory/LogicalFamilyProof.lean': 'R',
+                  'TensorRewrite/Theory/Convolution.lean': 'S',
+                  'TensorRewrite/Theory/ConvolutionLemmas.lean': 'H',
+                  'TensorRewrite/Theory/ConvolutionAlgebra.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     rows = []
     for name, category in categories.items():
@@ -65,7 +69,7 @@ def main():
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
                   scope='format-general floating negation; exact finite sums and semiring '
-                        'contraction distributivity and typed logical family; '
+                        'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: ('all supported FloatLib value formats; bit-exact negation; '
@@ -74,6 +78,9 @@ def main():
                              'equal-input xor requires value equality' if '.LogicalFamily.' in name else
                              'exact finite sums and ordered reductions under explicitly stated '
                              'AddMonoid/AddCommMonoid and equal-count premises' if '.FiniteSum.' in name
+                             else 'factored static convolution; positive stride/dilations; signed padding; '
+                                  'bounded grouping/sampling; Semiring for algebra; no IEEE contract'
+                             if '.Convolution.' in name
                              else 'arbitrary static contraction plans; Semiring; identity finish; '
                                   'no rounded floating-point algebra instance')
                       for name in dependencies},

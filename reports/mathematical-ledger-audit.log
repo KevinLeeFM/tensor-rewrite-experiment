@@ -1690,6 +1690,140 @@ TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes : ¬TensorRewrite.Pilot.S
       (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x y)
       (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x z)
 'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Convolution.basePosition_reverse : ∀ (axis : TensorRewrite.Theory.Convolution.Axis) (output : ℕ)
+  (kernel : Fin axis.kernelExtent),
+  { inputExtent := axis.inputExtent, kernelExtent := axis.kernelExtent, stride := axis.stride,
+          baseDilation := axis.baseDilation, kernelDilation := axis.kernelDilation, paddingLow := axis.paddingLow,
+          paddingHigh := axis.paddingHigh, reversed := !axis.reversed, stride_pos := ⋯, baseDilation_pos := ⋯,
+          kernelDilation_pos := ⋯ }.basePosition
+      output kernel.rev =
+    axis.basePosition output kernel
+'TensorRewrite.Theory.Convolution.basePosition_reverse' depends on axioms: [propext]
+@TensorRewrite.Theory.Convolution.convolve_bias_scale : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α)
+  (bias : TensorRewrite.Theory.Convolution.OutputIndex plan → α)
+  (weights : Fin plan.batchGroups → Fin plan.featureGroups → Fin plan.outputFeaturesPerGroup → α)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan),
+  (TensorRewrite.Theory.Convolution.convolve plan input kernel output + bias output) *
+      weights output.batchGroup output.featureGroup output.feature =
+    TensorRewrite.Theory.Convolution.convolve plan input (fun b h o c s => kernel b h o c s * weights b h o) output +
+      bias output * weights output.batchGroup output.featureGroup output.feature
+'TensorRewrite.Theory.Convolution.convolve_bias_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_empty_fiber : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape = 0 →
+    TensorRewrite.Theory.Convolution.convolve plan input kernel = fun x => 0
+'TensorRewrite.Theory.Convolution.convolve_empty_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_empty_kernel : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape = 0 →
+    TensorRewrite.Theory.Convolution.convolve plan input kernel = fun x => 0
+'TensorRewrite.Theory.Convolution.convolve_empty_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_empty_spatial_input : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    TensorRewrite.Theory.Convolution.convolve plan input kernel = fun x => 0
+'TensorRewrite.Theory.Convolution.convolve_empty_spatial_input' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_input_add : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (x y : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  TensorRewrite.Theory.Convolution.convolve plan (fun b c s => x b c s + y b c s) kernel = fun output =>
+    TensorRewrite.Theory.Convolution.convolve plan x kernel output +
+      TensorRewrite.Theory.Convolution.convolve plan y kernel output
+'TensorRewrite.Theory.Convolution.convolve_input_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_kernel_add : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (f g : TensorRewrite.Theory.Convolution.Kernel plan α),
+  (TensorRewrite.Theory.Convolution.convolve plan input fun b h o c s => f b h o c s + g b h o c s) = fun output =>
+    TensorRewrite.Theory.Convolution.convolve plan input f output +
+      TensorRewrite.Theory.Convolution.convolve plan input g output
+'TensorRewrite.Theory.Convolution.convolve_kernel_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_kernel_scale : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α)
+  (weights : Fin plan.batchGroups → Fin plan.featureGroups → Fin plan.outputFeaturesPerGroup → α),
+  (TensorRewrite.Theory.Convolution.convolve plan input fun b h o c s => kernel b h o c s * weights b h o) =
+    fun output =>
+    TensorRewrite.Theory.Convolution.convolve plan input kernel output *
+      weights output.batchGroup output.featureGroup output.feature
+'TensorRewrite.Theory.Convolution.convolve_kernel_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_no_channels : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  plan.inputFeaturesPerGroup = 0 → TensorRewrite.Theory.Convolution.convolve plan input kernel = fun x => 0
+'TensorRewrite.Theory.Convolution.convolve_no_channels' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_zero_input : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  TensorRewrite.Theory.Convolution.convolve plan (fun x x_1 x_2 => 0) kernel = fun x => 0
+'TensorRewrite.Theory.Convolution.convolve_zero_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.convolve_zero_kernel : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α),
+  (TensorRewrite.Theory.Convolution.convolve plan input fun x x_1 x_2 x_3 x_4 => 0) = fun x => 0
+'TensorRewrite.Theory.Convolution.convolve_zero_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Convolution.inputIndex?_negative : ∀ (axis : TensorRewrite.Theory.Convolution.Axis) (output : ℕ)
+  (kernel : Fin axis.kernelExtent), axis.basePosition output kernel < 0 → axis.inputIndex? output kernel = none
+'TensorRewrite.Theory.Convolution.inputIndex?_negative' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.Convolution.inputIndex?_position : ∀ (axis : TensorRewrite.Theory.Convolution.Axis) (output : ℕ)
+  (kernel : Fin axis.kernelExtent) (index : Fin axis.inputExtent),
+  axis.inputIndex? output kernel = some index → ↑↑index * ↑axis.baseDilation = axis.basePosition output kernel
+'TensorRewrite.Theory.Convolution.inputIndex?_position' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Convolution.spatialInput?_empty : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    ∀ (output : TensorRewrite.Pilot.Index plan.outputShape) (kernel : TensorRewrite.Pilot.Index plan.kernelShape),
+      TensorRewrite.Theory.Convolution.spatialInput? plan output kernel = none
+'TensorRewrite.Theory.Convolution.spatialInput?_empty' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Convolution.term_empty_spatial_input : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α) (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    TensorRewrite.Theory.Convolution.term plan input kernel output position = 0
+'TensorRewrite.Theory.Convolution.term_empty_spatial_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.term_input_add : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (x y : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α) (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.Convolution.term plan (fun b c s => x b c s + y b c s) kernel output position =
+    TensorRewrite.Theory.Convolution.term plan x kernel output position +
+      TensorRewrite.Theory.Convolution.term plan y kernel output position
+'TensorRewrite.Theory.Convolution.term_input_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.term_kernel_add : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (f g : TensorRewrite.Theory.Convolution.Kernel plan α) (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.Convolution.term plan input (fun b h o c s => f b h o c s + g b h o c s) output position =
+    TensorRewrite.Theory.Convolution.term plan input f output position +
+      TensorRewrite.Theory.Convolution.term plan input g output position
+'TensorRewrite.Theory.Convolution.term_kernel_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.term_kernel_scale : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α)
+  (weights : Fin plan.batchGroups → Fin plan.featureGroups → Fin plan.outputFeaturesPerGroup → α)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.Convolution.term plan input (fun b h o c s => kernel b h o c s * weights b h o) output position =
+    TensorRewrite.Theory.Convolution.term plan input kernel output position *
+      weights output.batchGroup output.featureGroup output.feature
+'TensorRewrite.Theory.Convolution.term_kernel_scale' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.term_zero_input : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (kernel : TensorRewrite.Theory.Convolution.Kernel plan α)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.Convolution.term plan (fun x x_1 x_2 => 0) kernel output position = 0
+'TensorRewrite.Theory.Convolution.term_zero_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Convolution.term_zero_kernel : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.Convolution.term plan input (fun x x_1 x_2 x_3 x_4 => 0) output position = 0
+'TensorRewrite.Theory.Convolution.term_zero_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum : ∀ {α : Type} [inst : AddMonoid α] (values : List α) (initial : α),
   List.foldl (fun x1 x2 => x1 + x2) initial values = initial + values.sum
 'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]

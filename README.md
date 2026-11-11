@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 18 checked mathematical statements; custom Lean totals **3,037**.
+The theory target now has 38 checked mathematical statements; custom Lean totals **3,318**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -816,7 +816,7 @@ remain open.
 ## Mathematical campaign ledger
 
 The retained benchmark corpus is frozen at488 records in
-`census/mathematical-corpus-v1.json`. The mathematical ledger audits248 registered
+`census/mathematical-corpus-v1.json`. The mathematical ledger audits268 registered
 model declarations and preserves all benchmark records without a coverage claim.
 Seventy-four records have candidate model evidence; full statement/domain
 partitions and whole-record results remain open. See
@@ -842,3 +842,18 @@ The ledger audits248 declarations and attaches this pure-value family to12 candi
 benchmark labels. Whole-record partitions, independent statement review and the full
 mathematical denominator remain open. See [evidence](reports/typed-logical-family-v1.md).
 Run `python3 tools/check_logical_family.py` after `python3 tools/check_theory.py`.
+
+
+## Exact convolution theory
+
+The [factored convolution model](docs/convolution-model.md) now derives bounded
+window coordinates with grouping, stride, signed padding, dilation and reversal.
+Twenty checked theorems cover geometry, empty/zero cases, linearity and
+per-output-feature/bias scaling under an explicit Semiring contract. Twenty-two
+semantic controls agree with an independent integer finite-sum oracle. IEEE
+accumulation, precision conversion and physical-layout normalization remain open;
+this does not complete the31-record convolution batch.
+
+The ledger now audits268 registered declarations. Run
+`python3 tools/check_convolution_model.py` after `python3 tools/check_theory.py`.
+See [the evidence report](reports/exact-convolution-model.md).

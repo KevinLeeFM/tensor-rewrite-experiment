@@ -465,6 +465,46 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_right
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_right
+#check @TensorRewrite.Theory.Convolution.basePosition_reverse
+#print axioms TensorRewrite.Theory.Convolution.basePosition_reverse
+#check @TensorRewrite.Theory.Convolution.convolve_bias_scale
+#print axioms TensorRewrite.Theory.Convolution.convolve_bias_scale
+#check @TensorRewrite.Theory.Convolution.convolve_empty_fiber
+#print axioms TensorRewrite.Theory.Convolution.convolve_empty_fiber
+#check @TensorRewrite.Theory.Convolution.convolve_empty_kernel
+#print axioms TensorRewrite.Theory.Convolution.convolve_empty_kernel
+#check @TensorRewrite.Theory.Convolution.convolve_empty_spatial_input
+#print axioms TensorRewrite.Theory.Convolution.convolve_empty_spatial_input
+#check @TensorRewrite.Theory.Convolution.convolve_input_add
+#print axioms TensorRewrite.Theory.Convolution.convolve_input_add
+#check @TensorRewrite.Theory.Convolution.convolve_kernel_add
+#print axioms TensorRewrite.Theory.Convolution.convolve_kernel_add
+#check @TensorRewrite.Theory.Convolution.convolve_kernel_scale
+#print axioms TensorRewrite.Theory.Convolution.convolve_kernel_scale
+#check @TensorRewrite.Theory.Convolution.convolve_no_channels
+#print axioms TensorRewrite.Theory.Convolution.convolve_no_channels
+#check @TensorRewrite.Theory.Convolution.convolve_zero_input
+#print axioms TensorRewrite.Theory.Convolution.convolve_zero_input
+#check @TensorRewrite.Theory.Convolution.convolve_zero_kernel
+#print axioms TensorRewrite.Theory.Convolution.convolve_zero_kernel
+#check @TensorRewrite.Theory.Convolution.inputIndex?_negative
+#print axioms TensorRewrite.Theory.Convolution.inputIndex?_negative
+#check @TensorRewrite.Theory.Convolution.inputIndex?_position
+#print axioms TensorRewrite.Theory.Convolution.inputIndex?_position
+#check @TensorRewrite.Theory.Convolution.spatialInput?_empty
+#print axioms TensorRewrite.Theory.Convolution.spatialInput?_empty
+#check @TensorRewrite.Theory.Convolution.term_empty_spatial_input
+#print axioms TensorRewrite.Theory.Convolution.term_empty_spatial_input
+#check @TensorRewrite.Theory.Convolution.term_input_add
+#print axioms TensorRewrite.Theory.Convolution.term_input_add
+#check @TensorRewrite.Theory.Convolution.term_kernel_add
+#print axioms TensorRewrite.Theory.Convolution.term_kernel_add
+#check @TensorRewrite.Theory.Convolution.term_kernel_scale
+#print axioms TensorRewrite.Theory.Convolution.term_kernel_scale
+#check @TensorRewrite.Theory.Convolution.term_zero_input
+#print axioms TensorRewrite.Theory.Convolution.term_zero_input
+#check @TensorRewrite.Theory.Convolution.term_zero_kernel
+#print axioms TensorRewrite.Theory.Convolution.term_zero_kernel
 #check @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #print axioms TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #check @TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum
