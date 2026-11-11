@@ -31,3 +31,5 @@ public import TensorRewrite.Theory.ScatterConcatProof
 public import TensorRewrite.Theory.ScatterLayoutCounterexample
 
 public import TensorRewrite.Theory.ScatterIndicesCounterexample
+
+public import TensorRewrite.Theory.ScatterBatchingCounterexample

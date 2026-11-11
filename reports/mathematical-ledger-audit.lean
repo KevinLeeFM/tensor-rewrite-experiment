@@ -1221,6 +1221,50 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square
 #check @TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
 #print axioms TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor
+#check @TensorRewrite.Theory.ScatterBatching.batch_coordinate_bound
+#print axioms TensorRewrite.Theory.ScatterBatching.batch_coordinate_bound
+#check @TensorRewrite.Theory.ScatterBatching.canonical_offset
+#print axioms TensorRewrite.Theory.ScatterBatching.canonical_offset
+#check @TensorRewrite.Theory.ScatterBatching.canonical_position
+#print axioms TensorRewrite.Theory.ScatterBatching.canonical_position
+#check @TensorRewrite.Theory.ScatterBatching.entries_eq_canonical
+#print axioms TensorRewrite.Theory.ScatterBatching.entries_eq_canonical
+#check @TensorRewrite.Theory.ScatterBatching.entries_length
+#print axioms TensorRewrite.Theory.ScatterBatching.entries_length
+#check @TensorRewrite.Theory.ScatterBatching.forgetting_batching_refuted
+#print axioms TensorRewrite.Theory.ScatterBatching.forgetting_batching_refuted
+#check @TensorRewrite.Theory.ScatterBatching.identityAxes_decode
+#print axioms TensorRewrite.Theory.ScatterBatching.identityAxes_decode
+#check @TensorRewrite.Theory.ScatterBatching.inserted_extent
+#print axioms TensorRewrite.Theory.ScatterBatching.inserted_extent
+#check @TensorRewrite.Theory.ScatterBatching.pairAt_mapped
+#print axioms TensorRewrite.Theory.ScatterBatching.pairAt_mapped
+#check @TensorRewrite.Theory.ScatterBatching.pairAt_unmapped
+#print axioms TensorRewrite.Theory.ScatterBatching.pairAt_unmapped
+#check @TensorRewrite.Theory.ScatterBatching.rawBatchAxis_extent
+#print axioms TensorRewrite.Theory.ScatterBatching.rawBatchAxis_extent
+#check @TensorRewrite.Theory.ScatterBatching.rawIndex_batch_value
+#print axioms TensorRewrite.Theory.ScatterBatching.rawIndex_batch_value
+#check @TensorRewrite.Theory.ScatterBatching.run_combine_nested
+#print axioms TensorRewrite.Theory.ScatterBatching.run_combine_nested
+#check @TensorRewrite.Theory.ScatterBatching.run_empty
+#print axioms TensorRewrite.Theory.ScatterBatching.run_empty
+#check @TensorRewrite.Theory.ScatterBatching.run_eq_canonical
+#print axioms TensorRewrite.Theory.ScatterBatching.run_eq_canonical
+#check @TensorRewrite.Theory.ScatterBatching.run_relayout_indices
+#print axioms TensorRewrite.Theory.ScatterBatching.run_relayout_indices
+#check @TensorRewrite.Theory.ScatterBatching.target_batch_coordinate
+#print axioms TensorRewrite.Theory.ScatterBatching.target_batch_coordinate
+#check @TensorRewrite.Theory.ScatterBatching.target_eq_canonical
+#print axioms TensorRewrite.Theory.ScatterBatching.target_eq_canonical
+#check @TensorRewrite.Theory.ScatterBatching.target_eq_some_iff
+#print axioms TensorRewrite.Theory.ScatterBatching.target_eq_some_iff
+#check @TensorRewrite.Theory.ScatterBatching.target_no_pairs
+#print axioms TensorRewrite.Theory.ScatterBatching.target_no_pairs
+#check @TensorRewrite.Theory.ScatterBatching.window_paired_zero
+#print axioms TensorRewrite.Theory.ScatterBatching.window_paired_zero
+#check @TensorRewrite.Theory.ScatterBatching.word_translate_distinct
+#print axioms TensorRewrite.Theory.ScatterBatching.word_translate_distinct
 #check @TensorRewrite.Theory.ScatterConcat.concatenate_left
 #print axioms TensorRewrite.Theory.ScatterConcat.concatenate_left
 #check @TensorRewrite.Theory.ScatterConcat.concatenate_right

@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ScatterBatching': ['inserted_extent', 'rawBatchAxis_extent', 'rawIndex_batch_value', 'pairAt_mapped', 'pairAt_unmapped', 'window_paired_zero', 'batch_coordinate_bound', 'identityAxes_decode', 'canonical_offset', 'canonical_position', 'target_eq_canonical', 'target_eq_some_iff', 'target_no_pairs', 'target_batch_coordinate', 'forgetting_batching_refuted', 'entries_eq_canonical', 'run_eq_canonical', 'entries_length', 'run_empty', 'run_relayout_indices', 'word_translate_distinct', 'run_combine_nested'],
     'IndexVector': ['batch_raw', 'component_raw', 'raw_split', 'vectorAxis_bound', 'implicit_components', 'elementCount_raw', 'read_pack', 'pack_read', 'read_map', 'read_relayout', 'relayout_refl', 'relayout_trans'],
     'ScatterIndices': ['entries_eq_layout', 'scatter_eq_layout', 'scatter_eq_ordered', 'entries_length', 'scatter_relayout_indices', 'scatter_empty', 'word_translate_distinct', 'empty_index_tensor_not_single_map'],
 
@@ -144,6 +145,10 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/ScatterBatching.lean': 'S',
+        'TensorRewrite/Theory/ScatterBatchingLemmas.lean': 'H',
+        'TensorRewrite/Theory/ScatterBatchingProof.lean': 'R',
+        'TensorRewrite/Theory/ScatterBatchingCounterexample.lean': 'C',
         'TensorRewrite/Theory/IndexVector.lean': 'S',
         'TensorRewrite/Theory/IndexVectorLemmas.lean': 'H',
         'TensorRewrite/Theory/ScatterIndices.lean': 'S',
@@ -267,6 +272,16 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: (
+                             'actual paired operand/index batching; equal extents and inserted '
+                             'operand axes disjoint from original vector-indexed axes; arbitrary '
+                             'pair ordering and subset of batch axes; actual raw axis projection; '
+                             'derive signed positions, identity-vector starts, targets and event/state '
+                             'equivalence; empty/relayout laws need no reducer algebra; distinct-role '
+                             'word translation and assoc/comm nested fusion only where stated; '
+                             'forgetting batching has a concrete slice counterexample; no general '
+                             'Transpose/Concat graph bridge, whole-window drop, IEEE algebra, '
+                             'external IR admission or full record/workload closure'
+                             if '.ScatterBatching.' in name else
                              'actual explicit zero-component raw index tensor with two batches: '
                              'zero raw index elements but two events, decimal Scatter12 versus first-update Map1; '
                              'no external guard or compiler behavior claim'

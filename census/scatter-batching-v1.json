@@ -1,0 +1,140 @@
+{
+  "schema": 1,
+  "model": "paired_operand_index_batching_and_raw_scatter_v1",
+  "geometry_contract": "actual raw index/update tensors; injective signed operand/index batch-axis arrays with equal extents; paired operand axes inserted and disjoint from indexed axes; actual batch coordinates override paired positions; ordinary offsets plus windows elsewhere; batch/window order and per-element drop",
+  "canonical_contract": "derive full identity operand-axis vector and every start from original indices or bounded batch coordinates; prove target, event and whole-state equivalence; no target equality or scalar algebra axiom",
+  "certificates": [
+    "TensorRewrite.Theory.ScatterBatching.inserted_extent",
+    "TensorRewrite.Theory.ScatterBatching.rawBatchAxis_extent",
+    "TensorRewrite.Theory.ScatterBatching.rawIndex_batch_value",
+    "TensorRewrite.Theory.ScatterBatching.pairAt_mapped",
+    "TensorRewrite.Theory.ScatterBatching.pairAt_unmapped",
+    "TensorRewrite.Theory.ScatterBatching.window_paired_zero",
+    "TensorRewrite.Theory.ScatterBatching.batch_coordinate_bound",
+    "TensorRewrite.Theory.ScatterBatching.identityAxes_decode",
+    "TensorRewrite.Theory.ScatterBatching.canonical_offset",
+    "TensorRewrite.Theory.ScatterBatching.canonical_position",
+    "TensorRewrite.Theory.ScatterBatching.target_eq_canonical",
+    "TensorRewrite.Theory.ScatterBatching.target_eq_some_iff",
+    "TensorRewrite.Theory.ScatterBatching.target_no_pairs",
+    "TensorRewrite.Theory.ScatterBatching.target_batch_coordinate",
+    "TensorRewrite.Theory.ScatterBatching.forgetting_batching_refuted",
+    "TensorRewrite.Theory.ScatterBatching.entries_eq_canonical",
+    "TensorRewrite.Theory.ScatterBatching.run_eq_canonical",
+    "TensorRewrite.Theory.ScatterBatching.entries_length",
+    "TensorRewrite.Theory.ScatterBatching.run_empty",
+    "TensorRewrite.Theory.ScatterBatching.run_relayout_indices",
+    "TensorRewrite.Theory.ScatterBatching.word_translate_distinct",
+    "TensorRewrite.Theory.ScatterBatching.run_combine_nested"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.ScatterBatching.forgetting_batching_refuted"
+  ],
+  "candidate_benchmark_bindings": {
+    "TensorRewrite.Theory.ScatterBatching.run_empty": [
+      "HandleScatter/empty-updates"
+    ],
+    "TensorRewrite.Theory.ScatterBatching.word_translate_distinct": [
+      "HandleAdd/scatter-single-lhs",
+      "HandleAdd/scatter-single-rhs"
+    ],
+    "TensorRewrite.Theory.ScatterBatching.run_combine_nested": [
+      "HandleAdd/scatter-nested"
+    ]
+  },
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ScatterBatchingLemmas.lean",
+      "sha256": "93dc651f9c588aea2ac68881688cd8877188d1458bdd2c6795d2a1b282e19150"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterBatchingCounterexample.lean",
+      "sha256": "c1ffe73973b1836b660a2407e4eeb6fb1176b0ca214cb21fb810f329a8593ed4"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterBatching.lean",
+      "sha256": "1c39c4aa9ad6038c999d96969e1e64149c5354929773f0d1281daaed4ae0b6c1"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterBatchingProof.lean",
+      "sha256": "50f2d76a4306b4fd2a2b608567b4c37070feb01794979fcf56565b1fe40cedf3"
+    },
+    {
+      "path": "tests/fixtures/ScatterBatchingControls.lean",
+      "sha256": "83876fcedeb31fade59f400db6dcc4d3c9cb90d6b32c24af6cb469b16e68e32d"
+    },
+    {
+      "path": "tools/scatter_batching_examples.py",
+      "sha256": "a9b9f367edb0498b2c5c20e2236e4e27b6c41c5ae8b7cc52622c6ad0e1b33259"
+    },
+    {
+      "path": "tools/check_scatter_batching.py",
+      "sha256": "26f8b796fe5291b682a73a5e1ec551529157e3d54c7a21317d28d34d5e7b4b85"
+    },
+    {
+      "path": "census/scatter-indices-v1.json",
+      "sha256": "f8cc3e410c521871e2603cd38c9cb2080b1a79f4bad0043a196cc78d9a8d5f1a"
+    },
+    {
+      "path": "census/scatter-layout-v1.json",
+      "sha256": "f538be562ec00ac15154fd4f2611322be81aa9bbd20d74b195489fa13dc950bf"
+    },
+    {
+      "path": "census/ordered-scatter-v1.json",
+      "sha256": "c13086b6ce0ee34725da67a868d5b25699c7ae2a5c152b1ce431f1766811946f"
+    },
+    {
+      "path": "TensorRewrite/Theory/IndexVector.lean",
+      "sha256": "fcd850b2d7ee123be24596bbc4c3b337e1f6eeed93ca986a8650b342e918c96b"
+    },
+    {
+      "path": "TensorRewrite/Theory/IndexVectorLemmas.lean",
+      "sha256": "c2b6cb33ae2c3457169e15cdf3431d058662763c6581fad4a64141297d79a7c4"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterIndices.lean",
+      "sha256": "d9ea8fdfb0b93fe42c3819da9248b26be665e6a1ce4b6c30b9c8d817c2dd55e2"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterLayout.lean",
+      "sha256": "2c0cdcba5ec0594b0d01143b5c57dae816f4f5e11bb0d63bb372e134a8a7776b"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterLayoutLemmas.lean",
+      "sha256": "67cba242f11fe40262c58e72c61077fd852335c33c2b0f00106afc1b0106aea0"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatter.lean",
+      "sha256": "8c093aa92f64d4e52497fcbca8b19730719da8e43954579b77cb5472b5b33ce1"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterGeometry.lean",
+      "sha256": "3f6cb2da8515fdf076d27bf38bff00ff23c2bfa790702192b739edfb697c7d66"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterGraph.lean",
+      "sha256": "36bced8f40e8685ea07fb66bdf8663d3e44a8b1d26bc8cc97aaebdba053e4f14"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiber.lean",
+      "sha256": "6c5666e00f969ab00e53a3a4eaefcbfb10e2527ae3c97832d781615a623ba6a1"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiberLemmas.lean",
+      "sha256": "a71056600ecf1eb98c95d9469c22549903e5285683f0c1a131c88f6beda70cb7"
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMaps.lean",
+      "sha256": "4e5980165487d76cc7c4d798ef7acc33bc724bc9b74b8b0e032dbfb8508c75e1"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independent_statement_review": "pending",
+  "whole_benchmark_records_closed": 0,
+  "mathematical_obligation_denominator": null
+}

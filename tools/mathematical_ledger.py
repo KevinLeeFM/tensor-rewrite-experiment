@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.ScatterBatching.' in name:
+            manifest=read('census/scatter-batching-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.ScatterIndices.' in name:
             manifest=read('census/scatter-indices-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -239,7 +242,9 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('raw_index_tensor_contract_counterexample'
+        kind=('paired_scatter_batching_contract_refutation'
+              if name.endswith('.ScatterBatching.forgetting_batching_refuted') else
+              'raw_index_tensor_contract_counterexample'
               if name.endswith('.ScatterIndices.empty_index_tensor_not_single_map') else
               'scatter_layout_order_refutation' if '.ScatterLayout.' in name
               and name.endswith('_refuted') else
@@ -650,6 +655,26 @@ def mathematical_models(root=ROOT):
                        all_scatter_dimension_numbers_supported=False,
                        independent_statement_review='pending',manifest=indices['manifest'],
                        manifest_sha256=indices['manifest_sha256']))
+    from check_scatter_batching import check_inputs as batching_inputs, validate_result as validate_batching
+    batching=read('reports/scatter-batching.json',root);validate_batching(batching)
+    extension=batching_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ScatterBatching.' in name}
+    assert len(expected)==22 and batching['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['geometry_contract'],
+                       canonical_contract=extension['canonical_contract'],status=batching['status'],
+                       checked_theorem_count=22,full_family_complete=False,
+                       actual_paired_batch_coordinates_derived=True,
+                       operand_index_batching_supported=True,unsorted_pair_arrays_supported=True,
+                       partial_batch_pairing_supported=True,actual_raw_index_batch_axis_derived=True,
+                       canonical_target_and_trace_bridge=True,whole_state_preserved=True,
+                       zero_pair_target_recovers_previous_model=True,
+                       general_transpose_graph_bridge_proved=False,
+                       general_raw_concat_graph_bridge_proved=False,
+                       all_scatter_dimension_numbers_supported=False,
+                       floating_associativity_assumed=False,
+                       independent_statement_review='pending',manifest=batching['manifest'],
+                       manifest_sha256=batching['manifest_sha256']))
     return models
 
 

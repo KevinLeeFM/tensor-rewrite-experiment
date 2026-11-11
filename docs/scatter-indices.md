@@ -72,3 +72,7 @@ reviewed 89 await independent statement review. Exact validation evidence is in
 All 98 curated mathematical tests pass. The five current-turn validation commands
 and exact outputs are archived in `reports/scatter-indices-validation-v1/`. Full
 Lake build and axiom checks include existing theory and the new extension.
+
+The subsequent [paired batching bridge](scatter-batching.md) adds actual operand/
+index-batch coordinates and a derived canonical evaluator. The frozen v1 reader
+profile remains unchanged; generic graph and observation bridges remain open.

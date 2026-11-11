@@ -436,3 +436,26 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScatterIndices.scatter_empty
 #print axioms TensorRewrite.Theory.ScatterIndices.word_translate_distinct
 #print axioms TensorRewrite.Theory.ScatterIndices.empty_index_tensor_not_single_map
+
+#print axioms TensorRewrite.Theory.ScatterBatching.inserted_extent
+#print axioms TensorRewrite.Theory.ScatterBatching.rawBatchAxis_extent
+#print axioms TensorRewrite.Theory.ScatterBatching.rawIndex_batch_value
+#print axioms TensorRewrite.Theory.ScatterBatching.pairAt_mapped
+#print axioms TensorRewrite.Theory.ScatterBatching.pairAt_unmapped
+#print axioms TensorRewrite.Theory.ScatterBatching.window_paired_zero
+#print axioms TensorRewrite.Theory.ScatterBatching.batch_coordinate_bound
+#print axioms TensorRewrite.Theory.ScatterBatching.identityAxes_decode
+#print axioms TensorRewrite.Theory.ScatterBatching.canonical_offset
+#print axioms TensorRewrite.Theory.ScatterBatching.canonical_position
+#print axioms TensorRewrite.Theory.ScatterBatching.target_eq_canonical
+#print axioms TensorRewrite.Theory.ScatterBatching.target_eq_some_iff
+#print axioms TensorRewrite.Theory.ScatterBatching.target_no_pairs
+#print axioms TensorRewrite.Theory.ScatterBatching.target_batch_coordinate
+#print axioms TensorRewrite.Theory.ScatterBatching.forgetting_batching_refuted
+#print axioms TensorRewrite.Theory.ScatterBatching.entries_eq_canonical
+#print axioms TensorRewrite.Theory.ScatterBatching.run_eq_canonical
+#print axioms TensorRewrite.Theory.ScatterBatching.entries_length
+#print axioms TensorRewrite.Theory.ScatterBatching.run_empty
+#print axioms TensorRewrite.Theory.ScatterBatching.run_relayout_indices
+#print axioms TensorRewrite.Theory.ScatterBatching.word_translate_distinct
+#print axioms TensorRewrite.Theory.ScatterBatching.run_combine_nested

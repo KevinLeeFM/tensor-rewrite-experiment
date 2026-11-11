@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 682,
+  "distinct_checked_declarations": 704,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,7 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 390,
+    "library_backed_theory": 411,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "ordered_scatter_contract_refutation": 4,
@@ -50,6 +50,7 @@
     "window_contract_refutation": 2,
     "remainder_contract_refutation": 3,
     "scalar_domain_counterexample": 2,
+    "paired_scatter_batching_contract_refutation": 1,
     "raw_index_tensor_contract_counterexample": 1,
     "scatter_layout_order_refutation": 1,
     "slice_pad_geometry_refutation": 2,
@@ -438,6 +439,29 @@
       "independent_statement_review": "pending",
       "manifest": "census/scatter-indices-v1.json",
       "manifest_sha256": "f8cc3e410c521871e2603cd38c9cb2080b1a79f4bad0043a196cc78d9a8d5f1a"
+    },
+    {
+      "model": "paired_operand_index_batching_and_raw_scatter_v1",
+      "scope": "actual raw index/update tensors; injective signed operand/index batch-axis arrays with equal extents; paired operand axes inserted and disjoint from indexed axes; actual batch coordinates override paired positions; ordinary offsets plus windows elsewhere; batch/window order and per-element drop",
+      "canonical_contract": "derive full identity operand-axis vector and every start from original indices or bounded batch coordinates; prove target, event and whole-state equivalence; no target equality or scalar algebra axiom",
+      "status": "kernel_checked_paired_batch_coordinates_and_raw_scatter_bridge",
+      "checked_theorem_count": 22,
+      "full_family_complete": false,
+      "actual_paired_batch_coordinates_derived": true,
+      "operand_index_batching_supported": true,
+      "unsorted_pair_arrays_supported": true,
+      "partial_batch_pairing_supported": true,
+      "actual_raw_index_batch_axis_derived": true,
+      "canonical_target_and_trace_bridge": true,
+      "whole_state_preserved": true,
+      "zero_pair_target_recovers_previous_model": true,
+      "general_transpose_graph_bridge_proved": false,
+      "general_raw_concat_graph_bridge_proved": false,
+      "all_scatter_dimension_numbers_supported": false,
+      "floating_associativity_assumed": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/scatter-batching-v1.json",
+      "manifest_sha256": "9c140d4c15f280a9515dcda598c2c767ec12628968a02dc4a3b70b3049e9e136"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -445,10 +469,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "1515065d8d68c9b951943608829f2b8a91695a075b27aef537d1a36a9f032836",
+    "sha256": "3770e69cc3681271d43a560990f1de024c735a65998059c201a45463b8d80af0",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "4b6b4f8a51db69cf2c865a14401feead043b316b099403b38f8a477a3eb4de66"
+    "output_sha256": "64f4a3da331e3b7c88f9b96b8289fe2ad24d80766a4bfe4aedd6584e3ad1ca93"
   },
   "proofs": [
     {
@@ -12211,6 +12235,397 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.batch_coordinate_bound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.canonical_offset",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.canonical_position",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.entries_eq_canonical",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.entries_length",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.forgetting_batching_refuted",
+      "kinds": [
+        "paired_scatter_batching_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.identityAxes_decode",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.inserted_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.pairAt_mapped",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.pairAt_unmapped",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.rawBatchAxis_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.rawIndex_batch_value",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.run_combine_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.run_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleScatter/empty-updates"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.run_eq_canonical",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.run_relayout_indices",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.target_batch_coordinate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.target_eq_canonical",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.target_eq_some_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.target_no_pairs",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.window_paired_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterBatching.word_translate_distinct",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual paired operand/index batching; equal extents and inserted operand axes disjoint from original vector-indexed axes; arbitrary pair ordering and subset of batch axes; actual raw axis projection; derive signed positions, identity-vector starts, targets and event/state equivalence; empty/relayout laws need no reducer algebra; distinct-role word translation and assoc/comm nested fusion only where stated; forgetting batching has a concrete slice counterexample; no general Transpose/Concat graph bridge, whole-window drop, IEEE algebra, external IR admission or full record/workload closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.ScatterConcat.concatenate_left",
       "kinds": [
         "library_backed_theory"
@@ -13861,6 +14276,7 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.OrderedScatter.run_combine_nested",
+        "TensorRewrite.Theory.ScatterBatching.run_combine_nested",
         "TensorRewrite.Theory.ScatterLayout.scatter_combine_nested"
       ],
       "whole_record_mathematically_closed": false,
@@ -13882,6 +14298,7 @@
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
         "TensorRewrite.Theory.OrderedScatter.scatter_translate",
         "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+        "TensorRewrite.Theory.ScatterBatching.word_translate_distinct",
         "TensorRewrite.Theory.ScatterIndices.word_translate_distinct",
         "TensorRewrite.Theory.ScatterLayout.scatter_translate",
         "TensorRewrite.Theory.ScatterLayout.word_translate_distinct"
@@ -13905,6 +14322,7 @@
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
         "TensorRewrite.Theory.OrderedScatter.scatter_translate",
         "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+        "TensorRewrite.Theory.ScatterBatching.word_translate_distinct",
         "TensorRewrite.Theory.ScatterIndices.word_translate_distinct",
         "TensorRewrite.Theory.ScatterLayout.scatter_translate",
         "TensorRewrite.Theory.ScatterLayout.word_translate_distinct"
@@ -17839,6 +18257,7 @@
       "evidence": [
         "TensorRewrite.Theory.OrderedScatter.empty_components",
         "TensorRewrite.Theory.OrderedScatter.scatter_empty",
+        "TensorRewrite.Theory.ScatterBatching.run_empty",
         "TensorRewrite.Theory.ScatterIndices.scatter_empty",
         "TensorRewrite.Theory.ScatterLayout.scatter_empty"
       ],
