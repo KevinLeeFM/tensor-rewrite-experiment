@@ -555,6 +555,28 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions
 #check @TensorRewrite.Theory.ConvolutionPointwise.term_pointwise
 #print axioms TensorRewrite.Theory.ConvolutionPointwise.term_pointwise
+#check @TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq
+#check @TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction
+#check @TensorRewrite.Theory.ConvolutionSeparable.derive_geometry
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.derive_geometry
+#check @TensorRewrite.Theory.ConvolutionSeparable.expand_project
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.expand_project
+#check @TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula
+#check @TensorRewrite.Theory.ConvolutionSeparable.project_expand
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.project_expand
+#check @TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply
+#check @TensorRewrite.Theory.ConvolutionSeparable.reverse_involution
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.reverse_involution
+#check @TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq
+#check @TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq
+#check @TensorRewrite.Theory.ConvolutionSeparable.term_reduced
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.term_reduced
 #check @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #print axioms TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #check @TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum

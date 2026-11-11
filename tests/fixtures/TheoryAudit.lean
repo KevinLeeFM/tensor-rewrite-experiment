@@ -63,3 +63,14 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum
 #print axioms TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot
 #print axioms TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.derive_geometry
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.project_expand
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.expand_project
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.reverse_involution
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.term_reduced
+#print axioms TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction

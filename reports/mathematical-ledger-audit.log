@@ -2003,6 +2003,92 @@ TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq : ∀ (axis : TensorR
       kernel output.batchGroup output.featureGroup output.feature (TensorRewrite.Pilot.FiniteProduct.row position)
         (TensorRewrite.Theory.ConvolutionPointwise.kernelIndex plan ⋯)
 'TensorRewrite.Theory.ConvolutionPointwise.term_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq : ∀ (axis : TensorRewrite.Theory.Convolution.Axis)
+  (separable : TensorRewrite.Theory.ConvolutionSeparable.IsSeparableAxis axis) (output : Fin axis.outputExtent)
+  (kernel : Fin axis.kernelExtent),
+  axis.inputIndex? (↑output) kernel =
+    some
+      (if unit : axis.kernelExtent = 1 then Fin.cast ⋯ output
+      else Fin.cast ⋯ (if axis.reversed = true then kernel.rev else kernel))
+'TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (separable : TensorRewrite.Theory.ConvolutionSeparable.IsSeparable plan) (single : plan.inputFeaturesPerGroup = 1)
+  (input : TensorRewrite.Theory.Convolution.Input plan α) (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  TensorRewrite.Theory.Convolution.convolve plan input kernel =
+    TensorRewrite.Theory.ConvolutionSeparable.productReduction plan ⋯ single input kernel
+'TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.derive_geometry : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank),
+  TensorRewrite.Theory.ConvolutionSeparable.IsSeparable plan → TensorRewrite.Theory.ConvolutionSeparable.Geometry plan
+'TensorRewrite.Theory.ConvolutionSeparable.derive_geometry' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.expand_project : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (index : TensorRewrite.Pilot.Index plan.kernelShape),
+  TensorRewrite.Theory.ConvolutionSeparable.expandKernel plan
+      (TensorRewrite.Theory.ConvolutionSeparable.projectKernel plan index) =
+    index
+'TensorRewrite.Theory.ConvolutionSeparable.expand_project' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula : ∀ (axis : TensorRewrite.Theory.Convolution.Axis),
+  TensorRewrite.Theory.ConvolutionSeparable.IsSeparableAxis axis →
+    axis.outputExtent = (↑axis.inputExtent - ↑axis.kernelExtent + 1).toNat
+'TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.project_expand : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (index : TensorRewrite.Theory.ConvolutionSeparable.ReducedIndex plan),
+  TensorRewrite.Theory.ConvolutionSeparable.projectKernel plan
+      (TensorRewrite.Theory.ConvolutionSeparable.expandKernel plan index) =
+    index
+'TensorRewrite.Theory.ConvolutionSeparable.project_expand' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (single : plan.inputFeaturesPerGroup = 1)
+  (reduced : TensorRewrite.Theory.ConvolutionSeparable.ReducedIndex plan),
+  (TensorRewrite.Theory.ConvolutionSeparable.reducedPositionEquiv plan single) reduced =
+    TensorRewrite.Pilot.FiniteProduct.join (TensorRewrite.Theory.ConvolutionSeparable.channelZero plan single)
+      (TensorRewrite.Pilot.LinearIndex.linearize plan.kernelShape
+        (TensorRewrite.Theory.ConvolutionSeparable.reverseKernel plan
+          (TensorRewrite.Theory.ConvolutionSeparable.expandKernel plan reduced)))
+'TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.reverse_involution : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (index : TensorRewrite.Pilot.Index plan.kernelShape),
+  TensorRewrite.Theory.ConvolutionSeparable.reverseKernel plan
+      (TensorRewrite.Theory.ConvolutionSeparable.reverseKernel plan index) =
+    index
+'TensorRewrite.Theory.ConvolutionSeparable.reverse_involution' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq : ∀ (axis : TensorRewrite.Theory.Convolution.Axis),
+  TensorRewrite.Theory.ConvolutionSeparable.IsSeparableAxis axis →
+    axis.outputExtent = 1 → axis.kernelExtent = axis.inputExtent
+'TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (separable : TensorRewrite.Theory.ConvolutionSeparable.IsSeparable plan)
+  (output : TensorRewrite.Pilot.Index plan.outputShape) (kernel : TensorRewrite.Pilot.Index plan.kernelShape),
+  TensorRewrite.Theory.Convolution.spatialInput? plan output kernel =
+    some
+      (TensorRewrite.Theory.ConvolutionSeparable.productInputIndex plan ⋯ output
+        (TensorRewrite.Theory.ConvolutionSeparable.reverseKernel plan kernel))
+'TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionSeparable.term_reduced : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (separable : TensorRewrite.Theory.ConvolutionSeparable.IsSeparable plan) (single : plan.inputFeaturesPerGroup = 1)
+  (input : TensorRewrite.Theory.Convolution.Input plan α) (kernel : TensorRewrite.Theory.Convolution.Kernel plan α)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (reduced : TensorRewrite.Theory.ConvolutionSeparable.ReducedIndex plan),
+  TensorRewrite.Theory.Convolution.term plan input kernel output
+      ((TensorRewrite.Theory.ConvolutionSeparable.reducedPositionEquiv plan single) reduced) =
+    input (TensorRewrite.Pilot.FiniteProduct.join output.batchGroup output.batch)
+        (TensorRewrite.Pilot.FiniteProduct.join output.featureGroup
+          (TensorRewrite.Theory.ConvolutionSeparable.channelZero plan single))
+        (TensorRewrite.Theory.ConvolutionSeparable.productInputIndex plan ⋯ output.spatial
+          (TensorRewrite.Theory.ConvolutionSeparable.expandKernel plan reduced)) *
+      kernel output.batchGroup output.featureGroup output.feature
+        (TensorRewrite.Theory.ConvolutionSeparable.channelZero plan single)
+        (TensorRewrite.Theory.ConvolutionSeparable.reverseKernel plan
+          (TensorRewrite.Theory.ConvolutionSeparable.expandKernel plan reduced))
+'TensorRewrite.Theory.ConvolutionSeparable.term_reduced' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum : ∀ {α : Type} [inst : AddMonoid α] (values : List α) (initial : α),
   List.foldl (fun x1 x2 => x1 + x2) initial values = initial + values.sum
 'TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum' depends on axioms: [propext]

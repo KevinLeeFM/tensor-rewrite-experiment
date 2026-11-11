@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 407,
-    "partial_model_evidence_requires_partition_review": 69,
+    "needs_formal_statement_and_domain_partition": 405,
+    "partial_model_evidence_requires_partition_review": 71,
     "declared_value_family_complete_full_record_partitions_open": 12
   },
   "batch_counts": {
@@ -25,14 +25,14 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 293,
+  "distinct_checked_declarations": 304,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
     "pure_graph_context": 12,
     "fixed_schedule_context": 12,
     "refutation_or_diagnostic_certificate": 38,
-    "library_backed_theory": 63
+    "library_backed_theory": 74
   },
   "formulated_mathematical_families": [
     {
@@ -95,6 +95,19 @@
       "independent_statement_review": "pending",
       "manifest": "census/convolution-dot-v1.json",
       "manifest_sha256": "4d17e816986053a79dd08310eceded90e08e77ee7ff8d3c7069fee549aea8a4c"
+    },
+    {
+      "model": "mixed_window_product_reduction_v1",
+      "scope": "each axis has kernel extent one or output extent one; unit stride/base/kernel dilation; zero padding; one input channel per group; same-type Semiring",
+      "scalar_contract": "exact_semiring_single_input_channel",
+      "status": "kernel_checked_mixed_window_product_reduction",
+      "checked_theorem_count": 11,
+      "full_family_complete": false,
+      "nonunit_axes_only": true,
+      "kernel_reversal_reindexed": true,
+      "independent_statement_review": "pending",
+      "manifest": "census/convolution-separable-v1.json",
+      "manifest_sha256": "347097e6242880005e51b3eeb25a9adfa29776b573879f1437f08f6ce6a061b8"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -102,10 +115,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "ef2d448a4305b045f7f1294027bce82c085b9cdd0cfe5d11ccd433058d3b999c",
+    "sha256": "5a6864afcf578fc236ad876391396f9dde9de568bc0d426ce42cd17aa607b6bd",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "eee6a27e4e6184ca518a4c35db60ec6b062d1fbb08286cee3bf20fce9a6d5559"
+    "output_sha256": "23fdcc16d182c1df641f29e44eb16bfef901b9b03627b67f693508cd0deb999c"
   },
   "proofs": [
     {
@@ -5080,6 +5093,200 @@
       ],
       "profile_descriptions": [
         "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToMultiply/pointwise-000",
+        "SimplifyConvToMultiply/reduce-000",
+        "SimplifyConvToMultiply/reduce-100"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.derive_geometry",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.expand_project",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.project_expand",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.reverse_involution",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionSeparable.term_reduced",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; one input channel; arbitrary rank/extents/groups/features; nonunit-axis reduction and kernel reversal; exact Semiring"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -10578,7 +10785,8 @@
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=False/False",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel"
+        "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel",
+        "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -10622,8 +10830,10 @@
       "retained_lhs": "restricted grouped/depthwise Convolution",
       "retained_rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=False; input/kernel type casts=False/False",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -10666,8 +10876,10 @@
       "retained_lhs": "restricted grouped/depthwise Convolution",
       "retained_rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel)) then ReduceAdd and Reshape",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=True; input/kernel type casts=False/False",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

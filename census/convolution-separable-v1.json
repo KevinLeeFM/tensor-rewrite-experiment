@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "model": "mixed_window_product_reduction_v1",
+  "base_model_manifest": "census/convolution-model-v2.json",
+  "channel_model_manifest": "census/convolution-pointwise-v1.json",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ConvolutionSeparable.lean",
+      "sha256": "178e5831d314a9e1e2330a1b6b23394f24521a57d1b13d2837c2739dca674322"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionSeparableLemmas.lean",
+      "sha256": "f8fcf596cc069bc6d06b5aad5d54fb253868f75739c504d51297106f2bb69a3b"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionSeparableProof.lean",
+      "sha256": "b8adf1fe3fe95ef2082da55ee4e26f054587bbed3eae842526b1ee5db5459a92"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionSeparableReindex.lean",
+      "sha256": "cfac951ef9948e38453a63ee10116f935eb361ef5c61b30c6f9365970b62c474"
+    },
+    {
+      "path": "tests/fixtures/ConvolutionSeparableControls.lean",
+      "sha256": "11b2fd823014c6a23c25f4c380ba4e7332fd5f41cf23dc804ad56f9e849978c1"
+    },
+    {
+      "path": "tools/check_convolution_separable.py",
+      "sha256": "dd85a04f95759d6fab5d1a5e58a5d63ce43916ad7645c6eadbe3b0247a5989fb"
+    },
+    {
+      "path": "census/convolution-mathematical-domains-v1.json",
+      "sha256": "f573d763d16ef2f22230c2cf03cbacbeacb6c2c7fce5a6b490a13b16cc18ee7e"
+    }
+  ],
+  "certificates": [
+    "TensorRewrite.Theory.ConvolutionSeparable.output_extent_formula",
+    "TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq",
+    "TensorRewrite.Theory.ConvolutionSeparable.derive_geometry",
+    "TensorRewrite.Theory.ConvolutionSeparable.axis_inputIndex_eq",
+    "TensorRewrite.Theory.ConvolutionSeparable.spatial_input_eq",
+    "TensorRewrite.Theory.ConvolutionSeparable.project_expand",
+    "TensorRewrite.Theory.ConvolutionSeparable.expand_project",
+    "TensorRewrite.Theory.ConvolutionSeparable.reverse_involution",
+    "TensorRewrite.Theory.ConvolutionSeparable.reduced_position_apply",
+    "TensorRewrite.Theory.ConvolutionSeparable.term_reduced",
+    "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
+  ],
+  "hypotheses": "each axis has kernel extent one or output extent one; unit stride/base/kernel dilation; zero padding; one input channel per group; same-type Semiring",
+  "conclusion": "pointwise product with reversed kernel, reduced only over nonunit spatial kernel axes",
+  "unrestricted": "rank, extents including zero, groups, batch sizes, output features, independent spatial reversals",
+  "geometry_derived_from_window": true,
+  "contribution_domain_equivalence_proved": true,
+  "scalar_contract": "exact_semiring_single_input_channel",
+  "full_convolution_family_complete": false,
+  "precision_conversions_modeled": false,
+  "ieee_accumulation_contract_proved": false,
+  "physical_layout_modeled": false,
+  "independently_reviewed_statements": false,
+  "code_correspondence": "future_work",
+  "new_custom_lean_lines": 226,
+  "previous_custom_lean_lines": 3698,
+  "current_custom_lean_lines": 3924,
+  "new_category_lines": {
+    "S": 51,
+    "H": 138,
+    "R": 36,
+    "A": 1
+  },
+  "base_model_manifest_sha256": "56b07e3eb7270982a04f24c0f86a61c6264ee97ea2a270f45133d00fddabc151",
+  "channel_model_manifest_sha256": "bf76965a3fe8fc7bd4f88c9646550e1d15e84f64a619b6b6d26e362d2a039662"
+}

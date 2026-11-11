@@ -45,9 +45,9 @@ class ConvolutionDotTests(unittest.TestCase):
             with patch.object(dot, 'digest', side_effect=changed_digest):
                 with self.assertRaises(AssertionError):dot.check_inputs()
         models=ledger.mathematical_models()
-        self.assertTrue(models[-1]['dot_tensor_bridge_proved'])
-        self.assertTrue(models[-1]['both_coordinate_round_trips_proved'])
-        self.assertFalse(models[-1]['full_family_complete'])
+        self.assertTrue(models[2]['dot_tensor_bridge_proved'])
+        self.assertTrue(models[2]['both_coordinate_round_trips_proved'])
+        self.assertFalse(models[2]['full_family_complete'])
 
 
 if __name__=='__main__':unittest.main()

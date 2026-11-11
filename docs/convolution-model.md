@@ -79,3 +79,8 @@ The original base files and v1/v2 evidence remain unchanged.
 The subsequent [Dot extension](convolution-dot.md) proves this pointwise
 channel reduction equal to the existing matrix contraction model, with
 bidirectional coordinate recovery and batch/spatial row flattening.
+
+The [mixed-window extension](convolution-separable.md) also covers axes with a
+unit kernel or a single output position, removing unit axes and the sole channel
+from the reduction and moving selected reversal onto the kernel operand. Its
+mathematical domain worksheet keeps all31 convolution records and their gaps.

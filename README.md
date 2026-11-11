@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 63 checked mathematical statements; custom Lean totals **3,698**.
+The theory target now has 74 checked mathematical statements; custom Lean totals **3,924**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -891,3 +891,18 @@ independent convolution oracle. All17 mathematical accounting tests pass. See
 [the statement and reproduction guide](docs/convolution-dot.md) and
 `reports/convolution-dot.json`. IEEE, conversions, physical layout, other window
 partitions and the full research verdict remain open.
+
+
+## Mixed-window product and reduction
+
+The exact model now proves convolution with mixed unit-kernel/single-output
+spatial axes equals a product reduced only over nonunit kernel axes. One input
+channel is required; geometry and selected kernel reversal are derived. Eleven
+new checked statements add226 Lean lines. Eleven profiles compare123 outputs
+against an independent oracle, and all20 mathematical accounting tests pass.
+
+See [the mixed-window guide](docs/convolution-separable.md),
+`reports/convolution-separable.json` and the versioned31-record mathematical
+domain worksheet. Nine conversion variants and seven helper-composition
+references remain visible; no final obligation denominator or full convolution
+family is claimed.

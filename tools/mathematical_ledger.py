@@ -104,6 +104,9 @@ def evidence(root=ROOT):
                     ('lhs-lhs','lhs-rhs','rhs-lhs','rhs-rhs')]
         if name.endswith('ConvolutionPointwise.convolve_eq_channelSum'):
             labels=['SimplifyConvToDot/pointwise-layout']
+        if name.endswith('ConvolutionSeparable.convolve_eq_productReduction'):
+            labels=['SimplifyConvToMultiply/'+mode for mode in
+                    ('pointwise-000','reduce-000','reduce-100')]
         if name.endswith('ConvolutionDot.convolve_eq_dot'):
             labels=['SimplifyConvToDot/pointwise-layout']
         if name.endswith('ConvolutionPointwise.convolve_single_channel'):
@@ -212,6 +215,21 @@ def mathematical_models(root=ROOT):
                        dot_tensor_bridge_proved=True,both_coordinate_round_trips_proved=True,
                        independent_statement_review='pending',manifest=dot['manifest'],
                        manifest_sha256=dot['manifest_sha256']))
+    from check_convolution_separable import check_inputs as separable_inputs
+    from check_convolution_separable import validate_result as validate_separable
+    separable=read('reports/convolution-separable.json',root);validate_separable(separable)
+    assert digest(root/separable['manifest'])==separable['manifest_sha256']
+    separable_manifest=separable_inputs(root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ConvolutionSeparable.' in name}
+    assert separable['certificate_axioms']==expected
+    assert set(separable_manifest['certificates'])==set(expected)
+    models.append(dict(model=separable_manifest['model'],scope=separable_manifest['hypotheses'],
+                       scalar_contract=separable['scalar_contract'],status=separable['status'],
+                       checked_theorem_count=11,full_family_complete=False,
+                       nonunit_axes_only=True,kernel_reversal_reindexed=True,
+                       independent_statement_review='pending',manifest=separable['manifest'],
+                       manifest_sha256=separable['manifest_sha256']))
     return models
 
 
