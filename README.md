@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 38 checked mathematical statements; custom Lean totals **3,318**.
+The theory target now has 51 checked mathematical statements; custom Lean totals **3,493**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -859,3 +859,18 @@ this does not complete the31-record convolution batch.
 The ledger now audits268 registered declarations. Run
 `python3 tools/check_convolution_model.py` after `python3 tools/check_theory.py`.
 See [the evidence report](reports/exact-convolution-model.md).
+
+
+## Pointwise convolution reduction
+
+Exact pointwise convolution now reduces to a genuine sum over input channels;
+with one channel per group, it reduces to one product. Thirteen new checked
+statements derive shape, bounded sampling and loop reindexing for arbitrary
+ranks/extents/groups/channels, including empty domains and rank zero. Eight
+semantic profiles compare both formulations with an independent integer oracle
+at78 output coordinates. The extension adds175 custom Lean lines.
+
+See [the statement and reproduction guide](docs/convolution-pointwise.md) and
+`reports/convolution-pointwise.json`. This is exact Semiring theory. The existing
+Dot-model bridge, other convolution geometry/conversion partitions, independent
+semantic review and full-workload mathematical closure remain open.

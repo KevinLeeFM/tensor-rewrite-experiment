@@ -38,3 +38,16 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Convolution.convolve_input_add
 #print axioms TensorRewrite.Theory.Convolution.convolve_kernel_scale
 #print axioms TensorRewrite.Theory.Convolution.convolve_bias_scale
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.base_position_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.term_pointwise
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel

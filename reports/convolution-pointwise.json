@@ -1,0 +1,579 @@
+{
+  "status": "kernel_checked_pointwise_convolution_to_channel_sum",
+  "manifest": "census/convolution-pointwise-v1.json",
+  "manifest_sha256": "bf76965a3fe8fc7bd4f88c9646550e1d15e84f64a619b6b6d26e362d2a039662",
+  "certificate_axioms": {
+    "TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit": [
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one": [
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.base_position_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq": [
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.term_pointwise": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "checked_statement_count": 13,
+  "semantic_profile_count": 8,
+  "semantic_output_count": 78,
+  "controls_stdout": "POINTWISE_COUNT case=one_channel count=3\nPOINTWISE case=one_channel index=0 conv=3 channels=3\nPOINTWISE case=one_channel index=1 conv=6 channels=6\nPOINTWISE case=one_channel index=2 conv=9 channels=9\nPOINTWISE_COUNT case=grouped_two_dimensional count=64\nPOINTWISE case=grouped_two_dimensional index=0 conv=152 channels=152\nPOINTWISE case=grouped_two_dimensional index=1 conv=164 channels=164\nPOINTWISE case=grouped_two_dimensional index=2 conv=272 channels=272\nPOINTWISE case=grouped_two_dimensional index=3 conv=284 channels=284\nPOINTWISE case=grouped_two_dimensional index=4 conv=304 channels=304\nPOINTWISE case=grouped_two_dimensional index=5 conv=328 channels=328\nPOINTWISE case=grouped_two_dimensional index=6 conv=544 channels=544\nPOINTWISE case=grouped_two_dimensional index=7 conv=568 channels=568\nPOINTWISE case=grouped_two_dimensional index=8 conv=512 channels=512\nPOINTWISE case=grouped_two_dimensional index=9 conv=524 channels=524\nPOINTWISE case=grouped_two_dimensional index=10 conv=632 channels=632\nPOINTWISE case=grouped_two_dimensional index=11 conv=644 channels=644\nPOINTWISE case=grouped_two_dimensional index=12 conv=1024 channels=1024\nPOINTWISE case=grouped_two_dimensional index=13 conv=1048 channels=1048\nPOINTWISE case=grouped_two_dimensional index=14 conv=1264 channels=1264\nPOINTWISE case=grouped_two_dimensional index=15 conv=1288 channels=1288\nPOINTWISE case=grouped_two_dimensional index=16 conv=1352 channels=1352\nPOINTWISE case=grouped_two_dimensional index=17 conv=1364 channels=1364\nPOINTWISE case=grouped_two_dimensional index=18 conv=1472 channels=1472\nPOINTWISE case=grouped_two_dimensional index=19 conv=1484 channels=1484\nPOINTWISE case=grouped_two_dimensional index=20 conv=2704 channels=2704\nPOINTWISE case=grouped_two_dimensional index=21 conv=2728 channels=2728\nPOINTWISE case=grouped_two_dimensional index=22 conv=2944 channels=2944\nPOINTWISE case=grouped_two_dimensional index=23 conv=2968 channels=2968\nPOINTWISE case=grouped_two_dimensional index=24 conv=1712 channels=1712\nPOINTWISE case=grouped_two_dimensional index=25 conv=1724 channels=1724\nPOINTWISE case=grouped_two_dimensional index=26 conv=1832 channels=1832\nPOINTWISE case=grouped_two_dimensional index=27 conv=1844 channels=1844\nPOINTWISE case=grouped_two_dimensional index=28 conv=3424 channels=3424\nPOINTWISE case=grouped_two_dimensional index=29 conv=3448 channels=3448\nPOINTWISE case=grouped_two_dimensional index=30 conv=3664 channels=3664\nPOINTWISE case=grouped_two_dimensional index=31 conv=3688 channels=3688\nPOINTWISE case=grouped_two_dimensional index=32 conv=5104 channels=5104\nPOINTWISE case=grouped_two_dimensional index=33 conv=5128 channels=5128\nPOINTWISE case=grouped_two_dimensional index=34 conv=5344 channels=5344\nPOINTWISE case=grouped_two_dimensional index=35 conv=5368 channels=5368\nPOINTWISE case=grouped_two_dimensional index=36 conv=10208 channels=10208\nPOINTWISE case=grouped_two_dimensional index=37 conv=10256 channels=10256\nPOINTWISE case=grouped_two_dimensional index=38 conv=10688 channels=10688\nPOINTWISE case=grouped_two_dimensional index=39 conv=10736 channels=10736\nPOINTWISE case=grouped_two_dimensional index=40 conv=5824 channels=5824\nPOINTWISE case=grouped_two_dimensional index=41 conv=5848 channels=5848\nPOINTWISE case=grouped_two_dimensional index=42 conv=6064 channels=6064\nPOINTWISE case=grouped_two_dimensional index=43 conv=6088 channels=6088\nPOINTWISE case=grouped_two_dimensional index=44 conv=11648 channels=11648\nPOINTWISE case=grouped_two_dimensional index=45 conv=11696 channels=11696\nPOINTWISE case=grouped_two_dimensional index=46 conv=12128 channels=12128\nPOINTWISE case=grouped_two_dimensional index=47 conv=12176 channels=12176\nPOINTWISE case=grouped_two_dimensional index=48 conv=7504 channels=7504\nPOINTWISE case=grouped_two_dimensional index=49 conv=7528 channels=7528\nPOINTWISE case=grouped_two_dimensional index=50 conv=7744 channels=7744\nPOINTWISE case=grouped_two_dimensional index=51 conv=7768 channels=7768\nPOINTWISE case=grouped_two_dimensional index=52 conv=15008 channels=15008\nPOINTWISE case=grouped_two_dimensional index=53 conv=15056 channels=15056\nPOINTWISE case=grouped_two_dimensional index=54 conv=15488 channels=15488\nPOINTWISE case=grouped_two_dimensional index=55 conv=15536 channels=15536\nPOINTWISE case=grouped_two_dimensional index=56 conv=8224 channels=8224\nPOINTWISE case=grouped_two_dimensional index=57 conv=8248 channels=8248\nPOINTWISE case=grouped_two_dimensional index=58 conv=8464 channels=8464\nPOINTWISE case=grouped_two_dimensional index=59 conv=8488 channels=8488\nPOINTWISE case=grouped_two_dimensional index=60 conv=16448 channels=16448\nPOINTWISE case=grouped_two_dimensional index=61 conv=16496 channels=16496\nPOINTWISE case=grouped_two_dimensional index=62 conv=16928 channels=16928\nPOINTWISE case=grouped_two_dimensional index=63 conv=16976 channels=16976\nPOINTWISE_COUNT case=reversed_kernel_dilation count=6\nPOINTWISE case=reversed_kernel_dilation index=0 conv=47 channels=47\nPOINTWISE case=reversed_kernel_dilation index=1 conv=54 channels=54\nPOINTWISE case=reversed_kernel_dilation index=2 conv=61 channels=61\nPOINTWISE case=reversed_kernel_dilation index=3 conv=94 channels=94\nPOINTWISE case=reversed_kernel_dilation index=4 conv=108 channels=108\nPOINTWISE case=reversed_kernel_dilation index=5 conv=122 channels=122\nPOINTWISE_COUNT case=zero_channels count=3\nPOINTWISE case=zero_channels index=0 conv=0 channels=0\nPOINTWISE case=zero_channels index=1 conv=0 channels=0\nPOINTWISE case=zero_channels index=2 conv=0 channels=0\nPOINTWISE_COUNT case=empty_spatial count=0\nPOINTWISE_COUNT case=rank_zero count=1\nPOINTWISE case=rank_zero index=0 conv=47 channels=47\nPOINTWISE_COUNT case=rank_zero_no_channels count=1\nPOINTWISE case=rank_zero_no_channels index=0 conv=0 channels=0\nPOINTWISE_COUNT case=no_batch_groups count=0\n",
+  "profile_counts": [
+    {
+      "name": "one_channel",
+      "count": 3
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "count": 64
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "count": 6
+    },
+    {
+      "name": "zero_channels",
+      "count": 3
+    },
+    {
+      "name": "empty_spatial",
+      "count": 0
+    },
+    {
+      "name": "rank_zero",
+      "count": 1
+    },
+    {
+      "name": "rank_zero_no_channels",
+      "count": 1
+    },
+    {
+      "name": "no_batch_groups",
+      "count": 0
+    }
+  ],
+  "controls": [
+    {
+      "name": "one_channel",
+      "index": 0,
+      "convolution": 3,
+      "channel_sum": 3
+    },
+    {
+      "name": "one_channel",
+      "index": 1,
+      "convolution": 6,
+      "channel_sum": 6
+    },
+    {
+      "name": "one_channel",
+      "index": 2,
+      "convolution": 9,
+      "channel_sum": 9
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 0,
+      "convolution": 152,
+      "channel_sum": 152
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 1,
+      "convolution": 164,
+      "channel_sum": 164
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 2,
+      "convolution": 272,
+      "channel_sum": 272
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 3,
+      "convolution": 284,
+      "channel_sum": 284
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 4,
+      "convolution": 304,
+      "channel_sum": 304
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 5,
+      "convolution": 328,
+      "channel_sum": 328
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 6,
+      "convolution": 544,
+      "channel_sum": 544
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 7,
+      "convolution": 568,
+      "channel_sum": 568
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 8,
+      "convolution": 512,
+      "channel_sum": 512
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 9,
+      "convolution": 524,
+      "channel_sum": 524
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 10,
+      "convolution": 632,
+      "channel_sum": 632
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 11,
+      "convolution": 644,
+      "channel_sum": 644
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 12,
+      "convolution": 1024,
+      "channel_sum": 1024
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 13,
+      "convolution": 1048,
+      "channel_sum": 1048
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 14,
+      "convolution": 1264,
+      "channel_sum": 1264
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 15,
+      "convolution": 1288,
+      "channel_sum": 1288
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 16,
+      "convolution": 1352,
+      "channel_sum": 1352
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 17,
+      "convolution": 1364,
+      "channel_sum": 1364
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 18,
+      "convolution": 1472,
+      "channel_sum": 1472
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 19,
+      "convolution": 1484,
+      "channel_sum": 1484
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 20,
+      "convolution": 2704,
+      "channel_sum": 2704
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 21,
+      "convolution": 2728,
+      "channel_sum": 2728
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 22,
+      "convolution": 2944,
+      "channel_sum": 2944
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 23,
+      "convolution": 2968,
+      "channel_sum": 2968
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 24,
+      "convolution": 1712,
+      "channel_sum": 1712
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 25,
+      "convolution": 1724,
+      "channel_sum": 1724
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 26,
+      "convolution": 1832,
+      "channel_sum": 1832
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 27,
+      "convolution": 1844,
+      "channel_sum": 1844
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 28,
+      "convolution": 3424,
+      "channel_sum": 3424
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 29,
+      "convolution": 3448,
+      "channel_sum": 3448
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 30,
+      "convolution": 3664,
+      "channel_sum": 3664
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 31,
+      "convolution": 3688,
+      "channel_sum": 3688
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 32,
+      "convolution": 5104,
+      "channel_sum": 5104
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 33,
+      "convolution": 5128,
+      "channel_sum": 5128
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 34,
+      "convolution": 5344,
+      "channel_sum": 5344
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 35,
+      "convolution": 5368,
+      "channel_sum": 5368
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 36,
+      "convolution": 10208,
+      "channel_sum": 10208
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 37,
+      "convolution": 10256,
+      "channel_sum": 10256
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 38,
+      "convolution": 10688,
+      "channel_sum": 10688
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 39,
+      "convolution": 10736,
+      "channel_sum": 10736
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 40,
+      "convolution": 5824,
+      "channel_sum": 5824
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 41,
+      "convolution": 5848,
+      "channel_sum": 5848
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 42,
+      "convolution": 6064,
+      "channel_sum": 6064
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 43,
+      "convolution": 6088,
+      "channel_sum": 6088
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 44,
+      "convolution": 11648,
+      "channel_sum": 11648
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 45,
+      "convolution": 11696,
+      "channel_sum": 11696
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 46,
+      "convolution": 12128,
+      "channel_sum": 12128
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 47,
+      "convolution": 12176,
+      "channel_sum": 12176
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 48,
+      "convolution": 7504,
+      "channel_sum": 7504
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 49,
+      "convolution": 7528,
+      "channel_sum": 7528
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 50,
+      "convolution": 7744,
+      "channel_sum": 7744
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 51,
+      "convolution": 7768,
+      "channel_sum": 7768
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 52,
+      "convolution": 15008,
+      "channel_sum": 15008
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 53,
+      "convolution": 15056,
+      "channel_sum": 15056
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 54,
+      "convolution": 15488,
+      "channel_sum": 15488
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 55,
+      "convolution": 15536,
+      "channel_sum": 15536
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 56,
+      "convolution": 8224,
+      "channel_sum": 8224
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 57,
+      "convolution": 8248,
+      "channel_sum": 8248
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 58,
+      "convolution": 8464,
+      "channel_sum": 8464
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 59,
+      "convolution": 8488,
+      "channel_sum": 8488
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 60,
+      "convolution": 16448,
+      "channel_sum": 16448
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 61,
+      "convolution": 16496,
+      "channel_sum": 16496
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 62,
+      "convolution": 16928,
+      "channel_sum": 16928
+    },
+    {
+      "name": "grouped_two_dimensional",
+      "index": 63,
+      "convolution": 16976,
+      "channel_sum": 16976
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "index": 0,
+      "convolution": 47,
+      "channel_sum": 47
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "index": 1,
+      "convolution": 54,
+      "channel_sum": 54
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "index": 2,
+      "convolution": 61,
+      "channel_sum": 61
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "index": 3,
+      "convolution": 94,
+      "channel_sum": 94
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "index": 4,
+      "convolution": 108,
+      "channel_sum": 108
+    },
+    {
+      "name": "reversed_kernel_dilation",
+      "index": 5,
+      "convolution": 122,
+      "channel_sum": 122
+    },
+    {
+      "name": "zero_channels",
+      "index": 0,
+      "convolution": 0,
+      "channel_sum": 0
+    },
+    {
+      "name": "zero_channels",
+      "index": 1,
+      "convolution": 0,
+      "channel_sum": 0
+    },
+    {
+      "name": "zero_channels",
+      "index": 2,
+      "convolution": 0,
+      "channel_sum": 0
+    },
+    {
+      "name": "rank_zero",
+      "index": 0,
+      "convolution": 47,
+      "channel_sum": 47
+    },
+    {
+      "name": "rank_zero_no_channels",
+      "index": 0,
+      "convolution": 0,
+      "channel_sum": 0
+    }
+  ],
+  "scalar_contract": "exact_semiring",
+  "full_convolution_family_complete": false,
+  "dot_tensor_bridge_proved": false,
+  "physical_layout_modeled": false,
+  "precision_conversions_modeled": false,
+  "ieee_accumulation_contract_proved": false,
+  "whole_benchmark_records_closed": 0,
+  "independently_reviewed_statements": false,
+  "code_correspondence_performed": false,
+  "code_correspondence_future_work": true
+}

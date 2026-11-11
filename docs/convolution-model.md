@@ -66,3 +66,12 @@ its manifest/result. V2 reflows overlong source lines to the adopted style; it
 changes no mathematical statement. First accepted model code added272 Lean lines;
 final formatted code adds281, for3318 custom lines in total. The snapshot is an
 evidence/source archive, not a new independent clean replay of the full campaign.
+
+
+## Pointwise extension
+
+The frozen base model is extended by the separately versioned
+[pointwise reduction](convolution-pointwise.md). It proves that unit spatial
+kernels with unit stride/base dilation and zero padding reduce to a sum over
+input channels, then to one product when there is one input channel per group.
+The original base files and v1/v2 evidence remain unchanged.

@@ -505,6 +505,32 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.Convolution.term_zero_input
 #check @TensorRewrite.Theory.Convolution.term_zero_kernel
 #print axioms TensorRewrite.Theory.Convolution.term_zero_kernel
+#check @TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq
+#check @TensorRewrite.Theory.ConvolutionPointwise.base_position_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.base_position_eq
+#check @TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum
+#check @TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel
+#check @TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one
+#check @TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit
+#check @TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one
+#check @TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique
+#check @TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq
+#check @TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq
+#check @TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq
+#check @TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions
+#check @TensorRewrite.Theory.ConvolutionPointwise.term_pointwise
+#print axioms TensorRewrite.Theory.ConvolutionPointwise.term_pointwise
 #check @TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #print axioms TensorRewrite.Theory.FiniteSum.foldl_add_eq_sum
 #check @TensorRewrite.Theory.FiniteSum.reduce_add_eq_fiber_sum

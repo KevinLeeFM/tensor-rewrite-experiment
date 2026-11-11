@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 409,
-    "partial_model_evidence_requires_partition_review": 67,
+    "needs_formal_statement_and_domain_partition": 407,
+    "partial_model_evidence_requires_partition_review": 69,
     "declared_value_family_complete_full_record_partitions_open": 12
   },
   "batch_counts": {
@@ -25,14 +25,14 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 268,
+  "distinct_checked_declarations": 281,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
     "pure_graph_context": 12,
     "fixed_schedule_context": 12,
     "refutation_or_diagnostic_certificate": 38,
-    "library_backed_theory": 38
+    "library_backed_theory": 51
   },
   "formulated_mathematical_families": [
     {
@@ -71,6 +71,17 @@
       "independent_statement_review": "pending",
       "manifest": "census/convolution-model-v2.json",
       "manifest_sha256": "56b07e3eb7270982a04f24c0f86a61c6264ee97ea2a270f45133d00fddabc151"
+    },
+    {
+      "model": "pointwise_convolution_to_channel_sum_v1",
+      "scope": "unit kernel extents, unit stride and base dilation, zero low/high padding on all spatial axes",
+      "scalar_contract": "exact_semiring",
+      "status": "kernel_checked_pointwise_convolution_to_channel_sum",
+      "checked_theorem_count": 13,
+      "full_family_complete": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/convolution-pointwise-v1.json",
+      "manifest_sha256": "bf76965a3fe8fc7bd4f88c9646550e1d15e84f64a619b6b6d26e362d2a039662"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -78,10 +89,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "e4bfccca259477161d7324e33aa51d8613cda5ebb47105db9db80ea08df47f34",
+    "sha256": "248ce36315a3d745b4c0ff9bfc07ea46c527a2b9e50c07e70b279f93ecac5b0f",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "1215b3fb8ccd6d453f34d1d41c382e7c0a18a7e3fe682b5d8cd9a6cf2dd4a258"
+    "output_sha256": "4ae7a2ba6b7913543a0736410d5611b56b05f7163b76c63d58957fc1c74b5f57"
   },
   "proofs": [
     {
@@ -4617,6 +4628,233 @@
       ],
       "profile_descriptions": [
         "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.base_position_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToDot/pointwise-layout"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToMultiply/pointwise-000"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionPointwise.term_pointwise",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "unit spatial kernel/stride/base dilation; zero padding; arbitrary kernel dilation/reversal, rank, extents, groups and channel counts; exact semiring; channel reduction and single-channel product"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -10099,8 +10337,10 @@
       "retained_lhs": "pointwise Convolution(input,filter)",
       "retained_rhs": "Bitcast(Dot(Bitcast(input),Bitcast(filter)))",
       "unreviewed_benchmark_notes_not_assumptions": "enable_conv_simplification; layout SENSITIVE; all layouts present; every kernel spatial extent1; no stride/padding/base dilation; input/output layouts equal and feature most minor; filter input feature more major than output feature; both group counts1",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -10110,8 +10350,10 @@
       "retained_lhs": "restricted grouped/depthwise Convolution",
       "retained_rhs": "Multiply(transposed/converted input,BroadcastSequence(reversed/transposed/converted kernel))",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=False/False",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

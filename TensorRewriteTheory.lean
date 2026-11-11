@@ -5,3 +5,4 @@ public import TensorRewrite.Theory.FiniteSum
 public import TensorRewrite.Theory.ContractionAlgebra
 public import TensorRewrite.Theory.LogicalFamilyProof
 public import TensorRewrite.Theory.ConvolutionAlgebra
+public import TensorRewrite.Theory.ConvolutionPointwiseAlgebra

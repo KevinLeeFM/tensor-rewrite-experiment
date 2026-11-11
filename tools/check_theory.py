@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ConvolutionPointwise': ['dilatedExtent_one', 'output_extent_eq', 'output_shape_eq', 'elementCount_unit', 'kernel_count_eq_one', 'kernel_index_unique', 'base_position_eq', 'axis_inputIndex_eq', 'spatial_input_eq', 'term_pointwise', 'sum_kernel_positions', 'convolve_eq_channelSum', 'convolve_single_channel'],
     'FloatNegation': ['scalar_involution', 'tensor_involution', 'reindex_neg', 'reverse_neg'],
     'FiniteSum': ['foldl_add_eq_sum', 'reduce_add_eq_fiber_sum', 'reshapeEquiv_apply',
                   'sum_reshape', 'sum_swap', 'sum_add'],
@@ -48,6 +49,9 @@ def main():
                   'TensorRewrite/Theory/Convolution.lean': 'S',
                   'TensorRewrite/Theory/ConvolutionLemmas.lean': 'H',
                   'TensorRewrite/Theory/ConvolutionAlgebra.lean': 'R',
+                  'TensorRewrite/Theory/ConvolutionPointwise.lean': 'S',
+                  'TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean': 'H',
+                  'TensorRewrite/Theory/ConvolutionPointwiseAlgebra.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     rows = []
     for name, category in categories.items():
@@ -66,6 +70,8 @@ def main():
                   total_custom_lean_lines=2796+count, dependency_packages=integration['packages'],
                   proof_reuse={'FloatNegation.scalar_involution': 'FloatLib Model.neg_neg',
                                'FiniteSum.sum_reshape': 'Mathlib Equiv.sum_comp plus existing index theory',
+                               'ConvolutionPointwise.convolve_eq_channelSum':
+                                   'Mathlib Fin.sum_univ_def and Equiv.sum_comp; derived window geometry',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
                   scope='format-general floating negation; exact finite sums and semiring '
@@ -78,9 +84,13 @@ def main():
                              'equal-input xor requires value equality' if '.LogicalFamily.' in name else
                              'exact finite sums and ordered reductions under explicitly stated '
                              'AddMonoid/AddCommMonoid and equal-count premises' if '.FiniteSum.' in name
+                             else 'unit spatial kernel/stride/base dilation; zero padding; arbitrary '
+                                  'kernel dilation/reversal, rank, extents, groups and channel counts; '
+                                  'exact semiring; channel reduction and single-channel product'
+                             if '.ConvolutionPointwise.' in name
                              else 'factored static convolution; positive stride/dilations; signed padding; '
                                   'bounded grouping/sampling; Semiring for algebra; no IEEE contract'
-                             if '.Convolution.' in name
+                             if '.Convolution.' in name or '.ConvolutionPointwise.' in name
                              else 'arbitrary static contraction plans; Semiring; identity finish; '
                                   'no rounded floating-point algebra instance')
                       for name in dependencies},

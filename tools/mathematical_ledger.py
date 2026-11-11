@@ -102,6 +102,10 @@ def evidence(root=ROOT):
         if name.endswith('Convolution.convolve_bias_scale'):
             labels=['TryToReorderConvAddMultiply/order-'+side for side in
                     ('lhs-lhs','lhs-rhs','rhs-lhs','rhs-rhs')]
+        if name.endswith('ConvolutionPointwise.convolve_eq_channelSum'):
+            labels=['SimplifyConvToDot/pointwise-layout']
+        if name.endswith('ConvolutionPointwise.convolve_single_channel'):
+            labels=['SimplifyConvToMultiply/pointwise-000']
         add(name,'library_backed_theory',theory.get('theorem_profiles',{}).get(name,theory['scope']),labels)
     return sorted(result.values(),key=lambda row:row['theorem'])
 
@@ -169,10 +173,28 @@ def mathematical_models(root=ROOT):
     expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
               if '.Convolution.' in name}
     assert model['certificate_axioms']==expected
-    return [dict(model=frozen['model'],scope=frozen['geometry'],scalar_contract='exact_semiring',
+    models=[dict(model=frozen['model'],scope=frozen['geometry'],scalar_contract='exact_semiring',
                  status=model['status'],checked_theorem_count=20,
                  full_family_complete=False,independent_statement_review='pending',
                  manifest=model['manifest'],manifest_sha256=model['manifest_sha256'])]
+    from check_convolution_pointwise import validate_result as validate_pointwise
+    pointwise=read('reports/convolution-pointwise.json',root);validate_pointwise(pointwise)
+    assert digest(root/pointwise['manifest'])==pointwise['manifest_sha256']
+    extension=read(pointwise['manifest'],root)
+    assert extension['base_model_manifest']==model['manifest']
+    assert extension['base_model_manifest_sha256']==model['manifest_sha256']
+    for file in extension['files']:
+        assert digest(root/file['path'])==file['sha256'],file['path']
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ConvolutionPointwise.' in name}
+    assert pointwise['certificate_axioms']==expected
+    assert set(extension['certificates'])==set(expected)
+    models.append(dict(model=extension['model'],scope=extension['hypotheses'],
+                       scalar_contract='exact_semiring',status=pointwise['status'],
+                       checked_theorem_count=13,full_family_complete=False,
+                       independent_statement_review='pending',manifest=pointwise['manifest'],
+                       manifest_sha256=pointwise['manifest_sha256']))
+    return models
 
 
 def assemble(cases,proofs,audit,families=(),models=()):

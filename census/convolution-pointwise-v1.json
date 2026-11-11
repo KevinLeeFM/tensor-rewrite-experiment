@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "model": "pointwise_convolution_to_channel_sum_v1",
+  "base_model_manifest": "census/convolution-model-v2.json",
+  "base_model_manifest_sha256": "56b07e3eb7270982a04f24c0f86a61c6264ee97ea2a270f45133d00fddabc151",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwise.lean",
+      "sha256": "c6341f8168c2ce4374c3d0465089edbd64e2f8d0175c26fd1bfe3dfb57d15bb5"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwiseAlgebra.lean",
+      "sha256": "c77b6a75feca945045fad2cac360b4d39cea6b755f22c61cd65f4a02bd4fe280"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "sha256": "61db9787b4c2f5b632045de177889552ff281547bf76e9980f649cde48a64402"
+    },
+    {
+      "path": "tests/fixtures/ConvolutionPointwiseControls.lean",
+      "sha256": "0d7b739e688adb13b601e93b6ca9ba8fae9e18479256a240aa27fcae8b689155"
+    },
+    {
+      "path": "tools/convolution_examples.py",
+      "sha256": "973682211ce88dcea2b77d305fadf5a1dd565bda7e80abdd52aa5eb102cc0a12"
+    },
+    {
+      "path": "tools/check_convolution_pointwise.py",
+      "sha256": "bba2fc469c72f5a37bb9abbe20877c7cc2a75e15af10d39b616f6f46a906fb5a"
+    }
+  ],
+  "certificates": [
+    "TensorRewrite.Theory.ConvolutionPointwise.dilatedExtent_one",
+    "TensorRewrite.Theory.ConvolutionPointwise.output_extent_eq",
+    "TensorRewrite.Theory.ConvolutionPointwise.output_shape_eq",
+    "TensorRewrite.Theory.ConvolutionPointwise.elementCount_unit",
+    "TensorRewrite.Theory.ConvolutionPointwise.kernel_count_eq_one",
+    "TensorRewrite.Theory.ConvolutionPointwise.kernel_index_unique",
+    "TensorRewrite.Theory.ConvolutionPointwise.base_position_eq",
+    "TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq",
+    "TensorRewrite.Theory.ConvolutionPointwise.spatial_input_eq",
+    "TensorRewrite.Theory.ConvolutionPointwise.term_pointwise",
+    "TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions",
+    "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum",
+    "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel"
+  ],
+  "hypotheses": "unit kernel extents, unit stride and base dilation, zero low/high padding on all spatial axes",
+  "unrestricted": "spatial rank/input extents; batch and feature groups; batch sizes; input/output feature counts; positive kernel dilation; kernel reversal",
+  "scalar_contract": "exact_semiring",
+  "conclusion": "channel-only finite reduction at unchanged spatial coordinates; one-channel corollary is one product",
+  "dot_tensor_bridge_proved": false,
+  "full_convolution_family_complete": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work",
+  "new_custom_lean_lines": 175,
+  "previous_custom_lean_lines": 3318,
+  "current_custom_lean_lines": 3493,
+  "new_category_lines": {
+    "S": 33,
+    "H": 73,
+    "R": 68,
+    "A": 1
+  }
+}
