@@ -785,6 +785,74 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.PadWindow.unequal_fill_refuted
 #check @TensorRewrite.Theory.PadWindow.values_fusion
 #print axioms TensorRewrite.Theory.PadWindow.values_fusion
+#check @TensorRewrite.Theory.PrefixWindow.additive_prefix
+#print axioms TensorRewrite.Theory.PrefixWindow.additive_prefix
+#check @TensorRewrite.Theory.PrefixWindow.constant_additive_prefix
+#print axioms TensorRewrite.Theory.PrefixWindow.constant_additive_prefix
+#check @TensorRewrite.Theory.PrefixWindow.i32_prefix_product
+#print axioms TensorRewrite.Theory.PrefixWindow.i32_prefix_product
+#check @TensorRewrite.Theory.PrefixWindow.i64_prefix_product
+#print axioms TensorRewrite.Theory.PrefixWindow.i64_prefix_product
+#check @TensorRewrite.Theory.PrefixWindow.kernel_enumerate
+#print axioms TensorRewrite.Theory.PrefixWindow.kernel_enumerate
+#check @TensorRewrite.Theory.PrefixWindow.map_finRange_add
+#print axioms TensorRewrite.Theory.PrefixWindow.map_finRange_add
+#check @TensorRewrite.Theory.PrefixWindow.natural_prefix_count
+#print axioms TensorRewrite.Theory.PrefixWindow.natural_prefix_count
+#check @TensorRewrite.Theory.PrefixWindow.negative_axis
+#print axioms TensorRewrite.Theory.PrefixWindow.negative_axis
+#check @TensorRewrite.Theory.PrefixWindow.nonfixed_padding_refuted
+#print axioms TensorRewrite.Theory.PrefixWindow.nonfixed_padding_refuted
+#check @TensorRewrite.Theory.PrefixWindow.padding_partition
+#print axioms TensorRewrite.Theory.PrefixWindow.padding_partition
+#check @TensorRewrite.Theory.PrefixWindow.prefix_constant
+#print axioms TensorRewrite.Theory.PrefixWindow.prefix_constant
+#check @TensorRewrite.Theory.PrefixWindow.prefix_length
+#print axioms TensorRewrite.Theory.PrefixWindow.prefix_length
+#check @TensorRewrite.Theory.PrefixWindow.prefix_output_extent
+#print axioms TensorRewrite.Theory.PrefixWindow.prefix_output_extent
+#check @TensorRewrite.Theory.PrefixWindow.reduce_prefix
+#print axioms TensorRewrite.Theory.PrefixWindow.reduce_prefix
+#check @TensorRewrite.Theory.PrefixWindow.retained_bound
+#print axioms TensorRewrite.Theory.PrefixWindow.retained_bound
+#check @TensorRewrite.Theory.PrefixWindow.retained_output_extent
+#print axioms TensorRewrite.Theory.PrefixWindow.retained_output_extent
+#check @TensorRewrite.Theory.PrefixWindow.retained_sample
+#print axioms TensorRewrite.Theory.PrefixWindow.retained_sample
+#check @TensorRewrite.Theory.PrefixWindow.sample_axis
+#print axioms TensorRewrite.Theory.PrefixWindow.sample_axis
+#check @TensorRewrite.Theory.PrefixWindow.sample_invalid
+#print axioms TensorRewrite.Theory.PrefixWindow.sample_invalid
+#check @TensorRewrite.Theory.PrefixWindow.sample_valid
+#print axioms TensorRewrite.Theory.PrefixWindow.sample_valid
+#check @TensorRewrite.Theory.PrefixWindow.semiring_prefix_product
+#print axioms TensorRewrite.Theory.PrefixWindow.semiring_prefix_product
+#check @TensorRewrite.Theory.PrefixWindow.signed_count_exact_iff
+#print axioms TensorRewrite.Theory.PrefixWindow.signed_count_exact_iff
+#check @TensorRewrite.Theory.PrefixWindow.signed_width_boundary_refuted
+#print axioms TensorRewrite.Theory.PrefixWindow.signed_width_boundary_refuted
+#check @TensorRewrite.Theory.PrefixWindow.split_kernel_range
+#print axioms TensorRewrite.Theory.PrefixWindow.split_kernel_range
+#check @TensorRewrite.Theory.PrefixWindow.unit_enumerate_map
+#print axioms TensorRewrite.Theory.PrefixWindow.unit_enumerate_map
+#check @TensorRewrite.Theory.PrefixWindow.unsigned_count_exact_iff
+#print axioms TensorRewrite.Theory.PrefixWindow.unsigned_count_exact_iff
+#check @TensorRewrite.Theory.PrefixWindow.values_prefix
+#print axioms TensorRewrite.Theory.PrefixWindow.values_prefix
+#check @TensorRewrite.Theory.PrefixWindow.values_scan_range
+#print axioms TensorRewrite.Theory.PrefixWindow.values_scan_range
+#check @TensorRewrite.Theory.PrefixWindow.word_count_overflow_refuted
+#print axioms TensorRewrite.Theory.PrefixWindow.word_count_overflow_refuted
+#check @TensorRewrite.Theory.PrefixWindow.word_prefix_count
+#print axioms TensorRewrite.Theory.PrefixWindow.word_prefix_count
+#check @TensorRewrite.Theory.PrefixWindow.word_prefix_product
+#print axioms TensorRewrite.Theory.PrefixWindow.word_prefix_product
+#check @TensorRewrite.Theory.PrefixWindow.word_prefix_signed_iff
+#print axioms TensorRewrite.Theory.PrefixWindow.word_prefix_signed_iff
+#check @TensorRewrite.Theory.PrefixWindow.word_prefix_unsigned_iff
+#print axioms TensorRewrite.Theory.PrefixWindow.word_prefix_unsigned_iff
+#check @TensorRewrite.Theory.PrefixWindow.word_replicate_fold
+#print axioms TensorRewrite.Theory.PrefixWindow.word_replicate_fold
 #check @TensorRewrite.Theory.ReductionAlgebra.concat_add
 #print axioms TensorRewrite.Theory.ReductionAlgebra.concat_add
 #check @TensorRewrite.Theory.ReductionAlgebra.constant_absorb

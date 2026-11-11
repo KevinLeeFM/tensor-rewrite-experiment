@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 368,
-    "partial_model_evidence_requires_partition_review": 108,
+    "needs_formal_statement_and_domain_partition": 364,
+    "partial_model_evidence_requires_partition_review": 112,
     "declared_value_family_complete_full_record_partitions_open": 12
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 490,
+  "distinct_checked_declarations": 524,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,9 +39,10 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 217,
+    "library_backed_theory": 248,
     "numerical_contract_refutation": 2,
     "pad_window_contract_refutation": 2,
+    "prefix_window_contract_refutation": 3,
     "reduction_contract_refutation": 3,
     "window_contract_refutation": 2,
     "scalar_domain_counterexample": 2,
@@ -256,6 +257,25 @@
       "independent_statement_review": "pending",
       "manifest": "census/pad-window-v1.json",
       "manifest_sha256": "a838908d33293aecdb6d8d1bebc0a220cb73c7488d15dc95735911545ba1a388"
+    },
+    {
+      "model": "ordered_prefix_window_integer_domains_v1",
+      "scope": "one full-extent cumulative axis: unit stride/dilations, low=n-1 signed, high0, no reversal; other axes unit unpadded windows with arbitrary positive strides",
+      "scalar_contract": "arbitrary folds retain leading padding; prefix-only needs op(initial,padding)=initial; exact AddMonoid/Semiring or same-width modular BitVec; count observation ranges iff",
+      "status": "kernel_checked_ordered_prefix_and_integer_count_domains",
+      "checked_theorem_count": 34,
+      "full_family_complete": false,
+      "direct_prefix_semantics": true,
+      "ordered_padding_prefix_partition": true,
+      "retained_strides_general": true,
+      "same_width_iota_product": true,
+      "signed_unsigned_exact_domains_iff": true,
+      "rounded_uniform_sum_product_proved": false,
+      "scalar_wrapper_recognition_proved": false,
+      "window_domain_worksheet": "census/reduction-window-domains-v3.json",
+      "independent_statement_review": "pending",
+      "manifest": "census/prefix-window-v1.json",
+      "manifest_sha256": "45c5d3f78e56934c1e2190ae9790f890ed520c08c18164721bda3f97d53ef347"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -263,10 +283,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "8d8b3e6d86506fa9570019ad5a3ec5b5ff54a6e972fcdc82329195cef212c8ce",
+    "sha256": "99be79f3b22458df70e4154b3738517330ea5106d1961902007f988b6b0e6dd3",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "1ea916c95ecab2d8fe7220d406ee72c2b18bb7eb4f51e5c2c4f87b138bc3dab8"
+    "output_sha256": "46736330eb74d2d38b490a55674e9230c1964ce84875c275c03d04165b08c241"
   },
   "proofs": [
     {
@@ -8103,6 +8123,609 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.additive_prefix",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.constant_additive_prefix",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.i32_prefix_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+        "HandleReduceWindow/cumsum-i32-reuse-literal"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.i64_prefix_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+        "HandleReduceWindow/cumsum-i64-reuse-literal"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.kernel_enumerate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.map_finRange_add",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.natural_prefix_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.negative_axis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.nonfixed_padding_refuted",
+      "kinds": [
+        "prefix_window_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.padding_partition",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.prefix_constant",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.prefix_length",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.prefix_output_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.reduce_prefix",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.retained_bound",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.retained_output_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.retained_sample",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.sample_axis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.sample_invalid",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.sample_valid",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+        "HandleReduceWindow/cumsum-i32-reuse-literal",
+        "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+        "HandleReduceWindow/cumsum-i64-reuse-literal"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.signed_count_exact_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.signed_width_boundary_refuted",
+      "kinds": [
+        "prefix_window_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.split_kernel_range",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.unit_enumerate_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.unsigned_count_exact_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.values_prefix",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.values_scan_range",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.word_count_overflow_refuted",
+      "kinds": [
+        "prefix_window_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.word_prefix_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.word_prefix_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.word_prefix_signed_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.word_prefix_unsigned_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PrefixWindow.word_replicate_fold",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "one cumulative axis at any position with arbitrary retained positive strides; derived output bounds and exact leading-padding/prefix lists; initializer fixed point only when dropping leading padding; AddMonoid/Semiring laws only where stated; all-width BitVec modular Iota/product including 32/64-bit cases; unsigned/signed exact count range iff statements; no rounded arithmetic or wrapper/source closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.ReductionAlgebra.concat_add",
       "kinds": [
         "library_backed_theory"
@@ -13428,8 +14051,11 @@
       "retained_lhs": "cumsum-like ReduceWindow of uniform converted literal",
       "retained_rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type not S64; literal scalarization or convert list needed=True",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PrefixWindow.i32_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -13439,8 +14065,11 @@
       "retained_lhs": "cumsum-like ReduceWindow of uniform converted literal",
       "retained_rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type not S64; literal scalarization or convert list needed=False",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PrefixWindow.i32_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -13450,8 +14079,11 @@
       "retained_lhs": "cumsum-like ReduceWindow of uniform converted literal",
       "retained_rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type S64; literal scalarization or convert list needed=True",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PrefixWindow.i64_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -13461,8 +14093,11 @@
       "retained_lhs": "cumsum-like ReduceWindow of uniform converted literal",
       "retained_rhs": "Multiply(Broadcast(converted literal),ConvertIfNeeded(Iota+1))",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; walk operand through Reshape, same-element-type Bitcast, Convert, Slice, Copy to scalar Broadcast; zero init; Add reducer; underlying effective-scalar Constant; exactly one window axis size>1 matching operand extent, stride1, low=size-1, high0, dilations1, no reversal; other axes low/high0 and base dilation1; final scalar literal type S64; literal scalarization or convert list needed=False",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PrefixWindow.i64_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

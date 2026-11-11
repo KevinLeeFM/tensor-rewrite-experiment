@@ -15,3 +15,4 @@ public import TensorRewrite.Theory.ReductionWindowCounterexamples
 public import TensorRewrite.Theory.SlicePadCounterexamples
 public import TensorRewrite.Theory.FullSpanWindowProof
 public import TensorRewrite.Theory.PadWindowCounterexamples
+public import TensorRewrite.Theory.PrefixWindowCounterexamples

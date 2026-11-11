@@ -2747,6 +2747,271 @@ TensorRewrite.Theory.PadWindow.unequal_fill_refuted : (TensorRewrite.Theory.Redu
     TensorRewrite.Theory.ReductionWindow.values (TensorRewrite.Theory.PadWindow.fusedWindow plan) fill input
       (TensorRewrite.Theory.PadWindow.outputIndex plan output)
 'TensorRewrite.Theory.PadWindow.values_fusion' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.additive_prefix : ∀ {rank : ℕ} {α : Type} [inst : AddMonoid α]
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (initial : α)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PrefixWindow.windowPlan plan).inputShape α),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      initial 0 input =
+    fun output => initial + (TensorRewrite.Theory.PrefixWindow.prefixValues plan input output).sum
+'TensorRewrite.Theory.PrefixWindow.additive_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.constant_additive_prefix : ∀ {rank : ℕ} {α : Type} [inst : AddMonoid α]
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (initial value : α),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      initial 0 (TensorRewrite.Pilot.Tensor.constant value) =
+    fun output =>
+    initial +
+      (↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+          1) •
+        value
+'TensorRewrite.Theory.PrefixWindow.constant_additive_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.i32_prefix_product : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (value : BitVec 32),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      0 0 (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.constant value) fun output =>
+      BitVec.ofNat 32
+          ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1#32
+'TensorRewrite.Theory.PrefixWindow.i32_prefix_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.i64_prefix_product : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (value : BitVec 64),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      0 0 (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.constant value) fun output =>
+      BitVec.ofNat 64
+          ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1#64
+'TensorRewrite.Theory.PrefixWindow.i64_prefix_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.kernel_enumerate : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (value : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).kernelShape → α),
+  List.map value
+      (TensorRewrite.Theory.OrderedCoordinates.enumerate
+        (TensorRewrite.Theory.PrefixWindow.windowPlan plan).kernelShape) =
+    List.map (fun position => value (TensorRewrite.Theory.PrefixWindow.kernelIndex plan position))
+      (List.finRange (TensorRewrite.Theory.PrefixWindow.scanExtent plan))
+'TensorRewrite.Theory.PrefixWindow.kernel_enumerate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.map_finRange_add : ∀ {α : Type} (first second : ℕ)
+  (value : Fin (first + second) → α),
+  List.map value (List.finRange (first + second)) =
+    List.map (fun position => value ⟨↑position, ⋯⟩) (List.finRange first) ++
+      List.map (fun position => value ⟨first + ↑position, ⋯⟩) (List.finRange second)
+'TensorRewrite.Theory.PrefixWindow.map_finRange_add' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.natural_prefix_count : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      0 0 (TensorRewrite.Pilot.Tensor.constant 1) =
+    fun output =>
+    ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) + 1
+'TensorRewrite.Theory.PrefixWindow.natural_prefix_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.negative_axis : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape)
+  (kernel : Fin (TensorRewrite.Theory.PrefixWindow.scanExtent plan)),
+  ↑kernel < TensorRewrite.Theory.PrefixWindow.paddingCount plan output →
+    ∃ axis,
+      ((TensorRewrite.Theory.PrefixWindow.windowPlan plan).window axis).inputIndex? (↑(output axis))
+          (TensorRewrite.Theory.PrefixWindow.kernelIndex plan kernel axis) =
+        none
+'TensorRewrite.Theory.PrefixWindow.negative_axis' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.nonfixed_padding_refuted : (TensorRewrite.Theory.ReductionWindow.reduce
+      (TensorRewrite.Theory.PrefixWindow.windowPlan (TensorRewrite.Theory.PrefixWindow.shortScan 3))
+      (fun x1 x2 => x1 + x2) 1 1 (TensorRewrite.Pilot.Tensor.constant 1) fun x => ⟨0, ⋯⟩) =
+    4 ∧
+  List.foldl (fun x1 x2 => x1 + x2) 1
+      (TensorRewrite.Theory.PrefixWindow.prefixValues (TensorRewrite.Theory.PrefixWindow.shortScan 3)
+        (TensorRewrite.Pilot.Tensor.constant 1) fun x => ⟨0, ⋯⟩) =
+    2
+'TensorRewrite.Theory.PrefixWindow.nonfixed_padding_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.padding_partition : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  TensorRewrite.Theory.PrefixWindow.paddingCount plan output +
+        ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+            (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+      1 =
+    TensorRewrite.Theory.PrefixWindow.scanExtent plan
+'TensorRewrite.Theory.PrefixWindow.padding_partition' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.prefix_constant : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (value : α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  TensorRewrite.Theory.PrefixWindow.prefixValues plan (TensorRewrite.Pilot.Tensor.constant value) output =
+    List.replicate
+      (↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+            (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1)
+      value
+'TensorRewrite.Theory.PrefixWindow.prefix_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.prefix_length : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PrefixWindow.windowPlan plan).inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  (TensorRewrite.Theory.PrefixWindow.prefixValues plan input output).length =
+    ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) + 1
+'TensorRewrite.Theory.PrefixWindow.prefix_length' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.prefix_output_extent : ∀ (extent : ℕ),
+  (TensorRewrite.Theory.PrefixWindow.prefixAxis extent).outputExtent = extent
+'TensorRewrite.Theory.PrefixWindow.prefix_output_extent' depends on axioms: [propext]
+@TensorRewrite.Theory.PrefixWindow.reduce_prefix : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (operation : α → α → α) (initial padding : α),
+  operation initial padding = initial →
+    ∀ (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PrefixWindow.windowPlan plan).inputShape α),
+      TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) operation initial
+          padding input =
+        fun output => List.foldl operation initial (TensorRewrite.Theory.PrefixWindow.prefixValues plan input output)
+'TensorRewrite.Theory.PrefixWindow.reduce_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.retained_bound : ∀ (extent : ℕ) (stride : ℕ+)
+  (output : Fin (TensorRewrite.Theory.PrefixWindow.retainedAxis extent stride).outputExtent), ↑output * ↑stride < extent
+'TensorRewrite.Theory.PrefixWindow.retained_bound' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.retained_output_extent : ∀ (extent : ℕ) (stride : ℕ+),
+  (TensorRewrite.Theory.PrefixWindow.retainedAxis extent stride).outputExtent = ((↑extent - 1) / ↑↑stride + 1).toNat
+'TensorRewrite.Theory.PrefixWindow.retained_output_extent' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.retained_sample : ∀ (extent : ℕ) (stride : ℕ+)
+  (output : Fin (TensorRewrite.Theory.PrefixWindow.retainedAxis extent stride).outputExtent)
+  (kernel : Fin (TensorRewrite.Theory.PrefixWindow.retainedAxis extent stride).kernelExtent),
+  (TensorRewrite.Theory.PrefixWindow.retainedAxis extent stride).inputIndex? (↑output) kernel =
+    some (TensorRewrite.Theory.PrefixWindow.retainedIndex extent stride output)
+'TensorRewrite.Theory.PrefixWindow.retained_sample' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.sample_axis : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape)
+  (kernel : Fin (TensorRewrite.Theory.PrefixWindow.scanExtent plan))
+  (valid : TensorRewrite.Theory.PrefixWindow.paddingCount plan output ≤ ↑kernel) (axis : Fin rank),
+  ((TensorRewrite.Theory.PrefixWindow.windowPlan plan).window axis).inputIndex? (↑(output axis))
+      (TensorRewrite.Theory.PrefixWindow.kernelIndex plan kernel axis) =
+    some (TensorRewrite.Theory.PrefixWindow.sampledIndex plan output kernel valid axis)
+'TensorRewrite.Theory.PrefixWindow.sample_axis' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.sample_invalid : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape)
+  (kernel : Fin (TensorRewrite.Theory.PrefixWindow.scanExtent plan)),
+  ↑kernel < TensorRewrite.Theory.PrefixWindow.paddingCount plan output →
+    TensorRewrite.Theory.ReductionWindow.sample? (TensorRewrite.Theory.PrefixWindow.windowPlan plan) output
+        (TensorRewrite.Theory.PrefixWindow.kernelIndex plan kernel) =
+      none
+'TensorRewrite.Theory.PrefixWindow.sample_invalid' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.sample_valid : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape)
+  (kernel : Fin (TensorRewrite.Theory.PrefixWindow.scanExtent plan))
+  (valid : TensorRewrite.Theory.PrefixWindow.paddingCount plan output ≤ ↑kernel),
+  TensorRewrite.Theory.ReductionWindow.sample? (TensorRewrite.Theory.PrefixWindow.windowPlan plan) output
+      (TensorRewrite.Theory.PrefixWindow.kernelIndex plan kernel) =
+    some (TensorRewrite.Theory.PrefixWindow.sampledIndex plan output kernel valid)
+'TensorRewrite.Theory.PrefixWindow.sample_valid' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.semiring_prefix_product : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (value : α),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      0 0 (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.constant value) fun output =>
+      ↑↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1
+'TensorRewrite.Theory.PrefixWindow.semiring_prefix_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.signed_count_exact_iff : ∀ (width count : ℕ),
+  (BitVec.ofNat width count).toInt = ↑count ↔ 2 * count < 2 ^ width
+'TensorRewrite.Theory.PrefixWindow.signed_count_exact_iff' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.signed_width_boundary_refuted : (BitVec.ofNat 32 (2 ^ 31)).toInt = -2 ^ 31 ∧
+  (BitVec.ofNat 64 (2 ^ 63)).toInt = -2 ^ 63
+'TensorRewrite.Theory.PrefixWindow.signed_width_boundary_refuted' depends on axioms: [propext]
+@TensorRewrite.Theory.PrefixWindow.split_kernel_range : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape)
+  (value : Fin (TensorRewrite.Theory.PrefixWindow.scanExtent plan) → α),
+  List.map value (List.finRange (TensorRewrite.Theory.PrefixWindow.scanExtent plan)) =
+    List.map (fun position => value ⟨↑position, ⋯⟩)
+        (List.finRange (TensorRewrite.Theory.PrefixWindow.paddingCount plan output)) ++
+      List.map (fun position => value ⟨TensorRewrite.Theory.PrefixWindow.paddingCount plan output + ↑position, ⋯⟩)
+        (List.finRange
+          (↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+                (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+            1))
+'TensorRewrite.Theory.PrefixWindow.split_kernel_range' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.unit_enumerate_map : ∀ {rank : ℕ} {α : Type}
+  (shape : TensorRewrite.Pilot.Shape rank),
+  (∀ (axis : Fin rank), shape axis = 1) →
+    ∀ (value : TensorRewrite.Pilot.Index shape → α) (index : TensorRewrite.Pilot.Index shape),
+      List.map value (TensorRewrite.Theory.OrderedCoordinates.enumerate shape) = [value index]
+'TensorRewrite.Theory.PrefixWindow.unit_enumerate_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.unsigned_count_exact_iff : ∀ (width count : ℕ),
+  (BitVec.ofNat width count).toNat = count ↔ count < 2 ^ width
+'TensorRewrite.Theory.PrefixWindow.unsigned_count_exact_iff' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.values_prefix : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (padding : α)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PrefixWindow.windowPlan plan).inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  TensorRewrite.Theory.ReductionWindow.values (TensorRewrite.Theory.PrefixWindow.windowPlan plan) padding input output =
+    List.replicate (TensorRewrite.Theory.PrefixWindow.paddingCount plan output) padding ++
+      TensorRewrite.Theory.PrefixWindow.prefixValues plan input output
+'TensorRewrite.Theory.PrefixWindow.values_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.values_scan_range : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (padding : α)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PrefixWindow.windowPlan plan).inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  TensorRewrite.Theory.ReductionWindow.values (TensorRewrite.Theory.PrefixWindow.windowPlan plan) padding input output =
+    List.map
+      (fun position =>
+        TensorRewrite.Theory.ReductionWindow.contribution (TensorRewrite.Theory.PrefixWindow.windowPlan plan) padding
+          input output (TensorRewrite.Theory.PrefixWindow.kernelIndex plan position))
+      (List.finRange (TensorRewrite.Theory.PrefixWindow.scanExtent plan))
+'TensorRewrite.Theory.PrefixWindow.values_scan_range' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.word_count_overflow_refuted : (TensorRewrite.Theory.ReductionWindow.reduce
+        (TensorRewrite.Theory.PrefixWindow.windowPlan (TensorRewrite.Theory.PrefixWindow.shortScan 4))
+        (fun x1 x2 => x1 + x2) 0 0 (TensorRewrite.Pilot.Tensor.constant 1#2) fun x => ⟨3, ⋯⟩).toNat =
+    0 ∧
+  (TensorRewrite.Theory.ReductionWindow.reduce
+        (TensorRewrite.Theory.PrefixWindow.windowPlan (TensorRewrite.Theory.PrefixWindow.shortScan 2))
+        (fun x1 x2 => x1 + x2) 0 0 (TensorRewrite.Pilot.Tensor.constant 1#2) fun x => ⟨1, ⋯⟩).toInt =
+    -2
+'TensorRewrite.Theory.PrefixWindow.word_count_overflow_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.word_prefix_count : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.PrefixWindow.Plan rank)
+  (width : ℕ),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      0 0 (TensorRewrite.Pilot.Tensor.constant 1#width) =
+    fun output =>
+    BitVec.ofNat width
+      (↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+            (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1)
+'TensorRewrite.Theory.PrefixWindow.word_prefix_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.word_prefix_product : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (width : ℕ) (value : BitVec width),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan) (fun x1 x2 => x1 + x2)
+      0 0 (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) (TensorRewrite.Pilot.Tensor.constant value) fun output =>
+      BitVec.ofNat width
+          ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1#width
+'TensorRewrite.Theory.PrefixWindow.word_prefix_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.word_prefix_signed_iff : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (width : ℕ)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  (TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan)
+          (fun x1 x2 => x1 + x2) 0 0 (TensorRewrite.Pilot.Tensor.constant 1#width) output).toInt =
+      ↑(↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+          1) ↔
+    2 *
+        (↑(TensorRewrite.Theory.PrefixWindow.coordinate plan
+              (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+          1) <
+      2 ^ width
+'TensorRewrite.Theory.PrefixWindow.word_prefix_signed_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PrefixWindow.word_prefix_unsigned_iff : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.PrefixWindow.Plan rank) (width : ℕ)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.PrefixWindow.windowPlan plan).outputShape),
+  (TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.PrefixWindow.windowPlan plan)
+          (fun x1 x2 => x1 + x2) 0 0 (TensorRewrite.Pilot.Tensor.constant 1#width) output).toNat =
+      ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1 ↔
+    ↑(TensorRewrite.Theory.PrefixWindow.coordinate plan (TensorRewrite.Theory.PrefixWindow.outputIndex plan output)) +
+        1 <
+      2 ^ width
+'TensorRewrite.Theory.PrefixWindow.word_prefix_unsigned_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PrefixWindow.word_replicate_fold : ∀ (width count : ℕ) (initial value : BitVec width),
+  List.foldl (fun x1 x2 => x1 + x2) initial (List.replicate count value) = initial + BitVec.ofNat width count * value
+'TensorRewrite.Theory.PrefixWindow.word_replicate_fold' depends on axioms: [propext]
 @TensorRewrite.Theory.ReductionAlgebra.concat_add : ∀ {α : Type} [inst : AddMonoid α] (blocks : List (List α)),
   List.foldl (fun x1 x2 => x1 + x2) 0 blocks.flatten =
     List.foldl (fun x1 x2 => x1 + x2) 0 (List.map (fun block => List.foldl (fun x1 x2 => x1 + x2) 0 block) blocks)

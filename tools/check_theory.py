@@ -9,6 +9,8 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'PrefixWindow': ['retained_output_extent', 'retained_bound', 'retained_sample', 'prefix_output_extent', 'unit_enumerate_map', 'kernel_enumerate', 'values_scan_range', 'padding_partition', 'sample_axis', 'sample_valid', 'negative_axis', 'sample_invalid', 'map_finRange_add', 'split_kernel_range', 'word_replicate_fold', 'unsigned_count_exact_iff', 'signed_count_exact_iff', 'values_prefix', 'reduce_prefix', 'prefix_length', 'prefix_constant', 'additive_prefix', 'constant_additive_prefix', 'natural_prefix_count', 'semiring_prefix_product', 'word_prefix_product', 'word_prefix_count', 'word_prefix_unsigned_iff', 'word_prefix_signed_iff', 'i32_prefix_product', 'i64_prefix_product', 'nonfixed_padding_refuted', 'word_count_overflow_refuted', 'signed_width_boundary_refuted'],
+
     'LatticeIndex': ['decode_eq_some_iff', 'window_eq_some_iff', 'assemble_eq_some_iff', 'assemble_bind'],
     'PadWindow': ['occupied_bound', 'pad_sample_iff', 'sample_embedded', 'fused_position', 'fused_output_extent', 'dilated_extent_nonempty', 'fused_high_nonempty', 'fused_high_unit_base', 'axis_compose', 'output_shape', 'sample_compose', 'contribution_fusion', 'values_fusion', 'reduce_fusion', 'map_pad', 'convert_reduce_fusion', 'convert_initial_fusion', 'empty_high_formula_refuted', 'unequal_fill_refuted'],
 
@@ -127,6 +129,16 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/PrefixWindow.lean': 'S',
+        'TensorRewrite/Theory/PrefixWindowStride.lean': 'H',
+        'TensorRewrite/Theory/PrefixWindowTarget.lean': 'S',
+        'TensorRewrite/Theory/PrefixWindowLemmas.lean': 'H',
+        'TensorRewrite/Theory/PrefixWindowSampling.lean': 'H',
+        'TensorRewrite/Theory/PrefixWindowArithmetic.lean': 'H',
+        'TensorRewrite/Theory/PrefixWindowProof.lean': 'R',
+        'TensorRewrite/Theory/PrefixWindowInteger.lean': 'R',
+        'TensorRewrite/Theory/PrefixWindowCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/LatticeIndex.lean': 'H',
         'TensorRewrite/Theory/PadWindow.lean': 'S',
         'TensorRewrite/Theory/PadWindowLemmas.lean': 'H',
@@ -173,7 +185,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='Pad/window fusion with derived empty-safe geometry and converted fill; '
+                  scope='ordered cumulative windows, exact/modular Iota products and count-conversion domains; '
+                        'Pad/window fusion with derived empty-safe geometry and converted fill; '
                         'canonical full-span ordered window/reduction/reshape; '
                         'derived Map/Slice/Pad shape and index factorization; '
                         'ordered window folds and unit-window affine gathers; '
@@ -182,7 +195,14 @@ def main():
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('independent nonnegative-edge/interior Pad and arbitrary window geometry; '
+                      name: ('one cumulative axis at any position with arbitrary retained positive strides; '
+                             'derived output bounds and exact leading-padding/prefix lists; '
+                             'initializer fixed point only when dropping leading padding; '
+                             'AddMonoid/Semiring laws only where stated; all-width BitVec modular '
+                             'Iota/product including 32/64-bit cases; unsigned/signed exact count '
+                             'range iff statements; no rounded arithmetic or wrapper/source closure'
+                             if '.PrefixWindow.' in name else
+                             'independent nonnegative-edge/interior Pad and arbitrary window geometry; '
                              'derived fused spacings/low/high/output shape including empty inputs; '
                              'identical complete ordered lists/folds with the same explicit/implicit '
                              'fill; arbitrary operation/initializer and pure heterogeneous conversion '

@@ -1,0 +1,530 @@
+{
+  "schema": 1,
+  "status": "partial_window_model_evidence_not_a_frozen_denominator",
+  "retained_batch": "census/reduction-cases.json",
+  "retained_batch_sha256": "c1dc27dc2fe45f38936388b72fe9f387dcb0c43439ed6eef1b04a286b08d68b7",
+  "mathematical_obligation_denominator": null,
+  "source_guards_adopted_as_proof_assumptions": false,
+  "benchmark_record_count": 31,
+  "records": [
+    {
+      "benchmark_id": "HandleReduceWindow/empty-tuple",
+      "declared_profile": "empty input plus op(initial,initial)=initial with initializer-valued padding, or empty output with no algebraic premise; pure whole-state tuple reducer allowed",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.reduce_empty_input_fixed",
+        "TensorRewrite.Theory.ReductionWindow.reduce_empty_output",
+        "TensorRewrite.Theory.ReductionWindow.empty_input_components"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Adopt the exact initializer/padding law per reducer and resolve state/tuple packaging and numerical observations."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/empty-single",
+      "declared_profile": "empty input plus op(initial,initial)=initial with initializer-valued padding, or empty output with no algebraic premise; pure whole-state tuple reducer allowed",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.reduce_empty_input_fixed",
+        "TensorRewrite.Theory.ReductionWindow.reduce_empty_output"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Adopt the exact initializer/padding law per reducer and resolve state/tuple packaging and numerical observations."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/scalar-tuple",
+      "declared_profile": "pointwise unit/stride/base-dilation geometry without padding; whole-state initializer is a left identity",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.pointwise_eliminate"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Whole-state scalar/tuple interface and initializer identity for each admitted scalar observation."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/scalar-single",
+      "declared_profile": "pointwise unit/stride/base-dilation geometry without padding; whole-state initializer is a left identity",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.pointwise_eliminate"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Whole-state scalar/tuple interface and initializer identity for each admitted scalar observation."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-tuple",
+      "declared_profile": "operator semantics available; rewrite-specific mathematical target remains open",
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Instantiate a singleton-tuple state isomorphism and reducer/initializer conjugacy."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+      "declared_profile": "One cumulative scan axis at any position; retained unit unpadded axes have arbitrary positive strides; constant inputs; exact Semiring or same-width modular BitVec inclusive-Iota product. Unsigned and signed natural count observation ranges are explicit iff conditions.",
+      "core_evidence": [
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.i64_prefix_product"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Pure exact/modular prefix target proved; arbitrary dtype/literal wrapper recognition and conversions are not inferred.",
+        "Cross-width count conversion, signed/unsigned interpretation into other numeric types and rounded accumulation/product observations remain open.",
+        "Canonical retained unit-axis dilation/reversal normalization and all complete per-record partitions/review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/cumsum-i64-reuse-literal",
+      "declared_profile": "One cumulative scan axis at any position; retained unit unpadded axes have arbitrary positive strides; constant inputs; exact Semiring or same-width modular BitVec inclusive-Iota product. Unsigned and signed natural count observation ranges are explicit iff conditions.",
+      "core_evidence": [
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.i64_prefix_product"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Pure exact/modular prefix target proved; arbitrary dtype/literal wrapper recognition and conversions are not inferred.",
+        "Cross-width count conversion, signed/unsigned interpretation into other numeric types and rounded accumulation/product observations remain open.",
+        "Canonical retained unit-axis dilation/reversal normalization and all complete per-record partitions/review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+      "declared_profile": "One cumulative scan axis at any position; retained unit unpadded axes have arbitrary positive strides; constant inputs; exact Semiring or same-width modular BitVec inclusive-Iota product. Unsigned and signed natural count observation ranges are explicit iff conditions.",
+      "core_evidence": [
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.i32_prefix_product"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Pure exact/modular prefix target proved; arbitrary dtype/literal wrapper recognition and conversions are not inferred.",
+        "Cross-width count conversion, signed/unsigned interpretation into other numeric types and rounded accumulation/product observations remain open.",
+        "Canonical retained unit-axis dilation/reversal normalization and all complete per-record partitions/review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/cumsum-i32-reuse-literal",
+      "declared_profile": "One cumulative scan axis at any position; retained unit unpadded axes have arbitrary positive strides; constant inputs; exact Semiring or same-width modular BitVec inclusive-Iota product. Unsigned and signed natural count observation ranges are explicit iff conditions.",
+      "core_evidence": [
+        "TensorRewrite.Theory.PrefixWindow.semiring_prefix_product",
+        "TensorRewrite.Theory.PrefixWindow.i32_prefix_product"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Pure exact/modular prefix target proved; arbitrary dtype/literal wrapper recognition and conversions are not inferred.",
+        "Cross-width count conversion, signed/unsigned interpretation into other numeric types and rounded accumulation/product observations remain open.",
+        "Canonical retained unit-axis dilation/reversal normalization and all complete per-record partitions/review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-crop-all-add",
+      "declared_profile": "unit windows; undilated input; op(initial,padding)=padding; explicit outside-coordinate geometry",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Derive every retained crop-all domain, including high-side conditions beyond the sufficient low-side theorem.",
+        "Separate Slice/Pad graph and exceptional floating reducer contracts.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-add-no-pad-no-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; AddZeroClass and neutral zero initializer/padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-add-no-pad-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; AddZeroClass and neutral zero initializer/padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-add-pad-no-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; AddZeroClass and neutral zero initializer/padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-add-pad-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; AddZeroClass and neutral zero initializer/padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-crop-all-minimum",
+      "declared_profile": "unit windows; undilated input; op(initial,padding)=padding; explicit outside-coordinate geometry",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Derive every retained crop-all domain, including high-side conditions beyond the sufficient low-side theorem.",
+        "Separate Slice/Pad graph and exceptional floating reducer contracts.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-minimum-no-pad-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-minimum-pad-no-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-minimum-pad-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-crop-all-maximum",
+      "declared_profile": "unit windows; undilated input; op(initial,padding)=padding; explicit outside-coordinate geometry",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
+        "TensorRewrite.Theory.ReductionWindow.unit_crop_low_all",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Derive every retained crop-all domain, including high-side conditions beyond the sufficient low-side theorem.",
+        "Separate Slice/Pad graph and exceptional floating reducer contracts.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-maximum-no-pad-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-maximum-pad-no-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/singleton-maximum-pad-crop",
+      "declared_profile": "unit kernel and undilated input; arbitrary positive stride/kernel dilation, reversal and signed padding; LinearOrder and actual initializer-valued padding",
+      "core_evidence": [
+        "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
+        "TensorRewrite.Theory.SlicePad.unit_window_graph"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Base-dilation variants and numerical add-zero/min/max behavior (including NaNs and signed zero) are not discharged.",
+        "Canonical Slice/Pad graph now derived; benchmark-specific domain/observation partitions and review remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/full-dimensions",
+      "declared_profile": "Canonical mixed kept/unit-kernel and reduced/full-span axes; no stride/dilation/padding/reversal; arbitrary operation and initializer; complete ordered reduction and derived logical reshape.",
+      "core_evidence": [
+        "TensorRewrite.Theory.FullSpanWindow.reduce_reshape",
+        "TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Canonical graph proved; general geometry/representation/tuple and benchmark domain partitions remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/pad-broadcast-direct-combined",
+      "declared_profile": "operator semantics available; rewrite-specific mathematical target remains open",
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Define separate Pad/Broadcast sequence, derive composed low/high/interior geometry and converted padding values."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/pad-broadcast-direct-existing",
+      "declared_profile": "operator semantics available; rewrite-specific mathematical target remains open",
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Define separate Pad/Broadcast sequence, derive composed low/high/interior geometry and converted padding values."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/pad-fold-direct",
+      "declared_profile": "Independent nonnegative Pad with positive interior spacing; arbitrary outer window geometry; same explicit/implicit fill; derived empty-safe fusion and identical ordered contributions.",
+      "core_evidence": [
+        "TensorRewrite.Theory.PadWindow.reduce_fusion"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Converted fill equality must be explicit where initializer is substituted; broadcast-sequence alternatives and all benchmark/observation/domain partitions remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/pad-broadcast-convert-combined",
+      "declared_profile": "operator semantics available; rewrite-specific mathematical target remains open",
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Define separate Pad/Broadcast sequence, derive composed low/high/interior geometry and converted padding values."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/pad-broadcast-convert-existing",
+      "declared_profile": "operator semantics available; rewrite-specific mathematical target remains open",
+      "core_evidence": [],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Define separate Pad/Broadcast sequence, derive composed low/high/interior geometry and converted padding values."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReduceWindow/pad-fold-convert",
+      "declared_profile": "Independent nonnegative Pad with positive interior spacing; arbitrary outer window geometry; same explicit/implicit fill; derived empty-safe fusion and identical ordered contributions.",
+      "core_evidence": [
+        "TensorRewrite.Theory.PadWindow.convert_reduce_fusion",
+        "TensorRewrite.Theory.PadWindow.convert_initial_fusion"
+      ],
+      "remaining_mathematical_partitions": [
+        "Independent mathematical statement review; dtype/precision/observation partitions.",
+        "No benchmark-label or implementation correspondence is certified.",
+        "Converted fill equality must be explicit where initializer is substituted; broadcast-sequence alternatives and all benchmark/observation/domain partitions remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "code_correspondence": "future_work"
+    }
+  ],
+  "supersedes": {
+    "path": "census/reduction-window-domains-v2.json",
+    "sha256": "728772c2fea683e36a2c168708e527c0eebde77cac25416ee48ca8e6162c6e3b"
+  },
+  "extension_manifests": [
+    "census/slice-pad-v1.json",
+    "census/full-span-window-v1.json",
+    "census/pad-window-v1.json",
+    "census/prefix-window-v1.json"
+  ],
+  "updated_mathematics": "Derived Slice/Pad factorization; canonical full-span ordered reduction/reshape; empty-safe direct/converted Pad fusion. Broadcast/cumulative/tuple and all whole-record partitions remain open. Ordered prefix lists, exact/same-width modular inclusive Iota products and signed/unsigned count observation iff domains; arbitrary retained strides. Broadcast alternatives and singleton tuple lack core bindings."
+}

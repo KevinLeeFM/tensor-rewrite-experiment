@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 230 checked mathematical statements; custom Lean totals **5,963**.
+The theory target now has 264 checked mathematical statements; custom Lean totals **6,429**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -1028,3 +1028,19 @@ The successor window worksheet retains31 records,22 with partial core associatio
 All488 records remain368 unformulated/108 partial/12 logical-family; zero whole
 records close. Broadcast alternatives, cumulative counts, other partitions and
 independent review remain open. Code correspondence and the full verdict remain open.
+
+
+## Cumulative prefixes and integer count domains
+
+Actual cumulative windows now have derived ordered leading-padding/prefix lists,
+with a scan at any axis and arbitrary positive retained strides. Exact semiring
+and all-width modular word products match Broadcast(value)*(Iota+1); count
+observations have signed/unsigned exact-range iff theorems. Three certificates
+expose missing initializer and overflow conditions. See [the prefix guide](docs/prefix-window-counts.md).
+Thirty-four statements add466 Lean lines; total6429, theory264/ledger524, with
+four integration theorems separate. All58 focused tests pass:726 profiles/1290
+outputs,45 count-conversion controls and four nonzero retained-stride controls.
+Window worksheet v3 retains31 records,26 with partial core associations. All488
+records remain364 unformulated/112 partial/12 logical-family; zero whole records
+close. Rounded products, width/wrapper conversions, broadcast/tuple cases and
+independent review remain open. Code correspondence and the final verdict remain open.

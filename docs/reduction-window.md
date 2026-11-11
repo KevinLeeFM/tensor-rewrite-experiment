@@ -125,3 +125,13 @@ The immutable v1 worksheet above is superseded for current mathematical tracking
 by `census/reduction-window-domains-v2.json`: all31 records remain,22 with partial
 core associations after Slice/Pad, full-span and Pad-fusion extensions. Broadcast,
 cumulative/tuple and whole-record partitions remain open.
+
+
+## Later cumulative-prefix refinement
+
+[The prefix extension](prefix-window-counts.md) derives ordered prefixes, arbitrary
+positive retained strides, exact/same-width modular inclusive-Iota products and
+precise signed/unsigned count-observation domains. The current domain worksheet
+is `census/reduction-window-domains-v3.json`: all31 records remain,26 with partial
+core associations. Four broadcast alternatives, one singleton tuple and full
+per-record partitions/observations remain open; earlier frozen worksheets remain.

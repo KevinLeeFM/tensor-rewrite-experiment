@@ -188,6 +188,9 @@ def evidence(root=ROOT):
             labels=[r['benchmark_id'] for r in domains['records'] if name in r['core_evidence']]
         if name.endswith(('FullSpanWindow.reduce_reshape','FullSpanWindow.original_reduce_reshape')):
             labels=read('census/full-span-window-v1.json',root)['candidate_benchmark_labels']
+        if '.PrefixWindow.' in name:
+            manifest=read('census/prefix-window-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
         if '.PadWindow.' in name:
             manifest=read('census/pad-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
@@ -200,7 +203,9 @@ def evidence(root=ROOT):
                         ('singleton-add-' in label if suffix=='unit_window_add_zero' else
                          'singleton-minimum-' in label if suffix=='unit_window_min' else
                          'singleton-maximum-' in label)]
-        kind=('pad_window_contract_refutation' if '.PadWindow.' in name
+        kind=('prefix_window_contract_refutation' if '.PrefixWindow.' in name
+              and name.endswith('_refuted') else
+              'pad_window_contract_refutation' if '.PadWindow.' in name
               and name.endswith('_refuted') else
               'slice_pad_geometry_refutation' if '.SlicePad.' in name
               and name.endswith('_refuted') else
@@ -434,6 +439,24 @@ def mathematical_models(root=ROOT):
                        window_domain_worksheet=extension['window_domain_worksheet'],
                        independent_statement_review='pending',manifest=padded['manifest'],
                        manifest_sha256=padded['manifest_sha256']))
+    from check_prefix_window import check_inputs as prefix_inputs
+    from check_prefix_window import validate_result as validate_prefix
+    prefix=read('reports/prefix-window.json',root);validate_prefix(prefix)
+    extension=prefix_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.PrefixWindow.' in name}
+    assert prefix['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['conditions'],
+                       scalar_contract=extension['arithmetic_contract'],status=prefix['status'],
+                       checked_theorem_count=34,full_family_complete=False,
+                       direct_prefix_semantics=True,ordered_padding_prefix_partition=True,
+                       retained_strides_general=True,same_width_iota_product=True,
+                       signed_unsigned_exact_domains_iff=True,
+                       rounded_uniform_sum_product_proved=False,
+                       scalar_wrapper_recognition_proved=False,
+                       window_domain_worksheet=extension['window_domain_worksheet'],
+                       independent_statement_review='pending',manifest=prefix['manifest'],
+                       manifest_sha256=prefix['manifest_sha256']))
     return models
 
 
