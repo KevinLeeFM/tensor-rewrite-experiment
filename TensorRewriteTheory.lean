@@ -48,3 +48,5 @@ public import TensorRewrite.Theory.ControlValuesCounterexamples
 public import TensorRewrite.Theory.ConcatenationCounterexamples
 
 public import TensorRewrite.Theory.ConcatenationGraphCounterexamples
+
+public import TensorRewrite.Theory.BitPackingCounterexamples

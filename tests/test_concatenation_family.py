@@ -44,7 +44,7 @@ class ConcatenationFamilyTests(unittest.TestCase):
         self.assertIn('iff complete output shape',empty['domain'])
         old=audit.assemble(ledger.corpus(),ledger.read('census/mathematical-ledger.json'),
                            audit.read_catalog('census/workload-formulation-catalog-v9.json'))
-        new=audit.assemble(ledger.corpus(),ledger.read('census/mathematical-ledger.json'),audit.read_catalog())
+        new=audit.assemble(ledger.corpus(),ledger.read('census/mathematical-ledger.json'),audit.read_catalog('census/workload-formulation-catalog-v10.json'))
         self.assertEqual(old['records_with_only_unreviewed_proposal_worksheets'],217)
         self.assertEqual(new['records_with_only_unreviewed_proposal_worksheets'],213)
         self.assertEqual(new['records_with_domain_worksheets'],488)

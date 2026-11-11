@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "model": "bounded_stored_word_bit_packing_v1",
+  "base_revision": "6b6917186b998b1ab53a9283ca80027b11e05ea6",
+  "certificates": [
+    "TensorRewrite.Theory.BitPacking.bitIndex_involution",
+    "TensorRewrite.Theory.BitPacking.wordOfBits_getLsb",
+    "TensorRewrite.Theory.BitPacking.word_ext",
+    "TensorRewrite.Theory.BitPacking.flatten_inflate",
+    "TensorRewrite.Theory.BitPacking.inflate_flatten",
+    "TensorRewrite.Theory.BitPacking.transport_refl",
+    "TensorRewrite.Theory.BitPacking.transport_trans",
+    "TensorRewrite.Theory.BitPacking.flatten_repack",
+    "TensorRewrite.Theory.BitPacking.count_appendAxis",
+    "TensorRewrite.Theory.BitPacking.split_bit_count",
+    "TensorRewrite.Theory.BitPacking.rowMajor_orderedShape",
+    "TensorRewrite.Theory.BitPacking.physical_split_bit_count",
+    "TensorRewrite.Theory.BitPacking.width_eq_of_nonempty",
+    "TensorRewrite.Theory.BitPacking.repack_refl",
+    "TensorRewrite.Theory.BitPacking.repack_compose",
+    "TensorRewrite.Theory.BitPacking.repack_same_width",
+    "TensorRewrite.Theory.BitPacking.logical_convert_refl",
+    "TensorRewrite.Theory.BitPacking.logical_convert_compose",
+    "TensorRewrite.Theory.BitPacking.physical_convert_refl",
+    "TensorRewrite.Theory.BitPacking.physical_convert_compose",
+    "TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+    "TensorRewrite.Theory.BitPacking.join_split",
+    "TensorRewrite.Theory.BitPacking.split_join",
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_refl",
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_compose",
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_map",
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich",
+    "TensorRewrite.Theory.BitPacking.bit_order_refuted",
+    "TensorRewrite.Theory.BitPacking.numeric_extension_refuted",
+    "TensorRewrite.Theory.BitPacking.layout_identity_refuted",
+    "TensorRewrite.Theory.BitPacking.empty_width_inference_refuted"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.BitPacking.bit_order_refuted",
+    "TensorRewrite.Theory.BitPacking.numeric_extension_refuted",
+    "TensorRewrite.Theory.BitPacking.layout_identity_refuted",
+    "TensorRewrite.Theory.BitPacking.empty_width_inference_refuted"
+  ],
+  "candidate_benchmark_labels": [
+    "HandleBitcast/compatible-stage",
+    "HandleBitcast/compose-stage",
+    "HandleBitcast/unary-sandwich",
+    "HandleBitcastConvert/compatible",
+    "HandleBitcastConvert/compose",
+    "HandleBitcastConvert/last-contiguous-axis",
+    "HandleBitcastConvert/same-physical-shape"
+  ],
+  "candidate_benchmark_bindings": {
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich": [
+      "HandleBitcast/unary-sandwich"
+    ],
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_compose": [
+      "HandleBitcast/compose-stage"
+    ],
+    "TensorRewrite.Theory.BitPacking.cell_bitcast_refl": [
+      "HandleBitcast/compatible-stage"
+    ],
+    "TensorRewrite.Theory.BitPacking.physical_convert_compose": [
+      "HandleBitcastConvert/compose"
+    ],
+    "TensorRewrite.Theory.BitPacking.logical_convert_compose": [
+      "HandleBitcastConvert/compose"
+    ],
+    "TensorRewrite.Theory.BitPacking.physical_convert_refl": [
+      "HandleBitcastConvert/compatible"
+    ],
+    "TensorRewrite.Theory.BitPacking.logical_convert_refl": [
+      "HandleBitcastConvert/compatible"
+    ],
+    "TensorRewrite.Theory.BitPacking.physical_convert_same_width": [
+      "HandleBitcastConvert/same-physical-shape"
+    ],
+    "TensorRewrite.Theory.BitPacking.width_eq_of_nonempty": [
+      "HandleBitcastConvert/same-physical-shape"
+    ],
+    "TensorRewrite.Theory.BitPacking.physical_split_bit_count": [
+      "HandleBitcastConvert/last-contiguous-axis"
+    ],
+    "TensorRewrite.Theory.BitPacking.join_split": [
+      "HandleBitcastConvert/last-contiguous-axis"
+    ],
+    "TensorRewrite.Theory.BitPacking.split_join": [
+      "HandleBitcastConvert/last-contiguous-axis"
+    ]
+  },
+  "domain_worksheet": "census/bit-packing-domains-v1.json",
+  "storage_contract": "actual bounded BitVec words; exact complete bit stream; explicit least-first or most-first order",
+  "layout_contract": "arbitrary legal untiled dense minor-to-major permutations; no padding, tiles or aliases",
+  "shape_contract": "all finite ranks and static extents; equal total bits independent of values; derived appended ratio axis",
+  "observation_contract": "exact complete static shapes and stored words; pure value maps; no memory or effect observation",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/BitPacking.lean",
+      "sha256": "f7be26657106a400674295ba8e75a9bbde859b35059c0be743081082efb7c8ba"
+    },
+    {
+      "path": "TensorRewrite/Theory/BitPackingLemmas.lean",
+      "sha256": "dbcfc91b6afa31d37449a9e596366a8856ff347f179ac92d36aa32f2ed48d5ed"
+    },
+    {
+      "path": "TensorRewrite/Theory/BitPackingProof.lean",
+      "sha256": "ea59964d4ca6ac3006927d337f8a58b2202bd048cbeddf413965202f1efd2392"
+    },
+    {
+      "path": "TensorRewrite/Theory/BitPackingShape.lean",
+      "sha256": "df1ef0a0516657bc15e3d40761cb38a51c907c7afe4f7d493fa4cefc5f96afa5"
+    },
+    {
+      "path": "TensorRewrite/Theory/BitPackingShapeProof.lean",
+      "sha256": "40bc634a812c05f555df54fcea02157a605e34836af2c2b2631dde7610506740"
+    },
+    {
+      "path": "TensorRewrite/Theory/BitPackingCell.lean",
+      "sha256": "da5030eec8713533e54deb4b26ab464257d0077f3156d74625fe79e754320c6f"
+    },
+    {
+      "path": "TensorRewrite/Theory/BitPackingCounterexamples.lean",
+      "sha256": "6eb60b3b019c16cd61627007191e90d58529dda8c1235290138d81c4bf8d22b2"
+    },
+    {
+      "path": "tests/fixtures/BitPackingControls.lean",
+      "sha256": "9aee273343fa8926db2c8e7d3e18e6a7b47705279a2268d9abf9bb25b946a06d"
+    },
+    {
+      "path": "tests/fixtures/InvalidBitPacking.lean",
+      "sha256": "fe4be6cfbf1eb2e26f7502945613baa255c6d2fa5b6324bb4ea069ef4ed557d1"
+    },
+    {
+      "path": "tools/bit_packing_examples.py",
+      "sha256": "f7919ac09fccc7d309ae5433a3d9321496ed8cda46ba0ec521dac38d926d02f2"
+    },
+    {
+      "path": "tools/check_bit_packing.py",
+      "sha256": "f55f1adbbb96ee193f5ea73afb0f4ad609415bc4a4890d05c8297f6bf76c923f"
+    },
+    {
+      "path": "census/bit-packing-domains-v1.json",
+      "sha256": "e221a9ae3c8c7a65ed862d06ba04d45cc9de7789f9867d77cb0b2d4b0b6b2df0"
+    },
+    {
+      "path": "TensorRewrite/Pilot/DenseLayout.lean",
+      "sha256": "9ce92a554976c85e6f279b1d7cfcf0edbdf95e45b4ce0c03a1b89a8fa863b734"
+    },
+    {
+      "path": "TensorRewrite/Pilot/DenseLayoutLemmas.lean",
+      "sha256": "8a721be3f4df8b68def8cd237f8db5139edbb850b5d840b9a7a203951dd04bec"
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProduct.lean",
+      "sha256": "ac83afd5255db6543d7cd28a3c0adb2df86a0c2656835eb6f4f1a76138c1a0e1"
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProductLemmas.lean",
+      "sha256": "846b504cd4bd6bb2039dbc25d8cb6c325856393268b799b8438457a70ea29711"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndexLemmas.lean",
+      "sha256": "f5850dd78c05d62837a026f7fed3c73c0206e916fa2b57148b1e4f1c597118ff"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Tensor.lean",
+      "sha256": "c1b41d38bee3d55c4a63df7333c7f0d23ea5917e4260062e2efad97edbeab122"
+    },
+    {
+      "path": "TensorRewrite/Pilot/PermutationArrays.lean",
+      "sha256": "5660b5ada4a334fca6fe92643414f67bedee5b48b37af0683b0e90e5f7865369"
+    },
+    {
+      "path": "TensorRewrite/Pilot/PermutationArrayLemmas.lean",
+      "sha256": "b387a54031685e5eb99d75dbaa943dbffef5f5f5f0256a3ee02ea292d98fbc19"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedCoordinates.lean",
+      "sha256": "67765b42b750f3b07ffafeadb4994362d198c70bd6b7d52b4baff6a38a186d91"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "imported_rewrite_proofs": [],
+  "library_reuse": "Lean/Std BitVec Bool-list constructor and bounded-bit extensionality; existing finite-product and dense-layout coordinate inverses; FloatLib only in stored-bit controls",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "full_workload_complete": false,
+  "full_bitcast_family_complete": false,
+  "snapshot_stage": "post-development accepted artifact at first commit; not a preregistered discovery trial"
+}

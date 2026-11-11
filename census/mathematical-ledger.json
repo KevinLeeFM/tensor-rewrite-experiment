@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 222,
-    "partial_model_evidence_requires_partition_review": 144,
+    "needs_formal_statement_and_domain_partition": 215,
+    "partial_model_evidence_requires_partition_review": 151,
     "declared_value_family_complete_full_record_partitions_open": 122
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 956,
+  "distinct_checked_declarations": 987,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,8 +39,9 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 634,
+    "library_backed_theory": 661,
     "arithmetic_ieee_profile_refutation": 3,
+    "bit_packing_contract_refutation": 4,
     "broadcast_state_contract_refutation": 3,
     "concatenation_contract_refutation": 4,
     "concatenation_graph_contract_refutation": 4,
@@ -1307,6 +1308,24 @@
       "independent_statement_review": "pending",
       "manifest": "census/concatenation-v1.json",
       "manifest_sha256": "ad776c597335ba60397307e15ede9073298c02f7bcd0f3c7a4520446a2a5609d"
+    },
+    {
+      "model": "bounded_stored_word_bit_packing_v1",
+      "status": "kernel_checked_partial_stored_word_and_dense_bitcast_model",
+      "checked_theorem_count": 31,
+      "scope": "exact complete static shapes and stored words; pure value maps; no memory or effect observation",
+      "storage_contract": "actual bounded BitVec words; exact complete bit stream; explicit least-first or most-first order",
+      "shape_contract": "all finite ranks and static extents; equal total bits independent of values; derived appended ratio axis",
+      "layout_contract": "arbitrary legal untiled dense minor-to-major permutations; no padding, tiles or aliases",
+      "full_family_complete": false,
+      "actual_word_stream_roundtrips_proved": true,
+      "dense_layout_composition_proved": true,
+      "trailing_ratio_shape_derived": true,
+      "all_scalar_datatype_encodings_proved": false,
+      "tiled_or_padded_storage_modeled": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/bit-packing-v1.json",
+      "manifest_sha256": "04f80b16c7df0e198c49695918b3bed79ccece35f29720656e277709ca099fdd"
     }
   ],
   "kernel_complete_family_profile_count": 397,
@@ -1314,10 +1333,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "d07fda3c85d808521ae9b87cac301081564956bb93c1e4d44c23e6619781bf58",
+    "sha256": "bda73bf5a8efbbb1377c6076b0786cce9a4745c8a7c58d56ffeef98da1e22d68",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "b3b74c8dd2928bb4fdc5a90deea6fab8322882ab1151b7edd61b670139bcd97e"
+    "output_sha256": "9e0a306b6be8ebb949b04081c9f04bc62b449152ebc190385709407b84a42bc1"
   },
   "proofs": [
     {
@@ -7361,6 +7380,562 @@
       "independent_statement_review": "pending",
       "axiom_dependencies": [
         "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.bitIndex_involution",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.bit_order_refuted",
+      "kinds": [
+        "bit_packing_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcast/compose-stage"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcast/compatible-stage"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcast/unary-sandwich"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.count_appendAxis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.empty_width_inference_refuted",
+      "kinds": [
+        "bit_packing_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.flatten_inflate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.flatten_repack",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.inflate_flatten",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.join_split",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/last-contiguous-axis"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.layout_identity_refuted",
+      "kinds": [
+        "bit_packing_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.logical_convert_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/compose"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.logical_convert_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/compatible"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.numeric_extension_refuted",
+      "kinds": [
+        "bit_packing_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.physical_convert_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/compose"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.physical_convert_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/compatible"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/same-physical-shape"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.physical_split_bit_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/last-contiguous-axis"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.repack_compose",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.repack_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.repack_same_width",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.rowMajor_orderedShape",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.split_bit_count",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.split_join",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/last-contiguous-axis"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.transport_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.transport_trans",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.width_eq_of_nonempty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleBitcastConvert/same-physical-shape"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.wordOfBits_getLsb",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.BitPacking.word_ext",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact stored BitVec streams; arbitrary counts/widths, ranks and legal untiled dense permutations; explicit per-word bit order; total-bit shape guard independent of values; derived trailing-ratio shape; same-cell map/compose/identity bridges; no numerical cast, scalar encoding completeness, tiled/padded storage, memory, effects or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
         "Quot.sound",
         "propext"
       ]
@@ -20463,8 +21038,10 @@
       "retained_lhs": "current Bitcast(x)",
       "retained_rhs": "current operand x",
       "unreviewed_benchmark_notes_not_assumptions": "initial bitcast has no control dependencies; current output and operand same element type; ReplaceInstructionIfCompatible succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.cell_bitcast_refl"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -20474,8 +21051,10 @@
       "retained_lhs": "Bitcast(Bitcast(x))",
       "retained_rhs": "Bitcast(x)",
       "unreviewed_benchmark_notes_not_assumptions": "initial bitcast has no control dependencies; nested Bitcast matcher after recursive simplification of inner operand",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.cell_bitcast_compose"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -20496,8 +21075,10 @@
       "retained_lhs": "Bitcast(Unary(Bitcast(x)))",
       "retained_rhs": "Bitcast(cloned Unary(x))",
       "unreviewed_benchmark_notes_not_assumptions": "initial bitcast has no control dependencies; Unary elementwise, not Fusion, one operand and one user; same element types through all four endpoints; inner bitcast and x have no tiles or no layout",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -20507,8 +21088,11 @@
       "retained_lhs": "BitcastConvert(x)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "compatibility replacement succeeds; return value otherwise ignored",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.logical_convert_refl",
+        "TensorRewrite.Theory.BitPacking.physical_convert_refl"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -20518,8 +21102,11 @@
       "retained_lhs": "BitcastConvert(BitcastConvert(x))",
       "retained_rhs": "BitcastConvert(x,final shape)",
       "unreviewed_benchmark_notes_not_assumptions": "inner opcode BitcastConvert",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.logical_convert_compose",
+        "TensorRewrite.Theory.BitPacking.physical_convert_compose"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -20540,8 +21127,12 @@
       "retained_lhs": "BitcastConvert(x)",
       "retained_rhs": "Bitcast(x)",
       "unreviewed_benchmark_notes_not_assumptions": "layout sensitive; rewrite_no_op_bitcast_convert_to_bitcast; shape with more dimensions has LastDimIsMinorMost; absent/zero element_size_in_bits requires StorageBitWidth divisible by8, otherwise exact element-size/width equality",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.join_split",
+        "TensorRewrite.Theory.BitPacking.physical_split_bit_count",
+        "TensorRewrite.Theory.BitPacking.split_join"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -20551,8 +21142,11 @@
       "retained_lhs": "BitcastConvert(x)",
       "retained_rhs": "Bitcast(x)",
       "unreviewed_benchmark_notes_not_assumptions": "layout sensitive; rewrite_no_op_bitcast_convert_to_bitcast; ShapeUtil::EqualIgnoringElementType(output,x); legal source implies same storage bit width",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+        "TensorRewrite.Theory.BitPacking.width_eq_of_nonempty"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

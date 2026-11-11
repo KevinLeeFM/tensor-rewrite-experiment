@@ -559,6 +559,68 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ArithmeticFamily.subtract_broadcast
 #check @TensorRewrite.Theory.ArithmeticFamily.word_family
 #print axioms TensorRewrite.Theory.ArithmeticFamily.word_family
+#check @TensorRewrite.Theory.BitPacking.bitIndex_involution
+#print axioms TensorRewrite.Theory.BitPacking.bitIndex_involution
+#check @TensorRewrite.Theory.BitPacking.bit_order_refuted
+#print axioms TensorRewrite.Theory.BitPacking.bit_order_refuted
+#check @TensorRewrite.Theory.BitPacking.cell_bitcast_compose
+#print axioms TensorRewrite.Theory.BitPacking.cell_bitcast_compose
+#check @TensorRewrite.Theory.BitPacking.cell_bitcast_map
+#print axioms TensorRewrite.Theory.BitPacking.cell_bitcast_map
+#check @TensorRewrite.Theory.BitPacking.cell_bitcast_refl
+#print axioms TensorRewrite.Theory.BitPacking.cell_bitcast_refl
+#check @TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich
+#print axioms TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich
+#check @TensorRewrite.Theory.BitPacking.count_appendAxis
+#print axioms TensorRewrite.Theory.BitPacking.count_appendAxis
+#check @TensorRewrite.Theory.BitPacking.empty_width_inference_refuted
+#print axioms TensorRewrite.Theory.BitPacking.empty_width_inference_refuted
+#check @TensorRewrite.Theory.BitPacking.flatten_inflate
+#print axioms TensorRewrite.Theory.BitPacking.flatten_inflate
+#check @TensorRewrite.Theory.BitPacking.flatten_repack
+#print axioms TensorRewrite.Theory.BitPacking.flatten_repack
+#check @TensorRewrite.Theory.BitPacking.inflate_flatten
+#print axioms TensorRewrite.Theory.BitPacking.inflate_flatten
+#check @TensorRewrite.Theory.BitPacking.join_split
+#print axioms TensorRewrite.Theory.BitPacking.join_split
+#check @TensorRewrite.Theory.BitPacking.layout_identity_refuted
+#print axioms TensorRewrite.Theory.BitPacking.layout_identity_refuted
+#check @TensorRewrite.Theory.BitPacking.logical_convert_compose
+#print axioms TensorRewrite.Theory.BitPacking.logical_convert_compose
+#check @TensorRewrite.Theory.BitPacking.logical_convert_refl
+#print axioms TensorRewrite.Theory.BitPacking.logical_convert_refl
+#check @TensorRewrite.Theory.BitPacking.numeric_extension_refuted
+#print axioms TensorRewrite.Theory.BitPacking.numeric_extension_refuted
+#check @TensorRewrite.Theory.BitPacking.physical_convert_compose
+#print axioms TensorRewrite.Theory.BitPacking.physical_convert_compose
+#check @TensorRewrite.Theory.BitPacking.physical_convert_refl
+#print axioms TensorRewrite.Theory.BitPacking.physical_convert_refl
+#check @TensorRewrite.Theory.BitPacking.physical_convert_same_width
+#print axioms TensorRewrite.Theory.BitPacking.physical_convert_same_width
+#check @TensorRewrite.Theory.BitPacking.physical_split_bit_count
+#print axioms TensorRewrite.Theory.BitPacking.physical_split_bit_count
+#check @TensorRewrite.Theory.BitPacking.repack_compose
+#print axioms TensorRewrite.Theory.BitPacking.repack_compose
+#check @TensorRewrite.Theory.BitPacking.repack_refl
+#print axioms TensorRewrite.Theory.BitPacking.repack_refl
+#check @TensorRewrite.Theory.BitPacking.repack_same_width
+#print axioms TensorRewrite.Theory.BitPacking.repack_same_width
+#check @TensorRewrite.Theory.BitPacking.rowMajor_orderedShape
+#print axioms TensorRewrite.Theory.BitPacking.rowMajor_orderedShape
+#check @TensorRewrite.Theory.BitPacking.split_bit_count
+#print axioms TensorRewrite.Theory.BitPacking.split_bit_count
+#check @TensorRewrite.Theory.BitPacking.split_join
+#print axioms TensorRewrite.Theory.BitPacking.split_join
+#check @TensorRewrite.Theory.BitPacking.transport_refl
+#print axioms TensorRewrite.Theory.BitPacking.transport_refl
+#check @TensorRewrite.Theory.BitPacking.transport_trans
+#print axioms TensorRewrite.Theory.BitPacking.transport_trans
+#check @TensorRewrite.Theory.BitPacking.width_eq_of_nonempty
+#print axioms TensorRewrite.Theory.BitPacking.width_eq_of_nonempty
+#check @TensorRewrite.Theory.BitPacking.wordOfBits_getLsb
+#print axioms TensorRewrite.Theory.BitPacking.wordOfBits_getLsb
+#check @TensorRewrite.Theory.BitPacking.word_ext
+#print axioms TensorRewrite.Theory.BitPacking.word_ext
 #check @TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono
 #print axioms TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono
 #check @TensorRewrite.Theory.BroadcastWindow.axes_decode

@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.BitPacking.' in name:
+            manifest=read('census/bit-packing-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.Concatenation.' in name:
             manifest=read('census/concatenation-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -262,7 +265,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('concatenation_graph_contract_refutation' if '.ConcatenationFamily.' in name
+        kind=('bit_packing_contract_refutation' if '.BitPacking.' in name
+              and name.endswith('_refuted') else 'concatenation_graph_contract_refutation' if '.ConcatenationFamily.' in name
               and name.endswith('_refuted') else 'concatenation_contract_refutation' if '.Concatenation.' in name
               and name.endswith('_refuted') else 'control_value_contract_refutation' if '.ControlValues.' in name
               and name.endswith('_refuted') else 'dynamic_update_contract_refutation' if '.DynamicUpdate.' in name
@@ -795,6 +799,19 @@ def mathematical_models(root=ROOT):
                        unit_axis_reshape_broadcast_graph_proved=False,
                        independent_statement_review='pending',manifest=concat['manifest'],
                        manifest_sha256=concat['manifest_sha256']))
+    from check_bit_packing import check_inputs as bit_inputs, validate_result as validate_bits
+    bits=read('reports/bit-packing.json',root);validate_bits(bits,root)
+    extension=bit_inputs(root)
+    expected={name:theory['axiom_dependencies'][name] for name in extension['certificates']}
+    assert len(expected)==31 and bits['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],status=bits['status'],checked_theorem_count=31,
+                       scope=extension['observation_contract'],storage_contract=extension['storage_contract'],
+                       shape_contract=extension['shape_contract'],layout_contract=extension['layout_contract'],
+                       full_family_complete=False,actual_word_stream_roundtrips_proved=True,
+                       dense_layout_composition_proved=True,trailing_ratio_shape_derived=True,
+                       all_scalar_datatype_encodings_proved=False,tiled_or_padded_storage_modeled=False,
+                       independent_statement_review='pending',manifest=bits['manifest'],
+                       manifest_sha256=bits['manifest_sha256']))
     return models
 
 

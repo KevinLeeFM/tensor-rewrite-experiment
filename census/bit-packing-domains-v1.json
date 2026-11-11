@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_partial_dense_bit_packing_profiles_remaining_observations_open",
+  "retained_batches": [
+    {
+      "path": "census/layout-cases.json",
+      "sha256": "6add1829272874e0b549c41b6c458e713b8c9585c31ef74b4f5dcf55ea73bfac"
+    }
+  ],
+  "mathematical_model_manifest": "census/bit-packing-v1.json",
+  "base_revision": "6b6917186b998b1ab53a9283ca80027b11e05ea6",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleBitcast/compatible-stage",
+      "retained_lhs": "current Bitcast(x)",
+      "retained_rhs": "current operand x",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.cell_bitcast_refl"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/compose-stage",
+      "retained_lhs": "Bitcast(Bitcast(x))",
+      "retained_rhs": "Bitcast(x)",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.cell_bitcast_compose"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleBitcast/unary-sandwich",
+      "retained_lhs": "Bitcast(Unary(Bitcast(x)))",
+      "retained_rhs": "Bitcast(cloned Unary(x))",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/compatible",
+      "retained_lhs": "BitcastConvert(x)",
+      "retained_rhs": "x",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.physical_convert_refl",
+        "TensorRewrite.Theory.BitPacking.logical_convert_refl"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/compose",
+      "retained_lhs": "BitcastConvert(BitcastConvert(x))",
+      "retained_rhs": "BitcastConvert(x,final shape)",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.physical_convert_compose",
+        "TensorRewrite.Theory.BitPacking.logical_convert_compose"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/last-contiguous-axis",
+      "retained_lhs": "BitcastConvert(x)",
+      "retained_rhs": "Bitcast(x)",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.physical_split_bit_count",
+        "TensorRewrite.Theory.BitPacking.join_split",
+        "TensorRewrite.Theory.BitPacking.split_join"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total.",
+        "The actual standard dense split/join shapes append/remove the complete trailing ratio axis and derive their storage-bit count."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking.",
+        "This supplies actual rank-changing packing and inverse proofs, not equivalence to the full externally selected storage Bitcast replacement; padded widths/other layouts remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleBitcastConvert/same-physical-shape",
+      "retained_lhs": "BitcastConvert(x)",
+      "retained_rhs": "Bitcast(x)",
+      "core_evidence": [
+        "TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+        "TensorRewrite.Theory.BitPacking.width_eq_of_nonempty"
+      ],
+      "mathematical_premises": [
+        "Arbitrary finite ranks/extents and legal dense minor-to-major permutations; scalar and empty tensors included.",
+        "Exact stored-word profile uses actual BitVec encodings and an explicit per-word bit order, with equal total bits independent of values.",
+        "Same-cell Bitcast graphs use the existing independent physical cell encode/read maps; any Unary map is pure and total.",
+        "The same-width bridge has an explicit equal-width premise. Inferring widths from total-bit equality additionally requires a nonzero cell count."
+      ],
+      "remaining_partitions": [
+        "Independent statement and retained-case partition review remain open; no source guard is adopted as an algebraic axiom.",
+        "Tiled/padded/strided storage, memory spaces, alias/control observations and dynamic shapes require separate models.",
+        "Primitive scalar encodings, logical versus storage widths, bytes and backend endianness need explicit adapters; numerical conversion is not bit repacking.",
+        "Empty shapes do not allow element-width inference from total-bit equality; the concrete counterexample is retained."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}

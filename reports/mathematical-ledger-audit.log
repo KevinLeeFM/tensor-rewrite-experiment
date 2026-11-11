@@ -1989,6 +1989,214 @@ TensorRewrite.Theory.ArithmeticFamily.rule_count : TensorRewrite.Theory.Arithmet
     TensorRewrite.Theory.ArithmeticFamily.Expr.eval
       (TensorRewrite.Theory.ArithmeticFamily.Operations.exact (BitVec width)) inputs predicates rule.rhs
 'TensorRewrite.Theory.ArithmeticFamily.word_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.bitIndex_involution : ∀ {width : ℕ} (order : TensorRewrite.Theory.BitPacking.Order)
+  (bit : Fin width), order.bitIndex (order.bitIndex bit) = bit
+'TensorRewrite.Theory.BitPacking.bitIndex_involution' depends on axioms: [propext]
+TensorRewrite.Theory.BitPacking.bit_order_refuted : TensorRewrite.Theory.BitPacking.repack
+    TensorRewrite.Theory.BitPacking.Order.leastFirst TensorRewrite.Theory.BitPacking.Order.leastFirst
+    TensorRewrite.Theory.BitPacking.bit_order_refuted._proof_1 TensorRewrite.Theory.BitPacking.bytePair 0 ≠
+  TensorRewrite.Theory.BitPacking.repack TensorRewrite.Theory.BitPacking.Order.mostFirst
+    TensorRewrite.Theory.BitPacking.Order.mostFirst TensorRewrite.Theory.BitPacking.bit_order_refuted._proof_1
+    TensorRewrite.Theory.BitPacking.bytePair 0
+'TensorRewrite.Theory.BitPacking.bit_order_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.cell_bitcast_compose : ∀ {firstRank middleRank lastRank : ℕ} {α : Type}
+  {firstShape : TensorRewrite.Pilot.Shape firstRank} (middleShape : TensorRewrite.Pilot.Shape middleRank)
+  (lastShape : TensorRewrite.Pilot.Shape lastRank) (firstLayout : TensorRewrite.Pilot.DenseLayout firstRank)
+  (middleLayout : TensorRewrite.Pilot.DenseLayout middleRank) (lastLayout : TensorRewrite.Pilot.DenseLayout lastRank)
+  (left :
+    TensorRewrite.Pilot.LinearIndex.elementCount (firstLayout.orderedShape firstShape) =
+      TensorRewrite.Pilot.LinearIndex.elementCount (middleLayout.orderedShape middleShape))
+  (right :
+    TensorRewrite.Pilot.LinearIndex.elementCount (middleLayout.orderedShape middleShape) =
+      TensorRewrite.Pilot.LinearIndex.elementCount (lastLayout.orderedShape lastShape))
+  (input : TensorRewrite.Pilot.Tensor firstShape α),
+  middleLayout.bitcastTensor lastLayout lastShape right
+      (firstLayout.bitcastTensor middleLayout middleShape left input) =
+    firstLayout.bitcastTensor lastLayout lastShape ⋯ input
+'TensorRewrite.Theory.BitPacking.cell_bitcast_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.cell_bitcast_map : ∀ {inputRank outputRank : ℕ} {α β : Type}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} (inputLayout : TensorRewrite.Pilot.DenseLayout inputRank)
+  (outputLayout : TensorRewrite.Pilot.DenseLayout outputRank) (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (same :
+    TensorRewrite.Pilot.LinearIndex.elementCount (inputLayout.orderedShape inputShape) =
+      TensorRewrite.Pilot.LinearIndex.elementCount (outputLayout.orderedShape outputShape))
+  (function : α → β) (input : TensorRewrite.Pilot.Tensor inputShape α),
+  inputLayout.bitcastTensor outputLayout outputShape same (TensorRewrite.Pilot.Tensor.map function input) =
+    TensorRewrite.Pilot.Tensor.map function (inputLayout.bitcastTensor outputLayout outputShape same input)
+'TensorRewrite.Theory.BitPacking.cell_bitcast_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.cell_bitcast_refl : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (layout : TensorRewrite.Pilot.DenseLayout rank) (input : TensorRewrite.Pilot.Tensor shape α),
+  layout.bitcastTensor layout shape ⋯ input = input
+'TensorRewrite.Theory.BitPacking.cell_bitcast_refl' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich : ∀ {firstRank middleRank lastRank : ℕ} {α β : Type}
+  {firstShape : TensorRewrite.Pilot.Shape firstRank} (middleShape : TensorRewrite.Pilot.Shape middleRank)
+  (lastShape : TensorRewrite.Pilot.Shape lastRank) (firstLayout : TensorRewrite.Pilot.DenseLayout firstRank)
+  (middleLayout : TensorRewrite.Pilot.DenseLayout middleRank) (lastLayout : TensorRewrite.Pilot.DenseLayout lastRank)
+  (left :
+    TensorRewrite.Pilot.LinearIndex.elementCount (firstLayout.orderedShape firstShape) =
+      TensorRewrite.Pilot.LinearIndex.elementCount (middleLayout.orderedShape middleShape))
+  (right :
+    TensorRewrite.Pilot.LinearIndex.elementCount (middleLayout.orderedShape middleShape) =
+      TensorRewrite.Pilot.LinearIndex.elementCount (lastLayout.orderedShape lastShape))
+  (function : α → β) (input : TensorRewrite.Pilot.Tensor firstShape α),
+  middleLayout.bitcastTensor lastLayout lastShape right
+      (TensorRewrite.Pilot.Tensor.map function (firstLayout.bitcastTensor middleLayout middleShape left input)) =
+    firstLayout.bitcastTensor lastLayout lastShape ⋯ (TensorRewrite.Pilot.Tensor.map function input)
+'TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.count_appendAxis : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank) (extent : ℕ),
+  TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.BitPacking.appendAxis shape extent) =
+    TensorRewrite.Pilot.LinearIndex.elementCount shape * extent
+'TensorRewrite.Theory.BitPacking.count_appendAxis' depends on axioms: [propext]
+TensorRewrite.Theory.BitPacking.empty_width_inference_refuted : 0 * 8 = 0 * 16 ∧ 8 ≠ 16
+'TensorRewrite.Theory.BitPacking.empty_width_inference_refuted' does not depend on any axioms
+@TensorRewrite.Theory.BitPacking.flatten_inflate : ∀ {cells width : ℕ} (order : TensorRewrite.Theory.BitPacking.Order)
+  (bits : TensorRewrite.Theory.BitPacking.Bits (cells * width)),
+  TensorRewrite.Theory.BitPacking.flatten order (TensorRewrite.Theory.BitPacking.inflate order bits) = bits
+'TensorRewrite.Theory.BitPacking.flatten_inflate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.flatten_repack : ∀ {inputCells inputWidth outputCells outputWidth : ℕ}
+  (inputOrder outputOrder : TensorRewrite.Theory.BitPacking.Order)
+  (same : inputCells * inputWidth = outputCells * outputWidth)
+  (input : TensorRewrite.Theory.BitPacking.Words inputCells inputWidth),
+  TensorRewrite.Theory.BitPacking.flatten outputOrder
+      (TensorRewrite.Theory.BitPacking.repack inputOrder outputOrder same input) =
+    TensorRewrite.Theory.BitPacking.transport same (TensorRewrite.Theory.BitPacking.flatten inputOrder input)
+'TensorRewrite.Theory.BitPacking.flatten_repack' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.inflate_flatten : ∀ {cells width : ℕ} (order : TensorRewrite.Theory.BitPacking.Order)
+  (words : TensorRewrite.Theory.BitPacking.Words cells width),
+  TensorRewrite.Theory.BitPacking.inflate order (TensorRewrite.Theory.BitPacking.flatten order words) = words
+'TensorRewrite.Theory.BitPacking.inflate_flatten' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.join_split : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank} (factor : ℕ)
+  (order : TensorRewrite.Theory.BitPacking.Order) (input : TensorRewrite.Pilot.Tensor shape (BitVec (factor * width))),
+  TensorRewrite.Theory.BitPacking.joinLast shape factor order
+      (TensorRewrite.Theory.BitPacking.splitLast factor order input) =
+    input
+'TensorRewrite.Theory.BitPacking.join_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.BitPacking.layout_identity_refuted : (TensorRewrite.Theory.BitPacking.physicalConvert
+    (TensorRewrite.Pilot.DenseLayout.rowMajor 2) (TensorRewrite.Pilot.DenseLayout.columnMajor 2) (fun x => 2)
+    TensorRewrite.Theory.BitPacking.Order.leastFirst TensorRewrite.Theory.BitPacking.Order.leastFirst
+    TensorRewrite.Theory.BitPacking.layout_identity_refuted._proof_1 TensorRewrite.Theory.BitPacking.matrixInput
+    fun axis => if axis = 0 then 0 else 1) ≠
+  TensorRewrite.Theory.BitPacking.matrixInput fun axis => if axis = 0 then 0 else 1
+'TensorRewrite.Theory.BitPacking.layout_identity_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.logical_convert_compose : ∀
+  {firstRank middleRank lastRank firstWidth middleWidth lastWidth : ℕ}
+  {firstShape : TensorRewrite.Pilot.Shape firstRank} (middleShape : TensorRewrite.Pilot.Shape middleRank)
+  (lastShape : TensorRewrite.Pilot.Shape lastRank)
+  (firstOrder middleOrder lastOrder : TensorRewrite.Theory.BitPacking.Order)
+  (left :
+    TensorRewrite.Pilot.LinearIndex.elementCount firstShape * firstWidth =
+      TensorRewrite.Pilot.LinearIndex.elementCount middleShape * middleWidth)
+  (right :
+    TensorRewrite.Pilot.LinearIndex.elementCount middleShape * middleWidth =
+      TensorRewrite.Pilot.LinearIndex.elementCount lastShape * lastWidth)
+  (input : TensorRewrite.Pilot.Tensor firstShape (BitVec firstWidth)),
+  TensorRewrite.Theory.BitPacking.logicalConvert lastShape middleOrder lastOrder right
+      (TensorRewrite.Theory.BitPacking.logicalConvert middleShape firstOrder middleOrder left input) =
+    TensorRewrite.Theory.BitPacking.logicalConvert lastShape firstOrder lastOrder ⋯ input
+'TensorRewrite.Theory.BitPacking.logical_convert_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.logical_convert_refl : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (order : TensorRewrite.Theory.BitPacking.Order) (input : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Theory.BitPacking.logicalConvert shape order order ⋯ input = input
+'TensorRewrite.Theory.BitPacking.logical_convert_refl' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.BitPacking.numeric_extension_refuted : TensorRewrite.Theory.BitPacking.repack
+    TensorRewrite.Theory.BitPacking.Order.leastFirst TensorRewrite.Theory.BitPacking.Order.leastFirst
+    TensorRewrite.Theory.BitPacking.bit_order_refuted._proof_1 TensorRewrite.Theory.BitPacking.bytePair 0 ≠
+  BitVec.zeroExtend 16 (TensorRewrite.Theory.BitPacking.bytePair 0)
+'TensorRewrite.Theory.BitPacking.numeric_extension_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.physical_convert_compose : ∀
+  {firstRank middleRank lastRank firstWidth middleWidth lastWidth : ℕ}
+  {firstShape : TensorRewrite.Pilot.Shape firstRank} (middleShape : TensorRewrite.Pilot.Shape middleRank)
+  (lastShape : TensorRewrite.Pilot.Shape lastRank) (firstLayout : TensorRewrite.Pilot.DenseLayout firstRank)
+  (middleLayout : TensorRewrite.Pilot.DenseLayout middleRank) (lastLayout : TensorRewrite.Pilot.DenseLayout lastRank)
+  (firstOrder middleOrder lastOrder : TensorRewrite.Theory.BitPacking.Order)
+  (left :
+    TensorRewrite.Pilot.LinearIndex.elementCount (firstLayout.orderedShape firstShape) * firstWidth =
+      TensorRewrite.Pilot.LinearIndex.elementCount (middleLayout.orderedShape middleShape) * middleWidth)
+  (right :
+    TensorRewrite.Pilot.LinearIndex.elementCount (middleLayout.orderedShape middleShape) * middleWidth =
+      TensorRewrite.Pilot.LinearIndex.elementCount (lastLayout.orderedShape lastShape) * lastWidth)
+  (input : TensorRewrite.Pilot.Tensor firstShape (BitVec firstWidth)),
+  TensorRewrite.Theory.BitPacking.physicalConvert middleLayout lastLayout lastShape middleOrder lastOrder right
+      (TensorRewrite.Theory.BitPacking.physicalConvert firstLayout middleLayout middleShape firstOrder middleOrder left
+        input) =
+    TensorRewrite.Theory.BitPacking.physicalConvert firstLayout lastLayout lastShape firstOrder lastOrder ⋯ input
+'TensorRewrite.Theory.BitPacking.physical_convert_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.physical_convert_refl : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (layout : TensorRewrite.Pilot.DenseLayout rank) (order : TensorRewrite.Theory.BitPacking.Order)
+  (input : TensorRewrite.Pilot.Tensor shape (BitVec width)),
+  TensorRewrite.Theory.BitPacking.physicalConvert layout layout shape order order ⋯ input = input
+'TensorRewrite.Theory.BitPacking.physical_convert_refl' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.physical_convert_same_width : ∀ {inputRank outputRank width : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} (inputLayout : TensorRewrite.Pilot.DenseLayout inputRank)
+  (outputLayout : TensorRewrite.Pilot.DenseLayout outputRank) (outputShape : TensorRewrite.Pilot.Shape outputRank)
+  (order : TensorRewrite.Theory.BitPacking.Order)
+  (same :
+    TensorRewrite.Pilot.LinearIndex.elementCount (inputLayout.orderedShape inputShape) =
+      TensorRewrite.Pilot.LinearIndex.elementCount (outputLayout.orderedShape outputShape))
+  (input : TensorRewrite.Pilot.Tensor inputShape (BitVec width)),
+  TensorRewrite.Theory.BitPacking.physicalConvert inputLayout outputLayout outputShape order order ⋯ input =
+    inputLayout.bitcastTensor outputLayout outputShape same input
+'TensorRewrite.Theory.BitPacking.physical_convert_same_width' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.physical_split_bit_count : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (factor width : ℕ),
+  TensorRewrite.Pilot.LinearIndex.elementCount ((TensorRewrite.Pilot.DenseLayout.rowMajor rank).orderedShape shape) *
+      (factor * width) =
+    TensorRewrite.Pilot.LinearIndex.elementCount
+        ((TensorRewrite.Pilot.DenseLayout.rowMajor (rank + 1)).orderedShape
+          (TensorRewrite.Theory.BitPacking.appendAxis shape factor)) *
+      width
+'TensorRewrite.Theory.BitPacking.physical_split_bit_count' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.BitPacking.repack_compose : ∀
+  {firstCells firstWidth middleCells middleWidth lastCells lastWidth : ℕ}
+  (firstOrder middleOrder lastOrder : TensorRewrite.Theory.BitPacking.Order)
+  (left : firstCells * firstWidth = middleCells * middleWidth)
+  (right : middleCells * middleWidth = lastCells * lastWidth)
+  (input : TensorRewrite.Theory.BitPacking.Words firstCells firstWidth),
+  TensorRewrite.Theory.BitPacking.repack middleOrder lastOrder right
+      (TensorRewrite.Theory.BitPacking.repack firstOrder middleOrder left input) =
+    TensorRewrite.Theory.BitPacking.repack firstOrder lastOrder ⋯ input
+'TensorRewrite.Theory.BitPacking.repack_compose' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.repack_refl : ∀ {cells width : ℕ} (order : TensorRewrite.Theory.BitPacking.Order)
+  (input : TensorRewrite.Theory.BitPacking.Words cells width),
+  TensorRewrite.Theory.BitPacking.repack order order ⋯ input = input
+'TensorRewrite.Theory.BitPacking.repack_refl' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.repack_same_width : ∀ {inputCells outputCells width : ℕ}
+  (order : TensorRewrite.Theory.BitPacking.Order) (same : inputCells = outputCells)
+  (input : TensorRewrite.Theory.BitPacking.Words inputCells width),
+  TensorRewrite.Theory.BitPacking.repack order order ⋯ input = fun cell => input (Fin.cast ⋯ cell)
+'TensorRewrite.Theory.BitPacking.repack_same_width' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.rowMajor_orderedShape : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank),
+  (TensorRewrite.Pilot.DenseLayout.rowMajor rank).orderedShape shape = shape
+'TensorRewrite.Theory.BitPacking.rowMajor_orderedShape' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.BitPacking.split_bit_count : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (factor width : ℕ),
+  TensorRewrite.Pilot.LinearIndex.elementCount shape * (factor * width) =
+    TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.BitPacking.appendAxis shape factor) * width
+'TensorRewrite.Theory.BitPacking.split_bit_count' depends on axioms: [propext]
+@TensorRewrite.Theory.BitPacking.split_join : ∀ {rank width : ℕ} (shape : TensorRewrite.Pilot.Shape rank) (factor : ℕ)
+  (order : TensorRewrite.Theory.BitPacking.Order)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.BitPacking.appendAxis shape factor) (BitVec width)),
+  TensorRewrite.Theory.BitPacking.splitLast factor order
+      (TensorRewrite.Theory.BitPacking.joinLast shape factor order input) =
+    input
+'TensorRewrite.Theory.BitPacking.split_join' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.BitPacking.transport_refl : ∀ {size : ℕ} (bits : TensorRewrite.Theory.BitPacking.Bits size),
+  TensorRewrite.Theory.BitPacking.transport ⋯ bits = bits
+'TensorRewrite.Theory.BitPacking.transport_refl' does not depend on any axioms
+@TensorRewrite.Theory.BitPacking.transport_trans : ∀ {first middle last : ℕ} (left : first = middle)
+  (right : middle = last) (bits : TensorRewrite.Theory.BitPacking.Bits first),
+  TensorRewrite.Theory.BitPacking.transport right (TensorRewrite.Theory.BitPacking.transport left bits) =
+    TensorRewrite.Theory.BitPacking.transport ⋯ bits
+'TensorRewrite.Theory.BitPacking.transport_trans' does not depend on any axioms
+@TensorRewrite.Theory.BitPacking.width_eq_of_nonempty : ∀ {cells firstWidth secondWidth : ℕ},
+  0 < cells → cells * firstWidth = cells * secondWidth → firstWidth = secondWidth
+'TensorRewrite.Theory.BitPacking.width_eq_of_nonempty' does not depend on any axioms
+@TensorRewrite.Theory.BitPacking.wordOfBits_getLsb : ∀ {width : ℕ} (bits : Fin width → Bool) (bit : Fin width),
+  (TensorRewrite.Theory.BitPacking.wordOfBits bits).getLsb bit = bits bit
+'TensorRewrite.Theory.BitPacking.wordOfBits_getLsb' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.BitPacking.word_ext : ∀ {width : ℕ} {left right : BitVec width},
+  (∀ (bit : Fin width), left.getLsb bit = right.getLsb bit) → left = right
+'TensorRewrite.Theory.BitPacking.word_ext' depends on axioms: [propext, Quot.sound]
 TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono : ∀ (plan : TensorRewrite.Theory.BroadcastWindow.Plan),
   StrictMono (TensorRewrite.Theory.BroadcastWindow.axesMap plan)
 'TensorRewrite.Theory.BroadcastWindow.axesMap_strictMono' depends on axioms: [propext, Classical.choice, Quot.sound]

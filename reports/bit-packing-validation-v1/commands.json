@@ -1,0 +1,97 @@
+[
+  {
+    "command": [
+      "python3",
+      "tools/check_theory.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/bit-packing-validation-v1/theory-check.log",
+    "log_sha256": "e8b04de1947169fa06e5dab113cf85b78485962679b346e087b3b49c5f69a255"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/check_bit_packing.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/bit-packing-validation-v1/model-replay.log",
+    "log_sha256": "0140973fe2edb719007520fedba5920d557d1c7be69778c3671eca6df1b90a51"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/mathematical_ledger.py"
+    ],
+    "exit_code": 1,
+    "log": "reports/bit-packing-validation-v1/ledger-before-replay-report.log",
+    "log_sha256": "b91a17b212ca74e86576c06ddd37e9d7ad3c7a998e9ae668bf0f58a91b184901",
+    "diagnosis": "integrator launched ledger before replay report existed; no new ledger produced; terminal failure preserved, then rerun after successful report production",
+    "outcome_class": "infrastructure_dependency_order_failure_not_proof_search"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/mathematical_ledger.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/bit-packing-validation-v1/ledger.log",
+    "log_sha256": "0e81405adeec7a66542efeca51a0d577f18e29ce921107a0cb482c9948596234"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/workload_formulation_audit.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/bit-packing-validation-v1/workload-audit.log",
+    "log_sha256": "975cf32d473caede805f0934f6013688912af7c6581b8e2ca96b2125107777dd"
+  },
+  {
+    "patterns": [
+      "test_convolution*.py",
+      "test_logical_family.py",
+      "test_mathematical_ledger.py",
+      "test_theory_accounting.py",
+      "test_mathematical_review_readiness.py",
+      "test_scalar_domains.py",
+      "test_reduction_algebra.py",
+      "test_reduction_window.py",
+      "test_slice_pad.py",
+      "test_full_span_window.py",
+      "test_pad_window.py",
+      "test_prefix_window.py",
+      "test_broadcast_window.py",
+      "test_window_tuple_family.py",
+      "test_pad_broadcast.py",
+      "test_remainder.py",
+      "test_formulation_expansion.py",
+      "test_ordered_scatter.py",
+      "test_scatter_concat.py",
+      "test_scatter_layout.py",
+      "test_scatter_indices.py",
+      "test_scatter_batching.py",
+      "test_arithmetic_family.py",
+      "test_numerical.py",
+      "test_order_family.py",
+      "test_dynamic_update.py",
+      "test_fixed_tactics.py",
+      "test_control_values.py",
+      "test_concatenation.py",
+      "test_concatenation_family.py",
+      "test_bit_packing.py"
+    ],
+    "exit_code": 0,
+    "test_count": 148,
+    "log": "reports/bit-packing-validation-v1/curated-tests.log",
+    "command": [
+      "python3",
+      "-P",
+      "reports/bit-packing-validation-v1/run-curated.py"
+    ],
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "log_sha256": "a55f50b18dc0d1466a96290798249688e97bce970031585ae4f36b33c7aa20bb",
+    "runner_sha256": "8286926dfaf2a261729f641ed0bb4a7f8c9541fb06517759171d565838dc2f16"
+  }
+]

@@ -148,3 +148,13 @@ indices, ordered Lists, Boolean tests and arithmetic reasoning for its new proof
 Existing OrderedCoordinates and FloatLib supply control enumeration and stored-bit
 examples. No numerical law or default data value is needed by the concatenation
 proofs, and no new dependency or library-ablation claim is introduced.
+
+
+## Reuse for stored-word reinterpretation
+
+The [bit-packing extension](bit-packing.md) uses existing Lean/Std BitVec bit
+observations, Boolean-list construction and extensionality, plus project bounded
+finite-product and dense-layout inverses. FloatLib supplies actual binary32
+stored-bit controls. This introduces no new dependency, unchecked host numerical
+conversion, imported rewrite solution or controlled library-ablation result.
+All new packing/shape/graph support is counted as experiment-owned Lean.

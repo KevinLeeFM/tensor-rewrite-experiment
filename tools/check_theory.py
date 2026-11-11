@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'BitPacking': ['bitIndex_involution', 'wordOfBits_getLsb', 'word_ext', 'flatten_inflate', 'inflate_flatten', 'transport_refl', 'transport_trans', 'flatten_repack', 'count_appendAxis', 'split_bit_count', 'rowMajor_orderedShape', 'physical_split_bit_count', 'width_eq_of_nonempty', 'repack_refl', 'repack_compose', 'repack_same_width', 'logical_convert_refl', 'logical_convert_compose', 'physical_convert_refl', 'physical_convert_compose', 'physical_convert_same_width', 'join_split', 'split_join', 'cell_bitcast_refl', 'cell_bitcast_compose', 'cell_bitcast_map', 'cell_bitcast_sandwich', 'bit_order_refuted', 'numeric_extension_refuted', 'layout_identity_refuted', 'empty_width_inference_refuted'],
     'ConcatenationFamily': ['gapped_slices_refuted', 'padding_side_refuted', 'padding_fill_refuted', 'nonunit_delete_refuted'],
     'UnitAxis': ['axis_unit', 'target_one', 'count', 'linearize_insert', 'reshape_index', 'axes_decode', 'axes_extent', 'axes_increasing', 'projectIndex_value', 'broadcast_index', 'sourceIndex_value', 'axis_ofAxis', 'target_ofAxis', 'input_ofAxis', 'sequence_value'],
     'ShapeTransport': ['indexAlong_value', 'indexAlong_refl', 'tensorAlong_refl', 'tensorAlong_trans'],
@@ -168,6 +169,13 @@ def main():
         'TensorRewrite/Theory/UnitAxisTargetLemmas.lean': 'H',
         'TensorRewrite/Theory/ConcatenationRepeat.lean': 'R',
         'TensorRewrite/Theory/ConcatenationGraphCounterexamples.lean': 'C',
+        'TensorRewrite/Theory/BitPacking.lean': 'S',
+        'TensorRewrite/Theory/BitPackingLemmas.lean': 'H',
+        'TensorRewrite/Theory/BitPackingProof.lean': 'R',
+        'TensorRewrite/Theory/BitPackingShape.lean': 'S',
+        'TensorRewrite/Theory/BitPackingShapeProof.lean': 'R',
+        'TensorRewrite/Theory/BitPackingCell.lean': 'R',
+        'TensorRewrite/Theory/BitPackingCounterexamples.lean': 'C',
         'TensorRewrite/Theory/Concatenation.lean': 'S',
         'TensorRewrite/Theory/ConcatenationLemmas.lean': 'H',
         'TensorRewrite/Theory/ConcatenationProof.lean': 'R',
@@ -527,6 +535,12 @@ def main():
                              '-pi < imaginary part <= pi; complex sqrt-square/magnitude iff real '
                              'axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math '
                              'semantics' if '.ScalarDomains.' in name else
+                             'exact stored BitVec streams; arbitrary counts/widths, ranks and legal '
+                             'untiled dense permutations; explicit per-word bit order; total-bit '
+                             'shape guard independent of values; derived trailing-ratio shape; '
+                             'same-cell map/compose/identity bridges; no numerical cast, scalar '
+                             'encoding completeness, tiled/padded storage, memory, effects or '
+                             'whole-record closure claim' if '.BitPacking.' in name else
                              'pure static arbitrary-rank Concat, bounded Slice, boundary Pad and '
                              'ordinary singleton-delete Reshape/Broadcast; arbitrary data; exact '
                              'full shapes and ordered operands; filtering needs actual nonempty '

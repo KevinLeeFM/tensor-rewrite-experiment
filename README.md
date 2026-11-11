@@ -4,9 +4,9 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 696 checked mathematical statements; custom Lean totals **12,027**.
+The theory target now has 727 checked mathematical statements; custom Lean totals **12,341**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including213 covered only by
+All488 retained records now have domain/dependency worksheets, including206 covered only by
 unreviewed proposals after the latest typed mathematical refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
@@ -1246,3 +1246,17 @@ Six families have397 profile units, while213 retained records remain proposal-on
 Independent arrays agree on11544 new rows across1044 profiles; four false goals
 are rejected normally; all143 curated mathematical tests pass. Whole-record closure stays zero, N/F remains unfrozen and
 the final verdict remains open. Code correspondence stays future work.
+
+
+## Stored-word packing and dense Bitcast graphs
+
+Actual BitVec packing now has complete bit-stream round trips, arbitrary-width
+composition, dense-layout composition, a bridge to the existing same-cell Bitcast,
+pure Unary sandwiches and derived trailing-ratio split/join graphs. Four refutations
+retain bit-order, numeric-extension, layout and empty-width-inference boundaries.
+See [the representation model and remaining contracts](docs/bit-packing.md).
+Thirty-one statements add314 lines; totals727 theory/987 ledger and12341 custom
+Lean lines. Independent integer-stream/array controls agree on4127 rows. All148 curated mathematical tests pass. Seven
+records gain partial evidence;206 remain proposal-only. Complete families stay397
+profiles; whole records, mathematical N/F and the final verdict remain open.
+Code correspondence is future work.
