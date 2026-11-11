@@ -81,7 +81,7 @@ class ArithmeticFamilyTests(unittest.TestCase):
         self.assertIsNone(progress['mathematical_obligation_denominator'])
         rows=audit.assemble(ledger.corpus(),progress,audit.read_catalog())
         self.assertEqual(rows['records_with_domain_worksheets'],488)
-        self.assertEqual(rows['records_with_only_unreviewed_proposal_worksheets'],340)
+        self.assertEqual(rows['records_with_only_unreviewed_proposal_worksheets'],309)
         records=ledger.read('census/arithmetic-typed-domains-v1.json')['records']
         self.assertEqual(len(records),34)
         self.assertTrue(all(not r['whole_record_closed'] for r in records))

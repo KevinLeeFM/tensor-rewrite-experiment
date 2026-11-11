@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.Numerical.' in name:
+            manifest=read('census/numerical-values-v2.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.ArithmeticFamily.' in name:
             manifest=read('census/arithmetic-values-family-v2.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -245,7 +248,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('arithmetic_ieee_profile_refutation' if '.ArithmeticFamily.' in name
+        kind=('exact_numerical_domain_refutation' if '.Numerical.' in name
+              and name.endswith('_refuted') else 'arithmetic_ieee_profile_refutation' if '.ArithmeticFamily.' in name
               and name.endswith('_refuted') else
               'paired_scatter_batching_contract_refutation'
               if name.endswith('.ScatterBatching.forgetting_batching_refuted') else
@@ -692,6 +696,20 @@ def mathematical_models(root=ROOT):
                        floating_associativity_assumed=False,
                        independent_statement_review='pending',manifest=batching['manifest'],
                        manifest_sha256=batching['manifest_sha256']))
+    from check_numerical import check_inputs as numerical_inputs, validate_result as validate_numerical
+    numerical=read('reports/numerical-values.json',root);validate_numerical(numerical,root)
+    extension=numerical_inputs(root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.Numerical.' in name}
+    assert len(expected)==53 and numerical['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['scope'],
+                       scalar_contract='exact totalized Field and Mathlib real/principal-complex analysis',
+                       status=numerical['status'],checked_theorem_count=53,full_family_complete=False,
+                       certificate_profiles=extension['certificate_profiles'],
+                       rounded_transcendentals_modeled=False,floating_point_division_modeled=False,
+                       word_division_is_field_division=False,
+                       independent_statement_review='pending',manifest=numerical['manifest'],
+                       manifest_sha256=numerical['manifest_sha256']))
     return models
 
 

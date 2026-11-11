@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 346,
-    "partial_model_evidence_requires_partition_review": 96,
+    "needs_formal_statement_and_domain_partition": 315,
+    "partial_model_evidence_requires_partition_review": 127,
     "declared_value_family_complete_full_record_partitions_open": 46
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 723,
+  "distinct_checked_declarations": 776,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,10 +39,11 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 427,
+    "library_backed_theory": 475,
     "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
+    "exact_numerical_domain_refutation": 5,
     "ordered_scatter_contract_refutation": 4,
     "pad_broadcast_contract_refutation": 3,
     "pad_window_contract_refutation": 2,
@@ -509,6 +510,647 @@
       "independent_statement_review": "pending",
       "manifest": "census/scatter-batching-v1.json",
       "manifest_sha256": "9c140d4c15f280a9515dcda598c2c767ec12628968a02dc4a3b70b3049e9e136"
+    },
+    {
+      "model": "exact_numerical_value_graphs_v1",
+      "scope": "typed exact division, exponential, power, sqrt/rsqrt and log-power graphs; explicit domains and counterexamples",
+      "scalar_contract": "exact totalized Field and Mathlib real/principal-complex analysis",
+      "status": "kernel_checked_exact_numerical_value_graphs_with_domain_refutations",
+      "checked_theorem_count": 53,
+      "full_family_complete": false,
+      "certificate_profiles": {
+        "TensorRewrite.Theory.Numerical.divide_one": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_one (a : Tensor shape \u03b1) : Tensor.map (\u00b7 / 1) a = a",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/one"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_as_product": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_as_product (a b : Tensor shape \u03b1) :\n    Tensor.map\u2082 (\u00b7 / \u00b7) a b = Tensor.map\u2082 (\u00b7 * \u00b7) a (Tensor.map (1 / \u00b7) b)",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_constant": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_constant (a : Tensor shape \u03b1) (value : \u03b1) :\n    Tensor.map\u2082 (\u00b7 / \u00b7) a (Tensor.constant value) =\n      Tensor.map\u2082 (\u00b7 * \u00b7) a (Tensor.constant (1 / value))",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/constant-direct"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_reciprocal": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_reciprocal (a b : Tensor shape \u03b1) :\n    Tensor.map\u2082 (fun x y => x / (1 / y)) a b = Tensor.map\u2082 (\u00b7 * \u00b7) a b",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_fractions": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_fractions (a b c d : Tensor shape \u03b1) :\n    (fun i => (a i / b i) / (c i / d i)) =\n      (fun i => (a i * d i) / (b i * c i))",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/fractions"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_nested_numerator": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_nested_numerator (a b c : Tensor shape \u03b1) :\n    (fun i => (a i / b i) / c i) = (fun i => a i / (b i * c i))",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/nested-numerator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_nested_denominator": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_nested_denominator (a b c : Tensor shape \u03b1) :\n    (fun i => a i / (b i / c i)) = (fun i => (a i * c i) / b i)",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/nested-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_broadcast": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_broadcast {smallRank : Nat} {smallShape : Shape smallRank}\n    (axes : IndexMaps.BroadcastAxes smallRank rank)\n    (extents : \u2200 axis, smallShape axis = shape (axes.decode axis))\n    (a : Tensor shape \u03b1) (small : Tensor smallShape \u03b1) :\n    Tensor.map\u2082 (\u00b7 / \u00b7) a (Tensor.reindex (IndexMaps.broadcastIndex axes extents) small) =\n      Tensor.map\u2082 (\u00b7 * \u00b7) a\n        (Tensor.reindex (IndexMaps.broadcastIndex axes extents) (Tensor.map (1 / \u00b7) small))",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/constant-broadcast",
+            "HandleDivide/broadcast-reciprocal"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.divide_predicate_broadcast": {
+          "domain": "all field values including zero denominators; arbitrary field type",
+          "scalar_contract": "exact totalized Field",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem divide_predicate_broadcast {smallRank : Nat} {smallShape : Shape smallRank}\n    (axes : IndexMaps.BroadcastAxes smallRank rank)\n    (extents : \u2200 axis, smallShape axis = shape (axes.decode axis))\n    (p : Tensor shape Bool) (small : Tensor smallShape \u03b1) :\n    Tensor.map\u2082 (\u00b7 / \u00b7) (Tensor.map (fun b => if b then (1 : \u03b1) else 0) p)\n        (Tensor.reindex (IndexMaps.broadcastIndex axes extents) small) =\n      Tensor.map\u2082 (\u00b7 * \u00b7)\n        (Tensor.reindex (IndexMaps.broadcastIndex axes extents) (Tensor.map (1 / \u00b7) small))\n        (Tensor.map (fun b => if b then (1 : \u03b1) else 0) p)",
+          "shared_ambient_binders": "{\u03b1 : Type} [Field \u03b1] {rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/predicate-scalar-broadcast"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_exp_product": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_exp_product (a b : Tensor shape \u211d) :\n    (fun i => Real.exp (a i) * Real.exp (b i)) = (fun i => Real.exp (a i + b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/exp-product"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_exp_quotient": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_exp_quotient (a b : Tensor shape \u211d) :\n    (fun i => Real.exp (a i) / Real.exp (b i)) = (fun i => Real.exp (a i - b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/exp-pair"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_exp_denominator": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_exp_denominator (a b : Tensor shape \u211d) :\n    (fun i => a i / Real.exp (b i)) = (fun i => a i * Real.exp (-b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/exp-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_denominator": {
+          "domain": "every base b is nonnegative; sufficient domain",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_denominator (a b c : Tensor shape \u211d) (nonnegative : \u2200 i, 0 \u2264 b i) :\n    (fun i => a i / (b i ^ c i)) = (fun i => a i * (b i ^ (-c i)))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/power-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_abs_square": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_abs_square (a : Tensor shape \u211d) :\n    (fun i => |a i| * |a i|) = (fun i => a i * a i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/abs-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_sqrt_square_iff": {
+          "domain": "all exact real inputs; equality with original replacement iff every value is nonnegative",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_sqrt_square_iff (a : Tensor shape \u211d) :\n    (fun i => Real.sqrt (a i) * Real.sqrt (a i)) = a \u2194 \u2200 i, 0 \u2264 a i",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/sqrt-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff": {
+          "domain": "all exact real inputs; equality with original replacement iff every value is nonnegative",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_rsqrt_square_iff (a : Tensor shape \u211d) :\n    (fun i => (Real.sqrt (a i))\u207b\u00b9 * (Real.sqrt (a i))\u207b\u00b9) =\n        (fun i => 1 / a i) \u2194 \u2200 i, 0 \u2264 a i",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/rsqrt-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_zero": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_zero (a : Tensor shape \u211d) :\n    (fun i => a i ^ (0 : \u211d)) = Tensor.constant 1",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/zero"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_one": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_one (a : Tensor shape \u211d) : (fun i => a i ^ (1 : \u211d)) = a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/one"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_two": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_two (a : Tensor shape \u211d) :\n    (fun i => a i ^ (2 : \u211d)) = (fun i => a i * a i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/two"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_three": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_three (a : Tensor shape \u211d) :\n    (fun i => a i ^ (3 : \u211d)) = (fun i => a i * (a i * a i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/three"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_minus_one": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_minus_one (a : Tensor shape \u211d) :\n    (fun i => a i ^ (-1 : \u211d)) = (fun i => 1 / a i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/minus-one"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_half": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_half (a : Tensor shape \u211d) :\n    (fun i => a i ^ (1 / 2 : \u211d)) = Tensor.map Real.sqrt a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/half"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_exp": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_power_exp (a b : Tensor shape \u211d) :\n    (fun i => Real.exp (a i) ^ b i) = (fun i => Real.exp (a i * b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/exp-base"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_log_power_pos": {
+          "domain": "every real base a is strictly positive; sufficient conventional logarithm domain",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_log_power_pos (a b : Tensor shape \u211d) (positive : \u2200 i, 0 < a i) :\n    (fun i => Real.log (a i ^ b i)) =\n      (fun i => if b i = 0 then 0 else Real.log |a i| * b i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleLog/power-real"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_log_rsqrt_pos": {
+          "domain": "every real input a is strictly positive; sufficient conventional logarithm domain",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_log_rsqrt_pos (a : Tensor shape \u211d) (positive : \u2200 i, 0 < a i) :\n    (fun i => Real.log (Real.sqrt (a i))\u207b\u00b9) =\n      (fun i => Real.log (a i) * (-1 / 2 : \u211d))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleLog/rsqrt"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_rsqrt_inverse_square (a : Tensor shape \u211d) :\n    (fun i => (Real.sqrt (a i ^ (-2 : \u211d)))\u207b\u00b9) = Tensor.map abs a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleRsqrt/inverse-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff": {
+          "domain": "all exact real inputs; equality with original replacement iff every value is nonnegative",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_rsqrt_inverse_square_iff (a : Tensor shape \u211d) :\n    (fun i => (Real.sqrt (a i ^ (-2 : \u211d)))\u207b\u00b9) = a \u2194 \u2200 i, 0 \u2264 a i",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleRsqrt/inverse-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_rsqrt_reciprocal (a : Tensor shape \u211d) :\n    (fun i => (Real.sqrt (1 / a i))\u207b\u00b9) = Tensor.map Real.sqrt a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleRsqrt/reciprocal"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_divide_sqrt": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_divide_sqrt (a b : Tensor shape \u211d) :\n    (fun i => a i / Real.sqrt (b i)) =\n      (fun i => a i * (Real.sqrt (b i))\u207b\u00b9)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/sqrt-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_divide_rsqrt": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_divide_rsqrt (a b : Tensor shape \u211d) :\n    (fun i => a i / (Real.sqrt (b i))\u207b\u00b9) =\n      (fun i => a i * Real.sqrt (b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/rsqrt-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_exp_zero": {
+          "domain": "all exact real values, with declared totalizations",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem real_exp_zero :\n    Tensor.map Real.exp (Tensor.constant (shape := shape) 0) = Tensor.constant 1",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleExp/zero-scalar",
+            "HandleExp/zero-broadcast"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_exp_zero": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_exp_zero :\n    Tensor.map Complex.exp (Tensor.constant (shape := shape) 0) = Tensor.constant 1",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleExp/zero-scalar",
+            "HandleExp/zero-broadcast"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_exp_product": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_exp_product (a b : Tensor shape \u2102) :\n    (fun i => Complex.exp (a i) * Complex.exp (b i)) =\n      (fun i => Complex.exp (a i + b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/exp-product"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_exp_quotient": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_exp_quotient (a b : Tensor shape \u2102) :\n    (fun i => Complex.exp (a i) / Complex.exp (b i)) =\n      (fun i => Complex.exp (a i - b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/exp-pair"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_exp_denominator": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_exp_denominator (a b : Tensor shape \u2102) :\n    (fun i => a i / Complex.exp (b i)) = (fun i => a i * Complex.exp (-b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/exp-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_denominator": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_denominator (a b c : Tensor shape \u2102) :\n    (fun i => a i / (b i ^ c i)) = (fun i => a i * (b i ^ (-c i)))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/power-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_sqrt_square": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_sqrt_square (a : Tensor shape \u2102) :\n    (fun i => Complex.sqrt (a i) * Complex.sqrt (a i)) = a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/sqrt-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_rsqrt_square": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_rsqrt_square (a : Tensor shape \u2102) :\n    (fun i => (Complex.sqrt (a i))\u207b\u00b9 * (Complex.sqrt (a i))\u207b\u00b9) =\n      (fun i => 1 / a i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleMultiply/rsqrt-square"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_zero": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_zero (a : Tensor shape \u2102) :\n    (fun i => a i ^ (0 : \u2102)) = Tensor.constant 1",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/zero"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_one": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_one (a : Tensor shape \u2102) : (fun i => a i ^ (1 : \u2102)) = a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/one"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_two": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_two (a : Tensor shape \u2102) :\n    (fun i => a i ^ (2 : \u2102)) = (fun i => a i * a i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/two"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_three": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_three (a : Tensor shape \u2102) :\n    (fun i => a i ^ (3 : \u2102)) = (fun i => a i * (a i * a i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/three"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_minus_one": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_minus_one (a : Tensor shape \u2102) :\n    (fun i => a i ^ (-1 : \u2102)) = (fun i => 1 / a i)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/minus-one"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_half": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_half (a : Tensor shape \u2102) :\n    (fun i => a i ^ (1 / 2 : \u2102)) = Tensor.map Complex.sqrt a",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/half"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_exp_strip": {
+          "domain": "-pi < imaginary input <= pi at every index; sufficient principal strip",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_power_exp_strip (a b : Tensor shape \u2102)\n    (strip : \u2200 i, -Real.pi < (a i).im \u2227 (a i).im \u2264 Real.pi) :\n    (fun i => Complex.exp (a i) ^ b i) = (fun i => Complex.exp (a i * b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandlePower/exp-base"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_log_power_iff": {
+          "domain": "all pointwise nonzero complex bases; equality iff -pi < Im(log(a)*b) <= pi pointwise",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_log_power_iff (a b : Tensor shape \u2102) (nonzero : \u2200 i, a i \u2260 0) :\n    (fun i => Complex.log (a i ^ b i)) =\n        (fun i => if b i = 0 then 0 else Complex.log (a i) * b i) \u2194\n      \u2200 i, -Real.pi < (Complex.log (a i) * b i).im \u2227\n        (Complex.log (a i) * b i).im \u2264 Real.pi",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleLog/power-complex"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_divide_sqrt": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_divide_sqrt (a b : Tensor shape \u2102) :\n    (fun i => a i / Complex.sqrt (b i)) =\n      (fun i => a i * (Complex.sqrt (b i))\u207b\u00b9)",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/sqrt-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.complex_divide_rsqrt": {
+          "domain": "all principal complex values, with declared zero-base totalization",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "arbitrary finite rank and extents including scalar and empty tensors",
+          "declaration_header": "theorem complex_divide_rsqrt (a b : Tensor shape \u2102) :\n    (fun i => a i / (Complex.sqrt (b i))\u207b\u00b9) =\n      (fun i => a i * Complex.sqrt (b i))",
+          "shared_ambient_binders": "{rank : Nat} {shape : Pilot.Shape rank}",
+          "candidate_benchmark_labels": [
+            "HandleDivide/rsqrt-denominator"
+          ],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "checked_exact_statement"
+        },
+        "TensorRewrite.Theory.Numerical.real_sqrt_square_refuted": {
+          "domain": "specific exact scalar witness",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "one scalar witness",
+          "declaration_header": "theorem real_sqrt_square_refuted : Real.sqrt (-1) * Real.sqrt (-1) \u2260 (-1 : \u211d)",
+          "shared_ambient_binders": "none",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "refutation_of_dropped_mathematical_premise"
+        },
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted": {
+          "domain": "specific exact scalar witness",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "one scalar witness",
+          "declaration_header": "theorem real_rsqrt_inverse_square_refuted :\n    (Real.sqrt ((-1 : \u211d) ^ (-2 : \u211d)))\u207b\u00b9 \u2260 (-1 : \u211d)",
+          "shared_ambient_binders": "none",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "refutation_of_dropped_mathematical_premise"
+        },
+        "TensorRewrite.Theory.Numerical.real_power_denominator_refuted": {
+          "domain": "specific exact scalar witness",
+          "scalar_contract": "exact real Mathlib analysis",
+          "quantified_shape": "one scalar witness",
+          "declaration_header": "theorem real_power_denominator_refuted :\n    (1 : \u211d) / ((-1 : \u211d) ^ (1 / 3 : \u211d)) \u2260\n      (1 : \u211d) * ((-1 : \u211d) ^ (-(1 / 3) : \u211d))",
+          "shared_ambient_binders": "none",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "refutation_of_dropped_mathematical_premise"
+        },
+        "TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted": {
+          "domain": "specific exact scalar witness",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "one scalar witness",
+          "declaration_header": "theorem complex_rsqrt_reciprocal_refuted :\n    (Complex.sqrt (1 / (-1 : \u2102)))\u207b\u00b9 \u2260 Complex.sqrt (-1 : \u2102)",
+          "shared_ambient_binders": "none",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "refutation_of_dropped_mathematical_premise"
+        },
+        "TensorRewrite.Theory.Numerical.complex_power_exp_refuted": {
+          "domain": "specific exact scalar witness",
+          "scalar_contract": "principal complex Mathlib analysis",
+          "quantified_shape": "one scalar witness",
+          "declaration_header": "theorem complex_power_exp_refuted :\n    Complex.exp (2 * (Real.pi : \u2102) * Complex.I) ^ (1 / 2 : \u2102) \u2260\n      Complex.exp ((2 * (Real.pi : \u2102) * Complex.I) * (1 / 2 : \u2102))",
+          "shared_ambient_binders": "none",
+          "candidate_benchmark_labels": [],
+          "observation": "pure exact mathematical values; no status flags, effects, schedule or physical layout",
+          "result_kind": "refutation_of_dropped_mathematical_premise"
+        }
+      },
+      "rounded_transcendentals_modeled": false,
+      "floating_point_division_modeled": false,
+      "word_division_is_field_division": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/numerical-values-v2.json",
+      "manifest_sha256": "9aa89947845d0dd7bc31245f5898578e1a38fbd1d3b7725b1aa77e0ecd46187b"
     }
   ],
   "kernel_complete_family_profile_count": 193,
@@ -516,10 +1158,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "f8fcd57622d51d2c45474496027bc4a5e3d13d573f87d07ba2b70c92598aa88e",
+    "sha256": "c097df09cb212602eac43094edde4ab6c1a2a8cc17faf15b5448d3f808f47428",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "7fe771f320112f8ea629bb0e5768ed816ceb09a26c2c862afa1188a202695662"
+    "output_sha256": "d00f0232cc12fff5ffc7c5c60194fee477923452a120dce23d8846afccbccced"
   },
   "proofs": [
     {
@@ -9155,6 +9797,1051 @@
       "axiom_dependencies": []
     },
     {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_divide_rsqrt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/rsqrt-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_divide_sqrt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/sqrt-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_exp_denominator",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/exp-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_exp_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/exp-product"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_exp_quotient",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/exp-pair"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_exp_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleExp/zero-broadcast",
+        "HandleExp/zero-scalar"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_log_power_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/power-complex"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_denominator",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/power-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_exp_refuted",
+      "kinds": [
+        "exact_numerical_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_exp_strip",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/exp-base"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_half",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/half"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_minus_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/minus-one"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/one"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_three",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/three"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_two",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/two"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_power_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted",
+      "kinds": [
+        "exact_numerical_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_rsqrt_square",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/rsqrt-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.complex_sqrt_square",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/sqrt-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_as_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_broadcast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/broadcast-reciprocal",
+        "HandleDivide/constant-broadcast"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_constant",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/constant-direct"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_fractions",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/fractions"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_nested_denominator",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/nested-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_nested_numerator",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/nested-numerator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/one"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_predicate_broadcast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/predicate-scalar-broadcast"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.divide_reciprocal",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_abs_square",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/abs-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_divide_rsqrt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/rsqrt-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_divide_sqrt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/sqrt-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_exp_denominator",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/exp-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_exp_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/exp-product"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_exp_quotient",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/exp-pair"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_exp_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleExp/zero-broadcast",
+        "HandleExp/zero-scalar"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_log_power_pos",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/power-real"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_log_rsqrt_pos",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleLog/rsqrt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_denominator",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleDivide/power-denominator"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_denominator_refuted",
+      "kinds": [
+        "exact_numerical_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_exp",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/exp-base"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_half",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/half"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_minus_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/minus-one"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_one",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/one"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_three",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/three"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_two",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/two"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_power_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandlePower/zero"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRsqrt/inverse-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRsqrt/inverse-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted",
+      "kinds": [
+        "exact_numerical_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleRsqrt/reciprocal"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/rsqrt-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_sqrt_square_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMultiply/sqrt-square"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Numerical.real_sqrt_square_refuted",
+      "kinds": [
+        "exact_numerical_domain_refutation"
+      ],
+      "profile_descriptions": [
+        "exact totalized Field division with actual bounded Broadcast; Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; pointwise sign/positive/nonzero and principal-strip domains explicit; five exact premise-dropping refutations; no machine division, rounded transcendental, flags, effects, physical or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar",
       "kinds": [
         "library_backed_theory"
@@ -16205,8 +17892,10 @@
       "retained_lhs": "Divide(a,Broadcast(b,dims))",
       "retained_rhs": "Multiply(a,Broadcast(Divide(1,b),dims))",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; executing_on_cpu; enable_sink_broadcast; enable_fast_math; broadcast input b has one use",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_broadcast"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16216,8 +17905,10 @@
       "retained_lhs": "Divide(NonConstant(a),Broadcast(Constant(c),dims))",
       "retained_rhs": "Multiply(a,Broadcast(inverted_literal,dims))",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; literal primitive dispatch floating OR complex; InvertConstant succeeds; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_broadcast"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16227,8 +17918,10 @@
       "retained_lhs": "Divide(NonConstant(a),Constant(c))",
       "retained_rhs": "Multiply(a,inverted_literal)",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; literal primitive dispatch floating OR complex; InvertConstant succeeds; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_constant"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16238,8 +17931,11 @@
       "retained_lhs": "Divide(a,Exp(b))",
       "retained_rhs": "Multiply(a,Exp(Negate(b)))",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_exp_denominator",
+        "TensorRewrite.Theory.Numerical.real_exp_denominator"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16249,8 +17945,11 @@
       "retained_lhs": "Divide(Exp(a),Exp(b))",
       "retained_rhs": "Exp(Subtract(a,b))",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_exp_quotient",
+        "TensorRewrite.Theory.Numerical.real_exp_quotient"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16260,8 +17959,10 @@
       "retained_lhs": "Divide(Divide(a,b),Divide(c,d))",
       "retained_rhs": "Divide(Multiply(a,d),Multiply(b,c))",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; exact Divide matcher; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_fractions"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16271,8 +17972,10 @@
       "retained_lhs": "Divide(a,Divide(b,c))",
       "retained_rhs": "Divide(Multiply(a,c),b)",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; exact Divide matcher; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_nested_denominator"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16282,8 +17985,10 @@
       "retained_lhs": "Divide(Divide(a,b),c)",
       "retained_rhs": "Divide(a,Multiply(b,c))",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; exact Divide matcher; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_nested_numerator"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16293,8 +17998,10 @@
       "retained_lhs": "Divide(a,1)",
       "retained_rhs": "a",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(denominator,1); compatibility succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_one"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16304,8 +18011,11 @@
       "retained_lhs": "Divide(a,Power(b,c))",
       "retained_rhs": "Multiply(a,Power(b,Negate(c)))",
       "unreviewed_benchmark_notes_not_assumptions": "output not integral; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_denominator",
+        "TensorRewrite.Theory.Numerical.real_power_denominator"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16337,8 +18047,10 @@
       "retained_lhs": "Divide(Convert(pred),Broadcast(scalar_b))",
       "retained_rhs": "Multiply(Broadcast(Divide(1,b)),Convert(pred))",
       "unreviewed_benchmark_notes_not_assumptions": "after integral-output early return; Convert input PRED; denominator broadcast input scalar; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.divide_predicate_broadcast"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16348,8 +18060,11 @@
       "retained_lhs": "Divide(a,Rsqrt(b))",
       "retained_rhs": "Multiply(a,Sqrt(b))",
       "unreviewed_benchmark_notes_not_assumptions": "Rsqrt one use; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_divide_rsqrt",
+        "TensorRewrite.Theory.Numerical.real_divide_rsqrt"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16359,8 +18074,11 @@
       "retained_lhs": "Divide(a,Sqrt(b))",
       "retained_rhs": "Multiply(a,Rsqrt(b))",
       "unreviewed_benchmark_notes_not_assumptions": "Sqrt one use; no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_divide_sqrt",
+        "TensorRewrite.Theory.Numerical.real_divide_sqrt"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16839,8 +18557,11 @@
       "retained_lhs": "Exp(Broadcast(ConstantScalar(0)))",
       "retained_rhs": "MakeScalarLike(old,1.0)",
       "unreviewed_benchmark_notes_not_assumptions": "matcher succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_exp_zero",
+        "TensorRewrite.Theory.Numerical.real_exp_zero"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16850,8 +18571,11 @@
       "retained_lhs": "Exp(ConstantScalar(0))",
       "retained_rhs": "MakeScalarLike(old,1.0)",
       "unreviewed_benchmark_notes_not_assumptions": "matcher succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_exp_zero",
+        "TensorRewrite.Theory.Numerical.real_exp_zero"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17004,8 +18728,10 @@
       "retained_lhs": "Log(Power(a,b))",
       "retained_rhs": "Select(b == 0,0,Multiply(Log(a),b))",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math; a element type complex",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_log_power_iff"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17015,8 +18741,10 @@
       "retained_lhs": "Log(Power(a,b))",
       "retained_rhs": "Select(b == 0,0,Multiply(Log(Abs(a)),b))",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math; a element type not complex",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.real_log_power_pos"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17026,8 +18754,10 @@
       "retained_lhs": "Log(Rsqrt(a))",
       "retained_rhs": "Multiply(Log(a),-0.5)",
       "unreviewed_benchmark_notes_not_assumptions": "Rsqrt matcher; no local fast-math or domain guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.real_log_rsqrt_pos"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17402,8 +19132,10 @@
       "retained_lhs": "Multiply(Abs(a),Abs(a))",
       "retained_rhs": "Multiply(a,a)",
       "unreviewed_benchmark_notes_not_assumptions": "lhs == rhs; Abs matcher; a element type not complex",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.real_abs_square"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17461,8 +19193,11 @@
       "retained_lhs": "Multiply(Exp(a),Exp(b))",
       "retained_rhs": "Exp(Add(a,b))",
       "unreviewed_benchmark_notes_not_assumptions": "fast math enabled; Exp matchers",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_exp_product",
+        "TensorRewrite.Theory.Numerical.real_exp_product"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17681,8 +19416,11 @@
       "retained_lhs": "Multiply(Rsqrt(a),Rsqrt(a))",
       "retained_rhs": "Divide(MakeScalarLike(a,1),a)",
       "unreviewed_benchmark_notes_not_assumptions": "UniqueHloInstruction matches same a; IsNonNegative(a,options)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_rsqrt_square",
+        "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17692,8 +19430,11 @@
       "retained_lhs": "Multiply(Sqrt(a),Sqrt(a))",
       "retained_rhs": "a",
       "unreviewed_benchmark_notes_not_assumptions": "UniqueHloInstruction matches same a; IsNonNegative(a,options)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_sqrt_square",
+        "TensorRewrite.Theory.Numerical.real_sqrt_square_iff"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17896,8 +19637,11 @@
       "retained_lhs": "Power(Exp(a),b)",
       "retained_rhs": "Exp(Multiply(a,b))",
       "unreviewed_benchmark_notes_not_assumptions": "enable_fast_math; Exp matcher",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_exp_strip",
+        "TensorRewrite.Theory.Numerical.real_power_exp"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17907,8 +19651,11 @@
       "retained_lhs": "Power(a,0.5)",
       "retained_rhs": "Sqrt(a)",
       "unreviewed_benchmark_notes_not_assumptions": "IsAllFloat(exponent,0.5); IsNonNegative(a,options)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_half",
+        "TensorRewrite.Theory.Numerical.real_power_half"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17918,8 +19665,11 @@
       "retained_lhs": "Power(a,-1)",
       "retained_rhs": "Divide(1,a)",
       "unreviewed_benchmark_notes_not_assumptions": "output not integral; IsAll(exponent,-1)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_minus_one",
+        "TensorRewrite.Theory.Numerical.real_power_minus_one"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17929,8 +19679,11 @@
       "retained_lhs": "Power(a,1)",
       "retained_rhs": "a",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(exponent,1); compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_one",
+        "TensorRewrite.Theory.Numerical.real_power_one"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17940,8 +19693,11 @@
       "retained_lhs": "Power(a,3)",
       "retained_rhs": "Multiply(a,Multiply(a,a))",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(exponent,3); no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_three",
+        "TensorRewrite.Theory.Numerical.real_power_three"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17951,8 +19707,11 @@
       "retained_lhs": "Power(a,2)",
       "retained_rhs": "Multiply(a,a)",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(exponent,2); no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_two",
+        "TensorRewrite.Theory.Numerical.real_power_two"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -17962,8 +19721,11 @@
       "retained_lhs": "Power(a,0)",
       "retained_rhs": "MakeScalarLike(output,1)",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(exponent,0)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_zero",
+        "TensorRewrite.Theory.Numerical.real_power_zero"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19026,8 +20788,11 @@
       "retained_lhs": "Rsqrt(Power(a,-2))",
       "retained_rhs": "a",
       "unreviewed_benchmark_notes_not_assumptions": "Power opcode; IsAll(exponent,-2); IsNonNegative(a,options); no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square",
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19037,8 +20802,10 @@
       "retained_lhs": "Rsqrt(Divide(1,a))",
       "retained_rhs": "Sqrt(a)",
       "unreviewed_benchmark_notes_not_assumptions": "Divide opcode; IsAll(numerator,1); IsNonNegative(a,options); no local fast-math guard",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

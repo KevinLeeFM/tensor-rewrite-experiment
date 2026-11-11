@@ -8,7 +8,7 @@ from fractions import Fraction
 import numerical_examples as oracle
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST = 'census/numerical-values-v1.json'
+MANIFEST = 'census/numerical-values-v2.json'
 ALLOWED = {'propext', 'Quot.sound', 'Classical.choice'}
 FALSE_FIELDS = ('rounded_transcendentals_modeled', 'floating_point_division_modeled',
                 'fast_math_permissions_modeled', 'word_division_is_field_division',
@@ -26,7 +26,7 @@ def check_inputs(root=ROOT):
     assert len(manifest['certificates']) == len(set(manifest['certificates'])) == 53
     assert len(manifest['counterexample_certificates']) == 5
     assert set(manifest['counterexample_certificates']) <= set(manifest['certificates'])
-    assert len(manifest['candidate_benchmark_labels']) == 33
+    assert len(manifest['candidate_benchmark_labels']) == 31
     for row in manifest['files']:
         assert digest(root/row['path']) == row['sha256'], row['path']
     assert digest(root/'lake-manifest.json') == manifest['lake_manifest_sha256']
@@ -41,6 +41,20 @@ def check_inputs(root=ROOT):
     assert manifest['control_scope'] == 'development controls; symbolic exact analysis and executable rationals; no held-out independent review'
     assert manifest['source_guards_adopted_as_proof_assumptions'] is False
     assert manifest['mathematical_obligation_denominator'] is None
+    assert set(manifest['certificate_profiles']) == set(manifest['certificates'])
+    for name in manifest['counterexample_certificates']:
+        assert manifest['certificate_profiles'][name]['candidate_benchmark_labels'] == []
+    assert manifest['certificate_profiles']['TensorRewrite.Theory.Numerical.real_power_denominator']['domain'] == 'every base b is nonnegative; sufficient domain'
+    assert manifest['certificate_profiles']['TensorRewrite.Theory.Numerical.complex_power_exp_strip']['domain'] == '-pi < imaginary input <= pi at every index; sufficient principal strip'
+    sheet = json.loads((root/manifest['domain_worksheet']).read_text())
+    assert sorted(row['benchmark_id'] for row in sheet['records']) == manifest['candidate_benchmark_labels']
+    assert not sheet['mathematical_denominator_frozen'] and not sheet['independently_reviewed']
+    for row in sheet['records']:
+        assert not row['whole_record_closed'] and not row['candidate_label_correspondence_certified']
+        expected = sorted(name for name, labels in manifest['candidate_benchmark_bindings'].items()
+                          if row['benchmark_id'] in labels)
+        assert sorted(row['core_evidence']) == expected
+        assert row['remaining_partitions'] and row['mathematical_premises']
     return manifest
 
 

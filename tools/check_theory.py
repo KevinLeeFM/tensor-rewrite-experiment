@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'Numerical': ['divide_one', 'divide_as_product', 'divide_constant', 'divide_reciprocal', 'divide_fractions', 'divide_nested_numerator', 'divide_nested_denominator', 'divide_broadcast', 'divide_predicate_broadcast', 'real_exp_product', 'real_exp_quotient', 'real_exp_denominator', 'real_power_denominator', 'real_abs_square', 'real_sqrt_square_iff', 'real_rsqrt_square_iff', 'real_power_zero', 'real_power_one', 'real_power_two', 'real_power_three', 'real_power_minus_one', 'real_power_half', 'real_power_exp', 'real_log_power_pos', 'real_log_rsqrt_pos', 'real_rsqrt_inverse_square', 'real_rsqrt_inverse_square_iff', 'real_rsqrt_reciprocal', 'real_divide_sqrt', 'real_divide_rsqrt', 'real_exp_zero', 'complex_exp_zero', 'complex_exp_product', 'complex_exp_quotient', 'complex_exp_denominator', 'complex_power_denominator', 'complex_sqrt_square', 'complex_rsqrt_square', 'complex_power_zero', 'complex_power_one', 'complex_power_two', 'complex_power_three', 'complex_power_minus_one', 'complex_power_half', 'complex_power_exp_strip', 'complex_log_power_iff', 'complex_divide_sqrt', 'complex_divide_rsqrt', 'real_sqrt_square_refuted', 'real_rsqrt_inverse_square_refuted', 'real_power_denominator_refuted', 'complex_rsqrt_reciprocal_refuted', 'complex_power_exp_refuted'],
     'ArithmeticFamily': ['binary32_add_assoc_refuted', 'binary32_mul_assoc_refuted', 'binary32_mul_zero_refuted', 'subtract_broadcast', 'add_broadcast_constants', 'subtract_add_broadcast_constants', 'multiply_broadcast_constants', 'broadcast_uniform_factor', 'eval_addOrder', 'eval_mulOrder', 'rewrite_sound', 'rewrite_in_context', 'allRules_complete', 'allRuleKeys_nodup', 'rule_count', 'integer_family', 'real_family', 'complex_family', 'word_family'],
     'ScatterBatching': ['inserted_extent', 'rawBatchAxis_extent', 'rawIndex_batch_value', 'pairAt_mapped', 'pairAt_unmapped', 'window_paired_zero', 'batch_coordinate_bound', 'identityAxes_decode', 'canonical_offset', 'canonical_position', 'target_eq_canonical', 'target_eq_some_iff', 'target_no_pairs', 'target_batch_coordinate', 'forgetting_batching_refuted', 'entries_eq_canonical', 'run_eq_canonical', 'entries_length', 'run_empty', 'run_relayout_indices', 'word_translate_distinct', 'run_combine_nested'],
     'IndexVector': ['batch_raw', 'component_raw', 'raw_split', 'vectorAxis_bound', 'implicit_components', 'elementCount_raw', 'read_pack', 'pack_read', 'read_map', 'read_relayout', 'relayout_refl', 'relayout_trans'],
@@ -146,6 +147,11 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/NumericalField.lean': 'R',
+        'TensorRewrite/Theory/NumericalReal.lean': 'R',
+        'TensorRewrite/Theory/NumericalComplex.lean': 'R',
+        'TensorRewrite/Theory/NumericalCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/ArithmeticFamily.lean': 'S',
         'TensorRewrite/Theory/ArithmeticFamilyProof.lean': 'R',
         'TensorRewrite/Theory/ArithmeticBroadcast.lean': 'R',
@@ -277,6 +283,12 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: (
+                             'exact totalized Field division with actual bounded Broadcast; '
+                             'Mathlib real rpow/exp/sqrt and principal complex cpow/sqrt; '
+                             'pointwise sign/positive/nonzero and principal-strip domains explicit; '
+                             'five exact premise-dropping refutations; no machine division, '
+                             'rounded transcendental, flags, effects, physical or whole-record claim'
+                             if '.Numerical.' in name else
                              'closed pure arithmetic trees:43 rule/order instances; actual '
                              'CommRing for Int/Real/Complex/all-width BitVec; shared input identity '
                              'and Boolean conversion/selection explicit; complete unique enumeration '

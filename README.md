@@ -4,10 +4,10 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 463 checked mathematical statements; custom Lean totals **9,447**.
+The theory target now has 516 checked mathematical statements; custom Lean totals **9,772**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including340 covered only by
-unreviewed proposals after the Scatter and typed-arithmetic refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
+All488 retained records now have domain/dependency worksheets, including309 covered only by
+unreviewed proposals after the Scatter and typed-numerical refinements; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1168,3 +1168,13 @@ profiles, with five actual Broadcast corollaries and three separate IEEE tree
 refutations. Nineteen statements add313 custom Lean lines. Thirty-three records
 carry these complete declared value profiles;34 records gain typed refinements.
 Global N/F, remaining numerical/graph/effect/layout partitions and review stay open.
+
+
+## Exact division and numerical domains
+
+The [numerical extension](docs/numerical-values.md) adds53 checked statements in325
+custom Lean lines, including five sign/branch counterexamples. It proves exact
+field division and real/principal-complex Exp, Power, Sqrt/Rsqrt and Log-Power
+graphs with explicit sufficient or iff domains. Thirty-one records gain typed
+partial evidence. Machine division, rounded transcendentals, remaining numerical
+partitions and independent review stay open; the complete family count remains193.

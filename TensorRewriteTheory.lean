@@ -36,3 +36,5 @@ public import TensorRewrite.Theory.ScatterBatchingCounterexample
 
 public import TensorRewrite.Theory.ArithmeticBroadcast
 public import TensorRewrite.Theory.ArithmeticFloatCounterexamples
+
+public import TensorRewrite.Theory.NumericalCounterexamples

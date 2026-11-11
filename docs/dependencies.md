@@ -98,3 +98,14 @@ FloatLib add/mul supplies a checked uniform-fold rounding diagnostic. Its IEEE
 nearest-quotient `remainder` is not silently used as truncating floating remainder;
 that adapter and exceptional/flag domains remain unproved. See
 [the exact contracts and workload gaps](remainder-and-collective-domains.md).
+
+
+## Reuse for exact division and numerical domains
+
+The same Mathlib pin supplies totalized field division, real power/exp/sqrt and
+principal complex power. The [numerical extension](numerical-values.md) derives
+actual tensor graphs, pointwise sign/branch iff domains and five premise-dropping
+refutations. Real negative-base power follows Mathlib's explicitly disclosed
+real-part convention. Rounded machine division and transcendental implementations
+remain separate. No additional library or toolchain change was needed; a controlled
+library ablation has not yet measured the size benefit of this reuse.

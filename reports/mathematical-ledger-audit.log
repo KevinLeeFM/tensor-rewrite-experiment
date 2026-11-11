@@ -3025,6 +3025,215 @@ TensorRewrite.Theory.LogicalFamily.word_keys_uniform : ∀ (width : ℕ),
     List.map TensorRewrite.Theory.LogicalFamily.Rule.key
       (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word 0))
 'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms
+@TensorRewrite.Theory.Numerical.complex_divide_rsqrt : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i / (b i).sqrt⁻¹) = fun i => a i * (b i).sqrt
+'TensorRewrite.Theory.Numerical.complex_divide_rsqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_divide_sqrt : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i / (b i).sqrt) = fun i => a i * (b i).sqrt⁻¹
+'TensorRewrite.Theory.Numerical.complex_divide_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_exp_denominator : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i / Complex.exp (b i)) = fun i => a i * Complex.exp (-b i)
+'TensorRewrite.Theory.Numerical.complex_exp_denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_exp_product : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ),
+  (fun i => Complex.exp (a i) * Complex.exp (b i)) = fun i => Complex.exp (a i + b i)
+'TensorRewrite.Theory.Numerical.complex_exp_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_exp_quotient : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ),
+  (fun i => Complex.exp (a i) / Complex.exp (b i)) = fun i => Complex.exp (a i - b i)
+'TensorRewrite.Theory.Numerical.complex_exp_quotient' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_exp_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank},
+  TensorRewrite.Pilot.Tensor.map Complex.exp (TensorRewrite.Pilot.Tensor.constant 0) =
+    TensorRewrite.Pilot.Tensor.constant 1
+'TensorRewrite.Theory.Numerical.complex_exp_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_log_power_iff : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ),
+  (∀ (i : TensorRewrite.Pilot.Index shape), a i ≠ 0) →
+    (((fun i => Complex.log (a i ^ b i)) = fun i => if b i = 0 then 0 else Complex.log (a i) * b i) ↔
+      ∀ (i : TensorRewrite.Pilot.Index shape),
+        -Real.pi < (Complex.log (a i) * b i).im ∧ (Complex.log (a i) * b i).im ≤ Real.pi)
+'TensorRewrite.Theory.Numerical.complex_log_power_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_denominator : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b c : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i / b i ^ c i) = fun i => a i * b i ^ (-c i)
+'TensorRewrite.Theory.Numerical.complex_power_denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Numerical.complex_power_exp_refuted : Complex.exp (2 * ↑Real.pi * Complex.I) ^ (1 / 2) ≠
+  Complex.exp (2 * ↑Real.pi * Complex.I * (1 / 2))
+'TensorRewrite.Theory.Numerical.complex_power_exp_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_exp_strip : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℂ),
+  (∀ (i : TensorRewrite.Pilot.Index shape), -Real.pi < (a i).im ∧ (a i).im ≤ Real.pi) →
+    (fun i => Complex.exp (a i) ^ b i) = fun i => Complex.exp (a i * b i)
+'TensorRewrite.Theory.Numerical.complex_power_exp_strip' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_half : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i ^ (1 / 2)) = TensorRewrite.Pilot.Tensor.map Complex.sqrt a
+'TensorRewrite.Theory.Numerical.complex_power_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_minus_one : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i ^ (-1)) = fun i => 1 / a i
+'TensorRewrite.Theory.Numerical.complex_power_minus_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_one : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i ^ 1) = a
+'TensorRewrite.Theory.Numerical.complex_power_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_three : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i ^ 3) = fun i => a i * (a i * a i)
+'TensorRewrite.Theory.Numerical.complex_power_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_two : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i ^ 2) = fun i => a i * a i
+'TensorRewrite.Theory.Numerical.complex_power_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_power_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => a i ^ 0) = TensorRewrite.Pilot.Tensor.constant 1
+'TensorRewrite.Theory.Numerical.complex_power_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted : (1 / -1).sqrt⁻¹ ≠ (-1).sqrt
+'TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_rsqrt_square : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => (a i).sqrt⁻¹ * (a i).sqrt⁻¹) = fun i => 1 / a i
+'TensorRewrite.Theory.Numerical.complex_rsqrt_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.complex_sqrt_square : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℂ), (fun i => (a i).sqrt * (a i).sqrt) = a
+'TensorRewrite.Theory.Numerical.complex_sqrt_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_as_product : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a b : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 / x2) a b =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) a (TensorRewrite.Pilot.Tensor.map (fun x => 1 / x) b)
+'TensorRewrite.Theory.Numerical.divide_as_product' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_broadcast : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} {smallRank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis))
+  (a : TensorRewrite.Pilot.Tensor shape α) (small : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 / x2) a
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) small) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) a
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map (fun x => 1 / x) small))
+'TensorRewrite.Theory.Numerical.divide_broadcast' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_constant : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a : TensorRewrite.Pilot.Tensor shape α) (value : α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 / x2) a (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) a (TensorRewrite.Pilot.Tensor.constant (1 / value))
+'TensorRewrite.Theory.Numerical.divide_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_fractions : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a b c d : TensorRewrite.Pilot.Tensor shape α),
+  (fun i => a i / b i / (c i / d i)) = fun i => a i * d i / (b i * c i)
+'TensorRewrite.Theory.Numerical.divide_fractions' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_nested_denominator : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a b c : TensorRewrite.Pilot.Tensor shape α),
+  (fun i => a i / (b i / c i)) = fun i => a i * c i / b i
+'TensorRewrite.Theory.Numerical.divide_nested_denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_nested_numerator : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a b c : TensorRewrite.Pilot.Tensor shape α),
+  (fun i => a i / b i / c i) = fun i => a i / (b i * c i)
+'TensorRewrite.Theory.Numerical.divide_nested_numerator' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_one : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Pilot.Tensor.map (fun x => x / 1) a = a
+'TensorRewrite.Theory.Numerical.divide_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_predicate_broadcast : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} {smallRank : ℕ} {smallShape : TensorRewrite.Pilot.Shape smallRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes smallRank rank)
+  (extents : ∀ (axis : Fin smallRank), smallShape axis = shape (axes.decode axis))
+  (p : TensorRewrite.Pilot.Tensor shape Bool) (small : TensorRewrite.Pilot.Tensor smallShape α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 / x2)
+      (TensorRewrite.Pilot.Tensor.map (fun b => if b = true then 1 else 0) p)
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents) small) =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2)
+      (TensorRewrite.Pilot.Tensor.reindex (TensorRewrite.Pilot.IndexMaps.broadcastIndex axes extents)
+        (TensorRewrite.Pilot.Tensor.map (fun x => 1 / x) small))
+      (TensorRewrite.Pilot.Tensor.map (fun b => if b = true then 1 else 0) p)
+'TensorRewrite.Theory.Numerical.divide_predicate_broadcast' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Numerical.divide_reciprocal : ∀ {α : Type} [inst : Field α] {rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} (a b : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x y => x / (1 / y)) a b =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 * x2) a b
+'TensorRewrite.Theory.Numerical.divide_reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_abs_square : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => |a i| * |a i|) = fun i => a i * a i
+'TensorRewrite.Theory.Numerical.real_abs_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_divide_rsqrt : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i / (√(b i))⁻¹) = fun i => a i * √(b i)
+'TensorRewrite.Theory.Numerical.real_divide_rsqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_divide_sqrt : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i / √(b i)) = fun i => a i * (√(b i))⁻¹
+'TensorRewrite.Theory.Numerical.real_divide_sqrt' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_exp_denominator : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i / Real.exp (b i)) = fun i => a i * Real.exp (-b i)
+'TensorRewrite.Theory.Numerical.real_exp_denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_exp_product : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => Real.exp (a i) * Real.exp (b i)) = fun i => Real.exp (a i + b i)
+'TensorRewrite.Theory.Numerical.real_exp_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_exp_quotient : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => Real.exp (a i) / Real.exp (b i)) = fun i => Real.exp (a i - b i)
+'TensorRewrite.Theory.Numerical.real_exp_quotient' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_exp_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank},
+  TensorRewrite.Pilot.Tensor.map Real.exp (TensorRewrite.Pilot.Tensor.constant 0) =
+    TensorRewrite.Pilot.Tensor.constant 1
+'TensorRewrite.Theory.Numerical.real_exp_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_log_power_pos : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ),
+  (∀ (i : TensorRewrite.Pilot.Index shape), 0 < a i) →
+    (fun i => Real.log (a i ^ b i)) = fun i => if b i = 0 then 0 else Real.log |a i| * b i
+'TensorRewrite.Theory.Numerical.real_log_power_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_log_rsqrt_pos : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ),
+  (∀ (i : TensorRewrite.Pilot.Index shape), 0 < a i) →
+    (fun i => Real.log (√(a i))⁻¹) = fun i => Real.log (a i) * (-1 / 2)
+'TensorRewrite.Theory.Numerical.real_log_rsqrt_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_denominator : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b c : TensorRewrite.Pilot.Tensor shape ℝ),
+  (∀ (i : TensorRewrite.Pilot.Index shape), 0 ≤ b i) → (fun i => a i / b i ^ c i) = fun i => a i * b i ^ (-c i)
+'TensorRewrite.Theory.Numerical.real_power_denominator' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Numerical.real_power_denominator_refuted : 1 / (-1) ^ (1 / 3) ≠ 1 * (-1) ^ (-(1 / 3))
+'TensorRewrite.Theory.Numerical.real_power_denominator_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_exp : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a b : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => Real.exp (a i) ^ b i) = fun i => Real.exp (a i * b i)
+'TensorRewrite.Theory.Numerical.real_power_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_half : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i ^ (1 / 2)) = TensorRewrite.Pilot.Tensor.map Real.sqrt a
+'TensorRewrite.Theory.Numerical.real_power_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_minus_one : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i ^ (-1)) = fun i => 1 / a i
+'TensorRewrite.Theory.Numerical.real_power_minus_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_one : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i ^ 1) = a
+'TensorRewrite.Theory.Numerical.real_power_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_three : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i ^ 3) = fun i => a i * (a i * a i)
+'TensorRewrite.Theory.Numerical.real_power_three' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_two : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i ^ 2) = fun i => a i * a i
+'TensorRewrite.Theory.Numerical.real_power_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_power_zero : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => a i ^ 0) = TensorRewrite.Pilot.Tensor.constant 1
+'TensorRewrite.Theory.Numerical.real_power_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => (√(a i ^ (-2)))⁻¹) = TensorRewrite.Pilot.Tensor.map abs a
+'TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ),
+  (fun i => (√(a i ^ (-2)))⁻¹) = a ↔ ∀ (i : TensorRewrite.Pilot.Index shape), 0 ≤ a i
+'TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted : (√((-1) ^ (-2)))⁻¹ ≠ -1
+'TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ), (fun i => (√(1 / a i))⁻¹) = TensorRewrite.Pilot.Tensor.map Real.sqrt a
+'TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_rsqrt_square_iff : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ),
+  ((fun i => (√(a i))⁻¹ * (√(a i))⁻¹) = fun i => 1 / a i) ↔ ∀ (i : TensorRewrite.Pilot.Index shape), 0 ≤ a i
+'TensorRewrite.Theory.Numerical.real_rsqrt_square_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Numerical.real_sqrt_square_iff : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (a : TensorRewrite.Pilot.Tensor shape ℝ),
+  (fun i => √(a i) * √(a i)) = a ↔ ∀ (i : TensorRewrite.Pilot.Index shape), 0 ≤ a i
+'TensorRewrite.Theory.Numerical.real_sqrt_square_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.Numerical.real_sqrt_square_refuted : √(-1) * √(-1) ≠ -1
+'TensorRewrite.Theory.Numerical.real_sqrt_square_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar : ∀ (shape : TensorRewrite.Pilot.Shape 0),
   TensorRewrite.Theory.OrderedCoordinates.enumerate shape = [fun axis => axis.elim0]
 'TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]

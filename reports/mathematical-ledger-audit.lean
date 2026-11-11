@@ -853,6 +853,112 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.LogicalFamily.word_count
 #check @TensorRewrite.Theory.LogicalFamily.word_keys_uniform
 #print axioms TensorRewrite.Theory.LogicalFamily.word_keys_uniform
+#check @TensorRewrite.Theory.Numerical.complex_divide_rsqrt
+#print axioms TensorRewrite.Theory.Numerical.complex_divide_rsqrt
+#check @TensorRewrite.Theory.Numerical.complex_divide_sqrt
+#print axioms TensorRewrite.Theory.Numerical.complex_divide_sqrt
+#check @TensorRewrite.Theory.Numerical.complex_exp_denominator
+#print axioms TensorRewrite.Theory.Numerical.complex_exp_denominator
+#check @TensorRewrite.Theory.Numerical.complex_exp_product
+#print axioms TensorRewrite.Theory.Numerical.complex_exp_product
+#check @TensorRewrite.Theory.Numerical.complex_exp_quotient
+#print axioms TensorRewrite.Theory.Numerical.complex_exp_quotient
+#check @TensorRewrite.Theory.Numerical.complex_exp_zero
+#print axioms TensorRewrite.Theory.Numerical.complex_exp_zero
+#check @TensorRewrite.Theory.Numerical.complex_log_power_iff
+#print axioms TensorRewrite.Theory.Numerical.complex_log_power_iff
+#check @TensorRewrite.Theory.Numerical.complex_power_denominator
+#print axioms TensorRewrite.Theory.Numerical.complex_power_denominator
+#check @TensorRewrite.Theory.Numerical.complex_power_exp_refuted
+#print axioms TensorRewrite.Theory.Numerical.complex_power_exp_refuted
+#check @TensorRewrite.Theory.Numerical.complex_power_exp_strip
+#print axioms TensorRewrite.Theory.Numerical.complex_power_exp_strip
+#check @TensorRewrite.Theory.Numerical.complex_power_half
+#print axioms TensorRewrite.Theory.Numerical.complex_power_half
+#check @TensorRewrite.Theory.Numerical.complex_power_minus_one
+#print axioms TensorRewrite.Theory.Numerical.complex_power_minus_one
+#check @TensorRewrite.Theory.Numerical.complex_power_one
+#print axioms TensorRewrite.Theory.Numerical.complex_power_one
+#check @TensorRewrite.Theory.Numerical.complex_power_three
+#print axioms TensorRewrite.Theory.Numerical.complex_power_three
+#check @TensorRewrite.Theory.Numerical.complex_power_two
+#print axioms TensorRewrite.Theory.Numerical.complex_power_two
+#check @TensorRewrite.Theory.Numerical.complex_power_zero
+#print axioms TensorRewrite.Theory.Numerical.complex_power_zero
+#check @TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted
+#print axioms TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted
+#check @TensorRewrite.Theory.Numerical.complex_rsqrt_square
+#print axioms TensorRewrite.Theory.Numerical.complex_rsqrt_square
+#check @TensorRewrite.Theory.Numerical.complex_sqrt_square
+#print axioms TensorRewrite.Theory.Numerical.complex_sqrt_square
+#check @TensorRewrite.Theory.Numerical.divide_as_product
+#print axioms TensorRewrite.Theory.Numerical.divide_as_product
+#check @TensorRewrite.Theory.Numerical.divide_broadcast
+#print axioms TensorRewrite.Theory.Numerical.divide_broadcast
+#check @TensorRewrite.Theory.Numerical.divide_constant
+#print axioms TensorRewrite.Theory.Numerical.divide_constant
+#check @TensorRewrite.Theory.Numerical.divide_fractions
+#print axioms TensorRewrite.Theory.Numerical.divide_fractions
+#check @TensorRewrite.Theory.Numerical.divide_nested_denominator
+#print axioms TensorRewrite.Theory.Numerical.divide_nested_denominator
+#check @TensorRewrite.Theory.Numerical.divide_nested_numerator
+#print axioms TensorRewrite.Theory.Numerical.divide_nested_numerator
+#check @TensorRewrite.Theory.Numerical.divide_one
+#print axioms TensorRewrite.Theory.Numerical.divide_one
+#check @TensorRewrite.Theory.Numerical.divide_predicate_broadcast
+#print axioms TensorRewrite.Theory.Numerical.divide_predicate_broadcast
+#check @TensorRewrite.Theory.Numerical.divide_reciprocal
+#print axioms TensorRewrite.Theory.Numerical.divide_reciprocal
+#check @TensorRewrite.Theory.Numerical.real_abs_square
+#print axioms TensorRewrite.Theory.Numerical.real_abs_square
+#check @TensorRewrite.Theory.Numerical.real_divide_rsqrt
+#print axioms TensorRewrite.Theory.Numerical.real_divide_rsqrt
+#check @TensorRewrite.Theory.Numerical.real_divide_sqrt
+#print axioms TensorRewrite.Theory.Numerical.real_divide_sqrt
+#check @TensorRewrite.Theory.Numerical.real_exp_denominator
+#print axioms TensorRewrite.Theory.Numerical.real_exp_denominator
+#check @TensorRewrite.Theory.Numerical.real_exp_product
+#print axioms TensorRewrite.Theory.Numerical.real_exp_product
+#check @TensorRewrite.Theory.Numerical.real_exp_quotient
+#print axioms TensorRewrite.Theory.Numerical.real_exp_quotient
+#check @TensorRewrite.Theory.Numerical.real_exp_zero
+#print axioms TensorRewrite.Theory.Numerical.real_exp_zero
+#check @TensorRewrite.Theory.Numerical.real_log_power_pos
+#print axioms TensorRewrite.Theory.Numerical.real_log_power_pos
+#check @TensorRewrite.Theory.Numerical.real_log_rsqrt_pos
+#print axioms TensorRewrite.Theory.Numerical.real_log_rsqrt_pos
+#check @TensorRewrite.Theory.Numerical.real_power_denominator
+#print axioms TensorRewrite.Theory.Numerical.real_power_denominator
+#check @TensorRewrite.Theory.Numerical.real_power_denominator_refuted
+#print axioms TensorRewrite.Theory.Numerical.real_power_denominator_refuted
+#check @TensorRewrite.Theory.Numerical.real_power_exp
+#print axioms TensorRewrite.Theory.Numerical.real_power_exp
+#check @TensorRewrite.Theory.Numerical.real_power_half
+#print axioms TensorRewrite.Theory.Numerical.real_power_half
+#check @TensorRewrite.Theory.Numerical.real_power_minus_one
+#print axioms TensorRewrite.Theory.Numerical.real_power_minus_one
+#check @TensorRewrite.Theory.Numerical.real_power_one
+#print axioms TensorRewrite.Theory.Numerical.real_power_one
+#check @TensorRewrite.Theory.Numerical.real_power_three
+#print axioms TensorRewrite.Theory.Numerical.real_power_three
+#check @TensorRewrite.Theory.Numerical.real_power_two
+#print axioms TensorRewrite.Theory.Numerical.real_power_two
+#check @TensorRewrite.Theory.Numerical.real_power_zero
+#print axioms TensorRewrite.Theory.Numerical.real_power_zero
+#check @TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square
+#print axioms TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square
+#check @TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff
+#print axioms TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff
+#check @TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted
+#print axioms TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted
+#check @TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal
+#print axioms TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal
+#check @TensorRewrite.Theory.Numerical.real_rsqrt_square_iff
+#print axioms TensorRewrite.Theory.Numerical.real_rsqrt_square_iff
+#check @TensorRewrite.Theory.Numerical.real_sqrt_square_iff
+#print axioms TensorRewrite.Theory.Numerical.real_sqrt_square_iff
+#check @TensorRewrite.Theory.Numerical.real_sqrt_square_refuted
+#print axioms TensorRewrite.Theory.Numerical.real_sqrt_square_refuted
 #check @TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
 #print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
 #check @TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons

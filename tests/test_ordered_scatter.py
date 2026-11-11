@@ -102,7 +102,7 @@ class OrderedScatterTests(unittest.TestCase):
         progress=ledger.read('census/mathematical-ledger.json')
         result=audit.assemble(ledger.corpus(),progress,audit.read_catalog())
         self.assertEqual(result['records_with_domain_worksheets'],488)
-        self.assertEqual(result['records_with_only_unreviewed_proposal_worksheets'],340)
+        self.assertEqual(result['records_with_only_unreviewed_proposal_worksheets'],309)
         self.assertEqual(result['whole_benchmark_records_closed'],0)
         self.assertIsNone(result['mathematical_obligation_denominator'])
         worksheet=ledger.read('census/scatter-mathematical-domains-v1.json')
