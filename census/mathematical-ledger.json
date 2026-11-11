@@ -9,9 +9,9 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 253,
+    "needs_formal_statement_and_domain_partition": 234,
     "partial_model_evidence_requires_partition_review": 141,
-    "declared_value_family_complete_full_record_partitions_open": 94
+    "declared_value_family_complete_full_record_partitions_open": 113
   },
   "batch_counts": {
     "dot-cases": 44,
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 835,
+  "distinct_checked_declarations": 863,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,9 +39,10 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 527,
+    "library_backed_theory": 549,
     "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
+    "control_value_contract_refutation": 6,
     "numerical_contract_refutation": 2,
     "dynamic_update_contract_refutation": 3,
     "exact_numerical_domain_refutation": 5,
@@ -202,6 +203,38 @@
         "TrySimplifyTautologicalCompare/Gt-Lt",
         "TrySimplifyTautologicalCompare/Lt-Gt",
         "TrySimplifyTautologicalCompare/Lt-Lt"
+      ],
+      "label_correspondence_certified": false
+    },
+    {
+      "family": "typed_pure_control_values_v1",
+      "profile_unit_count": 19,
+      "profile_unit_kind": "universal mathematical graph schemas, not dtype instantiations or whole retained cases",
+      "kernel_status": "kernel_complete_declared_mathematical_value_family",
+      "independent_statement_review": "pending",
+      "observations": "pure tensor values and exact typed branch-function results; eager trace diagnostics are separate rejected mutations",
+      "manifest": "census/control-values-family-v1.json",
+      "manifest_sha256": "06ec8ecbde7a596acb48a065656117e79c22833773b5b78e18691a174b966f54",
+      "candidate_benchmark_labels": [
+        "HandleConditional/predicate-convert",
+        "HandleMap/constant-root-broadcast",
+        "HandleMap/constant-root-scalar",
+        "HandleMap/elementwise-root",
+        "HandleMap/parameter-root",
+        "HandleSelect/boolean-compare-eq",
+        "HandleSelect/boolean-compare-ge",
+        "HandleSelect/boolean-compare-gt",
+        "HandleSelect/boolean-compare-le",
+        "HandleSelect/boolean-compare-lt",
+        "HandleSelect/boolean-compare-ne",
+        "HandleSelect/equal-values",
+        "HandleSelect/false",
+        "HandleSelect/false-true-broadcast",
+        "HandleSelect/false-true-direct",
+        "HandleSelect/not-predicate",
+        "HandleSelect/true",
+        "HandleSelect/true-false-broadcast",
+        "HandleSelect/true-false-direct"
       ],
       "label_correspondence_certified": false
     }
@@ -1232,15 +1265,15 @@
       "manifest_sha256": "f6555f895c2db604f113e18f1e33c34f55ff3978ee2b6bdcb63fe5c9ee4b327f"
     }
   ],
-  "kernel_complete_family_profile_count": 369,
+  "kernel_complete_family_profile_count": 388,
   "count_policy": "declaration kinds can overlap; benchmark labels are retained candidates, not certified correspondence; no proof-count/488 coverage fraction",
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "94e8823689c95afe4574307a5dc5b5bec0146678f7adc3e643db92c718e1fcc8",
+    "sha256": "11265c5ef5979c66618a5b171e92d684b9f0d080f7224f6bd99d8966413265ee",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "d0c0ba5f65986f4047b381d7233432a2b08460262a4b34bc20e6331b88a8c43e"
+    "output_sha256": "3a483ee5a3779ad5b6a8ee8231363472d7b014569525e52ec2c89eda665abecb"
   },
   "proofs": [
     {
@@ -7785,6 +7818,483 @@
       "independent_statement_review": "pending",
       "axiom_dependencies": [
         "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.broadcast_constant",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.broadcast_select",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.conditional_branch_order_refuted",
+      "kinds": [
+        "control_value_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.conditional_convert",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConditional/predicate-convert"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_constant",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_constant_broadcast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMap/constant-root-broadcast"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_effect_drop_refuted",
+      "kinds": [
+        "control_value_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_elementwise",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMap/elementwise-root"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_parameter",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMap/parameter-root"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_parameter_order_refuted",
+      "kinds": [
+        "control_value_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.map_scalar_constant",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleMap/constant-root-scalar"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_compare_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/boolean-compare-eq"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_compare_ge",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/boolean-compare-ge"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_compare_gt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/boolean-compare-gt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_compare_le",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/boolean-compare-le"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_compare_lt",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/boolean-compare-lt"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_compare_ne",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/boolean-compare-ne"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_direction_refuted",
+      "kinds": [
+        "control_value_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_effect_drop_refuted",
+      "kinds": [
+        "control_value_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_effect_swap_refuted",
+      "kinds": [
+        "control_value_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_equal",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/equal-values"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_false",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/false"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_false_true",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/false-true-direct"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_false_true_broadcast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/false-true-broadcast"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_not",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/not-predicate"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_true",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/true"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_true_false",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/true-false-direct"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ControlValues.select_true_false_broadcast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous Map at arbitrary finite shapes; exact Boolean order false0/true1; exact typed branch dispatch with arbitrary result observations; six explicit value/trace mutations are refuted; no discarded evaluation, dynamic shapes, physical effects or whole-record claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSelect/true-false-broadcast"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
         "Quot.sound",
         "propext"
       ]
@@ -19132,10 +19642,15 @@
       "retained_lhs": "Conditional(Convert(p),arg0,branch0,arg1,branch1)",
       "retained_rhs": "Conditional(p,true_arg=arg1,true_branch=branch1,false_arg=arg0,false_branch=branch0)",
       "unreviewed_benchmark_notes_not_assumptions": "enable_conditional_simplification; selector opcode Convert; Convert input PRED; exactly two branches",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.conditional_convert"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleConstant/iota",
@@ -20382,10 +20897,15 @@
       "retained_lhs": "Map(operands,Constant(c))",
       "retained_rhs": "Broadcast(cloned Constant(c),output shape)",
       "unreviewed_benchmark_notes_not_assumptions": "map root scalar Constant; output nonscalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.map_constant_broadcast"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMap/constant-root-scalar",
@@ -20393,10 +20913,15 @@
       "retained_lhs": "Map(operands,Constant(c))",
       "retained_rhs": "cloned Constant(c)",
       "unreviewed_benchmark_notes_not_assumptions": "map root scalar Constant; output scalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.map_scalar_constant"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMap/elementwise-root",
@@ -20404,10 +20929,15 @@
       "retained_lhs": "Map(operands,Elementwise(Parameter(k0),...))",
       "retained_rhs": "clone Elementwise with output shape and selected operands[kj]",
       "unreviewed_benchmark_notes_not_assumptions": "root not Fusion and IsElementwise; every direct root operand Parameter",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.map_elementwise"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMap/parameter-root",
@@ -20415,10 +20945,15 @@
       "retained_lhs": "Map(operands,Parameter(k))",
       "retained_rhs": "operands[k]",
       "unreviewed_benchmark_notes_not_assumptions": "map computation root Parameter; ReplaceInstructionIfCompatible succeeds (return value ignored by handler)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.map_parameter"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleMaximum/clamp-lhs-lhs",
@@ -22663,10 +23198,15 @@
       "retained_lhs": "Select(Compare(a,b,Eq),a,b)",
       "retained_rhs": "b",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; compare operands same pointers as select true/false operands; direction Eq",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_eq"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/boolean-compare-ge",
@@ -22674,10 +23214,15 @@
       "retained_lhs": "Select(Compare(a,b,Ge),a,b)",
       "retained_rhs": "Or(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; compare operands same pointers as select true/false operands; direction Ge",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_ge"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/boolean-compare-gt",
@@ -22685,10 +23230,15 @@
       "retained_lhs": "Select(Compare(a,b,Gt),a,b)",
       "retained_rhs": "Or(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; compare operands same pointers as select true/false operands; direction Gt",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_gt"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/boolean-compare-le",
@@ -22696,10 +23246,15 @@
       "retained_lhs": "Select(Compare(a,b,Le),a,b)",
       "retained_rhs": "And(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; compare operands same pointers as select true/false operands; direction Le",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_le"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/boolean-compare-lt",
@@ -22707,10 +23262,15 @@
       "retained_lhs": "Select(Compare(a,b,Lt),a,b)",
       "retained_rhs": "And(a,b)",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; compare operands same pointers as select true/false operands; direction Lt",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_lt"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/boolean-compare-ne",
@@ -22718,10 +23278,15 @@
       "retained_lhs": "Select(Compare(a,b,Ne),a,b)",
       "retained_rhs": "a",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; compare operands same pointers as select true/false operands; direction Ne",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_ne"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/equal-values",
@@ -22729,10 +23294,15 @@
       "retained_lhs": "Select(p,x,x)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "true/false operand pointer identity; compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_equal"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/false",
@@ -22740,10 +23310,15 @@
       "retained_lhs": "Select(false,x,y)",
       "retained_rhs": "y",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(predicate,false); compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_false"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/false-true-broadcast",
@@ -22751,10 +23326,15 @@
       "retained_lhs": "Select(p,false,true)",
       "retained_rhs": "Broadcast(Not(p))",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; IsAll(branches,listed values); replacement scalar and output nonscalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_false_true_broadcast"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/false-true-direct",
@@ -22762,10 +23342,15 @@
       "retained_lhs": "Select(p,false,true)",
       "retained_rhs": "Not(p)",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; IsAll(branches,listed values); replacement not (replacement scalar and output nonscalar)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_false_true"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/not-predicate",
@@ -22773,10 +23358,15 @@
       "retained_lhs": "Select(Not(p),x,y)",
       "retained_rhs": "Select(p,y,x)",
       "unreviewed_benchmark_notes_not_assumptions": "predicate opcode Not",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_not"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/true",
@@ -22784,10 +23374,15 @@
       "retained_lhs": "Select(true,x,y)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "IsAll(predicate,true); compatibility replacement succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_true"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/true-false-broadcast",
@@ -22795,10 +23390,15 @@
       "retained_lhs": "Select(p,true,false)",
       "retained_rhs": "Broadcast(p)",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; IsAll(branches,listed values); replacement scalar and output nonscalar",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_true_false_broadcast"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/true-false-direct",
@@ -22806,10 +23406,15 @@
       "retained_lhs": "Select(p,true,false)",
       "retained_rhs": "p",
       "unreviewed_benchmark_notes_not_assumptions": "output PRED; IsAll(branches,listed values); replacement not (replacement scalar and output nonscalar)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "declared_value_family_complete_full_record_partitions_open",
+      "evidence": [
+        "TensorRewrite.Theory.ControlValues.select_true_false"
+      ],
       "whole_record_mathematically_closed": false,
-      "code_correspondence": "future_work"
+      "code_correspondence": "future_work",
+      "kernel_complete_declared_value_families": [
+        "typed_pure_control_values_v1"
+      ]
     },
     {
       "benchmark_id": "HandleSelect/update-false-scalar-pred",

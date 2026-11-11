@@ -1,0 +1,134 @@
+[
+  {
+    "command": [
+      "python3",
+      "tools/check_theory.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/control-values-validation-v1/check_theory.log"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/check_control_values.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/control-values-validation-v1/check_control_values.log"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/mathematical_ledger.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/control-values-validation-v1/mathematical_ledger.log"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/workload_formulation_audit.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/control-values-validation-v1/workload_formulation_audit.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-c",
+      "import json, unittest\nfrom pathlib import Path\npatterns=json.loads(Path('reports/fixed-tactics-validation-v1/commands.json').read_text())[-1]['patterns']+['test_control_values.py']\nsuite=unittest.TestSuite()\nfor pattern in patterns:suite.addTests(unittest.defaultTestLoader.discover('tests',pattern=pattern))\nwith Path('reports/control-values-validation-v1/curated-tests.log').open('w') as stream:\n result=unittest.TextTestRunner(verbosity=2,stream=stream).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+    ],
+    "patterns": [
+      "test_convolution*.py",
+      "test_logical_family.py",
+      "test_mathematical_ledger.py",
+      "test_theory_accounting.py",
+      "test_mathematical_review_readiness.py",
+      "test_scalar_domains.py",
+      "test_reduction_algebra.py",
+      "test_reduction_window.py",
+      "test_slice_pad.py",
+      "test_full_span_window.py",
+      "test_pad_window.py",
+      "test_prefix_window.py",
+      "test_broadcast_window.py",
+      "test_window_tuple_family.py",
+      "test_pad_broadcast.py",
+      "test_remainder.py",
+      "test_formulation_expansion.py",
+      "test_ordered_scatter.py",
+      "test_scatter_concat.py",
+      "test_scatter_layout.py",
+      "test_scatter_indices.py",
+      "test_scatter_batching.py",
+      "test_arithmetic_family.py",
+      "test_numerical.py",
+      "test_order_family.py",
+      "test_dynamic_update.py",
+      "test_fixed_tactics.py",
+      "test_control_values.py"
+    ],
+    "exit_code": 0,
+    "test_count": 133,
+    "log": "reports/control-values-validation-v1/curated-tests.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-c",
+      "import json, unittest\nfrom pathlib import Path\npatterns=json.loads(Path('reports/fixed-tactics-validation-v1/commands.json').read_text())[-1]['patterns']+['test_control_values.py']\nsuite=unittest.TestSuite()\nfor pattern in patterns:suite.addTests(unittest.defaultTestLoader.discover('tests',pattern=pattern))\nwith Path('reports/control-values-validation-v1/curated-tests.log').open('w') as stream:\n result=unittest.TextTestRunner(verbosity=2,stream=stream).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+    ],
+    "patterns": [
+      "test_convolution*.py",
+      "test_logical_family.py",
+      "test_mathematical_ledger.py",
+      "test_theory_accounting.py",
+      "test_mathematical_review_readiness.py",
+      "test_scalar_domains.py",
+      "test_reduction_algebra.py",
+      "test_reduction_window.py",
+      "test_slice_pad.py",
+      "test_full_span_window.py",
+      "test_pad_window.py",
+      "test_prefix_window.py",
+      "test_broadcast_window.py",
+      "test_window_tuple_family.py",
+      "test_pad_broadcast.py",
+      "test_remainder.py",
+      "test_formulation_expansion.py",
+      "test_ordered_scatter.py",
+      "test_scatter_concat.py",
+      "test_scatter_layout.py",
+      "test_scatter_indices.py",
+      "test_scatter_batching.py",
+      "test_arithmetic_family.py",
+      "test_numerical.py",
+      "test_order_family.py",
+      "test_dynamic_update.py",
+      "test_fixed_tactics.py",
+      "test_control_values.py"
+    ],
+    "exit_code": 1,
+    "test_count": 133,
+    "failures": 1,
+    "log": "reports/control-values-validation-v1/curated-tests-before-family-table-repair.log",
+    "stage": "earlier integration attempt",
+    "diagnosis": "A legacy test compared the entire family dictionary against exactly four families; retain its legacy contribution assertion while allowing the new fifth family."
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_control_values.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "test_count": 5,
+    "stage": "draft inputs before final readable header layout",
+    "log": "reports/control-values-validation-v1/focused-tests-before-final-layout.log"
+  }
+]

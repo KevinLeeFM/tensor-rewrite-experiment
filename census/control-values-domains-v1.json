@@ -1,0 +1,416 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_pure_control_profiles_remaining_observations_open",
+  "retained_batches": [
+    {
+      "path": "census/scalar-control-cases.json",
+      "sha256": "905974b8c88743cef12ce689f7aaca918dc635955d987eaa237d13f4e85c0c14"
+    },
+    {
+      "path": "census/simple-cases.json",
+      "sha256": "89285c0fb18b2e42d29c3e78c9d800b4b16354a0c0d0cd53ecca9843d3177e05"
+    }
+  ],
+  "mathematical_model_manifest": "census/control-values-family-v1.json",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleConditional/predicate-convert",
+      "retained_lhs": "Conditional(Convert(p),arg0,branch0,arg1,branch1)",
+      "retained_rhs": "Conditional(p,true_arg=arg1,true_branch=branch1,false_arg=arg0,false_branch=branch0)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.conditional_convert"
+      ],
+      "declared_profile": "HandleConditional/predicate-convert",
+      "mathematical_premises": [
+        "The Boolean conversion is exactly false to index0 and true to index1.",
+        "Each branch retains its own typed argument; the result type is arbitrary, including state-to-observation computations."
+      ],
+      "remaining_partitions": [
+        "External branch-index conventions, out-of-range indexed dispatch, control edges, divergent/exceptional execution admission and ambient graph scheduling are not supplied.",
+        "This is an exact branch-function equality, not a pointwise Select theorem or proof about an external executor."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMap/constant-root-broadcast",
+      "retained_lhs": "Map(operands,Constant(c))",
+      "retained_rhs": "Broadcast(cloned Constant(c),output shape)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.map_constant_broadcast"
+      ],
+      "declared_profile": "HandleMap/constant-root-broadcast",
+      "mathematical_premises": [
+        "Legal finite parameter indices; all selected operands have the stated dependent input types and common tensor shape.",
+        "Scalar body and cloned operation are pure, total functions; actual selected operand order and repetitions are retained."
+      ],
+      "remaining_partitions": [
+        "Tuple-of-tensors graph/result packaging, dynamic-shape execution and physical/control observations are separate.",
+        "Dropping unused operand computation is not justified by the pure-value theorem; the eager trace diagnostic refutes unrestricted dropping."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMap/constant-root-scalar",
+      "retained_lhs": "Map(operands,Constant(c))",
+      "retained_rhs": "cloned Constant(c)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.map_scalar_constant"
+      ],
+      "declared_profile": "HandleMap/constant-root-scalar",
+      "mathematical_premises": [
+        "Legal finite parameter indices; all selected operands have the stated dependent input types and common tensor shape.",
+        "Scalar body and cloned operation are pure, total functions; actual selected operand order and repetitions are retained."
+      ],
+      "remaining_partitions": [
+        "Tuple-of-tensors graph/result packaging, dynamic-shape execution and physical/control observations are separate.",
+        "Dropping unused operand computation is not justified by the pure-value theorem; the eager trace diagnostic refutes unrestricted dropping."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMap/elementwise-root",
+      "retained_lhs": "Map(operands,Elementwise(Parameter(k0),...))",
+      "retained_rhs": "clone Elementwise with output shape and selected operands[kj]",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.map_elementwise"
+      ],
+      "declared_profile": "HandleMap/elementwise-root",
+      "mathematical_premises": [
+        "Legal finite parameter indices; all selected operands have the stated dependent input types and common tensor shape.",
+        "Scalar body and cloned operation are pure, total functions; actual selected operand order and repetitions are retained."
+      ],
+      "remaining_partitions": [
+        "Tuple-of-tensors graph/result packaging, dynamic-shape execution and physical/control observations are separate.",
+        "Dropping unused operand computation is not justified by the pure-value theorem; the eager trace diagnostic refutes unrestricted dropping."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMap/parameter-root",
+      "retained_lhs": "Map(operands,Parameter(k))",
+      "retained_rhs": "operands[k]",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.map_parameter"
+      ],
+      "declared_profile": "HandleMap/parameter-root",
+      "mathematical_premises": [
+        "Legal finite parameter indices; all selected operands have the stated dependent input types and common tensor shape.",
+        "Scalar body and cloned operation are pure, total functions; actual selected operand order and repetitions are retained."
+      ],
+      "remaining_partitions": [
+        "Tuple-of-tensors graph/result packaging, dynamic-shape execution and physical/control observations are separate.",
+        "Dropping unused operand computation is not justified by the pure-value theorem; the eager trace diagnostic refutes unrestricted dropping."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-eq",
+      "retained_lhs": "Select(Compare(a,b,Eq),a,b)",
+      "retained_rhs": "b",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_eq"
+      ],
+      "declared_profile": "HandleSelect/boolean-compare-eq",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-ge",
+      "retained_lhs": "Select(Compare(a,b,Ge),a,b)",
+      "retained_rhs": "Or(a,b)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_ge"
+      ],
+      "declared_profile": "HandleSelect/boolean-compare-ge",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-gt",
+      "retained_lhs": "Select(Compare(a,b,Gt),a,b)",
+      "retained_rhs": "Or(a,b)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_gt"
+      ],
+      "declared_profile": "HandleSelect/boolean-compare-gt",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-le",
+      "retained_lhs": "Select(Compare(a,b,Le),a,b)",
+      "retained_rhs": "And(a,b)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_le"
+      ],
+      "declared_profile": "HandleSelect/boolean-compare-le",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-lt",
+      "retained_lhs": "Select(Compare(a,b,Lt),a,b)",
+      "retained_rhs": "And(a,b)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_lt"
+      ],
+      "declared_profile": "HandleSelect/boolean-compare-lt",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/boolean-compare-ne",
+      "retained_lhs": "Select(Compare(a,b,Ne),a,b)",
+      "retained_rhs": "a",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_compare_ne"
+      ],
+      "declared_profile": "HandleSelect/boolean-compare-ne",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/equal-values",
+      "retained_lhs": "Select(p,x,x)",
+      "retained_rhs": "x",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_equal"
+      ],
+      "declared_profile": "HandleSelect/equal-values",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/false",
+      "retained_lhs": "Select(false,x,y)",
+      "retained_rhs": "y",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_false"
+      ],
+      "declared_profile": "HandleSelect/false",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/false-true-broadcast",
+      "retained_lhs": "Select(p,false,true)",
+      "retained_rhs": "Broadcast(Not(p))",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_false_true_broadcast"
+      ],
+      "declared_profile": "HandleSelect/false-true-broadcast",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/false-true-direct",
+      "retained_lhs": "Select(p,false,true)",
+      "retained_rhs": "Not(p)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_false_true"
+      ],
+      "declared_profile": "HandleSelect/false-true-direct",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/not-predicate",
+      "retained_lhs": "Select(Not(p),x,y)",
+      "retained_rhs": "Select(p,y,x)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_not"
+      ],
+      "declared_profile": "HandleSelect/not-predicate",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/true",
+      "retained_lhs": "Select(true,x,y)",
+      "retained_rhs": "x",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_true"
+      ],
+      "declared_profile": "HandleSelect/true",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/true-false-broadcast",
+      "retained_lhs": "Select(p,true,false)",
+      "retained_rhs": "Broadcast(p)",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_true_false_broadcast"
+      ],
+      "declared_profile": "HandleSelect/true-false-broadcast",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSelect/true-false-direct",
+      "retained_lhs": "Select(p,true,false)",
+      "retained_rhs": "p",
+      "core_evidence": [
+        "TensorRewrite.Theory.ControlValues.select_true_false"
+      ],
+      "declared_profile": "HandleSelect/true-false-direct",
+      "mathematical_premises": [
+        "All data operands have the stated common finite shape; predicates are pointwise Boolean values.",
+        "Broadcast cases use the actual decoded signed dimension array and matching extents; scalar predicates use the empty rank-zero dimension array.",
+        "Only Boolean data use the false0/true1 comparison interpretation; arbitrary numerical data need no algebra or order instance."
+      ],
+      "remaining_partitions": [
+        "Evaluation/control dependencies and dropped or exchanged operand computations require an independently admitted observation contract.",
+        "Dynamic-shape execution, physical layout/memory observations and external expression admission remain separate."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}

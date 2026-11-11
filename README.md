@@ -1208,6 +1208,16 @@ Four fixed policies jointly prove 13/44; historical solution-informed agent sour
 replays 44/44 at that basis. All 176 measured attempts and the separately repaired
 negative controls are retained. This is not a blinded discovery or whole-workload
 result. The comparison inventory adds 3217 separately classified Lean source lines,
-including failed/control sources and historical duplication; core proof coverage
-and its 10,497-line total are unchanged. All 128 curated mathematical tests pass;
+including failed/control sources and historical duplication. At that checkpoint,
+core coverage and its 10,497-line total were unchanged, and 128 curated tests passed;
 see the [checkpoint evidence](reports/fixed-tactics-milestone-v1.json).
+
+
+## Pure control values and exact branch dispatch
+
+The [control-value extension](docs/control-values.md) proves nineteen universal
+Select/Map/Conditional graph profiles, including heterogeneous Map operands and
+actual scalar/axis Broadcasts. Six value/trace refutations keep execution claims
+separate. This adds 196 custom Lean lines; current core totals are 603 statements
+and 10,693 lines. Complete declared profiles total 388 across five families;
+225 records remain proposal-only, with whole-record closure and global N/F open.

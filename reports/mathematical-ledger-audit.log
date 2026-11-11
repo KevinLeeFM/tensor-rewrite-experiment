@@ -2204,6 +2204,183 @@ TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted : ¬TensorRewrite.
       (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x y)
       (TensorRewrite.Pilot.Contraction.dotTensor plan (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x z)
 'TensorRewrite.Theory.ContractionAlgebra.dot_add_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ControlValues.broadcast_constant : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank} {α : Type}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes inputRank outputRank)
+  (extents : ∀ (axis : Fin inputRank), inputShape axis = outputShape (axes.decode axis)) (value : α),
+  TensorRewrite.Theory.ControlValues.broadcast axes extents (TensorRewrite.Pilot.Tensor.constant value) =
+    TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Theory.ControlValues.broadcast_constant' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.broadcast_select : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank} {α : Type}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes inputRank outputRank)
+  (extents : ∀ (axis : Fin inputRank), inputShape axis = outputShape (axes.decode axis))
+  (predicate : TensorRewrite.Pilot.Tensor inputShape Bool) (onTrue onFalse : TensorRewrite.Pilot.Tensor inputShape α),
+  TensorRewrite.Theory.ControlValues.broadcast axes extents
+      (TensorRewrite.Theory.ControlValues.select predicate onTrue onFalse) =
+    TensorRewrite.Theory.ControlValues.select (TensorRewrite.Theory.ControlValues.broadcast axes extents predicate)
+      (TensorRewrite.Theory.ControlValues.broadcast axes extents onTrue)
+      (TensorRewrite.Theory.ControlValues.broadcast axes extents onFalse)
+'TensorRewrite.Theory.ControlValues.broadcast_select' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ControlValues.conditional_branch_order_refuted : (TensorRewrite.Theory.ControlValues.indexedConditional
+    (TensorRewrite.Theory.ControlValues.booleanIndex true) (fun x => ()) fun branch x =>
+    { value := 7, events := [↑branch] }) ≠
+  TensorRewrite.Theory.ControlValues.predicateConditional true () (fun x => { value := 7, events := [0] }) () fun x =>
+    { value := 7, events := [1] }
+'TensorRewrite.Theory.ControlValues.conditional_branch_order_refuted' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.conditional_convert : ∀ {argumentTypes : Fin 2 → Type} {β : Type} (predicate : Bool)
+  (arguments : (branch : Fin 2) → argumentTypes branch) (branches : (branch : Fin 2) → argumentTypes branch → β),
+  TensorRewrite.Theory.ControlValues.indexedConditional (TensorRewrite.Theory.ControlValues.booleanIndex predicate)
+      arguments branches =
+    TensorRewrite.Theory.ControlValues.predicateConditional predicate (arguments 1) (branches 1) (arguments 0)
+      (branches 0)
+'TensorRewrite.Theory.ControlValues.conditional_convert' depends on axioms: [propext]
+@TensorRewrite.Theory.ControlValues.map_constant : ∀ {arity rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {β : Type} {inputTypes : Fin arity → Type} (value : β)
+  (inputs : (argument : Fin arity) → TensorRewrite.Pilot.Tensor shape (inputTypes argument)),
+  TensorRewrite.Theory.ControlValues.mapTensor (fun x => value) inputs = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Theory.ControlValues.map_constant' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.map_constant_broadcast : ∀ {arity rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {β : Type} {inputTypes : Fin arity → Type} (value : β)
+  (inputs : (argument : Fin arity) → TensorRewrite.Pilot.Tensor shape (inputTypes argument)),
+  TensorRewrite.Theory.ControlValues.mapTensor (fun x => value) inputs =
+    TensorRewrite.Theory.ControlValues.broadcast (TensorRewrite.Theory.ControlValues.scalarAxes rank) ⋯
+      (TensorRewrite.Pilot.Tensor.constant value)
+'TensorRewrite.Theory.ControlValues.map_constant_broadcast' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ControlValues.map_effect_drop_refuted : TensorRewrite.Theory.ControlValues.eagerConstantMap
+    { value := 9, events := [4] } 7 ≠
+  { value := 7, events := [] }
+'TensorRewrite.Theory.ControlValues.map_effect_drop_refuted' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.map_elementwise : ∀ {arity selected rank : ℕ}
+  {shape : TensorRewrite.Pilot.Shape rank} {β : Type} {inputTypes : Fin arity → Type}
+  (parameters : Fin selected → Fin arity)
+  (operation : ((argument : Fin selected) → inputTypes (parameters argument)) → β)
+  (inputs : (argument : Fin arity) → TensorRewrite.Pilot.Tensor shape (inputTypes argument)),
+  TensorRewrite.Theory.ControlValues.mapTensor (fun values => operation fun argument => values (parameters argument))
+      inputs =
+    TensorRewrite.Theory.ControlValues.elementwise operation fun argument => inputs (parameters argument)
+'TensorRewrite.Theory.ControlValues.map_elementwise' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.map_parameter : ∀ {arity rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {inputTypes : Fin arity → Type} (parameter : Fin arity)
+  (inputs : (argument : Fin arity) → TensorRewrite.Pilot.Tensor shape (inputTypes argument)),
+  TensorRewrite.Theory.ControlValues.mapTensor (fun values => values parameter) inputs = inputs parameter
+'TensorRewrite.Theory.ControlValues.map_parameter' does not depend on any axioms
+TensorRewrite.Theory.ControlValues.map_parameter_order_refuted : 7 - 9 ≠ 9 - 7
+'TensorRewrite.Theory.ControlValues.map_parameter_order_refuted' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.map_scalar_constant : ∀ {arity : ℕ} {β : Type} {inputTypes : Fin arity → Type}
+  (value : β) (inputs : (argument : Fin arity) → TensorRewrite.Pilot.Tensor Fin.elim0 (inputTypes argument)),
+  TensorRewrite.Theory.ControlValues.mapTensor (fun x => value) inputs = TensorRewrite.Pilot.Tensor.constant value
+'TensorRewrite.Theory.ControlValues.map_scalar_constant' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.select_compare_eq : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (left right : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select
+      (TensorRewrite.Pilot.Tensor.map₂
+        (TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.eq) left right)
+      left right =
+    right
+'TensorRewrite.Theory.ControlValues.select_compare_eq' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_compare_ge : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (left right : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select
+      (TensorRewrite.Pilot.Tensor.map₂
+        (TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.ge) left right)
+      left right =
+    TensorRewrite.Pilot.Tensor.map₂ or left right
+'TensorRewrite.Theory.ControlValues.select_compare_ge' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_compare_gt : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (left right : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select
+      (TensorRewrite.Pilot.Tensor.map₂
+        (TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.gt) left right)
+      left right =
+    TensorRewrite.Pilot.Tensor.map₂ or left right
+'TensorRewrite.Theory.ControlValues.select_compare_gt' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_compare_le : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (left right : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select
+      (TensorRewrite.Pilot.Tensor.map₂
+        (TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.le) left right)
+      left right =
+    TensorRewrite.Pilot.Tensor.map₂ and left right
+'TensorRewrite.Theory.ControlValues.select_compare_le' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_compare_lt : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (left right : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select
+      (TensorRewrite.Pilot.Tensor.map₂
+        (TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.lt) left right)
+      left right =
+    TensorRewrite.Pilot.Tensor.map₂ and left right
+'TensorRewrite.Theory.ControlValues.select_compare_lt' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_compare_ne : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (left right : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select
+      (TensorRewrite.Pilot.Tensor.map₂
+        (TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.ne) left right)
+      left right =
+    left
+'TensorRewrite.Theory.ControlValues.select_compare_ne' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ControlValues.select_direction_refuted : (if
+      TensorRewrite.Theory.ControlValues.compare TensorRewrite.Theory.ControlValues.Direction.gt true false = true then
+    true
+  else false) ≠
+  (true && false)
+'TensorRewrite.Theory.ControlValues.select_direction_refuted' does not depend on any axioms
+TensorRewrite.Theory.ControlValues.select_effect_drop_refuted : TensorRewrite.Theory.ControlValues.eagerSelect
+    { value := true, events := [] } { value := 7, events := [] } { value := 9, events := [3] } ≠
+  { value := 7, events := [] }
+'TensorRewrite.Theory.ControlValues.select_effect_drop_refuted' does not depend on any axioms
+TensorRewrite.Theory.ControlValues.select_effect_swap_refuted : TensorRewrite.Theory.ControlValues.eagerSelect
+    { value := false, events := [] } { value := 7, events := [1] } { value := 9, events := [2] } ≠
+  TensorRewrite.Theory.ControlValues.eagerSelect { value := true, events := [] } { value := 9, events := [2] }
+    { value := 7, events := [1] }
+'TensorRewrite.Theory.ControlValues.select_effect_swap_refuted' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.select_equal : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (predicate : TensorRewrite.Pilot.Tensor shape Bool) (input : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Theory.ControlValues.select predicate input input = input
+'TensorRewrite.Theory.ControlValues.select_equal' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (onTrue onFalse : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Theory.ControlValues.select (TensorRewrite.Pilot.Tensor.constant false) onTrue onFalse = onFalse
+'TensorRewrite.Theory.ControlValues.select_false' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.select_false_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (predicate : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select predicate (TensorRewrite.Pilot.Tensor.constant false)
+      (TensorRewrite.Pilot.Tensor.constant true) =
+    TensorRewrite.Pilot.Tensor.map not predicate
+'TensorRewrite.Theory.ControlValues.select_false_true' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_false_true_broadcast : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes inputRank outputRank)
+  (extents : ∀ (axis : Fin inputRank), inputShape axis = outputShape (axes.decode axis))
+  (predicate : TensorRewrite.Pilot.Tensor inputShape Bool),
+  TensorRewrite.Theory.ControlValues.select (TensorRewrite.Theory.ControlValues.broadcast axes extents predicate)
+      (TensorRewrite.Pilot.Tensor.constant false) (TensorRewrite.Pilot.Tensor.constant true) =
+    TensorRewrite.Theory.ControlValues.broadcast axes extents (TensorRewrite.Pilot.Tensor.map not predicate)
+'TensorRewrite.Theory.ControlValues.select_false_true_broadcast' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_not : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (predicate : TensorRewrite.Pilot.Tensor shape Bool) (onTrue onFalse : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Theory.ControlValues.select (TensorRewrite.Pilot.Tensor.map not predicate) onTrue onFalse =
+    TensorRewrite.Theory.ControlValues.select predicate onFalse onTrue
+'TensorRewrite.Theory.ControlValues.select_not' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_true : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (onTrue onFalse : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Theory.ControlValues.select (TensorRewrite.Pilot.Tensor.constant true) onTrue onFalse = onTrue
+'TensorRewrite.Theory.ControlValues.select_true' does not depend on any axioms
+@TensorRewrite.Theory.ControlValues.select_true_false : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (predicate : TensorRewrite.Pilot.Tensor shape Bool),
+  TensorRewrite.Theory.ControlValues.select predicate (TensorRewrite.Pilot.Tensor.constant true)
+      (TensorRewrite.Pilot.Tensor.constant false) =
+    predicate
+'TensorRewrite.Theory.ControlValues.select_true_false' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ControlValues.select_true_false_broadcast : ∀ {inputRank outputRank : ℕ}
+  {inputShape : TensorRewrite.Pilot.Shape inputRank} {outputShape : TensorRewrite.Pilot.Shape outputRank}
+  (axes : TensorRewrite.Pilot.IndexMaps.BroadcastAxes inputRank outputRank)
+  (extents : ∀ (axis : Fin inputRank), inputShape axis = outputShape (axes.decode axis))
+  (predicate : TensorRewrite.Pilot.Tensor inputShape Bool),
+  TensorRewrite.Theory.ControlValues.select (TensorRewrite.Theory.ControlValues.broadcast axes extents predicate)
+      (TensorRewrite.Pilot.Tensor.constant true) (TensorRewrite.Pilot.Tensor.constant false) =
+    TensorRewrite.Theory.ControlValues.broadcast axes extents predicate
+'TensorRewrite.Theory.ControlValues.select_true_false_broadcast' depends on axioms: [propext, Quot.sound]
 TensorRewrite.Theory.Convolution.basePosition_reverse : ∀ (axis : TensorRewrite.Theory.Convolution.Axis) (output : ℕ)
   (kernel : Fin axis.kernelExtent),
   { inputExtent := axis.inputExtent, kernelExtent := axis.kernelExtent, stride := axis.stride,

@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.ControlValues.' in name:
+            manifest=read('census/control-values-family-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.DynamicUpdate.' in name:
             manifest=read('census/dynamic-update-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -254,7 +257,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('dynamic_update_contract_refutation' if '.DynamicUpdate.' in name
+        kind=('control_value_contract_refutation' if '.ControlValues.' in name
+              and name.endswith('_refuted') else 'dynamic_update_contract_refutation' if '.DynamicUpdate.' in name
               and name.endswith('_refuted') else 'exact_order_domain_refutation' if '.OrderFamily.' in name
               and name.endswith('_refuted') else 'exact_numerical_domain_refutation' if '.Numerical.' in name
               and name.endswith('_refuted') else 'arithmetic_ieee_profile_refutation' if '.ArithmeticFamily.' in name
@@ -374,6 +378,18 @@ def formulated_families(root=ROOT):
     assert len(expected)==18 and family['certificate_axioms']==expected
     families.append(dict(family=frozen['family'],profile_unit_count=176,
                          rule_order_instance_count=44,kernel_status=family['status'],
+                         independent_statement_review='pending',observations=family['observations'],
+                         manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
+                         candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],
+                         label_correspondence_certified=False))
+    from check_control_values import validate_result as validate_control
+    family=read('reports/control-values-family.json',root);validate_control(family,root)
+    frozen=read(family['manifest'],root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ControlValues.' in name}
+    assert len(expected)==28 and family['certificate_axioms']==expected
+    families.append(dict(family=frozen['family'],profile_unit_count=19,
+                         profile_unit_kind=frozen['profile_unit_kind'],kernel_status=family['status'],
                          independent_statement_review='pending',observations=family['observations'],
                          manifest=family['manifest'],manifest_sha256=family['manifest_sha256'],
                          candidate_benchmark_labels=family['covered_candidate_benchmark_labels'],

@@ -615,6 +615,62 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_right
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_right
+#check @TensorRewrite.Theory.ControlValues.broadcast_constant
+#print axioms TensorRewrite.Theory.ControlValues.broadcast_constant
+#check @TensorRewrite.Theory.ControlValues.broadcast_select
+#print axioms TensorRewrite.Theory.ControlValues.broadcast_select
+#check @TensorRewrite.Theory.ControlValues.conditional_branch_order_refuted
+#print axioms TensorRewrite.Theory.ControlValues.conditional_branch_order_refuted
+#check @TensorRewrite.Theory.ControlValues.conditional_convert
+#print axioms TensorRewrite.Theory.ControlValues.conditional_convert
+#check @TensorRewrite.Theory.ControlValues.map_constant
+#print axioms TensorRewrite.Theory.ControlValues.map_constant
+#check @TensorRewrite.Theory.ControlValues.map_constant_broadcast
+#print axioms TensorRewrite.Theory.ControlValues.map_constant_broadcast
+#check @TensorRewrite.Theory.ControlValues.map_effect_drop_refuted
+#print axioms TensorRewrite.Theory.ControlValues.map_effect_drop_refuted
+#check @TensorRewrite.Theory.ControlValues.map_elementwise
+#print axioms TensorRewrite.Theory.ControlValues.map_elementwise
+#check @TensorRewrite.Theory.ControlValues.map_parameter
+#print axioms TensorRewrite.Theory.ControlValues.map_parameter
+#check @TensorRewrite.Theory.ControlValues.map_parameter_order_refuted
+#print axioms TensorRewrite.Theory.ControlValues.map_parameter_order_refuted
+#check @TensorRewrite.Theory.ControlValues.map_scalar_constant
+#print axioms TensorRewrite.Theory.ControlValues.map_scalar_constant
+#check @TensorRewrite.Theory.ControlValues.select_compare_eq
+#print axioms TensorRewrite.Theory.ControlValues.select_compare_eq
+#check @TensorRewrite.Theory.ControlValues.select_compare_ge
+#print axioms TensorRewrite.Theory.ControlValues.select_compare_ge
+#check @TensorRewrite.Theory.ControlValues.select_compare_gt
+#print axioms TensorRewrite.Theory.ControlValues.select_compare_gt
+#check @TensorRewrite.Theory.ControlValues.select_compare_le
+#print axioms TensorRewrite.Theory.ControlValues.select_compare_le
+#check @TensorRewrite.Theory.ControlValues.select_compare_lt
+#print axioms TensorRewrite.Theory.ControlValues.select_compare_lt
+#check @TensorRewrite.Theory.ControlValues.select_compare_ne
+#print axioms TensorRewrite.Theory.ControlValues.select_compare_ne
+#check @TensorRewrite.Theory.ControlValues.select_direction_refuted
+#print axioms TensorRewrite.Theory.ControlValues.select_direction_refuted
+#check @TensorRewrite.Theory.ControlValues.select_effect_drop_refuted
+#print axioms TensorRewrite.Theory.ControlValues.select_effect_drop_refuted
+#check @TensorRewrite.Theory.ControlValues.select_effect_swap_refuted
+#print axioms TensorRewrite.Theory.ControlValues.select_effect_swap_refuted
+#check @TensorRewrite.Theory.ControlValues.select_equal
+#print axioms TensorRewrite.Theory.ControlValues.select_equal
+#check @TensorRewrite.Theory.ControlValues.select_false
+#print axioms TensorRewrite.Theory.ControlValues.select_false
+#check @TensorRewrite.Theory.ControlValues.select_false_true
+#print axioms TensorRewrite.Theory.ControlValues.select_false_true
+#check @TensorRewrite.Theory.ControlValues.select_false_true_broadcast
+#print axioms TensorRewrite.Theory.ControlValues.select_false_true_broadcast
+#check @TensorRewrite.Theory.ControlValues.select_not
+#print axioms TensorRewrite.Theory.ControlValues.select_not
+#check @TensorRewrite.Theory.ControlValues.select_true
+#print axioms TensorRewrite.Theory.ControlValues.select_true
+#check @TensorRewrite.Theory.ControlValues.select_true_false
+#print axioms TensorRewrite.Theory.ControlValues.select_true_false
+#check @TensorRewrite.Theory.ControlValues.select_true_false_broadcast
+#print axioms TensorRewrite.Theory.ControlValues.select_true_false_broadcast
 #check @TensorRewrite.Theory.Convolution.basePosition_reverse
 #print axioms TensorRewrite.Theory.Convolution.basePosition_reverse
 #check @TensorRewrite.Theory.Convolution.convolve_bias_scale

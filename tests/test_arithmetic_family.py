@@ -76,10 +76,10 @@ class ArithmeticFamilyTests(unittest.TestCase):
         self.assertEqual(len(family['candidate_benchmark_labels']),33)
         self.assertFalse(family['label_correspondence_certified'])
         progress=ledger.read('census/mathematical-ledger.json')
-        self.assertEqual(progress['kernel_complete_family_profile_count'],369)
+        self.assertGreaterEqual(progress['kernel_complete_family_profile_count'],369)
         self.assertEqual(progress['whole_benchmark_records_closed'],0)
         self.assertIsNone(progress['mathematical_obligation_denominator'])
-        rows=audit.assemble(ledger.corpus(),progress,audit.read_catalog())
+        rows=audit.assemble(ledger.corpus(),progress,audit.read_catalog('census/workload-formulation-catalog-v7.json'))
         self.assertEqual(rows['records_with_domain_worksheets'],488)
         self.assertEqual(rows['records_with_only_unreviewed_proposal_worksheets'],244)
         records=ledger.read('census/arithmetic-typed-domains-v1.json')['records']

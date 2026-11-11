@@ -100,7 +100,7 @@ class OrderedScatterTests(unittest.TestCase):
         self.assertFalse(model['full_family_complete'])
         self.assertFalse(model['tensor_input_concatenation_bridge_proved'])
         progress=ledger.read('census/mathematical-ledger.json')
-        result=audit.assemble(ledger.corpus(),progress,audit.read_catalog())
+        result=audit.assemble(ledger.corpus(),progress,audit.read_catalog('census/workload-formulation-catalog-v7.json'))
         self.assertEqual(result['records_with_domain_worksheets'],488)
         self.assertEqual(result['records_with_only_unreviewed_proposal_worksheets'],244)
         self.assertEqual(result['whole_benchmark_records_closed'],0)

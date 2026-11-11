@@ -129,3 +129,13 @@ index bounds/composition and static Slice theory. Its new membership decoder,
 nested-write and Select/Add proofs are counted separately. FloatLib supplies the
 actual binary32 negative-zero Add diagnostic. No library or toolchain pin changes
 are needed; decoded mathematical starts do not identify every finite index decoder.
+
+
+## Reuse for pure control values
+
+The [Select/Map/Conditional extension](control-values.md) reuses the project bounded
+Broadcast map and Std Boolean/Fin/function-equality support. Arbitrary data Select
+requires no numerical instance; heterogeneous Map preserves actual parameter order,
+and exact dispatch retains the selected branch and its own argument. FloatLib is
+used for stored-bit development controls, not as an arithmetic premise of Select.
+No new dependency or controlled library-ablation result is introduced.

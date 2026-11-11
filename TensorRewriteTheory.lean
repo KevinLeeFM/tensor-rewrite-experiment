@@ -42,3 +42,5 @@ public import TensorRewrite.Theory.NumericalCounterexamples
 public import TensorRewrite.Theory.OrderCounterexamples
 
 public import TensorRewrite.Theory.DynamicUpdateCounterexamples
+
+public import TensorRewrite.Theory.ControlValuesCounterexamples

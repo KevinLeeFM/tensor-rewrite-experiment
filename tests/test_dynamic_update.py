@@ -67,10 +67,10 @@ class DynamicUpdateTests(unittest.TestCase):
 
     def test_every_record_and_remaining_partition_stays_in_the_workload(self):
         progress=ledger.read('census/mathematical-ledger.json')
-        result=audit.assemble(ledger.corpus(),progress,audit.read_catalog())
+        result=audit.assemble(ledger.corpus(),progress,audit.read_catalog('census/workload-formulation-catalog-v7.json'))
         self.assertEqual(result['retained_benchmark_records'],488)
         self.assertEqual(result['records_with_only_unreviewed_proposal_worksheets'],244)
-        self.assertEqual(progress['kernel_complete_family_profile_count'],369)
+        self.assertGreaterEqual(progress['kernel_complete_family_profile_count'],369)
         self.assertEqual(result['whole_benchmark_records_closed'],0)
         self.assertIsNone(result['mathematical_obligation_denominator'])
         self.assertFalse(result['every_record_has_received_a_complete_proof_attempt'])

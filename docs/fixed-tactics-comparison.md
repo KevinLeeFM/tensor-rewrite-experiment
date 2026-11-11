@@ -88,8 +88,9 @@ signature/isolation controls and the corrected negative-control results.
 
 ## Lean size and replay
 
-The main mathematical development remains 575 statements and 10,497 custom Lean
-lines. The comparison adds a separately disclosed source inventory:
+At the comparison checkpoint, the main development contained 575 statements and
+10,497 custom Lean lines. Later campaign extensions do not change these historical
+comparison results. The comparison adds a separately disclosed source inventory:
 
 | Comparison component | Lean code lines |
 | --- | ---: |

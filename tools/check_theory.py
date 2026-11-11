@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ControlValues': ['select_equal', 'select_true', 'select_false', 'select_not', 'select_true_false', 'select_false_true', 'broadcast_select', 'broadcast_constant', 'select_true_false_broadcast', 'select_false_true_broadcast', 'select_compare_lt', 'select_compare_le', 'select_compare_gt', 'select_compare_ge', 'select_compare_eq', 'select_compare_ne', 'map_parameter', 'map_constant', 'map_scalar_constant', 'map_constant_broadcast', 'map_elementwise', 'conditional_convert', 'select_direction_refuted', 'map_parameter_order_refuted', 'select_effect_drop_refuted', 'select_effect_swap_refuted', 'map_effect_drop_refuted', 'conditional_branch_order_refuted'],
     'DynamicUpdate': ['start_bounds', 'embed_value', 'locate_embed', 'embed_locate', 'locate_eq_some_iff', 'embed_compose', 'locate_compose', 'full_start', 'full_embed', 'full_locate', 'zero_full_start', 'zero_full_embed', 'zero_full_locate', 'slice_eq_existing', 'slice_compose', 'slice_full', 'slice_scalar', 'slice_zero_full_axes', 'update_full', 'update_empty', 'slice_update', 'update_slice_self', 'slice_update_inside', 'update_nested', 'map_update', 'update_zero_full_axes', 'select_update_false', 'select_update_true', 'select_scalar_false', 'select_scalar_true', 'add_update_right', 'add_update_left', 'static_axis_count', 'static_axes_valid', 'static_index', 'slice_static', 'static_slice_update', 'static_slice_update_inside', 'decoded_signedness_refuted', 'raw_nested_sum_refuted', 'binary32_add_update_refuted'],
     'OrderFamily': ['eval_minOrder', 'eval_maxOrder', 'rewrite_sound', 'condition_admitted', 'rewrite_in_context', 'allRules_complete', 'allRuleKeys_nodup', 'rule_count', 'integer_family', 'real_family', 'unsigned_family', 'signed_family', 'unsigned_nonnegative', 'unsigned_zero', 'reversed_bounds_refuted', 'signedness_refuted', 'binary32_nan_self_refuted', 'binary32_zero_observation_refuted'],
     'Numerical': ['divide_one', 'divide_as_product', 'divide_constant', 'divide_reciprocal', 'divide_fractions', 'divide_nested_numerator', 'divide_nested_denominator', 'divide_broadcast', 'divide_predicate_broadcast', 'real_exp_product', 'real_exp_quotient', 'real_exp_denominator', 'real_power_denominator', 'real_abs_square', 'real_sqrt_square_iff', 'real_rsqrt_square_iff', 'real_power_zero', 'real_power_one', 'real_power_two', 'real_power_three', 'real_power_minus_one', 'real_power_half', 'real_power_exp', 'real_log_power_pos', 'real_log_rsqrt_pos', 'real_rsqrt_inverse_square', 'real_rsqrt_inverse_square_iff', 'real_rsqrt_reciprocal', 'real_divide_sqrt', 'real_divide_rsqrt', 'real_exp_zero', 'complex_exp_zero', 'complex_exp_product', 'complex_exp_quotient', 'complex_exp_denominator', 'complex_power_denominator', 'complex_sqrt_square', 'complex_rsqrt_square', 'complex_power_zero', 'complex_power_one', 'complex_power_two', 'complex_power_three', 'complex_power_minus_one', 'complex_power_half', 'complex_power_exp_strip', 'complex_log_power_iff', 'complex_divide_sqrt', 'complex_divide_rsqrt', 'real_sqrt_square_refuted', 'real_rsqrt_inverse_square_refuted', 'real_power_denominator_refuted', 'complex_rsqrt_reciprocal_refuted', 'complex_power_exp_refuted'],
@@ -149,6 +150,10 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/ControlValues.lean': 'S',
+        'TensorRewrite/Theory/ControlValuesProof.lean': 'R',
+        'TensorRewrite/Theory/ControlValuesCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/DynamicUpdate.lean': 'S',
         'TensorRewrite/Theory/DynamicUpdateLemmas.lean': 'H',
         'TensorRewrite/Theory/DynamicUpdateProof.lean': 'R',
@@ -282,7 +287,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='actual ordered full-window Scatter, reducer roles and trace fusion; '
+                  scope='pure Select, actual Broadcast, heterogeneous Map and exact branch dispatch; '
+                        'actual ordered full-window Scatter, reducer roles and trace fusion; '
                         'exact and all-width remainder masks/Iota offsets; fixed-order uniform float diagnostic; '
                         'derived raw Pad/window reshape/Broadcast composition and converted fill; '
                         'covered singleton-window reshape/Broadcast and complete pure singleton tuple family; '
@@ -495,6 +501,12 @@ def main():
                              '-pi < imaginary part <= pi; complex sqrt-square/magnitude iff real '
                              'axis; arbitrary-rank pointwise tensor lifts; no rounded or fast-math '
                              'semantics' if '.ScalarDomains.' in name else
+                             'pure arbitrary-type Select, decoded-axis Broadcast and heterogeneous '
+                             'Map at arbitrary finite shapes; exact Boolean order false0/true1; '
+                             'exact typed branch dispatch with arbitrary result observations; '
+                             'six explicit value/trace mutations are refuted; no discarded '
+                             'evaluation, dynamic shapes, physical effects or whole-record claim'
+                             if '.ControlValues.' in name else
                              'all supported FloatLib value formats; bit-exact negation; '
                              'flags not observed' if '.FloatNegation.' in name else
                              'pure predicate/word tensor values; all ranks/extents/word widths; '
