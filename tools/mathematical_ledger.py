@@ -186,6 +186,8 @@ def evidence(root=ROOT):
         if '.ReductionWindow.' in name:
             domains=read('census/reduction-window-domains-v1.json',root)
             labels=[r['benchmark_id'] for r in domains['records'] if name in r['core_evidence']]
+        if name.endswith(('FullSpanWindow.reduce_reshape','FullSpanWindow.original_reduce_reshape')):
+            labels=read('census/full-span-window-v1.json',root)['candidate_benchmark_labels']
         if '.SlicePad.' in name:
             manifest=read('census/slice-pad-v1.json',root)
             suffix=name.rsplit('.',1)[1]
@@ -395,6 +397,22 @@ def mathematical_models(root=ROOT):
                        base_window_manifest_sha256=window['manifest_sha256'],
                        independent_statement_review='pending',manifest=factor['manifest'],
                        manifest_sha256=factor['manifest_sha256']))
+    from check_full_span_window import check_inputs as full_inputs
+    from check_full_span_window import validate_result as validate_full
+    full=read('reports/full-span-window.json',root);validate_full(full)
+    extension=full_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.FullSpanWindow.' in name or '.OrderedCoordinates.' in name}
+    assert full['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['conditions'],
+                       scalar_contract=extension['scalar_contract'],status=full['status'],
+                       checked_theorem_count=20,full_family_complete=False,
+                       ordered_contribution_lists_equal=True,initializer_retained=True,
+                       output_shape_and_reshape_derived=True,mixed_kept_reduced_axes=True,
+                       base_window_manifest=window['manifest'],
+                       base_window_manifest_sha256=window['manifest_sha256'],
+                       independent_statement_review='pending',manifest=full['manifest'],
+                       manifest_sha256=full['manifest_sha256']))
     return models
 
 

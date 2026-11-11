@@ -9,6 +9,9 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'OrderedCoordinates': ['map_finRange_mul', 'enumerate_scalar', 'enumerate_uncons', 'enumerate_uncons_map'],
+    'FullSpanWindow': ['kept_output_extent', 'reduced_output_extent', 'kept_sample', 'reduced_sample', 'input_shape', 'original_input', 'input_original', 'axis_sample', 'sample_valid', 'output_count', 'output_linearize', 'output_reshape', 'sampled_fiber', 'values_fiber', 'reduce_reshape', 'original_reduce_reshape'],
+
     'SlicePad': ['ceil_le_iff', 'ceil_mono', 'first_le_last', 'last_le_output', 'valid_interval', 'start_le_input', 'start_cast', 'slice_coordinate', 'slice_bounded', 'padded_extent', 'start_le_limit', 'limit_le_input', 'attributes_count', 'attributes_valid', 'bounded_isSome', 'bounded_value', 'pad_interval', 'coordinate_after_pad', 'graph_shape', 'padding_admission', 'graph_index', 'graph_gather', 'unit_window_graph', 'unit_window_add_zero', 'unit_window_min', 'unit_window_max', 'rounded_start_refuted', 'unclipped_shape_refuted'],
     'ReductionWindow': ['values_length', 'sample_empty_input', 'values_empty_input', 'unit_count', 'unit_index_unique', 'values_unit', 'axis_unit_position', 'axis_unit_sample', 'sample_unit_affine', 'foldl_replicate_fixed', 'bounded_none_of_outside', 'affine_none_of_axis', 'reduce_empty_kernel', 'reduce_empty_input', 'reduce_empty_input_fixed', 'reduce_empty_output', 'reduce_unit', 'unit_gather', 'unit_gather_initial', 'unit_gather_add_zero', 'unit_gather_min', 'unit_gather_max', 'pointwise', 'pointwise_eliminate', 'unit_crop_all', 'unit_crop_low_all', 'empty_input_components', 'padding_fixed_refuted', 'padding_skip_refuted'],
     'ReductionFiber': ['elementCount_shape', 'output_merge', 'reduced_merge', 'merge_split', 'fiberValues_map', 'fiberValues_constant', 'foldl_replicate_absorb', 'sum_head_tail', 'sum_flatMap', 'fiberValues_sum', 'foldl_map_hom'],
@@ -120,6 +123,12 @@ def main():
                   'TensorRewrite/Theory/ConvolutionOrderedProof.lean': 'R',
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
+    categories.update({
+        'TensorRewrite/Theory/OrderedCoordinates.lean': 'H',
+        'TensorRewrite/Theory/FullSpanWindow.lean': 'S',
+        'TensorRewrite/Theory/FullSpanWindowLemmas.lean': 'H',
+        'TensorRewrite/Theory/FullSpanWindowProof.lean': 'R',
+    })
     rows = []
     for name, category in categories.items():
         rows.extend(measure_file(name,category))
@@ -155,14 +164,21 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='derived Map/Slice/Pad shape and index factorization; '
+                  scope='canonical full-span ordered window/reduction/reshape; '
+                        'derived Map/Slice/Pad shape and index factorization; '
                         'ordered window folds and unit-window affine gathers; '
                         'exact real and principal-complex log/sqrt domains; '
                         'format-general floating negation; exact finite sums and semiring '
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling '
+                      name: ('canonical mixed kept/full-span window geometry; arbitrary ranks/extents; '
+                             'ordered contribution list equals actual Reduction.fiberValues; '
+                             'derived equal output counts and logical reshape; arbitrary scalar '
+                             'type/operation/initializer/padding; no algebraic law, IEEE/FMA/flags, '
+                             'external IR admission or whole-record closure'
+                             if '.FullSpanWindow.' in name or '.OrderedCoordinates.' in name else
+                             'pure Map/Slice/nonnegative-Pad graph with derived signed-ceiling '
                              'valid interval, legal ordinary Slice attributes and reconstructed '
                              'output shape; arbitrary affine output extent, positive stride and '
                              'signed low padding; arbitrary scalar maps; window corollaries require '

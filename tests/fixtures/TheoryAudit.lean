@@ -191,3 +191,24 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.SlicePad.unit_window_max
 #print axioms TensorRewrite.Theory.SlicePad.rounded_start_refuted
 #print axioms TensorRewrite.Theory.SlicePad.unclipped_shape_refuted
+
+#print axioms TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
+#print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
+#print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons
+#print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map
+#print axioms TensorRewrite.Theory.FullSpanWindow.kept_output_extent
+#print axioms TensorRewrite.Theory.FullSpanWindow.reduced_output_extent
+#print axioms TensorRewrite.Theory.FullSpanWindow.kept_sample
+#print axioms TensorRewrite.Theory.FullSpanWindow.reduced_sample
+#print axioms TensorRewrite.Theory.FullSpanWindow.input_shape
+#print axioms TensorRewrite.Theory.FullSpanWindow.original_input
+#print axioms TensorRewrite.Theory.FullSpanWindow.input_original
+#print axioms TensorRewrite.Theory.FullSpanWindow.axis_sample
+#print axioms TensorRewrite.Theory.FullSpanWindow.sample_valid
+#print axioms TensorRewrite.Theory.FullSpanWindow.output_count
+#print axioms TensorRewrite.Theory.FullSpanWindow.output_linearize
+#print axioms TensorRewrite.Theory.FullSpanWindow.output_reshape
+#print axioms TensorRewrite.Theory.FullSpanWindow.sampled_fiber
+#print axioms TensorRewrite.Theory.FullSpanWindow.values_fiber
+#print axioms TensorRewrite.Theory.FullSpanWindow.reduce_reshape
+#print axioms TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape

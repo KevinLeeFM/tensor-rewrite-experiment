@@ -687,6 +687,38 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.FloatNegation.scalar_involution
 #check @TensorRewrite.Theory.FloatNegation.tensor_involution
 #print axioms TensorRewrite.Theory.FloatNegation.tensor_involution
+#check @TensorRewrite.Theory.FullSpanWindow.axis_sample
+#print axioms TensorRewrite.Theory.FullSpanWindow.axis_sample
+#check @TensorRewrite.Theory.FullSpanWindow.input_original
+#print axioms TensorRewrite.Theory.FullSpanWindow.input_original
+#check @TensorRewrite.Theory.FullSpanWindow.input_shape
+#print axioms TensorRewrite.Theory.FullSpanWindow.input_shape
+#check @TensorRewrite.Theory.FullSpanWindow.kept_output_extent
+#print axioms TensorRewrite.Theory.FullSpanWindow.kept_output_extent
+#check @TensorRewrite.Theory.FullSpanWindow.kept_sample
+#print axioms TensorRewrite.Theory.FullSpanWindow.kept_sample
+#check @TensorRewrite.Theory.FullSpanWindow.original_input
+#print axioms TensorRewrite.Theory.FullSpanWindow.original_input
+#check @TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape
+#print axioms TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape
+#check @TensorRewrite.Theory.FullSpanWindow.output_count
+#print axioms TensorRewrite.Theory.FullSpanWindow.output_count
+#check @TensorRewrite.Theory.FullSpanWindow.output_linearize
+#print axioms TensorRewrite.Theory.FullSpanWindow.output_linearize
+#check @TensorRewrite.Theory.FullSpanWindow.output_reshape
+#print axioms TensorRewrite.Theory.FullSpanWindow.output_reshape
+#check @TensorRewrite.Theory.FullSpanWindow.reduce_reshape
+#print axioms TensorRewrite.Theory.FullSpanWindow.reduce_reshape
+#check @TensorRewrite.Theory.FullSpanWindow.reduced_output_extent
+#print axioms TensorRewrite.Theory.FullSpanWindow.reduced_output_extent
+#check @TensorRewrite.Theory.FullSpanWindow.reduced_sample
+#print axioms TensorRewrite.Theory.FullSpanWindow.reduced_sample
+#check @TensorRewrite.Theory.FullSpanWindow.sample_valid
+#print axioms TensorRewrite.Theory.FullSpanWindow.sample_valid
+#check @TensorRewrite.Theory.FullSpanWindow.sampled_fiber
+#print axioms TensorRewrite.Theory.FullSpanWindow.sampled_fiber
+#check @TensorRewrite.Theory.FullSpanWindow.values_fiber
+#print axioms TensorRewrite.Theory.FullSpanWindow.values_fiber
 #check @TensorRewrite.Theory.LogicalFamily.allRules_complete
 #print axioms TensorRewrite.Theory.LogicalFamily.allRules_complete
 #check @TensorRewrite.Theory.LogicalFamily.allRules_nodup
@@ -699,6 +731,14 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.LogicalFamily.word_count
 #check @TensorRewrite.Theory.LogicalFamily.word_keys_uniform
 #print axioms TensorRewrite.Theory.LogicalFamily.word_keys_uniform
+#check @TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
+#print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar
+#check @TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons
+#print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons
+#check @TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map
+#print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map
+#check @TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
+#print axioms TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
 #check @TensorRewrite.Theory.ReductionAlgebra.concat_add
 #print axioms TensorRewrite.Theory.ReductionAlgebra.concat_add
 #check @TensorRewrite.Theory.ReductionAlgebra.constant_absorb

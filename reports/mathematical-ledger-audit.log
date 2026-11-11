@@ -2449,6 +2449,100 @@ TensorRewrite.Theory.ConvolutionSeparable.spanning_extent_eq : ∀ (axis : Tenso
       (TensorRewrite.Pilot.Tensor.map FloatLib.Floats.Formats.BinaryInterchange.Model.neg x) =
     x
 'TensorRewrite.Theory.FloatNegation.tensor_involution' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.axis_sample : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape)
+  (kernel : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).kernelShape)
+  (axis : Fin plan.inputRank),
+  ((TensorRewrite.Theory.FullSpanWindow.windowPlan plan).window axis).inputIndex? (↑(output axis)) (kernel axis) =
+    some (TensorRewrite.Theory.FullSpanWindow.sampleIndex plan output kernel axis)
+'TensorRewrite.Theory.FullSpanWindow.axis_sample' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.input_original : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (index : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).inputShape),
+  TensorRewrite.Theory.FullSpanWindow.inputIndex plan (TensorRewrite.Theory.FullSpanWindow.originalIndex plan index) =
+    index
+'TensorRewrite.Theory.FullSpanWindow.input_original' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.input_shape : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).inputShape = plan.inputShape
+'TensorRewrite.Theory.FullSpanWindow.input_shape' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.kept_output_extent : ∀ (extent : ℕ),
+  (TensorRewrite.Theory.FullSpanWindow.keptAxis extent).outputExtent = extent
+'TensorRewrite.Theory.FullSpanWindow.kept_output_extent' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.kept_sample : ∀ (extent : ℕ)
+  (output : Fin (TensorRewrite.Theory.FullSpanWindow.keptAxis extent).outputExtent)
+  (kernel : Fin (TensorRewrite.Theory.FullSpanWindow.keptAxis extent).kernelExtent),
+  (TensorRewrite.Theory.FullSpanWindow.keptAxis extent).inputIndex? (↑output) kernel = some (Fin.cast ⋯ output)
+'TensorRewrite.Theory.FullSpanWindow.kept_sample' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.original_input : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (index : TensorRewrite.Pilot.Index plan.inputShape),
+  TensorRewrite.Theory.FullSpanWindow.originalIndex plan (TensorRewrite.Theory.FullSpanWindow.inputIndex plan index) =
+    index
+'TensorRewrite.Theory.FullSpanWindow.original_input' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : α → α → α) (initial padding : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  (TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.FullSpanWindow.windowPlan plan) operation initial
+      padding fun index => input (TensorRewrite.Theory.FullSpanWindow.originalIndex plan index)) =
+    TensorRewrite.Pilot.Reshape.reshapeTensor (TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial input)
+      (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape ⋯
+'TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.output_count : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan),
+  TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape
+'TensorRewrite.Theory.FullSpanWindow.output_count' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.output_linearize : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape),
+  ↑(TensorRewrite.Pilot.LinearIndex.linearize plan.outputShape
+        (TensorRewrite.Theory.FullSpanWindow.outputIndex plan output)) =
+    ↑(TensorRewrite.Pilot.LinearIndex.linearize (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape
+        output)
+'TensorRewrite.Theory.FullSpanWindow.output_linearize' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.output_reshape : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape),
+  TensorRewrite.Theory.FullSpanWindow.outputIndex plan output =
+    TensorRewrite.Pilot.Reshape.reshapeIndex plan.outputShape
+      (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape ⋯ output
+'TensorRewrite.Theory.FullSpanWindow.output_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FullSpanWindow.reduce_reshape : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (operation : α → α → α) (initial padding : α)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).inputShape α),
+  TensorRewrite.Theory.ReductionWindow.reduce (TensorRewrite.Theory.FullSpanWindow.windowPlan plan) operation initial
+      padding input =
+    TensorRewrite.Pilot.Reshape.reshapeTensor
+      (TensorRewrite.Pilot.Reduction.reduceTensor plan operation initial fun index =>
+        input (TensorRewrite.Theory.FullSpanWindow.inputIndex plan index))
+      (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape ⋯
+'TensorRewrite.Theory.FullSpanWindow.reduce_reshape' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.reduced_output_extent : ∀ (extent : ℕ),
+  (TensorRewrite.Theory.FullSpanWindow.reducedAxis extent).outputExtent = 1
+'TensorRewrite.Theory.FullSpanWindow.reduced_output_extent' depends on axioms: [propext]
+TensorRewrite.Theory.FullSpanWindow.reduced_sample : ∀ (extent : ℕ)
+  (output : Fin (TensorRewrite.Theory.FullSpanWindow.reducedAxis extent).outputExtent) (kernel : Fin extent),
+  (TensorRewrite.Theory.FullSpanWindow.reducedAxis extent).inputIndex? (↑output) kernel = some kernel
+'TensorRewrite.Theory.FullSpanWindow.reduced_sample' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.FullSpanWindow.sample_valid : ∀ (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape)
+  (kernel : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).kernelShape),
+  TensorRewrite.Theory.ReductionWindow.sample? (TensorRewrite.Theory.FullSpanWindow.windowPlan plan) output kernel =
+    some (TensorRewrite.Theory.FullSpanWindow.sampleIndex plan output kernel)
+'TensorRewrite.Theory.FullSpanWindow.sample_valid' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.FullSpanWindow.sampled_fiber : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape),
+  List.map (fun kernel => input (TensorRewrite.Theory.FullSpanWindow.sampleIndex plan output kernel))
+      (TensorRewrite.Theory.OrderedCoordinates.enumerate
+        (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).kernelShape) =
+    TensorRewrite.Pilot.Reduction.fiberValues plan
+      (fun index => input (TensorRewrite.Theory.FullSpanWindow.inputIndex plan index))
+      (TensorRewrite.Theory.FullSpanWindow.outputIndex plan output)
+'TensorRewrite.Theory.FullSpanWindow.sampled_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.FullSpanWindow.values_fiber : ∀ {α : Type} (plan : TensorRewrite.Pilot.Reduction.Plan)
+  (padding : α) (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).inputShape α)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.FullSpanWindow.windowPlan plan).outputShape),
+  TensorRewrite.Theory.ReductionWindow.values (TensorRewrite.Theory.FullSpanWindow.windowPlan plan) padding input
+      output =
+    TensorRewrite.Pilot.Reduction.fiberValues plan
+      (fun index => input (TensorRewrite.Theory.FullSpanWindow.inputIndex plan index))
+      (TensorRewrite.Theory.FullSpanWindow.outputIndex plan output)
+'TensorRewrite.Theory.FullSpanWindow.values_fiber' depends on axioms: [propext, Classical.choice, Quot.sound]
 @TensorRewrite.Theory.LogicalFamily.allRules_complete : ∀ {domain : TensorRewrite.Theory.LogicalFamily.Domain}
   (rule : TensorRewrite.Theory.LogicalFamily.Rule domain), rule ∈ TensorRewrite.Theory.LogicalFamily.allRules domain
 'TensorRewrite.Theory.LogicalFamily.allRules_complete' depends on axioms: [propext]
@@ -2475,6 +2569,36 @@ TensorRewrite.Theory.LogicalFamily.word_keys_uniform : ∀ (width : ℕ),
     List.map TensorRewrite.Theory.LogicalFamily.Rule.key
       (TensorRewrite.Theory.LogicalFamily.allRules (TensorRewrite.Theory.LogicalFamily.Domain.word 0))
 'TensorRewrite.Theory.LogicalFamily.word_keys_uniform' does not depend on any axioms
+TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar : ∀ (shape : TensorRewrite.Pilot.Shape 0),
+  TensorRewrite.Theory.OrderedCoordinates.enumerate shape = [fun axis => axis.elim0]
+'TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape (rank + 1)),
+  TensorRewrite.Theory.OrderedCoordinates.enumerate shape =
+    List.flatMap
+      (fun head =>
+        List.map (fun tail i => Fin.cases head tail i)
+          (TensorRewrite.Theory.OrderedCoordinates.enumerate fun axis => shape axis.succ))
+      (List.finRange (shape 0))
+'TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map : ∀ {rank : ℕ} {α : Type}
+  (shape : TensorRewrite.Pilot.Shape (rank + 1)) (value : TensorRewrite.Pilot.Index shape → α),
+  List.map value (TensorRewrite.Theory.OrderedCoordinates.enumerate shape) =
+    List.flatMap
+      (fun head =>
+        List.map (fun tail => value fun i => Fin.cases head tail i)
+          (TensorRewrite.Theory.OrderedCoordinates.enumerate fun axis => shape axis.succ))
+      (List.finRange (shape 0))
+'TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul : ∀ {α : Type} (rows columns : ℕ)
+  (value : Fin (rows * columns) → α),
+  List.map value (List.finRange (rows * columns)) =
+    List.flatMap
+      (fun row =>
+        List.map (fun column => value (TensorRewrite.Pilot.FiniteProduct.join row column)) (List.finRange columns))
+      (List.finRange rows)
+'TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.ReductionAlgebra.concat_add : ∀ {α : Type} [inst : AddMonoid α] (blocks : List (List α)),
   List.foldl (fun x1 x2 => x1 + x2) 0 blocks.flatten =
     List.foldl (fun x1 x2 => x1 + x2) 0 (List.map (fun block => List.foldl (fun x1 x2 => x1 + x2) 0 block) blocks)

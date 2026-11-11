@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 187 checked mathematical statements; custom Lean totals **5,261**.
+The theory target now has 207 checked mathematical statements; custom Lean totals **5,576**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -999,3 +999,17 @@ See [the graph construction guide](docs/slice-pad-factorization.md). This closes
 the earlier canonical mathematical graph gap; numerical/full-span/composition
 partitions and independent review remain open. No whole benchmark record closes
 from this alone; code correspondence and the full-workload verdict remain open.
+
+
+## Ordered full-span windows
+
+Canonical mixed kept/full-span windows now equal the existing ordered reduction
+followed by logical reshape, with geometry, contribution order and shape maps
+derived. The theorem supports any operation and initializer, including scalar
+and empty cases. Twenty statements add315 custom Lean lines (S40/H198/R76/A1).
+All50 focused tests pass;585 mixed axis plans/1111 outputs match an independent
+input-coordinate filtering oracle. See [the full-span guide](docs/full-span-window.md).
+Totals:5576 lines,207 theory/467 ledger declarations, four integration theorems
+separate. All488 records remain370 unformulated/106 partial/12 logical-family;
+zero whole records closed. Compositions, numerical domains and the full campaign
+remain open. New statements await review; code correspondence stays future work.

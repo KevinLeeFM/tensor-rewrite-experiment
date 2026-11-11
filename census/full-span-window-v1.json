@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "model": "ordered_full_span_window_reduction_reshape_v1",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/FullSpanWindow.lean",
+      "sha256": "139ce6e051d934c59b3e533abec5cf3178090bb4c6af7ee77e7d874f86030860"
+    },
+    {
+      "path": "TensorRewrite/Theory/FullSpanWindowLemmas.lean",
+      "sha256": "f39929c638001c716d56936f0d56c22bf5ebc93006d7bb069881b3a2eeb494f2"
+    },
+    {
+      "path": "TensorRewrite/Theory/FullSpanWindowProof.lean",
+      "sha256": "fff94199f0d92a3577eeb98f68e2bc57f6da31f482c1ffb142635f6278270db8"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedCoordinates.lean",
+      "sha256": "67765b42b750f3b07ffafeadb4994362d198c70bd6b7d52b4baff6a38a186d91"
+    },
+    {
+      "path": "tests/fixtures/FullSpanWindowControls.lean",
+      "sha256": "04ee0a64717c01794fcb47f938c230ca1af664eab90656b6b251f60d0fbe7052"
+    },
+    {
+      "path": "tools/full_span_window_examples.py",
+      "sha256": "a9b60fb3b427664371977c6400e8c18a78bdd8b795d64b602973a02b3233b9c0"
+    },
+    {
+      "path": "tools/check_full_span_window.py",
+      "sha256": "dcf86510e61a6944a38dddf7de354b1066054f36235d11f54090909dbd1d16d2"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindow.lean",
+      "sha256": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2"
+    },
+    {
+      "path": "TensorRewrite/Theory/Convolution.lean",
+      "sha256": "a8de43c44f6c77904afdde43afde33e771b51132244a327acc2db121fe39bfb4"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "sha256": "61db9787b4c2f5b632045de177889552ff281547bf76e9980f649cde48a64402"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reduction.lean",
+      "sha256": "bea0cf586bdf37c77ed80435eea287930f6b15a3e44a0c725373859c02d15499"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reshape.lean",
+      "sha256": "542164be841d856e88f310b37e70b2a98ccdd19ea18239bcfc3f35a99ca3bc2d"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978"
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndexLemmas.lean",
+      "sha256": "f5850dd78c05d62837a026f7fed3c73c0206e916fa2b57148b1e4f1c597118ff"
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProduct.lean",
+      "sha256": "ac83afd5255db6543d7cd28a3c0adb2df86a0c2656835eb6f4f1a76138c1a0e1"
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProductLemmas.lean",
+      "sha256": "846b504cd4bd6bb2039dbc25d8cb6c325856393268b799b8438457a70ea29711"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "certificates": [
+    "TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul",
+    "TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar",
+    "TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons",
+    "TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map",
+    "TensorRewrite.Theory.FullSpanWindow.kept_output_extent",
+    "TensorRewrite.Theory.FullSpanWindow.reduced_output_extent",
+    "TensorRewrite.Theory.FullSpanWindow.kept_sample",
+    "TensorRewrite.Theory.FullSpanWindow.reduced_sample",
+    "TensorRewrite.Theory.FullSpanWindow.input_shape",
+    "TensorRewrite.Theory.FullSpanWindow.original_input",
+    "TensorRewrite.Theory.FullSpanWindow.input_original",
+    "TensorRewrite.Theory.FullSpanWindow.axis_sample",
+    "TensorRewrite.Theory.FullSpanWindow.sample_valid",
+    "TensorRewrite.Theory.FullSpanWindow.output_count",
+    "TensorRewrite.Theory.FullSpanWindow.output_linearize",
+    "TensorRewrite.Theory.FullSpanWindow.output_reshape",
+    "TensorRewrite.Theory.FullSpanWindow.sampled_fiber",
+    "TensorRewrite.Theory.FullSpanWindow.values_fiber",
+    "TensorRewrite.Theory.FullSpanWindow.reduce_reshape",
+    "TensorRewrite.Theory.FullSpanWindow.original_reduce_reshape"
+  ],
+  "conditions": "kept axes use kernel1; reduced axes use kernel=input extent; unit stride and both dilations; zero padding; no reversal",
+  "scalar_contract": "arbitrary type, operation, initializer and padding",
+  "shape_or_index_equivalence_postulated": false,
+  "contribution_order": "original logical row-major order with retained axes fixed",
+  "candidate_benchmark_labels": [
+    "HandleReduceWindow/full-dimensions"
+  ],
+  "benchmark_correspondence_certified": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work",
+  "full_window_family_complete": false,
+  "empty_kernel": "allowed by declared model; no external IR admission claim",
+  "residuals": [
+    "other geometries and reordering",
+    "tuple/representation/observation partitions",
+    "Pad/Broadcast/Convert compositions",
+    "cumulative window counts",
+    "whole-window-family formulation and review"
+  ]
+}

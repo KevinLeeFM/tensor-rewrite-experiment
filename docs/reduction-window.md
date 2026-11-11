@@ -105,3 +105,12 @@ unit/undilated profile by [the constructed Slice/Pad extension](slice-pad-factor
 That extension derives actual ordinary Slice attributes and output shape, retaining
 the initializer/padding law. The original window model and its historical result
 are unchanged. Other numerical/full-span/composition partitions remain open.
+
+
+## Later full-span refinement
+
+[The full-span extension](full-span-window.md) proves the canonical mixed
+kept/full-span window equal to ordered reduction and the derived logical reshape.
+It preserves arbitrary operations and initializers. The original window model
+and frozen evidence above remain unchanged; compositions, numerical partitions
+and full-family formulation/review remain open.
