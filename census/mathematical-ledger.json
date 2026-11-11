@@ -25,14 +25,14 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 281,
+  "distinct_checked_declarations": 293,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
     "pure_graph_context": 12,
     "fixed_schedule_context": 12,
     "refutation_or_diagnostic_certificate": 38,
-    "library_backed_theory": 51
+    "library_backed_theory": 63
   },
   "formulated_mathematical_families": [
     {
@@ -82,6 +82,19 @@
       "independent_statement_review": "pending",
       "manifest": "census/convolution-pointwise-v1.json",
       "manifest_sha256": "bf76965a3fe8fc7bd4f88c9646550e1d15e84f64a619b6b6d26e362d2a039662"
+    },
+    {
+      "model": "pointwise_convolution_as_existing_matrix_dot_v1",
+      "scope": "pointwise unit kernel/stride/base dilation and zero padding; exact Semiring; identity finish",
+      "scalar_contract": "exact_semiring",
+      "status": "kernel_checked_pointwise_convolution_as_existing_dot",
+      "checked_theorem_count": 12,
+      "full_family_complete": false,
+      "dot_tensor_bridge_proved": true,
+      "both_coordinate_round_trips_proved": true,
+      "independent_statement_review": "pending",
+      "manifest": "census/convolution-dot-v1.json",
+      "manifest_sha256": "4d17e816986053a79dd08310eceded90e08e77ee7ff8d3c7069fee549aea8a4c"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -89,10 +102,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "248ce36315a3d745b4c0ff9bfc07ea46c527a2b9e50c07e70b279f93ecac5b0f",
+    "sha256": "ef2d448a4305b045f7f1294027bce82c085b9cdd0cfe5d11ccd433058d3b999c",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "4ae7a2ba6b7913543a0736410d5611b56b05f7163b76c63d58957fc1c74b5f57"
+    "output_sha256": "eee6a27e4e6184ca518a4c35db60ec6b062d1fbb08286cee3bf20fce9a6d5559"
   },
   "proofs": [
     {
@@ -4628,6 +4641,218 @@
       ],
       "profile_descriptions": [
         "factored static convolution; positive stride/dilations; signed padding; bounded grouping/sampling; Semiring for algebra; no IEEE contract"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.convolution_output_dot_output",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToDot/pointwise-layout"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.dot_output_convolution_output",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.lhs_index_channel",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.lhs_index_row",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.matrix_output_feature",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.matrix_output_row",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.rhs_index_channel",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.rhs_index_feature",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionDot.sum_contract_positions",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -10339,6 +10564,7 @@
       "unreviewed_benchmark_notes_not_assumptions": "enable_conv_simplification; layout SENSITIVE; all layouts present; every kernel spatial extent1; no stride/padding/base dilation; input/output layouts equal and feature most minor; filter input feature more major than output feature; both group counts1",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
+        "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
         "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum"
       ],
       "whole_record_mathematically_closed": false,

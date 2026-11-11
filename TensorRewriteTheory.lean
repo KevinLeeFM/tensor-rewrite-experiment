@@ -6,3 +6,4 @@ public import TensorRewrite.Theory.ContractionAlgebra
 public import TensorRewrite.Theory.LogicalFamilyProof
 public import TensorRewrite.Theory.ConvolutionAlgebra
 public import TensorRewrite.Theory.ConvolutionPointwiseAlgebra
+public import TensorRewrite.Theory.ConvolutionDotProof

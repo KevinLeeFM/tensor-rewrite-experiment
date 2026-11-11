@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 51 checked mathematical statements; custom Lean totals **3,493**.
+The theory target now has 63 checked mathematical statements; custom Lean totals **3,698**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -872,5 +872,22 @@ at78 output coordinates. The extension adds175 custom Lean lines.
 
 See [the statement and reproduction guide](docs/convolution-pointwise.md) and
 `reports/convolution-pointwise.json`. This is exact Semiring theory. The existing
-Dot-model bridge, other convolution geometry/conversion partitions, independent
-semantic review and full-workload mathematical closure remain open.
+Dot-model bridge was still open at that checkpoint and is proved below. Other
+convolution geometry/conversion partitions, independent semantic review and
+full-workload mathematical closure remain open.
+
+
+## Pointwise convolution as matrix Dot
+
+The channel sum now connects to the existing `Contraction.dotTensor` model.
+Each batch/feature-group pair uses matrices with input shape `[B*S,C]`, kernel
+shape `[O,C]` and result shape `[B*S,O]`, where `S` is the spatial element count.
+Both coordinate round trips and both directions of the value identity are proved
+for arbitrary ranks/extents/groups/channels under the exact pointwise conditions.
+
+The bridge adds12 checked statements and205 custom Lean lines. Eleven profiles
+compare220 values and matrix coordinates in two enumeration orders against an
+independent convolution oracle. All17 mathematical accounting tests pass. See
+[the statement and reproduction guide](docs/convolution-dot.md) and
+`reports/convolution-dot.json`. IEEE, conversions, physical layout, other window
+partitions and the full research verdict remain open.

@@ -1,5 +1,9 @@
 # Exact pointwise convolution to a channel reduction
 
+**Subsequent result:** the [matrix Dot bridge](convolution-dot.md) is now proved,
+including flattening and both coordinate round trips. The original frozen
+pointwise manifest/report records the preceding channel-sum checkpoint.
+
 The mathematical convolution model now has a checked pointwise reduction. This
 extends the frozen factored convolution model; it does not complete the whole
 convolution benchmark family. Code correspondence remains future work.
@@ -71,8 +75,8 @@ axioms. Independent statement/semantic review remains pending.
 ## Remaining mathematical work
 
 A channel-only sum is the mathematical core needed for pointwise convolution
-rewrites. A bridge to the existing `Contraction.dotTensor` model, including
-coordinate regrouping/flattening, remains unproved. The multiply/reduce benchmark
+rewrites. The subsequent [Dot bridge](convolution-dot.md) proves the connection to the
+existing `Contraction.dotTensor` model, including coordinate regrouping/flattening. The multiply/reduce benchmark
 also permits other geometry and conversion partitions, which are not closed here.
 No full benchmark record is promoted; mathematical N/F remains unfrozen. Numerical,
 layout and effect theory, the diverse reviewed pilot, whole-workload campaign,

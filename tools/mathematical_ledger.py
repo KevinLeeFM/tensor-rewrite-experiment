@@ -104,6 +104,8 @@ def evidence(root=ROOT):
                     ('lhs-lhs','lhs-rhs','rhs-lhs','rhs-rhs')]
         if name.endswith('ConvolutionPointwise.convolve_eq_channelSum'):
             labels=['SimplifyConvToDot/pointwise-layout']
+        if name.endswith('ConvolutionDot.convolve_eq_dot'):
+            labels=['SimplifyConvToDot/pointwise-layout']
         if name.endswith('ConvolutionPointwise.convolve_single_channel'):
             labels=['SimplifyConvToMultiply/pointwise-000']
         add(name,'library_backed_theory',theory.get('theorem_profiles',{}).get(name,theory['scope']),labels)
@@ -194,6 +196,22 @@ def mathematical_models(root=ROOT):
                        checked_theorem_count=13,full_family_complete=False,
                        independent_statement_review='pending',manifest=pointwise['manifest'],
                        manifest_sha256=pointwise['manifest_sha256']))
+    from check_convolution_dot import check_inputs, validate_result as validate_dot
+    dot=read('reports/convolution-dot.json',root);validate_dot(dot)
+    assert digest(root/dot['manifest'])==dot['manifest_sha256']
+    dot_manifest=check_inputs(root)
+    assert dot_manifest['base_model_manifest']==model['manifest']
+    assert dot_manifest['channel_model_manifest']==pointwise['manifest']
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ConvolutionDot.' in name}
+    assert dot['certificate_axioms']==expected
+    assert set(dot_manifest['certificates'])==set(expected)
+    models.append(dict(model=dot_manifest['model'],scope=dot_manifest['hypotheses'],
+                       scalar_contract='exact_semiring',status=dot['status'],
+                       checked_theorem_count=12,full_family_complete=False,
+                       dot_tensor_bridge_proved=True,both_coordinate_round_trips_proved=True,
+                       independent_statement_review='pending',manifest=dot['manifest'],
+                       manifest_sha256=dot['manifest_sha256']))
     return models
 
 

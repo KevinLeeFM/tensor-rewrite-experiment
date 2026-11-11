@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "model": "pointwise_convolution_as_existing_matrix_dot_v1",
+  "base_model_manifest": "census/convolution-model-v2.json",
+  "channel_model_manifest": "census/convolution-pointwise-v1.json",
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ConvolutionDot.lean",
+      "sha256": "9e92e94e3935c8f153b43aa3ee5bae87d69355dfb57b6a46ecb3ef9da561f286"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionDotLemmas.lean",
+      "sha256": "219d38e5c7e22099a2279a03860a80434b4f2fc9a662f8bb3a7e8f141fdee7d8"
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionDotProof.lean",
+      "sha256": "f38f6102137d792d771f565f58e245286c03a61b65b26473bb0b5742d6f721b2"
+    },
+    {
+      "path": "tests/fixtures/ConvolutionDotControls.lean",
+      "sha256": "b2be7eed3622201f81fd1a13c64bf064ffa19113b517b0fc57373c2e5a6350df"
+    },
+    {
+      "path": "tools/check_convolution_dot.py",
+      "sha256": "a90e67cfe29ac45d48490f8edebfe51383fa71a07c0ed297c19c049d0b8c9af8"
+    }
+  ],
+  "certificates": [
+    "TensorRewrite.Theory.ConvolutionDot.lhs_index_row",
+    "TensorRewrite.Theory.ConvolutionDot.lhs_index_channel",
+    "TensorRewrite.Theory.ConvolutionDot.rhs_index_feature",
+    "TensorRewrite.Theory.ConvolutionDot.rhs_index_channel",
+    "TensorRewrite.Theory.ConvolutionDot.matrix_output_row",
+    "TensorRewrite.Theory.ConvolutionDot.matrix_output_feature",
+    "TensorRewrite.Theory.ConvolutionDot.convolution_output_dot_output",
+    "TensorRewrite.Theory.ConvolutionDot.dot_output_convolution_output",
+    "TensorRewrite.Theory.ConvolutionDot.sum_contract_positions",
+    "TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum",
+    "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
+    "TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve"
+  ],
+  "hypotheses": "pointwise unit kernel/stride/base dilation and zero padding; exact Semiring; identity finish",
+  "unrestricted": "arbitrary rank, spatial extents, batch/feature groups, batches, input/output channels, positive kernel dilation and reversal",
+  "matrix_dimensions": "rows=batchesPerGroup*elementCount(inputShape); lhs=[rows,C], rhs=[O,C], result=[rows,O]",
+  "coordinate_contract": "both round trips; row unflattens batch and spatial coordinates; feature is the result column",
+  "dot_tensor_bridge_proved": true,
+  "both_coordinate_round_trips_proved": true,
+  "physical_layout_modeled": false,
+  "precision_conversions_modeled": false,
+  "ieee_accumulation_contract_proved": false,
+  "full_convolution_family_complete": false,
+  "independent_statement_review": "pending",
+  "code_correspondence": "future_work",
+  "new_custom_lean_lines": 205,
+  "previous_custom_lean_lines": 3493,
+  "current_custom_lean_lines": 3698,
+  "new_category_lines": {
+    "S": 50,
+    "H": 95,
+    "R": 59,
+    "A": 1
+  },
+  "base_model_manifest_sha256": "56b07e3eb7270982a04f24c0f86a61c6264ee97ea2a270f45133d00fddabc151",
+  "channel_model_manifest_sha256": "bf76965a3fe8fc7bd4f88c9646550e1d15e84f64a619b6b6d26e362d2a039662"
+}

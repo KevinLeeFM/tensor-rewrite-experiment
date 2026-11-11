@@ -75,3 +75,7 @@ The frozen base model is extended by the separately versioned
 kernels with unit stride/base dilation and zero padding reduce to a sum over
 input channels, then to one product when there is one input channel per group.
 The original base files and v1/v2 evidence remain unchanged.
+
+The subsequent [Dot extension](convolution-dot.md) proves this pointwise
+channel reduction equal to the existing matrix contraction model, with
+bidirectional coordinate recovery and batch/spatial row flattening.

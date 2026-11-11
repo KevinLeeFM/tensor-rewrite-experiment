@@ -51,3 +51,15 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ConvolutionPointwise.sum_kernel_positions
 #print axioms TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum
 #print axioms TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel
+#print axioms TensorRewrite.Theory.ConvolutionDot.lhs_index_row
+#print axioms TensorRewrite.Theory.ConvolutionDot.lhs_index_channel
+#print axioms TensorRewrite.Theory.ConvolutionDot.rhs_index_feature
+#print axioms TensorRewrite.Theory.ConvolutionDot.rhs_index_channel
+#print axioms TensorRewrite.Theory.ConvolutionDot.matrix_output_row
+#print axioms TensorRewrite.Theory.ConvolutionDot.matrix_output_feature
+#print axioms TensorRewrite.Theory.ConvolutionDot.convolution_output_dot_output
+#print axioms TensorRewrite.Theory.ConvolutionDot.dot_output_convolution_output
+#print axioms TensorRewrite.Theory.ConvolutionDot.sum_contract_positions
+#print axioms TensorRewrite.Theory.ConvolutionDot.dot_eq_channel_sum
+#print axioms TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot
+#print axioms TensorRewrite.Theory.ConvolutionDot.dot_eq_convolve
