@@ -2641,6 +2641,231 @@ TensorRewrite.Theory.ReductionFiber.reduced_merge : ∀ (plan : TensorRewrite.Pi
   ∑ index, input index =
     ∑ head, ∑ tail, input ((TensorRewrite.Theory.ReductionFiber.headTailEquiv extent tailShape).symm (head, tail))
 'TensorRewrite.Theory.ReductionFiber.sum_head_tail' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.affine_none_of_axis : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (output : TensorRewrite.Pilot.Index plan.outputShape)
+  (axis : Fin rank),
+  TensorRewrite.Theory.ReductionWindow.affinePosition plan output axis < 0 ∨
+      ↑(plan.window axis).inputExtent ≤ TensorRewrite.Theory.ReductionWindow.affinePosition plan output axis →
+    TensorRewrite.Theory.ReductionWindow.affineInput? plan output = none
+'TensorRewrite.Theory.ReductionWindow.affine_none_of_axis' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionWindow.axis_unit_position : ∀ (axis : TensorRewrite.Theory.Convolution.Axis),
+  axis.kernelExtent = 1 →
+    ∀ (output : ℕ) (kernel : Fin axis.kernelExtent),
+      axis.basePosition output kernel = ↑output * ↑axis.stride - axis.paddingLow
+'TensorRewrite.Theory.ReductionWindow.axis_unit_position' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionWindow.axis_unit_sample : ∀ (axis : TensorRewrite.Theory.Convolution.Axis),
+  axis.kernelExtent = 1 →
+    axis.baseDilation = 1 →
+      ∀ (output : ℕ) (kernel : Fin axis.kernelExtent),
+        axis.inputIndex? output kernel =
+          TensorRewrite.Theory.ReductionWindow.boundedIndex? axis.inputExtent (↑output * ↑axis.stride - axis.paddingLow)
+'TensorRewrite.Theory.ReductionWindow.axis_unit_sample' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ReductionWindow.bounded_none_of_outside : ∀ (extent : ℕ) (position : ℤ),
+  position < 0 ∨ ↑extent ≤ position → TensorRewrite.Theory.ReductionWindow.boundedIndex? extent position = none
+'TensorRewrite.Theory.ReductionWindow.bounded_none_of_outside' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.empty_input_components : ∀ {rank : ℕ} {components : Type} {α : components → Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank)
+  (operation : ((c : components) → α c) → ((c : components) → α c) → (c : components) → α c)
+  (initial : (c : components) → α c) (input : TensorRewrite.Pilot.Tensor plan.inputShape ((c : components) → α c)),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    operation initial initial = initial →
+      ∀ (component : components),
+        TensorRewrite.Pilot.Tensor.map (fun state => state component)
+            (TensorRewrite.Theory.ReductionWindow.reduce plan operation initial initial input) =
+          TensorRewrite.Pilot.Tensor.constant (initial component)
+'TensorRewrite.Theory.ReductionWindow.empty_input_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.foldl_replicate_fixed : ∀ {α : Type} (operation : α → α → α)
+  (initial padding : α),
+  operation initial padding = initial →
+    ∀ (count : ℕ), List.foldl operation initial (List.replicate count padding) = initial
+'TensorRewrite.Theory.ReductionWindow.foldl_replicate_fixed' does not depend on any axioms
+TensorRewrite.Theory.ReductionWindow.padding_fixed_refuted : TensorRewrite.Theory.ReductionWindow.reduce
+      TensorRewrite.Theory.ReductionWindow.emptyPadded Nat.add 1 1 (TensorRewrite.Pilot.Tensor.constant 7)
+      TensorRewrite.Theory.ReductionWindow.emptyOutput =
+    2 ∧
+  TensorRewrite.Theory.ReductionWindow.gatherMap TensorRewrite.Theory.ReductionWindow.emptyPadded 1 (Nat.add 1)
+        (TensorRewrite.Pilot.Tensor.constant 7) TensorRewrite.Theory.ReductionWindow.emptyOutput =
+      1 ∧
+    2 ≠ 1
+'TensorRewrite.Theory.ReductionWindow.padding_fixed_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ReductionWindow.padding_skip_refuted : TensorRewrite.Theory.ReductionWindow.values
+      TensorRewrite.Theory.ReductionWindow.threeSamples 3 (TensorRewrite.Pilot.Tensor.constant 2)
+      TensorRewrite.Theory.ReductionWindow.threeOutput =
+    [3, 2, 3] ∧
+  TensorRewrite.Theory.ReductionWindow.reduce TensorRewrite.Theory.ReductionWindow.threeSamples Nat.add 3 3
+        (TensorRewrite.Pilot.Tensor.constant 2) TensorRewrite.Theory.ReductionWindow.threeOutput =
+      11 ∧
+    List.foldl Nat.add 3 [2] = 5 ∧ 11 ≠ 5
+'TensorRewrite.Theory.ReductionWindow.padding_skip_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.pointwise : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank)
+  (geometry : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan.asConvolution) (operation : α → α → α)
+  (initial padding : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input = fun output =>
+    operation initial (input (TensorRewrite.Theory.ConvolutionPointwise.inputIndex plan.asConvolution ⋯ output))
+'TensorRewrite.Theory.ReductionWindow.pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.pointwise_eliminate : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank)
+  (geometry : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan.asConvolution) (operation : α → α → α)
+  (initial padding : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  (∀ (x : α), operation initial x = x) →
+    TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input = fun output =>
+      input (TensorRewrite.Theory.ConvolutionPointwise.inputIndex plan.asConvolution ⋯ output)
+'TensorRewrite.Theory.ReductionWindow.pointwise_eliminate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.reduce_empty_input : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (operation : α → α → α) (initial padding : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+      TensorRewrite.Pilot.Tensor.constant
+        (List.foldl operation initial
+          (List.replicate (TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape) padding))
+'TensorRewrite.Theory.ReductionWindow.reduce_empty_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.reduce_empty_input_fixed : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (operation : α → α → α) (initial : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    operation initial initial = initial →
+      TensorRewrite.Theory.ReductionWindow.reduce plan operation initial initial input =
+        TensorRewrite.Pilot.Tensor.constant initial
+'TensorRewrite.Theory.ReductionWindow.reduce_empty_input_fixed' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.reduce_empty_kernel : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (operation : α → α → α) (initial padding : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape = 0 →
+    TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+      TensorRewrite.Pilot.Tensor.constant initial
+'TensorRewrite.Theory.ReductionWindow.reduce_empty_kernel' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.reduce_empty_output : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (operation : α → α → α) (initial padding : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.outputShape = 0 →
+    TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+      TensorRewrite.Pilot.Tensor.constant initial
+'TensorRewrite.Theory.ReductionWindow.reduce_empty_output' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.reduce_unit : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (unit : TensorRewrite.Theory.ReductionWindow.IsUnit plan)
+  (operation : α → α → α) (initial padding : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input = fun output =>
+    operation initial
+      (TensorRewrite.Theory.ReductionWindow.contribution plan padding input output
+        (TensorRewrite.Theory.ReductionWindow.unitIndex plan unit))
+'TensorRewrite.Theory.ReductionWindow.reduce_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.sample_empty_input : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    ∀ (output : TensorRewrite.Pilot.Index plan.outputShape) (kernel : TensorRewrite.Pilot.Index plan.kernelShape),
+      TensorRewrite.Theory.ReductionWindow.sample? plan output kernel = none
+'TensorRewrite.Theory.ReductionWindow.sample_empty_input' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.sample_unit_affine : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (output : TensorRewrite.Pilot.Index plan.outputShape) (kernel : TensorRewrite.Pilot.Index plan.kernelShape),
+        TensorRewrite.Theory.ReductionWindow.sample? plan output kernel =
+          TensorRewrite.Theory.ReductionWindow.affineInput? plan output
+'TensorRewrite.Theory.ReductionWindow.sample_unit_affine' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_count : ∀ {rank : ℕ} (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan → TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape = 1
+'TensorRewrite.Theory.ReductionWindow.unit_count' depends on axioms: [propext]
+@TensorRewrite.Theory.ReductionWindow.unit_crop_all : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (operation : α → α → α) (initial padding : α),
+        operation initial padding = padding →
+          ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+            (∀ (output : TensorRewrite.Pilot.Index plan.outputShape),
+                ∃ axis,
+                  TensorRewrite.Theory.ReductionWindow.affinePosition plan output axis < 0 ∨
+                    ↑(plan.window axis).inputExtent ≤
+                      TensorRewrite.Theory.ReductionWindow.affinePosition plan output axis) →
+              TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+                TensorRewrite.Pilot.Tensor.constant padding
+'TensorRewrite.Theory.ReductionWindow.unit_crop_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_crop_low_all : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (operation : α → α → α) (initial padding : α),
+        operation initial padding = padding →
+          ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α) (axis : Fin rank),
+            (plan.window axis).paddingLow ≤ -↑(plan.window axis).inputExtent →
+              TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+                TensorRewrite.Pilot.Tensor.constant padding
+'TensorRewrite.Theory.ReductionWindow.unit_crop_low_all' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_gather : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (operation : α → α → α) (initial padding : α),
+        operation initial padding = padding →
+          ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+            TensorRewrite.Theory.ReductionWindow.reduce plan operation initial padding input =
+              TensorRewrite.Theory.ReductionWindow.gatherMap plan padding (operation initial) input
+'TensorRewrite.Theory.ReductionWindow.unit_gather' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero : ∀ {rank : ℕ} {α : Type} [inst : AddZeroClass α]
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce plan (fun x1 x2 => x1 + x2) 0 0 input =
+          TensorRewrite.Theory.ReductionWindow.gatherMap plan 0 id input
+'TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_gather_initial : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (operation : α → α → α) (initial : α),
+        operation initial initial = initial →
+          ∀ (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+            TensorRewrite.Theory.ReductionWindow.reduce plan operation initial initial input =
+              TensorRewrite.Theory.ReductionWindow.gatherMap plan initial (operation initial) input
+'TensorRewrite.Theory.ReductionWindow.unit_gather_initial' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_gather_max : ∀ {rank : ℕ} {α : Type} [inst : LinearOrder α]
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce plan max initial initial input =
+          TensorRewrite.Theory.ReductionWindow.gatherMap plan initial (fun x => max x initial) input
+'TensorRewrite.Theory.ReductionWindow.unit_gather_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_gather_min : ∀ {rank : ℕ} {α : Type} [inst : LinearOrder α]
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank),
+  TensorRewrite.Theory.ReductionWindow.IsUnit plan →
+    TensorRewrite.Theory.ReductionWindow.IsUndilated plan →
+      ∀ (initial : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce plan min initial initial input =
+          TensorRewrite.Theory.ReductionWindow.gatherMap plan initial (fun x => min x initial) input
+'TensorRewrite.Theory.ReductionWindow.unit_gather_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.unit_index_unique : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (unit : TensorRewrite.Theory.ReductionWindow.IsUnit plan)
+  (index : TensorRewrite.Pilot.Index plan.kernelShape), index = TensorRewrite.Theory.ReductionWindow.unitIndex plan unit
+'TensorRewrite.Theory.ReductionWindow.unit_index_unique' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.values_empty_input : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (padding : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.inputShape = 0 →
+    ∀ (output : TensorRewrite.Pilot.Index plan.outputShape),
+      TensorRewrite.Theory.ReductionWindow.values plan padding input output =
+        List.replicate (TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape) padding
+'TensorRewrite.Theory.ReductionWindow.values_empty_input' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.values_length : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (padding : α)
+  (input : TensorRewrite.Pilot.Tensor plan.inputShape α) (output : TensorRewrite.Pilot.Index plan.outputShape),
+  (TensorRewrite.Theory.ReductionWindow.values plan padding input output).length =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape
+'TensorRewrite.Theory.ReductionWindow.values_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ReductionWindow.values_unit : ∀ {rank : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ReductionWindow.Plan rank) (unit : TensorRewrite.Theory.ReductionWindow.IsUnit plan)
+  (padding : α) (input : TensorRewrite.Pilot.Tensor plan.inputShape α)
+  (output : TensorRewrite.Pilot.Index plan.outputShape),
+  TensorRewrite.Theory.ReductionWindow.values plan padding input output =
+    [TensorRewrite.Theory.ReductionWindow.contribution plan padding input output
+        (TensorRewrite.Theory.ReductionWindow.unitIndex plan unit)]
+'TensorRewrite.Theory.ReductionWindow.values_unit' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample : Complex.log
     (Complex.exp (2 * ↑Real.pi * Complex.I)) ≠
   2 * ↑Real.pi * Complex.I

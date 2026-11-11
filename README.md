@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 130 checked mathematical statements; custom Lean totals **4,598**.
+The theory target now has 159 checked mathematical statements; custom Lean totals **4,920**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -969,3 +969,19 @@ See [the reduction guide](docs/reduction-algebra.md). All38 focused tests pass.
 Current totals are130 theory statements,390 ledger declarations and4598 custom
 Lean lines, with four integration theorems separate. The41 statements added after
 the old89-statement review await independent review. Whole-workload closure is open.
+
+
+## Ordered window core
+
+The ordered window model retains each invalid sample's padding value and its
+actual initializer. Unit windows with undilated input equal a derived affine
+crop/stride gather under explicit padding laws. Empty and tuple-state cases,
+pointwise elimination conditions and two padding-law certificates add29 statements
+and322 Lean lines. The separate Slice/Pad target graph is still unproved; no
+IEEE add-zero/linear-order-extrema profile is silently assumed.
+See [the window guide](docs/reduction-window.md). All42 focused tests pass,
+with15 profiles/45 oracle observations. Current totals:159 theory/419 ledger
+declarations,4920 custom Lean lines; four integration theorems separate.
+All31 window records remain in a domain map, with partial core evidence for19.
+No whole record is closed. These29 additions await review separately from the
+unchanged41-statement packet. Code correspondence and the full verdict remain open.

@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ReductionWindow': ['values_length', 'sample_empty_input', 'values_empty_input', 'unit_count', 'unit_index_unique', 'values_unit', 'axis_unit_position', 'axis_unit_sample', 'sample_unit_affine', 'foldl_replicate_fixed', 'bounded_none_of_outside', 'affine_none_of_axis', 'reduce_empty_kernel', 'reduce_empty_input', 'reduce_empty_input_fixed', 'reduce_empty_output', 'reduce_unit', 'unit_gather', 'unit_gather_initial', 'unit_gather_add_zero', 'unit_gather_min', 'unit_gather_max', 'pointwise', 'pointwise_eliminate', 'unit_crop_all', 'unit_crop_low_all', 'empty_input_components', 'padding_fixed_refuted', 'padding_skip_refuted'],
     'ReductionFiber': ['elementCount_shape', 'output_merge', 'reduced_merge', 'merge_split', 'fiberValues_map', 'fiberValues_constant', 'foldl_replicate_absorb', 'sum_head_tail', 'sum_flatMap', 'fiberValues_sum', 'foldl_map_hom'],
     'ReductionAlgebra': ['constant_absorb', 'constant_and', 'constant_or', 'constant_min', 'constant_max', 'constant_add', 'negate_sum', 'concat_add', 'coordinate_sum', 'sum_reduction', 'map_reduction', 'empty_components', 'sameCount_components', 'empty_constant_refuted', 'repeated_initializer_refuted', 'nonassociative_regrouping_refuted'],
     'ScalarDomains': ['complex_square_sqrt', 'complex_sqrt_square_ofReal',
@@ -81,6 +82,10 @@ def main():
             assert axioms <= ALLOWED, (full_name, axioms)
             dependencies[full_name] = sorted(axioms)
     categories = {'TensorRewrite/Theory/FloatNegation.lean': 'R',
+                  'TensorRewrite/Theory/ReductionWindow.lean': 'S',
+                  'TensorRewrite/Theory/ReductionWindowLemmas.lean': 'H',
+                  'TensorRewrite/Theory/ReductionWindowAlgebra.lean': 'R',
+                  'TensorRewrite/Theory/ReductionWindowCounterexamples.lean': 'C',
                   'TensorRewrite/Theory/ReductionFiber.lean': 'S',
                   'TensorRewrite/Theory/ReductionFiberLemmas.lean': 'H',
                   'TensorRewrite/Theory/ReductionAlgebra.lean': 'R',
@@ -145,12 +150,20 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='exact real and principal-complex log/sqrt domains; '
+                  scope='ordered window folds and unit-window affine gathers; '
+                        'exact real and principal-complex log/sqrt domains; '
                         'format-general floating negation; exact finite sums and semiring '
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('bounded recursive reduction axis plans with derived kept/reduced '
+                      name: ('ordered window folds with explicit initializer and every invalid '
+                             'sample contribution; bounded convolution axis geometry; arbitrary '
+                             'scalar/whole-state operations; unit kernel/undilated input for '
+                             'affine crop-stride gather; explicit padding fixed-point and '
+                             'initializer laws; AddZeroClass/LinearOrder only where stated; '
+                             'no IEEE algebra or separate Slice-Pad graph equivalence'
+                             if '.ReductionWindow.' in name else
+                             'bounded recursive reduction axis plans with derived kept/reduced '
                              'coordinate inverses and actual fiber-sum bridge; constant fibers '
                              'retain the initializer and nonempty premise for absorption; exact '
                              'AddMonoid/AddCommMonoid/AddCommGroup or Boolean/LinearOrder laws '

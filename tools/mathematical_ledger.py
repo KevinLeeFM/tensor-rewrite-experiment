@@ -183,7 +183,12 @@ def evidence(root=ROOT):
                 'empty_components':['BroadcastReduce/tuple','HandleReduce/empty-delegation'],
                 'sameCount_components':['ReplaceReduceWithReshape/tuple',
                                         'HandleReduce/same-element-count']}.get(suffix,[])
-        kind=('reduction_contract_refutation' if '.ReductionAlgebra.' in name
+        if '.ReductionWindow.' in name:
+            domains=read('census/reduction-window-domains-v1.json',root)
+            labels=[r['benchmark_id'] for r in domains['records'] if name in r['core_evidence']]
+        kind=('window_contract_refutation' if '.ReductionWindow.' in name
+              and name.endswith('_refuted') else
+              'reduction_contract_refutation' if '.ReductionAlgebra.' in name
               and name.endswith('_refuted') else
               'scalar_domain_counterexample' if '.ScalarDomains.' in name
               and name.endswith('_counterexample') else
@@ -350,6 +355,20 @@ def mathematical_models(root=ROOT):
                        actual_ordered_fiber_to_coordinate_sum_proved=True,
                        window_geometry_proved=False,independent_statement_review='pending',
                        manifest=reduction['manifest'],manifest_sha256=reduction['manifest_sha256']))
+    from check_reduction_window import check_inputs as window_inputs
+    from check_reduction_window import validate_result as validate_window
+    window=read('reports/reduction-window.json',root);validate_window(window)
+    extension=window_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ReductionWindow.' in name}
+    assert window['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['geometry_contract'],
+                       scalar_contract=window['scalar_contract'],status=window['status'],
+                       checked_theorem_count=29,full_family_complete=False,
+                       unit_affine_gather_proved=True,invalid_samples_are_folded=True,
+                       separate_slice_pad_graph_equivalence_proved=False,
+                       independent_statement_review='pending',manifest=window['manifest'],
+                       manifest_sha256=window['manifest_sha256']))
     return models
 
 

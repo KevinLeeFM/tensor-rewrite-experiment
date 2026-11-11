@@ -753,6 +753,64 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ReductionFiber.sum_flatMap
 #check @TensorRewrite.Theory.ReductionFiber.sum_head_tail
 #print axioms TensorRewrite.Theory.ReductionFiber.sum_head_tail
+#check @TensorRewrite.Theory.ReductionWindow.affine_none_of_axis
+#print axioms TensorRewrite.Theory.ReductionWindow.affine_none_of_axis
+#check @TensorRewrite.Theory.ReductionWindow.axis_unit_position
+#print axioms TensorRewrite.Theory.ReductionWindow.axis_unit_position
+#check @TensorRewrite.Theory.ReductionWindow.axis_unit_sample
+#print axioms TensorRewrite.Theory.ReductionWindow.axis_unit_sample
+#check @TensorRewrite.Theory.ReductionWindow.bounded_none_of_outside
+#print axioms TensorRewrite.Theory.ReductionWindow.bounded_none_of_outside
+#check @TensorRewrite.Theory.ReductionWindow.empty_input_components
+#print axioms TensorRewrite.Theory.ReductionWindow.empty_input_components
+#check @TensorRewrite.Theory.ReductionWindow.foldl_replicate_fixed
+#print axioms TensorRewrite.Theory.ReductionWindow.foldl_replicate_fixed
+#check @TensorRewrite.Theory.ReductionWindow.padding_fixed_refuted
+#print axioms TensorRewrite.Theory.ReductionWindow.padding_fixed_refuted
+#check @TensorRewrite.Theory.ReductionWindow.padding_skip_refuted
+#print axioms TensorRewrite.Theory.ReductionWindow.padding_skip_refuted
+#check @TensorRewrite.Theory.ReductionWindow.pointwise
+#print axioms TensorRewrite.Theory.ReductionWindow.pointwise
+#check @TensorRewrite.Theory.ReductionWindow.pointwise_eliminate
+#print axioms TensorRewrite.Theory.ReductionWindow.pointwise_eliminate
+#check @TensorRewrite.Theory.ReductionWindow.reduce_empty_input
+#print axioms TensorRewrite.Theory.ReductionWindow.reduce_empty_input
+#check @TensorRewrite.Theory.ReductionWindow.reduce_empty_input_fixed
+#print axioms TensorRewrite.Theory.ReductionWindow.reduce_empty_input_fixed
+#check @TensorRewrite.Theory.ReductionWindow.reduce_empty_kernel
+#print axioms TensorRewrite.Theory.ReductionWindow.reduce_empty_kernel
+#check @TensorRewrite.Theory.ReductionWindow.reduce_empty_output
+#print axioms TensorRewrite.Theory.ReductionWindow.reduce_empty_output
+#check @TensorRewrite.Theory.ReductionWindow.reduce_unit
+#print axioms TensorRewrite.Theory.ReductionWindow.reduce_unit
+#check @TensorRewrite.Theory.ReductionWindow.sample_empty_input
+#print axioms TensorRewrite.Theory.ReductionWindow.sample_empty_input
+#check @TensorRewrite.Theory.ReductionWindow.sample_unit_affine
+#print axioms TensorRewrite.Theory.ReductionWindow.sample_unit_affine
+#check @TensorRewrite.Theory.ReductionWindow.unit_count
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_count
+#check @TensorRewrite.Theory.ReductionWindow.unit_crop_all
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_crop_all
+#check @TensorRewrite.Theory.ReductionWindow.unit_crop_low_all
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_crop_low_all
+#check @TensorRewrite.Theory.ReductionWindow.unit_gather
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_gather
+#check @TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero
+#check @TensorRewrite.Theory.ReductionWindow.unit_gather_initial
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_gather_initial
+#check @TensorRewrite.Theory.ReductionWindow.unit_gather_max
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_gather_max
+#check @TensorRewrite.Theory.ReductionWindow.unit_gather_min
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_gather_min
+#check @TensorRewrite.Theory.ReductionWindow.unit_index_unique
+#print axioms TensorRewrite.Theory.ReductionWindow.unit_index_unique
+#check @TensorRewrite.Theory.ReductionWindow.values_empty_input
+#print axioms TensorRewrite.Theory.ReductionWindow.values_empty_input
+#check @TensorRewrite.Theory.ReductionWindow.values_length
+#print axioms TensorRewrite.Theory.ReductionWindow.values_length
+#check @TensorRewrite.Theory.ReductionWindow.values_unit
+#print axioms TensorRewrite.Theory.ReductionWindow.values_unit
 #check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
 #print axioms TensorRewrite.Theory.ScalarDomains.complex_log_exp_counterexample
 #check @TensorRewrite.Theory.ScalarDomains.complex_log_exp_iff
