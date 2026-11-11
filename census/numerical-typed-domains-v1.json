@@ -1,0 +1,994 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_exact_profiles_and_domain_refutations_remaining_partitions_open",
+  "retained_batches": [
+    {
+      "path": "census/simple-cases.json",
+      "sha256": "89285c0fb18b2e42d29c3e78c9d800b4b16354a0c0d0cd53ecca9843d3177e05"
+    },
+    {
+      "path": "census/arithmetic-cases.json",
+      "sha256": "a3df5f4aa5d8c122fda52db44d920e625b5f38be15b68eaaeaa06fb3c82037f7"
+    },
+    {
+      "path": "census/scalar-control-cases.json",
+      "sha256": "905974b8c88743cef12ce689f7aaca918dc635955d987eaa237d13f4e85c0c14"
+    }
+  ],
+  "mathematical_model_manifest": "census/numerical-values-v1.json",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleDivide/broadcast-reciprocal",
+      "retained_lhs": "Divide(a,Broadcast(b,dims))",
+      "retained_rhs": "Multiply(a,Broadcast(Divide(1,b),dims))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_broadcast"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_broadcast",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/constant-broadcast",
+      "retained_lhs": "Divide(NonConstant(a),Broadcast(Constant(c),dims))",
+      "retained_rhs": "Multiply(a,Broadcast(inverted_literal,dims))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_broadcast"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_broadcast",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/constant-direct",
+      "retained_lhs": "Divide(NonConstant(a),Constant(c))",
+      "retained_rhs": "Multiply(a,inverted_literal)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_constant"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_constant",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/exp-denominator",
+      "retained_lhs": "Divide(a,Exp(b))",
+      "retained_rhs": "Multiply(a,Exp(Negate(b)))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_exp_denominator",
+        "TensorRewrite.Theory.Numerical.complex_exp_denominator"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_exp_denominator",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_exp_denominator",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/exp-pair",
+      "retained_lhs": "Divide(Exp(a),Exp(b))",
+      "retained_rhs": "Exp(Subtract(a,b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_exp_quotient",
+        "TensorRewrite.Theory.Numerical.complex_exp_quotient"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_exp_quotient",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_exp_quotient",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/fractions",
+      "retained_lhs": "Divide(Divide(a,b),Divide(c,d))",
+      "retained_rhs": "Divide(Multiply(a,d),Multiply(b,c))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_fractions"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_fractions",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/nested-denominator",
+      "retained_lhs": "Divide(a,Divide(b,c))",
+      "retained_rhs": "Divide(Multiply(a,c),b)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_nested_denominator"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_nested_denominator",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/nested-numerator",
+      "retained_lhs": "Divide(Divide(a,b),c)",
+      "retained_rhs": "Divide(a,Multiply(b,c))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_nested_numerator"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_nested_numerator",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/one",
+      "retained_lhs": "Divide(a,1)",
+      "retained_rhs": "a",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_one"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_one",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/power-denominator",
+      "retained_lhs": "Divide(a,Power(b,c))",
+      "retained_rhs": "Multiply(a,Power(b,Negate(c)))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_denominator",
+        "TensorRewrite.Theory.Numerical.complex_power_denominator"
+      ],
+      "refutation_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_denominator_refuted"
+      ],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_denominator",
+          "domain": "every base b is nonnegative; sufficient domain"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_denominator",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/predicate-scalar-broadcast",
+      "retained_lhs": "Divide(Convert(pred),Broadcast(scalar_b))",
+      "retained_rhs": "Multiply(Broadcast(Divide(1,b)),Convert(pred))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.divide_predicate_broadcast"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.divide_predicate_broadcast",
+          "domain": "all field values including zero denominators; arbitrary field type"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/rsqrt-denominator",
+      "retained_lhs": "Divide(a,Rsqrt(b))",
+      "retained_rhs": "Multiply(a,Sqrt(b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_divide_rsqrt",
+        "TensorRewrite.Theory.Numerical.complex_divide_rsqrt"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_divide_rsqrt",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_divide_rsqrt",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleDivide/sqrt-denominator",
+      "retained_lhs": "Divide(a,Sqrt(b))",
+      "retained_rhs": "Multiply(a,Rsqrt(b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_divide_sqrt",
+        "TensorRewrite.Theory.Numerical.complex_divide_sqrt"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_divide_sqrt",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_divide_sqrt",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleExp/zero-broadcast",
+      "retained_lhs": "Exp(Broadcast(ConstantScalar(0)))",
+      "retained_rhs": "MakeScalarLike(old,1.0)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_exp_zero",
+        "TensorRewrite.Theory.Numerical.complex_exp_zero"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_exp_zero",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_exp_zero",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleExp/zero-scalar",
+      "retained_lhs": "Exp(ConstantScalar(0))",
+      "retained_rhs": "MakeScalarLike(old,1.0)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_exp_zero",
+        "TensorRewrite.Theory.Numerical.complex_exp_zero"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_exp_zero",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_exp_zero",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleLog/power-complex",
+      "retained_lhs": "Log(Power(a,b))",
+      "retained_rhs": "Select(b == 0,0,Multiply(Log(a),b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.complex_log_power_iff"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_log_power_iff",
+          "domain": "all pointwise nonzero complex bases; equality iff -pi < Im(log(a)*b) <= pi pointwise"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleLog/power-real",
+      "retained_lhs": "Log(Power(a,b))",
+      "retained_rhs": "Select(b == 0,0,Multiply(Log(Abs(a)),b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_log_power_pos"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_log_power_pos",
+          "domain": "every real base a is strictly positive; sufficient conventional logarithm domain"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleLog/rsqrt",
+      "retained_lhs": "Log(Rsqrt(a))",
+      "retained_rhs": "Multiply(Log(a),-0.5)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_log_rsqrt_pos"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_log_rsqrt_pos",
+          "domain": "every real input a is strictly positive; sufficient conventional logarithm domain"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/abs-square",
+      "retained_lhs": "Multiply(Abs(a),Abs(a))",
+      "retained_rhs": "Multiply(a,a)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_abs_square"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_abs_square",
+          "domain": "all exact real values, with declared totalizations"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/exp-product",
+      "retained_lhs": "Multiply(Exp(a),Exp(b))",
+      "retained_rhs": "Exp(Add(a,b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_exp_product",
+        "TensorRewrite.Theory.Numerical.complex_exp_product"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_exp_product",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_exp_product",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/rsqrt-square",
+      "retained_lhs": "Multiply(Rsqrt(a),Rsqrt(a))",
+      "retained_rhs": "Divide(MakeScalarLike(a,1),a)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff",
+        "TensorRewrite.Theory.Numerical.complex_rsqrt_square"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff",
+          "domain": "all exact real inputs; equality with original replacement iff every value is nonnegative"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_rsqrt_square",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleMultiply/sqrt-square",
+      "retained_lhs": "Multiply(Sqrt(a),Sqrt(a))",
+      "retained_rhs": "a",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_sqrt_square_iff",
+        "TensorRewrite.Theory.Numerical.complex_sqrt_square"
+      ],
+      "refutation_evidence": [
+        "TensorRewrite.Theory.Numerical.real_sqrt_square_refuted"
+      ],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_sqrt_square_iff",
+          "domain": "all exact real inputs; equality with original replacement iff every value is nonnegative"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_sqrt_square",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/exp-base",
+      "retained_lhs": "Power(Exp(a),b)",
+      "retained_rhs": "Exp(Multiply(a,b))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_exp",
+        "TensorRewrite.Theory.Numerical.complex_power_exp_strip"
+      ],
+      "refutation_evidence": [
+        "TensorRewrite.Theory.Numerical.complex_power_exp_refuted"
+      ],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_exp",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_exp_strip",
+          "domain": "-pi < imaginary input <= pi at every index; sufficient principal strip"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/half",
+      "retained_lhs": "Power(a,0.5)",
+      "retained_rhs": "Sqrt(a)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_half",
+        "TensorRewrite.Theory.Numerical.complex_power_half"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_half",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_half",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/minus-one",
+      "retained_lhs": "Power(a,-1)",
+      "retained_rhs": "Divide(1,a)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_minus_one",
+        "TensorRewrite.Theory.Numerical.complex_power_minus_one"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_minus_one",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_minus_one",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/one",
+      "retained_lhs": "Power(a,1)",
+      "retained_rhs": "a",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_one",
+        "TensorRewrite.Theory.Numerical.complex_power_one"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_one",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_one",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/three",
+      "retained_lhs": "Power(a,3)",
+      "retained_rhs": "Multiply(a,Multiply(a,a))",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_three",
+        "TensorRewrite.Theory.Numerical.complex_power_three"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_three",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_three",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/two",
+      "retained_lhs": "Power(a,2)",
+      "retained_rhs": "Multiply(a,a)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_two",
+        "TensorRewrite.Theory.Numerical.complex_power_two"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_two",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_two",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandlePower/zero",
+      "retained_lhs": "Power(a,0)",
+      "retained_rhs": "MakeScalarLike(output,1)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_power_zero",
+        "TensorRewrite.Theory.Numerical.complex_power_zero"
+      ],
+      "refutation_evidence": [],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_power_zero",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.complex_power_zero",
+          "domain": "all principal complex values, with declared zero-base totalization"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleRsqrt/inverse-square",
+      "retained_lhs": "Rsqrt(Power(a,-2))",
+      "retained_rhs": "a",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square",
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff"
+      ],
+      "refutation_evidence": [
+        "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_refuted"
+      ],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square",
+          "domain": "all exact real values, with declared totalizations"
+        },
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff",
+          "domain": "all exact real inputs; equality with original replacement iff every value is nonnegative"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleRsqrt/reciprocal",
+      "retained_lhs": "Rsqrt(Divide(1,a))",
+      "retained_rhs": "Sqrt(a)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal"
+      ],
+      "refutation_evidence": [
+        "TensorRewrite.Theory.Numerical.complex_rsqrt_reciprocal_refuted"
+      ],
+      "exact_profile_contracts": [
+        {
+          "certificate": "TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal",
+          "domain": "all exact real values, with declared totalizations"
+        }
+      ],
+      "mathematical_premises": [
+        "Use actual selected Field/Mathlib real/principal complex operations, with explicit inverse and zero/power totalizations.",
+        "Use exactly each theorem signature: positive/nonnegative bases and complex strip/nonzero conditions are not consequences of a source guard.",
+        "Reciprocal square root is explicitly inverse of the actual square-root operation, not a separate rounded primitive."
+      ],
+      "remaining_partitions": [
+        "Rounded numeric, transcendental, exceptional encoding and status/permission semantics remain open.",
+        "Machine integer division does not inherit field theorems; BitVec 8 has no selected Field instance.",
+        "Pure exact values only; effects, schedule, dynamic/physical observations and full case admission remain open."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}
