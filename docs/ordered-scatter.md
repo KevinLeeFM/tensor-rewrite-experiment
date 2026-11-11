@@ -122,3 +122,8 @@ The subsequent [leading-axis input bridge](scatter-concat.md) derives actual ten
 Concat to event append for arbitrary shared trailing batch dimensions. The frozen
 v1 report remains the earlier trace-only milestone; general dimension/layout
 bridges and whole-record closure remain open.
+
+The subsequent [raw update-layout bridge](scatter-layout.md) derives interleaved
+batch/window tensor reads and singleton window insertions. Its precise remaining
+dimension/order boundaries supersede the earlier unsupported-layout description
+for that new profile; the original frozen milestone is retained.

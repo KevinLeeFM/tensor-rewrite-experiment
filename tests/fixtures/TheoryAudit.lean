@@ -398,3 +398,20 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScatterConcat.scatter_concatenate
 #print axioms TensorRewrite.Theory.ScatterConcat.scatter_combine
 #print axioms TensorRewrite.Theory.ScatterConcat.word_combine_distinct
+
+#print axioms TensorRewrite.Theory.ScatterLayout.project_expand
+#print axioms TensorRewrite.Theory.ScatterLayout.expand_project
+#print axioms TensorRewrite.Theory.ScatterLayout.enumerate_expand
+#print axioms TensorRewrite.Theory.ScatterLayout.elementCount_full
+#print axioms TensorRewrite.Theory.ScatterLayout.update_coordinate
+#print axioms TensorRewrite.Theory.ScatterLayout.adapt_expand
+#print axioms TensorRewrite.Theory.ScatterLayout.adapt_map
+#print axioms TensorRewrite.Theory.ScatterLayout.entries_eq_ordered
+#print axioms TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered
+#print axioms TensorRewrite.Theory.ScatterLayout.entries_length
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_empty
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_map
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_translate
+#print axioms TensorRewrite.Theory.ScatterLayout.word_translate_distinct
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_combine_nested

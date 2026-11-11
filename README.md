@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 386 checked mathematical statements; custom Lean totals **8,228**.
+The theory target now has 402 checked mathematical statements; custom Lean totals **8,506**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 All488 retained records now have domain/dependency worksheets, including374 covered only by
 unreviewed proposals after the six-record Scatter refinement; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
@@ -1133,3 +1133,11 @@ to exact ordered Scatter events, with arbitrary shared trailing batch dimensions
 Sequential composition needs no scalar laws; result fusion explicitly requires
 assoc/comm, with an arbitrary-width word Add instance. Nine statements add201
 custom Lean lines. General dimension layouts and the full campaign remain open.
+
+## Raw Scatter update-layout bridge
+
+The [raw update-layout model](docs/scatter-layout.md) now derives actual interleaved
+batch/window tensor reads and inserted singleton operand-window coordinates to
+the existing exact ordered event list. Sixteen statements add278 custom Lean lines.
+A checked counterexample distinguishes raw storage order from declared Scatter
+order. General dimension bridges and the whole-workload verdict remain open.

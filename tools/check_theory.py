@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ScatterLayout': ['project_expand', 'expand_project', 'enumerate_expand', 'elementCount_full', 'update_coordinate', 'adapt_expand', 'adapt_map', 'entries_eq_ordered', 'raw_storage_order_refuted', 'scatter_eq_ordered', 'entries_length', 'scatter_empty', 'scatter_map', 'scatter_translate', 'word_translate_distinct', 'scatter_combine_nested'],
     'ScatterConcat': ['concatenate_left', 'concatenate_right', 'enumerate_concatenate', 'entries_coordinates', 'target_rebatch', 'entries_concatenate', 'scatter_concatenate', 'scatter_combine', 'word_combine_distinct'],
     'OrderedScatter': ['repeated_parameter_refuted', 'duplicate_order_refuted', 'binary32_translate_refuted', 'clamping_refuted', 'entries_full_window', 'values_full_window', 'offset_mapped', 'offset_unmapped', 'target_eq_some_iff', 'entries_length', 'entries_empty_batch', 'entries_empty_window', 'empty_vector_offset', 'full_window_target', 'filterMap_finRange_single', 'scatter_map', 'empty_components', 'scatter_translate', 'word_translate_distinct', 'step_at', 'run_at', 'run_append', 'values_append', 'step_map', 'run_map', 'foldl_translate', 'foldl_combine', 'run_empty', 'scatter_empty', 'full_window_map', 'run_translate', 'run_combine', 'run_combine_nested', 'word_combine', 'entries_map', 'distinct_word_operation'],
     'Remainder': ['power_toNat', 'power_mask', 'natural_msb_false', 'signed_power_msb', 'natural_add_toNat', 'natural_add_msb_false', 'integer_nested', 'unsigned_nested', 'signed_nested', 'unsigned_power_mask', 'signed_power_mask', 'unsigned_offset', 'signed_offset', 'integer_nested_tensor', 'unsigned_nested_tensor', 'signed_nested_tensor', 'unsigned_mask_tensor', 'signed_mask_tensor', 'unsigned_iota', 'signed_iota', 'unsigned_iota_offset_rhs', 'unsigned_iota_offset_lhs', 'signed_iota_offset_rhs', 'signed_iota_offset_lhs', 'signed_correction_refuted', 'unsigned_wrap_refuted', 'signed_wrap_refuted'],
@@ -140,6 +141,10 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/ScatterLayout.lean': 'S',
+        'TensorRewrite/Theory/ScatterLayoutLemmas.lean': 'H',
+        'TensorRewrite/Theory/ScatterLayoutProof.lean': 'R',
+        'TensorRewrite/Theory/ScatterLayoutCounterexample.lean': 'C',
         'TensorRewrite/Theory/ScatterConcat.lean': 'S',
         'TensorRewrite/Theory/ScatterConcatLemmas.lean': 'H',
         'TensorRewrite/Theory/ScatterConcatProof.lean': 'R',
@@ -254,6 +259,14 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: (
+                             'actual interleaved update tensor and compact/full window index inverses; '
+                             'arbitrary singleton insertions; exact original batch/window event list; '
+                             'arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm '
+                             'only for named algebraic laws; distinct-role all-width word translation; '
+                             'raw storage order has a concrete counterexample; no operand/index batching, '
+                             'implicit index-vector or relative-window permutation bridge, IEEE algebra, '
+                             'external IR admission or whole-record closure'
+                             if '.ScatterLayout.' in name else
                              'actual leading-axis index/update tensor concatenation; arbitrary common trailing batch ranks/extents; full-rank Scatter windows and shared injective signed axes; derived exact event append with duplicates and elementwise drops; arbitrary whole-state reducer for sequential composition, assoc+comm for result fusion, all-width word Add with distinct parameter roles; no arbitrary Concat axis or general Scatter dimension numbers/IEEE algebra/external IR/whole-record closure'
                              if '.ScatterConcat.' in name else {
                           'repeated_parameter_refuted':

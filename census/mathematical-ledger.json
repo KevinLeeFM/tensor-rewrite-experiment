@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 646,
+  "distinct_checked_declarations": 662,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,7 +39,7 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 356,
+    "library_backed_theory": 371,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
     "ordered_scatter_contract_refutation": 4,
@@ -50,6 +50,7 @@
     "window_contract_refutation": 2,
     "remainder_contract_refutation": 3,
     "scalar_domain_counterexample": 2,
+    "scatter_layout_order_refutation": 1,
     "slice_pad_geometry_refutation": 2,
     "uniform_fixed_order_rounding_refutation": 1
   },
@@ -392,6 +393,27 @@
       "independent_statement_review": "pending",
       "manifest": "census/scatter-concat-v1.json",
       "manifest_sha256": "f04590d73347d5caeb19bcbc8203ccc3587b45ce7623061517adca0b57d47dff"
+    },
+    {
+      "model": "raw_update_layout_and_inserted_scatter_windows_v1",
+      "scope": "arbitrary raw batch/window axis interleaving; singleton inserted operand-window dimensions; relative batch/window orders retained; shared injective signed index axes; per-element drop; batch-major/window-major order",
+      "scalar_contract": "none for layout/trace/whole-state transport; homomorphism for scalar mapping; assoc for base translation; assoc+comm for nested result fusion; word Add requires distinct reducer roles",
+      "status": "kernel_checked_raw_update_layout_and_inserted_window_profile",
+      "checked_theorem_count": 16,
+      "full_family_complete": false,
+      "actual_raw_update_tensor_read": true,
+      "arbitrary_batch_window_axis_interleaving": true,
+      "inserted_singleton_window_axes_derived": true,
+      "exact_ordered_trace_bridge": true,
+      "raw_storage_order_counterexample_checked": true,
+      "operand_index_batching_supported": false,
+      "implicit_index_vector_layout_supported": false,
+      "arbitrary_relative_window_permutation_supported": false,
+      "all_scatter_dimension_numbers_supported": false,
+      "floating_associativity_assumed": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/scatter-layout-v1.json",
+      "manifest_sha256": "f538be562ec00ac15154fd4f2611322be81aa9bbd20d74b195489fa13dc950bf"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -399,10 +421,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "2fc6e98ea3998bc6a9504a694d9a0ea65f7dd910bfa3c8c703e90441c851068a",
+    "sha256": "28686169cfa587af6cf59023152dcdabb53730e6e7e9f58e0526051a8a2136a7",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "bd0e36727184fa906de52d9bede859b7682bec1d268b03930ba3c14d601aad72"
+    "output_sha256": "034473bbb2fc338c76ce969a29f3b0cee551d23fc1aa0295e3ce69563e4c265e"
   },
   "proofs": [
     {
@@ -12130,6 +12152,299 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.adapt_expand",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.adapt_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.elementCount_full",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.entries_eq_ordered",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.entries_length",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.enumerate_expand",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.expand_project",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.project_expand",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted",
+      "kinds": [
+        "scatter_layout_order_refutation"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.scatter_combine_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.scatter_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleScatter/empty-updates"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.scatter_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.scatter_translate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.update_coordinate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ScatterLayout.word_translate_distinct",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "actual interleaved update tensor and compact/full window index inverses; arbitrary singleton insertions; exact original batch/window event list; arbitrary whole-state reducer for layout bridge; explicit hom/assoc/comm only for named algebraic laws; distinct-role all-width word translation; raw storage order has a concrete counterexample; no operand/index batching, implicit index-vector or relative-window permutation bridge, IEEE algebra, external IR admission or whole-record closure"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.SlicePad.attributes_count",
       "kinds": [
         "library_backed_theory"
@@ -13172,7 +13487,8 @@
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; both operands Scatter with one use; both reducer roots Add(Parameter,Parameter); index ranks equal; concat-dimension loop does not early-return; selected concat axis is not scalar sentinel; sum of update element counts < lhs result element count; concat safety conjunction fails; Parameter0/Parameter1 identities and distinctness are NOT checked",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Theory.OrderedScatter.run_combine_nested"
+        "TensorRewrite.Theory.OrderedScatter.run_combine_nested",
+        "TensorRewrite.Theory.ScatterLayout.scatter_combine_nested"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -13192,7 +13508,9 @@
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
         "TensorRewrite.Theory.OrderedScatter.scatter_translate",
-        "TensorRewrite.Theory.OrderedScatter.word_translate_distinct"
+        "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+        "TensorRewrite.Theory.ScatterLayout.scatter_translate",
+        "TensorRewrite.Theory.ScatterLayout.word_translate_distinct"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -13212,7 +13530,9 @@
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
         "TensorRewrite.Theory.OrderedScatter.scatter_translate",
-        "TensorRewrite.Theory.OrderedScatter.word_translate_distinct"
+        "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+        "TensorRewrite.Theory.ScatterLayout.scatter_translate",
+        "TensorRewrite.Theory.ScatterLayout.word_translate_distinct"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -17143,7 +17463,8 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.OrderedScatter.empty_components",
-        "TensorRewrite.Theory.OrderedScatter.scatter_empty"
+        "TensorRewrite.Theory.OrderedScatter.scatter_empty",
+        "TensorRewrite.Theory.ScatterLayout.scatter_empty"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"

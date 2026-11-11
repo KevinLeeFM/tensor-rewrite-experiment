@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.ScatterLayout.' in name:
+            manifest=read('census/scatter-layout-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.ScatterConcat.' in name:
             manifest=read('census/scatter-concat-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -233,7 +236,9 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('ordered_scatter_contract_refutation' if '.OrderedScatter.' in name
+        kind=('scatter_layout_order_refutation' if '.ScatterLayout.' in name
+              and name.endswith('_refuted') else
+              'ordered_scatter_contract_refutation' if '.OrderedScatter.' in name
               and name.endswith('_refuted') else
               'uniform_fixed_order_rounding_refutation' if '.UniformSum.' in name else
               'remainder_contract_refutation' if '.Remainder.' in name
@@ -599,6 +604,26 @@ def mathematical_models(root=ROOT):
                        floating_associativity_assumed=False,
                        independent_statement_review='pending',manifest=concatenation['manifest'],
                        manifest_sha256=concatenation['manifest_sha256']))
+    from check_scatter_layout import check_inputs as layout_inputs, validate_result as validate_layout
+    layout=read('reports/scatter-layout.json',root);validate_layout(layout)
+    extension=layout_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ScatterLayout.' in name}
+    assert len(expected)==16 and layout['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['geometry_contract'],
+                       scalar_contract=extension['algebra_contract'],status=layout['status'],
+                       checked_theorem_count=16,full_family_complete=False,
+                       actual_raw_update_tensor_read=True,
+                       arbitrary_batch_window_axis_interleaving=True,
+                       inserted_singleton_window_axes_derived=True,exact_ordered_trace_bridge=True,
+                       raw_storage_order_counterexample_checked=True,
+                       operand_index_batching_supported=False,
+                       implicit_index_vector_layout_supported=False,
+                       arbitrary_relative_window_permutation_supported=False,
+                       all_scatter_dimension_numbers_supported=False,
+                       floating_associativity_assumed=False,
+                       independent_statement_review='pending',manifest=layout['manifest'],
+                       manifest_sha256=layout['manifest_sha256']))
     return models
 
 

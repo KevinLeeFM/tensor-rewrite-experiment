@@ -1215,6 +1215,38 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ScatterConcat.target_rebatch
 #check @TensorRewrite.Theory.ScatterConcat.word_combine_distinct
 #print axioms TensorRewrite.Theory.ScatterConcat.word_combine_distinct
+#check @TensorRewrite.Theory.ScatterLayout.adapt_expand
+#print axioms TensorRewrite.Theory.ScatterLayout.adapt_expand
+#check @TensorRewrite.Theory.ScatterLayout.adapt_map
+#print axioms TensorRewrite.Theory.ScatterLayout.adapt_map
+#check @TensorRewrite.Theory.ScatterLayout.elementCount_full
+#print axioms TensorRewrite.Theory.ScatterLayout.elementCount_full
+#check @TensorRewrite.Theory.ScatterLayout.entries_eq_ordered
+#print axioms TensorRewrite.Theory.ScatterLayout.entries_eq_ordered
+#check @TensorRewrite.Theory.ScatterLayout.entries_length
+#print axioms TensorRewrite.Theory.ScatterLayout.entries_length
+#check @TensorRewrite.Theory.ScatterLayout.enumerate_expand
+#print axioms TensorRewrite.Theory.ScatterLayout.enumerate_expand
+#check @TensorRewrite.Theory.ScatterLayout.expand_project
+#print axioms TensorRewrite.Theory.ScatterLayout.expand_project
+#check @TensorRewrite.Theory.ScatterLayout.project_expand
+#print axioms TensorRewrite.Theory.ScatterLayout.project_expand
+#check @TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted
+#print axioms TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted
+#check @TensorRewrite.Theory.ScatterLayout.scatter_combine_nested
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_combine_nested
+#check @TensorRewrite.Theory.ScatterLayout.scatter_empty
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_empty
+#check @TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered
+#check @TensorRewrite.Theory.ScatterLayout.scatter_map
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_map
+#check @TensorRewrite.Theory.ScatterLayout.scatter_translate
+#print axioms TensorRewrite.Theory.ScatterLayout.scatter_translate
+#check @TensorRewrite.Theory.ScatterLayout.update_coordinate
+#print axioms TensorRewrite.Theory.ScatterLayout.update_coordinate
+#check @TensorRewrite.Theory.ScatterLayout.word_translate_distinct
+#print axioms TensorRewrite.Theory.ScatterLayout.word_translate_distinct
 #check @TensorRewrite.Theory.SlicePad.attributes_count
 #print axioms TensorRewrite.Theory.SlicePad.attributes_count
 #check @TensorRewrite.Theory.SlicePad.attributes_valid

@@ -4430,6 +4430,150 @@ TensorRewrite.Theory.ScalarDomains.real_sqrt_square : ∀ (x : ℝ), √(x * x) 
           (TensorRewrite.Theory.ScatterConcat.concatenate tail leftIndices rightIndices)
           (TensorRewrite.Theory.ScatterConcat.concatenate tail leftUpdates rightUpdates)
 'TensorRewrite.Theory.ScatterConcat.word_combine_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.adapt_expand : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α)
+  (batch : TensorRewrite.Pilot.Index plan.updateAxes.outputShape)
+  (window : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ReductionFiber.shape plan.updateAxes)),
+  TensorRewrite.Theory.ScatterLayout.adaptUpdates plan updates batch (plan.windows.expandIndex window) =
+    updates (TensorRewrite.Theory.ReductionFiber.mergeIndex plan.updateAxes batch window)
+'TensorRewrite.Theory.ScatterLayout.adapt_expand' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.adapt_map : ∀ {indexSize : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize) (convert : α → β)
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterLayout.adaptUpdates plan (TensorRewrite.Pilot.Tensor.map convert updates) = fun batch =>
+    TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.ScatterLayout.adaptUpdates plan updates batch)
+'TensorRewrite.Theory.ScatterLayout.adapt_map' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.elementCount_full : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (embedding : TensorRewrite.Theory.ScatterLayout.WindowEmbedding shape),
+  TensorRewrite.Pilot.LinearIndex.elementCount embedding.fullShape = TensorRewrite.Pilot.LinearIndex.elementCount shape
+'TensorRewrite.Theory.ScatterLayout.elementCount_full' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.entries_eq_ordered : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterLayout.entries plan indices updates =
+    TensorRewrite.Theory.OrderedScatter.entries plan.toOrdered indices
+      (TensorRewrite.Theory.ScatterLayout.adaptUpdates plan updates)
+'TensorRewrite.Theory.ScatterLayout.entries_eq_ordered' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.entries_length : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  (TensorRewrite.Theory.ScatterLayout.entries plan indices updates).length =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.updateAxes.outputShape *
+      TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.ReductionFiber.shape plan.updateAxes)
+'TensorRewrite.Theory.ScatterLayout.entries_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.enumerate_expand : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (embedding : TensorRewrite.Theory.ScatterLayout.WindowEmbedding shape),
+  TensorRewrite.Theory.OrderedCoordinates.enumerate embedding.fullShape =
+    List.map embedding.expandIndex (TensorRewrite.Theory.OrderedCoordinates.enumerate shape)
+'TensorRewrite.Theory.ScatterLayout.enumerate_expand' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.expand_project : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (embedding : TensorRewrite.Theory.ScatterLayout.WindowEmbedding shape)
+  (index : TensorRewrite.Pilot.Index embedding.fullShape), embedding.expandIndex (embedding.projectIndex index) = index
+'TensorRewrite.Theory.ScatterLayout.expand_project' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.project_expand : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (embedding : TensorRewrite.Theory.ScatterLayout.WindowEmbedding shape) (index : TensorRewrite.Pilot.Index shape),
+  embedding.projectIndex (embedding.expandIndex index) = index
+'TensorRewrite.Theory.ScatterLayout.project_expand' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted : have indices := fun batch x =>
+  Int.ofNat ↑(batch ⟨0, TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted._proof_1⟩) - 1;
+have updates := fun raw =>
+  10 * ↑(raw ⟨0, TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted._proof_2⟩) +
+      ↑(raw ⟨1, TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted._proof_3⟩) +
+    1;
+(TensorRewrite.Theory.ScatterLayout.scatter TensorRewrite.Theory.ScatterLayout.interleavedExample
+      (fun a b => 10 * a + b) (TensorRewrite.Pilot.Tensor.constant 0) indices updates fun x => ⟨0, ⋯⟩) =
+    112 ∧
+  (TensorRewrite.Theory.OrderedScatter.run (fun a b => 10 * a + b) (TensorRewrite.Pilot.Tensor.constant 0)
+      (TensorRewrite.Theory.ScatterLayout.storageEntries TensorRewrite.Theory.ScatterLayout.interleavedExample indices
+        updates)
+      fun x => ⟨0, ⋯⟩) =
+    31
+'TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.scatter_combine_nested : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize) (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    (∀ (a b : α), operation a b = operation b a) →
+      ∀ (first second : TensorRewrite.Pilot.Tensor plan.operandShape α)
+        (leftIndices rightIndices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+        (leftUpdates rightUpdates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+        TensorRewrite.Pilot.Tensor.map₂ operation
+            (TensorRewrite.Theory.ScatterLayout.scatter plan operation first leftIndices leftUpdates)
+            (TensorRewrite.Theory.ScatterLayout.scatter plan operation second rightIndices rightUpdates) =
+          TensorRewrite.Theory.ScatterLayout.scatter plan operation
+            (TensorRewrite.Theory.ScatterLayout.scatter plan operation
+              (TensorRewrite.Pilot.Tensor.map₂ operation first second) leftIndices leftUpdates)
+            rightIndices rightUpdates
+'TensorRewrite.Theory.ScatterLayout.scatter_combine_nested' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.scatter_empty : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.updateAxes.outputShape = 0 ∨
+      TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.ReductionFiber.shape plan.updateAxes) = 0 →
+    ∀ (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+      TensorRewrite.Theory.ScatterLayout.scatter plan operation base indices updates = base
+'TensorRewrite.Theory.ScatterLayout.scatter_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize) (operation : α → α → α)
+  (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+  (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+  (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+  TensorRewrite.Theory.ScatterLayout.scatter plan operation base indices updates =
+    TensorRewrite.Theory.OrderedScatter.scatter plan.toOrdered operation base indices
+      (TensorRewrite.Theory.ScatterLayout.adaptUpdates plan updates)
+'TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.scatter_map : ∀ {indexSize : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize) (convert : α → β) (first : α → α → α) (second : β → β → β),
+  (∀ (a b : α), convert (first a b) = second (convert a) (convert b)) →
+    ∀ (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+      TensorRewrite.Pilot.Tensor.map convert
+          (TensorRewrite.Theory.ScatterLayout.scatter plan first base indices updates) =
+        TensorRewrite.Theory.ScatterLayout.scatter plan second (TensorRewrite.Pilot.Tensor.map convert base) indices
+          (TensorRewrite.Pilot.Tensor.map convert updates)
+'TensorRewrite.Theory.ScatterLayout.scatter_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.scatter_translate : ∀ {indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize) (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    ∀ (first base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape α),
+      TensorRewrite.Theory.ScatterLayout.scatter plan operation (TensorRewrite.Pilot.Tensor.map₂ operation first base)
+          indices updates =
+        TensorRewrite.Pilot.Tensor.map₂ operation first
+          (TensorRewrite.Theory.ScatterLayout.scatter plan operation base indices updates)
+'TensorRewrite.Theory.ScatterLayout.scatter_translate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.update_coordinate : ∀ {indexSize : ℕ}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize)
+  (batch : TensorRewrite.Pilot.Index plan.updateAxes.outputShape)
+  (window : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ReductionFiber.shape plan.updateAxes)),
+  TensorRewrite.Theory.ReductionFiber.outputIndex plan.updateAxes
+        (TensorRewrite.Theory.ReductionFiber.mergeIndex plan.updateAxes batch window) =
+      batch ∧
+    TensorRewrite.Theory.ReductionFiber.reducedIndex plan.updateAxes
+        (TensorRewrite.Theory.ReductionFiber.mergeIndex plan.updateAxes batch window) =
+      window
+'TensorRewrite.Theory.ScatterLayout.update_coordinate' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ScatterLayout.word_translate_distinct : ∀ {indexSize width : ℕ}
+  (plan : TensorRewrite.Theory.ScatterLayout.Plan indexSize) (order : Bool)
+  (first second : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+  first ≠ second →
+    ∀ (separate base : TensorRewrite.Pilot.Tensor plan.operandShape (BitVec width))
+      (indices : TensorRewrite.Pilot.Tensor plan.updateAxes.outputShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.updateAxes.inputShape (BitVec width)),
+      TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 + x2) order separate
+          (TensorRewrite.Theory.ScatterLayout.scatter plan
+            (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second) base indices updates) =
+        TensorRewrite.Theory.ScatterLayout.scatter plan
+          (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second)
+          (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) separate base) indices updates
+'TensorRewrite.Theory.ScatterLayout.word_translate_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.SlicePad.attributes_count : ∀ (axis : TensorRewrite.Theory.SlicePad.Axis),
   axis.attributes.elementCount = ↑axis.count
 'TensorRewrite.Theory.SlicePad.attributes_count' depends on axioms: [propext, Classical.choice, Quot.sound]

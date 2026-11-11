@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "model": "raw_update_layout_and_inserted_scatter_windows_v1",
+  "geometry_contract": "arbitrary raw batch/window axis interleaving; singleton inserted operand-window dimensions; relative batch/window orders retained; shared injective signed index axes; per-element drop; batch-major/window-major order",
+  "algebra_contract": "none for layout/trace/whole-state transport; homomorphism for scalar mapping; assoc for base translation; assoc+comm for nested result fusion; word Add requires distinct reducer roles",
+  "candidate_benchmark_bindings": {
+    "TensorRewrite.Theory.ScatterLayout.scatter_empty": [
+      "HandleScatter/empty-updates"
+    ],
+    "TensorRewrite.Theory.ScatterLayout.scatter_translate": [
+      "HandleAdd/scatter-single-lhs",
+      "HandleAdd/scatter-single-rhs"
+    ],
+    "TensorRewrite.Theory.ScatterLayout.word_translate_distinct": [
+      "HandleAdd/scatter-single-lhs",
+      "HandleAdd/scatter-single-rhs"
+    ],
+    "TensorRewrite.Theory.ScatterLayout.scatter_combine_nested": [
+      "HandleAdd/scatter-nested"
+    ]
+  },
+  "certificates": [
+    "TensorRewrite.Theory.ScatterLayout.project_expand",
+    "TensorRewrite.Theory.ScatterLayout.expand_project",
+    "TensorRewrite.Theory.ScatterLayout.enumerate_expand",
+    "TensorRewrite.Theory.ScatterLayout.elementCount_full",
+    "TensorRewrite.Theory.ScatterLayout.update_coordinate",
+    "TensorRewrite.Theory.ScatterLayout.adapt_expand",
+    "TensorRewrite.Theory.ScatterLayout.adapt_map",
+    "TensorRewrite.Theory.ScatterLayout.entries_eq_ordered",
+    "TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted",
+    "TensorRewrite.Theory.ScatterLayout.scatter_eq_ordered",
+    "TensorRewrite.Theory.ScatterLayout.entries_length",
+    "TensorRewrite.Theory.ScatterLayout.scatter_empty",
+    "TensorRewrite.Theory.ScatterLayout.scatter_map",
+    "TensorRewrite.Theory.ScatterLayout.scatter_translate",
+    "TensorRewrite.Theory.ScatterLayout.word_translate_distinct",
+    "TensorRewrite.Theory.ScatterLayout.scatter_combine_nested"
+  ],
+  "counterexample_certificates": [
+    "TensorRewrite.Theory.ScatterLayout.raw_storage_order_refuted"
+  ],
+  "files": [
+    {
+      "path": "TensorRewrite/Theory/ScatterLayoutLemmas.lean",
+      "sha256": "67cba242f11fe40262c58e72c61077fd852335c33c2b0f00106afc1b0106aea0"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterLayoutCounterexample.lean",
+      "sha256": "d94fd8c10f8d43cdb302a861f372553175890da01349deff7b35eeb0777519fc"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterLayout.lean",
+      "sha256": "2c0cdcba5ec0594b0d01143b5c57dae816f4f5e11bb0d63bb372e134a8a7776b"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterLayoutProof.lean",
+      "sha256": "03e88e35c3d4f204c993a94c57fffdc565a5a0598ece1898aacd486be7569d7e"
+    },
+    {
+      "path": "tests/fixtures/ScatterLayoutControls.lean",
+      "sha256": "8ac228380ae5bf6bd30c3cca6769352e51163bc0d945b08631b08455452be1ff"
+    },
+    {
+      "path": "tools/scatter_layout_examples.py",
+      "sha256": "fba1cc7effb614eae82d1211c5aa9fcaee558e0c5e4009916776ed5eefa63751"
+    },
+    {
+      "path": "tools/check_scatter_layout.py",
+      "sha256": "02bf936bfa8be751373010ff81c0aa5d99e421a8b23e36f651ee6dc9cbc16ae2"
+    },
+    {
+      "path": "census/ordered-scatter-v1.json",
+      "sha256": "c13086b6ce0ee34725da67a868d5b25699c7ae2a5c152b1ce431f1766811946f"
+    },
+    {
+      "path": "census/scatter-concat-v1.json",
+      "sha256": "f04590d73347d5caeb19bcbc8203ccc3587b45ce7623061517adca0b57d47dff"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatter.lean",
+      "sha256": "8c093aa92f64d4e52497fcbca8b19730719da8e43954579b77cb5472b5b33ce1"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterLemmas.lean",
+      "sha256": "89205746ef948334b66103949113811b21db86a9d9cb37d50c2fed3aebeb46cd"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterProof.lean",
+      "sha256": "8fc058869632fc802658f979dd2fee31602f13f7af609268ba947b2d8c578092"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedScatterGraph.lean",
+      "sha256": "36bced8f40e8685ea07fb66bdf8663d3e44a8b1d26bc8cc97aaebdba053e4f14"
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderedCoordinates.lean",
+      "sha256": "67765b42b750f3b07ffafeadb4994362d198c70bd6b7d52b4baff6a38a186d91"
+    },
+    {
+      "path": "TensorRewrite/Theory/ScatterConcatLemmas.lean",
+      "sha256": "ca78106d70801bd5aa3af45444c9fd5b5f570eb353f77487d3018c362decade1"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiber.lean",
+      "sha256": "6c5666e00f969ab00e53a3a4eaefcbfb10e2527ae3c97832d781615a623ba6a1"
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiberLemmas.lean",
+      "sha256": "a71056600ecf1eb98c95d9469c22549903e5285683f0c1a131c88f6beda70cb7"
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reduction.lean",
+      "sha256": "bea0cf586bdf37c77ed80435eea287930f6b15a3e44a0c725373859c02d15499"
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReducerIndex.lean",
+      "sha256": "10bd9cfa55c85042495a5e751cfae1a2b745298e5bb9790101ef3ad48aa95905"
+    },
+    {
+      "path": "lean-toolchain",
+      "sha256": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c"
+    }
+  ],
+  "lake_manifest_sha256": "e91e7fc9c30cb1390276c4b29e1a2fe1eec70a1867e72de0a233c660dd0d38d6",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "independent_statement_review": "pending",
+  "whole_benchmark_records_closed": 0,
+  "mathematical_obligation_denominator": null
+}
