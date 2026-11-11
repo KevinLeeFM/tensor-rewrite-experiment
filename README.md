@@ -938,7 +938,7 @@ no false statement in the inspected 89-statement foundation. Two bookkeeping
 findings require correction: 30 omitted retained declarations and 12 refutation
 lines misclassified as correctness proofs. The response registers 349 declarations
 and corrects R/C attribution without changing Lean statements or the total.
-Correction recheck and full-workload review remain open. See [the review/replay guide](docs/mathematical-review.md)
+The correction recheck has closed both findings; full-workload review remains open. See [the review/replay guide](docs/mathematical-review.md)
 and `reports/mathematical-clean-replay-v1.md`. Custom Lean remains4165 lines.
 
 

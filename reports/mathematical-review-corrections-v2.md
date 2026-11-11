@@ -19,3 +19,8 @@ Its frozen registered baseline remains349 declarations/89 theory statements/4165
 custom lines; the moving worktree may contain later mathematical work. A further
 independent recheck of MF-01-R1 is pending. No claim about all349 statements,
 benchmark correspondence, source correspondence or the full workload is implied.
+
+Final resolution: the independent recheck of `4273260` closed MF-01-R1 and thus
+MF-01; MF-02 remains resolved. All31 baseline tests pass and regenerated ledger
+bytes match the commit. See the final correction recheck under `reviews/results/`.
+This does not expand the scope to the later scalar-domain milestone or full workload.

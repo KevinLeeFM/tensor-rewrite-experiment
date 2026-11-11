@@ -78,3 +78,18 @@ The source snapshot and replay evidence are preserved separately from the moving
 worktree. The current v1 report/validator is deliberately bound to this baseline;
 a later reviewed extension needs a separately versioned packet and record.
 Code correspondence remains future work.
+
+## Correction closeout
+
+The final independent recheck at `4273260` closes MF-01, MF-01-R1 and MF-02
+with no remaining finding in that correction scope. The witness metadata now
+matches its exact-integer model, ledger regeneration matches committed bytes,
+and all31 baseline tests pass. The reviewer reused verified project/dependency
+artifacts for this narrow final replay and preserved portable evidence in
+`reviews/results/mathematical-foundation-v1-final-correction-recheck.json`.
+Its Markdown companion records inspected scope and all limitations.
+
+The reviewed basis remains349 declarations/89 theory statements/4165 custom
+lines. The later scalar-domain milestone at `27937c1` raises current totals
+to363/103/4283; its14 new statements were excluded from the old review and
+await independent review. No whole retained record is closed by this review.
