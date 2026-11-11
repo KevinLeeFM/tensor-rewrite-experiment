@@ -529,6 +529,36 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.ConvolutionDot.rhs_index_feature
 #check @TensorRewrite.Theory.ConvolutionDot.sum_contract_positions
 #print axioms TensorRewrite.Theory.ConvolutionDot.sum_contract_positions
+#check @TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted
+#print axioms TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted
+#check @TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot
+#print axioms TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot
+#check @TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq
+#print axioms TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq
+#check @TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted
+#print axioms TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted
+#check @TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq
+#check @TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq
+#check @TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot
+#check @TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring
+#check @TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel
+#check @TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve
+#check @TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast
+#check @TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton
+#check @TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product
+#check @TensorRewrite.Theory.ConvolutionOrdered.term_pointwise
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.term_pointwise
+#check @TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms
+#print axioms TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms
 #check @TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq
 #print axioms TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq
 #check @TensorRewrite.Theory.ConvolutionPointwise.base_position_eq

@@ -1,5 +1,9 @@
 # Exact pointwise convolution as matrix Dot
 
+**Subsequent extension:** the [ordered scalar theorem](convolution-ordered.md)
+proves equal contribution lists and folds without algebra assumptions, including
+a pinned binary32 stored-value specialization under the same schedule.
+
 The mathematical bridge from pointwise convolution to the existing Dot model is
 proved in `TensorRewrite/Theory/ConvolutionDotProof.lean`. The matrix definitions
 are in `ConvolutionDot.lean`; bounded coordinate recovery is proved in

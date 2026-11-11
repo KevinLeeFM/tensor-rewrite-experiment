@@ -9,6 +9,9 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'ConvolutionOrdered': ['map_finRange_cast', 'map_finRange_singleton', 'convolve_semiring', 'term_pointwise', 'contribution_count_eq', 'channel_position_eq', 'term_eq_dot_product', 'terms_eq_dot_terms', 'convolve_eq_dot', 'dot_eq_convolve', 'convolve_single_channel'],
+    'ConvolutionFloat': ['binary32_pointwise_dot', 'binary32_reference_eq', 'binary32_fold_omission_refuted', 'binary32_reversal_refuted'],
+
     'ConvolutionSeparable': ['output_extent_formula', 'spanning_extent_eq', 'derive_geometry', 'axis_inputIndex_eq', 'spatial_input_eq', 'project_expand', 'expand_project', 'reverse_involution', 'reduced_position_apply', 'term_reduced', 'convolve_eq_productReduction'],
     'ConvolutionDot': ['lhs_index_row', 'lhs_index_channel', 'rhs_index_feature', 'rhs_index_channel', 'matrix_output_row', 'matrix_output_feature', 'convolution_output_dot_output', 'dot_output_convolution_output', 'sum_contract_positions', 'dot_eq_channel_sum', 'convolve_eq_dot', 'dot_eq_convolve'],
     'ConvolutionPointwise': ['dilatedExtent_one', 'output_extent_eq', 'output_shape_eq', 'elementCount_unit', 'kernel_count_eq_one', 'kernel_index_unique', 'base_position_eq', 'axis_inputIndex_eq', 'spatial_input_eq', 'term_pointwise', 'sum_kernel_positions', 'convolve_eq_channelSum', 'convolve_single_channel'],
@@ -61,6 +64,10 @@ def main():
                   'TensorRewrite/Theory/ConvolutionSeparableLemmas.lean': 'H',
                   'TensorRewrite/Theory/ConvolutionSeparableReindex.lean': 'H',
                   'TensorRewrite/Theory/ConvolutionSeparableProof.lean': 'R',
+                  'TensorRewrite/Theory/ConvolutionOrdered.lean': 'S',
+                  'TensorRewrite/Theory/ConvolutionOrderedLemmas.lean': 'H',
+                  'TensorRewrite/Theory/ConvolutionOrderedProof.lean': 'R',
+                  'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     rows = []
     for name, category in categories.items():
@@ -95,6 +102,13 @@ def main():
                              'equal-input xor requires value equality' if '.LogicalFamily.' in name else
                              'exact finite sums and ordered reductions under explicitly stated '
                              'AddMonoid/AddCommMonoid and equal-count premises' if '.FiniteSum.' in name
+                             else 'explicit ordered binary32 values; shared separate product/add fold; '
+                                  'bit-exact pointwise Dot and reference equality; concrete signed-zero '
+                                  'and reversed-fold refutations; flags/FMA/backend policy outside model'
+                             if '.ConvolutionFloat.' in name
+                             else 'arbitrary scalar types/product/add/initializer/finish; identical '
+                                  'pointwise convolution and Dot lists/folds; no scalar algebra assumed'
+                             if '.ConvolutionOrdered.' in name
                              else 'mixed unit-kernel/output-one windows; undilated/unpadded/unit stride; '
                                   'one input channel; arbitrary rank/extents/groups/features; '
                                   'nonunit-axis reduction and kernel reversal; exact Semiring'

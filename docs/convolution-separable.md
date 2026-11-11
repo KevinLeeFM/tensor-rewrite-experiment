@@ -85,3 +85,8 @@ exact outputs and certificate axioms are in `reports/convolution-separable.json`
 Independent statement review, the remaining numerical/layout/padding/composition
 partitions, the full campaign and a final feasibility verdict remain open.
 Code correspondence is user-deferred future work.
+
+The [ordered numerical extension](convolution-ordered.md) proves the pointwise
+Dot case without algebra laws. Its kernel-checked signed-zero and reversal
+examples also show why the mixed-window exact sum reindexing needs a separate
+rounded accumulation/observation argument.

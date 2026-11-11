@@ -1921,6 +1921,167 @@ TensorRewrite.Theory.Convolution.inputIndex?_position : ∀ (axis : TensorRewrit
   (value : Fin channels → α),
   ∑ position, value (TensorRewrite.Pilot.FiniteProduct.row position) = ∑ channel, value channel
 'TensorRewrite.Theory.ConvolutionDot.sum_contract_positions' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted : FloatLib.Floats.ExecFloat.Binary.toNatBits
+    (FloatLib.Floats.ExecFloat.add (FloatLib.Floats.ExecFloat.Binary.ofNatBits 0)
+      (FloatLib.Floats.ExecFloat.mul (FloatLib.Floats.ExecFloat.Binary.ofNatBits 2147483648)
+        (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1065353216))) ≠
+  FloatLib.Floats.ExecFloat.Binary.toNatBits
+    (FloatLib.Floats.ExecFloat.mul (FloatLib.Floats.ExecFloat.Binary.ofNatBits 2147483648)
+      (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1065353216))
+'TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (initial padding : FloatLib.Floats.Binary32)
+  (input : TensorRewrite.Theory.Convolution.Input plan FloatLib.Floats.Binary32)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan FloatLib.Floats.Binary32)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan),
+  TensorRewrite.Theory.ConvolutionOrdered.convolve plan FloatLib.Floats.ExecFloat.add initial padding
+      FloatLib.Floats.ExecFloat.mul id input kernel output =
+    TensorRewrite.Pilot.Contraction.dotTensor (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan)
+      FloatLib.Floats.ExecFloat.add initial FloatLib.Floats.ExecFloat.mul id
+      (TensorRewrite.Theory.ConvolutionDot.lhsMatrix plan input output.batchGroup output.featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.rhsMatrix plan ⋯ kernel output.batchGroup output.featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.dotOutput plan ⋯ output)
+'TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (initial padding : FloatLib.Floats.Binary32)
+  (input : TensorRewrite.Theory.Convolution.Input plan FloatLib.Floats.Binary32)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan FloatLib.Floats.Binary32),
+  TensorRewrite.Theory.ConvolutionOrdered.convolve plan FloatLib.Floats.ExecFloat.add initial padding
+      FloatLib.Floats.ExecFloat.mul id input kernel =
+    TensorRewrite.Theory.ConvolutionOrdered.convolve plan FloatLib.Floats.ExecFloat.Spec.add initial padding
+      FloatLib.Floats.ExecFloat.Spec.mul id input kernel
+'TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted : (List.foldl FloatLib.Floats.ExecFloat.add
+      (FloatLib.Floats.ExecFloat.Binary.ofNatBits 0)
+      [FloatLib.Floats.ExecFloat.Binary.ofNatBits 1266679808, FloatLib.Floats.ExecFloat.Binary.ofNatBits 1065353216,
+        FloatLib.Floats.ExecFloat.Binary.ofNatBits 3414163456]).toNatBits ≠
+  (List.foldl FloatLib.Floats.ExecFloat.add (FloatLib.Floats.ExecFloat.Binary.ofNatBits 0)
+      [FloatLib.Floats.ExecFloat.Binary.ofNatBits 3414163456, FloatLib.Floats.ExecFloat.Binary.ofNatBits 1065353216,
+        FloatLib.Floats.ExecFloat.Binary.ofNatBits 1266679808]).toNatBits
+'TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Pilot.FiniteProduct.row position =
+    TensorRewrite.Pilot.LinearIndex.delinearize (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).contractShape
+      (Fin.cast ⋯ position) 0
+'TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq : ∀ {rank : ℕ}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank),
+  TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan →
+    plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape =
+      TensorRewrite.Pilot.LinearIndex.elementCount (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).contractShape
+'TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq' depends on axioms: [propext]
+@TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot : ∀ {rank : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (add : Acc → Acc → Acc)
+  (initial padding : Acc) (multiply : L → R → Acc) (finish : Acc → Result)
+  (input : TensorRewrite.Theory.Convolution.Input plan L) (kernel : TensorRewrite.Theory.Convolution.Kernel plan R)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan),
+  TensorRewrite.Theory.ConvolutionOrdered.convolve plan add initial padding multiply finish input kernel output =
+    TensorRewrite.Pilot.Contraction.dotTensor (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan) add initial multiply
+      finish (TensorRewrite.Theory.ConvolutionDot.lhsMatrix plan input output.batchGroup output.featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.rhsMatrix plan ⋯ kernel output.batchGroup output.featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.dotOutput plan ⋯ output)
+'TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring : ∀ {rank : ℕ} {α : Type} [inst : Semiring α]
+  (plan : TensorRewrite.Theory.Convolution.Plan rank) (input : TensorRewrite.Theory.Convolution.Input plan α)
+  (kernel : TensorRewrite.Theory.Convolution.Kernel plan α),
+  TensorRewrite.Theory.ConvolutionOrdered.convolve plan (fun x1 x2 => x1 + x2) 0 0 (fun x1 x2 => x1 * x2) id input
+      kernel =
+    TensorRewrite.Theory.Convolution.convolve plan input kernel
+'TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel : ∀ {rank : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (single : plan.inputFeaturesPerGroup = 1)
+  (add : Acc → Acc → Acc) (initial padding : Acc) (multiply : L → R → Acc) (finish : Acc → Result)
+  (input : TensorRewrite.Theory.Convolution.Input plan L) (kernel : TensorRewrite.Theory.Convolution.Kernel plan R)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan),
+  TensorRewrite.Theory.ConvolutionOrdered.convolve plan add initial padding multiply finish input kernel output =
+    finish
+      (add initial
+        (multiply
+          (input (TensorRewrite.Pilot.FiniteProduct.join output.batchGroup output.batch)
+            (TensorRewrite.Pilot.FiniteProduct.join output.featureGroup ⟨0, ⋯⟩)
+            (TensorRewrite.Theory.ConvolutionPointwise.inputIndex plan ⋯ output.spatial))
+          (kernel output.batchGroup output.featureGroup output.feature ⟨0, ⋯⟩
+            (TensorRewrite.Theory.ConvolutionPointwise.kernelIndex plan ⋯))))
+'TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve : ∀ {rank : ℕ} {L R Acc Result : Type}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (add : Acc → Acc → Acc)
+  (initial padding : Acc) (multiply : L → R → Acc) (finish : Acc → Result)
+  (input : TensorRewrite.Theory.Convolution.Input plan L) (kernel : TensorRewrite.Theory.Convolution.Kernel plan R)
+  (batchGroup : Fin plan.batchGroups) (featureGroup : Fin plan.featureGroups)
+  (output : TensorRewrite.Pilot.Index (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).outputShape),
+  TensorRewrite.Pilot.Contraction.dotTensor (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan) add initial multiply
+      finish (TensorRewrite.Theory.ConvolutionDot.lhsMatrix plan input batchGroup featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.rhsMatrix plan ⋯ kernel batchGroup featureGroup) output =
+    TensorRewrite.Theory.ConvolutionOrdered.convolve plan add initial padding multiply finish input kernel
+      (TensorRewrite.Theory.ConvolutionDot.convolutionOutput plan ⋯ batchGroup featureGroup output)
+'TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast : ∀ {α : Type} {first second : ℕ} (same : first = second)
+  (value : Fin second → α),
+  List.map (fun position => value (Fin.cast same position)) (List.finRange first) =
+    List.map value (List.finRange second)
+'TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast' does not depend on any axioms
+@TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton : ∀ {α : Type} {count : ℕ} (single : count = 1)
+  (value : Fin count → α), List.map value (List.finRange count) = [value ⟨0, ⋯⟩]
+'TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product : ∀ {rank : ℕ} {L R Acc : Type}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (padding : Acc) (multiply : L → R → Acc)
+  (input : TensorRewrite.Theory.Convolution.Input plan L) (kernel : TensorRewrite.Theory.Convolution.Kernel plan R)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.ConvolutionOrdered.term plan padding multiply input kernel output position =
+    multiply
+      (TensorRewrite.Theory.ConvolutionDot.lhsMatrix plan input output.batchGroup output.featureGroup
+        ((TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).lhsIndex
+          (TensorRewrite.Theory.ConvolutionDot.dotOutput plan ⋯ output)
+          (TensorRewrite.Pilot.LinearIndex.delinearize
+            (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).contractShape (Fin.cast ⋯ position))))
+      (TensorRewrite.Theory.ConvolutionDot.rhsMatrix plan ⋯ kernel output.batchGroup output.featureGroup
+        ((TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).rhsIndex
+          (TensorRewrite.Theory.ConvolutionDot.dotOutput plan ⋯ output)
+          (TensorRewrite.Pilot.LinearIndex.delinearize
+            (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan).contractShape (Fin.cast ⋯ position))))
+'TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.term_pointwise : ∀ {rank : ℕ} {L R Acc : Type}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (padding : Acc) (multiply : L → R → Acc)
+  (input : TensorRewrite.Theory.Convolution.Input plan L) (kernel : TensorRewrite.Theory.Convolution.Kernel plan R)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan)
+  (position : Fin (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape)),
+  TensorRewrite.Theory.ConvolutionOrdered.term plan padding multiply input kernel output position =
+    multiply
+      (input (TensorRewrite.Pilot.FiniteProduct.join output.batchGroup output.batch)
+        (TensorRewrite.Pilot.FiniteProduct.join output.featureGroup (TensorRewrite.Pilot.FiniteProduct.row position))
+        (TensorRewrite.Theory.ConvolutionPointwise.inputIndex plan ⋯ output.spatial))
+      (kernel output.batchGroup output.featureGroup output.feature (TensorRewrite.Pilot.FiniteProduct.row position)
+        (TensorRewrite.Theory.ConvolutionPointwise.kernelIndex plan ⋯))
+'TensorRewrite.Theory.ConvolutionOrdered.term_pointwise' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms : ∀ {rank : ℕ} {L R Acc : Type}
+  (plan : TensorRewrite.Theory.Convolution.Plan rank)
+  (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwise plan) (padding : Acc) (multiply : L → R → Acc)
+  (input : TensorRewrite.Theory.Convolution.Input plan L) (kernel : TensorRewrite.Theory.Convolution.Kernel plan R)
+  (output : TensorRewrite.Theory.Convolution.OutputIndex plan),
+  TensorRewrite.Theory.ConvolutionOrdered.terms plan padding multiply input kernel output =
+    TensorRewrite.Pilot.Contraction.terms (TensorRewrite.Theory.ConvolutionDot.matrixPlan plan) multiply
+      (TensorRewrite.Theory.ConvolutionDot.lhsMatrix plan input output.batchGroup output.featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.rhsMatrix plan ⋯ kernel output.batchGroup output.featureGroup)
+      (TensorRewrite.Theory.ConvolutionDot.dotOutput plan ⋯ output)
+'TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.ConvolutionPointwise.axis_inputIndex_eq : ∀ (axis : TensorRewrite.Theory.Convolution.Axis)
   (pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis axis) (output : Fin axis.outputExtent)
   (kernel : Fin axis.kernelExtent), axis.inputIndex? (↑output) kernel = some (Fin.cast ⋯ output)

@@ -8,3 +8,4 @@ public import TensorRewrite.Theory.ConvolutionAlgebra
 public import TensorRewrite.Theory.ConvolutionPointwiseAlgebra
 public import TensorRewrite.Theory.ConvolutionDotProof
 public import TensorRewrite.Theory.ConvolutionSeparableProof
+public import TensorRewrite.Theory.ConvolutionFloat

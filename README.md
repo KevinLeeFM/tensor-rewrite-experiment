@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 74 checked mathematical statements; custom Lean totals **3,924**.
+The theory target now has 89 checked mathematical statements; custom Lean totals **4,165**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -906,3 +906,20 @@ See [the mixed-window guide](docs/convolution-separable.md),
 domain worksheet. Nine conversion variants and seven helper-composition
 references remain visible; no final obligation denominator or full convolution
 family is claimed.
+
+
+## Ordered binary32 pointwise Dot
+
+Pointwise convolution and matrix Dot now have identical ordered contribution
+lists and folds without scalar algebra assumptions. The pinned binary32
+specialization preserves stored values under the same separate multiply/add
+schedule. The one-channel formula retains its initial addition and finish;
+concrete signed-zero and reversed-fold counterexamples prove why those details
+matter. External backend/FMA/precision contracts remain separate.
+
+Fifteen new statements add241 custom Lean lines. Twelve binary32 profiles match
+an independent rational oracle, and a heterogeneous non-associative fold also
+agrees. All23 mathematical accounting tests pass. See
+[the ordered contract](docs/convolution-ordered.md), `reports/convolution-ordered.json`
+and the preserved failed-v1/corrected-v2 checker history. Full workload closure
+and independent semantic review remain open.

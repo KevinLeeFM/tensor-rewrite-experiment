@@ -60,7 +60,7 @@ class ConvolutionSeparableTests(unittest.TestCase):
                 return 'changed' if str(path).endswith(suffix) else original_digest(path)
             with patch.object(separable,'digest',side_effect=changed_digest):
                 with self.assertRaises(AssertionError):separable.check_inputs()
-        model=ledger.mathematical_models()[-1]
+        model=ledger.mathematical_models()[3]
         self.assertEqual(model['checked_theorem_count'],11)
         self.assertTrue(model['nonunit_axes_only'] and model['kernel_reversal_reindexed'])
         self.assertFalse(model['full_family_complete'])

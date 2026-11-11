@@ -104,6 +104,12 @@ def evidence(root=ROOT):
                     ('lhs-lhs','lhs-rhs','rhs-lhs','rhs-rhs')]
         if name.endswith('ConvolutionPointwise.convolve_eq_channelSum'):
             labels=['SimplifyConvToDot/pointwise-layout']
+        if name.endswith(('ConvolutionOrdered.convolve_eq_dot','ConvolutionFloat.binary32_pointwise_dot')):
+            labels=['SimplifyConvToDot/pointwise-layout']
+        if name.endswith('ConvolutionFloat.binary32_fold_omission_refuted'):
+            labels=['SimplifyConvToMultiply/pointwise-000']
+        if name.endswith('ConvolutionFloat.binary32_reversal_refuted'):
+            labels=['SimplifyConvToMultiply/reduce-100']
         if name.endswith('ConvolutionSeparable.convolve_eq_productReduction'):
             labels=['SimplifyConvToMultiply/'+mode for mode in
                     ('pointwise-000','reduce-000','reduce-100')]
@@ -111,7 +117,9 @@ def evidence(root=ROOT):
             labels=['SimplifyConvToDot/pointwise-layout']
         if name.endswith('ConvolutionPointwise.convolve_single_channel'):
             labels=['SimplifyConvToMultiply/pointwise-000']
-        add(name,'library_backed_theory',theory.get('theorem_profiles',{}).get(name,theory['scope']),labels)
+        kind=('numerical_contract_refutation' if '.ConvolutionFloat.' in name
+              and name.endswith('_refuted') else 'library_backed_theory')
+        add(name,kind,theory.get('theorem_profiles',{}).get(name,theory['scope']),labels)
     return sorted(result.values(),key=lambda row:row['theorem'])
 
 
@@ -230,6 +238,22 @@ def mathematical_models(root=ROOT):
                        nonunit_axes_only=True,kernel_reversal_reindexed=True,
                        independent_statement_review='pending',manifest=separable['manifest'],
                        manifest_sha256=separable['manifest_sha256']))
+    from check_convolution_ordered import check_inputs as ordered_inputs
+    from check_convolution_ordered import validate_result as validate_ordered
+    ordered=read('reports/convolution-ordered.json',root);validate_ordered(ordered)
+    assert digest(root/ordered['manifest'])==ordered['manifest_sha256']
+    ordered_manifest=ordered_inputs(root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.ConvolutionOrdered.' in name or '.ConvolutionFloat.' in name}
+    assert ordered['certificate_axioms']==expected
+    assert set(ordered_manifest['certificates'])==set(expected)
+    models.append(dict(model=ordered_manifest['model'],scope=ordered_manifest['hypotheses'],
+                       scalar_contract=ordered['scalar_contract'],status=ordered['status'],
+                       checked_theorem_count=15,full_family_complete=False,
+                       binary32_ordered_pointwise_proved=True,
+                       external_backend_schedule_verified=False,
+                       independent_statement_review='pending',manifest=ordered['manifest'],
+                       manifest_sha256=ordered['manifest_sha256']))
     return models
 
 

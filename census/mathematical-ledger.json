@@ -25,14 +25,15 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 304,
+  "distinct_checked_declarations": 319,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
     "pure_graph_context": 12,
     "fixed_schedule_context": 12,
     "refutation_or_diagnostic_certificate": 38,
-    "library_backed_theory": 74
+    "library_backed_theory": 87,
+    "numerical_contract_refutation": 2
   },
   "formulated_mathematical_families": [
     {
@@ -108,6 +109,19 @@
       "independent_statement_review": "pending",
       "manifest": "census/convolution-separable-v1.json",
       "manifest_sha256": "347097e6242880005e51b3eeb25a9adfa29776b573879f1437f08f6ce6a061b8"
+    },
+    {
+      "model": "ordered_pointwise_dot_and_binary32_contract_v2",
+      "scope": "pointwise windows; arbitrary scalar operations and scalar stage types; identical contribution order, initializer and finish",
+      "scalar_contract": "arbitrary ordered operations; pinned FloatLib binary32 specialization",
+      "status": "kernel_checked_ordered_pointwise_dot_and_binary32_contract",
+      "checked_theorem_count": 15,
+      "full_family_complete": false,
+      "binary32_ordered_pointwise_proved": true,
+      "external_backend_schedule_verified": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/convolution-ordered-v2.json",
+      "manifest_sha256": "ad377f8de1390d260b3f363297dbfe33ffc365ee7089cb54709651c92b23c28c"
     }
   ],
   "kernel_complete_family_profile_count": 20,
@@ -115,10 +129,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "5a6864afcf578fc236ad876391396f9dde9de568bc0d426ce42cd17aa607b6bd",
+    "sha256": "fbba26e635923e14f7439bb9512ff8f1de81a74acd6f9acba56d83641d761110",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "23fdcc16d182c1df641f29e44eb16bfef901b9b03627b67f693508cd0deb999c"
+    "output_sha256": "1830c9d46ab27a1a3de8a3f56c4a8bdd6fc81984326b8cf272f2289d8ddd9a52"
   },
   "proofs": [
     {
@@ -4866,6 +4880,277 @@
       ],
       "profile_descriptions": [
         "pointwise convolution as per-group matrix Dot; batch/spatial row flattening with inverse coordinate maps; exact Semiring and identity finish; arbitrary ranks, extents, groups and channels; no IEEE/layout"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted",
+      "kinds": [
+        "numerical_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "explicit ordered binary32 values; shared separate product/add fold; bit-exact pointwise Dot and reference equality; concrete signed-zero and reversed-fold refutations; flags/FMA/backend policy outside model"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToMultiply/pointwise-000"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "explicit ordered binary32 values; shared separate product/add fold; bit-exact pointwise Dot and reference equality; concrete signed-zero and reversed-fold refutations; flags/FMA/backend policy outside model"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToDot/pointwise-layout"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionFloat.binary32_reference_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "explicit ordered binary32 values; shared separate product/add fold; bit-exact pointwise Dot and reference equality; concrete signed-zero and reversed-fold refutations; flags/FMA/backend policy outside model"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted",
+      "kinds": [
+        "numerical_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "explicit ordered binary32 values; shared separate product/add fold; bit-exact pointwise Dot and reference equality; concrete signed-zero and reversed-fold refutations; flags/FMA/backend policy outside model"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToMultiply/reduce-100"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.channel_position_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.contribution_count_eq",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "SimplifyConvToDot/pointwise-layout"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.convolve_semiring",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.convolve_single_channel",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.dot_eq_convolve",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_cast",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.map_finRange_singleton",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.term_eq_dot_product",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.term_pointwise",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.ConvolutionOrdered.terms_eq_dot_terms",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary scalar types/product/add/initializer/finish; identical pointwise convolution and Dot lists/folds; no scalar algebra assumed"
       ],
       "historical_candidate_benchmark_labels": [],
       "label_correspondence_certified": false,
@@ -10772,6 +11057,8 @@
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
         "TensorRewrite.Theory.ConvolutionDot.convolve_eq_dot",
+        "TensorRewrite.Theory.ConvolutionFloat.binary32_pointwise_dot",
+        "TensorRewrite.Theory.ConvolutionOrdered.convolve_eq_dot",
         "TensorRewrite.Theory.ConvolutionPointwise.convolve_eq_channelSum"
       ],
       "whole_record_mathematically_closed": false,
@@ -10785,6 +11072,7 @@
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=False; nontrivial kernel reversal=False; input/kernel type casts=False/False",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
+        "TensorRewrite.Theory.ConvolutionFloat.binary32_fold_omission_refuted",
         "TensorRewrite.Theory.ConvolutionPointwise.convolve_single_channel",
         "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
       ],
@@ -10878,6 +11166,7 @@
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; no rhs sparsity; each kernel spatial extent1 OR output extent1; no stride/padding/dilation; kernel input feature extent1; input/output feature extents equal feature_group_count; reduction=True; nontrivial kernel reversal=True; input/kernel type casts=False/False",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
+        "TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted",
         "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
       ],
       "whole_record_mathematically_closed": false,

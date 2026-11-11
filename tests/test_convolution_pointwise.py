@@ -36,7 +36,7 @@ class ConvolutionPointwiseTests(unittest.TestCase):
 
     def test_base_and_extension_pins_are_required(self):
         models=ledger.mathematical_models()
-        self.assertEqual([m['checked_theorem_count'] for m in models], [20, 13, 12, 11])
+        self.assertEqual([m['checked_theorem_count'] for m in models], [20, 13, 12, 11, 15])
         self.assertTrue(all(not m['full_family_complete'] for m in models))
         original_digest=ledger.digest
         for suffix in ('Convolution.lean', 'ConvolutionPointwise.lean',
