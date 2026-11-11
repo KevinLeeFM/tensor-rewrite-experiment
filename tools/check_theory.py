@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'OrderedScatter': ['repeated_parameter_refuted', 'duplicate_order_refuted', 'binary32_translate_refuted', 'clamping_refuted', 'entries_full_window', 'values_full_window', 'offset_mapped', 'offset_unmapped', 'target_eq_some_iff', 'entries_length', 'entries_empty_batch', 'entries_empty_window', 'empty_vector_offset', 'full_window_target', 'filterMap_finRange_single', 'scatter_map', 'empty_components', 'scatter_translate', 'word_translate_distinct', 'step_at', 'run_at', 'run_append', 'values_append', 'step_map', 'run_map', 'foldl_translate', 'foldl_combine', 'run_empty', 'scatter_empty', 'full_window_map', 'run_translate', 'run_combine', 'run_combine_nested', 'word_combine', 'entries_map', 'distinct_word_operation'],
     'Remainder': ['power_toNat', 'power_mask', 'natural_msb_false', 'signed_power_msb', 'natural_add_toNat', 'natural_add_msb_false', 'integer_nested', 'unsigned_nested', 'signed_nested', 'unsigned_power_mask', 'signed_power_mask', 'unsigned_offset', 'signed_offset', 'integer_nested_tensor', 'unsigned_nested_tensor', 'signed_nested_tensor', 'unsigned_mask_tensor', 'signed_mask_tensor', 'unsigned_iota', 'signed_iota', 'unsigned_iota_offset_rhs', 'unsigned_iota_offset_lhs', 'signed_iota_offset_rhs', 'signed_iota_offset_lhs', 'signed_correction_refuted', 'unsigned_wrap_refuted', 'signed_wrap_refuted'],
     'UniformSum': ['binary32_uniform_product_refuted'],
 
@@ -138,6 +139,15 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/OrderedScatter.lean': 'S',
+        'TensorRewrite/Theory/OrderedScatterCounterexamples.lean': 'C',
+        'TensorRewrite/Theory/OrderedScatterFullWindow.lean': 'H',
+        'TensorRewrite/Theory/OrderedScatterGeometry.lean': 'H',
+        'TensorRewrite/Theory/OrderedScatterGraph.lean': 'R',
+        'TensorRewrite/Theory/OrderedScatterLemmas.lean': 'H',
+        'TensorRewrite/Theory/OrderedScatterProof.lean': 'R',
+        'TensorRewrite/Theory/OrderedScatterTransport.lean': 'H',
+
         'TensorRewrite/Theory/Remainder.lean': 'S',
         'TensorRewrite/Theory/RemainderLemmas.lean': 'H',
         'TensorRewrite/Theory/RemainderScalar.lean': 'R',
@@ -225,7 +235,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='exact and all-width remainder masks/Iota offsets; fixed-order uniform float diagnostic; '
+                  scope='actual ordered full-window Scatter, reducer roles and trace fusion; '
+                        'exact and all-width remainder masks/Iota offsets; fixed-order uniform float diagnostic; '
                         'derived raw Pad/window reshape/Broadcast composition and converted fill; '
                         'covered singleton-window reshape/Broadcast and complete pure singleton tuple family; '
                         'ordered cumulative windows, exact/modular Iota products and count-conversion domains; '
@@ -238,7 +249,29 @@ def main():
                         'contraction/convolution exact algebra and typed logical family; '
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
-                      name: ('ordered repeated modular addition for arbitrary count/width/initializer; '
+                      name: ({
+                          'repeated_parameter_refuted':
+                              'actual duplicate scalar-address word trace with repeated-current '
+                              'Add parameters; original11 versus transformed4 at width4',
+                          'duplicate_order_refuted':
+                              'same two actual scalar-address updates in reversed order under '
+                              'pure decimal reducer give12 versus21',
+                          'binary32_translate_refuted':
+                              'actual full-window scalar binary32 Scatter/Add translation; finite '
+                              'original stored bits0 versus transformed0x3f800000; no IEEE associativity',
+                          'clamping_refuted':
+                              'declared negative-address element drop retains original2; '
+                              'clamping that event to coordinate0 instead gives11'
+                             }[name.rsplit('.',1)[1]]
+                             if '.OrderedScatter.' in name and name.endswith('_refuted') else
+                             'arbitrary-rank whole-state ordered events and actual full-rank windows; '
+                             'injective signed index axes, omitted starts0, per-element out-of-bounds '
+                             'drop without clamping; empty/full-window Map and actual parameter roles; '
+                             'assoc or assoc+comm only for named fusion laws, modular word instances; '
+                             'no tensor-input Concat/dimension-number/transpose bridge, general '
+                             'Scatter, floating associativity, effect or whole-record closure claim'
+                             if '.OrderedScatter.' in name else
+                             'ordered repeated modular addition for arbitrary count/width/initializer; '
                              'same-width count cast and modular product; no replica geometry, '
                              'communication, host literal or external schedule correspondence'
                              if name.endswith('PrefixWindow.word_replicate_fold') else

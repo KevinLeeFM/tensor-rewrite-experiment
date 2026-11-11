@@ -134,6 +134,20 @@ def evidence(root=ROOT):
                 group.get('logical_profile','Declared mathematical premises/conclusion in the checked Lean type; retained '+group_name))))
             add(name,kinds.get(field,'retained_mathematical_declaration'),profile)
         result[name]['retained_manifest_paths']=sorted(origins)
+    # The retained packet groups two mathematical diagnostics. Keep their namespaces
+    # and candidate labels distinct; no native or caller/API correspondence is inferred.
+    for name,row in result.items():
+        if '.ReducerIndex.ScatterRoles.' in name:
+            row['historical_candidate_benchmark_labels']=[
+                'HandleAdd/scatter-single-lhs','HandleAdd/scatter-single-rhs']
+            row['profile_descriptions']=['single in-bounds coordinate update at arbitrary vector '
+                'size/word width; actual current/update parameter roles; no general window, '
+                'floating, effect or source correspondence claim']
+        elif '.ReducerIndex.GatherLiterals.' in name:
+            row['historical_candidate_benchmark_labels']=['HandleGather/small-select-chain']
+            row['profile_descriptions']=['actual signed-word Select-chain coordinates and '
+                'represented-threshold condition; concrete signed8 narrowing certificates; '
+                'not general Gather dimension semantics or source correspondence']
     theory=read('reports/theory-progress.json',root)
     for name in theory['axiom_dependencies']:
         labels=['HandleNegate/involution'] if name.endswith('FloatNegation.tensor_involution') else []
@@ -191,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.OrderedScatter.' in name:
+            manifest=read('census/ordered-scatter-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
         if '.PadBroadcast.' in name:
             manifest=read('census/pad-broadcast-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
@@ -213,7 +230,9 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('uniform_fixed_order_rounding_refutation' if '.UniformSum.' in name else
+        kind=('ordered_scatter_contract_refutation' if '.OrderedScatter.' in name
+              and name.endswith('_refuted') else
+              'uniform_fixed_order_rounding_refutation' if '.UniformSum.' in name else
               'remainder_contract_refutation' if '.Remainder.' in name
               and name.endswith('_refuted') else
               'pad_broadcast_contract_refutation' if '.PadBroadcast.' in name
@@ -542,6 +561,24 @@ def mathematical_models(root=ROOT):
                        domain_worksheet=extension['domain_worksheet'],
                        independent_statement_review='pending',manifest=remainder['manifest'],
                        manifest_sha256=remainder['manifest_sha256']))
+    from check_ordered_scatter import check_inputs as scatter_inputs, validate_result as validate_scatter
+    scatter=read('reports/ordered-scatter.json',root);validate_scatter(scatter)
+    extension=scatter_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.OrderedScatter.' in name}
+    assert len(expected)==36 and scatter['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['geometry_contract'],
+                       scalar_contract=extension['algebra_contract'],status=scatter['status'],
+                       checked_theorem_count=36,full_family_complete=False,
+                       actual_window_event_generation=True,duplicate_order_preserved=True,
+                       whole_coupled_state_preserved=True,derived_empty_vector_full_window_map=True,
+                       actual_reducer_parameter_roles=True,all_width_word_instantiation=True,
+                       tensor_input_concatenation_bridge_proved=False,
+                       all_scatter_dimension_numbers_supported=False,
+                       floating_associativity_assumed=False,
+                       domain_worksheet=extension['domain_worksheet'],
+                       independent_statement_review='pending',manifest=scatter['manifest'],
+                       manifest_sha256=scatter['manifest_sha256']))
     return models
 
 

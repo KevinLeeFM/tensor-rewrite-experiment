@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 351,
-    "partial_model_evidence_requires_partition_review": 124,
+    "needs_formal_statement_and_domain_partition": 347,
+    "partial_model_evidence_requires_partition_review": 128,
     "declared_value_family_complete_full_record_partitions_open": 13
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 601,
+  "distinct_checked_declarations": 637,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,9 +39,10 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 315,
+    "library_backed_theory": 347,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
+    "ordered_scatter_contract_refutation": 4,
     "pad_broadcast_contract_refutation": 3,
     "pad_window_contract_refutation": 2,
     "prefix_window_contract_refutation": 3,
@@ -351,6 +352,27 @@
       "independent_statement_review": "pending",
       "manifest": "census/remainder-v1.json",
       "manifest_sha256": "8b945473999a542ef242239e7691766010e3f3206d0c65609bd4052959657d62"
+    },
+    {
+      "model": "ordered_full_window_scatter_and_trace_fusion_v1",
+      "scope": "full-rank windows; arbitrary batch rank; injective signed index axes; omitted axes start0; start+window coordinate checked per element without clamping; batch-major/window-major order",
+      "scalar_contract": "actual whole-state reducer; no laws for ordered evaluation or empty/full-window Map; assoc for base translation and assoc+comm for two-trace fusion; word Add requires distinct parameter roles",
+      "status": "kernel_checked_ordered_scatter_profile_with_open_dimension_bridges",
+      "checked_theorem_count": 36,
+      "full_family_complete": false,
+      "actual_window_event_generation": true,
+      "duplicate_order_preserved": true,
+      "whole_coupled_state_preserved": true,
+      "derived_empty_vector_full_window_map": true,
+      "actual_reducer_parameter_roles": true,
+      "all_width_word_instantiation": true,
+      "tensor_input_concatenation_bridge_proved": false,
+      "all_scatter_dimension_numbers_supported": false,
+      "floating_associativity_assumed": false,
+      "domain_worksheet": "census/scatter-mathematical-domains-v1.json",
+      "independent_statement_review": "pending",
+      "manifest": "census/ordered-scatter-v1.json",
+      "manifest_sha256": "c13086b6ce0ee34725da67a868d5b25699c7ae2a5c152b1ce431f1766811946f"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -358,10 +380,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "f1f5c342e462138fa7948acac3f51cd3cf72fb2b1052915b210390935dffecc1",
+    "sha256": "9faeb628cbf8c88b78a2d1aa2b64ab50f333a4ad1ee28ed03db70fb66ea6a015",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "f7dfaf4aeb2e6d4526bcc8e927a50409714733eb7d53e9db5fd17fc0743dfe5e"
+    "output_sha256": "f6f2a322125f2263888d96aab7dcbba00914a17c50994e3c348507396931bac8"
   },
   "proofs": [
     {
@@ -4227,11 +4249,9 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "actual signed-word Select-chain coordinates and represented-threshold condition; concrete signed8 narrowing certificates; not general Gather dimension semantics or source correspondence"
       ],
       "historical_candidate_benchmark_labels": [
-        "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
         "HandleGather/small-select-chain"
       ],
       "label_correspondence_certified": false,
@@ -4248,11 +4268,9 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "actual signed-word Select-chain coordinates and represented-threshold condition; concrete signed8 narrowing certificates; not general Gather dimension semantics or source correspondence"
       ],
       "historical_candidate_benchmark_labels": [
-        "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
         "HandleGather/small-select-chain"
       ],
       "label_correspondence_certified": false,
@@ -4269,11 +4287,9 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "actual signed-word Select-chain coordinates and represented-threshold condition; concrete signed8 narrowing certificates; not general Gather dimension semantics or source correspondence"
       ],
       "historical_candidate_benchmark_labels": [
-        "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
         "HandleGather/small-select-chain"
       ],
       "label_correspondence_certified": false,
@@ -4290,11 +4306,9 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "actual signed-word Select-chain coordinates and represented-threshold condition; concrete signed8 narrowing certificates; not general Gather dimension semantics or source correspondence"
       ],
       "historical_candidate_benchmark_labels": [
-        "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
         "HandleGather/small-select-chain"
       ],
       "label_correspondence_certified": false,
@@ -4311,9 +4325,11 @@
         "support_lemma"
       ],
       "profile_descriptions": [
-        "premises and conclusion in the checked Lean declaration"
+        "actual signed-word Select-chain coordinates and represented-threshold condition; concrete signed8 narrowing certificates; not general Gather dimension semantics or source correspondence"
       ],
-      "historical_candidate_benchmark_labels": [],
+      "historical_candidate_benchmark_labels": [
+        "HandleGather/small-select-chain"
+      ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
@@ -4332,11 +4348,9 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "actual signed-word Select-chain coordinates and represented-threshold condition; concrete signed8 narrowing certificates; not general Gather dimension semantics or source correspondence"
       ],
       "historical_candidate_benchmark_labels": [
-        "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
         "HandleGather/small-select-chain"
       ],
       "label_correspondence_certified": false,
@@ -4353,9 +4367,12 @@
         "support_lemma"
       ],
       "profile_descriptions": [
-        "premises and conclusion in the checked Lean declaration"
+        "single in-bounds coordinate update at arbitrary vector size/word width; actual current/update parameter roles; no general window, floating, effect or source correspondence claim"
       ],
-      "historical_candidate_benchmark_labels": [],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
@@ -4374,9 +4391,12 @@
         "support_lemma"
       ],
       "profile_descriptions": [
-        "premises and conclusion in the checked Lean declaration"
+        "single in-bounds coordinate update at arbitrary vector size/word width; actual current/update parameter roles; no general window, floating, effect or source correspondence claim"
       ],
-      "historical_candidate_benchmark_labels": [],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
@@ -4395,12 +4415,11 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "single in-bounds coordinate update at arbitrary vector size/word width; actual current/update parameter roles; no general window, floating, effect or source correspondence claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
-        "HandleGather/small-select-chain"
+        "HandleAdd/scatter-single-rhs"
       ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
@@ -4418,12 +4437,11 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "single in-bounds coordinate update at arbitrary vector size/word width; actual current/update parameter roles; no general window, floating, effect or source correspondence claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
-        "HandleGather/small-select-chain"
+        "HandleAdd/scatter-single-rhs"
       ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
@@ -4441,12 +4459,11 @@
         "refutation_or_diagnostic_certificate"
       ],
       "profile_descriptions": [
-        "single in-bounds rank1 word Scatter update; signed8 Gather label indices and host narrowing128 to -128; no floating or arbitrary effect contract"
+        "single in-bounds coordinate update at arbitrary vector size/word width; actual current/update parameter roles; no general window, floating, effect or source correspondence claim"
       ],
       "historical_candidate_benchmark_labels": [
         "HandleAdd/scatter-single-lhs",
-        "HandleAdd/scatter-single-rhs",
-        "HandleGather/small-select-chain"
+        "HandleAdd/scatter-single-rhs"
       ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
@@ -4464,9 +4481,12 @@
         "support_lemma"
       ],
       "profile_descriptions": [
-        "premises and conclusion in the checked Lean declaration"
+        "single in-bounds coordinate update at arbitrary vector size/word width; actual current/update parameter roles; no general window, floating, effect or source correspondence claim"
       ],
-      "historical_candidate_benchmark_labels": [],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
       "label_correspondence_certified": false,
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
@@ -8325,6 +8345,658 @@
       "mathematical_acceptance": "kernel_checked_in_declared_model",
       "independent_statement_review": "pending",
       "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.binary32_translate_refuted",
+      "kinds": [
+        "ordered_scatter_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "actual full-window scalar binary32 Scatter/Add translation; finite original stored bits0 versus transformed0x3f800000; no IEEE associativity"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.clamping_refuted",
+      "kinds": [
+        "ordered_scatter_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "declared negative-address element drop retains original2; clamping that event to coordinate0 instead gives11"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.distinct_word_operation",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.duplicate_order_refuted",
+      "kinds": [
+        "ordered_scatter_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "same two actual scalar-address updates in reversed order under pure decimal reducer give12 versus21"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.empty_components",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleScatter/empty-updates"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.empty_vector_offset",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.entries_empty_batch",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.entries_empty_window",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.entries_full_window",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.entries_length",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.entries_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.filterMap_finRange_single",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.foldl_combine",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.foldl_translate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.full_window_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleScatter/empty-indices"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.full_window_target",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.offset_mapped",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.offset_unmapped",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.repeated_parameter_refuted",
+      "kinds": [
+        "ordered_scatter_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "actual duplicate scalar-address word trace with repeated-current Add parameters; original11 versus transformed4 at width4"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_append",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_at",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_combine",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-concat"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_combine_nested",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-nested"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.run_translate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.scatter_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleScatter/empty-updates"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.scatter_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.scatter_translate",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.step_at",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.step_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.target_eq_some_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.values_append",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.values_full_window",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.word_combine",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-concat"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.OrderedScatter.word_translate_distinct",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "arbitrary-rank whole-state ordered events and actual full-rank windows; injective signed index axes, omitted starts0, per-element out-of-bounds drop without clamping; empty/full-window Map and actual parameter roles; assoc or assoc+comm only for named fusion laws, modular word instances; no tensor-input Concat/dimension-number/transpose bridge, general Scatter, floating associativity, effect or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleAdd/scatter-single-lhs",
+        "HandleAdd/scatter-single-rhs"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
         "Quot.sound",
         "propext"
       ]
@@ -12297,8 +12969,11 @@
       "retained_lhs": "Add(Scatter(base1,i1,u1),Scatter(base2,i2,u2))",
       "retained_rhs": "Scatter(Add(base1,base2),Concat(i1,i2,index_axis),Concat(u1,u2,update_axis),lhs_reducer,lhs_dnums,false,false)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; both operands Scatter with one use; both reducer roots Add(Parameter,Parameter); index ranks equal; concat-dimension loop does not early-return; selected concat axis is not scalar sentinel; sum of update element counts < lhs result element count; both scatters not unique and not sorted; all six dimension-number fields equal; index element types equal; filtered update window dimensions equal; Parameter0/Parameter1 identities and distinctness are NOT checked",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.OrderedScatter.run_combine",
+        "TensorRewrite.Theory.OrderedScatter.word_combine"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -12308,8 +12983,10 @@
       "retained_lhs": "Add(lhsScatter,rhsScatter)",
       "retained_rhs": "lhsScatter mutated to base=rhsScatter mutated to base=Add(lhs_base,rhs_base)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; both operands Scatter with one use; both reducer roots Add(Parameter,Parameter); index ranks equal; concat-dimension loop does not early-return; selected concat axis is not scalar sentinel; sum of update element counts < lhs result element count; concat safety conjunction fails; Parameter0/Parameter1 identities and distinctness are NOT checked",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.OrderedScatter.run_combine_nested"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -12321,14 +12998,14 @@
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; only lhs local scatter-match flag true; matched Scatter one use; reducer root Add(Parameter,Parameter); Parameter0/Parameter1 identities and distinctness are NOT checked",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes",
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve",
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes",
-        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes"
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
+        "TensorRewrite.Theory.OrderedScatter.scatter_translate",
+        "TensorRewrite.Theory.OrderedScatter.word_translate_distinct"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -12341,14 +13018,14 @@
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; only rhs local scatter-match flag true; matched Scatter one use; reducer root Add(Parameter,Parameter); Parameter0/Parameter1 identities and distinctness are NOT checked",
       "mathematical_target_status": "partial_model_evidence_requires_partition_review",
       "evidence": [
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes",
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.distinct_parameters_preserve",
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
         "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes",
-        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes"
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes",
+        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.update_current_preserves",
+        "TensorRewrite.Theory.OrderedScatter.scatter_translate",
+        "TensorRewrite.Theory.OrderedScatter.word_translate_distinct"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -14250,10 +14927,8 @@
         "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.maximum_index_changes",
         "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.negative_index_changes",
         "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
-        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes",
-        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
-        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_current_changes",
-        "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.repeated_update_changes"
+        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.selectedIndex_eq_original",
+        "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.zero_index_changes"
       ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
@@ -16265,8 +16940,10 @@
       "retained_lhs": "Scatter(base,empty_indices,update)",
       "retained_rhs": "Map(base,update,to_apply)",
       "unreviewed_benchmark_notes_not_assumptions": "one scatter operand; indices zero-element array; SameShape(output,base) and SameShape(output,update)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.OrderedScatter.full_window_map"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -16276,8 +16953,11 @@
       "retained_lhs": "Scatter(bases,indices,updates)",
       "retained_rhs": "bases (or tuple)",
       "unreviewed_benchmark_notes_not_assumptions": "all updates zero-element arrays; ReplaceInstructionIfCompatible with scatter_operands succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.OrderedScatter.empty_components",
+        "TensorRewrite.Theory.OrderedScatter.scatter_empty"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

@@ -88,7 +88,8 @@ class FormulationExpansionTests(unittest.TestCase):
         progress=ledger.read('census/mathematical-ledger.json')
         old=audit.assemble(ledger.corpus(),progress,
                            audit.read_catalog('census/workload-formulation-catalog-v1.json'))
-        result=audit.assemble(ledger.corpus(),progress,audit.read_catalog())
+        result=audit.assemble(ledger.corpus(),progress,
+                              audit.read_catalog('census/workload-formulation-catalog-v2.json'))
         self.assertEqual(old['records_with_domain_worksheets'],108)
         self.assertEqual(len(old['records_without_domain_worksheets']),380)
         self.assertEqual(result['records_with_domain_worksheets'],488)

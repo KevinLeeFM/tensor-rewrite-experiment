@@ -4,10 +4,10 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 341 checked mathematical statements; custom Lean totals **7,547**.
+The theory target now has 377 checked mathematical statements; custom Lean totals **8,027**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
-All488 retained records now have domain/dependency worksheets, including380 new unreviewed
-proposals; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
+All488 retained records now have domain/dependency worksheets, including374 covered only by
+unreviewed proposals after the six-record Scatter refinement; this is not completed formalization or proof acceptance. See [the proposal scope](docs/workload-formulation-proposals.md).
 
 
 Independent Git/Lake project for tensor rewrite verification. The current proof
@@ -1110,3 +1110,18 @@ closed. All80 focused tests pass. Record proof statuses stay351 needing formal
 statement/domain work,124 partial and13 carrying value families. Worksheet presence
 is not completed formulation, all-case attempts or a frozen N/F. The full campaign,
 independent reviews and final verdict remain open; code correspondence is future work.
+
+
+## Ordered Scatter semantics and partial fusion
+
+An actual full-rank window Scatter model now derives bounded events from signed
+index axes, preserves duplicate order and whole coupled state, and proves empty/
+full-window Map and associative/commutative trace fusion. Actual word parameter
+roles and four contract certificates remain explicit. See [the model and open
+bridges](docs/ordered-scatter.md). Tensor-input Concatenate and general dimension/
+transpose bridges are still unproved. Thirty-six statements add480 Lean lines;
+totals8027, theory377/ledger637, four integration results separate. Independent
+oracles agree on2709 profiles/3354 events/2968 outputs,11872 role controls and four
+finite binary32 outputs. All86 focused tests pass. Catalog v3 refines six records, leaving374 covered only
+by unreviewed proposals. Whole-record closure stays0; full campaign/review/verdict
+remain open. Code correspondence remains user-deferred future work.

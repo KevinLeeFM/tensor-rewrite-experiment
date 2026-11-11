@@ -2817,6 +2817,350 @@ TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar : ∀ (shape : TensorRe
         List.map (fun column => value (TensorRewrite.Pilot.FiniteProduct.join row column)) (List.finRange columns))
       (List.finRange rows)
 'TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.OrderedScatter.binary32_translate_refuted : FloatLib.Floats.ExecFloat.Binary.toNatBits
+      (FloatLib.Floats.ExecFloat.add (FloatLib.Floats.ExecFloat.Binary.ofNatBits 3414163456)
+        (TensorRewrite.Theory.OrderedScatter.scatter
+          (TensorRewrite.Theory.OrderedScatter.fullWindowPlan TensorRewrite.Theory.OrderedScatter.scalarShape)
+          FloatLib.Floats.ExecFloat.add
+          (TensorRewrite.Pilot.Tensor.constant (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1266679808))
+          (fun x => Fin.elim0)
+          (fun x => TensorRewrite.Pilot.Tensor.constant (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1065353216))
+          TensorRewrite.Theory.OrderedScatter.scalarIndex)) =
+    0 ∧
+  (TensorRewrite.Theory.OrderedScatter.scatter
+        (TensorRewrite.Theory.OrderedScatter.fullWindowPlan TensorRewrite.Theory.OrderedScatter.scalarShape)
+        FloatLib.Floats.ExecFloat.add
+        (TensorRewrite.Pilot.Tensor.constant
+          (FloatLib.Floats.ExecFloat.add (FloatLib.Floats.ExecFloat.Binary.ofNatBits 3414163456)
+            (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1266679808)))
+        (fun x => Fin.elim0)
+        (fun x => TensorRewrite.Pilot.Tensor.constant (FloatLib.Floats.ExecFloat.Binary.ofNatBits 1065353216))
+        TensorRewrite.Theory.OrderedScatter.scalarIndex).toNatBits =
+    1065353216
+'TensorRewrite.Theory.OrderedScatter.binary32_translate_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+TensorRewrite.Theory.OrderedScatter.clamping_refuted : (TensorRewrite.Theory.OrderedScatter.scatter
+      TensorRewrite.Theory.OrderedScatter.singlePointPlan (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.constant 2)
+      (fun x x_1 => -1) (fun x => TensorRewrite.Pilot.Tensor.constant 9) fun x => ⟨0, ⋯⟩) =
+    2 ∧
+  (TensorRewrite.Theory.OrderedScatter.run (fun x1 x2 => x1 + x2) (TensorRewrite.Pilot.Tensor.constant 2)
+      [{ target := some fun x => ⟨0, ⋯⟩, value := 9 }] fun x => ⟨0, ⋯⟩) =
+    11
+'TensorRewrite.Theory.OrderedScatter.clamping_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.distinct_word_operation : ∀ {width : ℕ}
+  (first second : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+  first ≠ second → TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second = fun a b => a + b
+'TensorRewrite.Theory.OrderedScatter.distinct_word_operation' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.OrderedScatter.duplicate_order_refuted : TensorRewrite.Theory.OrderedScatter.run
+      (fun a b => 10 * a + b) (TensorRewrite.Pilot.Tensor.constant 0)
+      [{ target := some TensorRewrite.Theory.OrderedScatter.scalarIndex, value := 1 },
+        { target := some TensorRewrite.Theory.OrderedScatter.scalarIndex, value := 2 }]
+      TensorRewrite.Theory.OrderedScatter.scalarIndex =
+    12 ∧
+  TensorRewrite.Theory.OrderedScatter.run (fun a b => 10 * a + b) (TensorRewrite.Pilot.Tensor.constant 0)
+      [{ target := some TensorRewrite.Theory.OrderedScatter.scalarIndex, value := 2 },
+        { target := some TensorRewrite.Theory.OrderedScatter.scalarIndex, value := 1 }]
+      TensorRewrite.Theory.OrderedScatter.scalarIndex =
+    21
+'TensorRewrite.Theory.OrderedScatter.duplicate_order_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.empty_components : ∀ {rank batchRank indexSize count : ℕ} (α : Fin count → Type)
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.batchShape = 0 ∨
+      TensorRewrite.Pilot.LinearIndex.elementCount plan.windowShape = 0 →
+    ∀
+      (operation :
+        ((component : Fin count) → α component) →
+          ((component : Fin count) → α component) → (component : Fin count) → α component)
+      (bases : (component : Fin count) → TensorRewrite.Pilot.Tensor plan.operandShape (α component))
+      (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates :
+        TensorRewrite.Pilot.Tensor plan.batchShape
+          (TensorRewrite.Pilot.Tensor plan.windowShape ((component : Fin count) → α component))),
+      (fun component index =>
+          TensorRewrite.Theory.OrderedScatter.scatter plan operation (fun index component => bases component index)
+            indices updates index component) =
+        bases
+'TensorRewrite.Theory.OrderedScatter.empty_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.empty_vector_offset : ∀ {rank batchRank : ℕ}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank 0)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin 0 → ℤ)) (batch : TensorRewrite.Pilot.Index plan.batchShape)
+  (axis : Fin rank), TensorRewrite.Theory.OrderedScatter.offset plan indices batch axis = 0
+'TensorRewrite.Theory.OrderedScatter.empty_vector_offset' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.entries_empty_batch : ∀ {rank batchRank indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.batchShape = 0 →
+    ∀ (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+      TensorRewrite.Theory.OrderedScatter.entries plan indices updates = []
+'TensorRewrite.Theory.OrderedScatter.entries_empty_batch' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.entries_empty_window : ∀ {rank batchRank indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.windowShape = 0 →
+    ∀ (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+      TensorRewrite.Theory.OrderedScatter.entries plan indices updates = []
+'TensorRewrite.Theory.OrderedScatter.entries_empty_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.entries_full_window : ∀ {rank : ℕ} {α : Type}
+  (shape : TensorRewrite.Pilot.Shape rank)
+  (indices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape (Fin 0 → ℤ))
+  (updates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape
+      (TensorRewrite.Pilot.Tensor shape α)),
+  TensorRewrite.Theory.OrderedScatter.entries (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape) indices
+      updates =
+    List.map
+      (fun position =>
+        have index := TensorRewrite.Pilot.LinearIndex.delinearize shape position;
+        { target := some index, value := updates (fun axis => axis.elim0) index })
+      (List.finRange (TensorRewrite.Pilot.LinearIndex.elementCount shape))
+'TensorRewrite.Theory.OrderedScatter.entries_full_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.entries_length : ∀ {rank batchRank indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+  (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+  (TensorRewrite.Theory.OrderedScatter.entries plan indices updates).length =
+    TensorRewrite.Pilot.LinearIndex.elementCount plan.batchShape *
+      TensorRewrite.Pilot.LinearIndex.elementCount plan.windowShape
+'TensorRewrite.Theory.OrderedScatter.entries_length' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.entries_map : ∀ {rank batchRank indexSize : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize) (convert : α → β)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+  (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+  (TensorRewrite.Theory.OrderedScatter.entries plan indices fun batch =>
+      TensorRewrite.Pilot.Tensor.map convert (updates batch)) =
+    List.map (TensorRewrite.Theory.OrderedScatter.Entry.mapValue convert)
+      (TensorRewrite.Theory.OrderedScatter.entries plan indices updates)
+'TensorRewrite.Theory.OrderedScatter.entries_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.filterMap_finRange_single : ∀ {size : ℕ} {α : Type} (query : Fin size)
+  (value : Fin size → α),
+  List.filterMap (fun position => if position = query then some (value position) else none) (List.finRange size) =
+    [value query]
+'TensorRewrite.Theory.OrderedScatter.filterMap_finRange_single' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.foldl_combine : ∀ {α : Type} (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    (∀ (a b : α), operation a b = operation b a) →
+      ∀ (first second : α) (left right : List α),
+        operation (List.foldl operation first left) (List.foldl operation second right) =
+          List.foldl operation (operation first second) (left ++ right)
+'TensorRewrite.Theory.OrderedScatter.foldl_combine' does not depend on any axioms
+@TensorRewrite.Theory.OrderedScatter.foldl_translate : ∀ {α : Type} (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    ∀ (first initial : α) (values : List α),
+      List.foldl operation (operation first initial) values = operation first (List.foldl operation initial values)
+'TensorRewrite.Theory.OrderedScatter.foldl_translate' does not depend on any axioms
+@TensorRewrite.Theory.OrderedScatter.full_window_map : ∀ {rank : ℕ} {α : Type} (shape : TensorRewrite.Pilot.Shape rank)
+  (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor shape α)
+  (indices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape (Fin 0 → ℤ))
+  (updates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape
+      (TensorRewrite.Pilot.Tensor shape α)),
+  TensorRewrite.Theory.OrderedScatter.scatter (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape) operation base
+      indices updates =
+    TensorRewrite.Pilot.Tensor.map₂ operation base (updates fun axis => axis.elim0)
+'TensorRewrite.Theory.OrderedScatter.full_window_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.full_window_target : ∀ {rank : ℕ} (shape : TensorRewrite.Pilot.Shape rank)
+  (indices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape (Fin 0 → ℤ))
+  (batch : TensorRewrite.Pilot.Index (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape)
+  (window : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Theory.OrderedScatter.target? (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape) indices batch
+      window =
+    some window
+'TensorRewrite.Theory.OrderedScatter.full_window_target' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.offset_mapped : ∀ {rank batchRank indexSize : ℕ}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+  (batch : TensorRewrite.Pilot.Index plan.batchShape) (component : Fin indexSize),
+  TensorRewrite.Theory.OrderedScatter.offset plan indices batch (plan.indexAxes.decode component) =
+    indices batch component
+'TensorRewrite.Theory.OrderedScatter.offset_mapped' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.offset_unmapped : ∀ {rank batchRank indexSize : ℕ}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+  (batch : TensorRewrite.Pilot.Index plan.batchShape) (axis : Fin rank),
+  (∀ (component : Fin indexSize), plan.indexAxes.decode component ≠ axis) →
+    TensorRewrite.Theory.OrderedScatter.offset plan indices batch axis = 0
+'TensorRewrite.Theory.OrderedScatter.offset_unmapped' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.OrderedScatter.repeated_parameter_refuted : (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+        (TensorRewrite.Pilot.Tensor.constant 3#4)
+        (TensorRewrite.Theory.OrderedScatter.run
+          (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine
+            TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+            TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current)
+          (TensorRewrite.Pilot.Tensor.constant 2#4) TensorRewrite.Theory.OrderedScatter.duplicateWordEvents)
+        TensorRewrite.Theory.OrderedScatter.scalarIndex).toNat =
+    11 ∧
+  (TensorRewrite.Theory.OrderedScatter.run
+        (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine
+          TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current
+          TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter.current)
+        (TensorRewrite.Pilot.Tensor.constant (3#4 + 2#4)) TensorRewrite.Theory.OrderedScatter.duplicateWordEvents
+        TensorRewrite.Theory.OrderedScatter.scalarIndex).toNat =
+    4
+'TensorRewrite.Theory.OrderedScatter.repeated_parameter_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_append : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor shape α)
+  (first second : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)),
+  TensorRewrite.Theory.OrderedScatter.run operation base (first ++ second) =
+    TensorRewrite.Theory.OrderedScatter.run operation (TensorRewrite.Theory.OrderedScatter.run operation base first)
+      second
+'TensorRewrite.Theory.OrderedScatter.run_append' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_at : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor shape α)
+  (entries : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)) (index : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Theory.OrderedScatter.run operation base entries index =
+    List.foldl operation (base index) (TensorRewrite.Theory.OrderedScatter.valuesAt entries index)
+'TensorRewrite.Theory.OrderedScatter.run_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_combine : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    (∀ (a b : α), operation a b = operation b a) →
+      ∀ (first second : TensorRewrite.Pilot.Tensor shape α)
+        (left right : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)),
+        TensorRewrite.Pilot.Tensor.map₂ operation (TensorRewrite.Theory.OrderedScatter.run operation first left)
+            (TensorRewrite.Theory.OrderedScatter.run operation second right) =
+          TensorRewrite.Theory.OrderedScatter.run operation (TensorRewrite.Pilot.Tensor.map₂ operation first second)
+            (left ++ right)
+'TensorRewrite.Theory.OrderedScatter.run_combine' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_combine_nested : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  {α : Type} (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    (∀ (a b : α), operation a b = operation b a) →
+      ∀ (first second : TensorRewrite.Pilot.Tensor shape α)
+        (left right : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)),
+        TensorRewrite.Pilot.Tensor.map₂ operation (TensorRewrite.Theory.OrderedScatter.run operation first left)
+            (TensorRewrite.Theory.OrderedScatter.run operation second right) =
+          TensorRewrite.Theory.OrderedScatter.run operation
+            (TensorRewrite.Theory.OrderedScatter.run operation (TensorRewrite.Pilot.Tensor.map₂ operation first second)
+              left)
+            right
+'TensorRewrite.Theory.OrderedScatter.run_combine_nested' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_empty : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor shape α),
+  TensorRewrite.Theory.OrderedScatter.run operation base [] = base
+'TensorRewrite.Theory.OrderedScatter.run_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_map : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α β : Type}
+  (convert : α → β) (first : α → α → α) (second : β → β → β),
+  (∀ (a b : α), convert (first a b) = second (convert a) (convert b)) →
+    ∀ (base : TensorRewrite.Pilot.Tensor shape α) (entries : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)),
+      TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.OrderedScatter.run first base entries) =
+        TensorRewrite.Theory.OrderedScatter.run second (TensorRewrite.Pilot.Tensor.map convert base)
+          (List.map (TensorRewrite.Theory.OrderedScatter.Entry.mapValue convert) entries)
+'TensorRewrite.Theory.OrderedScatter.run_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.run_translate : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    ∀ (first base : TensorRewrite.Pilot.Tensor shape α)
+      (events : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)),
+      TensorRewrite.Theory.OrderedScatter.run operation (TensorRewrite.Pilot.Tensor.map₂ operation first base) events =
+        TensorRewrite.Pilot.Tensor.map₂ operation first (TensorRewrite.Theory.OrderedScatter.run operation base events)
+'TensorRewrite.Theory.OrderedScatter.run_translate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.scatter_empty : ∀ {rank batchRank indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize),
+  TensorRewrite.Pilot.LinearIndex.elementCount plan.batchShape = 0 ∨
+      TensorRewrite.Pilot.LinearIndex.elementCount plan.windowShape = 0 →
+    ∀ (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+      TensorRewrite.Theory.OrderedScatter.scatter plan operation base indices updates = base
+'TensorRewrite.Theory.OrderedScatter.scatter_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.scatter_map : ∀ {rank batchRank indexSize : ℕ} {α β : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize) (convert : α → β) (first : α → α → α)
+  (second : β → β → β),
+  (∀ (a b : α), convert (first a b) = second (convert a) (convert b)) →
+    ∀ (base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+      TensorRewrite.Pilot.Tensor.map convert
+          (TensorRewrite.Theory.OrderedScatter.scatter plan first base indices updates) =
+        TensorRewrite.Theory.OrderedScatter.scatter plan second (TensorRewrite.Pilot.Tensor.map convert base) indices
+          fun batch => TensorRewrite.Pilot.Tensor.map convert (updates batch)
+'TensorRewrite.Theory.OrderedScatter.scatter_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.scatter_translate : ∀ {rank batchRank indexSize : ℕ} {α : Type}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize) (operation : α → α → α),
+  (∀ (a b c : α), operation (operation a b) c = operation a (operation b c)) →
+    ∀ (first base : TensorRewrite.Pilot.Tensor plan.operandShape α)
+      (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates : TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape α)),
+      TensorRewrite.Theory.OrderedScatter.scatter plan operation (TensorRewrite.Pilot.Tensor.map₂ operation first base)
+          indices updates =
+        TensorRewrite.Pilot.Tensor.map₂ operation first
+          (TensorRewrite.Theory.OrderedScatter.scatter plan operation base indices updates)
+'TensorRewrite.Theory.OrderedScatter.scatter_translate' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.step_at : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (operation : α → α → α) (base : TensorRewrite.Pilot.Tensor shape α)
+  (entry : TensorRewrite.Theory.OrderedScatter.Entry shape α) (index : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Theory.OrderedScatter.step operation base entry index =
+    if entry.target = some index then operation (base index) entry.value else base index
+'TensorRewrite.Theory.OrderedScatter.step_at' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.step_map : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α β : Type}
+  (convert : α → β) (first : α → α → α) (second : β → β → β),
+  (∀ (a b : α), convert (first a b) = second (convert a) (convert b)) →
+    ∀ (base : TensorRewrite.Pilot.Tensor shape α) (entry : TensorRewrite.Theory.OrderedScatter.Entry shape α),
+      TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.OrderedScatter.step first base entry) =
+        TensorRewrite.Theory.OrderedScatter.step second (TensorRewrite.Pilot.Tensor.map convert base)
+          (TensorRewrite.Theory.OrderedScatter.Entry.mapValue convert entry)
+'TensorRewrite.Theory.OrderedScatter.step_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.target_eq_some_iff : ∀ {rank batchRank indexSize : ℕ}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize)
+  (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+  (batch : TensorRewrite.Pilot.Index plan.batchShape) (window : TensorRewrite.Pilot.Index plan.windowShape)
+  (target : TensorRewrite.Pilot.Index plan.operandShape),
+  TensorRewrite.Theory.OrderedScatter.target? plan indices batch window = some target ↔
+    ∀ (axis : Fin rank),
+      TensorRewrite.Theory.OrderedScatter.offset plan indices batch axis + ↑↑(window axis) = ↑↑(target axis)
+'TensorRewrite.Theory.OrderedScatter.target_eq_some_iff' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.values_append : ∀ {rank : ℕ} {shape : TensorRewrite.Pilot.Shape rank} {α : Type}
+  (first second : List (TensorRewrite.Theory.OrderedScatter.Entry shape α)) (index : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Theory.OrderedScatter.valuesAt (first ++ second) index =
+    TensorRewrite.Theory.OrderedScatter.valuesAt first index ++
+      TensorRewrite.Theory.OrderedScatter.valuesAt second index
+'TensorRewrite.Theory.OrderedScatter.values_append' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.values_full_window : ∀ {rank : ℕ} {α : Type}
+  (shape : TensorRewrite.Pilot.Shape rank)
+  (indices :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape (Fin 0 → ℤ))
+  (updates :
+    TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape).batchShape
+      (TensorRewrite.Pilot.Tensor shape α))
+  (index : TensorRewrite.Pilot.Index shape),
+  TensorRewrite.Theory.OrderedScatter.valuesAt
+      (TensorRewrite.Theory.OrderedScatter.entries (TensorRewrite.Theory.OrderedScatter.fullWindowPlan shape) indices
+        updates)
+      index =
+    [updates (fun axis => axis.elim0) index]
+'TensorRewrite.Theory.OrderedScatter.values_full_window' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.word_combine : ∀ {rank width : ℕ} {shape : TensorRewrite.Pilot.Shape rank}
+  (first second : TensorRewrite.Pilot.Tensor shape (BitVec width))
+  (left right : List (TensorRewrite.Theory.OrderedScatter.Entry shape (BitVec width))),
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Theory.OrderedScatter.run (fun x1 x2 => x1 + x2) first left)
+      (TensorRewrite.Theory.OrderedScatter.run (fun x1 x2 => x1 + x2) second right) =
+    TensorRewrite.Theory.OrderedScatter.run (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) first second) (left ++ right)
+'TensorRewrite.Theory.OrderedScatter.word_combine' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.OrderedScatter.word_translate_distinct : ∀ {rank batchRank indexSize width : ℕ}
+  (plan : TensorRewrite.Theory.OrderedScatter.Plan rank batchRank indexSize) (order : Bool)
+  (first second : TensorRewrite.Pilot.ReducerIndex.ScatterRoles.Parameter),
+  first ≠ second →
+    ∀ (separate base : TensorRewrite.Pilot.Tensor plan.operandShape (BitVec width))
+      (indices : TensorRewrite.Pilot.Tensor plan.batchShape (Fin indexSize → ℤ))
+      (updates :
+        TensorRewrite.Pilot.Tensor plan.batchShape (TensorRewrite.Pilot.Tensor plan.windowShape (BitVec width))),
+      TensorRewrite.Pilot.OperandOrder.map₂ (fun x1 x2 => x1 + x2) order separate
+          (TensorRewrite.Theory.OrderedScatter.scatter plan
+            (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second) base indices updates) =
+        TensorRewrite.Theory.OrderedScatter.scatter plan
+          (TensorRewrite.Pilot.ReducerIndex.ScatterRoles.combine first second)
+          (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) separate base) indices updates
+'TensorRewrite.Theory.OrderedScatter.word_translate_distinct' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.PadBroadcast.converted_fill_refuted : (TensorRewrite.Theory.ReductionWindow.reduce
       (TensorRewrite.Theory.PadWindow.outerWindow
         (TensorRewrite.Theory.PadBroadcast.padPlan TensorRewrite.Theory.PadBroadcast.coveredPlan))

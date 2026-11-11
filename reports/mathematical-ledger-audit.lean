@@ -799,6 +799,78 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map
 #check @TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
 #print axioms TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
+#check @TensorRewrite.Theory.OrderedScatter.binary32_translate_refuted
+#print axioms TensorRewrite.Theory.OrderedScatter.binary32_translate_refuted
+#check @TensorRewrite.Theory.OrderedScatter.clamping_refuted
+#print axioms TensorRewrite.Theory.OrderedScatter.clamping_refuted
+#check @TensorRewrite.Theory.OrderedScatter.distinct_word_operation
+#print axioms TensorRewrite.Theory.OrderedScatter.distinct_word_operation
+#check @TensorRewrite.Theory.OrderedScatter.duplicate_order_refuted
+#print axioms TensorRewrite.Theory.OrderedScatter.duplicate_order_refuted
+#check @TensorRewrite.Theory.OrderedScatter.empty_components
+#print axioms TensorRewrite.Theory.OrderedScatter.empty_components
+#check @TensorRewrite.Theory.OrderedScatter.empty_vector_offset
+#print axioms TensorRewrite.Theory.OrderedScatter.empty_vector_offset
+#check @TensorRewrite.Theory.OrderedScatter.entries_empty_batch
+#print axioms TensorRewrite.Theory.OrderedScatter.entries_empty_batch
+#check @TensorRewrite.Theory.OrderedScatter.entries_empty_window
+#print axioms TensorRewrite.Theory.OrderedScatter.entries_empty_window
+#check @TensorRewrite.Theory.OrderedScatter.entries_full_window
+#print axioms TensorRewrite.Theory.OrderedScatter.entries_full_window
+#check @TensorRewrite.Theory.OrderedScatter.entries_length
+#print axioms TensorRewrite.Theory.OrderedScatter.entries_length
+#check @TensorRewrite.Theory.OrderedScatter.entries_map
+#print axioms TensorRewrite.Theory.OrderedScatter.entries_map
+#check @TensorRewrite.Theory.OrderedScatter.filterMap_finRange_single
+#print axioms TensorRewrite.Theory.OrderedScatter.filterMap_finRange_single
+#check @TensorRewrite.Theory.OrderedScatter.foldl_combine
+#print axioms TensorRewrite.Theory.OrderedScatter.foldl_combine
+#check @TensorRewrite.Theory.OrderedScatter.foldl_translate
+#print axioms TensorRewrite.Theory.OrderedScatter.foldl_translate
+#check @TensorRewrite.Theory.OrderedScatter.full_window_map
+#print axioms TensorRewrite.Theory.OrderedScatter.full_window_map
+#check @TensorRewrite.Theory.OrderedScatter.full_window_target
+#print axioms TensorRewrite.Theory.OrderedScatter.full_window_target
+#check @TensorRewrite.Theory.OrderedScatter.offset_mapped
+#print axioms TensorRewrite.Theory.OrderedScatter.offset_mapped
+#check @TensorRewrite.Theory.OrderedScatter.offset_unmapped
+#print axioms TensorRewrite.Theory.OrderedScatter.offset_unmapped
+#check @TensorRewrite.Theory.OrderedScatter.repeated_parameter_refuted
+#print axioms TensorRewrite.Theory.OrderedScatter.repeated_parameter_refuted
+#check @TensorRewrite.Theory.OrderedScatter.run_append
+#print axioms TensorRewrite.Theory.OrderedScatter.run_append
+#check @TensorRewrite.Theory.OrderedScatter.run_at
+#print axioms TensorRewrite.Theory.OrderedScatter.run_at
+#check @TensorRewrite.Theory.OrderedScatter.run_combine
+#print axioms TensorRewrite.Theory.OrderedScatter.run_combine
+#check @TensorRewrite.Theory.OrderedScatter.run_combine_nested
+#print axioms TensorRewrite.Theory.OrderedScatter.run_combine_nested
+#check @TensorRewrite.Theory.OrderedScatter.run_empty
+#print axioms TensorRewrite.Theory.OrderedScatter.run_empty
+#check @TensorRewrite.Theory.OrderedScatter.run_map
+#print axioms TensorRewrite.Theory.OrderedScatter.run_map
+#check @TensorRewrite.Theory.OrderedScatter.run_translate
+#print axioms TensorRewrite.Theory.OrderedScatter.run_translate
+#check @TensorRewrite.Theory.OrderedScatter.scatter_empty
+#print axioms TensorRewrite.Theory.OrderedScatter.scatter_empty
+#check @TensorRewrite.Theory.OrderedScatter.scatter_map
+#print axioms TensorRewrite.Theory.OrderedScatter.scatter_map
+#check @TensorRewrite.Theory.OrderedScatter.scatter_translate
+#print axioms TensorRewrite.Theory.OrderedScatter.scatter_translate
+#check @TensorRewrite.Theory.OrderedScatter.step_at
+#print axioms TensorRewrite.Theory.OrderedScatter.step_at
+#check @TensorRewrite.Theory.OrderedScatter.step_map
+#print axioms TensorRewrite.Theory.OrderedScatter.step_map
+#check @TensorRewrite.Theory.OrderedScatter.target_eq_some_iff
+#print axioms TensorRewrite.Theory.OrderedScatter.target_eq_some_iff
+#check @TensorRewrite.Theory.OrderedScatter.values_append
+#print axioms TensorRewrite.Theory.OrderedScatter.values_append
+#check @TensorRewrite.Theory.OrderedScatter.values_full_window
+#print axioms TensorRewrite.Theory.OrderedScatter.values_full_window
+#check @TensorRewrite.Theory.OrderedScatter.word_combine
+#print axioms TensorRewrite.Theory.OrderedScatter.word_combine
+#check @TensorRewrite.Theory.OrderedScatter.word_translate_distinct
+#print axioms TensorRewrite.Theory.OrderedScatter.word_translate_distinct
 #check @TensorRewrite.Theory.PadBroadcast.converted_fill_refuted
 #print axioms TensorRewrite.Theory.PadBroadcast.converted_fill_refuted
 #check @TensorRewrite.Theory.PadBroadcast.expansion_axis

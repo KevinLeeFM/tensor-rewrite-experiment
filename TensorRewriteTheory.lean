@@ -23,3 +23,5 @@ public import TensorRewrite.Theory.PadBroadcastCounterexamples
 
 public import TensorRewrite.Theory.RemainderCounterexamples
 public import TensorRewrite.Theory.UniformSumCounterexample
+
+public import TensorRewrite.Theory.OrderedScatterCounterexamples

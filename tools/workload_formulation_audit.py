@@ -6,7 +6,7 @@ from pathlib import Path
 import mathematical_ledger as ledger
 
 ROOT = Path(__file__).resolve().parents[1]
-CATALOG = 'census/workload-formulation-catalog-v2.json'
+CATALOG = 'census/workload-formulation-catalog-v3.json'
 
 
 def digest(path): return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -25,7 +25,13 @@ def read_catalog(path=CATALOG):
     for row in catalog['worksheets']:
         assert digest(ROOT / row['path']) == row['sha256'], row['path']
         worksheet = ledger.read(row['path'])
-        assert digest(ROOT / worksheet['retained_batch']) == worksheet['retained_batch_sha256']
+        sources=(worksheet['retained_batches'] if 'retained_batches' in worksheet else
+                 [dict(path=worksheet['retained_batch'],sha256=worksheet['retained_batch_sha256'])])
+        source_ids=set()
+        for source in sources:
+            assert digest(ROOT / source['path']) == source['sha256'],source['path']
+            source_ids.update(case['id'] for case in ledger.read(source['path'])['cases'])
+        assert worksheet_ids(worksheet) <= source_ids
         assert len(worksheet_ids(worksheet)) == row['retained_record_count']
     return catalog
 
