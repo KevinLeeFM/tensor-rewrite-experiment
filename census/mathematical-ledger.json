@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 361,
-    "partial_model_evidence_requires_partition_review": 114,
+    "needs_formal_statement_and_domain_partition": 359,
+    "partial_model_evidence_requires_partition_review": 116,
     "declared_value_family_complete_full_record_partitions_open": 13
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 560,
+  "distinct_checked_declarations": 573,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,9 +39,10 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 281,
+    "library_backed_theory": 291,
     "broadcast_state_contract_refutation": 3,
     "numerical_contract_refutation": 2,
+    "pad_broadcast_contract_refutation": 3,
     "pad_window_contract_refutation": 2,
     "prefix_window_contract_refutation": 3,
     "reduction_contract_refutation": 3,
@@ -309,6 +310,25 @@
       "independent_statement_review": "pending",
       "manifest": "census/broadcast-window-v1.json",
       "manifest_sha256": "92af803295beaf6cfb189123eed102519f797e2470e0ed08ffe110a7c1b146f4"
+    },
+    {
+      "model": "raw_pad_window_broadcast_composition_v1",
+      "scope": "raw singleton occupied-offset first/last coverage with unit kernel dilation; retained unit spacing/base/stride/kernel and signed edge cancellation; actual empty-safe fused attributes derived",
+      "scalar_contract": "two-sided initializer identities; explicit direct fill equals initializer or actual converted fill equals result initializer; arbitrary pure conversion; original ordered fold",
+      "status": "kernel_checked_raw_pad_window_broadcast_composition",
+      "checked_theorem_count": 13,
+      "full_family_complete": false,
+      "raw_coverage_derived": true,
+      "retained_edge_cancellation_derived": true,
+      "complete_fused_attribute_equality": true,
+      "actual_reshape_broadcast_graph": true,
+      "associativity_assumed": false,
+      "converted_fill_equality_required": true,
+      "combined_pad_broadcast_composition_proved": true,
+      "window_domain_worksheet": "census/reduction-window-domains-v5.json",
+      "independent_statement_review": "pending",
+      "manifest": "census/pad-broadcast-v1.json",
+      "manifest_sha256": "6420f35b2ebbb341ca907cfbcd6ef427c3b0963c43ce84e951776e3fdc9a5058"
     }
   ],
   "kernel_complete_family_profile_count": 21,
@@ -316,10 +336,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "852bbc424121e8de0ac59e2166d4dc58785617818c7ddf2bc60ca332f1ff159f",
+    "sha256": "d74132643d12be2ee7a2670c82c38b960b50fa02ed61e5db297d772c73f70616",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "8b9ba0b35c9b2337d6bfa398db72684eb06d4473029d26cdf4c6d56877b655db"
+    "output_sha256": "bbce2ebc1a3bb6d11e0d171b98dc7be3d98970e3814f25178620074d2f396e4c"
   },
   "proofs": [
     {
@@ -8288,6 +8308,232 @@
       ]
     },
     {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.converted_fill_refuted",
+      "kinds": [
+        "pad_broadcast_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "conversion x+1 maps source Pad fill0 to1, differing from addition initializer0; source8 versus converted target6"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.expansion_axis",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.expansion_covers",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.expansion_output_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.fused_window",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.kept_pointwise",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-broadcast-convert-combined"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.reduce_sequence",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleReduceWindow/pad-broadcast-direct-combined"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.reduce_sequenceAlong",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted",
+      "kinds": [
+        "pad_broadcast_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "original extent2 with interior spacing2 and canceled edge Pad; fused extent3 contradicts a retained extent2"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": []
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.sequenceAlong_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.sequence_map",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "raw independent Pad/window axes compile to actual fused attributes; singleton coverage from first/last occupied offset; retained unit spacing/base/stride/kernel with signed edge cancellation; actual Reshape/Broadcast and derived shape transports; two-sided initializer identities and actual direct/converted fill equality; no associativity or arbitrary geometry/numerical/whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.PadBroadcast.unequal_fill_refuted",
+      "kinds": [
+        "pad_broadcast_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "covered original singleton with explicit Pad fill2, implicit fill0 and addition initializer0; source9 versus target5"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
       "theorem": "TensorRewrite.Theory.PadWindow.axis_compose",
       "kinds": [
         "library_backed_theory"
@@ -14825,8 +15071,10 @@
       "retained_lhs": "ReduceWindow(Convert(Pad(x)))",
       "retained_rhs": "CreateBroadcastSequence of selected operand",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=True; combined padded-window test true",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -14849,8 +15097,10 @@
       "retained_lhs": "ReduceWindow(Pad(x))",
       "retained_rhs": "CreateBroadcastSequence of selected operand",
       "unreviewed_benchmark_notes_not_assumptions": "single-output after early tuple return; operand Pad or Convert(Pad); if Convert and one nontrivial window axis, padding/scan-length ratio >=0.1; not(interior padding and window base dilation); no negative Pad; Pad value equals init pointer OR both Constant and equal directly/after ConvertToShape; ranks match; Convert present=False; combined padded-window test true",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.PadBroadcast.reduce_sequence"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

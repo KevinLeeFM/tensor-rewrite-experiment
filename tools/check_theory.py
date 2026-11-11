@@ -9,6 +9,7 @@ from lean_size import count_source
 ROOT = Path(__file__).resolve().parents[1]
 ALLOWED = {'propext', 'Classical.choice', 'Quot.sound'}
 THEOREMS = {
+    'PadBroadcast': ['kept_pointwise', 'expansion_axis', 'expansion_output_extent', 'expansion_covers', 'fused_window', 'reduce_sequenceAlong', 'sequenceAlong_map', 'reduce_sequence', 'sequence_map', 'reduce_converted_sequence', 'unequal_fill_refuted', 'converted_fill_refuted', 'retained_spacing_refuted'],
     'WindowTransport': ['contribution_map', 'values_map', 'reduce_map', 'reduce_equiv', 'singleton_reduce'],
     'WindowTupleFamily': ['rewrite_sound', 'allRules_complete', 'allRules_nodup'],
     'WindowTupleFloat': ['binary32_tuple', 'binary32_tuple_bits'],
@@ -134,6 +135,15 @@ def main():
                   'TensorRewrite/Theory/ConvolutionFloat.lean': 'R',
                   'TensorRewriteTheory.lean': 'A'}
     categories.update({
+        'TensorRewrite/Theory/PadBroadcast.lean': 'S',
+        'TensorRewrite/Theory/PadBroadcastPlan.lean': 'S',
+        'TensorRewrite/Theory/PadBroadcastTarget.lean': 'S',
+        'TensorRewrite/Theory/PadBroadcastGeometry.lean': 'H',
+        'TensorRewrite/Theory/PadBroadcastCompile.lean': 'H',
+        'TensorRewrite/Theory/PadBroadcastLemmas.lean': 'H',
+        'TensorRewrite/Theory/PadBroadcastProof.lean': 'R',
+        'TensorRewrite/Theory/PadBroadcastCounterexamples.lean': 'C',
+
         'TensorRewrite/Theory/WindowTransport.lean': 'S',
         'TensorRewrite/Theory/WindowTransportLemmas.lean': 'H',
         'TensorRewrite/Theory/WindowTransportProof.lean': 'R',
@@ -205,7 +215,8 @@ def main():
                                    'existing contraction/index inverses, channel reduction, Mathlib sums',
                                'FiniteSum.sum_swap': 'Mathlib Finset.sum_comm',
                                'FiniteSum.sum_add': 'Mathlib Finset.sum_add_distrib'},
-                  scope='covered singleton-window reshape/Broadcast and complete pure singleton tuple family; '
+                  scope='derived raw Pad/window reshape/Broadcast composition and converted fill; '
+                        'covered singleton-window reshape/Broadcast and complete pure singleton tuple family; '
                         'ordered cumulative windows, exact/modular Iota products and count-conversion domains; '
                         'Pad/window fusion with derived empty-safe geometry and converted fill; '
                         'canonical full-span ordered window/reduction/reshape; '
@@ -217,6 +228,25 @@ def main():
                         'no IEEE reassociation/distributivity claim',
                   theorem_profiles={
                       name: ({
+                          'unequal_fill_refuted':
+                              'covered original singleton with explicit Pad fill2, implicit fill0 '
+                              'and addition initializer0; source9 versus target5',
+                          'converted_fill_refuted':
+                              'conversion x+1 maps source Pad fill0 to1, differing from '
+                              'addition initializer0; source8 versus converted target6',
+                          'retained_spacing_refuted':
+                              'original extent2 with interior spacing2 and canceled edge Pad; '
+                              'fused extent3 contradicts a retained extent2'
+                             }[name.rsplit('.',1)[1]]
+                             if '.PadBroadcast.' in name and name.endswith('_refuted') else
+                             'raw independent Pad/window axes compile to actual fused attributes; '
+                             'singleton coverage from first/last occupied offset; retained unit '
+                             'spacing/base/stride/kernel with signed edge cancellation; actual '
+                             'Reshape/Broadcast and derived shape transports; two-sided initializer '
+                             'identities and actual direct/converted fill equality; no associativity '
+                             'or arbitrary geometry/numerical/whole-record closure claim'
+                             if '.PadBroadcast.' in name else
+                             {
                           'nonneutral_reducer_refuted':
                               'Nat addition with actual initializer/padding1 and input5; '
                               'a covered pair window returns7 while reshape/Broadcast returns5',

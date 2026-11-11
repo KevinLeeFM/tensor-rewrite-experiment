@@ -799,6 +799,32 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.OrderedCoordinates.enumerate_uncons_map
 #check @TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
 #print axioms TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul
+#check @TensorRewrite.Theory.PadBroadcast.converted_fill_refuted
+#print axioms TensorRewrite.Theory.PadBroadcast.converted_fill_refuted
+#check @TensorRewrite.Theory.PadBroadcast.expansion_axis
+#print axioms TensorRewrite.Theory.PadBroadcast.expansion_axis
+#check @TensorRewrite.Theory.PadBroadcast.expansion_covers
+#print axioms TensorRewrite.Theory.PadBroadcast.expansion_covers
+#check @TensorRewrite.Theory.PadBroadcast.expansion_output_extent
+#print axioms TensorRewrite.Theory.PadBroadcast.expansion_output_extent
+#check @TensorRewrite.Theory.PadBroadcast.fused_window
+#print axioms TensorRewrite.Theory.PadBroadcast.fused_window
+#check @TensorRewrite.Theory.PadBroadcast.kept_pointwise
+#print axioms TensorRewrite.Theory.PadBroadcast.kept_pointwise
+#check @TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence
+#print axioms TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence
+#check @TensorRewrite.Theory.PadBroadcast.reduce_sequence
+#print axioms TensorRewrite.Theory.PadBroadcast.reduce_sequence
+#check @TensorRewrite.Theory.PadBroadcast.reduce_sequenceAlong
+#print axioms TensorRewrite.Theory.PadBroadcast.reduce_sequenceAlong
+#check @TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted
+#print axioms TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted
+#check @TensorRewrite.Theory.PadBroadcast.sequenceAlong_map
+#print axioms TensorRewrite.Theory.PadBroadcast.sequenceAlong_map
+#check @TensorRewrite.Theory.PadBroadcast.sequence_map
+#print axioms TensorRewrite.Theory.PadBroadcast.sequence_map
+#check @TensorRewrite.Theory.PadBroadcast.unequal_fill_refuted
+#print axioms TensorRewrite.Theory.PadBroadcast.unequal_fill_refuted
 #check @TensorRewrite.Theory.PadWindow.axis_compose
 #print axioms TensorRewrite.Theory.PadWindow.axis_compose
 #check @TensorRewrite.Theory.PadWindow.contribution_fusion

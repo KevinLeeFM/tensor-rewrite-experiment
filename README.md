@@ -4,7 +4,7 @@
 tasks and proofs are user-deferred future work; see [scope](docs/theory-scope.md).
 Historical source/native evidence is preserved and does not gate mathematical acceptance.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
-The theory target now has 300 checked mathematical statements; custom Lean totals **7,065**.
+The theory target now has 313 checked mathematical statements; custom Lean totals **7,307**.
 See `reports/theory-progress.json` for category counts, dependency reuse and axiom audits.
 
 
@@ -1061,3 +1061,18 @@ the two combined Pad/broadcast compositions remain open. Complete declared value
 profiles total21. All488 records remain361 unformulated/114 partial/13 carrying
 value families; zero whole records close. Statement review, the full campaign and
 its verdict remain open; code correspondence stays future work.
+
+
+## Composed Pad/window broadcasts
+
+Raw Pad/window attributes now derive terminal coverage and pointwise retained axes,
+then compose actual Pad fusion with logical Reshape/Broadcast. Direct and converted
+fills retain explicit initializer identities. See [the composition guide](docs/pad-broadcast-composition.md).
+Thirteen statements add242 Lean lines; total7307, theory313/ledger573, four
+integration results separate. All70 focused tests pass:14400 raw axis configurations,
+3785 tensor profiles and1805 outputs agree with a materialized-Pad oracle.
+Worksheet v5 retains31 window records, all with core evidence; whole-record and
+numerical/observation partitions remain open. All488 records are359 unformulated,
+116 partial and13 carrying declared value families; zero whole records close.
+Complete declared profiles remain21. Independent review and the full mathematical
+campaign/verdict remain open; code correspondence stays future work.

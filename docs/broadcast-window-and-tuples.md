@@ -104,3 +104,10 @@ Whole-record closure remains zero; mathematical N/F and the workflow verdict rem
 open. The original review inspected 89 statements; the later 211 still need review.
 The full mathematical formulation, all-case attempts, residual interventions and
 independent replay remain required. Code correspondence is future work.
+
+
+The later [raw Pad/broadcast composition milestone](pad-broadcast-composition.md)
+derives sufficient admission conditions and proves both combined direct/converted
+value graphs. Worksheet v5 gives all31 window records core associations, while
+numerical/domain/observation partitions and whole-record closure remain open.
+This successor does not modify the narrower frozen evidence described above.

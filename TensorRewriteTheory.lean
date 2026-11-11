@@ -18,3 +18,5 @@ public import TensorRewrite.Theory.PadWindowCounterexamples
 public import TensorRewrite.Theory.PrefixWindowCounterexamples
 public import TensorRewrite.Theory.BroadcastWindowCounterexamples
 public import TensorRewrite.Theory.WindowTupleFloat
+
+public import TensorRewrite.Theory.PadBroadcastCounterexamples

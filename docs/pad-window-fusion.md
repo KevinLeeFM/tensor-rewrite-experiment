@@ -93,3 +93,10 @@ The141 theory statements added after the original reviewed89 are unreviewed;
 the unchanged41-statement extension packet covers only part of that backlog.
 The full mathematical campaign and final verdict remain open. Code correspondence
 stays user-deferred future work.
+
+
+The later [raw Pad/broadcast composition milestone](pad-broadcast-composition.md)
+derives sufficient admission conditions and proves both combined direct/converted
+value graphs. Worksheet v5 gives all31 window records core associations, while
+numerical/domain/observation partitions and whole-record closure remain open.
+This successor does not modify the narrower frozen evidence described above.

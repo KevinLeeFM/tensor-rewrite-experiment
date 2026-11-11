@@ -308,3 +308,17 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.BroadcastWindow.nonneutral_reducer_refuted
 #print axioms TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
 #print axioms TensorRewrite.Theory.BroadcastWindow.coupled_projection_refuted
+
+#print axioms TensorRewrite.Theory.PadBroadcast.kept_pointwise
+#print axioms TensorRewrite.Theory.PadBroadcast.expansion_axis
+#print axioms TensorRewrite.Theory.PadBroadcast.expansion_output_extent
+#print axioms TensorRewrite.Theory.PadBroadcast.expansion_covers
+#print axioms TensorRewrite.Theory.PadBroadcast.fused_window
+#print axioms TensorRewrite.Theory.PadBroadcast.reduce_sequenceAlong
+#print axioms TensorRewrite.Theory.PadBroadcast.sequenceAlong_map
+#print axioms TensorRewrite.Theory.PadBroadcast.reduce_sequence
+#print axioms TensorRewrite.Theory.PadBroadcast.sequence_map
+#print axioms TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence
+#print axioms TensorRewrite.Theory.PadBroadcast.unequal_fill_refuted
+#print axioms TensorRewrite.Theory.PadBroadcast.converted_fill_refuted
+#print axioms TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted

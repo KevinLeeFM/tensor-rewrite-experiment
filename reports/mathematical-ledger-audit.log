@@ -2817,6 +2817,117 @@ TensorRewrite.Theory.OrderedCoordinates.enumerate_scalar : ∀ (shape : TensorRe
         List.map (fun column => value (TensorRewrite.Pilot.FiniteProduct.join row column)) (List.finRange columns))
       (List.finRange rows)
 'TensorRewrite.Theory.OrderedCoordinates.map_finRange_mul' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadBroadcast.converted_fill_refuted : (TensorRewrite.Theory.ReductionWindow.reduce
+      (TensorRewrite.Theory.PadWindow.outerWindow
+        (TensorRewrite.Theory.PadBroadcast.padPlan TensorRewrite.Theory.PadBroadcast.coveredPlan))
+      (fun x1 x2 => x1 + x2) 0 0
+      (TensorRewrite.Pilot.Tensor.map (fun value => value + 1)
+        (TensorRewrite.Theory.PadWindow.pad
+          (TensorRewrite.Theory.PadBroadcast.padPlan TensorRewrite.Theory.PadBroadcast.coveredPlan) 0
+          (TensorRewrite.Pilot.Tensor.constant 5)))
+      fun x => ⟨0, ⋯⟩) =
+    8 ∧
+  (TensorRewrite.Pilot.Tensor.map (fun value => value + 1)
+      (TensorRewrite.Theory.PadBroadcast.sequence TensorRewrite.Theory.PadBroadcast.coveredPlan
+        (TensorRewrite.Pilot.Tensor.constant 5))
+      fun x => ⟨0, ⋯⟩) =
+    6
+'TensorRewrite.Theory.PadBroadcast.converted_fill_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PadBroadcast.expansion_axis : ∀ (expansion : TensorRewrite.Theory.PadBroadcast.Expansion),
+  expansion.broadcast.axis = TensorRewrite.Theory.PadWindow.fusedAxis expansion.padding expansion.window
+'TensorRewrite.Theory.PadBroadcast.expansion_axis' depends on axioms: [propext]
+TensorRewrite.Theory.PadBroadcast.expansion_covers : ∀ (expansion : TensorRewrite.Theory.PadBroadcast.Expansion),
+  expansion.Covers → expansion.broadcast.Covers
+'TensorRewrite.Theory.PadBroadcast.expansion_covers' depends on axioms: [propext]
+TensorRewrite.Theory.PadBroadcast.expansion_output_extent : ∀ (expansion : TensorRewrite.Theory.PadBroadcast.Expansion),
+  (TensorRewrite.Theory.PadWindow.outerAxis expansion.padding expansion.window).outputExtent =
+    expansion.broadcast.axis.outputExtent
+'TensorRewrite.Theory.PadBroadcast.expansion_output_extent' depends on axioms: [propext]
+TensorRewrite.Theory.PadBroadcast.fused_window : ∀ (plan : TensorRewrite.Theory.PadBroadcast.Plan),
+  TensorRewrite.Theory.PadWindow.fusedWindow (TensorRewrite.Theory.PadBroadcast.padPlan plan) =
+    TensorRewrite.Theory.BroadcastWindow.windowPlan (TensorRewrite.Theory.PadBroadcast.broadcastPlan plan)
+'TensorRewrite.Theory.PadBroadcast.fused_window' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.PadBroadcast.kept_pointwise : ∀ (axis : TensorRewrite.Theory.PadBroadcast.KeptAxis),
+  TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis
+    (TensorRewrite.Theory.PadWindow.fusedAxis axis.padding axis.window)
+'TensorRewrite.Theory.PadBroadcast.kept_pointwise' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence : ∀ {α β : Type}
+  (plan : TensorRewrite.Theory.PadBroadcast.Plan) (convert : α → β) (operation : β → β → β) (initial : β) (fill : α),
+  (∀ (value : β), operation initial value = value) →
+    (∀ (value : β), operation value initial = value) →
+      convert fill = initial →
+        ∀ (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PadBroadcast.padPlan plan).inputShape α),
+          TensorRewrite.Theory.ReductionWindow.reduce
+              (TensorRewrite.Theory.PadWindow.outerWindow (TensorRewrite.Theory.PadBroadcast.padPlan plan)) operation
+              initial initial
+              (TensorRewrite.Pilot.Tensor.map convert
+                (TensorRewrite.Theory.PadWindow.pad (TensorRewrite.Theory.PadBroadcast.padPlan plan) fill input)) =
+            TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.PadBroadcast.sequence plan input)
+'TensorRewrite.Theory.PadBroadcast.reduce_converted_sequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadBroadcast.reduce_sequence : ∀ {α : Type} (plan : TensorRewrite.Theory.PadBroadcast.Plan)
+  (operation : α → α → α) (initial : α),
+  (∀ (value : α), operation initial value = value) →
+    (∀ (value : α), operation value initial = value) →
+      ∀ (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PadBroadcast.padPlan plan).inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce
+            (TensorRewrite.Theory.PadWindow.outerWindow (TensorRewrite.Theory.PadBroadcast.padPlan plan)) operation
+            initial initial
+            (TensorRewrite.Theory.PadWindow.pad (TensorRewrite.Theory.PadBroadcast.padPlan plan) initial input) =
+          TensorRewrite.Theory.PadBroadcast.sequence plan input
+'TensorRewrite.Theory.PadBroadcast.reduce_sequence' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadBroadcast.reduce_sequenceAlong : ∀ {α : Type}
+  (target : TensorRewrite.Theory.BroadcastWindow.Plan) (window : TensorRewrite.Theory.ReductionWindow.Plan target.rank)
+  (same : window = TensorRewrite.Theory.BroadcastWindow.windowPlan target) (operation : α → α → α) (initial : α),
+  (∀ (value : α), operation initial value = value) →
+    (∀ (value : α), operation value initial = value) →
+      ∀ (input : TensorRewrite.Pilot.Tensor window.inputShape α),
+        TensorRewrite.Theory.ReductionWindow.reduce window operation initial initial input =
+          TensorRewrite.Theory.PadBroadcast.sequenceAlong target window same input
+'TensorRewrite.Theory.PadBroadcast.reduce_sequenceAlong' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted : (TensorRewrite.Theory.PadWindow.fusedAxis
+        (have this :=
+          { inputExtent := 2, low := 1, high := 1, spacing := 2,
+            spacing_pos := TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted._proof_1 };
+        this)
+        (have this :=
+          { inputExtent := 0, kernelExtent := 1, stride := 1, baseDilation := 1, kernelDilation := 1, paddingLow := -1,
+            paddingHigh := -1, reversed := false,
+            stride_pos := TensorRewrite.Theory.PadBroadcast.coveredExpansion._proof_1,
+            baseDilation_pos := TensorRewrite.Theory.PadBroadcast.coveredExpansion._proof_1,
+            kernelDilation_pos := TensorRewrite.Theory.PadBroadcast.coveredExpansion._proof_1 };
+        this)).outputExtent =
+    3 ∧
+  (have this :=
+        { inputExtent := 2, low := 1, high := 1, spacing := 2,
+          spacing_pos := TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted._proof_1 };
+      this).inputExtent =
+    2
+'TensorRewrite.Theory.PadBroadcast.retained_spacing_refuted' does not depend on any axioms
+@TensorRewrite.Theory.PadBroadcast.sequenceAlong_map : ∀ {α β : Type}
+  (target : TensorRewrite.Theory.BroadcastWindow.Plan) (window : TensorRewrite.Theory.ReductionWindow.Plan target.rank)
+  (same : window = TensorRewrite.Theory.BroadcastWindow.windowPlan target) (convert : α → β)
+  (input : TensorRewrite.Pilot.Tensor window.inputShape α),
+  TensorRewrite.Theory.PadBroadcast.sequenceAlong target window same (TensorRewrite.Pilot.Tensor.map convert input) =
+    TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.PadBroadcast.sequenceAlong target window same input)
+'TensorRewrite.Theory.PadBroadcast.sequenceAlong_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.PadBroadcast.sequence_map : ∀ {α β : Type} (plan : TensorRewrite.Theory.PadBroadcast.Plan)
+  (convert : α → β) (input : TensorRewrite.Pilot.Tensor (TensorRewrite.Theory.PadBroadcast.padPlan plan).inputShape α),
+  TensorRewrite.Theory.PadBroadcast.sequence plan (TensorRewrite.Pilot.Tensor.map convert input) =
+    TensorRewrite.Pilot.Tensor.map convert (TensorRewrite.Theory.PadBroadcast.sequence plan input)
+'TensorRewrite.Theory.PadBroadcast.sequence_map' depends on axioms: [propext, Classical.choice, Quot.sound]
+TensorRewrite.Theory.PadBroadcast.unequal_fill_refuted : (TensorRewrite.Theory.ReductionWindow.reduce
+      (TensorRewrite.Theory.PadWindow.outerWindow
+        (TensorRewrite.Theory.PadBroadcast.padPlan TensorRewrite.Theory.PadBroadcast.coveredPlan))
+      (fun x1 x2 => x1 + x2) 0 0
+      (TensorRewrite.Theory.PadWindow.pad
+        (TensorRewrite.Theory.PadBroadcast.padPlan TensorRewrite.Theory.PadBroadcast.coveredPlan) 2
+        (TensorRewrite.Pilot.Tensor.constant 5))
+      fun x => ⟨0, ⋯⟩) =
+    9 ∧
+  (TensorRewrite.Theory.PadBroadcast.sequence TensorRewrite.Theory.PadBroadcast.coveredPlan
+      (TensorRewrite.Pilot.Tensor.constant 5) fun x => ⟨0, ⋯⟩) =
+    5
+'TensorRewrite.Theory.PadBroadcast.unequal_fill_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
 TensorRewrite.Theory.PadWindow.axis_compose : ∀ (padding : TensorRewrite.Theory.PadWindow.PaddingAxis)
   (window : TensorRewrite.Theory.Convolution.Axis) (output : ℕ) (kernel : Fin window.kernelExtent),
   ((TensorRewrite.Theory.PadWindow.outerAxis padding window).inputIndex? output kernel).bind padding.sample? =

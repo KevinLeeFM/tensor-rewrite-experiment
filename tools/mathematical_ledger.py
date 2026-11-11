@@ -191,6 +191,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.PadBroadcast.' in name:
+            manifest=read('census/pad-broadcast-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
         if '.BroadcastWindow.' in name:
             manifest=read('census/broadcast-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
@@ -208,7 +211,9 @@ def evidence(root=ROOT):
                         ('singleton-add-' in label if suffix=='unit_window_add_zero' else
                          'singleton-minimum-' in label if suffix=='unit_window_min' else
                          'singleton-maximum-' in label)]
-        kind=('broadcast_state_contract_refutation' if '.BroadcastWindow.' in name
+        kind=('pad_broadcast_contract_refutation' if '.PadBroadcast.' in name
+              and name.endswith('_refuted') else
+              'broadcast_state_contract_refutation' if '.BroadcastWindow.' in name
               and name.endswith('_refuted') else
               'prefix_window_contract_refutation' if '.PrefixWindow.' in name
               and name.endswith('_refuted') else
@@ -495,6 +500,23 @@ def mathematical_models(root=ROOT):
                        window_domain_worksheet=extension['window_domain_worksheet'],
                        independent_statement_review='pending',manifest=broadcast['manifest'],
                        manifest_sha256=broadcast['manifest_sha256']))
+    from check_pad_broadcast import check_inputs as composed_inputs
+    from check_pad_broadcast import validate_result as validate_composed
+    composed=read('reports/pad-broadcast.json',root);validate_composed(composed)
+    extension=composed_inputs()
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.PadBroadcast.' in name}
+    assert len(expected)==13 and composed['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],scope=extension['geometry_contract'],
+                       scalar_contract=extension['value_contract'],status=composed['status'],
+                       checked_theorem_count=13,full_family_complete=False,
+                       raw_coverage_derived=True,retained_edge_cancellation_derived=True,
+                       complete_fused_attribute_equality=True,actual_reshape_broadcast_graph=True,
+                       associativity_assumed=False,converted_fill_equality_required=True,
+                       combined_pad_broadcast_composition_proved=True,
+                       window_domain_worksheet=extension['window_domain_worksheet'],
+                       independent_statement_review='pending',manifest=composed['manifest'],
+                       manifest_sha256=composed['manifest_sha256']))
     return models
 
 
