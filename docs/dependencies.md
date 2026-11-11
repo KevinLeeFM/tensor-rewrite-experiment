@@ -23,7 +23,8 @@ python3 tools/check_libraries.py
 
 Mathlib's update hook downloads its compiled cache. `.lake/` is generated and
 excluded from Git. FloatLib modules compile as imported. The default build includes
-the historical `TensorRewrite` development and `TensorRewriteLibraries` integration.
+the historical `TensorRewrite` development, `TensorRewriteLibraries` integration
+and `TensorRewriteTheory` mathematical proofs.
 The historical native XLA experiments additionally need their pinned external
 checkout, Bazel and parser dependencies; see README.md and the source manifests.
 They are separate from the Lean dependency setup.

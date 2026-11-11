@@ -11,7 +11,8 @@ See `reports/theory-progress.json` for category counts, dependency reuse and axi
 Independent Git/Lake project for tensor rewrite verification. The current proof
 baseline uses pinned Mathlib and FloatLib dependencies; see [dependency setup](docs/dependencies.md).
 Run `lake update`, `lake build`, then `python3 tools/check_libraries.py`.
-No GitHub remote is configured yet. Historical Std-only proofs/evidence are retained.
+Git remotes are local configuration; inspect them with `git remote -v`.
+Historical Std-only proofs/evidence are retained.
 The initial library-integration checkpoint had **2,796 custom Lean lines**: the historical 2,763
 plus 33 integration lines (category A). Imported library code is listed separately.
 See `reports/library-setup.json` for build and axiom-audit evidence.
@@ -45,7 +46,8 @@ python3 -m pip install --no-cache-dir --target .parser-deps --report reports/par
 
 The pinned locally installed toolchain is Lean
 4.35.0; `lean --version` should report commit
-`eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. No Mathlib dependency has been selected.
+`eb6cafb7290e8bd5f2937522d8d804f58f02bafc`. The original checkpoint used Std only;
+the current Mathlib and FloatLib pins are documented in `docs/dependencies.md`.
 
 ```sh
 python3 tools/freeze_inputs.py --check
