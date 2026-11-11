@@ -9,8 +9,8 @@
   "whole_benchmark_records_closed": 0,
   "positive_or_negative_workflow_verdict": "unresolved_full_campaign_required",
   "benchmark_status_counts": {
-    "needs_formal_statement_and_domain_partition": 234,
-    "partial_model_evidence_requires_partition_review": 141,
+    "needs_formal_statement_and_domain_partition": 226,
+    "partial_model_evidence_requires_partition_review": 149,
     "declared_value_family_complete_full_record_partitions_open": 113
   },
   "batch_counts": {
@@ -25,7 +25,7 @@
     "tensor-index-cases": 57,
     "shape-cases": 58
   },
-  "distinct_checked_declarations": 863,
+  "distinct_checked_declarations": 911,
   "declaration_kind_counts": {
     "support_lemma": 90,
     "value_law": 78,
@@ -39,9 +39,10 @@
     "model_consistency_certificate": 2,
     "index_value_profile_certificate": 4,
     "concrete_witness_certificate": 4,
-    "library_backed_theory": 549,
+    "library_backed_theory": 593,
     "arithmetic_ieee_profile_refutation": 3,
     "broadcast_state_contract_refutation": 3,
+    "concatenation_contract_refutation": 4,
     "control_value_contract_refutation": 6,
     "numerical_contract_refutation": 2,
     "dynamic_update_contract_refutation": 3,
@@ -1263,6 +1264,26 @@
       "independent_statement_review": "pending",
       "manifest": "census/dynamic-update-v1.json",
       "manifest_sha256": "f6555f895c2db604f113e18f1e33c34f55ff3978ee2b6bdcb63fe5c9ee4b327f"
+    },
+    {
+      "model": "arbitrary_axis_nary_concatenation_v1",
+      "status": "kernel_checked_partial_arbitrary_axis_concatenation_and_slice_model",
+      "checked_theorem_count": 48,
+      "scope": "derived tensor shape and pure logical values; execution/layout observations remain separate",
+      "value_contract": "arbitrary pure data types; no algebra, equality or default-value instance",
+      "shape_contract": "all finite ranks with a legal selected axis; arbitrary static extents including every empty-axis case",
+      "filter_contract": "actual-empty filtering derives shape equality from a nonempty kept list; zero-axis filtering is unconditional",
+      "slice_contract": "legal unit strides on the selected axis, with all other dimensions retained; derived prefix and output interval",
+      "full_family_complete": false,
+      "all_empty_first_shape_iff_proved": true,
+      "actual_empty_filter_requires_nonempty_kept_list": true,
+      "unconditional_actual_empty_filter_preserves_shape": false,
+      "adjacent_slice_merge_proved": false,
+      "concatenation_pad_graphs_proved": false,
+      "unit_axis_reshape_broadcast_graph_proved": false,
+      "independent_statement_review": "pending",
+      "manifest": "census/concatenation-v1.json",
+      "manifest_sha256": "ad776c597335ba60397307e15ede9073298c02f7bcd0f3c7a4520446a2a5609d"
     }
   ],
   "kernel_complete_family_profile_count": 388,
@@ -1270,10 +1291,10 @@
   "corpus_manifest": "census/mathematical-corpus-v1.json",
   "audit": {
     "path": "reports/mathematical-ledger-audit.lean",
-    "sha256": "11265c5ef5979c66618a5b171e92d684b9f0d080f7224f6bd99d8966413265ee",
+    "sha256": "6649f7b1e17fae94f92305b0c39f8650f10d8da1b0254db9c47eca2dacc747c9",
     "exit_code": 0,
     "output_path": "reports/mathematical-ledger-audit.log",
-    "output_sha256": "3a483ee5a3779ad5b6a8ee8231363472d7b014569525e52ec2c89eda665abecb"
+    "output_sha256": "a44147b3f2ee0dbbb4a2d7e8c0bd8a579dc0c1a9983940df44a4b33c20b26b7a"
   },
   "proofs": [
     {
@@ -7782,6 +7803,840 @@
       "independent_statement_review": "pending",
       "axiom_dependencies": [
         "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.castTensor_refl",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.castTensor_trans",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_all_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/filter-all-empty"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_filterEmpty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_filterZero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_filtered",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/filter-many-nonempty"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_flatten",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/flatten"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/filter-one-nonempty"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.concatenate_unary",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleConcatenate/unary"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted",
+      "kinds": [
+        "concatenation_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.empty_first_shape_refuted",
+      "kinds": [
+        "concatenation_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.filterEmpty_eq_filterZero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.filterEmpty_of_nonempty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.hasElements_iff_extent",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.hasElements_iff_index",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.hasElements_iff_positive",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.insert_rest_position",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.no_index_of_all_empty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.operand_order_refuted",
+      "kinds": [
+        "concatenation_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.position_withPosition",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_append_left",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_append_right",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_congr",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_filterZero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_flatten",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_live_operand",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_middle",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.readAt_unary",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.read_pack",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.rest_insert",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.rest_withPosition",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.shape_eq_iff",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_castTensor",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_exact_piece",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSlice/concat-exact-piece"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_full",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_offset_refuted",
+      "kinds": [
+        "concatenation_contract_refutation"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_selected",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSlice/concat-subrange-multi"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_single_piece",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [
+        "HandleSlice/concat-subrange-single"
+      ],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.slice_unary",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.total_append",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.total_filterEmpty",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.total_filterZero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.total_flatten",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.withPosition_position",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.withPosition_withPosition",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
+        "Quot.sound",
+        "propext"
+      ]
+    },
+    {
+      "theorem": "TensorRewrite.Theory.Concatenation.withPosition_zero",
+      "kinds": [
+        "library_backed_theory"
+      ],
+      "profile_descriptions": [
+        "pure arbitrary-axis, arbitrary-arity concatenation; actual bounded segment selection, grouped flattening and zero-extent filtering; actual-empty filtering requires a derived nonempty frame witness; all-empty first replacement also requires explicit output shape equality; legal unit-stride selected-group Slice with derived prefix offsets; no adjacent-Slice merge, Pad, repeat-axis Broadcast, effects, dynamic shape, physical-layout or whole-record closure claim"
+      ],
+      "historical_candidate_benchmark_labels": [],
+      "label_correspondence_certified": false,
+      "mathematical_acceptance": "kernel_checked_in_declared_model",
+      "independent_statement_review": "pending",
+      "axiom_dependencies": [
         "Quot.sound",
         "propext"
       ]
@@ -19554,8 +20409,10 @@
       "retained_lhs": "Concat(xs)",
       "retained_rhs": "original first operand",
       "unreviewed_benchmark_notes_not_assumptions": "at least one operand zero-element; selected nonempty count 0; compatibility succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19565,8 +20422,10 @@
       "retained_lhs": "Concat(xs)",
       "retained_rhs": "cloned Concat of nonempty operands",
       "unreviewed_benchmark_notes_not_assumptions": "at least one operand zero-element; selected nonempty count >1; compatibility succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_filtered"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19576,8 +20435,10 @@
       "retained_lhs": "Concat(xs)",
       "retained_rhs": "only nonempty operand",
       "unreviewed_benchmark_notes_not_assumptions": "at least one operand zero-element; selected nonempty count 1; compatibility succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19587,8 +20448,10 @@
       "retained_lhs": "Concat(xs with nested Concat on same axis)",
       "retained_rhs": "Concat(unnested operands)",
       "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; unnested operand count differs from original count",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_flatten"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -19631,8 +20494,10 @@
       "retained_lhs": "Concat(x)",
       "retained_rhs": "x",
       "unreviewed_benchmark_notes_not_assumptions": "one operand; compatibility succeeds",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_unary"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -23529,8 +24394,10 @@
       "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
       "retained_rhs": "xs[selected]",
       "unreviewed_benchmark_notes_not_assumptions": "unstrided; cumulative extent loop finds start piece and exclusive limit piece; they identify one piece; SameShape(piece,output)",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_exact_piece"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -23540,8 +24407,10 @@
       "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
       "retained_rhs": "Slice(Concat(selected pieces,axis),s-concat_start,adjusted_l,1)",
       "unreviewed_benchmark_notes_not_assumptions": "unstrided; cumulative loop finds start and limit; selected count less than original operand count; selected count >1; adjusted axis limit = adjusted start + output extent",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_selected"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },
@@ -23551,8 +24420,10 @@
       "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
       "retained_rhs": "Slice(selected piece,s-concat_start,adjusted_l,1)",
       "unreviewed_benchmark_notes_not_assumptions": "unstrided; cumulative loop finds start and limit; selected count less than original operand count; selected count ==1; adjusted axis limit = adjusted start + output extent",
-      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
-      "evidence": [],
+      "mathematical_target_status": "partial_model_evidence_requires_partition_review",
+      "evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_single_piece"
+      ],
       "whole_record_mathematically_closed": false,
       "code_correspondence": "future_work"
     },

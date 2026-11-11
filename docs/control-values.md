@@ -73,7 +73,7 @@ These are development controls rather than a held-out independent audit.
 ## Measurement and replay
 
 The extension has 28 statements: 22 positive/support statements and six refutations.
-It adds 196 custom Lean lines: S49/R115/A1/C31. Core totals are 603 theory
+It adds 196 custom Lean lines: S49/R115/A1/C31. At the control-value checkpoint, core totals were 603 theory
 statements, 863 ledger declarations and 10,693 custom Lean lines. The nineteen
 new universal graph profiles bring complete declared family-profile units to
 388 across five families. Profile units are not whole benchmark cases, and their

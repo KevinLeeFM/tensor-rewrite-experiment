@@ -205,6 +205,9 @@ def evidence(root=ROOT):
         if '.PrefixWindow.' in name:
             manifest=read('census/prefix-window-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name.rsplit('.',1)[1],[])
+        if '.Concatenation.' in name:
+            manifest=read('census/concatenation-v1.json',root)
+            labels=manifest['candidate_benchmark_bindings'].get(name,[])
         if '.ControlValues.' in name:
             manifest=read('census/control-values-family-v1.json',root)
             labels=manifest['candidate_benchmark_bindings'].get(name,[])
@@ -257,7 +260,8 @@ def evidence(root=ROOT):
                          'singleton-maximum-' in label)]
         remainder=read('census/remainder-v1.json',root)
         labels=sorted(set(labels)|set(remainder['candidate_benchmark_bindings'].get(name,[])))
-        kind=('control_value_contract_refutation' if '.ControlValues.' in name
+        kind=('concatenation_contract_refutation' if '.Concatenation.' in name
+              and name.endswith('_refuted') else 'control_value_contract_refutation' if '.ControlValues.' in name
               and name.endswith('_refuted') else 'dynamic_update_contract_refutation' if '.DynamicUpdate.' in name
               and name.endswith('_refuted') else 'exact_order_domain_refutation' if '.OrderFamily.' in name
               and name.endswith('_refuted') else 'exact_numerical_domain_refutation' if '.Numerical.' in name
@@ -760,6 +764,23 @@ def mathematical_models(root=ROOT):
                        all_machine_index_decoders_identified=False,floating_add_zero_laws_assumed=False,
                        independent_statement_review='pending',manifest=update['manifest'],
                        manifest_sha256=update['manifest_sha256']))
+    from check_concatenation import check_inputs as concat_inputs, validate_result as validate_concat
+    concat=read('reports/concatenation.json',root);validate_concat(concat,root)
+    extension=concat_inputs(root)
+    expected={name:axioms for name,axioms in theory['axiom_dependencies'].items()
+              if '.Concatenation.' in name}
+    assert len(expected)==48 and concat['certificate_axioms']==expected
+    models.append(dict(model=extension['model'],status=concat['status'],checked_theorem_count=48,
+                       scope=extension['observation_contract'],value_contract=extension['data_contract'],
+                       shape_contract=extension['shape_contract'],filter_contract=extension['filter_contract'],
+                       slice_contract=extension['slice_contract'],full_family_complete=False,
+                       all_empty_first_shape_iff_proved=True,
+                       actual_empty_filter_requires_nonempty_kept_list=True,
+                       unconditional_actual_empty_filter_preserves_shape=False,
+                       adjacent_slice_merge_proved=False,concatenation_pad_graphs_proved=False,
+                       unit_axis_reshape_broadcast_graph_proved=False,
+                       independent_statement_review='pending',manifest=concat['manifest'],
+                       manifest_sha256=concat['manifest_sha256']))
     return models
 
 

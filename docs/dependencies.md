@@ -139,3 +139,12 @@ requires no numerical instance; heterogeneous Map preserves actual parameter ord
 and exact dispatch retains the selected branch and its own argument. FloatLib is
 used for stored-bit development controls, not as an arithmetic premise of Select.
 No new dependency or controlled library-ablation result is introduced.
+
+
+## Reuse for arbitrary-axis concatenation
+
+The [nary concatenation and selected-Slice model](concatenation.md) uses Std finite
+indices, ordered Lists, Boolean tests and arithmetic reasoning for its new proofs.
+Existing OrderedCoordinates and FloatLib supply control enumeration and stored-bit
+examples. No numerical law or default data value is needed by the concatenation
+proofs, and no new dependency or library-ablation claim is introduced.

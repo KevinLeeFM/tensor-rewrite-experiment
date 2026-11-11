@@ -1,0 +1,17 @@
+tests/fixtures/InvalidConcatenation.lean:5:93: error: Tactic `decide` proved that the proposition
+  emptyOtherFrame.shape (total emptyOtherBlocks) 0 = emptyOtherFrame.shape 2 0
+is false
+tests/fixtures/InvalidConcatenation.lean:8:59: error: Tactic `decide` proved that the proposition
+  emptyOtherFrame.shape (total (filterEmpty emptyOtherBlocks)) 0 = emptyOtherFrame.shape (total emptyOtherBlocks) 0
+is false
+tests/fixtures/InvalidConcatenation.lean:12:36: error: Tactic `decide` proved that the proposition
+  concatenate [{ extent := 1, values := Tensor.constant 7 }, { extent := 1, values := Tensor.constant 9 }]
+      (lineIndex 0) =
+    concatenate [{ extent := 1, values := Tensor.constant 9 }, { extent := 1, values := Tensor.constant 7 }]
+      (lineIndex 0)
+is false
+tests/fixtures/InvalidConcatenation.lean:17:50: error: Tactic `decide` proved that the proposition
+  let first := { extent := 2, values := Tensor.constant 7 };
+  let second := { extent := 2, values := Tensor.constant 9 };
+  lineFrame.slice (concatenate [first, second]) 0 2 ⋯ (lineIndex 0) = second.values (lineIndex 0)
+is false

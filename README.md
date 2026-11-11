@@ -1218,6 +1218,18 @@ see the [checkpoint evidence](reports/fixed-tactics-milestone-v1.json).
 The [control-value extension](docs/control-values.md) proves nineteen universal
 Select/Map/Conditional graph profiles, including heterogeneous Map operands and
 actual scalar/axis Broadcasts. Six value/trace refutations keep execution claims
-separate. This adds 196 custom Lean lines; current core totals are 603 statements
-and 10,693 lines. Complete declared profiles total 388 across five families;
-225 records remain proposal-only, with whole-record closure and global N/F open.
+separate. At that checkpoint, this added 196 custom Lean lines, with core totals
+of 603 statements and 10,693 lines. Complete declared profiles reached 388 across
+five families; 225 records remained proposal-only, with whole-record closure and
+global N/F open.
+
+
+## Arbitrary-axis concatenation and selected Slice groups
+
+The [concatenation model](docs/concatenation.md) derives bounded nary segment reads,
+nested flattening, guarded empty filtering and actual unit-stride selected-group
+Slice graphs. The all-empty first-operand branch has an exact shape/value iff
+condition, with two shape refutations. Eight records gain typed partial evidence.
+This adds 535 Lean lines; core totals are 651 statements and 11,228 lines. Complete
+family-profile units remain 388, and 217 records remain proposal-only. Whole-record
+closure, global N/F and independent review remain open.

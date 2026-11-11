@@ -611,6 +611,102 @@ import TensorRewriteTheory
 #print axioms TensorRewrite.Theory.BroadcastWindow.sequence_value
 #check @TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
 #print axioms TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted
+#check @TensorRewrite.Theory.Concatenation.castTensor_refl
+#print axioms TensorRewrite.Theory.Concatenation.castTensor_refl
+#check @TensorRewrite.Theory.Concatenation.castTensor_trans
+#print axioms TensorRewrite.Theory.Concatenation.castTensor_trans
+#check @TensorRewrite.Theory.Concatenation.concatenate_all_empty
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_all_empty
+#check @TensorRewrite.Theory.Concatenation.concatenate_all_empty_first
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_all_empty_first
+#check @TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff
+#check @TensorRewrite.Theory.Concatenation.concatenate_filterEmpty
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_filterEmpty
+#check @TensorRewrite.Theory.Concatenation.concatenate_filterZero
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_filterZero
+#check @TensorRewrite.Theory.Concatenation.concatenate_filtered
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_filtered
+#check @TensorRewrite.Theory.Concatenation.concatenate_flatten
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_flatten
+#check @TensorRewrite.Theory.Concatenation.concatenate_only_nonempty
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_only_nonempty
+#check @TensorRewrite.Theory.Concatenation.concatenate_unary
+#print axioms TensorRewrite.Theory.Concatenation.concatenate_unary
+#check @TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted
+#print axioms TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted
+#check @TensorRewrite.Theory.Concatenation.empty_first_shape_refuted
+#print axioms TensorRewrite.Theory.Concatenation.empty_first_shape_refuted
+#check @TensorRewrite.Theory.Concatenation.filterEmpty_eq_filterZero
+#print axioms TensorRewrite.Theory.Concatenation.filterEmpty_eq_filterZero
+#check @TensorRewrite.Theory.Concatenation.filterEmpty_of_nonempty
+#print axioms TensorRewrite.Theory.Concatenation.filterEmpty_of_nonempty
+#check @TensorRewrite.Theory.Concatenation.hasElements_iff_extent
+#print axioms TensorRewrite.Theory.Concatenation.hasElements_iff_extent
+#check @TensorRewrite.Theory.Concatenation.hasElements_iff_index
+#print axioms TensorRewrite.Theory.Concatenation.hasElements_iff_index
+#check @TensorRewrite.Theory.Concatenation.hasElements_iff_positive
+#print axioms TensorRewrite.Theory.Concatenation.hasElements_iff_positive
+#check @TensorRewrite.Theory.Concatenation.insert_rest_position
+#print axioms TensorRewrite.Theory.Concatenation.insert_rest_position
+#check @TensorRewrite.Theory.Concatenation.no_index_of_all_empty
+#print axioms TensorRewrite.Theory.Concatenation.no_index_of_all_empty
+#check @TensorRewrite.Theory.Concatenation.operand_order_refuted
+#print axioms TensorRewrite.Theory.Concatenation.operand_order_refuted
+#check @TensorRewrite.Theory.Concatenation.position_withPosition
+#print axioms TensorRewrite.Theory.Concatenation.position_withPosition
+#check @TensorRewrite.Theory.Concatenation.readAt_append_left
+#print axioms TensorRewrite.Theory.Concatenation.readAt_append_left
+#check @TensorRewrite.Theory.Concatenation.readAt_append_right
+#print axioms TensorRewrite.Theory.Concatenation.readAt_append_right
+#check @TensorRewrite.Theory.Concatenation.readAt_congr
+#print axioms TensorRewrite.Theory.Concatenation.readAt_congr
+#check @TensorRewrite.Theory.Concatenation.readAt_filterZero
+#print axioms TensorRewrite.Theory.Concatenation.readAt_filterZero
+#check @TensorRewrite.Theory.Concatenation.readAt_flatten
+#print axioms TensorRewrite.Theory.Concatenation.readAt_flatten
+#check @TensorRewrite.Theory.Concatenation.readAt_live_operand
+#print axioms TensorRewrite.Theory.Concatenation.readAt_live_operand
+#check @TensorRewrite.Theory.Concatenation.readAt_middle
+#print axioms TensorRewrite.Theory.Concatenation.readAt_middle
+#check @TensorRewrite.Theory.Concatenation.readAt_unary
+#print axioms TensorRewrite.Theory.Concatenation.readAt_unary
+#check @TensorRewrite.Theory.Concatenation.read_pack
+#print axioms TensorRewrite.Theory.Concatenation.read_pack
+#check @TensorRewrite.Theory.Concatenation.rest_insert
+#print axioms TensorRewrite.Theory.Concatenation.rest_insert
+#check @TensorRewrite.Theory.Concatenation.rest_withPosition
+#print axioms TensorRewrite.Theory.Concatenation.rest_withPosition
+#check @TensorRewrite.Theory.Concatenation.shape_eq_iff
+#print axioms TensorRewrite.Theory.Concatenation.shape_eq_iff
+#check @TensorRewrite.Theory.Concatenation.slice_castTensor
+#print axioms TensorRewrite.Theory.Concatenation.slice_castTensor
+#check @TensorRewrite.Theory.Concatenation.slice_exact_piece
+#print axioms TensorRewrite.Theory.Concatenation.slice_exact_piece
+#check @TensorRewrite.Theory.Concatenation.slice_full
+#print axioms TensorRewrite.Theory.Concatenation.slice_full
+#check @TensorRewrite.Theory.Concatenation.slice_offset_refuted
+#print axioms TensorRewrite.Theory.Concatenation.slice_offset_refuted
+#check @TensorRewrite.Theory.Concatenation.slice_selected
+#print axioms TensorRewrite.Theory.Concatenation.slice_selected
+#check @TensorRewrite.Theory.Concatenation.slice_single_piece
+#print axioms TensorRewrite.Theory.Concatenation.slice_single_piece
+#check @TensorRewrite.Theory.Concatenation.slice_unary
+#print axioms TensorRewrite.Theory.Concatenation.slice_unary
+#check @TensorRewrite.Theory.Concatenation.total_append
+#print axioms TensorRewrite.Theory.Concatenation.total_append
+#check @TensorRewrite.Theory.Concatenation.total_filterEmpty
+#print axioms TensorRewrite.Theory.Concatenation.total_filterEmpty
+#check @TensorRewrite.Theory.Concatenation.total_filterZero
+#print axioms TensorRewrite.Theory.Concatenation.total_filterZero
+#check @TensorRewrite.Theory.Concatenation.total_flatten
+#print axioms TensorRewrite.Theory.Concatenation.total_flatten
+#check @TensorRewrite.Theory.Concatenation.withPosition_position
+#print axioms TensorRewrite.Theory.Concatenation.withPosition_position
+#check @TensorRewrite.Theory.Concatenation.withPosition_withPosition
+#print axioms TensorRewrite.Theory.Concatenation.withPosition_withPosition
+#check @TensorRewrite.Theory.Concatenation.withPosition_zero
+#print axioms TensorRewrite.Theory.Concatenation.withPosition_zero
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #print axioms TensorRewrite.Theory.ContractionAlgebra.dot_add_left
 #check @TensorRewrite.Theory.ContractionAlgebra.dot_add_right

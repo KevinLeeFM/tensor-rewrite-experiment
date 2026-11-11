@@ -1,0 +1,184 @@
+{
+  "schema": 1,
+  "status": "kernel_checked_partial_concatenation_profiles_remaining_observations_open",
+  "retained_batches": [
+    {
+      "path": "census/shape-cases.json",
+      "sha256": "71920defc8575dabdcdea5479fbd03ea4366d9e05667b23cc4cceba6125ccf4f"
+    },
+    {
+      "path": "census/tensor-index-cases.json",
+      "sha256": "91fefd43fd3426227bbe44a3633febac9a6ca935d1b1bfa199ee8fac33a0b5de"
+    }
+  ],
+  "mathematical_model_manifest": "census/concatenation-v1.json",
+  "source_guards_adopted_as_proof_assumptions": false,
+  "mathematical_denominator_frozen": false,
+  "mathematical_obligation_denominator": null,
+  "independently_reviewed": false,
+  "code_correspondence_performed": false,
+  "records": [
+    {
+      "benchmark_id": "HandleConcatenate/filter-all-empty",
+      "retained_lhs": "Concat(xs)",
+      "retained_rhs": "original first operand",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list.",
+        "All operands have no actual bounded coordinates; full output shape equality is necessary and sufficient for replacing the result by the first operand."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom.",
+        "The unconditional all-empty first-shape implication is refuted when a non-axis dimension is zero. The theorem derives an iff domain; it does not certify the external guard."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/filter-many-nonempty",
+      "retained_lhs": "Concat(xs)",
+      "retained_rhs": "cloned Concat of nonempty operands",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_filtered"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list.",
+        "A nonempty actual filtered list supplies an operand coordinate witness; tensor emptiness then agrees with zero selected-axis extent and output shape equality is derived."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/filter-one-nonempty",
+      "retained_lhs": "Concat(xs)",
+      "retained_rhs": "only nonempty operand",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list.",
+        "A nonempty actual filtered list supplies an operand coordinate witness; tensor emptiness then agrees with zero selected-axis extent and output shape equality is derived."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/flatten",
+      "retained_lhs": "Concat(xs with nested Concat on same axis)",
+      "retained_rhs": "Concat(unnested operands)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_flatten"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleConcatenate/unary",
+      "retained_lhs": "Concat(x)",
+      "retained_rhs": "x",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.concatenate_unary"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSlice/concat-exact-piece",
+      "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "retained_rhs": "xs[selected]",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_exact_piece"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list.",
+        "Legal unit strides on the selected axis; all other dimensions retained; selected interval fits its actual contiguous operand group, including zero-length intervals."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom.",
+        "Non-axis cropping and non-unit-stride Slice compositions are not established by these selected-axis profiles."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSlice/concat-subrange-multi",
+      "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "retained_rhs": "Slice(Concat(selected pieces,axis),s-concat_start,adjusted_l,1)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_selected"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list.",
+        "Legal unit strides on the selected axis; all other dimensions retained; selected interval fits its actual contiguous operand group, including zero-length intervals."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom.",
+        "Non-axis cropping and non-unit-stride Slice compositions are not established by these selected-axis profiles."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    },
+    {
+      "benchmark_id": "HandleSlice/concat-subrange-single",
+      "retained_lhs": "Slice(Concat(xs,axis),s,l,1)",
+      "retained_rhs": "Slice(selected piece,s-concat_start,adjusted_l,1)",
+      "core_evidence": [
+        "TensorRewrite.Theory.Concatenation.slice_single_piece"
+      ],
+      "mathematical_premises": [
+        "Static legal selected axis; arbitrary pure input data and finite extents, including other zero dimensions; all non-axis input extents agree by type.",
+        "All output extents and bounded segment coordinates are derived from the actual ordered operand list.",
+        "Legal unit strides on the selected axis; all other dimensions retained; selected interval fits its actual contiguous operand group, including zero-length intervals."
+      ],
+      "remaining_partitions": [
+        "Dynamic shapes, finite machine attributes/overflow, physical layout/memory and discarded execution observations require separate models.",
+        "Independent statement review and whole retained-case admission remain open; no source guard is adopted as an algebraic axiom.",
+        "Non-axis cropping and non-unit-stride Slice compositions are not established by these selected-axis profiles."
+      ],
+      "whole_record_closed": false,
+      "independent_statement_review": "pending",
+      "candidate_label_correspondence_certified": false
+    }
+  ]
+}

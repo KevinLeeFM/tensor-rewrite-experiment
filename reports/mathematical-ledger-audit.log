@@ -2186,6 +2186,328 @@ TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted : ¬TensorRewrite.
 'TensorRewrite.Theory.BroadcastWindow.uncovered_output_refuted' depends on axioms: [propext,
  Classical.choice,
  Quot.sound]
+@TensorRewrite.Theory.Concatenation.castTensor_refl : ∀ {rank extent : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α),
+  frame.castTensor ⋯ input = input
+'TensorRewrite.Theory.Concatenation.castTensor_refl' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.castTensor_trans : ∀ {rank first second third : ℕ} {α : Type}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (firstSame : first = second) (secondSame : second = third)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape first) α),
+  frame.castTensor secondSame (frame.castTensor firstSame input) = frame.castTensor ⋯ input
+'TensorRewrite.Theory.Concatenation.castTensor_trans' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_all_empty : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  (∀ block ∈ blocks, block.hasElements = false) →
+    ∀ (replacement : TensorRewrite.Pilot.Tensor (frame.shape (TensorRewrite.Theory.Concatenation.total blocks)) α),
+      TensorRewrite.Theory.Concatenation.concatenate blocks = replacement
+'TensorRewrite.Theory.Concatenation.concatenate_all_empty' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_all_empty_first : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (first : TensorRewrite.Theory.Concatenation.Block frame α)
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  (∀ block ∈ first :: blocks, block.hasElements = false) →
+    ∀ (same : TensorRewrite.Theory.Concatenation.total (first :: blocks) = first.extent),
+      frame.castTensor same (TensorRewrite.Theory.Concatenation.concatenate (first :: blocks)) = first.values
+'TensorRewrite.Theory.Concatenation.concatenate_all_empty_first' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (first : TensorRewrite.Theory.Concatenation.Block frame α)
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  (∀ block ∈ first :: blocks, block.hasElements = false) →
+    ((∃ (same : TensorRewrite.Theory.Concatenation.total (first :: blocks) = first.extent),
+        frame.castTensor same (TensorRewrite.Theory.Concatenation.concatenate (first :: blocks)) = first.values) ↔
+      frame.shape (TensorRewrite.Theory.Concatenation.total (first :: blocks)) = frame.shape first.extent)
+'TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_filterEmpty : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (witness : TensorRewrite.Theory.Concatenation.Block frame α) (nonempty : witness.hasElements = true),
+  frame.castTensor ⋯
+      (TensorRewrite.Theory.Concatenation.concatenate (TensorRewrite.Theory.Concatenation.filterEmpty blocks)) =
+    TensorRewrite.Theory.Concatenation.concatenate blocks
+'TensorRewrite.Theory.Concatenation.concatenate_filterEmpty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_filterZero : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  frame.castTensor ⋯
+      (TensorRewrite.Theory.Concatenation.concatenate (TensorRewrite.Theory.Concatenation.filterZero blocks)) =
+    TensorRewrite.Theory.Concatenation.concatenate blocks
+'TensorRewrite.Theory.Concatenation.concatenate_filterZero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_filtered : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  TensorRewrite.Theory.Concatenation.filterEmpty blocks ≠ [] →
+    ∃ (same :
+      TensorRewrite.Theory.Concatenation.total (TensorRewrite.Theory.Concatenation.filterEmpty blocks) =
+        TensorRewrite.Theory.Concatenation.total blocks),
+      frame.castTensor same
+          (TensorRewrite.Theory.Concatenation.concatenate (TensorRewrite.Theory.Concatenation.filterEmpty blocks)) =
+        TensorRewrite.Theory.Concatenation.concatenate blocks
+'TensorRewrite.Theory.Concatenation.concatenate_filtered' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_flatten : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (groups : List (List (TensorRewrite.Theory.Concatenation.Block frame α))),
+  frame.castTensor ⋯
+      (TensorRewrite.Theory.Concatenation.concatenate (List.map TensorRewrite.Theory.Concatenation.pack groups)) =
+    TensorRewrite.Theory.Concatenation.concatenate groups.flatten
+'TensorRewrite.Theory.Concatenation.concatenate_flatten' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_only_nonempty : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (only : TensorRewrite.Theory.Concatenation.Block frame α),
+  TensorRewrite.Theory.Concatenation.filterEmpty blocks = [only] →
+    ∃ (same : TensorRewrite.Theory.Concatenation.total blocks = only.extent),
+      frame.castTensor same (TensorRewrite.Theory.Concatenation.concatenate blocks) = only.values
+'TensorRewrite.Theory.Concatenation.concatenate_only_nonempty' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.Concatenation.concatenate_unary : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (block : TensorRewrite.Theory.Concatenation.Block frame α),
+  frame.castTensor ⋯ (TensorRewrite.Theory.Concatenation.concatenate [block]) = block.values
+'TensorRewrite.Theory.Concatenation.concatenate_unary' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted : TensorRewrite.Theory.Concatenation.emptyOtherFrame.shape
+    (TensorRewrite.Theory.Concatenation.total
+      (TensorRewrite.Theory.Concatenation.filterEmpty TensorRewrite.Theory.Concatenation.emptyOtherBlocks))
+    0 ≠
+  TensorRewrite.Theory.Concatenation.emptyOtherFrame.shape
+    (TensorRewrite.Theory.Concatenation.total TensorRewrite.Theory.Concatenation.emptyOtherBlocks) 0
+'TensorRewrite.Theory.Concatenation.empty_filter_shape_refuted' depends on axioms: [propext]
+TensorRewrite.Theory.Concatenation.empty_first_shape_refuted : (∀
+    block ∈ TensorRewrite.Theory.Concatenation.emptyOtherBlocks, block.hasElements = false) ∧
+  TensorRewrite.Theory.Concatenation.emptyOtherFrame.shape
+      (TensorRewrite.Theory.Concatenation.total TensorRewrite.Theory.Concatenation.emptyOtherBlocks) 0 ≠
+    TensorRewrite.Theory.Concatenation.emptyOtherFrame.shape 2 0
+'TensorRewrite.Theory.Concatenation.empty_first_shape_refuted' depends on axioms: [propext]
+@TensorRewrite.Theory.Concatenation.filterEmpty_eq_filterZero : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)) (rest : TensorRewrite.Pilot.Index (frame.shape 1)),
+  TensorRewrite.Theory.Concatenation.filterEmpty blocks = TensorRewrite.Theory.Concatenation.filterZero blocks
+'TensorRewrite.Theory.Concatenation.filterEmpty_eq_filterZero' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@TensorRewrite.Theory.Concatenation.filterEmpty_of_nonempty : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (witness : TensorRewrite.Theory.Concatenation.Block frame α),
+  witness.hasElements = true →
+    TensorRewrite.Theory.Concatenation.filterEmpty blocks = TensorRewrite.Theory.Concatenation.filterZero blocks
+'TensorRewrite.Theory.Concatenation.filterEmpty_of_nonempty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.hasElements_iff_extent : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (block : TensorRewrite.Theory.Concatenation.Block frame α) (rest : TensorRewrite.Pilot.Index (frame.shape 1)),
+  block.hasElements = true ↔ 0 < block.extent
+'TensorRewrite.Theory.Concatenation.hasElements_iff_extent' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.hasElements_iff_index : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (block : TensorRewrite.Theory.Concatenation.Block frame α),
+  block.hasElements = true ↔ Nonempty (TensorRewrite.Pilot.Index (frame.shape block.extent))
+'TensorRewrite.Theory.Concatenation.hasElements_iff_index' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.hasElements_iff_positive : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (block : TensorRewrite.Theory.Concatenation.Block frame α),
+  block.hasElements = true ↔ ∀ (axis : Fin rank), 0 < frame.shape block.extent axis
+'TensorRewrite.Theory.Concatenation.hasElements_iff_positive' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.insert_rest_position : ∀ {rank extent : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape extent)),
+  frame.withPosition (frame.rest index) (frame.position index) = index
+'TensorRewrite.Theory.Concatenation.insert_rest_position' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.no_index_of_all_empty : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  (∀ block ∈ blocks, block.hasElements = false) →
+    ¬Nonempty (TensorRewrite.Pilot.Index (frame.shape (TensorRewrite.Theory.Concatenation.total blocks)))
+'TensorRewrite.Theory.Concatenation.no_index_of_all_empty' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.Concatenation.operand_order_refuted : TensorRewrite.Theory.Concatenation.concatenate
+    [{ extent := 1, values := TensorRewrite.Pilot.Tensor.constant 7 },
+      { extent := 1, values := TensorRewrite.Pilot.Tensor.constant 9 }]
+    (TensorRewrite.Theory.Concatenation.lineIndex 0) ≠
+  TensorRewrite.Theory.Concatenation.concatenate
+    [{ extent := 1, values := TensorRewrite.Pilot.Tensor.constant 9 },
+      { extent := 1, values := TensorRewrite.Pilot.Tensor.constant 7 }]
+    (TensorRewrite.Theory.Concatenation.lineIndex 0)
+'TensorRewrite.Theory.Concatenation.operand_order_refuted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.position_withPosition : ∀ {rank inputExtent outputExtent : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape inputExtent))
+  (position : Fin outputExtent), frame.position (frame.withPosition index position) = position
+'TensorRewrite.Theory.Concatenation.position_withPosition' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_append_left : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (left right : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ)
+  (before : position < TensorRewrite.Theory.Concatenation.total left)
+  (bound : position < TensorRewrite.Theory.Concatenation.total (left ++ right)),
+  TensorRewrite.Theory.Concatenation.readAt (left ++ right) rest position bound =
+    TensorRewrite.Theory.Concatenation.readAt left rest position before
+'TensorRewrite.Theory.Concatenation.readAt_append_left' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_append_right : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (left right : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ),
+  TensorRewrite.Theory.Concatenation.total left ≤ position →
+    ∀ (bound : position < TensorRewrite.Theory.Concatenation.total (left ++ right))
+      (tailBound :
+        position - TensorRewrite.Theory.Concatenation.total left < TensorRewrite.Theory.Concatenation.total right),
+      TensorRewrite.Theory.Concatenation.readAt (left ++ right) rest position bound =
+        TensorRewrite.Theory.Concatenation.readAt right rest (position - TensorRewrite.Theory.Concatenation.total left)
+          tailBound
+'TensorRewrite.Theory.Concatenation.readAt_append_right' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_congr : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} {first second : List (TensorRewrite.Theory.Concatenation.Block frame α)},
+  first = second →
+    ∀ (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ)
+      (firstBound : position < TensorRewrite.Theory.Concatenation.total first)
+      (secondBound : position < TensorRewrite.Theory.Concatenation.total second),
+      TensorRewrite.Theory.Concatenation.readAt first rest position firstBound =
+        TensorRewrite.Theory.Concatenation.readAt second rest position secondBound
+'TensorRewrite.Theory.Concatenation.readAt_congr' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_filterZero : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)) (rest : TensorRewrite.Pilot.Index (frame.shape 1))
+  (position : ℕ) (bound : position < TensorRewrite.Theory.Concatenation.total blocks)
+  (filteredBound :
+    position < TensorRewrite.Theory.Concatenation.total (TensorRewrite.Theory.Concatenation.filterZero blocks)),
+  TensorRewrite.Theory.Concatenation.readAt (TensorRewrite.Theory.Concatenation.filterZero blocks) rest position
+      filteredBound =
+    TensorRewrite.Theory.Concatenation.readAt blocks rest position bound
+'TensorRewrite.Theory.Concatenation.readAt_filterZero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_flatten : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (groups : List (List (TensorRewrite.Theory.Concatenation.Block frame α)))
+  (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ)
+  (bound :
+    position < TensorRewrite.Theory.Concatenation.total (List.map TensorRewrite.Theory.Concatenation.pack groups))
+  (flatBound : position < TensorRewrite.Theory.Concatenation.total groups.flatten),
+  TensorRewrite.Theory.Concatenation.readAt (List.map TensorRewrite.Theory.Concatenation.pack groups) rest position
+      bound =
+    TensorRewrite.Theory.Concatenation.readAt groups.flatten rest position flatBound
+'TensorRewrite.Theory.Concatenation.readAt_flatten' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_live_operand : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)) (rest : TensorRewrite.Pilot.Index (frame.shape 1)),
+  ∀ position < TensorRewrite.Theory.Concatenation.total blocks, ∃ block ∈ blocks, block.hasElements = true
+'TensorRewrite.Theory.Concatenation.readAt_live_operand' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_middle : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (leading selected trailing : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ)
+  (before : position < TensorRewrite.Theory.Concatenation.total selected)
+  (bound :
+    TensorRewrite.Theory.Concatenation.total leading + position <
+      TensorRewrite.Theory.Concatenation.total (leading ++ (selected ++ trailing))),
+  TensorRewrite.Theory.Concatenation.readAt (leading ++ (selected ++ trailing)) rest
+      (TensorRewrite.Theory.Concatenation.total leading + position) bound =
+    TensorRewrite.Theory.Concatenation.readAt selected rest position before
+'TensorRewrite.Theory.Concatenation.readAt_middle' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.readAt_unary : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (block : TensorRewrite.Theory.Concatenation.Block frame α)
+  (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ) (bound : position < block.extent)
+  (listBound : position < TensorRewrite.Theory.Concatenation.total [block]),
+  TensorRewrite.Theory.Concatenation.readAt [block] rest position listBound =
+    block.values (frame.withPosition rest ⟨position, bound⟩)
+'TensorRewrite.Theory.Concatenation.readAt_unary' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.read_pack : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (rest : TensorRewrite.Pilot.Index (frame.shape 1)) (position : ℕ)
+  (bound : position < TensorRewrite.Theory.Concatenation.total blocks),
+  (TensorRewrite.Theory.Concatenation.pack blocks).values (frame.withPosition rest ⟨position, bound⟩) =
+    TensorRewrite.Theory.Concatenation.readAt blocks rest position bound
+'TensorRewrite.Theory.Concatenation.read_pack' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.rest_insert : ∀ {rank extent : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (rest : TensorRewrite.Pilot.Index (frame.shape 1))
+  (position : Fin extent), frame.rest (frame.withPosition rest position) = rest
+'TensorRewrite.Theory.Concatenation.rest_insert' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.rest_withPosition : ∀ {rank first second : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape first))
+  (position : Fin second), frame.rest (frame.withPosition index position) = frame.rest index
+'TensorRewrite.Theory.Concatenation.rest_withPosition' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.shape_eq_iff : ∀ {rank first second : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank), frame.shape first = frame.shape second ↔ first = second
+'TensorRewrite.Theory.Concatenation.shape_eq_iff' depends on axioms: [propext]
+@TensorRewrite.Theory.Concatenation.slice_castTensor : ∀ {rank first second : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type} (same : first = second)
+  (input : TensorRewrite.Pilot.Tensor (frame.shape first) α) (start length : ℕ) (firstFits : start + length ≤ first)
+  (secondFits : start + length ≤ second),
+  frame.slice (frame.castTensor same input) start length secondFits = frame.slice input start length firstFits
+'TensorRewrite.Theory.Concatenation.slice_castTensor' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.slice_exact_piece : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (leading trailing : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (block : TensorRewrite.Theory.Concatenation.Block frame α),
+  frame.slice (TensorRewrite.Theory.Concatenation.concatenate (leading ++ block :: trailing))
+      (TensorRewrite.Theory.Concatenation.total leading) block.extent ⋯ =
+    block.values
+'TensorRewrite.Theory.Concatenation.slice_exact_piece' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.slice_full : ∀ {rank extent : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (input : TensorRewrite.Pilot.Tensor (frame.shape extent) α), frame.slice input 0 extent ⋯ = input
+'TensorRewrite.Theory.Concatenation.slice_full' depends on axioms: [propext, Quot.sound]
+TensorRewrite.Theory.Concatenation.slice_offset_refuted : let first :=
+  { extent := 2, values := TensorRewrite.Pilot.Tensor.constant 7 };
+let second := { extent := 2, values := TensorRewrite.Pilot.Tensor.constant 9 };
+TensorRewrite.Theory.Concatenation.lineFrame.slice (TensorRewrite.Theory.Concatenation.concatenate [first, second]) 0 2
+    TensorRewrite.Theory.Concatenation.slice_offset_refuted._proof_1 (TensorRewrite.Theory.Concatenation.lineIndex 0) ≠
+  second.values (TensorRewrite.Theory.Concatenation.lineIndex 0)
+'TensorRewrite.Theory.Concatenation.slice_offset_refuted' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.slice_selected : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (leading selected trailing : List (TensorRewrite.Theory.Concatenation.Block frame α)) (start length : ℕ)
+  (fits : start + length ≤ TensorRewrite.Theory.Concatenation.total selected),
+  frame.slice (TensorRewrite.Theory.Concatenation.concatenate (leading ++ (selected ++ trailing)))
+      (TensorRewrite.Theory.Concatenation.total leading + start) length ⋯ =
+    frame.slice (TensorRewrite.Theory.Concatenation.concatenate selected) start length fits
+'TensorRewrite.Theory.Concatenation.slice_selected' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.slice_single_piece : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (leading trailing : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (block : TensorRewrite.Theory.Concatenation.Block frame α) (start length : ℕ) (fits : start + length ≤ block.extent),
+  frame.slice (TensorRewrite.Theory.Concatenation.concatenate (leading ++ block :: trailing))
+      (TensorRewrite.Theory.Concatenation.total leading + start) length ⋯ =
+    frame.slice block.values start length fits
+'TensorRewrite.Theory.Concatenation.slice_single_piece' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.slice_unary : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (block : TensorRewrite.Theory.Concatenation.Block frame α) (start length : ℕ)
+  (fits : start + length ≤ block.extent),
+  frame.slice (TensorRewrite.Theory.Concatenation.concatenate [block]) start length ⋯ =
+    frame.slice block.values start length fits
+'TensorRewrite.Theory.Concatenation.slice_unary' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.total_append : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (left right : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  TensorRewrite.Theory.Concatenation.total (left ++ right) =
+    TensorRewrite.Theory.Concatenation.total left + TensorRewrite.Theory.Concatenation.total right
+'TensorRewrite.Theory.Concatenation.total_append' depends on axioms: [propext]
+@TensorRewrite.Theory.Concatenation.total_filterEmpty : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α))
+  (witness : TensorRewrite.Theory.Concatenation.Block frame α),
+  witness.hasElements = true →
+    TensorRewrite.Theory.Concatenation.total (TensorRewrite.Theory.Concatenation.filterEmpty blocks) =
+      TensorRewrite.Theory.Concatenation.total blocks
+'TensorRewrite.Theory.Concatenation.total_filterEmpty' depends on axioms: [propext, Classical.choice, Quot.sound]
+@TensorRewrite.Theory.Concatenation.total_filterZero : ∀ {rank : ℕ}
+  {frame : TensorRewrite.Theory.Concatenation.Frame rank} {α : Type}
+  (blocks : List (TensorRewrite.Theory.Concatenation.Block frame α)),
+  TensorRewrite.Theory.Concatenation.total (TensorRewrite.Theory.Concatenation.filterZero blocks) =
+    TensorRewrite.Theory.Concatenation.total blocks
+'TensorRewrite.Theory.Concatenation.total_filterZero' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.total_flatten : ∀ {rank : ℕ} {frame : TensorRewrite.Theory.Concatenation.Frame rank}
+  {α : Type} (groups : List (List (TensorRewrite.Theory.Concatenation.Block frame α))),
+  TensorRewrite.Theory.Concatenation.total (List.map TensorRewrite.Theory.Concatenation.pack groups) =
+    TensorRewrite.Theory.Concatenation.total groups.flatten
+'TensorRewrite.Theory.Concatenation.total_flatten' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.withPosition_position : ∀ {rank extent : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape extent)),
+  frame.withPosition index (frame.position index) = index
+'TensorRewrite.Theory.Concatenation.withPosition_position' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.withPosition_withPosition : ∀ {rank first second third : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (index : TensorRewrite.Pilot.Index (frame.shape first))
+  (middle : Fin second) (last : Fin third),
+  frame.withPosition (frame.withPosition index middle) last = frame.withPosition index last
+'TensorRewrite.Theory.Concatenation.withPosition_withPosition' depends on axioms: [propext, Quot.sound]
+@TensorRewrite.Theory.Concatenation.withPosition_zero : ∀ {rank : ℕ}
+  (frame : TensorRewrite.Theory.Concatenation.Frame rank) (rest : TensorRewrite.Pilot.Index (frame.shape 1)),
+  frame.withPosition rest 0 = rest
+'TensorRewrite.Theory.Concatenation.withPosition_zero' depends on axioms: [propext, Quot.sound]
 @TensorRewrite.Theory.ContractionAlgebra.dot_add_left : ∀ {α : Type} [inst : Semiring α]
   {batch left right contracting : ℕ} (plan : TensorRewrite.Pilot.Contraction.Plan batch left right contracting)
   (x y : TensorRewrite.Pilot.Tensor plan.lhsShape α) (z : TensorRewrite.Pilot.Tensor plan.rhsShape α),
