@@ -1,0 +1,99 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_043__funext_simp.lean:13:72: error: unsolved goals
+α✝ : Type
+inst✝ : Semiring α✝
+batch✝ left✝ right✝ contracting✝ : ℕ
+plan✝ : TensorRewrite.Pilot.Contraction.Plan batch✝ left✝ right✝ contracting✝
+x✝ : TensorRewrite.Pilot.Tensor plan✝.lhsShape α✝
+y✝ z✝ : TensorRewrite.Pilot.Tensor plan✝.rhsShape α✝
+index✝ : TensorRewrite.Pilot.Index plan✝.outputShape
+⊢ List.foldl (fun x1 x2 => x1 + x2) 0
+      (List.map
+        (fun position =>
+          (x✝ fun axis =>
+              Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                (fun axis =>
+                  Fin.cast ⋯
+                    (Fin.addCases
+                      (fun axis =>
+                        Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.castAdd right✝ axis))))))
+                      (fun axis =>
+                        Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                      axis))
+                (plan✝.leftOrder.inputToOutput axis)) *
+            ((y✝ fun axis =>
+                Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                  (fun axis =>
+                    Fin.cast ⋯
+                      (Fin.addCases
+                        (fun axis =>
+                          Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.natAdd left✝ axis))))))
+                        (fun axis =>
+                          Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                        axis))
+                  (plan✝.rightOrder.inputToOutput axis)) +
+              z✝ fun axis =>
+                Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                  (fun axis =>
+                    Fin.cast ⋯
+                      (Fin.addCases
+                        (fun axis =>
+                          Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.natAdd left✝ axis))))))
+                        (fun axis =>
+                          Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                        axis))
+                  (plan✝.rightOrder.inputToOutput axis)))
+        (List.finRange (TensorRewrite.Pilot.LinearIndex.elementCount plan✝.contractShape))) =
+    List.foldl (fun x1 x2 => x1 + x2) 0
+        (List.map
+          (fun position =>
+            (x✝ fun axis =>
+                Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                  (fun axis =>
+                    Fin.cast ⋯
+                      (Fin.addCases
+                        (fun axis =>
+                          Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.castAdd right✝ axis))))))
+                        (fun axis =>
+                          Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                        axis))
+                  (plan✝.leftOrder.inputToOutput axis)) *
+              y✝ fun axis =>
+                Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                  (fun axis =>
+                    Fin.cast ⋯
+                      (Fin.addCases
+                        (fun axis =>
+                          Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.natAdd left✝ axis))))))
+                        (fun axis =>
+                          Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                        axis))
+                  (plan✝.rightOrder.inputToOutput axis))
+          (List.finRange (TensorRewrite.Pilot.LinearIndex.elementCount plan✝.contractShape))) +
+      List.foldl (fun x1 x2 => x1 + x2) 0
+        (List.map
+          (fun position =>
+            (x✝ fun axis =>
+                Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                  (fun axis =>
+                    Fin.cast ⋯
+                      (Fin.addCases
+                        (fun axis =>
+                          Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.castAdd right✝ axis))))))
+                        (fun axis =>
+                          Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                        axis))
+                  (plan✝.leftOrder.inputToOutput axis)) *
+              z✝ fun axis =>
+                Fin.addCases (fun axis => Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.castAdd (left✝ + right✝) axis))))
+                  (fun axis =>
+                    Fin.cast ⋯
+                      (Fin.addCases
+                        (fun axis =>
+                          Fin.cast ⋯ (Fin.cast ⋯ (Fin.cast ⋯ (index✝ (Fin.natAdd batch✝ (Fin.natAdd left✝ axis))))))
+                        (fun axis =>
+                          Fin.cast ⋯ (TensorRewrite.Pilot.LinearIndex.delinearize plan✝.contractShape position axis))
+                        axis))
+                  (plan✝.rightOrder.inputToOutput axis))
+          (List.finRange (TensorRewrite.Pilot.LinearIndex.elementCount plan✝.contractShape)))
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

@@ -1,0 +1,63 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_011__simp.lean:13:65: error: unsolved goals
+rank✝ : ℕ
+α✝ : Type
+inst✝ : Semiring α✝
+plan✝ : TensorRewrite.Theory.Convolution.Plan rank✝
+input✝ : TensorRewrite.Theory.Convolution.Input plan✝ α✝
+output✝ : TensorRewrite.Theory.Convolution.OutputIndex plan✝
+position✝ : Fin (plan✝.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan✝.kernelShape)
+⊢ (match
+      if h :
+          ∀ (axis : Fin rank✝),
+            ((plan✝.window axis).paddingLow ≤
+                ↑↑(output✝.spatial axis) * ↑(plan✝.window axis).stride +
+                  if (plan✝.window axis).reversed = true then
+                    ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                              (TensorRewrite.Pilot.FiniteProduct.column position✝) axis).rev *
+                      ↑(plan✝.window axis).kernelDilation
+                  else
+                    ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                            (TensorRewrite.Pilot.FiniteProduct.column position✝) axis) *
+                      ↑(plan✝.window axis).kernelDilation) ∧
+              ↑(plan✝.window axis).baseDilation ∣
+                  (↑↑(output✝.spatial axis) * ↑(plan✝.window axis).stride +
+                      if (plan✝.window axis).reversed = true then
+                        ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                                  (TensorRewrite.Pilot.FiniteProduct.column position✝) axis).rev *
+                          ↑(plan✝.window axis).kernelDilation
+                      else
+                        ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                                (TensorRewrite.Pilot.FiniteProduct.column position✝) axis) *
+                          ↑(plan✝.window axis).kernelDilation) -
+                    (plan✝.window axis).paddingLow ∧
+                ((↑↑(output✝.spatial axis) * ↑(plan✝.window axis).stride +
+                        if (plan✝.window axis).reversed = true then
+                          ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                                    (TensorRewrite.Pilot.FiniteProduct.column position✝) axis).rev *
+                            ↑(plan✝.window axis).kernelDilation
+                        else
+                          ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                                  (TensorRewrite.Pilot.FiniteProduct.column position✝) axis) *
+                            ↑(plan✝.window axis).kernelDilation) -
+                      (plan✝.window axis).paddingLow) /
+                    ↑(plan✝.window axis).baseDilation <
+                  ↑(plan✝.window axis).inputExtent then
+        some fun axis =>
+          ⟨(((↑↑(output✝.spatial axis) * ↑(plan✝.window axis).stride +
+                    if (plan✝.window axis).reversed = true then
+                      ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                                (TensorRewrite.Pilot.FiniteProduct.column position✝) axis).rev *
+                        ↑(plan✝.window axis).kernelDilation
+                    else
+                      ↑↑(TensorRewrite.Pilot.LinearIndex.delinearize plan✝.kernelShape
+                              (TensorRewrite.Pilot.FiniteProduct.column position✝) axis) *
+                        ↑(plan✝.window axis).kernelDilation) -
+                  (plan✝.window axis).paddingLow) /
+                ↑(plan✝.window axis).baseDilation).toNat,
+            ⋯⟩
+      else none with
+    | none => 0
+    | some coordinates => 0) =
+    0
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

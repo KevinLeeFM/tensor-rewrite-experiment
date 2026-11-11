@@ -1,0 +1,36 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_010__funext_simp.lean:13:65: error: unsolved goals
+axis✝ : TensorRewrite.Theory.Convolution.Axis
+output✝ : ℕ
+kernel✝ : Fin axis✝.kernelExtent
+index✝ : Fin axis✝.inputExtent
+sample✝ :
+  ∃ (h :
+    (axis✝.paddingLow ≤
+        ↑output✝ * ↑axis✝.stride +
+          if axis✝.reversed = true then (↑axis✝.kernelExtent - (↑↑kernel✝ + 1)) * ↑axis✝.kernelDilation
+          else ↑↑kernel✝ * ↑axis✝.kernelDilation) ∧
+      ↑axis✝.baseDilation ∣
+          (↑output✝ * ↑axis✝.stride +
+              if axis✝.reversed = true then (↑axis✝.kernelExtent - (↑↑kernel✝ + 1)) * ↑axis✝.kernelDilation
+              else ↑↑kernel✝ * ↑axis✝.kernelDilation) -
+            axis✝.paddingLow ∧
+        ((↑output✝ * ↑axis✝.stride +
+                if axis✝.reversed = true then (↑axis✝.kernelExtent - (↑↑kernel✝ + 1)) * ↑axis✝.kernelDilation
+                else ↑↑kernel✝ * ↑axis✝.kernelDilation) -
+              axis✝.paddingLow) /
+            ↑axis✝.baseDilation <
+          ↑axis✝.inputExtent),
+    ⟨(((↑output✝ * ↑axis✝.stride +
+                if axis✝.reversed = true then (↑axis✝.kernelExtent - (↑↑kernel✝ + 1)) * ↑axis✝.kernelDilation
+                else ↑↑kernel✝ * ↑axis✝.kernelDilation) -
+              axis✝.paddingLow) /
+            ↑axis✝.baseDilation).toNat,
+        ⋯⟩ =
+      index✝
+⊢ ↑↑index✝ * ↑axis✝.baseDilation =
+    (↑output✝ * ↑axis✝.stride +
+        if axis✝.reversed = true then (↑axis✝.kernelExtent - (↑↑kernel✝ + 1)) * ↑axis✝.kernelDilation
+        else ↑↑kernel✝ * ↑axis✝.kernelDilation) -
+      axis✝.paddingLow
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

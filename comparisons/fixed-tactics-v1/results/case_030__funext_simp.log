@@ -1,0 +1,16 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_030__funext_simp.lean:13:74: error: unsolved goals
+rank✝ : ℕ
+plan✝ : TensorRewrite.Theory.Convolution.Plan rank✝
+index✝ : Fin rank✝
+pointwise✝ : ∀ (axis : Fin rank✝), TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis (plan✝.window axis)
+⊢ ((((plan✝.window index✝).paddingLow +
+                if (plan✝.window index✝).inputExtent = 0 then 0
+                else ↑((plan✝.window index✝).inputExtent - 1) * ↑(plan✝.window index✝).baseDilation + 1) +
+              (plan✝.window index✝).paddingHigh -
+            if (plan✝.window index✝).kernelExtent = 0 then 0
+            else ↑((plan✝.window index✝).kernelExtent - 1) * ↑(plan✝.window index✝).kernelDilation + 1) /
+          ↑(plan✝.window index✝).stride +
+        1).toNat =
+    (plan✝.window index✝).inputExtent
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Quot.sound]

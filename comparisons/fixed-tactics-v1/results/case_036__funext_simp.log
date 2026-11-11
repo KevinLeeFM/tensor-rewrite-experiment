@@ -1,0 +1,87 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_036__funext_simp.lean:13:67: error: unsolved goals
+domain✝ : TensorRewrite.Theory.LogicalFamily.Domain
+rank✝ : ℕ
+shape✝ : TensorRewrite.Pilot.Shape rank✝
+rule✝ : TensorRewrite.Theory.LogicalFamily.Rule domain✝
+inputs✝ : ℕ → TensorRewrite.Pilot.Tensor shape✝ domain✝.Value
+index✝ : TensorRewrite.Pilot.Index shape✝
+condition✝ :
+  match rule✝ with
+  | TensorRewrite.Theory.LogicalFamily.Rule.xorEqual => inputs✝ 0 = inputs✝ 1
+  | x => True
+⊢ TensorRewrite.Theory.LogicalFamily.Expr.eval inputs✝
+      (match domain✝, rule✝ with
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.notNot =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).not.not
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.andZeroLeft =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.constant
+              (match domain with
+              | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+              | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width)).and
+          (TensorRewrite.Theory.LogicalFamily.Expr.input 0)
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.andZeroRight =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).and
+          (TensorRewrite.Theory.LogicalFamily.Expr.constant
+            (match domain with
+            | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+            | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width))
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.orZeroLeft =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.constant
+              (match domain with
+              | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+              | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width)).or
+          (TensorRewrite.Theory.LogicalFamily.Expr.input 0)
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.orZeroRight =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).or
+          (TensorRewrite.Theory.LogicalFamily.Expr.constant
+            (match domain with
+            | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+            | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width))
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.xorZeroLeft =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.constant
+              (match domain with
+              | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+              | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width)).xor
+          (TensorRewrite.Theory.LogicalFamily.Expr.input 0)
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.xorZeroRight =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).xor
+          (TensorRewrite.Theory.LogicalFamily.Expr.constant
+            (match domain with
+            | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+            | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width))
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.xorEqual =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).xor (TensorRewrite.Theory.LogicalFamily.Expr.input 1)
+      | .(TensorRewrite.Theory.LogicalFamily.Domain.predicate), TensorRewrite.Theory.LogicalFamily.Rule.andTrueLeft =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.constant true).and (TensorRewrite.Theory.LogicalFamily.Expr.input 0)
+      | .(TensorRewrite.Theory.LogicalFamily.Domain.predicate), TensorRewrite.Theory.LogicalFamily.Rule.andTrueRight =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).and (TensorRewrite.Theory.LogicalFamily.Expr.constant true)
+      | .(TensorRewrite.Theory.LogicalFamily.Domain.predicate), TensorRewrite.Theory.LogicalFamily.Rule.orTrueLeft =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.constant true).or (TensorRewrite.Theory.LogicalFamily.Expr.input 0)
+      | .(TensorRewrite.Theory.LogicalFamily.Domain.predicate), TensorRewrite.Theory.LogicalFamily.Rule.orTrueRight =>
+        (TensorRewrite.Theory.LogicalFamily.Expr.input 0).or (TensorRewrite.Theory.LogicalFamily.Expr.constant true))
+      index✝ =
+    TensorRewrite.Theory.LogicalFamily.Expr.eval inputs✝
+      (match domain✝, rule✝ with
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.andZeroLeft =>
+        TensorRewrite.Theory.LogicalFamily.Expr.constant
+          (match domain with
+          | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+          | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width)
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.andZeroRight =>
+        TensorRewrite.Theory.LogicalFamily.Expr.constant
+          (match domain with
+          | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+          | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width)
+      | domain, TensorRewrite.Theory.LogicalFamily.Rule.xorEqual =>
+        TensorRewrite.Theory.LogicalFamily.Expr.constant
+          (match domain with
+          | TensorRewrite.Theory.LogicalFamily.Domain.predicate => false
+          | TensorRewrite.Theory.LogicalFamily.Domain.word width => 0#width)
+      | .(TensorRewrite.Theory.LogicalFamily.Domain.predicate), TensorRewrite.Theory.LogicalFamily.Rule.orTrueLeft =>
+        TensorRewrite.Theory.LogicalFamily.Expr.constant true
+      | .(TensorRewrite.Theory.LogicalFamily.Domain.predicate), TensorRewrite.Theory.LogicalFamily.Rule.orTrueRight =>
+        TensorRewrite.Theory.LogicalFamily.Expr.constant true
+      | domain, x => TensorRewrite.Theory.LogicalFamily.Expr.input 0)
+      index✝
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Quot.sound]

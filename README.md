@@ -1198,3 +1198,16 @@ Select/Add transformations and legal static Slice corollaries. Forty-one stateme
 add399 custom Lean lines;17 records gain typed partial evidence. Three certificates
 separate decoded signedness, raw versus clamped sums and binary32 retained-zero
 observations. Machine index conversions, general strides and whole records remain open.
+
+
+## Fixed-tactic diagnostic comparison
+
+The [reviewed-subset comparison](docs/fixed-tactics-comparison.md) freezes 44 exact
+reviewed propositions and excludes 835 campaign proofs from the common imports.
+Four fixed policies jointly prove 13/44; historical solution-informed agent source
+replays 44/44 at that basis. All 176 measured attempts and the separately repaired
+negative controls are retained. This is not a blinded discovery or whole-workload
+result. The comparison inventory adds 3217 separately classified Lean source lines,
+including failed/control sources and historical duplication; core proof coverage
+and its 10,497-line total are unchanged. All 128 curated mathematical tests pass;
+see the [checkpoint evidence](reports/fixed-tactics-milestone-v1.json).

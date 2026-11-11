@@ -1,0 +1,21 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_042__rfl.lean:16:2: error: Tactic `rfl` failed: The left-hand side
+  TensorRewrite.Pilot.Contraction.dotTensor plan✝ (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id
+    (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x✝ y✝) z✝
+is not definitionally equal to the right-hand side
+  TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+    (TensorRewrite.Pilot.Contraction.dotTensor plan✝ (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x✝ z✝)
+    (TensorRewrite.Pilot.Contraction.dotTensor plan✝ (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id y✝ z✝)
+
+α✝ : Type
+inst✝ : Semiring α✝
+batch✝ left✝ right✝ contracting✝ : ℕ
+plan✝ : TensorRewrite.Pilot.Contraction.Plan batch✝ left✝ right✝ contracting✝
+x✝ y✝ : TensorRewrite.Pilot.Tensor plan✝.lhsShape α✝
+z✝ : TensorRewrite.Pilot.Tensor plan✝.rhsShape α✝
+⊢ TensorRewrite.Pilot.Contraction.dotTensor plan✝ (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id
+      (TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2) x✝ y✝) z✝ =
+    TensorRewrite.Pilot.Tensor.map₂ (fun x1 x2 => x1 + x2)
+      (TensorRewrite.Pilot.Contraction.dotTensor plan✝ (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id x✝ z✝)
+      (TensorRewrite.Pilot.Contraction.dotTensor plan✝ (fun x1 x2 => x1 + x2) 0 (fun x1 x2 => x1 * x2) id y✝ z✝)
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

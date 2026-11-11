@@ -1,0 +1,17 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_025__aesop.lean:16:2: warning: aesop: failed to prove the goal after exhaustive search.
+comparisons/fixed-tactics-v1/results/case_025__aesop.lean:13:65: error: unsolved goals
+rank : ℕ
+α : Type
+inst : Semiring α
+plan : TensorRewrite.Theory.Convolution.Plan rank
+x y : TensorRewrite.Theory.Convolution.Input plan α
+kernel : TensorRewrite.Theory.Convolution.Kernel plan α
+⊢ TensorRewrite.Theory.Convolution.convolve plan (fun b c s => x b c s + y b c s) kernel = fun output =>
+    (List.map (TensorRewrite.Theory.Convolution.term plan x kernel output)
+          (List.finRange
+            (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape))).sum +
+      (List.map (TensorRewrite.Theory.Convolution.term plan y kernel output)
+          (List.finRange
+            (plan.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan.kernelShape))).sum
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

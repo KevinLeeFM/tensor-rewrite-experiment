@@ -1,0 +1,24 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_016__simp.lean:13:65: error: unsolved goals
+rank✝ : ℕ
+plan✝ : TensorRewrite.Theory.Convolution.Plan rank✝
+empty✝ : TensorRewrite.Pilot.LinearIndex.elementCount plan✝.inputShape = 0
+output✝ : TensorRewrite.Pilot.Index plan✝.outputShape
+kernel✝ : TensorRewrite.Pilot.Index plan✝.kernelShape
+⊢ ∃ x,
+    ((plan✝.window x).paddingLow ≤
+        ↑↑(output✝ x) * ↑(plan✝.window x).stride +
+          if (plan✝.window x).reversed = true then ↑↑(kernel✝ x).rev * ↑(plan✝.window x).kernelDilation
+          else ↑↑(kernel✝ x) * ↑(plan✝.window x).kernelDilation) →
+      ↑(plan✝.window x).baseDilation ∣
+          (↑↑(output✝ x) * ↑(plan✝.window x).stride +
+              if (plan✝.window x).reversed = true then ↑↑(kernel✝ x).rev * ↑(plan✝.window x).kernelDilation
+              else ↑↑(kernel✝ x) * ↑(plan✝.window x).kernelDilation) -
+            (plan✝.window x).paddingLow →
+        ↑(plan✝.window x).inputExtent ≤
+          ((↑↑(output✝ x) * ↑(plan✝.window x).stride +
+                if (plan✝.window x).reversed = true then ↑↑(kernel✝ x).rev * ↑(plan✝.window x).kernelDilation
+                else ↑↑(kernel✝ x) * ↑(plan✝.window x).kernelDilation) -
+              (plan✝.window x).paddingLow) /
+            ↑(plan✝.window x).baseDilation
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

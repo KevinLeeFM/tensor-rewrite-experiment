@@ -1,0 +1,16 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_024__simp.lean:13:65: error: unsolved goals
+rank✝ : ℕ
+α✝ : Type
+inst✝ : Semiring α✝
+plan✝ : TensorRewrite.Theory.Convolution.Plan rank✝
+input✝ : TensorRewrite.Theory.Convolution.Input plan✝ α✝
+f✝ g✝ : TensorRewrite.Theory.Convolution.Kernel plan✝ α✝
+⊢ (TensorRewrite.Theory.Convolution.convolve plan✝ input✝ fun b h o c s => f✝ b h o c s + g✝ b h o c s) = fun output =>
+    (List.map (TensorRewrite.Theory.Convolution.term plan✝ input✝ f✝ output)
+          (List.finRange
+            (plan✝.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan✝.kernelShape))).sum +
+      (List.map (TensorRewrite.Theory.Convolution.term plan✝ input✝ g✝ output)
+          (List.finRange
+            (plan✝.inputFeaturesPerGroup * TensorRewrite.Pilot.LinearIndex.elementCount plan✝.kernelShape))).sum
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

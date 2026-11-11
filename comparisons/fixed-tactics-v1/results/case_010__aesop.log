@@ -1,0 +1,34 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_010__aesop.lean:16:2: warning: aesop: failed to prove the goal after exhaustive search.
+comparisons/fixed-tactics-v1/results/case_010__aesop.lean:13:65: error: unsolved goals
+axis : TensorRewrite.Theory.Convolution.Axis
+output : ℕ
+kernel : Fin axis.kernelExtent
+left : axis.paddingLow ≤ ↑output * ↑axis.stride + (↑axis.kernelExtent - (↑↑kernel + 1)) * ↑axis.kernelDilation
+left_1 :
+  ↑axis.baseDilation ∣
+    ↑output * ↑axis.stride + (↑axis.kernelExtent - (↑↑kernel + 1)) * ↑axis.kernelDilation - axis.paddingLow
+right :
+  (↑output * ↑axis.stride + (↑axis.kernelExtent - (↑↑kernel + 1)) * ↑axis.kernelDilation - axis.paddingLow) /
+      ↑axis.baseDilation <
+    ↑axis.inputExtent
+h : axis.reversed = true
+⊢ max
+        ((↑output * ↑axis.stride + (↑axis.kernelExtent - (↑↑kernel + 1)) * ↑axis.kernelDilation - axis.paddingLow) /
+          ↑axis.baseDilation)
+        0 *
+      ↑axis.baseDilation =
+    ↑output * ↑axis.stride + (↑axis.kernelExtent - (↑↑kernel + 1)) * ↑axis.kernelDilation - axis.paddingLow
+
+axis : TensorRewrite.Theory.Convolution.Axis
+output : ℕ
+kernel : Fin axis.kernelExtent
+left : axis.paddingLow ≤ ↑output * ↑axis.stride + ↑↑kernel * ↑axis.kernelDilation
+left_1 : ↑axis.baseDilation ∣ ↑output * ↑axis.stride + ↑↑kernel * ↑axis.kernelDilation - axis.paddingLow
+right :
+  (↑output * ↑axis.stride + ↑↑kernel * ↑axis.kernelDilation - axis.paddingLow) / ↑axis.baseDilation < ↑axis.inputExtent
+h : axis.reversed = false
+⊢ max ((↑output * ↑axis.stride + ↑↑kernel * ↑axis.kernelDilation - axis.paddingLow) / ↑axis.baseDilation) 0 *
+      ↑axis.baseDilation =
+    ↑output * ↑axis.stride + ↑↑kernel * ↑axis.kernelDilation - axis.paddingLow
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

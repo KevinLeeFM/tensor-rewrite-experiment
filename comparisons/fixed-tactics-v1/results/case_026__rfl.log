@@ -1,0 +1,20 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_026__rfl.lean:16:2: error: Tactic `rfl` failed: The left-hand side
+  TensorRewrite.Theory.Convolution.convolve plan✝ input✝ fun b h o c s => kernel✝ b h o c s * weights✝ b h o
+is not definitionally equal to the right-hand side
+  fun output =>
+    TensorRewrite.Theory.Convolution.convolve plan✝ input✝ kernel✝ output *
+      weights✝ output.batchGroup output.featureGroup output.feature
+
+rank✝ : ℕ
+α✝ : Type
+inst✝ : Semiring α✝
+plan✝ : TensorRewrite.Theory.Convolution.Plan rank✝
+input✝ : TensorRewrite.Theory.Convolution.Input plan✝ α✝
+kernel✝ : TensorRewrite.Theory.Convolution.Kernel plan✝ α✝
+weights✝ : Fin plan✝.batchGroups → Fin plan✝.featureGroups → Fin plan✝.outputFeaturesPerGroup → α✝
+⊢ (TensorRewrite.Theory.Convolution.convolve plan✝ input✝ fun b h o c s => kernel✝ b h o c s * weights✝ b h o) =
+    fun output =>
+    TensorRewrite.Theory.Convolution.convolve plan✝ input✝ kernel✝ output *
+      weights✝ output.batchGroup output.featureGroup output.feature
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

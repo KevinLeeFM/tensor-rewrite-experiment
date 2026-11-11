@@ -1,0 +1,94 @@
+[
+  {
+    "command": [
+      "python3",
+      "tools/run_fixed_tactics.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/fixed-tactics-validation-v1/sweep.log",
+    "measured_attempts": 176,
+    "original_malformed_negative_controls": 8
+  },
+  {
+    "command": [
+      "python3",
+      "tools/repair_fixed_tactic_controls.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/fixed-tactics-validation-v1/control-repair.log",
+    "corrected_controls": 8,
+    "measured_attempts_changed": false
+  },
+  {
+    "command": [
+      "python3",
+      "tools/check_fixed_tactics.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/fixed-tactics-validation-v1/check_fixed_tactics.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "tests",
+      "-p",
+      "test_fixed_tactics.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "test_count": 5,
+    "log": "reports/fixed-tactics-validation-v1/focused-tests.log"
+  },
+  {
+    "command": [
+      "python3",
+      "tools/check_theory.py"
+    ],
+    "exit_code": 0,
+    "log": "reports/fixed-tactics-validation-v1/check_theory.log",
+    "cached_build_log": "reports/fixed-tactics-validation-v1/cached-core-build.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-c",
+      "import json, unittest\nfrom pathlib import Path\npatterns=json.loads(Path('reports/dynamic-update-validation-v1/commands.json').read_text())[-1]['patterns']+['test_fixed_tactics.py']\nsuite=unittest.TestSuite()\nfor pattern in patterns:suite.addTests(unittest.defaultTestLoader.discover('tests',pattern=pattern))\nresult=unittest.TextTestRunner(verbosity=2).run(suite)\nraise SystemExit(not result.wasSuccessful())\n"
+    ],
+    "patterns": [
+      "test_convolution*.py",
+      "test_logical_family.py",
+      "test_mathematical_ledger.py",
+      "test_theory_accounting.py",
+      "test_mathematical_review_readiness.py",
+      "test_scalar_domains.py",
+      "test_reduction_algebra.py",
+      "test_reduction_window.py",
+      "test_slice_pad.py",
+      "test_full_span_window.py",
+      "test_pad_window.py",
+      "test_prefix_window.py",
+      "test_broadcast_window.py",
+      "test_window_tuple_family.py",
+      "test_pad_broadcast.py",
+      "test_remainder.py",
+      "test_formulation_expansion.py",
+      "test_ordered_scatter.py",
+      "test_scatter_concat.py",
+      "test_scatter_layout.py",
+      "test_scatter_indices.py",
+      "test_scatter_batching.py",
+      "test_arithmetic_family.py",
+      "test_numerical.py",
+      "test_order_family.py",
+      "test_dynamic_update.py",
+      "test_fixed_tactics.py"
+    ],
+    "exit_code": 0,
+    "test_count": 128,
+    "log": "reports/fixed-tactics-validation-v1/curated-tests.log"
+  }
+]

@@ -1,0 +1,32 @@
+FIXED_BASELINE_GUARD absent=835 present=0
+comparisons/fixed-tactics-v1/results/case_029__aesop.lean:16:2: warning: aesop: failed to prove the goal after exhaustive search.
+comparisons/fixed-tactics-v1/results/case_029__aesop.lean:13:74: error: unsolved goals
+axis : TensorRewrite.Theory.Convolution.Axis
+pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis axis
+h : axis.inputExtent = 0
+h_1 : axis.kernelExtent = 0
+⊢ (axis.paddingLow + axis.paddingHigh) / ↑axis.stride < 0
+
+axis : TensorRewrite.Theory.Convolution.Axis
+pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis axis
+h : axis.inputExtent = 0
+h_1 : ¬axis.kernelExtent = 0
+⊢ (axis.paddingLow + axis.paddingHigh - (↑(axis.kernelExtent - 1) * ↑axis.kernelDilation + 1)) / ↑axis.stride < 0
+
+axis : TensorRewrite.Theory.Convolution.Axis
+pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis axis
+h : ¬axis.inputExtent = 0
+h_1 : axis.kernelExtent = 0
+⊢ ((axis.paddingLow + (↑(axis.inputExtent - 1) * ↑axis.baseDilation + 1) + axis.paddingHigh) / ↑axis.stride + 1).toNat =
+    axis.inputExtent
+
+axis : TensorRewrite.Theory.Convolution.Axis
+pointwise : TensorRewrite.Theory.ConvolutionPointwise.IsPointwiseAxis axis
+h : ¬axis.inputExtent = 0
+h_1 : ¬axis.kernelExtent = 0
+⊢ ((axis.paddingLow + (↑(axis.inputExtent - 1) * ↑axis.baseDilation + 1) + axis.paddingHigh -
+            (↑(axis.kernelExtent - 1) * ↑axis.kernelDilation + 1)) /
+          ↑axis.stride +
+        1).toNat =
+    axis.inputExtent
+'FixedTacticTrial.candidate' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
