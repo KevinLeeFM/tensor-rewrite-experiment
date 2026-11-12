@@ -1,6 +1,6 @@
-# Paper-era comparison: 70 checked cases
+# Paper-era comparison: 83 checked cases
 
-This is the first comparison checkpoint, not a full experiment or a fresh proof
+This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
 artifact's executed main-suite rules. `build_cases.py` checks the recovered
 inventory against each source file's actual `main` call order, aligns the 118
@@ -23,7 +23,8 @@ order comparisons and three Clamp cases use the exact linear-order theory. Four
 Select cases and four Reverse cases use actual tensor functions and coordinates.
 The added Concat, Slice and Pad cases retain complete shapes and bounded indices.
 Additional cases cover exact division, absolute values, exponentiation, Iota,
-composed Broadcast and explicit positive/negative infinity in Min/Max.
+composed Broadcast, dynamic updates, relabeling, integer remainder, and explicit
+positive/negative infinity in Min/Max.
 Paper numeric input tensors are introduced via `linearMemory` as `nonInf` symbolic
 integer/real values; constants in these numeric rules are also finite. Thus these
 checks match that input scope, without claiming IEEE floating-point results or
@@ -54,6 +55,10 @@ do not extrapolate this observation to all 118 rules.
 | `iota/rule01`, `broadcast/rule07,08` | unit-axis Iota and Broadcast Iota/composition | bounded integer coordinates and derived axis maps |
 | `slice/rule02`, `broadcast/rule05,06` | constant Slice and DynamicSlice | output-size and index reasoning |
 | `max/rule01,02` | Max with −∞ and Min with +∞ | extended orders for finite inputs |
+| `dyslice/rule01,02,05` | static, full and nested DynamicSlice | actual valid starts, including derived nested start |
+| `dyupslice/rule01,03,04` | add to an update, full and nested update | actual DynamicUpdateSlice coordinates |
+| `relabel/rule01,02`, `broadcast/rule03` | relabel composition, identity and constant | bounded axis bijections |
+| `divmod/rule04–07` | idempotent, bounded-Iota and guarded integer remainder | truncating remainder including zero divisor |
 
 Reproduce from the repository root:
 
@@ -71,19 +76,30 @@ lake env lean comparisons/tensorright-v1/Numerical.lean
 lake env lean comparisons/tensorright-v1/Iota.lean
 lake env lean comparisons/tensorright-v1/Slices.lean
 lake env lean comparisons/tensorright-v1/Extremes.lean
+lake env lean comparisons/tensorright-v1/Dynamic.lean
+lake env lean comparisons/tensorright-v1/Relabel.lean
+lake env lean comparisons/tensorright-v1/Remainder.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 ```
 
-All twelve Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twelve
-`*-check.log` files. The comparison modules have 685 code lines total, including
-71 axiom-print commands. They reuse
-the existing mathematical development and Mathlib; 685 is not the independent
-cost of these proofs. The earlier 12,341 custom Lean lines include unrelated work
-and are not attributed wholesale to these cases. A precise shared-dependency cost
-remains future measurement. No correspondence proof or new compiler pass investigation
-was performed. These results reuse historical proofs and do not measure a fresh
-LLM discovery rate. The other 48 rows have not yet been assessed in this comparison.
+All fifteen Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the fifteen
+`*-check.log` files. The comparison modules have 865 code lines total, including
+89 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 865 is not the independent cost of these proofs. The earlier 12,341
+custom Lean lines include unrelated work and are not attributed wholesale to
+these cases. A precise shared-dependency cost remains future measurement. No
+correspondence proof or new compiler pass investigation was performed. These
+results reuse historical proofs and do not measure a fresh LLM discovery rate.
+The other 35 rows have not yet been assessed in this comparison.
+
+Of the 83 Lean-proved cases, 81 are among the paper archive's 115 successes,
+and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
+proofs use the conditions written in the artifact and the previously available
+Lean libraries; the authors' archived outcomes were not independently rerun.
+The remaining archived timeout is not yet assessed. This is evidence that the
+Lean approach can resolve these two modeled statements, not that an XLA bug was
+found or that a controlled head-to-head timing comparison was performed.
 
 For `clamp/rule02`, the original strict inequality between bounds implies the
 non-strict order needed by the proof; no extra restriction is imposed. The paper
@@ -107,3 +123,15 @@ The real division model and paper's finite real division both return zero at a
 zero denominator; integer division is only used with denominator one here.
 The two Min/Max proofs use `WithBot` or `WithTop` to model the actual infinity
 constant against a finite input; they do not claim a general IEEE semantics.
+
+The DynamicSlice and DynamicUpdateSlice proofs derive that the project's clamp
+returns the paper's start when the paper's bounds hold. For nested operations,
+`compose_eq_added` proves that the actual two starts add as the artifact states.
+Relabel uses lawful bijections on bounded axes; the result applies to the paper's
+label renamings and more general permutations. The integer-remainder proofs use
+Lean `Int.tmod` (truncation toward zero, dividend returned for divisor zero).
+TensorRight calls Grisette `remOr` with the dividend as its default; the exact
+[Grisette revision](https://github.com/lsrcz/grisette/blob/d1a6c6d016cb341a026aa9b05dda3dc8080ee25b/src/Grisette/Internal/Core/Data/Class/SafeDiv.hs)
+used by the artifact defines it as Haskell `rem` with that default. The Lean
+`unguarded_shift_refuted` theorem also demonstrates why the paper's sign guard
+for `divmod/rule07` matters: shifting −2 by 3 changes its remainder modulo 3.

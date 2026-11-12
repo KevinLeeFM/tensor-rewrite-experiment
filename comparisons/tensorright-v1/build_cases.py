@@ -109,15 +109,36 @@ def main():
         'broadcast/rule06': ('Slices', 'dynamic_slice_constant'),
         'max/rule01': ('Extremes', 'max_negative_infinity'),
         'max/rule02': ('Extremes', 'min_positive_infinity'),
+        'dyslice/rule01': ('Dynamic', 'static_slice'),
+        'dyslice/rule02': ('Dynamic', 'full_slice'),
+        'dyslice/rule05': ('Dynamic', 'nested_slice'),
+        'dyupslice/rule01': ('Dynamic', 'add_into_update'),
+        'dyupslice/rule03': ('Dynamic', 'full_update'),
+        'dyupslice/rule04': ('Dynamic', 'nested_update'),
+        'relabel/rule01': ('Relabel', 'compose'),
+        'relabel/rule02': ('Relabel', 'identity'),
+        'broadcast/rule03': ('Relabel', 'uniform'),
+        'divmod/rule04': ('Remainder', 'nested'),
+        'divmod/rule05': ('Remainder', 'bounded_iota'),
+        'divmod/rule06': ('Remainder', 'shifted_iota'),
+        'divmod/rule07': ('Remainder', 'shifted_scalar'),
     })
     logs = {'Add': 'add-check.log', 'ScalarArithmetic': 'scalar-check.log',
             'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log',
             'Comparisons': 'comparisons-check.log', 'Select': 'select-check.log',
             'Reverse': 'reverse-check.log', 'Concatenate': 'concatenate-check.log',
             'Numerical': 'numerical-check.log', 'Iota': 'iota-check.log',
-            'Slices': 'slices-check.log', 'Extremes': 'extremes-check.log'}
-    shape_support = {'slice/rule02': 'count_euclidean', 'broadcast/rule05': 'count_exact'}
-    audited = list(proofs.items()) + [(key, ('Slices', name)) for key, name in shape_support.items()]
+            'Slices': 'slices-check.log', 'Extremes': 'extremes-check.log',
+            'Dynamic': 'dynamic-check.log', 'Relabel': 'relabel-check.log',
+            'Remainder': 'remainder-check.log'}
+    shape_support = {'slice/rule02': ('Slices', 'count_euclidean'),
+                     'broadcast/rule05': ('Slices', 'count_exact'),
+                     'dyslice/rule01': ('Dynamic', 'static_start'),
+                     'dyslice/rule05': ('Dynamic', 'compose_eq_added'),
+                     'dyupslice/rule04': ('Dynamic', 'compose_eq_added'),
+                     'divmod/rule06': ('Remainder', 'signed_shift'),
+                     'divmod/rule07': ('Remainder', 'signed_shift')}
+    audited = list(proofs.items()) + list(shape_support.items())
     for group, filename in logs.items():
         check = (OUT / filename).read_text()
         for key, (namespace, name) in audited:
@@ -158,7 +179,23 @@ def main():
         }
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'Extremes':
+            if namespace == 'Remainder':
+                confidence = ('Finite TensorInt uses Grisette remOr with dividend as the zero '
+                              'divisor default; the pinned Grisette revision specifies Haskell '
+                              'rem, matching Lean truncating remainder. Iota coordinates and '
+                              'paper bounds or sign guards are explicit. C++ correspondence '
+                              'is assumed, not checked.')
+            elif namespace == 'Relabel':
+                confidence = ('Relabel preserves axis extents and values; the bounded bijective '
+                              'axis mapping models a more general permutation and covers the '
+                              'paper label renamings. C++ correspondence is assumed, not checked.')
+            elif namespace == 'Dynamic':
+                confidence = ('The paper requires in-bounds dynamic starts; the auxiliary '
+                              'unclamped theorem proves the existing clamped model uses exactly '
+                              'those starts. Nested windows derive the sum of the actual valid '
+                              'starts; Add preserves the paper operand order by commutativity. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Extremes':
                 confidence = ('The paper input tensor has finite numeric values; the explicit '
                               'negative or positive infinity constant is represented by WithBot '
                               'or WithTop. The relevant Min/Max branch returns the finite value. '
@@ -215,12 +252,15 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace == 'Concatenate' or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
-                                       'slice/rule02', 'broadcast/rule05', 'broadcast/rule06'}
-                                   else ['Int'] if case['id'] in {'iota/rule01', 'broadcast/rule07'}
+                                       'slice/rule02', 'broadcast/rule05', 'broadcast/rule06',
+                                       'dyslice/rule01', 'dyslice/rule02', 'dyslice/rule05',
+                                       'dyupslice/rule03', 'dyupslice/rule04'}
+                                   else ['Int'] if namespace == 'Remainder' or case['id'] in {
+                                       'iota/rule01', 'broadcast/rule07'}
                                    else ['Bool'] if namespace == 'Logical' and name != 'neg_neg'
                                    else ['Real'] if case['id'] in {'divmod/rule01',
                                        'divmod/rule02', 'divmod/rule03', 'mul/rule10'}
@@ -229,8 +269,9 @@ def main():
                        lean_proof_sha256=digest((OUT / f'{namespace}.lean').read_bytes()),
                        lean_check_log=f'comparisons/tensorright-v1/{logs[namespace]}')
             if case['id'] in shape_support:
+                support_namespace, support_name = shape_support[case['id']]
                 row['lean_support_theorems'] = [
-                    f"TensorRewrite.PaperComparison.Slices.{shape_support[case['id']]}"]
+                    f'TensorRewrite.PaperComparison.{support_namespace}.{support_name}']
             if types:
                 assert set(row['lean_types']) == set(types), case['id']
             else:
@@ -239,7 +280,8 @@ def main():
                 elif row['lean_types'] == ['Real']:
                     assert '@TensorReal' in declaration, case['id']
                 elif row['lean_types'] == ['Int']:
-                    assert 'iota ' in declaration, case['id']
+                    assert ('iota ' in declaration or '@TensorInt' in declaration
+                            or ':: TensorInt' in declaration), case['id']
                 else:
                     raise AssertionError((case['id'], row['lean_types']))
                 row['archived_result_types'] = row['lean_types']
@@ -253,7 +295,10 @@ def main():
               'archived_result_provenance': 'author-provided result.txt, not an independent rerun',
               'matching': 'runall sorted directories and main call order; printed labels checked except known shell expansion',
               'counts': {'cases': len(rows), 'paper_proved': 115, 'paper_failed': 3,
-                         'lean_proved': sum(r['lean_result'] == 'proved' for r in rows)},
+                         'lean_proved': sum(r['lean_result'] == 'proved' for r in rows),
+                         'lean_proved_paper_failed': sum(
+                             r['lean_result'] == 'proved' and
+                             r['archived_result'] == 'timeout_or_solver_failure' for r in rows)},
               'cases': rows}
     (OUT / 'cases.json').write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
     table = ['# TensorRight paper-era comparison', '',
