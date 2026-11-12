@@ -1,4 +1,4 @@
-# Paper-era comparison: 48 checked cases
+# Paper-era comparison: 70 checked cases
 
 This is the first comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -21,6 +21,9 @@ as well as the two numeric types. Eight Boolean And/Or rules and two double-nega
 rules reuse the Boolean and exact-arithmetic theories. Six self-comparisons, three
 order comparisons and three Clamp cases use the exact linear-order theory. Four
 Select cases and four Reverse cases use actual tensor functions and coordinates.
+The added Concat, Slice and Pad cases retain complete shapes and bounded indices.
+Additional cases cover exact division, absolute values, exponentiation, Iota,
+composed Broadcast and explicit positive/negative infinity in Min/Max.
 Paper numeric input tensors are introduced via `linearMemory` as `nonInf` symbolic
 integer/real values; constants in these numeric rules are also finite. Thus these
 checks match that input scope, without claiming IEEE floating-point results or
@@ -45,6 +48,12 @@ do not extrapolate this observation to all 118 rules.
 | `clamp/rule01–03` | Clamp identities; ordered bounds where required | linear-order graph theorem and `paperClamp_eq` |
 | `select/rule01–04` | Select identities | existing pure Select theory |
 | `reverse/rule01–04` | unit axes, reversal composition, constant addition | bounded Reverse maps |
+| `concat/rule01–07`, `slice/rule08` | grouping, Slice merging, edge Pad and segment extraction | actual Concat/Slice/Pad model |
+| `divmod/rule00–03` | divide by one, reciprocal and nested real division | exact totalized integer/real arithmetic |
+| `mul/rule09,10` | absolute-value square and real exponential addition | exact number theory |
+| `iota/rule01`, `broadcast/rule07,08` | unit-axis Iota and Broadcast Iota/composition | bounded integer coordinates and derived axis maps |
+| `slice/rule02`, `broadcast/rule05,06` | constant Slice and DynamicSlice | output-size and index reasoning |
+| `max/rule01,02` | Max with −∞ and Min with +∞ | extended orders for finite inputs |
 
 Reproduce from the repository root:
 
@@ -57,19 +66,24 @@ lake env lean comparisons/tensorright-v1/Logical.lean
 lake env lean comparisons/tensorright-v1/Comparisons.lean
 lake env lean comparisons/tensorright-v1/Select.lean
 lake env lean comparisons/tensorright-v1/Reverse.lean
+lake env lean comparisons/tensorright-v1/Concatenate.lean
+lake env lean comparisons/tensorright-v1/Numerical.lean
+lake env lean comparisons/tensorright-v1/Iota.lean
+lake env lean comparisons/tensorright-v1/Slices.lean
+lake env lean comparisons/tensorright-v1/Extremes.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 ```
 
-All seven Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the seven
-`*-check.log` files. The comparison modules have 404 code lines total, including
-48 axiom-print commands. They reuse
-the existing mathematical development and Mathlib; 404 is not the independent
+All twelve Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twelve
+`*-check.log` files. The comparison modules have 685 code lines total, including
+71 axiom-print commands. They reuse
+the existing mathematical development and Mathlib; 685 is not the independent
 cost of these proofs. The earlier 12,341 custom Lean lines include unrelated work
 and are not attributed wholesale to these cases. A precise shared-dependency cost
 remains future measurement. No correspondence proof or new compiler pass investigation
 was performed. These results reuse historical proofs and do not measure a fresh
-LLM discovery rate. The other 70 rows have not yet been assessed in this comparison.
+LLM discovery rate. The other 48 rows have not yet been assessed in this comparison.
 
 For `clamp/rule02`, the original strict inequality between bounds implies the
 non-strict order needed by the proof; no extra restriction is imposed. The paper
@@ -81,3 +95,15 @@ aggregated-axis groups are disjoint; the Lean theorem explicitly takes that
 well-formedness condition and proves the output axis mask, rather than assuming
 that the masks coincide. These proofs do not apply the exact-order results to IEEE
 NaNs, and do not establish implementation correspondence.
+
+The Concat list model follows the artifact's nonempty, right-recursive list
+implementation, and its flat-graph agreement is separately proved. For touching
+Slices, `unit_stride_adjacent` derives coordinate adjacency from the paper's
+unit stride, valid Slice and shared boundary; the proof handles empty slices.
+The Slice size lemmas derive the paper's output count from its positive stride
+and bounds, including zero length. `Iota.broadcast_composition` constructs and
+checks the composed signed axis map rather than assuming the two maps are equal.
+The real division model and paper's finite real division both return zero at a
+zero denominator; integer division is only used with denominator one here.
+The two Min/Max proofs use `WithBot` or `WithTop` to model the actual infinity
+constant against a finite input; they do not claim a general IEEE semantics.

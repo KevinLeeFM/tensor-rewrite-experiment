@@ -87,23 +87,48 @@ def main():
         'reverse/rule02': ('Reverse', 'involution'),
         'reverse/rule03': ('Reverse', 'overlapping_groups'),
         'reverse/rule04': ('Reverse', 'add_constant'),
+        'concat/rule01': ('Concatenate', 'list_pair'),
+        'concat/rule02': ('Concatenate', 'associate'),
+        'concat/rule03': ('Concatenate', 'list_three'),
+        'concat/rule04': ('Concatenate', 'touching_slices'),
+        'concat/rule05': ('Concatenate', 'pad_low'),
+        'concat/rule06': ('Concatenate', 'pad_high'),
+        'concat/rule07': ('Concatenate', 'list_three_reverse'),
+        'slice/rule08': ('Concatenate', 'slice_second'),
+        'divmod/rule00': ('Numerical', 'divide_one_both'),
+        'divmod/rule01': ('Numerical', 'divide_constant_real'),
+        'divmod/rule02': ('Numerical', 'divide_fractions_real'),
+        'divmod/rule03': ('Numerical', 'divide_nested_real'),
+        'mul/rule09': ('Numerical', 'abs_square'),
+        'mul/rule10': ('Numerical', 'exp_product_real'),
+        'iota/rule01': ('Iota', 'unit_axis'),
+        'broadcast/rule07': ('Iota', 'broadcast'),
+        'broadcast/rule08': ('Iota', 'broadcast_composition'),
+        'slice/rule02': ('Slices', 'slice_constant'),
+        'broadcast/rule05': ('Slices', 'slice_constant'),
+        'broadcast/rule06': ('Slices', 'dynamic_slice_constant'),
+        'max/rule01': ('Extremes', 'max_negative_infinity'),
+        'max/rule02': ('Extremes', 'min_positive_infinity'),
     })
     logs = {'Add': 'add-check.log', 'ScalarArithmetic': 'scalar-check.log',
             'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log',
             'Comparisons': 'comparisons-check.log', 'Select': 'select-check.log',
-            'Reverse': 'reverse-check.log'}
+            'Reverse': 'reverse-check.log', 'Concatenate': 'concatenate-check.log',
+            'Numerical': 'numerical-check.log', 'Iota': 'iota-check.log',
+            'Slices': 'slices-check.log', 'Extremes': 'extremes-check.log'}
+    shape_support = {'slice/rule02': 'count_euclidean', 'broadcast/rule05': 'count_exact'}
+    audited = list(proofs.items()) + [(key, ('Slices', name)) for key, name in shape_support.items()]
     for group, filename in logs.items():
         check = (OUT / filename).read_text()
-        for key, (namespace, name) in proofs.items():
+        for key, (namespace, name) in audited:
             if namespace == group:
                 prefix = f"'TensorRewrite.PaperComparison.{namespace}.{name}' "
-                lines = [line for line in check.splitlines() if line.startswith(prefix)]
-                assert len(lines) == 1, key
-                detail = lines[0][len(prefix):]
-                if detail != 'does not depend on any axioms':
-                    match = re.fullmatch(r'depends on axioms: \[(.*)\]', detail)
-                    assert match, (key, detail)
-                    axioms = {a.strip() for a in match[1].split(',') if a.strip()}
+                matches = list(re.finditer(re.escape(prefix) +
+                    r'(does not depend on any axioms|depends on axioms: \[([^]]*)\])', check))
+                assert len(matches) == 1, key
+                detail = matches[0].group(2)
+                if detail is not None:
+                    axioms = {a.strip() for a in detail.split(',') if a.strip()}
                     assert axioms <= {'propext', 'Quot.sound', 'Classical.choice'}, (key, axioms)
     rows = []
     for index, (case, block) in enumerate(zip(cases, blocks)):
@@ -133,7 +158,34 @@ def main():
         }
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'Comparisons':
+            if namespace == 'Extremes':
+                confidence = ('The paper input tensor has finite numeric values; the explicit '
+                              'negative or positive infinity constant is represented by WithBot '
+                              'or WithTop. The relevant Min/Max branch returns the finite value. '
+                              'This is not a full TensorNum or IEEE infinity semantics. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Slices':
+                confidence = ('The paper’s Slice output size is represented by the inferred '
+                              'valid shape; companion count lemmas connect Euclidean division '
+                              'and exact stride lengths to that shape. The direct DynamicSlice '
+                              'uses the paper in-bounds start conditions. C++ correspondence '
+                              'is assumed, not checked.')
+            elif namespace == 'Iota':
+                confidence = ('Iota reads the bounded integer coordinate and Broadcast uses '
+                              'actual composed signed axis maps. Paper Iota returns TensorInt; '
+                              'composition preserves all data types and extents. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Numerical':
+                confidence = ('Lean preserves the paper finite real/integer graph. Real division '
+                              'uses the same zero-denominator default of zero; integer division '
+                              'is used only by one. Exponential is exact real, not IEEE floating '
+                              'point. C++ correspondence is assumed, not checked.')
+            elif namespace == 'Concatenate':
+                confidence = ('Actual bounded Concat coordinates, shapes and relevant Slice/Pad '
+                              'operators model the paper graph. Recursive list Concat follows '
+                              'the artifact definition; unit-stride Slice adjacency is derived '
+                              'from validity and touching limits. C++ correspondence is assumed.')
+            elif namespace == 'Comparisons':
                 confidence = ('The Lean graph uses finite exact linear-order values and the '
                               'paper comparisons, Min/Max and Clamp. Clamp operand order is '
                               'explicitly related using min commutativity; the bound premise '
@@ -163,21 +215,36 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace == 'Concatenate' or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
-                                       'reverse/rule02', 'reverse/rule03'}
+                                       'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
+                                       'slice/rule02', 'broadcast/rule05', 'broadcast/rule06'}
+                                   else ['Int'] if case['id'] in {'iota/rule01', 'broadcast/rule07'}
                                    else ['Bool'] if namespace == 'Logical' and name != 'neg_neg'
+                                   else ['Real'] if case['id'] in {'divmod/rule01',
+                                       'divmod/rule02', 'divmod/rule03', 'mul/rule10'}
                                    else ['Int', 'Real']),
                        lean_proof_file=f'comparisons/tensorright-v1/{namespace}.lean',
                        lean_proof_sha256=digest((OUT / f'{namespace}.lean').read_bytes()),
                        lean_check_log=f'comparisons/tensorright-v1/{logs[namespace]}')
+            if case['id'] in shape_support:
+                row['lean_support_theorems'] = [
+                    f"TensorRewrite.PaperComparison.Slices.{shape_support[case['id']]}"]
             if types:
                 assert set(row['lean_types']) == set(types), case['id']
             else:
-                assert row['lean_types'] == ['Bool'] and '@SymBool' in declaration, case['id']
-                row['archived_result_types'] = ['Bool']
-                row['type_provenance'] = 'artifact rule declaration; archived result has no type label'
+                if row['lean_types'] == ['Bool']:
+                    assert '@SymBool' in declaration, case['id']
+                elif row['lean_types'] == ['Real']:
+                    assert '@TensorReal' in declaration, case['id']
+                elif row['lean_types'] == ['Int']:
+                    assert 'iota ' in declaration, case['id']
+                else:
+                    raise AssertionError((case['id'], row['lean_types']))
+                row['archived_result_types'] = row['lean_types']
+                row['type_provenance'] = ('artifact rule declaration or Iota constructor signature; '
+                                          'archived result has no type label')
         rows.append(row)
     assert Counter(r['archived_result'] for r in rows) == {'proved': 115, 'timeout_or_solver_failure': 3}
     result = {'schema': 1, 'scope': '118 executed paper-era model cases, not verified C++',

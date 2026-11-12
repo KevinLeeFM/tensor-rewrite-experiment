@@ -9,7 +9,7 @@
     "cases": 118,
     "paper_proved": 115,
     "paper_failed": 3,
-    "lean_proved": 48
+    "lean_proved": 70
   },
   "cases": [
     {
@@ -272,10 +272,23 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Slices.slice_constant"
+      ],
+      "translation_confidence": "The paper’s Slice output size is represented by the inferred valid shape; companion count lemmas connect Euclidean division and exact stride lengths to that shape. The direct DynamicSlice uses the paper in-bounds start conditions. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Slices.lean",
+      "lean_proof_sha256": "a5eab0837545c3c9b070b45769edb96be272c95af139e94c3e781074ebe9ecbe",
+      "lean_check_log": "comparisons/tensorright-v1/slices-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.Slices.count_exact"
+      ]
     },
     {
       "id": "broadcast/rule06",
@@ -295,10 +308,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Slices.dynamic_slice_constant"
+      ],
+      "translation_confidence": "The paper’s Slice output size is represented by the inferred valid shape; companion count lemmas connect Euclidean division and exact stride lengths to that shape. The direct DynamicSlice uses the paper in-bounds start conditions. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Slices.lean",
+      "lean_proof_sha256": "a5eab0837545c3c9b070b45769edb96be272c95af139e94c3e781074ebe9ecbe",
+      "lean_check_log": "comparisons/tensorright-v1/slices-check.log"
     },
     {
       "id": "broadcast/rule07",
@@ -314,12 +337,21 @@
       "archived_result": "proved",
       "archived_result_block_sha256": "8fc8a0ca0866af1be7410a2e5cda4081c86805d5063e1e00605c9522669efeb5",
       "archived_result_types": [
-        "see declaration and result block"
+        "Int"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Iota.broadcast"
+      ],
+      "translation_confidence": "Iota reads the bounded integer coordinate and Broadcast uses actual composed signed axis maps. Paper Iota returns TensorInt; composition preserves all data types and extents. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Iota.lean",
+      "lean_proof_sha256": "27353e56b0789be23114a08f5ceb4813f95ffa100cbf713f962c063f5c078fdd",
+      "lean_check_log": "comparisons/tensorright-v1/iota-check.log",
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "broadcast/rule08",
@@ -339,10 +371,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Iota.broadcast_composition"
+      ],
+      "translation_confidence": "Iota reads the bounded integer coordinate and Broadcast uses actual composed signed axis maps. Paper Iota returns TensorInt; composition preserves all data types and extents. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Iota.lean",
+      "lean_proof_sha256": "27353e56b0789be23114a08f5ceb4813f95ffa100cbf713f962c063f5c078fdd",
+      "lean_check_log": "comparisons/tensorright-v1/iota-check.log"
     },
     {
       "id": "clamp/rule01",
@@ -641,10 +683,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.list_pair"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "concat/rule02",
@@ -664,10 +716,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.associate"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "concat/rule03",
@@ -687,10 +749,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.list_three"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "concat/rule04",
@@ -710,10 +782,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.touching_slices"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "concat/rule05",
@@ -733,10 +815,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.pad_low"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "concat/rule06",
@@ -756,10 +848,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.pad_high"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "concat/rule07",
@@ -779,10 +881,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.list_three_reverse"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "conv/rule00",
@@ -867,10 +979,19 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Numerical.divide_one_both"
+      ],
+      "translation_confidence": "Lean preserves the paper finite real/integer graph. Real division uses the same zero-denominator default of zero; integer division is used only by one. Exponential is exact real, not IEEE floating point. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Numerical.lean",
+      "lean_proof_sha256": "4aedaf1e48d0f972c16c965978e5c31920a4c65f26eb5448744ecb64aaec519f",
+      "lean_check_log": "comparisons/tensorright-v1/numerical-check.log"
     },
     {
       "id": "divmod/rule01",
@@ -886,12 +1007,21 @@
       "archived_result": "proved",
       "archived_result_block_sha256": "6e54d1f30a9d4a76f8bd1f3f121f7796e097afa63a484e79e0e47ab2dd4c588e",
       "archived_result_types": [
-        "see declaration and result block"
+        "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Numerical.divide_constant_real"
+      ],
+      "translation_confidence": "Lean preserves the paper finite real/integer graph. Real division uses the same zero-denominator default of zero; integer division is used only by one. Exponential is exact real, not IEEE floating point. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Numerical.lean",
+      "lean_proof_sha256": "4aedaf1e48d0f972c16c965978e5c31920a4c65f26eb5448744ecb64aaec519f",
+      "lean_check_log": "comparisons/tensorright-v1/numerical-check.log",
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "divmod/rule02",
@@ -907,12 +1037,21 @@
       "archived_result": "proved",
       "archived_result_block_sha256": "06a62762c448a857f2acdb8a33529f38be0a3e81e973a290a36afc6a5cc466ad",
       "archived_result_types": [
-        "see declaration and result block"
+        "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Numerical.divide_fractions_real"
+      ],
+      "translation_confidence": "Lean preserves the paper finite real/integer graph. Real division uses the same zero-denominator default of zero; integer division is used only by one. Exponential is exact real, not IEEE floating point. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Numerical.lean",
+      "lean_proof_sha256": "4aedaf1e48d0f972c16c965978e5c31920a4c65f26eb5448744ecb64aaec519f",
+      "lean_check_log": "comparisons/tensorright-v1/numerical-check.log",
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "divmod/rule03",
@@ -928,12 +1067,21 @@
       "archived_result": "proved",
       "archived_result_block_sha256": "aed437ff82e3dd0ee04b64b1299c7f594d21c85291b2a2a6ded1dc1f9d8ce62a",
       "archived_result_types": [
-        "see declaration and result block"
+        "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Numerical.divide_nested_real"
+      ],
+      "translation_confidence": "Lean preserves the paper finite real/integer graph. Real division uses the same zero-denominator default of zero; integer division is used only by one. Exponential is exact real, not IEEE floating point. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Numerical.lean",
+      "lean_proof_sha256": "4aedaf1e48d0f972c16c965978e5c31920a4c65f26eb5448744ecb64aaec519f",
+      "lean_check_log": "comparisons/tensorright-v1/numerical-check.log",
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "divmod/rule04",
@@ -1371,12 +1519,21 @@
       "archived_result": "proved",
       "archived_result_block_sha256": "56d7b9ad4d5528153887f23bfb66c178f842bbaa97d11f6ec30f0f7921d3ffa5",
       "archived_result_types": [
-        "see declaration and result block"
+        "Int"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Iota.unit_axis"
+      ],
+      "translation_confidence": "Iota reads the bounded integer coordinate and Broadcast uses actual composed signed axis maps. Paper Iota returns TensorInt; composition preserves all data types and extents. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Iota.lean",
+      "lean_proof_sha256": "27353e56b0789be23114a08f5ceb4813f95ffa100cbf713f962c063f5c078fdd",
+      "lean_check_log": "comparisons/tensorright-v1/iota-check.log",
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule01",
@@ -1406,7 +1563,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule02",
@@ -1436,7 +1593,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule03",
@@ -1466,7 +1623,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule04",
@@ -1496,7 +1653,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule05",
@@ -1526,7 +1683,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule06",
@@ -1556,7 +1713,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule07",
@@ -1586,7 +1743,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule08",
@@ -1616,7 +1773,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "logical/rule09",
@@ -1728,10 +1885,19 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Extremes.max_negative_infinity"
+      ],
+      "translation_confidence": "The paper input tensor has finite numeric values; the explicit negative or positive infinity constant is represented by WithBot or WithTop. The relevant Min/Max branch returns the finite value. This is not a full TensorNum or IEEE infinity semantics. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Extremes.lean",
+      "lean_proof_sha256": "013343389423d7949bd2232b0f9636bbf7e1b3e9ad5273001b855712d57c3fa9",
+      "lean_check_log": "comparisons/tensorright-v1/extremes-check.log"
     },
     {
       "id": "max/rule02",
@@ -1750,10 +1916,19 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Extremes.min_positive_infinity"
+      ],
+      "translation_confidence": "The paper input tensor has finite numeric values; the explicit negative or positive infinity constant is represented by WithBot or WithTop. The relevant Min/Max branch returns the finite value. This is not a full TensorNum or IEEE infinity semantics. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Extremes.lean",
+      "lean_proof_sha256": "013343389423d7949bd2232b0f9636bbf7e1b3e9ad5273001b855712d57c3fa9",
+      "lean_check_log": "comparisons/tensorright-v1/extremes-check.log"
     },
     {
       "id": "mul/rule01",
@@ -2020,10 +2195,19 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Numerical.abs_square"
+      ],
+      "translation_confidence": "Lean preserves the paper finite real/integer graph. Real division uses the same zero-denominator default of zero; integer division is used only by one. Exponential is exact real, not IEEE floating point. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Numerical.lean",
+      "lean_proof_sha256": "4aedaf1e48d0f972c16c965978e5c31920a4c65f26eb5448744ecb64aaec519f",
+      "lean_check_log": "comparisons/tensorright-v1/numerical-check.log"
     },
     {
       "id": "mul/rule10",
@@ -2039,12 +2223,21 @@
       "archived_result": "proved",
       "archived_result_block_sha256": "dfbd6dabed8a29ec75b7e8e4e80678d50334d79ed0c44a1cecbf857d0b1a1690",
       "archived_result_types": [
-        "see declaration and result block"
+        "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Numerical.exp_product_real"
+      ],
+      "translation_confidence": "Lean preserves the paper finite real/integer graph. Real division uses the same zero-denominator default of zero; integer division is used only by one. Exponential is exact real, not IEEE floating point. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Numerical.lean",
+      "lean_proof_sha256": "4aedaf1e48d0f972c16c965978e5c31920a4c65f26eb5448744ecb64aaec519f",
+      "lean_check_log": "comparisons/tensorright-v1/numerical-check.log",
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "not/rule01",
@@ -2074,7 +2267,7 @@
       "lean_proof_file": "comparisons/tensorright-v1/Logical.lean",
       "lean_proof_sha256": "466f8a641ae69674b44ad3d6d53d506fd49012a692117bf7a279f617443b222a",
       "lean_check_log": "comparisons/tensorright-v1/logical-check.log",
-      "type_provenance": "artifact rule declaration; archived result has no type label"
+      "type_provenance": "artifact rule declaration or Iota constructor signature; archived result has no type label"
     },
     {
       "id": "not/rule02",
@@ -2724,10 +2917,23 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Slices.slice_constant"
+      ],
+      "translation_confidence": "The paper’s Slice output size is represented by the inferred valid shape; companion count lemmas connect Euclidean division and exact stride lengths to that shape. The direct DynamicSlice uses the paper in-bounds start conditions. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Slices.lean",
+      "lean_proof_sha256": "a5eab0837545c3c9b070b45769edb96be272c95af139e94c3e781074ebe9ecbe",
+      "lean_check_log": "comparisons/tensorright-v1/slices-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.Slices.count_euclidean"
+      ]
     },
     {
       "id": "slice/rule03",
@@ -2862,10 +3068,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Concatenate.slice_second"
+      ],
+      "translation_confidence": "Actual bounded Concat coordinates, shapes and relevant Slice/Pad operators model the paper graph. Recursive list Concat follows the artifact definition; unit-stride Slice adjacency is derived from validity and touching limits. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Concatenate.lean",
+      "lean_proof_sha256": "d8be9ff91d897f4c41bd96918b32d42770ed344370310a543a1122544a949885",
+      "lean_check_log": "comparisons/tensorright-v1/concatenate-check.log"
     },
     {
       "id": "slice/rule09",
