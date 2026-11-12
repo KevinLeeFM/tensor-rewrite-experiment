@@ -280,10 +280,12 @@ def main():
             'rule_declaration': declaration,
             'declaration_sha256': digest(declaration.encode()),
             'invocation': case['verifier_invocations'], 'reported_label': label,
-            'archived_result': 'proved' if status[-1] == 'SUCCESS' else 'timeout_or_solver_failure',
+            'archived_result': 'proved' if status[-1] == 'SUCCESS' else 'not_proved',
             'archived_result_block_sha256': digest(block.encode()),
             'archived_result_types': types or ['see declaration and result block'],
             'independent_rerun_result': rerun_cases[case['id']]['outcome'],
+            'archived_type_outcomes': rerun_cases[case['id']]['archived_type_outcomes'],
+            'independent_rerun_type_outcomes': rerun_cases[case['id']]['rerun_type_outcomes'],
             'lean_result': 'not_attempted_in_comparison', 'lean_theorems': [],
             'translation_confidence': 'not assessed',
             'implementation_result': 'not established',
@@ -589,7 +591,7 @@ def main():
                 row['type_provenance'] = ('artifact rule declaration or Iota constructor signature; '
                                           'archived result has no type label')
         rows.append(row)
-    assert Counter(r['archived_result'] for r in rows) == {'proved': 115, 'timeout_or_solver_failure': 3}
+    assert Counter(r['archived_result'] for r in rows) == {'proved': 115, 'not_proved': 3}
     result = {'schema': 1, 'scope': '118 executed paper-era model cases, not verified C++',
               'inventory_sha256': digest(INVENTORY.read_bytes()),
               'archived_result_sha256': digest(RESULT.read_bytes()),
@@ -606,7 +608,7 @@ def main():
                          'lean_unresolved': sum(r['lean_result'] == 'unresolved' for r in rows),
                          'lean_proved_paper_failed': sum(
                              r['lean_result'] == 'proved' and
-                             r['archived_result'] == 'timeout_or_solver_failure' for r in rows)},
+                             r['archived_result'] == 'not_proved' for r in rows)},
               'cases': rows}
     (OUT / 'cases.json').write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
     table = ['# TensorRight paper-era comparison', '',

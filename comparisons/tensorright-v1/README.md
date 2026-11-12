@@ -246,3 +246,5 @@ model counterexample, and neither establishes an XLA bug. The detailed results,
 method, cost limits and research conclusion are in `REPORT.md`.
 
 The complete checked replay can also be run with `python3 comparisons/tensorright-v1/replay_all.py`; its saved results are in `replay-audit.json` and `replay-build.log`.
+
+Correction on failure classification: `FAIL` can mean a counterexample or an inconclusive solver error. For `slice/rule13`, the archive is inconclusive for all types, but the unrestricted rerun finds counterexamples for Bool and Int and remains inconclusive for Real. See the report; the 118 matching aggregate success/failure outcomes do not imply matching detailed outcomes.

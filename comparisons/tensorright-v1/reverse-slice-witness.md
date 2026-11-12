@@ -21,8 +21,11 @@ Int and Real: it reported `lhsTensorIsValid: true`, `rhsTensorIsValid: false`,
 output index 0 and the bounds above. Full logs are in
 `reverse-slice-witness.stdout` and `reverse-slice-witness.stderr`;
 `rerun_reverse_slice_witness.sh` reproduces the run with the pinned Docker image.
-The original, unrestricted suite had reported this rule as a solver failure
-in its archive and our rerun. The fixed-input run is a separate diagnostic.
+The authors’ unrestricted archive reported solver failure for all three types.
+Our unrestricted rerun found counterexamples for Bool and Int, while Real
+reported solver failure. The fixed-input run is a separate diagnostic confirming
+a counterexample for all three types. The earlier description that both unrestricted
+runs only reported solver failure was incorrect.
 
 This disproves the paper artifact's modeled rule under its written conditions.
 It does **not** establish that XLA performs this rewrite, that its guards match,

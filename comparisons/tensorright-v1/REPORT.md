@@ -20,6 +20,27 @@ The agent read the frozen rule descriptions, selected or wrote mathematical defi
 
 Reuse is a legitimate part of the feasibility demonstration, including proofs written earlier in this project. It does prevent treating the final comparison as 118 independent, fresh proof-discovery trials. The evidence supports agent-assisted proof construction under the adopted model assumptions; unattended generalization, comparative efficiency and reproducible success rates remain unmeasured.
 
+## Correction: a failed run can contain a counterexample
+
+The earlier result parser grouped every `FAIL` as `timeout_or_solver_failure`.
+That was incorrect: TensorRight uses `FAIL` both for a found counterexample and
+for an inconclusive solver error. The corrected tables use `not_proved` for this
+aggregate and retain separate per-type outcomes. All 118 aggregate success/failure
+results match the archive, but the detailed outcomes do not all match.
+
+For `slice/rule13`, the authors' archive reports `SolvingError` for Bool, Int and
+Real (the paper describes these failures as timeouts). Our unrestricted rerun
+reports `Not verified forall left si exists right si` for Bool and Int. Inspection
+of `Core/Verify.hs` shows that this message is emitted only after `Right model`,
+meaning a counterexample was found. Real remains a solver failure. Our Lean
+certificate definitively refutes the rule independently of element type; the
+separate fixed-input TensorRight diagnostic also finds the counterexample for
+all three types. Thus our workflow resolves what the published run left unknown,
+but it did not uniquely outperform our later unrestricted TensorRight rerun on
+Bool and Int. The result is an incorrect modeled rule, not a proof of correctness
+or an inconclusive attempt. The `divmod/rule06,07` runs remain inconclusive in both
+archive and rerun; our Lean proofs establish those rules as correct.
+
 ## The two nonpositive model outcomes
 
 - **`slice/rule13`: model counterexample.** A length-10 tensor sliced from 2 to 8 with stride 2 has a valid original expression; the proposed replacement starts at −3, which the artifact's Slice semantics rejects. Lean checks this witness, and the frozen TensorRight implementation confirms valid left and invalid right sides for Boolean, integer and real values when the parameters are fixed. See [the witness and reproduction](reverse-slice-witness.md). The unrestricted artifact reports failure, not a discovered XLA bug. We have not established whether XLA performs the same rewrite under these conditions.

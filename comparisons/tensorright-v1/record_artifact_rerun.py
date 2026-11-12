@@ -14,6 +14,23 @@ def sha(data):
     return hashlib.sha256(data).hexdigest()
 
 
+def typed_outcomes(block):
+    results = {}
+    for status, kind, line in re.findall(
+            r'^\[(SUCCESS|FAIL)(?:-(Bool|Int|Real))?\]:(.*)$', block, re.M):
+        if status == 'SUCCESS':
+            outcome = 'proved'
+        elif 'Not verified forall' in line:
+            # Core/Verify.hs emits this only in the Right model branch.
+            outcome = 'counterexample'
+        elif 'solver failure' in line:
+            outcome = 'inconclusive_solver_failure'
+        else:
+            outcome = 'failure_unclassified'
+        results[kind or 'default'] = outcome
+    return results
+
+
 def main():
     rows = json.loads((OUT / 'cases.json').read_text())['cases']
     stdout = (OUT / 'artifact-rerun.stdout').read_text()
@@ -26,8 +43,10 @@ def main():
         assert sha((SOURCE / relative).read_bytes()) == expected, relative
     blocks = re.split(r'^====> ', stderr, flags=re.M)[1:]
     assert len(blocks) == len(rows) == 118
+    archived_blocks = re.split(r'^====> ', (SOURCE / 'plot/result.txt').read_text(), flags=re.M)[1:]
+    assert len(archived_blocks) == len(blocks)
     cases = []
-    for row, block in zip(rows, blocks):
+    for row, block, archived_block in zip(rows, blocks, archived_blocks):
         labels = block.splitlines()
         label = labels[0]
         if row['id'] != 'reduce/rule03':
@@ -37,13 +56,15 @@ def main():
             assert label.startswith('Const ') and ' Reduce(X) ' in label
         status = re.findall(r'^\[(SUCCESS|FAIL)(?:-Overall)?\]:', block, re.M)
         assert status, row['id']
-        outcome = 'proved' if status[-1] == 'SUCCESS' else 'timeout_or_solver_failure'
-        assert outcome == row['archived_result'], row['id']
+        outcome = 'proved' if status[-1] == 'SUCCESS' else 'not_proved'
+        assert (outcome == 'proved') == (row['archived_result'] == 'proved'), row['id']
         cases.append({'id': row['id'], 'outcome': outcome,
-                      'archived_outcome': row['archived_result'],
+                      'archived_outcome': 'proved' if row['archived_result'] == 'proved' else 'not_proved',
+                      'archived_type_outcomes': typed_outcomes(archived_block),
+                      'rerun_type_outcomes': typed_outcomes(block),
                       'label': label, 'result_block_sha256': sha(block.encode())})
     counts = Counter(row['outcome'] for row in cases)
-    assert counts == {'proved': 115, 'timeout_or_solver_failure': 3}
+    assert counts == {'proved': 115, 'not_proved': 3}
     result = {
         'schema': 1,
         'date': '2026-11-12',
@@ -60,6 +81,7 @@ def main():
         'image_source_manifest_sha256': sha((OUT / 'artifact-rerun-image-sources.sha256').read_bytes()),
         'stdout_sha256': sha(stdout.encode()), 'stderr_sha256': sha(stderr.encode()),
         'counts': dict(counts), 'matches_archived_outcomes': 118,
+        'matching_scope': 'Aggregate success versus not-proved only; per-type counterexample and solver-failure outcomes can differ.',
         'label_exception': 'reduce/rule03: unquoted shell wildcard expands to directory-specific filenames',
         'cases': cases,
     }

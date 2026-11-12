@@ -43,8 +43,8 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | divmod/rule03 | proved | proved | proved |
 | divmod/rule04 | proved | proved | proved |
 | divmod/rule05 | proved | proved | proved |
-| divmod/rule06 | timeout_or_solver_failure | timeout_or_solver_failure | proved |
-| divmod/rule07 | timeout_or_solver_failure | timeout_or_solver_failure | proved |
+| divmod/rule06 | not_proved | not_proved | proved |
+| divmod/rule07 | not_proved | not_proved | proved |
 | dot/rule01 | proved | proved | proved |
 | dot/rule02 | proved | proved | proved |
 | dot/rule03 | proved | proved | proved |
@@ -120,7 +120,7 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | slice/rule10 | proved | proved | proved |
 | slice/rule11 | proved | proved | proved |
 | slice/rule12 | proved | proved | proved |
-| slice/rule13 | timeout_or_solver_failure | timeout_or_solver_failure | disproved_in_model |
+| slice/rule13 | not_proved | not_proved | disproved_in_model |
 | sub/rule00 | proved | proved | proved |
 | sub/rule01 | proved | proved | proved |
 | sub/rule02 | proved | proved | proved |
