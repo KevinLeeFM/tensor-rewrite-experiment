@@ -1,0 +1,1599 @@
+tensor-right-0.1.0.0: unregistering (local file changes: package.yaml rules/clamp/Main.hs
+rules/debug/Main.hs src/TensorRight.hs src/TensorRight/Internal/...)
+tensor-right> configure (lib + exe)
+Configuring tensor-right-0.1.0.0...
+tensor-right> build (lib + exe) with ghc-9.8.2
+Preprocessing library for tensor-right-0.1.0.0..
+Building library for tensor-right-0.1.0.0..
+[ 9 of 21] Compiling TensorRight.Internal.Core.Tensor.Typed [Source file changed]
+[10 of 21] Compiling TensorRight.Internal.Core.Tensor [Source file changed]
+[11 of 21] Compiling TensorRight.Internal.Core.Verify [TensorRight.Internal.Core.Tensor changed]
+[16 of 21] Compiling TensorRight.Internal.DSL.Expr [Source file changed]
+[17 of 21] Compiling TensorRight.Internal.DSL.Eval [Source file changed]
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:345:31: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+345 |     else return $ iota sizes (head $ HS.toList axes)
+    |                               ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:380:37: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+380 |     else return $ concatTensor l r (head $ HS.toList axes)
+    |                                     ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:383:37: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+383 |   headShape <- gets $ (HM.! exprId (head exprs)) . exprShapes
+    |                                     ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:388:40: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+388 |     else return $ concatTensorList es (head $ HS.toList axes)
+    |                                        ^^^^
+[18 of 21] Compiling TensorRight.Internal.DSL.BoundInference [TensorRight.Internal.Core.Tensor changed]
+[19 of 21] Compiling TensorRight.Internal.DSL.DSL [Source file changed]
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1073:75: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1073 |     assert "All tensors in concatList must have the same Adims" $ all (== head shapes) shapes
+     |                                                                           ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1074:74: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1074 |     assert "All tensors in concatList must have the same type" $ all (== head tys) tys
+     |                                                                          ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1075:31: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1075 |     adim <- getAdimByAdimRef (head shapes) d
+     |                               ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1078:13: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1078 |     return (head shapes, head tys)
+     |             ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1078:26: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1078 |     return (head shapes, head tys)
+     |                          ^^^^
+[20 of 21] Compiling TensorRight.Internal.DSL.Verify [TensorRight.Internal.Core.Tensor changed]
+[21 of 21] Compiling TensorRight [Source file changed]
+Preprocessing executable 'rules-sub' for tensor-right-0.1.0.0..
+Building executable 'rules-sub' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-sub/rules-sub [Objects changed]
+Preprocessing executable 'rules-add' for tensor-right-0.1.0.0..
+Building executable 'rules-add' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-add/rules-add [Objects changed]
+Preprocessing executable 'rules-logical' for tensor-right-0.1.0.0..
+Building executable 'rules-logical' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-logical/rules-logical [Objects changed]
+Preprocessing executable 'rules-dyupslice' for tensor-right-0.1.0.0..
+Building executable 'rules-dyupslice' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-dyupslice/rules-dyupslice [Objects changed]
+Preprocessing executable 'rules-broadcast' for tensor-right-0.1.0.0..
+Building executable 'rules-broadcast' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-broadcast/rules-broadcast [Objects changed]
+Preprocessing executable 'rules-select' for tensor-right-0.1.0.0..
+Building executable 'rules-select' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-select/rules-select [Objects changed]
+Preprocessing executable 'rules-dot' for tensor-right-0.1.0.0..
+Building executable 'rules-dot' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-dot/rules-dot [Objects changed]
+Preprocessing executable 'rules-debug' for tensor-right-0.1.0.0..
+Building executable 'rules-debug' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-debug/rules-debug [Objects changed]
+Preprocessing executable 'rules-relabel' for tensor-right-0.1.0.0..
+Building executable 'rules-relabel' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-relabel/rules-relabel [Objects changed]
+Preprocessing executable 'rules-clamp' for tensor-right-0.1.0.0..
+Building executable 'rules-clamp' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-clamp/rules-clamp [Objects changed]
+Preprocessing executable 'rules-not' for tensor-right-0.1.0.0..
+Building executable 'rules-not' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-not/rules-not [Objects changed]
+Preprocessing executable 'rules-concat' for tensor-right-0.1.0.0..
+Building executable 'rules-concat' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-concat/rules-concat [Objects changed]
+Preprocessing executable 'rules-slice' for tensor-right-0.1.0.0..
+Building executable 'rules-slice' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-slice/rules-slice [Objects changed]
+Preprocessing executable 'rules-generalize' for tensor-right-0.1.0.0..
+Building executable 'rules-generalize' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-generalize/rules-generalize [Objects changed]
+Preprocessing executable 'rules-dyslice' for tensor-right-0.1.0.0..
+Building executable 'rules-dyslice' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-dyslice/rules-dyslice [Objects changed]
+Preprocessing executable 'rules-max' for tensor-right-0.1.0.0..
+Building executable 'rules-max' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-max/rules-max [Objects changed]
+Preprocessing executable 'rules-mul' for tensor-right-0.1.0.0..
+Building executable 'rules-mul' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-mul/rules-mul [Objects changed]
+Preprocessing executable 'rules-reduce' for tensor-right-0.1.0.0..
+Building executable 'rules-reduce' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-reduce/rules-reduce [Objects changed]
+Preprocessing executable 'rules-reverse' for tensor-right-0.1.0.0..
+Building executable 'rules-reverse' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-reverse/rules-reverse [Objects changed]
+Preprocessing executable 'rules-iota' for tensor-right-0.1.0.0..
+Building executable 'rules-iota' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-iota/rules-iota [Objects changed]
+Preprocessing executable 'rules-conv' for tensor-right-0.1.0.0..
+Building executable 'rules-conv' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-conv/rules-conv [Objects changed]
+Preprocessing executable 'rules-pad' for tensor-right-0.1.0.0..
+Building executable 'rules-pad' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-pad/rules-pad [Objects changed]
+Preprocessing executable 'rules-divmod' for tensor-right-0.1.0.0..
+Building executable 'rules-divmod' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-divmod/rules-divmod [Objects changed]
+Preprocessing executable 'rules-compare' for tensor-right-0.1.0.0..
+Building executable 'rules-compare' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [TensorRight changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-compare/rules-compare [Objects changed]
+tensor-right> copy/register
+Installing library in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/lib/x86_64-linux-ghc-9.8.2/tensor-right-0.1.0.0-AQ93immrvVuAnkn5HASgEF
+Installing executable rules-sub in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-add in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-logical in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-dyupslice in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-broadcast in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-select in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-dot in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-debug in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-relabel in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-clamp in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-not in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-concat in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-slice in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-generalize in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-dyslice in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-max in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-mul in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-reduce in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-reverse in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-iota in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-conv in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-pad in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-divmod in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Installing executable rules-compare in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Registering library for tensor-right-0.1.0.0..
+====> Add(Add(A,Const), Const2) ⇒ Add(A,Add(Const,Const2))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12973150797188282s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11048805480822921s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.24021956278011203s] Verification succeeded.
+====> Add(A,0)⇒A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12360808020457625s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1205755122937262s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.24418359249830246s] Verification succeeded.
+====> Add(0,A)⇒A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1171663380227983s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11099295224994421s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2281592902727425s] Verification succeeded.
+====> Add(Const,A) ⇒ Add(A,Const)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11602225806564093s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10995401069521904s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22597626876085997s] Verification succeeded.
+====> Add(Broadcast(A),Broadcast(B)) ⇒ Broadcast(Add(A,B))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10645344201475382s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.13064086204394698s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2370943040587008s] Verification succeeded.
+====> Mul(Broadcast(A),Broadcast(B)) ⇒ Broadcast(Mul(A,B))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11186355724930763s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.110311190597713s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22217474784702063s] Verification succeeded.
+====> Transpose(Broadcast(Scalar)) ⇒ Broadcast(Scalar)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.10267802700400352s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12072716001421213s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12335403123870492s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3467592182569206s] Verification succeeded.
+====> Reverse(Broadcast(Scalar)) ⇒ Broadcast(Scalar)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.11848280997946858s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.14784756489098072s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1223865239880979s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3887168988585472s] Verification succeeded.
+====> Slice(Broadcast(Scalar)) ⇒ Broadcast(Scalar)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.8333915257826447s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.6395179312676191s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.7212691260501742s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.194178583100438s] Verification succeeded.
+====> DynamicSlice(Broadcast(Scalar)) ⇒ Broadcast(Scalar)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.12834360683336854s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12026401981711388s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12199873197823763s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.37060635862872005s] Verification succeeded.
+====> Broadcast(Iota) ⇒ Iota
+[INFO]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.10738676879554987s] Verification succeeded.
+====> Broadcast(Broadcast(A, shape, dims), shape2, dims2) ⇒ Broadcast(A, shape3, dims3)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.1111047500744462s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12513492489233613s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12027870211750269s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.356518377084285s] Verification succeeded.
+====> Clamp(Const1,Clamp(Const1,A,Const2),Const2) ⇒ Clamp(Const1,A,Const2)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12587616872042418s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1290965350344777s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2549727037549019s] Verification succeeded.
+====> Max(Broadcast(Const), Min(A, Broadcast(Const2))) ⇒ Clamp(A,Const,Const2)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.15327434707432985s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1417672480456531s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.29504159511998296s] Verification succeeded.
+====> Min(Broadcast(Const), Max(A, Broadcast(Const2))) ⇒ Clamp(A,Const,Const2)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10241129389032722s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11114299390465021s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21355428779497743s] Verification succeeded.
+====> Gt(A, A) ⇒ False
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12226611701771617s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1139758238568902s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.23624194087460637s] Verification succeeded.
+====> Lt(A, A) ⇒ False
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1181493392214179s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11094424361363053s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22909358283504844s] Verification succeeded.
+====> Ne(A, A) ⇒ False
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1059315619058907s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11226557893678546s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21819714084267616s] Verification succeeded.
+====> Ge(A, A) ⇒ True
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10146935982629657s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10355311492457986s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.20502247475087643s] Verification succeeded.
+====> Le(A, A) ⇒ True
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10135360201820731s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10934473667293787s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21069833869114518s] Verification succeeded.
+====> Eqv(A, A) ⇒ True
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10351812792941928s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10165073489770293s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2051688628271222s] Verification succeeded.
+====> ConcatList(A, B) ⇒ Concat(A, B)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.11448008008301258s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12330534495413303s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.13300331495702267s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3707887399941683s] Verification succeeded.
+====> Concat(A, Concat(B, C)) ⇒ Concat(Concat(A, B), C)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.36279016314074397s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.3625376499257982s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.34675714606419206s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.0720849591307342s] Verification succeeded.
+====> ConcatList(A, B, C) ⇒ Concat(A, Concat(B, C))
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.10665646800771356s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12206228170543909s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1780903311446309s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.40680908085778356s] Verification succeeded.
+====> Concat(Slice(A), Slice(A)) ⇒ Slice(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.6268048072233796s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.6517895618453622s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.773610623087734s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.052204992156476s] Verification succeeded.
+====> Concat(Broadcast(Scalar), B) ⇒ Pad(B, scalar, low)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.5955024431459606s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.5805693101137877s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.5998590542003512s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.7759308074600995s] Verification succeeded.
+====> Concat(A, Broadcast(Scalar)) ⇒ Pad(A, scalar, high)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.5941044082865119s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.5935516059398651s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.6196950827725232s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.8073510969989002s] Verification succeeded.
+====> Concat(A, Concat(B, C)) ⇒ ConcatList(A, B, C)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.12005767086520791s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10388065781444311s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.18403029162436724s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.40796862030401826s] Verification succeeded.
+====> Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[WARNING]: Verification that all right si can be accessed fails due to unexpected solver failureSolvingError
+[WARNING]: Some SI cannot be accessed.
+[SUCCESS-Int]: [13.104591423645616s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[WARNING]: Verification that all right si can be accessed fails due to unexpected solver failureSolvingError
+[WARNING]: Some SI cannot be accessed.
+[SUCCESS-Real]: [12.183938706759363s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [25.28853013040498s] Verification succeeded.
+====> Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [5.17671214370057s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [4.908597717061639s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [10.085309860762209s] Verification succeeded.
+====> Conv(A,B) => Dot(A, B)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [3.6538999029435217s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [3.7969748470932245s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [7.450874750036746s] Verification succeeded.
+====> Div(A,1) ⇒ A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.952556993812323e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11213059723377228s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2116561671718955s] Verification succeeded.
+====> Div(A,Const) ⇒ Mul(A,1/Const)
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.12607847293838859s] Verification succeeded.
+====> Divide(Divide(A,B), Divide(C,D)) ⇒ Divide(Mul(A,D), Mul(B,C))
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [23.71567084873095s] Verification succeeded.
+====> Divide(A, Divide(B,C)) ⇒ Divide(Mul(A,C), B)
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.1355560957454145s] Verification succeeded.
+====> Rem(Rem(A,B),B) ⇒ Rem(A,B)
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.14516316819936037s] Verification succeeded.
+====> Rem(Iota,Const) ⇒ Iota
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.12996457191184163s] Verification succeeded.
+====> Rem(Add(Iota,Const), Const) ⇒ Rem(Iota,Const)
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[FAIL]: [10.143236024770886s] Verification failed with error: user error ( Verification for forall left si exists right si fails due to unexpected solver failureSolvingError
+====> Rem(Add(X,Const), Const) ⇒ Rem(X,Const)
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[FAIL]: [10.136407230049372s] Verification failed with error: user error ( Verification for forall left si exists right si fails due to unexpected solver failureSolvingError
+====> Dot(Concat(X, Y), Concat(C, D)) ⇒ Reduce(Concat(Broadcast(Dot(X, C)), Broadcast(Dot(Y, D)))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,2),(adim0,1),(adim2,2)]
+[INFO-Int]: Number of bounded verification tasks: 4
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[SUCCESS-Int]: [3.838695949409157s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,2),(adim0,1),(adim2,2)]
+[INFO-Real]: Number of bounded verification tasks: 4
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple right SI for a left SI.)
+[WARNING]: SI-relation is not bijective.
+[SUCCESS-Real]: [3.868829559069127s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [7.707525508478284s] Verification succeeded.
+====> Dot(A, B) ⇒ Dot(B, A)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim3,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.41766512813046575s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim3,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.46205526404082775s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.8797203921712935s] Verification succeeded.
+====> Dot(A,Dot(B,C)) ⇒ Dot(Dot(A,B),C)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim3,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[WARNING]: Some right si cannot be accessed.
+[WARNING]: Some SI cannot be accessed.
+[SUCCESS-Int]: [0.37452838802710176s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim3,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[WARNING]: Some right si cannot be accessed.
+[WARNING]: Some SI cannot be accessed.
+[SUCCESS-Real]: [0.3649133052676916s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.7394416932947934s] Verification succeeded.
+====> Dot(A,B) ⇒ Mul(Broadcast(A), Broadcast(B)) when no contraction
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11035349871963263s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11667316919192672s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22702666791155934s] Verification succeeded.
+====> Dot(A,B) ⇒ 0 when one of the dimensions is 0
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(cadim0,1),(adim1,1),(cadim1,1),(adim0,1),(badim1,1),(badim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1661715330556035s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(cadim0,1),(adim1,1),(cadim1,1),(adim0,1),(badim1,1),(badim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.16838297294452786s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.33455450600013137s] Verification succeeded.
+====> Dot(A,B) ⇒ Reduce(Mul(Broadcast(Transpose(A)), Broadcast(Transpose(B)))) when rhs only have contraction and batch adims
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(badim,1),(adim,1),(cadim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.40543517703190446s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(badim,1),(adim,1),(cadim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.43285375367850065s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.8382889307104051s] Verification succeeded.
+====> DynamicSlice(A) ⇒ Slice(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.2872196896933019s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.2792146299034357s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.2569184987805784s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.823352818377316s] Verification succeeded.
+====> DynamicSlice(A,...) ⇒ A // output shape is the same as input shape
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.1698865257203579s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1724955071695149s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.167585460934788s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.5099674938246608s] Verification succeeded.
+====> DynamicSlice(Broadcast(A),...) ⇒ Broadcast(DynamicSlice(A,...))
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.1386029440909624s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.134957579895854s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1364829633384943s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.4100434873253107s] Verification succeeded.
+====> DynamicSlice(Transpose(A),...) ⇒ Transpose(DynamicSlice(A,...))
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.1045544371008873s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.194156806915998e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10531504405662417s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.30181104922667146s] Verification succeeded.
+====> DynamicSlice(DynamicSlice(A,...),...) ⇒ DynamicSlice(A,...)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.2020018631592393s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.2061842088587582s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1986861890181899s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.6068722610361874s] Verification succeeded.
+====> Add(A, DynamicUpdateSlice(Broadcast(0), B) ⇒ DynamicUpdateSlice(A,...)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1970805050805211s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.19591532787308097s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3929958329536021s] Verification succeeded.
+====> DynamicUpdateSlice(Broadcast(Const),A,...) ⇒ Pad(
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,2)]
+[INFO-Bool]: Number of bounded verification tasks: 2
+[SUCCESS-Bool]: [0.7974008969031274s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,2)]
+[INFO-Int]: Number of bounded verification tasks: 2
+[SUCCESS-Int]: [0.8029411560855806s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,2)]
+[INFO-Real]: Number of bounded verification tasks: 2
+[SUCCESS-Real]: [0.8184276982210577s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.4187697512097657s] Verification succeeded.
+====> DynamicUpdateSlice(A,...) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.15896871499717236s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.15547805465757847s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.16795688215643167s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.4824036518111825s] Verification succeeded.
+====> DynamicUpdateSlice(A, DynamicUpdateSlice(DynamicSlice(A,...), C ,...),...)) ⇒ DynamicUpdateSlice(A,C,...)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,2)]
+[INFO-Bool]: Number of bounded verification tasks: 2
+[SUCCESS-Bool]: [0.6006916579790413s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,2)]
+[INFO-Int]: Number of bounded verification tasks: 2
+[SUCCESS-Int]: [0.6285276152193546s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,2)]
+[INFO-Real]: Number of bounded verification tasks: 2
+[SUCCESS-Real]: [0.6299732653424144s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.8591925385408103s] Verification succeeded.
+====> Iota ⇒ Zero
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.1112440712749958s] Verification succeeded.
+====> Or(A,True) ⇒ True
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.1151316212490201s] Verification succeeded.
+====> Or(True,A) ⇒ True
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.12840031133964658s] Verification succeeded.
+====> Or(A,False) ⇒ A
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.10545492032542825s] Verification succeeded.
+====> Or(False,A) ⇒ A
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [9.013285394757986e-2s] Verification succeeded.
+====> And(A,1) ⇒ A
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [9.707517409697175e-2s] Verification succeeded.
+====> And(1,A) ⇒ A
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [9.803598606958985e-2s] Verification succeeded.
+====> And(A,0) ⇒ 0
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [9.050666308030486e-2s] Verification succeeded.
+====> And(0,A) ⇒ 0
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [8.506715158000588e-2s] Verification succeeded.
+====> And(A < Const, Const1 > A) ⇒ Lt(A, min(Const, Const1))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1143734292127192s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12016918137669563s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.23454261058941483s] Verification succeeded.
+====> Gt(Max(A,B),B) ⇒ Gt(A,B)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.13052097475156188s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12193332193419337s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.25245429668575525s] Verification succeeded.
+====> Gt(Max(A,B),A) ⇒ Gt(B,A)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11950576025992632s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12125196401029825s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.24075772427022457s] Verification succeeded.
+====> Max(A,-inf) ⇒ A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.461600985378027e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11114797508344054s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2057639849372208s] Verification succeeded.
+====> Min(A,inf) ⇒ A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10060493880882859s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10301525006070733s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.20362018886953592s] Verification succeeded.
+====> Mul(A,1) ⇒ A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10600828612223268s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11021278984844685s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21622107597067952s] Verification succeeded.
+====> Mul(1,A) ⇒ A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10860043112188578s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1119605996645987s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22056103078648448s] Verification succeeded.
+====> Mul(A,0) ⇒ 0
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.798760805279016e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10326915420591831s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.20125676225870848s] Verification succeeded.
+====> Mul(0,A) ⇒ 0
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11898418702185154s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10364165296778083s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22262583998963237s] Verification succeeded.
+====> Mul(Mul(A, Const1), Mul(B, Const2)) ⇒ Mul(Mul(A, B),Mul(Const1,Const2))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11150659993290901s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10120405815541744s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21271065808832645s] Verification succeeded.
+====> Mul(Mul(A, Const1), Const2) ⇒ Mul(A, Mul(Const1,Const2))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10676636081188917s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10251034470275044s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.20927670551463962s] Verification succeeded.
+====> Mul(Mul(A, Const1), Broadcast(B)) ⇒ Mul(Broadcast(Mul(B, Const1), A))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11099444096907973s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.12168217403814197s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2326766150072217s] Verification succeeded.
+====> Add(Mul(A,C),Mul(B,C)) ⇒ Mul(Add(A,B),C)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10375449946150184s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10663130600005388s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21038580546155572s] Verification succeeded.
+====> Mul(Abs(A),Abs(A)) ⇒ Mul(A,A)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10320782195776701s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10388532606884837s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.20709314802661538s] Verification succeeded.
+====> Mul(Exp(A),Exp(B)) ⇒ Exp(Add(A,B))
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [3.912339499220252e-2s] Verification succeeded.
+====> Not(Not(A)) ⇒ A
+[INFO]: Inferred bounds: fromList [(adim,1)]
+[INFO]: Number of bounded verification tasks: 1
+[SUCCESS]: [0.10486646229401231s] Verification succeeded.
+====> Negate(Negate(A)) ⇒ A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10718955704942346s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10501968208700418s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21220923913642764s] Verification succeeded.
+====> Pad(A,val, 0_0_0) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.2697972571477294s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.2677138359285891s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.2761628138832748s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.8136739069595933s] Verification succeeded.
+====> Pad(A,val, low_int_high) ⇒ Pad(A,val,low_0_high)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,2),(adim0,2)]
+[INFO-Bool]: Number of bounded verification tasks: 4
+[SUCCESS-Bool]: [4.543149149045348s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,2),(adim0,2)]
+[INFO-Int]: Number of bounded verification tasks: 4
+[SUCCESS-Int]: [4.379578759893775s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,2),(adim0,2)]
+[INFO-Real]: Number of bounded verification tasks: 4
+[SUCCESS-Real]: [4.409833597950637s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [13.33256150688976s] Verification succeeded.
+====> Pad(Broadcast(Const1), Const2, low_0_0) ⇒ Broadcast(Pad(Broadcast(Const1), Const2))
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.8491933629848063s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.8041019421070814s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.8112211017869413s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.464516406878829s] Verification succeeded.
+====> Pad(A, val, negative_negative) ⇒ Slice(Pad(A, val, 0_0), abs(negative),negative+size)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [1.7259368440136313s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [1.70776158105582s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [1.7716385670937598s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [5.205336992163211s] Verification succeeded.
+====> Mul(Reduce(X), Reduce(Y)) ⇒ Reduce(Mul(Broadcast(X), Broadcast(Y)))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.49028494907543063s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.48133576195687056s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.9716207110323012s] Verification succeeded.
+====> Reduce(Concat(Reduce(X),Reduce(Y))) ⇒ Reduce(Concat(X,Y))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(concatAdim,1),(otherAdim,2)]
+[INFO-Int]: Number of bounded verification tasks: 2
+[WARNING]: SI-relation is not bijective. (There exist multiple left SI for a right SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple left SI for a right SI.)
+[WARNING]: SI-relation is not bijective.
+[SUCCESS-Int]: [1.0368897621519864s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(concatAdim,1),(otherAdim,2)]
+[INFO-Real]: Number of bounded verification tasks: 2
+[WARNING]: SI-relation is not bijective. (There exist multiple left SI for a right SI.)
+[WARNING]: SI-relation is not bijective.
+[WARNING]: SI-relation is not bijective. (There exist multiple left SI for a right SI.)
+[WARNING]: SI-relation is not bijective.
+[SUCCESS-Real]: [1.2304248651489615s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.267314627300948s] Verification succeeded.
+====> Const Makefile package.yaml rules runall.sh src stack.yaml stack.yaml.lock tensor-right.cabal test Reduce(X) ⇒ Reduce(Const Makefile package.yaml rules runall.sh src stack.yaml stack.yaml.lock tensor-right.cabal test X)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(reductionAdim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.36123900581151247s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(reductionAdim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.37841144809499383s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.7396504539065063s] Verification succeeded.
+====> Reduce(Relabel(X)) ⇒ Relabel(Reduce(X))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(nonReductionAdim,1),(reductionAdim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.4054293930530548s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(nonReductionAdim,1),(reductionAdim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.3908822829835117s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.7963116760365665s] Verification succeeded.
+====> Reduce(Reduce(X)) ⇒ Reduce(X)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [1.6955620949156582s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [1.6242370121181011s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [3.3197991070337594s] Verification succeeded.
+====> Reduce(Dot(X,Y)) ⇒ Dot(X,Y)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim3,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [2.3148318068124354s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim3,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [2.072032633703202s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [4.386864440515637s] Verification succeeded.
+====> Reduce(X) ⇒ ReshapeDegenerate(X)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adimDegenerate,1),(adim1,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.19153363863006234s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adimDegenerate,1),(adim1,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.202647574711591s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.39418121334165335s] Verification succeeded.
+====> Reduce(X) ⇒ ReshapeDegenerate(X)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adimDegenerate,1),(adim1,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1996848378330469s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adimDegenerate,1),(adim1,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.20163388410583138s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.4013187219388783s] Verification succeeded.
+====> Transpose(Transpose(A)) ⇒ Transpose(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.11263275286182761s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11223672376945615s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.13241670140996575s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3572861780412495s] Verification succeeded.
+====> Transpose(A) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.10465760296210647s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.13176846969872713s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1089066588319838s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3453327314928174s] Verification succeeded.
+====> Reverse(A,dims) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.17202709103003144s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.16227425914257765s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.15841423766687512s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.4927155878394842s] Verification succeeded.
+====> Reverse(Reverse(A,dims1),dims2) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.14597909385338426s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1468487922102213s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.14880263525992632s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.44163052132353187s] Verification succeeded.
+====> Reverse(Reverse(A,dims1),dims2) ⇒ Reverse(A, disjoint union of dims1 and dims2)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.17172671109437943s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.18466216325759888s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1),(adim2,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.18943837005645037s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.5458272444084287s] Verification succeeded.
+====> Reverse(Binary(A,Const)) ⇒ Binary(Reverse(A),Const)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10778372408822179s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10798490094020963s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21576862502843142s] Verification succeeded.
+====> Select(P,A,A) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.11747096804901958s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.11982477642595768s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10666962992399931s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.34396537439897656s] Verification succeeded.
+====> Select(True,A,B) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [9.915471402928233e-2s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.748197114095092e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10809204261749983s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.3047287277877331s] Verification succeeded.
+====> Select(False,A,B) ⇒ B
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [9.631077758967876e-2s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.67670176178217e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10051723569631577s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.2935950309038162s] Verification succeeded.
+====> Select(Not(P),A,B) ⇒ Select(P,B,A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [9.718755492940545e-2s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [9.251582436263561e-2s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.1188129959627986s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.30851637525483966s] Verification succeeded.
+====> Slice(A) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.30177114298567176s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.24570380989462137s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.249231971334666s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.7967069242149591s] Verification succeeded.
+====> Slice(Const) ⇒ Const
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.19494329998269677s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.20112077565863729s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.18714049458503723s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.5832045702263713s] Verification succeeded.
+====> Slice(Broadcast(A)) ⇒ Broadcast(Slice(A))
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.25649382919073105s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.26034709392115474s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.2251641657203436s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.7420050888322294s] Verification succeeded.
+====> Slice(Pad(A)) ⇒ A
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.5648738858290017s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.5405350183136761s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.5480192378163338s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.6534281419590116s] Verification succeeded.
+====> Slice(Pad(A, v)) ⇒ Broadcast(v)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.7128668050281703s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.6669603642076254s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.8987943129613996s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.2786214821971953s] Verification succeeded.
+====> Slice(Pad(A, v)) ⇒ Slice(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.4529180312529206s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.44563150964677334s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.4187673111446202s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.3173168520443141s] Verification succeeded.
+====> Slice(Slice(A)) ⇒ Slice(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.7100985129363835s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.8588211475871503s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.9066525418311357s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [2.4755722023546696s] Verification succeeded.
+====> Slice(Concat(A,B), A.size, A.size+B.size) ⇒ B
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.3398091602139175s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.40731456223875284s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.37118333391845226s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.1183070563711226s] Verification succeeded.
+====> Slice(Broadcast(A)) ⇒ Broadcast(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [1.0125531600788236s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [1.0808144472539425s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim1,1),(adim0,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [1.0616146018728614s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [3.1549822092056274s] Verification succeeded.
+====> Slice(Concat(A,B)) ⇒ Slice(A)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.18935791868716478s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1887857192195952s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.17550211399793625s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.5536457519046962s] Verification succeeded.
+====> Slice(Concat(A,B)) ⇒ Slice(B)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.3338811518624425s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.31412962870672345s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.3324902430176735s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.9805010235868394s] Verification succeeded.
+====> Slice(Concat(A,B,C)) ⇒ Slice(Concat(B,C))
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[SUCCESS-Bool]: [0.6691864687018096s] Verification succeeded.
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.6717620589770377s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.6497342763468623s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [1.9906828040257096s] Verification succeeded.
+====> Slice(Reverse(A,dims),start,stride,end) ⇒ Reverse(Slice(A,...),dims)
+>>> Bool
+[INFO-Bool]: Inferred bounds: fromList [(adim,1)]
+[INFO-Bool]: Number of bounded verification tasks: 1
+[FAIL-Bool]: [10.553880606312305s] Verification failed with error: user error ( Not verified forall left si exists right si.)
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[FAIL-Int]: [10.663487456273288s] Verification failed with error: user error ( Not verified forall left si exists right si.)
+>>> Real
+[FAIL-Real]: [10.101680175866932s] Verification failed with error: user error (Unexpected solver failure: SolvingError
+>>> Overall
+[FAIL-Overall]: [31.319048238452524s] Verification failed with error: user error ( Not verified forall left si exists right si.)
+====> Sub(A,0)⇒A
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.1214802130125463s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11084711644798517s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.23232732946053147s] Verification succeeded.
+====> Sub(A,Const)⇒Add(A,Neg(Const))
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.10515784891322255s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.11086033703759313s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.21601818595081568s] Verification succeeded.
+====> Sub(A,A)⇒0
+>>> Int
+[INFO-Int]: Inferred bounds: fromList [(adim,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+[SUCCESS-Int]: [0.12210084078833461s] Verification succeeded.
+>>> Real
+[INFO-Real]: Inferred bounds: fromList [(adim,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+[SUCCESS-Real]: [0.10308306198567152s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [0.22518390277400613s] Verification succeeded.

@@ -4,125 +4,125 @@ Archived paper outcomes are author-reported; Lean results are this project’s.
 See cases.json for exact source declarations, types, hashes and scope.
 Unresolved reasons identify missing proof connections; triage alone is not a timed proof attempt.
 
-| Case | Paper | Lean |
-| --- | --- | --- |
-| add/rule01 | proved | proved |
-| add/rule02 | proved | proved |
-| add/rule03 | proved | proved |
-| add/rule04 | proved | proved |
-| broadcast/rule01 | proved | proved |
-| broadcast/rule02 | proved | proved |
-| broadcast/rule03 | proved | proved |
-| broadcast/rule04 | proved | proved |
-| broadcast/rule05 | proved | proved |
-| broadcast/rule06 | proved | proved |
-| broadcast/rule07 | proved | proved |
-| broadcast/rule08 | proved | proved |
-| clamp/rule01 | proved | proved |
-| clamp/rule02 | proved | proved |
-| clamp/rule03 | proved | proved |
-| compare/rule01 | proved | proved |
-| compare/rule02 | proved | proved |
-| compare/rule03 | proved | proved |
-| compare/rule04 | proved | proved |
-| compare/rule05 | proved | proved |
-| compare/rule06 | proved | proved |
-| concat/rule01 | proved | proved |
-| concat/rule02 | proved | proved |
-| concat/rule03 | proved | proved |
-| concat/rule04 | proved | proved |
-| concat/rule05 | proved | proved |
-| concat/rule06 | proved | proved |
-| concat/rule07 | proved | proved |
-| conv/rule00 | proved | unresolved |
-| conv/rule01 | proved | unresolved |
-| conv/rule03 | proved | unresolved |
-| divmod/rule00 | proved | proved |
-| divmod/rule01 | proved | proved |
-| divmod/rule02 | proved | proved |
-| divmod/rule03 | proved | proved |
-| divmod/rule04 | proved | proved |
-| divmod/rule05 | proved | proved |
-| divmod/rule06 | timeout_or_solver_failure | proved |
-| divmod/rule07 | timeout_or_solver_failure | proved |
-| dot/rule01 | proved | unresolved |
-| dot/rule02 | proved | unresolved |
-| dot/rule03 | proved | unresolved |
-| dot/rule04 | proved | proved |
-| dot/rule05 | proved | proved |
-| dot/rule06 | proved | unresolved |
-| dyslice/rule01 | proved | proved |
-| dyslice/rule02 | proved | proved |
-| dyslice/rule03 | proved | unresolved |
-| dyslice/rule04 | proved | proved |
-| dyslice/rule05 | proved | proved |
-| dyupslice/rule01 | proved | proved |
-| dyupslice/rule02 | proved | unresolved |
-| dyupslice/rule03 | proved | proved |
-| dyupslice/rule04 | proved | proved |
-| iota/rule01 | proved | proved |
-| logical/rule01 | proved | proved |
-| logical/rule02 | proved | proved |
-| logical/rule03 | proved | proved |
-| logical/rule04 | proved | proved |
-| logical/rule05 | proved | proved |
-| logical/rule06 | proved | proved |
-| logical/rule07 | proved | proved |
-| logical/rule08 | proved | proved |
-| logical/rule09 | proved | proved |
-| logical/rule10 | proved | proved |
-| logical/rule11 | proved | proved |
-| max/rule01 | proved | proved |
-| max/rule02 | proved | proved |
-| mul/rule01 | proved | proved |
-| mul/rule02 | proved | proved |
-| mul/rule03 | proved | proved |
-| mul/rule04 | proved | proved |
-| mul/rule05 | proved | proved |
-| mul/rule06 | proved | proved |
-| mul/rule07 | proved | proved |
-| mul/rule08 | proved | proved |
-| mul/rule09 | proved | proved |
-| mul/rule10 | proved | proved |
-| not/rule01 | proved | proved |
-| not/rule02 | proved | proved |
-| pad/rule01 | proved | proved |
-| pad/rule02 | proved | unresolved |
-| pad/rule03 | proved | unresolved |
-| pad/rule04 | proved | unresolved |
-| reduce/rule01 | proved | unresolved |
-| reduce/rule02 | proved | unresolved |
-| reduce/rule03 | proved | proved |
-| reduce/rule04 | proved | unresolved |
-| reduce/rule05 | proved | unresolved |
-| reduce/rule06 | proved | unresolved |
-| reduce/rule07 | proved | proved |
-| reduce/rule08 | proved | proved |
-| relabel/rule01 | proved | proved |
-| relabel/rule02 | proved | proved |
-| reverse/rule01 | proved | proved |
-| reverse/rule02 | proved | proved |
-| reverse/rule03 | proved | proved |
-| reverse/rule04 | proved | proved |
-| select/rule01 | proved | proved |
-| select/rule02 | proved | proved |
-| select/rule03 | proved | proved |
-| select/rule04 | proved | proved |
-| slice/rule01 | proved | proved |
-| slice/rule02 | proved | proved |
-| slice/rule03 | proved | unresolved |
-| slice/rule04 | proved | unresolved |
-| slice/rule05 | proved | unresolved |
-| slice/rule06 | proved | unresolved |
-| slice/rule07 | proved | proved |
-| slice/rule08 | proved | proved |
-| slice/rule09 | proved | unresolved |
-| slice/rule10 | proved | proved |
-| slice/rule11 | proved | proved |
-| slice/rule12 | proved | unresolved |
-| slice/rule13 | timeout_or_solver_failure | unresolved |
-| sub/rule00 | proved | proved |
-| sub/rule01 | proved | proved |
-| sub/rule02 | proved | proved |
+| Case | Paper archive | TensorRight rerun | Lean |
+| --- | --- | --- | --- |
+| add/rule01 | proved | proved | proved |
+| add/rule02 | proved | proved | proved |
+| add/rule03 | proved | proved | proved |
+| add/rule04 | proved | proved | proved |
+| broadcast/rule01 | proved | proved | proved |
+| broadcast/rule02 | proved | proved | proved |
+| broadcast/rule03 | proved | proved | proved |
+| broadcast/rule04 | proved | proved | proved |
+| broadcast/rule05 | proved | proved | proved |
+| broadcast/rule06 | proved | proved | proved |
+| broadcast/rule07 | proved | proved | proved |
+| broadcast/rule08 | proved | proved | proved |
+| clamp/rule01 | proved | proved | proved |
+| clamp/rule02 | proved | proved | proved |
+| clamp/rule03 | proved | proved | proved |
+| compare/rule01 | proved | proved | proved |
+| compare/rule02 | proved | proved | proved |
+| compare/rule03 | proved | proved | proved |
+| compare/rule04 | proved | proved | proved |
+| compare/rule05 | proved | proved | proved |
+| compare/rule06 | proved | proved | proved |
+| concat/rule01 | proved | proved | proved |
+| concat/rule02 | proved | proved | proved |
+| concat/rule03 | proved | proved | proved |
+| concat/rule04 | proved | proved | proved |
+| concat/rule05 | proved | proved | proved |
+| concat/rule06 | proved | proved | proved |
+| concat/rule07 | proved | proved | proved |
+| conv/rule00 | proved | proved | unresolved |
+| conv/rule01 | proved | proved | unresolved |
+| conv/rule03 | proved | proved | unresolved |
+| divmod/rule00 | proved | proved | proved |
+| divmod/rule01 | proved | proved | proved |
+| divmod/rule02 | proved | proved | proved |
+| divmod/rule03 | proved | proved | proved |
+| divmod/rule04 | proved | proved | proved |
+| divmod/rule05 | proved | proved | proved |
+| divmod/rule06 | timeout_or_solver_failure | timeout_or_solver_failure | proved |
+| divmod/rule07 | timeout_or_solver_failure | timeout_or_solver_failure | proved |
+| dot/rule01 | proved | proved | unresolved |
+| dot/rule02 | proved | proved | unresolved |
+| dot/rule03 | proved | proved | unresolved |
+| dot/rule04 | proved | proved | proved |
+| dot/rule05 | proved | proved | proved |
+| dot/rule06 | proved | proved | unresolved |
+| dyslice/rule01 | proved | proved | proved |
+| dyslice/rule02 | proved | proved | proved |
+| dyslice/rule03 | proved | proved | unresolved |
+| dyslice/rule04 | proved | proved | proved |
+| dyslice/rule05 | proved | proved | proved |
+| dyupslice/rule01 | proved | proved | proved |
+| dyupslice/rule02 | proved | proved | unresolved |
+| dyupslice/rule03 | proved | proved | proved |
+| dyupslice/rule04 | proved | proved | proved |
+| iota/rule01 | proved | proved | proved |
+| logical/rule01 | proved | proved | proved |
+| logical/rule02 | proved | proved | proved |
+| logical/rule03 | proved | proved | proved |
+| logical/rule04 | proved | proved | proved |
+| logical/rule05 | proved | proved | proved |
+| logical/rule06 | proved | proved | proved |
+| logical/rule07 | proved | proved | proved |
+| logical/rule08 | proved | proved | proved |
+| logical/rule09 | proved | proved | proved |
+| logical/rule10 | proved | proved | proved |
+| logical/rule11 | proved | proved | proved |
+| max/rule01 | proved | proved | proved |
+| max/rule02 | proved | proved | proved |
+| mul/rule01 | proved | proved | proved |
+| mul/rule02 | proved | proved | proved |
+| mul/rule03 | proved | proved | proved |
+| mul/rule04 | proved | proved | proved |
+| mul/rule05 | proved | proved | proved |
+| mul/rule06 | proved | proved | proved |
+| mul/rule07 | proved | proved | proved |
+| mul/rule08 | proved | proved | proved |
+| mul/rule09 | proved | proved | proved |
+| mul/rule10 | proved | proved | proved |
+| not/rule01 | proved | proved | proved |
+| not/rule02 | proved | proved | proved |
+| pad/rule01 | proved | proved | proved |
+| pad/rule02 | proved | proved | unresolved |
+| pad/rule03 | proved | proved | unresolved |
+| pad/rule04 | proved | proved | unresolved |
+| reduce/rule01 | proved | proved | unresolved |
+| reduce/rule02 | proved | proved | unresolved |
+| reduce/rule03 | proved | proved | proved |
+| reduce/rule04 | proved | proved | unresolved |
+| reduce/rule05 | proved | proved | unresolved |
+| reduce/rule06 | proved | proved | unresolved |
+| reduce/rule07 | proved | proved | proved |
+| reduce/rule08 | proved | proved | proved |
+| relabel/rule01 | proved | proved | proved |
+| relabel/rule02 | proved | proved | proved |
+| reverse/rule01 | proved | proved | proved |
+| reverse/rule02 | proved | proved | proved |
+| reverse/rule03 | proved | proved | proved |
+| reverse/rule04 | proved | proved | proved |
+| select/rule01 | proved | proved | proved |
+| select/rule02 | proved | proved | proved |
+| select/rule03 | proved | proved | proved |
+| select/rule04 | proved | proved | proved |
+| slice/rule01 | proved | proved | proved |
+| slice/rule02 | proved | proved | proved |
+| slice/rule03 | proved | proved | unresolved |
+| slice/rule04 | proved | proved | unresolved |
+| slice/rule05 | proved | proved | unresolved |
+| slice/rule06 | proved | proved | unresolved |
+| slice/rule07 | proved | proved | proved |
+| slice/rule08 | proved | proved | proved |
+| slice/rule09 | proved | proved | unresolved |
+| slice/rule10 | proved | proved | proved |
+| slice/rule11 | proved | proved | proved |
+| slice/rule12 | proved | proved | unresolved |
+| slice/rule13 | timeout_or_solver_failure | timeout_or_solver_failure | unresolved |
+| sub/rule00 | proved | proved | proved |
+| sub/rule01 | proved | proved | proved |
+| sub/rule02 | proved | proved | proved |
 
 **Benchmark caveat:** `dot/rule03` is labeled as Dot associativity, but the artifact passes `lhs` as both sides to the verifier. Its archived success does not verify the labeled rewrite.

@@ -6,9 +6,13 @@ artifact's executed main-suite rules. `build_cases.py` checks the recovered
 inventory against each source file's actual `main` call order, aligns the 118
 archived result blocks, and checks printed labels. One label (`reduce/rule03`)
 had shell wildcard expansion in the archived output; its position is used and
-that exception is explicit in the script. The 115 successes and three failed
-solver results are author-provided archive results, not our rerun. The paper
-reports the three as timeouts. The archived success for `dot/rule03` is
+that exception is explicit in the script. The archive reports 115 successes and
+three failures, described in the paper as
+timeouts. We independently rebuilt the frozen sources in the authors' Docker
+image and reran all 118 cases; the per-case outcomes matched the archive, with
+the same three failures. See `artifact-rerun.json`, the raw `.stdout`/`.stderr`
+logs and `rerun_tensorright.sh` for details and reproduction. The archived
+success for `dot/rule03` is
 especially misleading: although its label and locally constructed `rhs` describe
 Dot associativity, its verifier call passes `lhs` twice. That result establishes
 only a reflexive identity, not the labeled associativity rewrite. The case remains
@@ -118,8 +122,8 @@ timed proof attempt was made for each case.
 Of the 94 Lean-proved cases, 92 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
-Lean libraries; the authors' archived outcomes were not independently rerun.
-The remaining archived timeout is not yet assessed. This is evidence that the
+Lean libraries; the independent rerun also reported these two failures.
+The remaining archived timeout is unresolved. This is evidence that the
 Lean approach can resolve these two modeled statements, not that an XLA bug was
 found or that a controlled head-to-head timing comparison was performed.
 
@@ -178,3 +182,13 @@ The partial-concatenation Slice cases derive the unit-stride interval length and
 second-operand offset, then reuse the checked contiguous-segment theorem. The
 dynamic-Slice relabel case represents a label rename by the identity value-axis
 map and retains the unchanged, valid dynamic start.
+
+The independent TensorRight run used the pinned image digest documented in
+`artifact-rerun.json`, but rebuilt the frozen `rules` and `src` trees because
+the image's bundled sources differ from the frozen artifact. The frozen and
+bundled source hashes are preserved separately. The run used the artifact's
+`stack build` and `runall.sh`, without container network access; the only
+printed-label mismatch was a known shell wildcard expansion in `reduce/rule03`.
+`record_artifact_rerun.py` checks the 118 per-case outcomes against the archive.
+As in the archive, the success for `dot/rule03` verifies `lhs = lhs`, not the
+associativity statement its label names.

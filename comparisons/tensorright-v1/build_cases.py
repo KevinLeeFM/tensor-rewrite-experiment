@@ -10,6 +10,7 @@ OUT = Path(__file__).resolve().parent
 INVENTORY = ROOT / 'census/historical-rules.json'
 RESULT = ROOT / 'sources/tensorright/artifact/tr-artifact/plot/result.txt'
 TRIAGE = OUT / 'triage.json'
+RERUN = OUT / 'artifact-rerun.json'
 
 
 def digest(data):
@@ -135,6 +136,9 @@ def main():
         'divmod/rule06': ('Remainder', 'shifted_iota'),
         'divmod/rule07': ('Remainder', 'shifted_scalar'),
     })
+    rerun = json.loads(RERUN.read_text())
+    rerun_cases = {r['id']: r for r in rerun['cases']}
+    assert len(rerun_cases) == 118 and set(rerun_cases) == {r['id'] for r in cases}
     triage = json.loads(TRIAGE.read_text())
     assert triage['schema'] == 1
     assert set(triage['cases']) == {r['id'] for r in cases} - set(proofs)
@@ -199,10 +203,12 @@ def main():
             'archived_result': 'proved' if status[-1] == 'SUCCESS' else 'timeout_or_solver_failure',
             'archived_result_block_sha256': digest(block.encode()),
             'archived_result_types': types or ['see declaration and result block'],
+            'independent_rerun_result': rerun_cases[case['id']]['outcome'],
             'lean_result': 'not_attempted_in_comparison', 'lean_theorems': [],
             'translation_confidence': 'not assessed',
             'implementation_result': 'not established',
         }
+        assert row['independent_rerun_result'] == row['archived_result'], case['id']
         if case['id'] in triage['cases']:
             row['lean_result'] = 'unresolved'
             row['unresolved_reason'] = triage['cases'][case['id']]
@@ -378,7 +384,8 @@ def main():
               'inventory_sha256': digest(INVENTORY.read_bytes()),
               'archived_result_sha256': digest(RESULT.read_bytes()),
               'unresolved_triage_sha256': digest(TRIAGE.read_bytes()),
-              'archived_result_provenance': 'author-provided result.txt, not an independent rerun',
+              'independent_rerun_sha256': digest(RERUN.read_bytes()),
+              'archived_result_provenance': 'author-provided result.txt; independent rerun recorded separately',
               'matching': 'runall sorted directories and main call order; printed labels checked except known shell expansion',
               'counts': {'cases': len(rows), 'paper_proved': 115, 'paper_failed': 3,
                          'lean_proved': sum(r['lean_result'] == 'proved' for r in rows),
@@ -392,8 +399,9 @@ def main():
              'Archived paper outcomes are author-reported; Lean results are this project’s.',
              'See cases.json for exact source declarations, types, hashes and scope.',
              'Unresolved reasons identify missing proof connections; triage alone is not a timed proof attempt.', '',
-             '| Case | Paper | Lean |', '| --- | --- | --- |']
-    table.extend(f"| {r['id']} | {r['archived_result']} | {r['lean_result']} |" for r in rows)
+             '| Case | Paper archive | TensorRight rerun | Lean |', '| --- | --- | --- | --- |']
+    table.extend(f"| {r['id']} | {r['archived_result']} | {r['independent_rerun_result']} | "
+                 f"{r['lean_result']} |" for r in rows)
     table.extend(['', '**Benchmark caveat:** `dot/rule03` is labeled as Dot associativity, '
                   'but the artifact passes `lhs` as both sides to the verifier. Its archived '
                   'success does not verify the labeled rewrite.'])
