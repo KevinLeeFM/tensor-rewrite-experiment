@@ -1,0 +1,154 @@
+CONV_DIAGNOSTIC_BUILD_COMPLETE
+====> Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)
+ ⇒ 
+Conv(input, weights, convLow + innerLow, innerInt, convHigh + innerHigh, rdilation)
+>>> Int
+Verifying rule Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)
+ ⇒ 
+Conv(input, weights, convLow + innerLow, innerInt, convHigh + innerHigh, rdilation)
+Verifying rule Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)
+ ⇒ 
+Conv(input, weights, convLow + innerLow, innerInt, convHigh + innerHigh, rdilation)
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+# all conditions: 2
+# all accesses: 4
+# filtered conditions: 1
+# filtered accesses: 2
+Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Int]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+  Pre-condition is stronger than needed.
+  Pre-condition allows at least one valid input, on which LHS=RHS.
+[WARNING]: Verification that all right si can be accessed fails due to unexpected solver failureSolvingError 
+*** Data.SBV: Timeout! User specified timeout of 5s exceeded:
+***
+***    Sent      : (check-sat)
+***
+***    Executable: /usr/bin/z3
+***    Options   : -nw -in -smt2
+***
+***    Hint      : Run with 'verbose=True' for further information
+
+[WARNING]: Some SI cannot be accessed.
+  Verified forall left si exists right si.
+  Verified forall right si exists left si.
+[SUCCESS-Int]: [12.632219985127449s] Verification succeeded.
+>>> Real
+Verifying rule Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)
+ ⇒ 
+Conv(input, weights, convLow + innerLow, innerInt, convHigh + innerHigh, rdilation)
+Verifying rule Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)
+ ⇒ 
+Conv(input, weights, convLow + innerLow, innerInt, convHigh + innerHigh, rdilation)
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+# all conditions: 2
+# all accesses: 4
+# filtered conditions: 1
+# filtered accesses: 2
+Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Real]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+  Pre-condition is stronger than needed.
+  Pre-condition allows at least one valid input, on which LHS=RHS.
+[WARNING]: Verification that all right si can be accessed fails due to unexpected solver failureSolvingError 
+*** Data.SBV: Timeout! User specified timeout of 5s exceeded:
+***
+***    Sent      : (check-sat)
+***
+***    Executable: /usr/bin/z3
+***    Options   : -nw -in -smt2
+***
+***    Hint      : Run with 'verbose=True' for further information
+
+[WARNING]: Some SI cannot be accessed.
+  Verified forall left si exists right si.
+  Verified forall right si exists left si.
+[SUCCESS-Real]: [12.505672201979905s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [25.137892187107354s] Verification succeeded.
+====> Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)
+ ⇒ 
+Conv(input, weights, stride=1, convLow, ldilation, convHigh, innerInt)
+>>> Int
+Verifying rule Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)
+ ⇒ 
+Conv(input, weights, stride=1, convLow, ldilation, convHigh, innerInt)
+Verifying rule Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)
+ ⇒ 
+Conv(input, weights, stride=1, convLow, ldilation, convHigh, innerInt)
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+# all conditions: 2
+# all accesses: 4
+# filtered conditions: 1
+# filtered accesses: 2
+Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Int]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+  Pre-condition is stronger than needed.
+  Pre-condition rules out all valid inputs (Or the rule is symbolically invalid).
+  Verified forall left si exists right si.
+  Verified forall right si exists left si.
+[SUCCESS-Int]: [5.415351668838412s] Verification succeeded.
+>>> Real
+Verifying rule Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)
+ ⇒ 
+Conv(input, weights, stride=1, convLow, ldilation, convHigh, innerInt)
+Verifying rule Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)
+ ⇒ 
+Conv(input, weights, stride=1, convLow, ldilation, convHigh, innerInt)
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+# all conditions: 2
+# all accesses: 4
+# filtered conditions: 1
+# filtered accesses: 2
+Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Real]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatial,1)]
+  Pre-condition is stronger than needed.
+  Pre-condition rules out all valid inputs (Or the rule is symbolically invalid).
+  Verified forall left si exists right si.
+  Verified forall right si exists left si.
+[SUCCESS-Real]: [5.5340640670619905s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [10.949415735900402s] Verification succeeded.
+====> Conv(A,B) => Dot(A, B)
+>>> Int
+Verifying rule Conv(A,B) => Dot(A, B)
+Verifying rule Conv(A,B) => Dot(A, B)
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+# all conditions: 1
+# all accesses: 4
+# filtered conditions: 1
+# filtered accesses: 2
+Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+[INFO-Int]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+[INFO-Int]: Number of bounded verification tasks: 1
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+  Pre-condition is stronger than needed.
+  Pre-condition allows at least one valid input, on which LHS=RHS.
+  Verified forall left si exists right si.
+  Verified forall right si exists left si.
+[SUCCESS-Int]: [4.063595301005989s] Verification succeeded.
+>>> Real
+Verifying rule Conv(A,B) => Dot(A, B)
+Verifying rule Conv(A,B) => Dot(A, B)
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+# all conditions: 1
+# all accesses: 4
+# filtered conditions: 1
+# filtered accesses: 2
+Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+[INFO-Real]: Inferred bounds: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+[INFO-Real]: Number of bounded verification tasks: 1
+Verifying with ndim: fromList [(batch,1),(output,1),(feature,1),(spatialTrivial,1),(spatialOne,1)]
+  Pre-condition is stronger than needed.
+  Pre-condition allows at least one valid input, on which LHS=RHS.
+  Verified forall left si exists right si.
+  Verified forall right si exists left si.
+[SUCCESS-Real]: [4.165240206755698s] Verification succeeded.
+>>> Overall
+[SUCCESS-Overall]: [8.228835507761687s] Verification succeeded.

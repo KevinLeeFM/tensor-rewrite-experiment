@@ -3,7 +3,7 @@
   "scope": "118 executed paper-era model cases, not verified C++",
   "inventory_sha256": "bb7b21cb437f238b36e1802f4b0169442c5bf53460358a5f938699a2c4453b63",
   "archived_result_sha256": "2cb2cb8fd5cdc631679aaf0b764c31b26e069af13212a9808aefb0a5a01d520e",
-  "unresolved_triage_sha256": "1bf7b9a16e433a2f07f0ee1b115b3dbb83fc1746efe5c30158a8b7d8d17eaeef",
+  "unresolved_triage_sha256": "22c28fc09ec27d62ef2c4995b2dcf9a8d1f1277655dbc72f6b67062d4d9c826d",
   "independent_rerun_sha256": "6adb22fa32f000278d6c0866636833ab73e07f35fe70f36f6417ba15fe3e00d5",
   "archived_result_provenance": "author-provided result.txt; independent rerun recorded separately",
   "matching": "runall sorted directories and main call order; printed labels checked except known shell expansion",
@@ -11,9 +11,10 @@
     "cases": 118,
     "paper_proved": 115,
     "paper_failed": 3,
-    "lean_proved": 110,
+    "lean_proved": 116,
     "lean_disproved_in_model": 1,
-    "lean_unresolved": 7,
+    "lean_vacuous_in_paper_model": 1,
+    "lean_unresolved": 0,
     "lean_proved_paper_failed": 2
   },
   "cases": [
@@ -957,12 +958,22 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.PadConvolution.convolve_fusion"
+      ],
+      "translation_confidence": "The independent Pad/window fusion is lifted to every actual convolution batch, feature and kernel contribution. Output shapes are derived by the window model; paper_edges derives the paper low/high sums and base dilation when its input dilation is one. Padding fill is zero, as in the paper. C++ correspondence is assumed, not checked.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect the paper's input Pad parameters and convolution dilation/edge formulas to the existing PadWindow and convolution models, including all feature and spatial reductions.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/PadConvolution.lean",
+      "lean_proof_sha256": "dc3b867860ccdb60312b0f2d49e8e3b2cfc92df896805c10cd4cbe5df6be52c1",
+      "lean_check_log": "comparisons/tensorright-v1/pad-convolution-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.PadConvolution.paper_edges"
+      ]
     },
     {
       "id": "conv/rule01",
@@ -982,12 +993,22 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "vacuous_in_paper_model",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.ConvolutionVacuity.zero_dilation_invalid",
+        "TensorRewrite.PaperComparison.ConvolutionVacuity.negative_interior"
+      ],
+      "translation_confidence": "The source-level zero dilation, decrement and Pad validity are independently recorded in the frozen artifact; Lean proves the necessary arithmetic condition and TensorRight confirms the no-valid-input diagnostic. No XLA conclusion is drawn.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect interior padding of the kernel to the paper's right-dilation convention, including zero-filled kernel positions, complete output shapes and reduction-index mapping.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/ConvolutionVacuity.lean",
+      "lean_proof_sha256": "77f46454aa269412ac2fea8d5b27bb8fd200d25920693f42bf87f0f8ae8f4618",
+      "lean_check_log": "comparisons/tensorright-v1/convolution-vacuity-check.log",
+      "model_vacuity": "The paper fixes input and lhs kernel dilation at zero; TensorRight executes each as Pad interior dilation minus one, which violates the nonnegative-interior requirement on any nonempty spatial axis. The unmodified diagnostic reports no valid inputs for both numeric types, then reports success.",
+      "model_vacuity_log": "comparisons/tensorright-v1/convolution-vacuity.stdout"
     },
     {
       "id": "conv/rule03",
@@ -1007,12 +1028,24 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.MixedConvolution.conv_to_grouped_dot"
+      ],
+      "translation_confidence": "The paper unit and equal-input/kernel spatial cases imply the derived mixed-window geometry. The proof retains all feature channels, removes singleton spatial coordinates by bijection, and sums the same products as the grouped Dot; the added unit output axes model the paper reshape. Executed TensorRight dilation 1 is unit spacing. C++ correspondence is assumed.",
       "implementation_result": "not established",
-      "unresolved_reason": "Extend the existing pointwise-convolution/Dot connection to the paper's mixed case: some spatial axes are contracted and others have unit kernel extent and remain as Dot batch axes.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/MixedConvolution.lean",
+      "lean_proof_sha256": "9c19b9dd53252fbff0fb27ca307fded000ac97e9b483b9cdd76d76ad6c43225d",
+      "lean_check_log": "comparisons/tensorright-v1/mixed-convolution-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.MixedConvolution.paper_axis_separable",
+        "TensorRewrite.PaperComparison.GroupedSums.dot_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "divmod/rule00",
@@ -2655,7 +2688,7 @@
         "Real"
       ],
       "lean_proof_file": "comparisons/tensorright-v1/Pad.lean",
-      "lean_proof_sha256": "7bd94bf71a5f598e8b1181ed4c16f0842b447d6f55c645b3a6705200a82e45dd",
+      "lean_proof_sha256": "19b0efda9d085ed4a7fd0ffd4ecf0af28f5d65a11ad7ff33c3824dabfa5f774a",
       "lean_check_log": "comparisons/tensorright-v1/pad-check.log"
     },
     {
@@ -2677,12 +2710,24 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.unit_interior"
+      ],
+      "translation_confidence": "The model retains signed low/high edges, nonnegative interior spacing, the paper output-extent formula and actual bounded occupied coordinates. On each changed unit axis, sample_unit and extent_unit show identical values and shapes; unchanged axes retain their attributes. C++ correspondence is assumed.",
       "implementation_result": "not established",
-      "unresolved_reason": "Add or connect an interior-spacing Pad model that handles the unchanged other-axis padding and proves the spacing is irrelevant on an input axis of extent one.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/SignedPad.lean",
+      "lean_proof_sha256": "cc2f42329b683d4158a5e7b95d9e0062f6ec9788fa0f3b58e6737d90c8d56d79",
+      "lean_check_log": "comparisons/tensorright-v1/signed-pad-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.extent_unit",
+        "TensorRewrite.PaperComparison.SignedPad.sample_some"
+      ]
     },
     {
       "id": "pad/rule03",
@@ -2703,12 +2748,25 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.pad_broadcast"
+      ],
+      "translation_confidence": "The retained group uses the actual signed Pad model; the extra broadcast group has zero low/high/interior padding. extent_zero and extra_selected derive its shape and coordinates, while appendIndex_projections connects grouped coordinates. The retained input is arbitrary. C++ correspondence is assumed.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect multidimensional signed edge Pad through Broadcast when all padding on the newly broadcast axis is zero, preserving the shapes and arbitrary input tensor values.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/SignedPad.lean",
+      "lean_proof_sha256": "cc2f42329b683d4158a5e7b95d9e0062f6ec9788fa0f3b58e6737d90c8d56d79",
+      "lean_check_log": "comparisons/tensorright-v1/signed-pad-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.extent_zero",
+        "TensorRewrite.PaperComparison.SignedPad.extra_selected",
+        "TensorRewrite.PaperComparison.GroupedSums.appendIndex_projections"
+      ]
     },
     {
       "id": "pad/rule04",
@@ -2729,12 +2787,25 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.pad_shift"
+      ],
+      "translation_confidence": "Both signed Pad graphs use the paper extent and occupied coordinates. The selected Slice starts at the actual low-edge difference, its validity is derived from negative crop bounds or the unchanged full axis, and shifted coordinates agree. C++ correspondence is assumed, not checked.",
       "implementation_result": "not established",
-      "unresolved_reason": "Model the paper's negative edge padding and prove that cropping by its specified Slice matches it, while retaining positive padding on the other axes.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/SignedPad.lean",
+      "lean_proof_sha256": "cc2f42329b683d4158a5e7b95d9e0062f6ec9788fa0f3b58e6737d90c8d56d79",
+      "lean_check_log": "comparisons/tensorright-v1/signed-pad-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.negative_crop_valid",
+        "TensorRewrite.PaperComparison.SignedPad.full_axis_valid",
+        "TensorRewrite.PaperComparison.SignedPad.sample_some"
+      ]
     },
     {
       "id": "reduce/rule01",
@@ -3521,12 +3592,24 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.slice_outside"
+      ],
+      "translation_confidence": "The signed edge and nonnegative interior Pad model records the paper output shape and occupied coordinates. One axis wholly before or after the occupied span forces every Slice value to be fill, including empty input; count_euclidean connects the paper broadcast size. C++ correspondence is assumed.",
       "implementation_result": "not established",
-      "unresolved_reason": "Prove the requested static Slice selects only padding values for all paper-admitted signed edge padding and interior spacing, with its computed output shape.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/SignedPad.lean",
+      "lean_proof_sha256": "cc2f42329b683d4158a5e7b95d9e0062f6ec9788fa0f3b58e6737d90c8d56d79",
+      "lean_check_log": "comparisons/tensorright-v1/signed-pad-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.SignedPad.sample_outside",
+        "TensorRewrite.PaperComparison.Slices.count_euclidean"
+      ]
     },
     {
       "id": "slice/rule06",

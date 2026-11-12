@@ -120,7 +120,13 @@ def main():
         'broadcast/rule06': ('Slices', 'dynamic_slice_constant'),
         'max/rule01': ('Extremes', 'max_negative_infinity'),
         'max/rule02': ('Extremes', 'min_positive_infinity'),
+        'conv/rule00': ('PadConvolution', 'convolve_fusion'),
+        'conv/rule03': ('MixedConvolution', 'conv_to_grouped_dot'),
         'pad/rule01': ('Pad', 'identity'),
+        'pad/rule02': ('SignedPad', 'unit_interior'),
+        'pad/rule03': ('SignedPad', 'pad_broadcast'),
+        'pad/rule04': ('SignedPad', 'pad_shift'),
+        'slice/rule05': ('SignedPad', 'slice_outside'),
         'dot/rule01': ('GroupedSums', 'dot_concat'),
         'dot/rule02': ('GroupedSums', 'dot_swap'),
         'reduce/rule04': ('GroupedSums', 'relabel_reduce'),
@@ -153,13 +159,15 @@ def main():
         'divmod/rule07': ('Remainder', 'shifted_scalar'),
     })
     refutations = {'slice/rule13': ('ReverseSliceFailure', 'rhs_invalid')}
+    vacuities = {'conv/rule01': ('ConvolutionVacuity', 'zero_dilation_invalid')}
+    vacuity_support = {'conv/rule01': ('ConvolutionVacuity', 'negative_interior')}
     witness_support = {'slice/rule13': ('ReverseSliceFailure', 'lhs_valid')}
     rerun = json.loads(RERUN.read_text())
     rerun_cases = {r['id']: r for r in rerun['cases']}
     assert len(rerun_cases) == 118 and set(rerun_cases) == {r['id'] for r in cases}
     triage = json.loads(TRIAGE.read_text())
     assert triage['schema'] == 1
-    assert set(triage['cases']) == {r['id'] for r in cases} - set(proofs) - set(refutations)
+    assert set(triage['cases']) == {r['id'] for r in cases} - set(proofs) - set(refutations) - set(vacuities)
     logs = {'Add': 'add-check.log', 'ScalarArithmetic': 'scalar-check.log',
             'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log',
             'Comparisons': 'comparisons-check.log', 'Select': 'select-check.log',
@@ -175,8 +183,17 @@ def main():
             'UpdatePad': 'update-pad-check.log', 'PadSlice': 'pad-slice-check.log',
             'InteriorSlice': 'interior-slice-check.log',
             'GroupedSums': 'grouped-sums-check.log',
-            'StrideConcat': 'stride-concat-check.log'}
-    shape_support = {'slice/rule12': ('StrideConcat', 'shifted_valid'),
+            'StrideConcat': 'stride-concat-check.log', 'SignedPad': 'signed-pad-check.log',
+            'MixedConvolution': 'mixed-convolution-check.log',
+            'PadConvolution': 'pad-convolution-check.log',
+            'ConvolutionVacuity': 'convolution-vacuity-check.log'}
+    shape_support = {'conv/rule00': ('PadConvolution', 'paper_edges'),
+                     'conv/rule03': ('MixedConvolution', 'paper_axis_separable'),
+                     'pad/rule04': ('SignedPad', 'negative_crop_valid'),
+                     'pad/rule03': ('SignedPad', 'extent_zero'),
+                     'slice/rule05': ('SignedPad', 'sample_outside'),
+                     'pad/rule02': ('SignedPad', 'extent_unit'),
+                     'slice/rule12': ('StrideConcat', 'shifted_valid'),
                      'reduce/rule02': ('GroupedSums', 'reduce_coordinate_sum'),
                      'dot/rule01': ('GroupedSums', 'dot_coordinate_sum'),
                      'reduce/rule06': ('GroupedSums', 'dot_coordinate_sum'),
@@ -206,7 +223,12 @@ def main():
                      'dyupslice/rule04': ('Dynamic', 'compose_eq_added'),
                      'divmod/rule06': ('Remainder', 'signed_shift'),
                      'divmod/rule07': ('Remainder', 'signed_shift')}
-    extra_support = {'slice/rule12': ('StrideConcat', 'matches_index_map'),
+    extra_support = {'conv/rule03': ('GroupedSums', 'dot_coordinate_sum'),
+                     'pad/rule04': ('SignedPad', 'full_axis_valid'),
+                     'pad/rule03': ('SignedPad', 'extra_selected'),
+                     'slice/rule05': ('Slices', 'count_euclidean'),
+                     'pad/rule02': ('SignedPad', 'sample_some'),
+                     'slice/rule12': ('StrideConcat', 'matches_index_map'),
                      'reduce/rule02': ('GroupedSums', 'concat_pair_coordinate'),
                      'dot/rule01': ('GroupedSums', 'concat_pair_coordinate'),
                      'reduce/rule06': ('GroupedSums', 'reduce_coordinate_sum'),
@@ -218,9 +240,13 @@ def main():
                      'slice/rule11': ('Concatenate', 'paper_interval'),
                      'slice/rule03': ('Slices', 'count_euclidean'),
                      'slice/rule09': ('SliceBroadcast', 'paper_ceil_count')}
-    additional_support = {'slice/rule12': ('GroupedSums', 'concat_pair_coordinate'),
+    additional_support = {'conv/rule03': ('GroupedSums', 'sum_coordinate_groups'),
+                          'pad/rule04': ('SignedPad', 'sample_some'),
+                          'pad/rule03': ('GroupedSums', 'appendIndex_projections'),
+                          'slice/rule12': ('GroupedSums', 'concat_pair_coordinate'),
                           'reduce/rule06': ('GroupedSums', 'sum_coordinate_groups')}
     audited = (list(proofs.items()) + list(refutations.items()) + list(witness_support.items()) +
+               list(vacuities.items()) + list(vacuity_support.items()) +
                list(shape_support.items()) + list(extra_support.items()) +
                list(additional_support.items()))
     for group, filename in logs.items():
@@ -268,6 +294,27 @@ def main():
             row['unresolved_reason'] = triage['cases'][case['id']]
             row['assessment_method'] = ('Paper declaration and existing proof dependencies '
                                         'reviewed; no timed proof attempt claimed by this triage.')
+        if case['id'] in vacuities:
+            namespace, name = vacuities[case['id']]
+            assert types == ['Int', 'Real'], case['id']
+            row.update(
+                lean_result='vacuous_in_paper_model', lean_types=types,
+                lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}',
+                               f'TensorRewrite.PaperComparison.{namespace}.negative_interior'],
+                lean_proof_file=f'comparisons/tensorright-v1/{namespace}.lean',
+                lean_proof_sha256=digest((OUT / f'{namespace}.lean').read_bytes()),
+                lean_check_log=f'comparisons/tensorright-v1/{logs[namespace]}',
+                model_vacuity=('The paper fixes input and lhs kernel dilation at zero; '
+                               'TensorRight executes each as Pad interior dilation minus one, '
+                               'which violates the nonnegative-interior requirement on any '
+                               'nonempty spatial axis. The unmodified diagnostic reports no '
+                               'valid inputs for both numeric types, then reports success.'),
+                model_vacuity_log='comparisons/tensorright-v1/convolution-vacuity.stdout',
+                translation_confidence=('The source-level zero dilation, decrement and Pad '
+                                        'validity are independently recorded in the frozen '
+                                        'artifact; Lean proves the necessary arithmetic '
+                                        'condition and TensorRight confirms the no-valid-input '
+                                        'diagnostic. No XLA conclusion is drawn.'))
         if case['id'] in refutations:
             namespace, name = refutations[case['id']]
             assert types == ['Bool', 'Int', 'Real'], case['id']
@@ -298,7 +345,45 @@ def main():
                 'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'StrideConcat':
+            if namespace == 'PadConvolution':
+                confidence = ('The independent Pad/window fusion is lifted to every actual '
+                              'convolution batch, feature and kernel contribution. Output '
+                              'shapes are derived by the window model; paper_edges derives the '
+                              'paper low/high sums and base dilation when its input dilation '
+                              'is one. Padding fill is zero, as in the paper. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'MixedConvolution':
+                confidence = ('The paper unit and equal-input/kernel spatial cases imply '
+                              'the derived mixed-window geometry. The proof retains all '
+                              'feature channels, removes singleton spatial coordinates by '
+                              'bijection, and sums the same products as the grouped Dot; '
+                              'the added unit output axes model the paper reshape. Executed '
+                              'TensorRight dilation 1 is unit spacing. C++ correspondence is assumed.')
+            elif namespace == 'SignedPad' and name == 'pad_shift':
+                confidence = ('Both signed Pad graphs use the paper extent and occupied '
+                              'coordinates. The selected Slice starts at the actual low-edge '
+                              'difference, its validity is derived from negative crop bounds '
+                              'or the unchanged full axis, and shifted coordinates agree. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'SignedPad' and name == 'pad_broadcast':
+                confidence = ('The retained group uses the actual signed Pad model; the '
+                              'extra broadcast group has zero low/high/interior padding. '
+                              'extent_zero and extra_selected derive its shape and coordinates, '
+                              'while appendIndex_projections connects grouped coordinates. '
+                              'The retained input is arbitrary. C++ correspondence is assumed.')
+            elif namespace == 'SignedPad' and name == 'slice_outside':
+                confidence = ('The signed edge and nonnegative interior Pad model records '
+                              'the paper output shape and occupied coordinates. One axis '
+                              'wholly before or after the occupied span forces every Slice '
+                              'value to be fill, including empty input; count_euclidean '
+                              'connects the paper broadcast size. C++ correspondence is assumed.')
+            elif namespace == 'SignedPad':
+                confidence = ('The model retains signed low/high edges, nonnegative interior '
+                              'spacing, the paper output-extent formula and actual bounded '
+                              'occupied coordinates. On each changed unit axis, sample_unit '
+                              'and extent_unit show identical values and shapes; unchanged '
+                              'axes retain their attributes. C++ correspondence is assumed.')
+            elif namespace == 'StrideConcat':
                 confidence = ('The paper Concat axis resolves to one named axis. The '
                               'shifted-valid lemma proves the original start/end offset '
                               'and output size for any valid positive stride, including '
@@ -460,7 +545,7 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'StrideConcat', 'UpdatePad', 'PadSlice', 'InteriorSlice', 'Pad'} or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'StrideConcat', 'SignedPad', 'UpdatePad', 'PadSlice', 'InteriorSlice', 'Pad'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
@@ -516,6 +601,8 @@ def main():
                          'lean_proved': sum(r['lean_result'] == 'proved' for r in rows),
                          'lean_disproved_in_model': sum(
                              r['lean_result'] == 'disproved_in_model' for r in rows),
+                         'lean_vacuous_in_paper_model': sum(
+                             r['lean_result'] == 'vacuous_in_paper_model' for r in rows),
                          'lean_unresolved': sum(r['lean_result'] == 'unresolved' for r in rows),
                          'lean_proved_paper_failed': sum(
                              r['lean_result'] == 'proved' and
@@ -537,6 +624,9 @@ def main():
                  '| Case | Archived result | Missing connection |', '| --- | --- | --- |']
     residuals.extend(f"| {r['id']} | {r['archived_result']} | {r['unresolved_reason']} |"
                      for r in rows if r['lean_result'] == 'unresolved')
+    if not triage['cases']:
+        residuals.extend(['', 'No primary cases remain unresolved. The vacuous model case '
+                          'is recorded separately in cases.json and cases.md.'])
     (OUT / 'triage.md').write_text('\n'.join(residuals) + '\n')
     print(result['counts'])
 

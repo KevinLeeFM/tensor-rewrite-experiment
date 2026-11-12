@@ -1,7 +1,7 @@
-# Paper-era comparison: 110 proofs and one model counterexample
+# Paper-era comparison: 116 proofs, one model counterexample and one vacuous case
 
-This is a comparison checkpoint, not a full experiment or a fresh proof
-search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
+This is a completed comparison of the paper artifact, not a fresh proof
+search trial or verification of all XLA code. The 118 rows in `cases.json` and `cases.md` correspond to the paper
 artifact's executed main-suite rules. `build_cases.py` checks the recovered
 inventory against each source file's actual `main` call order, aligns the 118
 archived result blocks, and checks printed labels. One label (`reduce/rule03`)
@@ -71,7 +71,10 @@ do not extrapolate this observation to all 118 rules.
 | `dot/rule01–06` | paired Concat, swap, intended associativity, no contraction, zero dimension, broadcast/reduce | bounded contraction, grouping and actual Concat coordinates |
 | `reduce/rule01–06` | products, Concat, scalar factor, relabel, nested reduction and Dot reduction | bounded coordinate groups and exact finite sums |
 | `reduce/rule07,08` | remove unit axes, with or without relabeling | reshape and singleton-fiber coordinate identity |
-| `pad/rule01` | zero padding is identity | bounded edge Pad and inferred shape |
+| `pad/rule01–04` | zero Pad; unit-axis interior; Broadcast; negative-edge crop | bounded signed Pad and Slice coordinates |
+| `slice/rule05` | a Slice outside occupied Pad positions is fill | signed Pad and exact output size |
+| `conv/rule00,03` | input-Pad fusion and mixed convolution-to-Dot | weighted window fusion and grouped reductions |
+| `conv/rule01` | paper-model case has no valid inputs | dilation-validity certificate and TensorRight diagnostic |
 | `slice/rule13` | model counterexample: valid original, invalid replacement | Lean certificate and fixed-input TensorRight diagnostic |
 
 Reproduce from the repository root:
@@ -104,18 +107,22 @@ lake env lean comparisons/tensorright-v1/PadSlice.lean
 lake env lean comparisons/tensorright-v1/InteriorSlice.lean
 lake env lean comparisons/tensorright-v1/GroupedSums.lean
 lake env lean comparisons/tensorright-v1/StrideConcat.lean
+lake env lean comparisons/tensorright-v1/SignedPad.lean
+lake env lean comparisons/tensorright-v1/MixedConvolution.lean
+lake env lean comparisons/tensorright-v1/PadConvolution.lean
+lake env lean comparisons/tensorright-v1/ConvolutionVacuity.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 python3 comparisons/tensorright-v1/measure_dependencies.py
 ```
 
-All twenty-six Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twenty-six
-`*-check.log` files. The comparison modules have 1728 code lines total, including
-144 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 1728 is not the independent cost of these proofs. The earlier 12,341
+All thirty Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the thirty
+`*-check.log` files. The comparison modules have 2168 code lines total, including
+170 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 2168 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
-these cases. The whole-module transitive import closure comprises 6,259 custom Lean code
-lines: 1,728 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,543
+these cases. The whole-module transitive import closure comprises 6,966 custom Lean code
+lines: 2,168 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,810
 under `TensorRewrite/Theory`. These are overlapping module-level dependencies,
 not necessarily minimal proof dependencies or fresh agent output. External
 libraries such as Mathlib are excluded. `dependency-costs.json` records the
@@ -123,11 +130,10 @@ per-module hashes and per-case import closures; per-case totals overlap and
 must not be added together. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-One rule is disproved in the model, and the other 7 rows are unresolved. Their specific missing model or proof
-connections are recorded in `triage.md`; dependency triage does not claim that a
-timed proof attempt was made for each case.
+One rule is disproved in the model, and one reported success is vacuous under
+the paper artifact’s executed model. All 118 cases have a classified outcome.
 
-Of the 110 Lean-proved cases, 108 are among the paper archive's 115 successes,
+Of the 116 Lean-proved cases, 114 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the independent rerun also reported these two failures.
@@ -230,3 +236,13 @@ The arbitrary-stride Slice/Concat case checks the paper's translated bounds and
 output size, relates its one-axis Slice coordinate to the bounded tensor model,
 and uses the verified Concat segment coordinates. The paper's Concat requires
 that aggregated axis to resolve to one named axis.
+
+`conv/rule01` is a separate vacuity finding: its zero dilation becomes interior
+padding −1 in executed TensorRight semantics, which is invalid for every
+nonempty spatial-axis group. The unmodified TensorRight diagnostic reports no
+valid inputs for both numeric types and then success. `convolution-vacuity.md`
+contains the certificate, diagnostic and reproducer. This is distinct from the
+model counterexample, and neither establishes an XLA bug. The detailed results,
+method, cost limits and research conclusion are in `REPORT.md`.
+
+The complete checked replay can also be run with `python3 comparisons/tensorright-v1/replay_all.py`; its saved results are in `replay-audit.json` and `replay-build.log`.

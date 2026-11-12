@@ -32,7 +32,7 @@ theorem identity {rank extent : Nat} {α : Type} (frame : Frame rank)
   by_cases same : axis = frame.axis
   · subst axis
     simp [Frame.withPosition, Frame.position, Theory.ShapeTransport.indexAlong]
-  · simp [Frame.withPosition, Frame.position, Theory.ShapeTransport.indexAlong, same]
+  · simp [Frame.withPosition, Theory.ShapeTransport.indexAlong, same]
 
 #print axioms identity
 

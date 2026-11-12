@@ -54,7 +54,7 @@ def main():
     modules = sorted(OUT.glob('*.lean'))
     cases = json.loads((OUT / 'cases.json').read_text())
     resolved = [row for row in cases['cases'] if row['lean_result'] in
-                {'proved', 'disproved_in_model'}]
+                {'proved', 'disproved_in_model', 'vacuous_in_paper_model'}]
     expected = {ROOT / row['lean_proof_file'] for row in resolved}
     assert expected == set(modules), 'Every counted comparison module must have a credited case'
     closures = {p: closure(p) for p in modules}

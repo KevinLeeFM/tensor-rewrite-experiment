@@ -34,9 +34,9 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | concat/rule05 | proved | proved | proved |
 | concat/rule06 | proved | proved | proved |
 | concat/rule07 | proved | proved | proved |
-| conv/rule00 | proved | proved | unresolved |
-| conv/rule01 | proved | proved | unresolved |
-| conv/rule03 | proved | proved | unresolved |
+| conv/rule00 | proved | proved | proved |
+| conv/rule01 | proved | proved | vacuous_in_paper_model |
+| conv/rule03 | proved | proved | proved |
 | divmod/rule00 | proved | proved | proved |
 | divmod/rule01 | proved | proved | proved |
 | divmod/rule02 | proved | proved | proved |
@@ -87,9 +87,9 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | not/rule01 | proved | proved | proved |
 | not/rule02 | proved | proved | proved |
 | pad/rule01 | proved | proved | proved |
-| pad/rule02 | proved | proved | unresolved |
-| pad/rule03 | proved | proved | unresolved |
-| pad/rule04 | proved | proved | unresolved |
+| pad/rule02 | proved | proved | proved |
+| pad/rule03 | proved | proved | proved |
+| pad/rule04 | proved | proved | proved |
 | reduce/rule01 | proved | proved | proved |
 | reduce/rule02 | proved | proved | proved |
 | reduce/rule03 | proved | proved | proved |
@@ -112,7 +112,7 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | slice/rule02 | proved | proved | proved |
 | slice/rule03 | proved | proved | proved |
 | slice/rule04 | proved | proved | proved |
-| slice/rule05 | proved | proved | unresolved |
+| slice/rule05 | proved | proved | proved |
 | slice/rule06 | proved | proved | proved |
 | slice/rule07 | proved | proved | proved |
 | slice/rule08 | proved | proved | proved |
