@@ -109,6 +109,8 @@ def main():
         'broadcast/rule07': ('Iota', 'broadcast'),
         'broadcast/rule08': ('Iota', 'broadcast_composition'),
         'slice/rule03': ('SliceBroadcast', 'commute'),
+        'slice/rule04': ('InteriorSlice', 'slice_occupied'),
+        'slice/rule06': ('PadSlice', 'slice_after_pad'),
         'slice/rule09': ('SliceBroadcast', 'full_retained'),
         'slice/rule01': ('SliceGeometry', 'full'),
         'slice/rule07': ('SliceGeometry', 'nested'),
@@ -118,6 +120,14 @@ def main():
         'max/rule01': ('Extremes', 'max_negative_infinity'),
         'max/rule02': ('Extremes', 'min_positive_infinity'),
         'pad/rule01': ('Pad', 'identity'),
+        'dot/rule01': ('GroupedSums', 'dot_concat'),
+        'dot/rule02': ('GroupedSums', 'dot_swap'),
+        'reduce/rule04': ('GroupedSums', 'relabel_reduce'),
+        'reduce/rule06': ('GroupedSums', 'reduce_dot'),
+        'dot/rule03': ('GroupedSums', 'dot_associativity'),
+        'dot/rule06': ('GroupedSums', 'dot_no_right'),
+        'reduce/rule01': ('GroupedSums', 'reduce_product'),
+        'reduce/rule05': ('GroupedSums', 'reduce_nested'),
         'dot/rule04': ('Dot', 'no_contract'),
         'dot/rule05': ('Dot', 'empty_dimension'),
         'reduce/rule03': ('Reduction', 'scalar_factor'),
@@ -129,6 +139,7 @@ def main():
         'dyslice/rule04': ('Dynamic', 'relabel_slice'),
         'dyslice/rule05': ('Dynamic', 'nested_slice'),
         'dyupslice/rule01': ('Dynamic', 'add_into_update'),
+        'dyupslice/rule02': ('UpdatePad', 'update_eq_pad'),
         'dyupslice/rule03': ('Dynamic', 'full_update'),
         'dyupslice/rule04': ('Dynamic', 'nested_update'),
         'relabel/rule01': ('Relabel', 'compose'),
@@ -158,8 +169,21 @@ def main():
             'SliceGeometry': 'slice-geometry-check.log', 'Dot': 'dot-check.log',
             'Reduction': 'reduction-check.log', 'Pad': 'pad-check.log',
             'ReverseSliceFailure': 'reverse-slice-failure-check.log',
-            'SliceBroadcast': 'slice-broadcast-check.log'}
-    shape_support = {'dyslice/rule03': ('SliceBroadcast', 'dynamic_start'),
+            'SliceBroadcast': 'slice-broadcast-check.log',
+            'UpdatePad': 'update-pad-check.log', 'PadSlice': 'pad-slice-check.log',
+            'InteriorSlice': 'interior-slice-check.log',
+            'GroupedSums': 'grouped-sums-check.log'}
+    shape_support = {'dot/rule01': ('GroupedSums', 'dot_coordinate_sum'),
+                     'reduce/rule06': ('GroupedSums', 'dot_coordinate_sum'),
+                     'dot/rule02': ('GroupedSums', 'dot_coordinate_sum'),
+                     'dot/rule03': ('GroupedSums', 'dot_coordinate_sum'),
+                     'dot/rule06': ('GroupedSums', 'dot_coordinate_sum'),
+                     'reduce/rule01': ('GroupedSums', 'reduce_coordinate_sum'),
+                     'reduce/rule05': ('GroupedSums', 'reduce_coordinate_sum'),
+                     'slice/rule04': ('InteriorSlice', 'paper_pad_extent'),
+                     'slice/rule06': ('PadSlice', 'translated_valid'),
+                     'dyupslice/rule02': ('UpdatePad', 'paper_shape'),
+                     'dyslice/rule03': ('SliceBroadcast', 'dynamic_start'),
                      'slice/rule03': ('SliceBroadcast', 'retained_size'),
                      'slice/rule09': ('SliceBroadcast', 'retained_size'),
                      'dyslice/rule04': ('Dynamic', 'unclamped'),
@@ -177,11 +201,20 @@ def main():
                      'dyupslice/rule04': ('Dynamic', 'compose_eq_added'),
                      'divmod/rule06': ('Remainder', 'signed_shift'),
                      'divmod/rule07': ('Remainder', 'signed_shift')}
-    extra_support = {'slice/rule11': ('Concatenate', 'paper_interval'),
+    extra_support = {'dot/rule01': ('GroupedSums', 'concat_pair_coordinate'),
+                     'reduce/rule06': ('GroupedSums', 'reduce_coordinate_sum'),
+                     'dot/rule02': ('GroupedSums', 'sum_coordinate_groups'),
+                     'dot/rule03': ('GroupedSums', 'sum_coordinate_groups'),
+                     'dot/rule06': ('GroupedSums', 'sum_coordinate_groups'),
+                     'reduce/rule01': ('GroupedSums', 'sum_coordinate_groups'),
+                     'reduce/rule05': ('GroupedSums', 'sum_coordinate_groups'),
+                     'slice/rule11': ('Concatenate', 'paper_interval'),
                      'slice/rule03': ('Slices', 'count_euclidean'),
                      'slice/rule09': ('SliceBroadcast', 'paper_ceil_count')}
+    additional_support = {'reduce/rule06': ('GroupedSums', 'sum_coordinate_groups')}
     audited = (list(proofs.items()) + list(refutations.items()) + list(witness_support.items()) +
-               list(shape_support.items()) + list(extra_support.items()))
+               list(shape_support.items()) + list(extra_support.items()) +
+               list(additional_support.items()))
     for group, filename in logs.items():
         check = (OUT / filename).read_text()
         for key, (namespace, name) in audited:
@@ -257,7 +290,33 @@ def main():
                 'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'SliceBroadcast' and name == 'dynamic_commute':
+            if namespace == 'GroupedSums':
+                confidence = ('The named disjoint axis groups are represented by arbitrary '
+                              'bounded coordinate types. The support lemmas connect exact '
+                              'group sums to actual Dot and Reduce coordinate enumeration '
+                              'and construct an equivalence for combined groups. Operand '
+                              'ordering follows the paper rule; C++ correspondence is assumed. '
+                              'For dot/rule03 Lean proves the intended associativity; the '
+                              'artifact itself verified lhs against lhs.')
+            elif namespace == 'InteriorSlice':
+                confidence = ('The nonnegative edge/interior Pad uses actual occupied '
+                              'lattice coordinates, with spacing equal to interior+1; '
+                              'paper_pad_extent derives the paper shape, including zero '
+                              'input extent. The Slice uses the paper start, stride and '
+                              'inferred input-sized output. C++ correspondence is assumed.')
+            elif namespace == 'PadSlice':
+                confidence = ('The paper assumes nonnegative edge padding, zero interior '
+                              'padding and unit Slice stride. Its start/end bounds imply '
+                              'the Slice lies inside the input region; translated_valid '
+                              'derives the shifted Slice validity and matching output size. '
+                              'All bounded coordinates are checked. C++ correspondence is assumed.')
+            elif namespace == 'UpdatePad':
+                confidence = ('The actual Pad and DynamicUpdateSlice models agree on '
+                              'every bounded coordinate, including empty shapes. Paper low '
+                              'and high padding are nonnegative, interior padding is zero, '
+                              'and start equals low; paper_shape derives the stated output '
+                              'shape. C++ correspondence is assumed, not checked.')
+            elif namespace == 'SliceBroadcast' and name == 'dynamic_commute':
                 confidence = ('Actual DynamicSlice and Broadcast projections commute on '
                               'retained axes with matching shape and start maps. The support '
                               'lemma proves the existing clamp is identity under the paper '
@@ -386,7 +445,7 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'Pad'} or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'UpdatePad', 'PadSlice', 'InteriorSlice', 'Pad'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
@@ -408,6 +467,10 @@ def main():
                     f'TensorRewrite.PaperComparison.{support_namespace}.{support_name}']
             if case['id'] in extra_support:
                 support_namespace, support_name = extra_support[case['id']]
+                row.setdefault('lean_support_theorems', []).append(
+                    f'TensorRewrite.PaperComparison.{support_namespace}.{support_name}')
+            if case['id'] in additional_support:
+                support_namespace, support_name = additional_support[case['id']]
                 row.setdefault('lean_support_theorems', []).append(
                     f'TensorRewrite.PaperComparison.{support_namespace}.{support_name}')
             if types:

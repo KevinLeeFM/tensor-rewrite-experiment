@@ -7,20 +7,9 @@ Read the paper declaration and inspect existing models for a matching complete p
 | conv/rule00 | proved | Connect the paper's input Pad parameters and convolution dilation/edge formulas to the existing PadWindow and convolution models, including all feature and spatial reductions. |
 | conv/rule01 | proved | Connect interior padding of the kernel to the paper's right-dilation convention, including zero-filled kernel positions, complete output shapes and reduction-index mapping. |
 | conv/rule03 | proved | Extend the existing pointwise-convolution/Dot connection to the paper's mixed case: some spatial axes are contracted and others have unit kernel extent and remain as Dot batch axes. |
-| dot/rule01 | proved | Prove Dot over paired concatenations equals the reduction of the two separate Dots, with the paper's piecewise contraction-index relation and arbitrary empty segments. |
-| dot/rule02 | proved | Construct the output-axis reordering and show that swapping Dot operands preserves each exact product and contraction sum for the paper's batch and free axes. |
-| dot/rule03 | proved | The executed artifact verifies lhs against lhs. The separately constructed rhs and named Dot associativity need a complete nested-contraction proof; the archived success is not that proof. |
-| dot/rule06 | proved | Connect the existing Dot contraction coordinates to Reduce of the explicitly broadcast, elementwise product when the right operand has no free axes. |
-| dyupslice/rule02 | proved | Prove that updating a constant tensor at the paper's in-bounds starts agrees at every output coordinate and shape with nonnegative zero-interior Pad of the update. |
 | pad/rule02 | proved | Add or connect an interior-spacing Pad model that handles the unchanged other-axis padding and proves the spacing is irrelevant on an input axis of extent one. |
 | pad/rule03 | proved | Connect multidimensional signed edge Pad through Broadcast when all padding on the newly broadcast axis is zero, preserving the shapes and arbitrary input tensor values. |
 | pad/rule04 | proved | Model the paper's negative edge padding and prove that cropping by its specified Slice matches it, while retaining positive padding on the other axes. |
-| reduce/rule01 | proved | Connect the two independent bounded reduction fibers to the single fiber over their product and apply exact distributivity to the broadcast product. |
 | reduce/rule02 | proved | Connect concatenated bounded tensors and their piecewise reduction indices to the two separately reduced tensors and their outer two-element reduction. |
-| reduce/rule04 | proved | Construct the relabeled reduction plan and show the renamed retained and reduced coordinates commute with the paper's axis-label swap. |
-| reduce/rule05 | proved | Connect the two successive reduction plans to the single combined plan for arbitrary retained axes, with the paper's matching reduction-index maps. |
-| reduce/rule06 | proved | Relate the Dot batch axis reduced afterward to an additional Dot contraction axis and prove the corresponding product/sum coordinate mapping. |
-| slice/rule04 | proved | Connect the paper's general interior-spacing Pad to static Slice at start=low and stride=interior+1, with the stated inferred size and bounds. |
 | slice/rule05 | proved | Prove the requested static Slice selects only padding values for all paper-admitted signed edge padding and interior spacing, with its computed output shape. |
-| slice/rule06 | proved | Prove that the paper's unit-stride Slice of nonnegative edge Pad with zero interior padding translates start and end by the low edge, using the existing edge-Pad model. |
 | slice/rule12 | proved | Generalize the existing unit-stride selected-Concat-segment proof to the paper's arbitrary positive stride, deriving both shifted bounds and output count. |

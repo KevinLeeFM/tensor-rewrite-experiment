@@ -3,7 +3,7 @@
   "scope": "118 executed paper-era model cases, not verified C++",
   "inventory_sha256": "bb7b21cb437f238b36e1802f4b0169442c5bf53460358a5f938699a2c4453b63",
   "archived_result_sha256": "2cb2cb8fd5cdc631679aaf0b764c31b26e069af13212a9808aefb0a5a01d520e",
-  "unresolved_triage_sha256": "9c00f26dd72a627141362a715fe486f401379b35c2f7d3ce0e7cbc1660c837f2",
+  "unresolved_triage_sha256": "7ff04d92012bd87ac4a9f284d1e36647363709e0a526f13292b021aecade6113",
   "independent_rerun_sha256": "6adb22fa32f000278d6c0866636833ab73e07f35fe70f36f6417ba15fe3e00d5",
   "archived_result_provenance": "author-provided result.txt; independent rerun recorded separately",
   "matching": "runall sorted directories and main call order; printed labels checked except known shell expansion",
@@ -11,9 +11,9 @@
     "cases": 118,
     "paper_proved": 115,
     "paper_failed": 3,
-    "lean_proved": 97,
+    "lean_proved": 108,
     "lean_disproved_in_model": 1,
-    "lean_unresolved": 20,
+    "lean_unresolved": 9,
     "lean_proved_paper_failed": 2
   },
   "cases": [
@@ -1287,12 +1287,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_concat"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Prove Dot over paired concatenations equals the reduction of the two separate Dots, with the paper's piecewise contraction-index relation and arbitrary empty segments.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.concat_pair_coordinate"
+      ]
     },
     {
       "id": "dot/rule02",
@@ -1312,12 +1323,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_swap"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Construct the output-axis reordering and show that swapping Dot operands preserves each exact product and contraction sum for the paper's batch and free axes.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "dot/rule03",
@@ -1337,13 +1359,24 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_associativity"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "The executed artifact verifies lhs against lhs. The separately constructed rhs and named Dot associativity need a complete nested-contraction proof; the archived success is not that proof.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage.",
-      "benchmark_discrepancy": "The label names Dot associativity and a rhs is constructed, but the artifact calls rewrite with lhs as both arguments. The archived success does not establish the labeled associativity statement."
+      "benchmark_discrepancy": "The label names Dot associativity and a rhs is constructed, but the artifact calls rewrite with lhs as both arguments. The archived success does not establish the labeled associativity statement.",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "dot/rule04",
@@ -1430,12 +1463,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_no_right"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect the existing Dot contraction coordinates to Reduce of the explicitly broadcast, elementwise product when the right operand has no free axes.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "dyslice/rule01",
@@ -1670,12 +1714,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.UpdatePad.update_eq_pad"
+      ],
+      "translation_confidence": "The actual Pad and DynamicUpdateSlice models agree on every bounded coordinate, including empty shapes. Paper low and high padding are nonnegative, interior padding is zero, and start equals low; paper_shape derives the stated output shape. C++ correspondence is assumed, not checked.",
       "implementation_result": "not established",
-      "unresolved_reason": "Prove that updating a constant tensor at the paper's in-bounds starts agrees at every output coordinate and shape with nonnegative zero-interior Pad of the update.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/UpdatePad.lean",
+      "lean_proof_sha256": "04e427b88d55961b4e754619c245856e8cfcb0ff97cdd8c443c3fa289ce9bd4c",
+      "lean_check_log": "comparisons/tensorright-v1/update-pad-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.UpdatePad.paper_shape"
+      ]
     },
     {
       "id": "dyupslice/rule03",
@@ -2699,12 +2754,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.reduce_product"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect the two independent bounded reduction fibers to the single fiber over their product and apply exact distributivity to the broadcast product.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.reduce_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "reduce/rule02",
@@ -2781,12 +2847,19 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.relabel_reduce"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Construct the relabeled reduction plan and show the renamed retained and reduced coordinates commute with the paper's axis-label swap.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log"
     },
     {
       "id": "reduce/rule05",
@@ -2806,12 +2879,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.reduce_nested"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect the two successive reduction plans to the single combined plan for arbitrary retained axes, with the paper's matching reduction-index maps.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.reduce_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "reduce/rule06",
@@ -2831,12 +2915,24 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.reduce_dot"
+      ],
+      "translation_confidence": "The named disjoint axis groups are represented by arbitrary bounded coordinate types. The support lemmas connect exact group sums to actual Dot and Reduce coordinate enumeration and construct an equivalence for combined groups. Operand ordering follows the paper rule; C++ correspondence is assumed. For dot/rule03 Lean proves the intended associativity; the artifact itself verified lhs against lhs.",
       "implementation_result": "not established",
-      "unresolved_reason": "Relate the Dot batch axis reduced afterward to an additional Dot contraction axis and prove the corresponding product/sum coordinate mapping.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/GroupedSums.lean",
+      "lean_proof_sha256": "a7821db5e331d7eaecbe1d5a4f699f465b7af286029535333378201484a7ffcf",
+      "lean_check_log": "comparisons/tensorright-v1/grouped-sums-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.GroupedSums.dot_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.reduce_coordinate_sum",
+        "TensorRewrite.PaperComparison.GroupedSums.sum_coordinate_groups"
+      ]
     },
     {
       "id": "reduce/rule07",
@@ -3377,12 +3473,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.InteriorSlice.slice_occupied"
+      ],
+      "translation_confidence": "The nonnegative edge/interior Pad uses actual occupied lattice coordinates, with spacing equal to interior+1; paper_pad_extent derives the paper shape, including zero input extent. The Slice uses the paper start, stride and inferred input-sized output. C++ correspondence is assumed.",
       "implementation_result": "not established",
-      "unresolved_reason": "Connect the paper's general interior-spacing Pad to static Slice at start=low and stride=interior+1, with the stated inferred size and bounds.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/InteriorSlice.lean",
+      "lean_proof_sha256": "9c8d50ff0e8c2bcffeec65034b6f3002590ee799f53d71f69ecdfd29ae950796",
+      "lean_check_log": "comparisons/tensorright-v1/interior-slice-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.InteriorSlice.paper_pad_extent"
+      ]
     },
     {
       "id": "slice/rule05",
@@ -3429,12 +3536,23 @@
         "Real"
       ],
       "independent_rerun_result": "proved",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.PadSlice.slice_after_pad"
+      ],
+      "translation_confidence": "The paper assumes nonnegative edge padding, zero interior padding and unit Slice stride. Its start/end bounds imply the Slice lies inside the input region; translated_valid derives the shifted Slice validity and matching output size. All bounded coordinates are checked. C++ correspondence is assumed.",
       "implementation_result": "not established",
-      "unresolved_reason": "Prove that the paper's unit-stride Slice of nonnegative edge Pad with zero interior padding translates start and end by the low edge, using the existing edge-Pad model.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/PadSlice.lean",
+      "lean_proof_sha256": "e878131b6a809b1bc54b8ae4d59908de87a52367ce2425302bd3c045c1da1a97",
+      "lean_check_log": "comparisons/tensorright-v1/pad-slice-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.PadSlice.translated_valid"
+      ]
     },
     {
       "id": "slice/rule07",
