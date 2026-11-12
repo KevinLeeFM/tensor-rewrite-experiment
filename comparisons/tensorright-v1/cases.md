@@ -53,7 +53,7 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | dot/rule06 | proved | proved | unresolved |
 | dyslice/rule01 | proved | proved | proved |
 | dyslice/rule02 | proved | proved | proved |
-| dyslice/rule03 | proved | proved | unresolved |
+| dyslice/rule03 | proved | proved | proved |
 | dyslice/rule04 | proved | proved | proved |
 | dyslice/rule05 | proved | proved | proved |
 | dyupslice/rule01 | proved | proved | proved |
@@ -110,13 +110,13 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | select/rule04 | proved | proved | proved |
 | slice/rule01 | proved | proved | proved |
 | slice/rule02 | proved | proved | proved |
-| slice/rule03 | proved | proved | unresolved |
+| slice/rule03 | proved | proved | proved |
 | slice/rule04 | proved | proved | unresolved |
 | slice/rule05 | proved | proved | unresolved |
 | slice/rule06 | proved | proved | unresolved |
 | slice/rule07 | proved | proved | proved |
 | slice/rule08 | proved | proved | proved |
-| slice/rule09 | proved | proved | unresolved |
+| slice/rule09 | proved | proved | proved |
 | slice/rule10 | proved | proved | proved |
 | slice/rule11 | proved | proved | proved |
 | slice/rule12 | proved | proved | unresolved |

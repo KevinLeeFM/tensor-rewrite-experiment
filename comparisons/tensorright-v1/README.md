@@ -1,4 +1,4 @@
-# Paper-era comparison: 94 proofs and one model counterexample
+# Paper-era comparison: 97 proofs and one model counterexample
 
 This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -61,10 +61,10 @@ do not extrapolate this observation to all 118 rules.
 | `divmod/rule00–03` | divide by one, reciprocal and nested real division | exact totalized integer/real arithmetic |
 | `mul/rule09,10` | absolute-value square and real exponential addition | exact number theory |
 | `iota/rule01`, `broadcast/rule07,08` | unit-axis Iota and Broadcast Iota/composition | bounded integer coordinates and derived axis maps |
-| `slice/rule01,07,10,11` | full, nested and partial-concatenation Slice | bounded coordinate and output-shape reasoning |
+| `slice/rule01,03,07,09–11` | full, Broadcast, nested and partial-concatenation Slice | bounded coordinate and output-shape reasoning |
 | `slice/rule02`, `broadcast/rule05,06` | constant Slice and DynamicSlice | output-size and index reasoning |
 | `max/rule01,02` | Max with −∞ and Min with +∞ | extended orders for finite inputs |
-| `dyslice/rule01,02,04,05` | static, full, relabeled and nested DynamicSlice | actual valid starts, including derived nested start |
+| `dyslice/rule01–05` | static, full, Broadcast, relabeled and nested DynamicSlice | actual valid starts and bounded projections |
 | `dyupslice/rule01,03,04` | add to an update, full and nested update | actual DynamicUpdateSlice coordinates |
 | `relabel/rule01,02`, `broadcast/rule03` | relabel composition, identity and constant | bounded axis bijections |
 | `divmod/rule04–07` | idempotent, bounded-Iota and guarded integer remainder | truncating remainder including zero divisor |
@@ -98,18 +98,19 @@ lake env lean comparisons/tensorright-v1/Dot.lean
 lake env lean comparisons/tensorright-v1/Reduction.lean
 lake env lean comparisons/tensorright-v1/Pad.lean
 lake env lean comparisons/tensorright-v1/ReverseSliceFailure.lean
+lake env lean comparisons/tensorright-v1/SliceBroadcast.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 python3 comparisons/tensorright-v1/measure_dependencies.py
 ```
 
-All twenty Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twenty
-`*-check.log` files. The comparison modules have 1126 code lines total, including
-111 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 1126 is not the independent cost of these proofs. The earlier 12,341
+All twenty-one Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twenty-one
+`*-check.log` files. The comparison modules have 1300 code lines total, including
+118 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 1300 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
-these cases. The whole-module transitive import closure comprises 5,314 custom Lean code
-lines: 1,126 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,200
+these cases. The whole-module transitive import closure comprises 5,488 custom Lean code
+lines: 1,300 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,200
 under `TensorRewrite/Theory`. These are overlapping module-level dependencies,
 not necessarily minimal proof dependencies or fresh agent output. External
 libraries such as Mathlib are excluded. `dependency-costs.json` records the
@@ -117,11 +118,11 @@ per-module hashes and per-case import closures; per-case totals overlap and
 must not be added together. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-One rule is disproved in the model, and the other 23 rows are unresolved. Their specific missing model or proof
+One rule is disproved in the model, and the other 20 rows are unresolved. Their specific missing model or proof
 connections are recorded in `triage.md`; dependency triage does not claim that a
 timed proof attempt was made for each case.
 
-Of the 94 Lean-proved cases, 92 are among the paper archive's 115 successes,
+Of the 97 Lean-proved cases, 95 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the independent rerun also reported these two failures.
@@ -203,3 +204,9 @@ and TensorRight itself confirms the fixed example for Bool, Int and Real after
 adding only a precondition fixing those inputs. See `reverse-slice-witness.md`
 for the patch, full logs and reproduction script. This refutes the artifact's
 model rule; it does not demonstrate an XLA compiler bug.
+
+The Slice/Broadcast cases compare actual coordinate projections and derive
+matching retained-axis sizes from equal Slice attributes. The full-retained
+case also proves the paper's piecewise quotient/remainder ceiling formula for
+added axes. The DynamicSlice/Broadcast case uses the same projections and shows
+that clamping leaves each paper-valid start unchanged.

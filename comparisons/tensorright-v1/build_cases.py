@@ -108,6 +108,8 @@ def main():
         'iota/rule01': ('Iota', 'unit_axis'),
         'broadcast/rule07': ('Iota', 'broadcast'),
         'broadcast/rule08': ('Iota', 'broadcast_composition'),
+        'slice/rule03': ('SliceBroadcast', 'commute'),
+        'slice/rule09': ('SliceBroadcast', 'full_retained'),
         'slice/rule01': ('SliceGeometry', 'full'),
         'slice/rule07': ('SliceGeometry', 'nested'),
         'slice/rule02': ('Slices', 'slice_constant'),
@@ -123,6 +125,7 @@ def main():
         'reduce/rule08': ('Reduction', 'relabel_singleton_reshape'),
         'dyslice/rule01': ('Dynamic', 'static_slice'),
         'dyslice/rule02': ('Dynamic', 'full_slice'),
+        'dyslice/rule03': ('SliceBroadcast', 'dynamic_commute'),
         'dyslice/rule04': ('Dynamic', 'relabel_slice'),
         'dyslice/rule05': ('Dynamic', 'nested_slice'),
         'dyupslice/rule01': ('Dynamic', 'add_into_update'),
@@ -154,8 +157,12 @@ def main():
             'Remainder': 'remainder-check.log',
             'SliceGeometry': 'slice-geometry-check.log', 'Dot': 'dot-check.log',
             'Reduction': 'reduction-check.log', 'Pad': 'pad-check.log',
-            'ReverseSliceFailure': 'reverse-slice-failure-check.log'}
-    shape_support = {'dyslice/rule04': ('Dynamic', 'unclamped'),
+            'ReverseSliceFailure': 'reverse-slice-failure-check.log',
+            'SliceBroadcast': 'slice-broadcast-check.log'}
+    shape_support = {'dyslice/rule03': ('SliceBroadcast', 'dynamic_start'),
+                     'slice/rule03': ('SliceBroadcast', 'retained_size'),
+                     'slice/rule09': ('SliceBroadcast', 'retained_size'),
+                     'dyslice/rule04': ('Dynamic', 'unclamped'),
                      'slice/rule10': ('Concatenate', 'paper_interval'),
                      'slice/rule11': ('Concatenate', 'paper_offset'),
                      'dot/rule05': ('Dot', 'grouped_empty'),
@@ -170,7 +177,9 @@ def main():
                      'dyupslice/rule04': ('Dynamic', 'compose_eq_added'),
                      'divmod/rule06': ('Remainder', 'signed_shift'),
                      'divmod/rule07': ('Remainder', 'signed_shift')}
-    extra_support = {'slice/rule11': ('Concatenate', 'paper_interval')}
+    extra_support = {'slice/rule11': ('Concatenate', 'paper_interval'),
+                     'slice/rule03': ('Slices', 'count_euclidean'),
+                     'slice/rule09': ('SliceBroadcast', 'paper_ceil_count')}
     audited = (list(proofs.items()) + list(refutations.items()) + list(witness_support.items()) +
                list(shape_support.items()) + list(extra_support.items()))
     for group, filename in logs.items():
@@ -248,7 +257,19 @@ def main():
                 'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'Pad':
+            if namespace == 'SliceBroadcast' and name == 'dynamic_commute':
+                confidence = ('Actual DynamicSlice and Broadcast projections commute on '
+                              'retained axes with matching shape and start maps. The support '
+                              'lemma proves the existing clamp is identity under the paper '
+                              'valid in-bounds starts, including added axes. C++ correspondence '
+                              'is assumed, not checked.')
+            elif namespace == 'SliceBroadcast':
+                confidence = ('Actual bounded Slice and Broadcast maps commute on each '
+                              'retained axis. Matching paper start/end/stride attributes '
+                              'derive the retained output sizes; the added Broadcast axes '
+                              'use the paper count formulas, proved by the listed support '
+                              'lemmas. C++ correspondence is assumed, not checked.')
+            elif namespace == 'Pad':
                 confidence = ('Zero low, high and interior padding is the edge-Pad model '
                               'with zero edges on every axis. The frame covers any nonempty '
                               'axis group and all extents; tensor shape transport and all '
@@ -365,7 +386,7 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'Pad'} or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'Pad'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
