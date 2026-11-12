@@ -67,9 +67,31 @@ def main():
         'logical/rule08': ('Logical', 'and_false_left'),
         'not/rule01': ('Logical', 'not_not'),
         'not/rule02': ('Logical', 'neg_neg'),
+        'compare/rule01': ('Comparisons', 'self_gt'),
+        'compare/rule02': ('Comparisons', 'self_lt'),
+        'compare/rule03': ('Comparisons', 'self_ne'),
+        'compare/rule04': ('Comparisons', 'self_ge'),
+        'compare/rule05': ('Comparisons', 'self_le'),
+        'compare/rule06': ('Comparisons', 'self_eq'),
+        'logical/rule09': ('Comparisons', 'less_than_minimum'),
+        'logical/rule10': ('Comparisons', 'max_gt_second'),
+        'logical/rule11': ('Comparisons', 'max_gt_first'),
+        'clamp/rule01': ('Comparisons', 'clamp_idempotent'),
+        'clamp/rule02': ('Comparisons', 'clamp_max_min'),
+        'clamp/rule03': ('Comparisons', 'clamp_min_max'),
+        'select/rule01': ('Select', 'equal'),
+        'select/rule02': ('Select', 'true_branch'),
+        'select/rule03': ('Select', 'false_branch'),
+        'select/rule04': ('Select', 'negate_condition'),
+        'reverse/rule01': ('Reverse', 'unit_axes'),
+        'reverse/rule02': ('Reverse', 'involution'),
+        'reverse/rule03': ('Reverse', 'overlapping_groups'),
+        'reverse/rule04': ('Reverse', 'add_constant'),
     })
     logs = {'Add': 'add-check.log', 'ScalarArithmetic': 'scalar-check.log',
-            'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log'}
+            'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log',
+            'Comparisons': 'comparisons-check.log', 'Select': 'select-check.log',
+            'Reverse': 'reverse-check.log'}
     for group, filename in logs.items():
         check = (OUT / filename).read_text()
         for key, (namespace, name) in proofs.items():
@@ -77,10 +99,12 @@ def main():
                 prefix = f"'TensorRewrite.PaperComparison.{namespace}.{name}' "
                 lines = [line for line in check.splitlines() if line.startswith(prefix)]
                 assert len(lines) == 1, key
-                assert lines[0][len(prefix):] in (
-                    'depends on axioms: [propext, Quot.sound]',
-                    'depends on axioms: [propext, Classical.choice, Quot.sound]',
-                    'does not depend on any axioms'), (key, lines)
+                detail = lines[0][len(prefix):]
+                if detail != 'does not depend on any axioms':
+                    match = re.fullmatch(r'depends on axioms: \[(.*)\]', detail)
+                    assert match, (key, detail)
+                    axioms = {a.strip() for a in match[1].split(',') if a.strip()}
+                    assert axioms <= {'propext', 'Quot.sound', 'Classical.choice'}, (key, axioms)
     rows = []
     for index, (case, block) in enumerate(zip(cases, blocks)):
         lines = (ROOT / case['path']).read_text().splitlines()
@@ -109,7 +133,21 @@ def main():
         }
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'Logical':
+            if namespace == 'Comparisons':
+                confidence = ('The Lean graph uses finite exact linear-order values and the '
+                              'paper comparisons, Min/Max and Clamp. Clamp operand order is '
+                              'explicitly related using min commutativity; the bound premise '
+                              'for clamp/rule02 matches its strict paper assumption. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Select':
+                confidence = ('Lean uses the same elementwise Select semantics over arbitrary '
+                              'values and conditions, including the paper constant condition. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Reverse':
+                confidence = ('Lean reverses actual bounded coordinates, with unit extents or '
+                              'disjoint axis groups corresponding to the paper conditions. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Logical':
                 confidence = ('The Lean theorem evaluates the same Boolean tensor operation '
                               'or exact numeric double negation on arbitrary finite shapes. '
                               'The data type is taken from the artifact declaration when the '
@@ -125,7 +163,10 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if case['id'] == 'broadcast/rule04'
+                       lean_types=(['Bool', 'Int', 'Real'] if case['id'] in {
+                                       'broadcast/rule04', 'select/rule01', 'select/rule02',
+                                       'select/rule03', 'select/rule04', 'reverse/rule01',
+                                       'reverse/rule02', 'reverse/rule03'}
                                    else ['Bool'] if namespace == 'Logical' and name != 'neg_neg'
                                    else ['Int', 'Real']),
                        lean_proof_file=f'comparisons/tensorright-v1/{namespace}.lean',
