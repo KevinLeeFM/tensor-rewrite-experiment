@@ -3,6 +3,7 @@
   "scope": "118 executed paper-era model cases, not verified C++",
   "inventory_sha256": "bb7b21cb437f238b36e1802f4b0169442c5bf53460358a5f938699a2c4453b63",
   "archived_result_sha256": "2cb2cb8fd5cdc631679aaf0b764c31b26e069af13212a9808aefb0a5a01d520e",
+  "unresolved_triage_sha256": "b63759d205c747f92a022c5dc0b7e0c53e627c38cc9e4a9543602874b96a2e2d",
   "archived_result_provenance": "author-provided result.txt, not an independent rerun",
   "matching": "runall sorted directories and main call order; printed labels checked except known shell expansion",
   "counts": {
@@ -10,6 +11,7 @@
     "paper_proved": 115,
     "paper_failed": 3,
     "lean_proved": 94,
+    "lean_unresolved": 24,
     "lean_proved_paper_failed": 2
   },
   "cases": [
@@ -924,10 +926,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect the paper's input Pad parameters and convolution dilation/edge formulas to the existing PadWindow and convolution models, including all feature and spatial reductions.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "conv/rule01",
@@ -946,10 +950,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect interior padding of the kernel to the paper's right-dilation convention, including zero-filled kernel positions, complete output shapes and reduction-index mapping.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "conv/rule03",
@@ -968,10 +974,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Extend the existing pointwise-convolution/Dot connection to the paper's mixed case: some spatial axes are contracted and others have unit kernel extent and remain as Dot batch axes.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "divmod/rule00",
@@ -1237,10 +1245,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove Dot over paired concatenations equals the reduction of the two separate Dots, with the paper's piecewise contraction-index relation and arbitrary empty segments.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "dot/rule02",
@@ -1259,10 +1269,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Construct the output-axis reordering and show that swapping Dot operands preserves each exact product and contraction sum for the paper's batch and free axes.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "dot/rule03",
@@ -1281,10 +1293,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
       "implementation_result": "not established",
+      "unresolved_reason": "The executed artifact verifies lhs against lhs. The separately constructed rhs and named Dot associativity need a complete nested-contraction proof; the archived success is not that proof.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage.",
       "benchmark_discrepancy": "The label names Dot associativity and a rhs is constructed, but the artifact calls rewrite with lhs as both arguments. The archived success does not establish the labeled associativity statement."
     },
     {
@@ -1369,10 +1383,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect the existing Dot contraction coordinates to Reduce of the explicitly broadcast, elementwise product when the right operand has no free axes.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "dyslice/rule01",
@@ -1461,10 +1477,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove the projection of a valid DynamicSlice through Broadcast equals DynamicSlice on retained input axes followed by Broadcast, including derived shapes and in-bounds starts on added axes.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "dyslice/rule04",
@@ -1587,10 +1605,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove that updating a constant tensor at the paper's in-bounds starts agrees at every output coordinate and shape with nonnegative zero-interior Pad of the update.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "dyupslice/rule03",
@@ -2507,10 +2527,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Add or connect an interior-spacing Pad model that handles the unchanged other-axis padding and proves the spacing is irrelevant on an input axis of extent one.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "pad/rule03",
@@ -2530,10 +2552,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect multidimensional signed edge Pad through Broadcast when all padding on the newly broadcast axis is zero, preserving the shapes and arbitrary input tensor values.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "pad/rule04",
@@ -2553,10 +2577,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Model the paper's negative edge padding and prove that cropping by its specified Slice matches it, while retaining positive padding on the other axes.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "reduce/rule01",
@@ -2575,10 +2601,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect the two independent bounded reduction fibers to the single fiber over their product and apply exact distributivity to the broadcast product.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "reduce/rule02",
@@ -2597,10 +2625,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect concatenated bounded tensors and their piecewise reduction indices to the two separately reduced tensors and their outer two-element reduction.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "reduce/rule03",
@@ -2650,10 +2680,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Construct the relabeled reduction plan and show the renamed retained and reduced coordinates commute with the paper's axis-label swap.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "reduce/rule05",
@@ -2672,10 +2704,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect the two successive reduction plans to the single combined plan for arbitrary retained axes, with the paper's matching reduction-index maps.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "reduce/rule06",
@@ -2694,10 +2728,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Relate the Dot batch axis reduced afterward to an additional Dot contraction axis and prove the corresponding product/sum coordinate mapping.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "reduce/rule07",
@@ -3185,10 +3221,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove bounded static Slice commutes with Broadcast projection and derive the broadcast-axis output count from the paper's stride and limits.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "slice/rule04",
@@ -3208,10 +3246,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Connect the paper's general interior-spacing Pad to static Slice at start=low and stride=interior+1, with the stated inferred size and bounds.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "slice/rule05",
@@ -3231,10 +3271,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove the requested static Slice selects only padding values for all paper-admitted signed edge padding and interior spacing, with its computed output shape.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "slice/rule06",
@@ -3254,10 +3296,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove that the paper's unit-stride Slice of nonnegative edge Pad with zero interior padding translates start and end by the low edge, using the existing edge-Pad model.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "slice/rule07",
@@ -3346,10 +3390,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Combine the full Slice identity on retained axes with the paper's ceiling-based output-size condition on added Broadcast axes.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "slice/rule10",
@@ -3442,10 +3488,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Generalize the existing unit-stride selected-Concat-segment proof to the paper's arbitrary positive stride, deriving both shifted bounds and output count.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "slice/rule13",
@@ -3465,10 +3513,12 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
+      "lean_result": "unresolved",
       "lean_theorems": [],
       "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "implementation_result": "not established",
+      "unresolved_reason": "Prove or refute the paper's modulo-based Reverse/Slice bound formulas using actual bounded coordinates and all valid shapes, including empty slices; this is the remaining archived timeout.",
+      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
     },
     {
       "id": "sub/rule00",

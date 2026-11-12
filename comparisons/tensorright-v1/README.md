@@ -93,6 +93,7 @@ lake env lean comparisons/tensorright-v1/Dot.lean
 lake env lean comparisons/tensorright-v1/Reduction.lean
 lake env lean comparisons/tensorright-v1/Pad.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
+python3 comparisons/tensorright-v1/measure_dependencies.py
 ```
 
 All nineteen Lean commands passed with either no axioms or only the standard
@@ -101,10 +102,18 @@ All nineteen Lean commands passed with either no axioms or only the standard
 109 axiom-print commands. They reuse the existing mathematical development and
 Mathlib; 1098 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
-these cases. A precise shared-dependency cost remains future measurement. No
+these cases. The whole-module transitive import closure comprises 5,286 custom Lean code
+lines: 1,098 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,200
+under `TensorRewrite/Theory`. These are overlapping module-level dependencies,
+not necessarily minimal proof dependencies or fresh agent output. External
+libraries such as Mathlib are excluded. `dependency-costs.json` records the
+per-module hashes and per-case import closures; per-case totals overlap and
+must not be added together. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-The other 24 rows have not yet been assessed in this comparison.
+The other 24 rows are unresolved. Their specific missing model or proof
+connections are recorded in `triage.md`; dependency triage does not claim that a
+timed proof attempt was made for each case.
 
 Of the 94 Lean-proved cases, 92 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean

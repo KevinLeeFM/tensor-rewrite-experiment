@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent
 INVENTORY = ROOT / 'census/historical-rules.json'
 RESULT = ROOT / 'sources/tensorright/artifact/tr-artifact/plot/result.txt'
+TRIAGE = OUT / 'triage.json'
 
 
 def digest(data):
@@ -134,6 +135,9 @@ def main():
         'divmod/rule06': ('Remainder', 'shifted_iota'),
         'divmod/rule07': ('Remainder', 'shifted_scalar'),
     })
+    triage = json.loads(TRIAGE.read_text())
+    assert triage['schema'] == 1
+    assert set(triage['cases']) == {r['id'] for r in cases} - set(proofs)
     logs = {'Add': 'add-check.log', 'ScalarArithmetic': 'scalar-check.log',
             'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log',
             'Comparisons': 'comparisons-check.log', 'Select': 'select-check.log',
@@ -199,6 +203,11 @@ def main():
             'translation_confidence': 'not assessed',
             'implementation_result': 'not established',
         }
+        if case['id'] in triage['cases']:
+            row['lean_result'] = 'unresolved'
+            row['unresolved_reason'] = triage['cases'][case['id']]
+            row['assessment_method'] = ('Paper declaration and existing proof dependencies '
+                                        'reviewed; no timed proof attempt claimed by this triage.')
         if case['id'] == 'dot/rule03':
             assert re.search(r'rewrite \"Dot\(A,Dot\(B,C\)\).*\" lhs lhs', declaration)
             row['benchmark_discrepancy'] = (
@@ -368,10 +377,12 @@ def main():
     result = {'schema': 1, 'scope': '118 executed paper-era model cases, not verified C++',
               'inventory_sha256': digest(INVENTORY.read_bytes()),
               'archived_result_sha256': digest(RESULT.read_bytes()),
+              'unresolved_triage_sha256': digest(TRIAGE.read_bytes()),
               'archived_result_provenance': 'author-provided result.txt, not an independent rerun',
               'matching': 'runall sorted directories and main call order; printed labels checked except known shell expansion',
               'counts': {'cases': len(rows), 'paper_proved': 115, 'paper_failed': 3,
                          'lean_proved': sum(r['lean_result'] == 'proved' for r in rows),
+                         'lean_unresolved': sum(r['lean_result'] == 'unresolved' for r in rows),
                          'lean_proved_paper_failed': sum(
                              r['lean_result'] == 'proved' and
                              r['archived_result'] == 'timeout_or_solver_failure' for r in rows)},
@@ -379,13 +390,19 @@ def main():
     (OUT / 'cases.json').write_text(json.dumps(result, indent=2, ensure_ascii=False) + '\n')
     table = ['# TensorRight paper-era comparison', '',
              'Archived paper outcomes are author-reported; Lean results are this project’s.',
-             'See cases.json for exact source declarations, types, hashes and scope.', '',
+             'See cases.json for exact source declarations, types, hashes and scope.',
+             'Unresolved reasons identify missing proof connections; triage alone is not a timed proof attempt.', '',
              '| Case | Paper | Lean |', '| --- | --- | --- |']
     table.extend(f"| {r['id']} | {r['archived_result']} | {r['lean_result']} |" for r in rows)
     table.extend(['', '**Benchmark caveat:** `dot/rule03` is labeled as Dot associativity, '
                   'but the artifact passes `lhs` as both sides to the verifier. Its archived '
                   'success does not verify the labeled rewrite.'])
     (OUT / 'cases.md').write_text('\n'.join(table) + '\n')
+    residuals = ['# Unresolved paper cases', '', triage['method'], '',
+                 '| Case | Archived result | Missing connection |', '| --- | --- | --- |']
+    residuals.extend(f"| {r['id']} | {r['archived_result']} | {r['unresolved_reason']} |"
+                     for r in rows if r['lean_result'] == 'unresolved')
+    (OUT / 'triage.md').write_text('\n'.join(residuals) + '\n')
     print(result['counts'])
 
 

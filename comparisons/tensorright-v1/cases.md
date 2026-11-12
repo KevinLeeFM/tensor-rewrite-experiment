@@ -2,6 +2,7 @@
 
 Archived paper outcomes are author-reported; Lean results are this project’s.
 See cases.json for exact source declarations, types, hashes and scope.
+Unresolved reasons identify missing proof connections; triage alone is not a timed proof attempt.
 
 | Case | Paper | Lean |
 | --- | --- | --- |
@@ -33,9 +34,9 @@ See cases.json for exact source declarations, types, hashes and scope.
 | concat/rule05 | proved | proved |
 | concat/rule06 | proved | proved |
 | concat/rule07 | proved | proved |
-| conv/rule00 | proved | not_attempted_in_comparison |
-| conv/rule01 | proved | not_attempted_in_comparison |
-| conv/rule03 | proved | not_attempted_in_comparison |
+| conv/rule00 | proved | unresolved |
+| conv/rule01 | proved | unresolved |
+| conv/rule03 | proved | unresolved |
 | divmod/rule00 | proved | proved |
 | divmod/rule01 | proved | proved |
 | divmod/rule02 | proved | proved |
@@ -44,19 +45,19 @@ See cases.json for exact source declarations, types, hashes and scope.
 | divmod/rule05 | proved | proved |
 | divmod/rule06 | timeout_or_solver_failure | proved |
 | divmod/rule07 | timeout_or_solver_failure | proved |
-| dot/rule01 | proved | not_attempted_in_comparison |
-| dot/rule02 | proved | not_attempted_in_comparison |
-| dot/rule03 | proved | not_attempted_in_comparison |
+| dot/rule01 | proved | unresolved |
+| dot/rule02 | proved | unresolved |
+| dot/rule03 | proved | unresolved |
 | dot/rule04 | proved | proved |
 | dot/rule05 | proved | proved |
-| dot/rule06 | proved | not_attempted_in_comparison |
+| dot/rule06 | proved | unresolved |
 | dyslice/rule01 | proved | proved |
 | dyslice/rule02 | proved | proved |
-| dyslice/rule03 | proved | not_attempted_in_comparison |
+| dyslice/rule03 | proved | unresolved |
 | dyslice/rule04 | proved | proved |
 | dyslice/rule05 | proved | proved |
 | dyupslice/rule01 | proved | proved |
-| dyupslice/rule02 | proved | not_attempted_in_comparison |
+| dyupslice/rule02 | proved | unresolved |
 | dyupslice/rule03 | proved | proved |
 | dyupslice/rule04 | proved | proved |
 | iota/rule01 | proved | proved |
@@ -86,15 +87,15 @@ See cases.json for exact source declarations, types, hashes and scope.
 | not/rule01 | proved | proved |
 | not/rule02 | proved | proved |
 | pad/rule01 | proved | proved |
-| pad/rule02 | proved | not_attempted_in_comparison |
-| pad/rule03 | proved | not_attempted_in_comparison |
-| pad/rule04 | proved | not_attempted_in_comparison |
-| reduce/rule01 | proved | not_attempted_in_comparison |
-| reduce/rule02 | proved | not_attempted_in_comparison |
+| pad/rule02 | proved | unresolved |
+| pad/rule03 | proved | unresolved |
+| pad/rule04 | proved | unresolved |
+| reduce/rule01 | proved | unresolved |
+| reduce/rule02 | proved | unresolved |
 | reduce/rule03 | proved | proved |
-| reduce/rule04 | proved | not_attempted_in_comparison |
-| reduce/rule05 | proved | not_attempted_in_comparison |
-| reduce/rule06 | proved | not_attempted_in_comparison |
+| reduce/rule04 | proved | unresolved |
+| reduce/rule05 | proved | unresolved |
+| reduce/rule06 | proved | unresolved |
 | reduce/rule07 | proved | proved |
 | reduce/rule08 | proved | proved |
 | relabel/rule01 | proved | proved |
@@ -109,17 +110,17 @@ See cases.json for exact source declarations, types, hashes and scope.
 | select/rule04 | proved | proved |
 | slice/rule01 | proved | proved |
 | slice/rule02 | proved | proved |
-| slice/rule03 | proved | not_attempted_in_comparison |
-| slice/rule04 | proved | not_attempted_in_comparison |
-| slice/rule05 | proved | not_attempted_in_comparison |
-| slice/rule06 | proved | not_attempted_in_comparison |
+| slice/rule03 | proved | unresolved |
+| slice/rule04 | proved | unresolved |
+| slice/rule05 | proved | unresolved |
+| slice/rule06 | proved | unresolved |
 | slice/rule07 | proved | proved |
 | slice/rule08 | proved | proved |
-| slice/rule09 | proved | not_attempted_in_comparison |
+| slice/rule09 | proved | unresolved |
 | slice/rule10 | proved | proved |
 | slice/rule11 | proved | proved |
-| slice/rule12 | proved | not_attempted_in_comparison |
-| slice/rule13 | timeout_or_solver_failure | not_attempted_in_comparison |
+| slice/rule12 | proved | unresolved |
+| slice/rule13 | timeout_or_solver_failure | unresolved |
 | sub/rule00 | proved | proved |
 | sub/rule01 | proved | proved |
 | sub/rule02 | proved | proved |
