@@ -165,6 +165,18 @@ theorem dot_concat {α : Type} [Semiring α] {m n lr rr : Nat}
   simp [Fin.sum_univ_two]
   rfl
 
+/-- `reduce/rule02`: reduce separately or reduce their actual concatenated axis. -/
+theorem reduce_concat {α : Type} [AddCommMonoid α] {m n otherRank : Nat}
+    (other : Shape otherRank) (x : Fin m → Index other → α) (y : Fin n → Index other → α) :
+    (fun (remaining : Index other) => ∑ segment : Fin 2,
+        (Fin.cases (∑ i, x i remaining) (fun _ => ∑ j, y j remaining) segment : α)) =
+      (fun (remaining : Index other) => ∑ i : Fin (m + n),
+        (Fin.addCases (fun i => x i remaining) (fun j => y j remaining) i : α)) := by
+  funext remaining
+  rw [Fin.sum_univ_add]
+  simp [Fin.sum_univ_two]
+  rfl
+
 /-- The labeled Dot associativity statement that the paper artifact accidentally did not run. -/
 theorem dot_associativity {α : Type} [Semiring α] {ar br cr dr : Nat}
     (a : Shape ar) (b : Shape br) (c : Shape cr) (d : Shape dr)
@@ -188,6 +200,7 @@ theorem dot_associativity {α : Type} [Semiring α] {ar br cr dr : Nat}
 #print axioms relabel_reduce
 #print axioms concat_pair_coordinate
 #print axioms dot_concat
+#print axioms reduce_concat
 #print axioms dot_associativity
 
 end TensorRewrite.PaperComparison.GroupedSums

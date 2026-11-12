@@ -91,7 +91,7 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | pad/rule03 | proved | proved | unresolved |
 | pad/rule04 | proved | proved | unresolved |
 | reduce/rule01 | proved | proved | proved |
-| reduce/rule02 | proved | proved | unresolved |
+| reduce/rule02 | proved | proved | proved |
 | reduce/rule03 | proved | proved | proved |
 | reduce/rule04 | proved | proved | proved |
 | reduce/rule05 | proved | proved | proved |
@@ -119,7 +119,7 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | slice/rule09 | proved | proved | proved |
 | slice/rule10 | proved | proved | proved |
 | slice/rule11 | proved | proved | proved |
-| slice/rule12 | proved | proved | unresolved |
+| slice/rule12 | proved | proved | proved |
 | slice/rule13 | timeout_or_solver_failure | timeout_or_solver_failure | disproved_in_model |
 | sub/rule00 | proved | proved | proved |
 | sub/rule01 | proved | proved | proved |

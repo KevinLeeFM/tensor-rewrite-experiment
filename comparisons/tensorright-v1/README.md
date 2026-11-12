@@ -1,4 +1,4 @@
-# Paper-era comparison: 108 proofs and one model counterexample
+# Paper-era comparison: 110 proofs and one model counterexample
 
 This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -61,7 +61,7 @@ do not extrapolate this observation to all 118 rules.
 | `divmod/rule00–03` | divide by one, reciprocal and nested real division | exact totalized integer/real arithmetic |
 | `mul/rule09,10` | absolute-value square and real exponential addition | exact number theory |
 | `iota/rule01`, `broadcast/rule07,08` | unit-axis Iota and Broadcast Iota/composition | bounded integer coordinates and derived axis maps |
-| `slice/rule01,03,04,06,07,09–11` | full, Broadcast, Pad, nested and partial-concatenation Slice | bounded coordinates and output-shape reasoning |
+| `slice/rule01,03,04,06,07,09–12` | full, Broadcast, Pad, nested and partial-concatenation Slice | bounded coordinates and output-shape reasoning |
 | `slice/rule02`, `broadcast/rule05,06` | constant Slice and DynamicSlice | output-size and index reasoning |
 | `max/rule01,02` | Max with −∞ and Min with +∞ | extended orders for finite inputs |
 | `dyslice/rule01–05` | static, full, Broadcast, relabeled and nested DynamicSlice | actual valid starts and bounded projections |
@@ -69,7 +69,7 @@ do not extrapolate this observation to all 118 rules.
 | `relabel/rule01,02`, `broadcast/rule03` | relabel composition, identity and constant | bounded axis bijections |
 | `divmod/rule04–07` | idempotent, bounded-Iota and guarded integer remainder | truncating remainder including zero divisor |
 | `dot/rule01–06` | paired Concat, swap, intended associativity, no contraction, zero dimension, broadcast/reduce | bounded contraction, grouping and actual Concat coordinates |
-| `reduce/rule01,03–06` | products, scalar factor, relabel, nested reduction and Dot reduction | bounded coordinate groups and exact finite sums |
+| `reduce/rule01–06` | products, Concat, scalar factor, relabel, nested reduction and Dot reduction | bounded coordinate groups and exact finite sums |
 | `reduce/rule07,08` | remove unit axes, with or without relabeling | reshape and singleton-fiber coordinate identity |
 | `pad/rule01` | zero padding is identity | bounded edge Pad and inferred shape |
 | `slice/rule13` | model counterexample: valid original, invalid replacement | Lean certificate and fixed-input TensorRight diagnostic |
@@ -103,18 +103,19 @@ lake env lean comparisons/tensorright-v1/UpdatePad.lean
 lake env lean comparisons/tensorright-v1/PadSlice.lean
 lake env lean comparisons/tensorright-v1/InteriorSlice.lean
 lake env lean comparisons/tensorright-v1/GroupedSums.lean
+lake env lean comparisons/tensorright-v1/StrideConcat.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 python3 comparisons/tensorright-v1/measure_dependencies.py
 ```
 
-All twenty-five Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twenty-five
-`*-check.log` files. The comparison modules have 1639 code lines total, including
-139 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 1639 is not the independent cost of these proofs. The earlier 12,341
+All twenty-six Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twenty-six
+`*-check.log` files. The comparison modules have 1728 code lines total, including
+144 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 1728 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
-these cases. The whole-module transitive import closure comprises 6,170 custom Lean code
-lines: 1,639 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,543
+these cases. The whole-module transitive import closure comprises 6,259 custom Lean code
+lines: 1,728 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,543
 under `TensorRewrite/Theory`. These are overlapping module-level dependencies,
 not necessarily minimal proof dependencies or fresh agent output. External
 libraries such as Mathlib are excluded. `dependency-costs.json` records the
@@ -122,11 +123,11 @@ per-module hashes and per-case import closures; per-case totals overlap and
 must not be added together. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-One rule is disproved in the model, and the other 9 rows are unresolved. Their specific missing model or proof
+One rule is disproved in the model, and the other 7 rows are unresolved. Their specific missing model or proof
 connections are recorded in `triage.md`; dependency triage does not claim that a
 timed proof attempt was made for each case.
 
-Of the 108 Lean-proved cases, 106 are among the paper archive's 115 successes,
+Of the 110 Lean-proved cases, 108 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the independent rerun also reported these two failures.
@@ -224,3 +225,8 @@ connect these to the existing tensor models, `sum_coordinate_groups` proves
 combined-group enumeration, and `concat_pair_coordinate` connects actual Concat
 segments. The Dot associativity theorem proves the paper's intended statement;
 the independently rerun artifact still checked `lhs = lhs` for that case.
+
+The arbitrary-stride Slice/Concat case checks the paper's translated bounds and
+output size, relates its one-axis Slice coordinate to the bounded tensor model,
+and uses the verified Concat segment coordinates. The paper's Concat requires
+that aggregated axis to resolve to one named axis.

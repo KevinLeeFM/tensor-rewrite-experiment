@@ -97,6 +97,7 @@ def main():
         'concat/rule06': ('Concatenate', 'pad_high'),
         'concat/rule07': ('Concatenate', 'list_three_reverse'),
         'slice/rule08': ('Concatenate', 'slice_second'),
+        'slice/rule12': ('StrideConcat', 'skip_first'),
         'slice/rule10': ('Concatenate', 'slice_first_piece'),
         'slice/rule11': ('Concatenate', 'slice_second_piece'),
         'divmod/rule00': ('Numerical', 'divide_one_both'),
@@ -127,6 +128,7 @@ def main():
         'dot/rule03': ('GroupedSums', 'dot_associativity'),
         'dot/rule06': ('GroupedSums', 'dot_no_right'),
         'reduce/rule01': ('GroupedSums', 'reduce_product'),
+        'reduce/rule02': ('GroupedSums', 'reduce_concat'),
         'reduce/rule05': ('GroupedSums', 'reduce_nested'),
         'dot/rule04': ('Dot', 'no_contract'),
         'dot/rule05': ('Dot', 'empty_dimension'),
@@ -172,8 +174,11 @@ def main():
             'SliceBroadcast': 'slice-broadcast-check.log',
             'UpdatePad': 'update-pad-check.log', 'PadSlice': 'pad-slice-check.log',
             'InteriorSlice': 'interior-slice-check.log',
-            'GroupedSums': 'grouped-sums-check.log'}
-    shape_support = {'dot/rule01': ('GroupedSums', 'dot_coordinate_sum'),
+            'GroupedSums': 'grouped-sums-check.log',
+            'StrideConcat': 'stride-concat-check.log'}
+    shape_support = {'slice/rule12': ('StrideConcat', 'shifted_valid'),
+                     'reduce/rule02': ('GroupedSums', 'reduce_coordinate_sum'),
+                     'dot/rule01': ('GroupedSums', 'dot_coordinate_sum'),
                      'reduce/rule06': ('GroupedSums', 'dot_coordinate_sum'),
                      'dot/rule02': ('GroupedSums', 'dot_coordinate_sum'),
                      'dot/rule03': ('GroupedSums', 'dot_coordinate_sum'),
@@ -201,7 +206,9 @@ def main():
                      'dyupslice/rule04': ('Dynamic', 'compose_eq_added'),
                      'divmod/rule06': ('Remainder', 'signed_shift'),
                      'divmod/rule07': ('Remainder', 'signed_shift')}
-    extra_support = {'dot/rule01': ('GroupedSums', 'concat_pair_coordinate'),
+    extra_support = {'slice/rule12': ('StrideConcat', 'matches_index_map'),
+                     'reduce/rule02': ('GroupedSums', 'concat_pair_coordinate'),
+                     'dot/rule01': ('GroupedSums', 'concat_pair_coordinate'),
                      'reduce/rule06': ('GroupedSums', 'reduce_coordinate_sum'),
                      'dot/rule02': ('GroupedSums', 'sum_coordinate_groups'),
                      'dot/rule03': ('GroupedSums', 'sum_coordinate_groups'),
@@ -211,7 +218,8 @@ def main():
                      'slice/rule11': ('Concatenate', 'paper_interval'),
                      'slice/rule03': ('Slices', 'count_euclidean'),
                      'slice/rule09': ('SliceBroadcast', 'paper_ceil_count')}
-    additional_support = {'reduce/rule06': ('GroupedSums', 'sum_coordinate_groups')}
+    additional_support = {'slice/rule12': ('GroupedSums', 'concat_pair_coordinate'),
+                          'reduce/rule06': ('GroupedSums', 'sum_coordinate_groups')}
     audited = (list(proofs.items()) + list(refutations.items()) + list(witness_support.items()) +
                list(shape_support.items()) + list(extra_support.items()) +
                list(additional_support.items()))
@@ -290,7 +298,14 @@ def main():
                 'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'GroupedSums':
+            if namespace == 'StrideConcat':
+                confidence = ('The paper Concat axis resolves to one named axis. The '
+                              'shifted-valid lemma proves the original start/end offset '
+                              'and output size for any valid positive stride, including '
+                              'empty slices. Supporting theorems connect the one-axis '
+                              'coordinates to tensor Slice and actual Concat segment maps. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'GroupedSums':
                 confidence = ('The named disjoint axis groups are represented by arbitrary '
                               'bounded coordinate types. The support lemmas connect exact '
                               'group sums to actual Dot and Reduce coordinate enumeration '
@@ -445,7 +460,7 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'UpdatePad', 'PadSlice', 'InteriorSlice', 'Pad'} or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'SliceBroadcast', 'StrideConcat', 'UpdatePad', 'PadSlice', 'InteriorSlice', 'Pad'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
