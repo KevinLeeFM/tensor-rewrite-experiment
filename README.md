@@ -1,5 +1,13 @@
 # Tensor rewrite verification experiment
 
+**Completed paper comparison (2026-11-12):** 116 Lean model proofs, one model
+counterexample and one vacuous artifact success among the 118 executed rules.
+See the [comparison report](comparisons/tensorright-v1/REPORT.md) for the fresh
+replay, paper rerun, code burden and limits of the automation claim. This is
+model verification with translation assumed, not a whole-pass safety guarantee.
+The older milestone counts below are historical and do not describe this result.
+
+
 **Current scope (2026-11-12):** reproduce TensorRight's mathematical-rule verification
 in Lean, assuming high-confidence translation from C++, and confirm implementation
 bugs with runnable counterexamples. Start with the paper's 118 implemented rules;
@@ -23,8 +31,8 @@ plus 33 integration lines (category A). Imported library code is listed separate
 See `reports/library-setup.json` for build and axiom-audit evidence.
 
 Implementation/evidence workspace for the 2026-11-10 plan in `../notes/`.
-Scheduling remains in `../notes/TODO.md`. The campaign is active; revised priorities
-are in docs/experiment-plan.md.
+Scheduling remains in `../notes/TODO.md`. The primary comparison is complete;
+the adopted scope and optional extension policy are in docs/experiment-plan.md.
 
 The historical initial dependency order was source/artifact freeze → discovery inventory →
 reviewed case census and semantic dependency map → pilot definitions/proofs →
