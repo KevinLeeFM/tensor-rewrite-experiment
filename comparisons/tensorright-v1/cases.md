@@ -123,3 +123,5 @@ See cases.json for exact source declarations, types, hashes and scope.
 | sub/rule00 | proved | proved |
 | sub/rule01 | proved | proved |
 | sub/rule02 | proved | proved |
+
+**Benchmark caveat:** `dot/rule03` is labeled as Dot associativity, but the artifact passes `lhs` as both sides to the verifier. Its archived success does not verify the labeled rewrite.

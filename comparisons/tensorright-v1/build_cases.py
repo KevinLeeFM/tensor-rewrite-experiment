@@ -182,6 +182,12 @@ def main():
             'translation_confidence': 'not assessed',
             'implementation_result': 'not established',
         }
+        if case['id'] == 'dot/rule03':
+            assert re.search(r'rewrite \"Dot\(A,Dot\(B,C\)\).*\" lhs lhs', declaration)
+            row['benchmark_discrepancy'] = (
+                'The label names Dot associativity and a rhs is constructed, but the '
+                'artifact calls rewrite with lhs as both arguments. The archived success '
+                'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
             if namespace == 'SliceGeometry':
@@ -316,6 +322,9 @@ def main():
              'See cases.json for exact source declarations, types, hashes and scope.', '',
              '| Case | Paper | Lean |', '| --- | --- | --- |']
     table.extend(f"| {r['id']} | {r['archived_result']} | {r['lean_result']} |" for r in rows)
+    table.extend(['', '**Benchmark caveat:** `dot/rule03` is labeled as Dot associativity, '
+                  'but the artifact passes `lhs` as both sides to the verifier. Its archived '
+                  'success does not verify the labeled rewrite.'])
     (OUT / 'cases.md').write_text('\n'.join(table) + '\n')
     print(result['counts'])
 

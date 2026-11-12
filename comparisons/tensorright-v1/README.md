@@ -8,7 +8,11 @@ archived result blocks, and checks printed labels. One label (`reduce/rule03`)
 had shell wildcard expansion in the archived output; its position is used and
 that exception is explicit in the script. The 115 successes and three failed
 solver results are author-provided archive results, not our rerun. The paper
-reports the three as timeouts. Every row preserves the exact rule declaration,
+reports the three as timeouts. The archived success for `dot/rule03` is
+especially misleading: although its label and locally constructed `rhs` describe
+Dot associativity, its verifier call passes `lhs` twice. That result establishes
+only a reflexive identity, not the labeled associativity rewrite. The case remains
+unassessed in our Lean comparison. Every row preserves the exact rule declaration,
 source identity/hash, archived result block hash, types and current outcome.
 
 Four Addition, three Subtraction and seven Multiplication rules have checked Lean
