@@ -48,7 +48,7 @@ See cases.json for exact source declarations, types, hashes and scope.
 | dot/rule02 | proved | not_attempted_in_comparison |
 | dot/rule03 | proved | not_attempted_in_comparison |
 | dot/rule04 | proved | proved |
-| dot/rule05 | proved | not_attempted_in_comparison |
+| dot/rule05 | proved | proved |
 | dot/rule06 | proved | not_attempted_in_comparison |
 | dyslice/rule01 | proved | proved |
 | dyslice/rule02 | proved | proved |
@@ -85,7 +85,7 @@ See cases.json for exact source declarations, types, hashes and scope.
 | mul/rule10 | proved | proved |
 | not/rule01 | proved | proved |
 | not/rule02 | proved | proved |
-| pad/rule01 | proved | not_attempted_in_comparison |
+| pad/rule01 | proved | proved |
 | pad/rule02 | proved | not_attempted_in_comparison |
 | pad/rule03 | proved | not_attempted_in_comparison |
 | pad/rule04 | proved | not_attempted_in_comparison |
@@ -95,8 +95,8 @@ See cases.json for exact source declarations, types, hashes and scope.
 | reduce/rule04 | proved | not_attempted_in_comparison |
 | reduce/rule05 | proved | not_attempted_in_comparison |
 | reduce/rule06 | proved | not_attempted_in_comparison |
-| reduce/rule07 | proved | not_attempted_in_comparison |
-| reduce/rule08 | proved | not_attempted_in_comparison |
+| reduce/rule07 | proved | proved |
+| reduce/rule08 | proved | proved |
 | relabel/rule01 | proved | proved |
 | relabel/rule02 | proved | proved |
 | reverse/rule01 | proved | proved |

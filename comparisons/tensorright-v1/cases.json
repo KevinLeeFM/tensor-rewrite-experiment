@@ -9,7 +9,7 @@
     "cases": 118,
     "paper_proved": 115,
     "paper_failed": 3,
-    "lean_proved": 87,
+    "lean_proved": 91,
     "lean_proved_paper_failed": 2
   },
   "cases": [
@@ -1315,7 +1315,7 @@
         "Real"
       ],
       "lean_proof_file": "comparisons/tensorright-v1/Dot.lean",
-      "lean_proof_sha256": "2ea0665edfe312a60118dc4ab15db7d203a48388c26368c7dd90e1133e10d62a",
+      "lean_proof_sha256": "b76bd2b61931316899c4d4e173e6a279566a7d6a47383edafc72a52ee64bccbf",
       "lean_check_log": "comparisons/tensorright-v1/dot-check.log"
     },
     {
@@ -1335,10 +1335,22 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Dot.empty_dimension"
+      ],
+      "translation_confidence": "The nonempty paper aggregated-axis groups contribute batch/free output or contraction axes. The zero-map guard implies a zero dimension in one of those groups; grouped_empty derives the corresponding output or contraction dimension. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Dot.lean",
+      "lean_proof_sha256": "b76bd2b61931316899c4d4e173e6a279566a7d6a47383edafc72a52ee64bccbf",
+      "lean_check_log": "comparisons/tensorright-v1/dot-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.Dot.grouped_empty"
+      ]
     },
     {
       "id": "dot/rule06",
@@ -2449,10 +2461,20 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Pad.identity"
+      ],
+      "translation_confidence": "Zero low, high and interior padding is the edge-Pad model with zero edges on every axis. The frame covers any nonempty axis group and all extents; tensor shape transport and all coordinates are explicit. C++ correspondence is assumed.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Pad.lean",
+      "lean_proof_sha256": "7bd94bf71a5f598e8b1181ed4c16f0842b447d6f55c645b3a6705200a82e45dd",
+      "lean_check_log": "comparisons/tensorright-v1/pad-check.log"
     },
     {
       "id": "pad/rule02",
@@ -2595,7 +2617,7 @@
         "Real"
       ],
       "lean_proof_file": "comparisons/tensorright-v1/Reduction.lean",
-      "lean_proof_sha256": "7be085f614e564006e38b41abbbab8d6b6a20e18f058c868a5f70f35a4456e6a",
+      "lean_proof_sha256": "44a1f075045b522d451bb1626c4fe007ff1ab0ab64d4e78382c46b0ddf8aed9e",
       "lean_check_log": "comparisons/tensorright-v1/reduction-check.log"
     },
     {
@@ -2681,10 +2703,22 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Reduction.singleton_reshape"
+      ],
+      "translation_confidence": "Every reduced axis has extent one, as in the paper; the existing coordinate lemma connects unit-axis removal with the reshape, including empty tensors. For rule08 the label change is represented by the identity axis mapping; it is removed by the subsequent reduction. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Reduction.lean",
+      "lean_proof_sha256": "44a1f075045b522d451bb1626c4fe007ff1ab0ab64d4e78382c46b0ddf8aed9e",
+      "lean_check_log": "comparisons/tensorright-v1/reduction-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.Reduction.singleton_count"
+      ]
     },
     {
       "id": "reduce/rule08",
@@ -2703,10 +2737,22 @@
         "Int",
         "Real"
       ],
-      "lean_result": "not_attempted_in_comparison",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
-      "implementation_result": "not established"
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Reduction.relabel_singleton_reshape"
+      ],
+      "translation_confidence": "Every reduced axis has extent one, as in the paper; the existing coordinate lemma connects unit-axis removal with the reshape, including empty tensors. For rule08 the label change is represented by the identity axis mapping; it is removed by the subsequent reduction. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Reduction.lean",
+      "lean_proof_sha256": "44a1f075045b522d451bb1626c4fe007ff1ab0ab64d4e78382c46b0ddf8aed9e",
+      "lean_check_log": "comparisons/tensorright-v1/reduction-check.log",
+      "lean_support_theorems": [
+        "TensorRewrite.PaperComparison.Reduction.singleton_count"
+      ]
     },
     {
       "id": "relabel/rule01",

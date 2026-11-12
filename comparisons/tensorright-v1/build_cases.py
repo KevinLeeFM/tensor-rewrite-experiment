@@ -111,8 +111,12 @@ def main():
         'broadcast/rule06': ('Slices', 'dynamic_slice_constant'),
         'max/rule01': ('Extremes', 'max_negative_infinity'),
         'max/rule02': ('Extremes', 'min_positive_infinity'),
+        'pad/rule01': ('Pad', 'identity'),
         'dot/rule04': ('Dot', 'no_contract'),
+        'dot/rule05': ('Dot', 'empty_dimension'),
         'reduce/rule03': ('Reduction', 'scalar_factor'),
+        'reduce/rule07': ('Reduction', 'singleton_reshape'),
+        'reduce/rule08': ('Reduction', 'relabel_singleton_reshape'),
         'dyslice/rule01': ('Dynamic', 'static_slice'),
         'dyslice/rule02': ('Dynamic', 'full_slice'),
         'dyslice/rule05': ('Dynamic', 'nested_slice'),
@@ -136,8 +140,11 @@ def main():
             'Dynamic': 'dynamic-check.log', 'Relabel': 'relabel-check.log',
             'Remainder': 'remainder-check.log',
             'SliceGeometry': 'slice-geometry-check.log', 'Dot': 'dot-check.log',
-            'Reduction': 'reduction-check.log'}
-    shape_support = {'slice/rule01': ('SliceGeometry', 'full_shape'),
+            'Reduction': 'reduction-check.log', 'Pad': 'pad-check.log'}
+    shape_support = {'dot/rule05': ('Dot', 'grouped_empty'),
+                     'reduce/rule07': ('Reduction', 'singleton_count'),
+                     'reduce/rule08': ('Reduction', 'singleton_count'),
+                     'slice/rule01': ('SliceGeometry', 'full_shape'),
                      'slice/rule07': ('SliceGeometry', 'nested_count'),
                      'slice/rule02': ('Slices', 'count_euclidean'),
                      'broadcast/rule05': ('Slices', 'count_exact'),
@@ -193,11 +200,29 @@ def main():
                 'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'Dot':
+            if namespace == 'Pad':
+                confidence = ('Zero low, high and interior padding is the edge-Pad model '
+                              'with zero edges on every axis. The frame covers any nonempty '
+                              'axis group and all extents; tensor shape transport and all '
+                              'coordinates are explicit. C++ correspondence is assumed.')
+            elif namespace == 'Dot' and name == 'empty_dimension':
+                confidence = ('The nonempty paper aggregated-axis groups contribute '
+                              'batch/free output or contraction axes. The zero-map guard '
+                              'implies a zero dimension in one of those groups; grouped_empty '
+                              'derives the corresponding output or contraction dimension. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Dot':
                 confidence = ('The contraction plan models all batch, free and contracted '
                               'coordinates; with no contracted axes its outerTensor reads the '
                               'two projected operand coordinates and multiplies them, matching '
                               'the paper broadcast product. C++ correspondence is assumed.')
+            elif namespace == 'Reduction' and name != 'scalar_factor':
+                confidence = ('Every reduced axis has extent one, as in the paper; '
+                              'the existing coordinate lemma connects unit-axis removal '
+                              'with the reshape, including empty tensors. For rule08 the '
+                              'label change is represented by the identity axis mapping; '
+                              'it is removed by the subsequent reduction. C++ correspondence '
+                              'is assumed, not checked.')
             elif namespace == 'Reduction':
                 confidence = ('The additive reduction traverses all bounded reduced coordinates '
                               'with zero initializer. Multiplication by the paper scalar constant '
@@ -281,7 +306,7 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry'} or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry', 'Pad'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
