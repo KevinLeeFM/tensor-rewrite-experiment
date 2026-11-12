@@ -1,4 +1,4 @@
-# Paper-era comparison: 85 checked cases
+# Paper-era comparison: 87 checked cases
 
 This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -64,6 +64,8 @@ do not extrapolate this observation to all 118 rules.
 | `dyupslice/rule01,03,04` | add to an update, full and nested update | actual DynamicUpdateSlice coordinates |
 | `relabel/rule01,02`, `broadcast/rule03` | relabel composition, identity and constant | bounded axis bijections |
 | `divmod/rule04–07` | idempotent, bounded-Iota and guarded integer remainder | truncating remainder including zero divisor |
+| `dot/rule04` | Dot without contracted axes becomes a broadcast product | bounded contraction plan |
+| `reduce/rule03` | scalar factor moves across additive reduction | zero-initialized reduction over bounded fibers |
 
 Reproduce from the repository root:
 
@@ -85,21 +87,23 @@ lake env lean comparisons/tensorright-v1/Dynamic.lean
 lake env lean comparisons/tensorright-v1/Relabel.lean
 lake env lean comparisons/tensorright-v1/Remainder.lean
 lake env lean comparisons/tensorright-v1/SliceGeometry.lean
+lake env lean comparisons/tensorright-v1/Dot.lean
+lake env lean comparisons/tensorright-v1/Reduction.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 ```
 
-All sixteen Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the sixteen
-`*-check.log` files. The comparison modules have 944 code lines total, including
-93 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 944 is not the independent cost of these proofs. The earlier 12,341
+All eighteen Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the eighteen
+`*-check.log` files. The comparison modules have 974 code lines total, including
+95 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 974 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
 these cases. A precise shared-dependency cost remains future measurement. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-The other 33 rows have not yet been assessed in this comparison.
+The other 31 rows have not yet been assessed in this comparison.
 
-Of the 85 Lean-proved cases, 83 are among the paper archive's 115 successes,
+Of the 87 Lean-proved cases, 85 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the authors' archived outcomes were not independently rerun.
@@ -145,3 +149,8 @@ for `divmod/rule07` matters: shifting −2 by 3 changes its remainder modulo 3.
 The full and nested Slice results separately derive their output shapes from the
 paper’s start, limit and unit-stride attributes, then prove equality of all bounded
 coordinates. They handle zero extents as well as nonempty shapes.
+
+The no-contraction Dot result uses the actual batch/free coordinate projections
+of the existing Dot model, including arbitrary axis permutations. The reduction
+proof distributes a scalar constant over the paper's exact zero-initialized sum,
+including empty fibers. Neither result covers IEEE rounded arithmetic.

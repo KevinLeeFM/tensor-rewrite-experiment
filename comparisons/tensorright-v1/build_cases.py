@@ -111,6 +111,8 @@ def main():
         'broadcast/rule06': ('Slices', 'dynamic_slice_constant'),
         'max/rule01': ('Extremes', 'max_negative_infinity'),
         'max/rule02': ('Extremes', 'min_positive_infinity'),
+        'dot/rule04': ('Dot', 'no_contract'),
+        'reduce/rule03': ('Reduction', 'scalar_factor'),
         'dyslice/rule01': ('Dynamic', 'static_slice'),
         'dyslice/rule02': ('Dynamic', 'full_slice'),
         'dyslice/rule05': ('Dynamic', 'nested_slice'),
@@ -133,7 +135,8 @@ def main():
             'Slices': 'slices-check.log', 'Extremes': 'extremes-check.log',
             'Dynamic': 'dynamic-check.log', 'Relabel': 'relabel-check.log',
             'Remainder': 'remainder-check.log',
-            'SliceGeometry': 'slice-geometry-check.log'}
+            'SliceGeometry': 'slice-geometry-check.log', 'Dot': 'dot-check.log',
+            'Reduction': 'reduction-check.log'}
     shape_support = {'slice/rule01': ('SliceGeometry', 'full_shape'),
                      'slice/rule07': ('SliceGeometry', 'nested_count'),
                      'slice/rule02': ('Slices', 'count_euclidean'),
@@ -190,7 +193,17 @@ def main():
                 'does not establish the labeled associativity statement.')
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'SliceGeometry':
+            if namespace == 'Dot':
+                confidence = ('The contraction plan models all batch, free and contracted '
+                              'coordinates; with no contracted axes its outerTensor reads the '
+                              'two projected operand coordinates and multiplies them, matching '
+                              'the paper broadcast product. C++ correspondence is assumed.')
+            elif namespace == 'Reduction':
+                confidence = ('The additive reduction traverses all bounded reduced coordinates '
+                              'with zero initializer. Multiplication by the paper scalar constant '
+                              'distributes over the exact sum, including an empty fiber. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'SliceGeometry':
                 confidence = ('The bounded Slice indices use the paper unit strides and exact '
                               'starts, including summed starts for nesting; companion theorems '
                               'derive inferred output sizes from the actual end bounds. '
