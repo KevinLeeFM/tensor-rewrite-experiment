@@ -1,4 +1,4 @@
-# Paper-era comparison: 94 checked cases
+# Paper-era comparison: 94 proofs and one model counterexample
 
 This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -72,6 +72,7 @@ do not extrapolate this observation to all 118 rules.
 | `reduce/rule03` | scalar factor moves across additive reduction | zero-initialized reduction over bounded fibers |
 | `reduce/rule07,08` | remove unit axes, with or without relabeling | reshape and singleton-fiber coordinate identity |
 | `pad/rule01` | zero padding is identity | bounded edge Pad and inferred shape |
+| `slice/rule13` | model counterexample: valid original, invalid replacement | Lean certificate and fixed-input TensorRight diagnostic |
 
 Reproduce from the repository root:
 
@@ -96,18 +97,19 @@ lake env lean comparisons/tensorright-v1/SliceGeometry.lean
 lake env lean comparisons/tensorright-v1/Dot.lean
 lake env lean comparisons/tensorright-v1/Reduction.lean
 lake env lean comparisons/tensorright-v1/Pad.lean
+lake env lean comparisons/tensorright-v1/ReverseSliceFailure.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 python3 comparisons/tensorright-v1/measure_dependencies.py
 ```
 
-All nineteen Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the nineteen
-`*-check.log` files. The comparison modules have 1098 code lines total, including
-109 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 1098 is not the independent cost of these proofs. The earlier 12,341
+All twenty Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the twenty
+`*-check.log` files. The comparison modules have 1126 code lines total, including
+111 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 1126 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
-these cases. The whole-module transitive import closure comprises 5,286 custom Lean code
-lines: 1,098 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,200
+these cases. The whole-module transitive import closure comprises 5,314 custom Lean code
+lines: 1,126 in comparison modules, 988 under `TensorRewrite/Pilot`, and 3,200
 under `TensorRewrite/Theory`. These are overlapping module-level dependencies,
 not necessarily minimal proof dependencies or fresh agent output. External
 libraries such as Mathlib are excluded. `dependency-costs.json` records the
@@ -115,7 +117,7 @@ per-module hashes and per-case import closures; per-case totals overlap and
 must not be added together. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-The other 24 rows are unresolved. Their specific missing model or proof
+One rule is disproved in the model, and the other 23 rows are unresolved. Their specific missing model or proof
 connections are recorded in `triage.md`; dependency triage does not claim that a
 timed proof attempt was made for each case.
 
@@ -123,7 +125,8 @@ Of the 94 Lean-proved cases, 92 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the independent rerun also reported these two failures.
-The remaining archived timeout is unresolved. This is evidence that the
+The remaining archived timeout, `slice/rule13`, has a concrete model
+counterexample described in `reverse-slice-witness.md`. This is evidence that the
 Lean approach can resolve these two modeled statements, not that an XLA bug was
 found or that a controlled head-to-head timing comparison was performed.
 
@@ -192,3 +195,11 @@ printed-label mismatch was a known shell wildcard expansion in `reduce/rule03`.
 `record_artifact_rerun.py` checks the 118 per-case outcomes against the archive.
 As in the archive, the success for `dot/rule03` verifies `lhs = lhs`, not the
 associativity statement its label names.
+
+For `slice/rule13`, a length-10 input and Slice bounds `[2,8)` with stride 2
+are valid, but the paper formula yields replacement start −3. Its own Slice
+semantics requires a nonnegative start. Lean checks the arithmetic and validity,
+and TensorRight itself confirms the fixed example for Bool, Int and Real after
+adding only a precondition fixing those inputs. See `reverse-slice-witness.md`
+for the patch, full logs and reproduction script. This refutes the artifact's
+model rule; it does not demonstrate an XLA compiler bug.

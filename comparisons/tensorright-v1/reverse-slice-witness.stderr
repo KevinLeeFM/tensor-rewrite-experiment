@@ -1,0 +1,97 @@
+tensor-right-0.1.0.0: unregistering (local file changes: package.yaml rules/slice/Main.hs
+src/TensorRight.hs src/TensorRight/Internal/Core/Tensor.hs src/T...)
+tensor-right> configure (lib + exe)
+Configuring tensor-right-0.1.0.0...
+tensor-right> build (lib + exe) with ghc-9.8.2
+Preprocessing library for tensor-right-0.1.0.0..
+Building library for tensor-right-0.1.0.0..
+[ 9 of 21] Compiling TensorRight.Internal.Core.Tensor.Typed [Source file changed]
+[10 of 21] Compiling TensorRight.Internal.Core.Tensor [Source file changed]
+[11 of 21] Compiling TensorRight.Internal.Core.Verify [TensorRight.Internal.Core.Tensor changed]
+[16 of 21] Compiling TensorRight.Internal.DSL.Expr [Source file changed]
+[17 of 21] Compiling TensorRight.Internal.DSL.Eval [Source file changed]
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:345:31: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+345 |     else return $ iota sizes (head $ HS.toList axes)
+    |                               ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:380:37: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+380 |     else return $ concatTensor l r (head $ HS.toList axes)
+    |                                     ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:383:37: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+383 |   headShape <- gets $ (HM.! exprId (head exprs)) . exprShapes
+    |                                     ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/Eval.hs:388:40: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+    |
+388 |     else return $ concatTensorList es (head $ HS.toList axes)
+    |                                        ^^^^
+[18 of 21] Compiling TensorRight.Internal.DSL.BoundInference [TensorRight.Internal.Core.Tensor changed]
+[19 of 21] Compiling TensorRight.Internal.DSL.DSL [Source file changed]
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1073:75: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1073 |     assert "All tensors in concatList must have the same Adims" $ all (== head shapes) shapes
+     |                                                                           ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1074:74: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1074 |     assert "All tensors in concatList must have the same type" $ all (== head tys) tys
+     |                                                                          ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1075:31: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1075 |     adim <- getAdimByAdimRef (head shapes) d
+     |                               ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1078:13: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1078 |     return (head shapes, head tys)
+     |             ^^^^
+
+/home/tr/src/TensorRight/Internal/DSL/DSL.hs:1078:26: warning: [GHC-63394] [-Wx-partial]
+    In the use of ‘head’
+    (imported from Prelude, but defined in GHC.List):
+    "This is a partial function, it throws an error on empty lists. Use pattern matching or Data.List.uncons instead. Consider refactoring to use Data.List.NonEmpty."
+     |
+1078 |     return (head shapes, head tys)
+     |                          ^^^^
+[20 of 21] Compiling TensorRight.Internal.DSL.Verify [TensorRight.Internal.Core.Tensor changed]
+[21 of 21] Compiling TensorRight [Source file changed]
+Preprocessing executable 'rules-slice' for tensor-right-0.1.0.0..
+Building executable 'rules-slice' for tensor-right-0.1.0.0..
+[1 of 2] Compiling Main [Source file changed]
+[2 of 2] Compiling Paths_tensor_right [Source file changed]
+[3 of 3] Linking .stack-work/dist/x86_64-linux/ghc-9.8.2/build/rules-slice/rules-slice [Objects changed]
+tensor-right> copy/register
+Installing library in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/lib/x86_64-linux-ghc-9.8.2/tensor-right-0.1.0.0-AQ93immrvVuAnkn5HASgEF
+Installing executable rules-slice in /home/tr/.stack-work/install/x86_64-linux/21ea927b963573e7584c3937c91fc6545edc024a148de746a572f26d7cbec919/9.8.2/bin
+Registering library for tensor-right-0.1.0.0..

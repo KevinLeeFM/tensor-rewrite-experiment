@@ -120,7 +120,7 @@ Unresolved reasons identify missing proof connections; triage alone is not a tim
 | slice/rule10 | proved | proved | proved |
 | slice/rule11 | proved | proved | proved |
 | slice/rule12 | proved | proved | unresolved |
-| slice/rule13 | timeout_or_solver_failure | timeout_or_solver_failure | unresolved |
+| slice/rule13 | timeout_or_solver_failure | timeout_or_solver_failure | disproved_in_model |
 | sub/rule00 | proved | proved | proved |
 | sub/rule01 | proved | proved | proved |
 | sub/rule02 | proved | proved | proved |

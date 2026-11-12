@@ -27,4 +27,3 @@ Read the paper declaration and inspect existing models for a matching complete p
 | slice/rule06 | proved | Prove that the paper's unit-stride Slice of nonnegative edge Pad with zero interior padding translates start and end by the low edge, using the existing edge-Pad model. |
 | slice/rule09 | proved | Combine the full Slice identity on retained axes with the paper's ceiling-based output-size condition on added Broadcast axes. |
 | slice/rule12 | proved | Generalize the existing unit-stride selected-Concat-segment proof to the paper's arbitrary positive stride, deriving both shifted bounds and output count. |
-| slice/rule13 | timeout_or_solver_failure | Prove or refute the paper's modulo-based Reverse/Slice bound formulas using actual bounded coordinates and all valid shapes, including empty slices; this is the remaining archived timeout. |

@@ -53,8 +53,9 @@ def category(path):
 def main():
     modules = sorted(OUT.glob('*.lean'))
     cases = json.loads((OUT / 'cases.json').read_text())
-    proved = [row for row in cases['cases'] if row['lean_result'] == 'proved']
-    expected = {ROOT / row['lean_proof_file'] for row in proved}
+    resolved = [row for row in cases['cases'] if row['lean_result'] in
+                {'proved', 'disproved_in_model'}]
+    expected = {ROOT / row['lean_proof_file'] for row in resolved}
     assert expected == set(modules), 'Every counted comparison module must have a credited case'
     closures = {p: closure(p) for p in modules}
     union = set().union(*closures.values())
@@ -73,9 +74,10 @@ def main():
                    'code_lines': sizes[p], 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()}
                   for p in sorted(union)],
         'cases': [{'id': row['id'], 'comparison_module': row['lean_proof_file'],
+                   'result': row['lean_result'],
                    'closure_modules': len(closures[ROOT / row['lean_proof_file']]),
                    'closure_code_lines': sum(sizes[p] for p in closures[ROOT / row['lean_proof_file']])}
-                  for row in proved],
+                  for row in resolved],
     }
     (OUT / 'dependency-costs.json').write_text(json.dumps(report, indent=2) + '\n')
     print(report['counts'])

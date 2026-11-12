@@ -136,12 +136,14 @@ def main():
         'divmod/rule06': ('Remainder', 'shifted_iota'),
         'divmod/rule07': ('Remainder', 'shifted_scalar'),
     })
+    refutations = {'slice/rule13': ('ReverseSliceFailure', 'rhs_invalid')}
+    witness_support = {'slice/rule13': ('ReverseSliceFailure', 'lhs_valid')}
     rerun = json.loads(RERUN.read_text())
     rerun_cases = {r['id']: r for r in rerun['cases']}
     assert len(rerun_cases) == 118 and set(rerun_cases) == {r['id'] for r in cases}
     triage = json.loads(TRIAGE.read_text())
     assert triage['schema'] == 1
-    assert set(triage['cases']) == {r['id'] for r in cases} - set(proofs)
+    assert set(triage['cases']) == {r['id'] for r in cases} - set(proofs) - set(refutations)
     logs = {'Add': 'add-check.log', 'ScalarArithmetic': 'scalar-check.log',
             'Broadcast': 'broadcast-check.log', 'Logical': 'logical-check.log',
             'Comparisons': 'comparisons-check.log', 'Select': 'select-check.log',
@@ -151,7 +153,8 @@ def main():
             'Dynamic': 'dynamic-check.log', 'Relabel': 'relabel-check.log',
             'Remainder': 'remainder-check.log',
             'SliceGeometry': 'slice-geometry-check.log', 'Dot': 'dot-check.log',
-            'Reduction': 'reduction-check.log', 'Pad': 'pad-check.log'}
+            'Reduction': 'reduction-check.log', 'Pad': 'pad-check.log',
+            'ReverseSliceFailure': 'reverse-slice-failure-check.log'}
     shape_support = {'dyslice/rule04': ('Dynamic', 'unclamped'),
                      'slice/rule10': ('Concatenate', 'paper_interval'),
                      'slice/rule11': ('Concatenate', 'paper_offset'),
@@ -168,7 +171,8 @@ def main():
                      'divmod/rule06': ('Remainder', 'signed_shift'),
                      'divmod/rule07': ('Remainder', 'signed_shift')}
     extra_support = {'slice/rule11': ('Concatenate', 'paper_interval')}
-    audited = list(proofs.items()) + list(shape_support.items()) + list(extra_support.items())
+    audited = (list(proofs.items()) + list(refutations.items()) + list(witness_support.items()) +
+               list(shape_support.items()) + list(extra_support.items()))
     for group, filename in logs.items():
         check = (OUT / filename).read_text()
         for key, (namespace, name) in audited:
@@ -214,6 +218,28 @@ def main():
             row['unresolved_reason'] = triage['cases'][case['id']]
             row['assessment_method'] = ('Paper declaration and existing proof dependencies '
                                         'reviewed; no timed proof attempt claimed by this triage.')
+        if case['id'] in refutations:
+            namespace, name = refutations[case['id']]
+            assert types == ['Bool', 'Int', 'Real'], case['id']
+            row.update(
+                lean_result='disproved_in_model', lean_types=types,
+                lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.lhs_valid',
+                               f'TensorRewrite.PaperComparison.{namespace}.{name}'],
+                lean_proof_file=f'comparisons/tensorright-v1/{namespace}.lean',
+                lean_proof_sha256=digest((OUT / f'{namespace}.lean').read_bytes()),
+                lean_check_log=f'comparisons/tensorright-v1/{logs[namespace]}',
+                model_witness_log='comparisons/tensorright-v1/reverse-slice-witness.stdout',
+                model_witness_patch='comparisons/tensorright-v1/reverse-slice-witness.patch',
+                model_witness=('One axis of extent 10; lhs Slice start 2, limit 8, stride 2, '
+                               'output length 3. The paper formulas require rhs start -3 and '
+                               'limit 3. The lhs and its index 0 are valid; the rhs Slice '
+                               'violates the required nonnegative start.'),
+                translation_confidence=('The Lean definitions reproduce the paper rule13 '
+                                        'count, start and end equations; for this positive '
+                                        'stride they use the same div/mod convention. '
+                                        'The artifact Slice requires nonnegative start. The fixed-input '
+                                        'TensorRight diagnostic independently reports lhs valid '
+                                        'and rhs invalid. No XLA conclusion is drawn.'))
         if case['id'] == 'dot/rule03':
             assert re.search(r'rewrite \"Dot\(A,Dot\(B,C\)\).*\" lhs lhs', declaration)
             row['benchmark_discrepancy'] = (
@@ -389,6 +415,8 @@ def main():
               'matching': 'runall sorted directories and main call order; printed labels checked except known shell expansion',
               'counts': {'cases': len(rows), 'paper_proved': 115, 'paper_failed': 3,
                          'lean_proved': sum(r['lean_result'] == 'proved' for r in rows),
+                         'lean_disproved_in_model': sum(
+                             r['lean_result'] == 'disproved_in_model' for r in rows),
                          'lean_unresolved': sum(r['lean_result'] == 'unresolved' for r in rows),
                          'lean_proved_paper_failed': sum(
                              r['lean_result'] == 'proved' and

@@ -3,7 +3,7 @@
   "scope": "118 executed paper-era model cases, not verified C++",
   "inventory_sha256": "bb7b21cb437f238b36e1802f4b0169442c5bf53460358a5f938699a2c4453b63",
   "archived_result_sha256": "2cb2cb8fd5cdc631679aaf0b764c31b26e069af13212a9808aefb0a5a01d520e",
-  "unresolved_triage_sha256": "b63759d205c747f92a022c5dc0b7e0c53e627c38cc9e4a9543602874b96a2e2d",
+  "unresolved_triage_sha256": "0024a9daa8be5684ca9f28fc339aa79968bbd74fbf73530709c3023b37e42db6",
   "independent_rerun_sha256": "6adb22fa32f000278d6c0866636833ab73e07f35fe70f36f6417ba15fe3e00d5",
   "archived_result_provenance": "author-provided result.txt; independent rerun recorded separately",
   "matching": "runall sorted directories and main call order; printed labels checked except known shell expansion",
@@ -12,7 +12,8 @@
     "paper_proved": 115,
     "paper_failed": 3,
     "lean_proved": 94,
-    "lean_unresolved": 24,
+    "lean_disproved_in_model": 1,
+    "lean_unresolved": 23,
     "lean_proved_paper_failed": 2
   },
   "cases": [
@@ -3629,12 +3630,24 @@
         "Real"
       ],
       "independent_rerun_result": "timeout_or_solver_failure",
-      "lean_result": "unresolved",
-      "lean_theorems": [],
-      "translation_confidence": "not assessed",
+      "lean_result": "disproved_in_model",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.ReverseSliceFailure.lhs_valid",
+        "TensorRewrite.PaperComparison.ReverseSliceFailure.rhs_invalid"
+      ],
+      "translation_confidence": "The Lean definitions reproduce the paper rule13 count, start and end equations; for this positive stride they use the same div/mod convention. The artifact Slice requires nonnegative start. The fixed-input TensorRight diagnostic independently reports lhs valid and rhs invalid. No XLA conclusion is drawn.",
       "implementation_result": "not established",
-      "unresolved_reason": "Prove or refute the paper's modulo-based Reverse/Slice bound formulas using actual bounded coordinates and all valid shapes, including empty slices; this is the remaining archived timeout.",
-      "assessment_method": "Paper declaration and existing proof dependencies reviewed; no timed proof attempt claimed by this triage."
+      "lean_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/ReverseSliceFailure.lean",
+      "lean_proof_sha256": "79afbfc32ee666c0df9e31dea6a3c9a32cad34058af670ae2d5e7765a7aa726f",
+      "lean_check_log": "comparisons/tensorright-v1/reverse-slice-failure-check.log",
+      "model_witness_log": "comparisons/tensorright-v1/reverse-slice-witness.stdout",
+      "model_witness_patch": "comparisons/tensorright-v1/reverse-slice-witness.patch",
+      "model_witness": "One axis of extent 10; lhs Slice start 2, limit 8, stride 2, output length 3. The paper formulas require rhs start -3 and limit 3. The lhs and its index 0 are valid; the rhs Slice violates the required nonnegative start."
     },
     {
       "id": "sub/rule00",
