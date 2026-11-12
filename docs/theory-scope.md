@@ -2,7 +2,7 @@
 
 The user's 2026-11-12 instruction supersedes the 2026-11-10 scope amendment.
 Follow [the updated experiment plan](experiment-plan.md). Planning has been updated;
-the proof campaign remains paused until resumed.
+the proof campaign resumed on 2026-11-12.
 
 For every uncertain requirement ask: **Is this required or assumed by the XLA
 rewrite paper we are comparing against?** Verify what it requires. Record and

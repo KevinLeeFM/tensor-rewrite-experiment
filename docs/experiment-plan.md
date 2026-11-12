@@ -5,8 +5,8 @@ execution plan. The objective is to prove as many mathematical rewrite rules as
 possible with little effort, or disprove actual implementations with runnable
 counterexamples. Correspondence between the translated model and C++ may be
 assumed with high confidence, just as for the paper's human-written translations.
-It is not a theorem we must prove. This update changes planning; the verification
-campaign remains paused until resumed. TODO.md remains the only scheduling index.
+It is not a theorem we must prove. The campaign was resumed on 2026-11-12.
+TODO.md remains the only scheduling index.
 
 [OBS 2026-11-12] Whenever scope is unclear, ask:
 **“Is this required or assumed by the XLA rewrite paper we are comparing against?”**

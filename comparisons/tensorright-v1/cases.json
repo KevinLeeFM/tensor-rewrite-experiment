@@ -1,0 +1,2667 @@
+{
+  "schema": 1,
+  "scope": "118 executed paper-era model cases, not verified C++",
+  "inventory_sha256": "bb7b21cb437f238b36e1802f4b0169442c5bf53460358a5f938699a2c4453b63",
+  "archived_result_sha256": "2cb2cb8fd5cdc631679aaf0b764c31b26e069af13212a9808aefb0a5a01d520e",
+  "archived_result_provenance": "author-provided result.txt, not an independent rerun",
+  "matching": "runall sorted directories and main call order; printed labels checked except known shell expansion",
+  "counts": {
+    "cases": 118,
+    "paper_proved": 115,
+    "paper_failed": 3,
+    "lean_proved": 4
+  },
+  "cases": [
+    {
+      "id": "add/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/add/Main.hs",
+      "source_line": 6,
+      "source_sha256": "ed3493852fbdbdeebe3a15e8ab374b13d13a6211c4cddf9ab270497843663748",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor1 <- constant @a \"a\" [adim --> map]\n  constTensor2 <- constant @a \"b\" [adim --> map]\n  lhs <- numBinOp Add (numBinOp Add tensor constTensor1) constTensor2\n  rhs <- numBinOp Add tensor (numBinOp Add constTensor1 constTensor2)\n  rewrite \"Add(Add(A,Const), Const2) ⇒ Add(A,Add(Const,Const2))\" lhs rhs\n",
+      "declaration_sha256": "eb3661c12edc0fa5e24a9003afb6ba1b22a668b17ec2b2be8f410f129721b43c",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(Add(A,Const), Const2) ⇒ Add(A,Add(Const,Const2))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "fccf64cd11162aeb8e70ae9fdc8ef9ec93351915a305fce9bf381fd97e16d584",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Add.reassociate"
+      ],
+      "translation_confidence": "Artifact original and replacement use same-shape elementwise addition; Lean proves a stronger arbitrary-tensor version over every commutative ring. Paper ordinary input tensors are finite integer/real values; constants are a special case. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Add.lean"
+    },
+    {
+      "id": "add/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/add/Main.hs",
+      "source_line": 17,
+      "source_sha256": "ed3493852fbdbdeebe3a15e8ab374b13d13a6211c4cddf9ab270497843663748",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 0 [adim --> map]\n  lhs <- numBinOp Add tensor constTensor\n  let rhs = tensor\n  rewrite \"Add(A,0)⇒A\" lhs rhs\n",
+      "declaration_sha256": "3bba5460da6887d49ee8d014c6f87b3a53b5babd09d22064af115d926be49758",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(A,0)⇒A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "2481875455fa61f54e881c50cd6ec13152dc40979efcbd24360cd12fe21f2405",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Add.zero_right"
+      ],
+      "translation_confidence": "Artifact original and replacement use same-shape elementwise addition; Lean proves a stronger arbitrary-tensor version over every commutative ring. Paper ordinary input tensors are finite integer/real values; constants are a special case. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Add.lean"
+    },
+    {
+      "id": "add/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/add/Main.hs",
+      "source_line": 27,
+      "source_sha256": "ed3493852fbdbdeebe3a15e8ab374b13d13a6211c4cddf9ab270497843663748",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 0 [adim --> map]\n  lhs <- numBinOp Add constTensor tensor\n  let rhs = tensor\n  rewrite \"Add(0,A)⇒A\" lhs rhs\n",
+      "declaration_sha256": "02d7657b5090250f7b5ad648bd60208403d2910005a9f6c5395377d3a7edc88d",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(0,A)⇒A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "bf07ca006ae59b2b7d6da0d31dfe376dc90c1f26d2141dfa217e8cc17d63bf85",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Add.zero_left"
+      ],
+      "translation_confidence": "Artifact original and replacement use same-shape elementwise addition; Lean proves a stronger arbitrary-tensor version over every commutative ring. Paper ordinary input tensors are finite integer/real values; constants are a special case. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Add.lean"
+    },
+    {
+      "id": "add/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/add/Main.hs",
+      "source_line": 37,
+      "source_sha256": "ed3493852fbdbdeebe3a15e8ab374b13d13a6211c4cddf9ab270497843663748",
+      "rule_declaration": "rule04 :: forall a. NumRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  t1 <- newTensor @a \"t1\" [adim --> map]\n  t2 <- constant @a \"a\" [adim --> map]\n  lhs <- numBinOp Add t1 t2\n  rhs <- numBinOp Add t2 t1\n  rewrite \"Add(Const,A) ⇒ Add(A,Const)\" lhs rhs\n",
+      "declaration_sha256": "2b29e425e35fb3ab6650edfcd3429e9e852a17a9180fc4dec04634d7e77dde34",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(Const,A) ⇒ Add(A,Const)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "0abfeba9ee5bee81e3388af646031a7c35eced2e650ecbb14145b809bab514b3",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "proved",
+      "lean_theorems": [
+        "TensorRewrite.PaperComparison.Add.commute"
+      ],
+      "translation_confidence": "Artifact original and replacement use same-shape elementwise addition; Lean proves a stronger arbitrary-tensor version over every commutative ring. Paper ordinary input tensors are finite integer/real values; constants are a special case. C++ correspondence is assumed, not checked.",
+      "implementation_result": "not established",
+      "lean_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_proof_file": "comparisons/tensorright-v1/Add.lean"
+    },
+    {
+      "id": "broadcast/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 6,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  tensor0 <- newTensor @a \"tensor0\" [adim0 --> map0]\n  tensor1 <- newTensor @a \"tensor1\" [adim0 --> map0]\n  lhs <- numBinOp Add (broadcast tensor0 [adim1 --> map1]) (broadcast tensor1 [adim1 --> map1])\n  rhs <- broadcast (numBinOp Add tensor0 tensor1) [adim1 --> map1]\n  rewrite \"Add(Broadcast(A),Broadcast(B)) ⇒ Broadcast(Add(A,B))\" lhs rhs\n",
+      "declaration_sha256": "ef3c7d0529ecd04456b7b76f5a5fc910dd5bfe99b0ff7dc366c2f8569c30c2bb",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(Broadcast(A),Broadcast(B)) ⇒ Broadcast(Add(A,B))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "59a5ca6b3a9bd9b4bc8e05b93d9c5f09b3a44a8c210d7190ff793e88c2df1e8f",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 17,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  tensor0 <- newTensor @a \"tensor0\" [adim0 --> map0]\n  tensor1 <- newTensor @a \"tensor1\" [adim0 --> map0]\n  lhs <- numBinOp Mul (broadcast tensor0 [adim1 --> map1]) (broadcast tensor1 [adim1 --> map1])\n  rhs <- broadcast (numBinOp Mul tensor0 tensor1) [adim1 --> map1]\n  rewrite \"Mul(Broadcast(A),Broadcast(B)) ⇒ Broadcast(Mul(A,B))\" lhs rhs\n",
+      "declaration_sha256": "609ba1f481aadb0a8234592a37325af2766542164880e4d0ad67e6ce4c9f74ae",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(Broadcast(A),Broadcast(B)) ⇒ Broadcast(Mul(A,B))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "7cf844f40d40b01cc16dd15b3f0f0f8259abe31217bbb8aee6da07cc6bd73f7a",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 28,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  lhsTensor <- constant @a \"a\" [adim --> map @@ \"label1\"]\n  rhsTensor <- constant @a \"a\" [adim --> map @@ \"label2\"]\n  lhs <- relabel lhsTensor [ByLabel \"label1\" --> ByLabel \"label2\"]\n  let rhs = rhsTensor\n  rewrite \"Transpose(Broadcast(Scalar)) ⇒ Broadcast(Scalar)\" lhs rhs\n",
+      "declaration_sha256": "c1b70304398e4310cb194dc1e44cf583107d29fcc0ad1ff7ec6d33f052f62be1",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Transpose(Broadcast(Scalar)) ⇒ Broadcast(Scalar)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "366836c5b4a65c6e402ccab9092adde0b74409b5d641ebb2bb800954ce8ec5c7",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 38,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  lhs <- reverseTensor (constant @a \"a\" [adim --> map]) [ByAdim adim]\n  rhs <- constant @a \"a\" [adim --> map]\n  rewrite \"Reverse(Broadcast(Scalar)) ⇒ Broadcast(Scalar)\" lhs rhs\n",
+      "declaration_sha256": "154796c4aee34428a1ea57cdf95e291d22ec4cf4c8782bc8678641ce4ea6b1e7",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Reverse(Broadcast(Scalar)) ⇒ Broadcast(Scalar)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "a162c24c3c62fd5b2e42c5c58f29d58636b837ecaa5ea20b042a973864aae448",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 46,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule05 :: forall a. AnyDTypeRule a\nrule05 _ = do\n  adim <- newAdim \"adim\"\n  [origSizeMap, newSizeMap, startMap, endMap, strideMap] <- newMaps [\"origSizeMap\", \"newSizeMap\", \"startMap\", \"endMap\", \"strideMap\"] adim\n  lhs <- slice (constant @a \"a\" [adim --> origSizeMap]) [adim --> startMap] [adim --> endMap] [adim --> strideMap]\n  rhs <- constant @a \"a\" [adim --> newSizeMap]\n  precondition [startMap] $ \\[start] -> start .>= 0\n  precondition [strideMap] $ \\[stride] -> stride .>= 1\n  precondition [origSizeMap, endMap] $ \\[origSize, end] -> end .<= origSize\n  precondition [newSizeMap, startMap, endMap, strideMap] $\n    \\[newSize, start, end, stride] -> end .== start + newSize * stride\n  rewrite \"Slice(Broadcast(Scalar)) ⇒ Broadcast(Scalar)\" lhs rhs\n",
+      "declaration_sha256": "6725b423e2282fffa776a0649c13f879d8a2043eec672ac1f3ccc936f6dc437c",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Broadcast(Scalar)) ⇒ Broadcast(Scalar)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "148c4c6552d3870b2dc23c2e4c73d3c9cc5b0b9bd5413c1a8c142f63e4b14f2c",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 59,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule06 :: forall a. AnyDTypeRule a\nrule06 _ = do\n  adim <- newAdim \"adim\"\n  [origSizeMap, newSizeMap, startMap] <- newMaps [\"origSizeMap\", \"newSizeMap\", \"startMap\"] adim\n  lhs <- dynamicSlice (constant @a \"a\" [adim --> origSizeMap]) DySlice {start = [adim --> startMap], sizes = [adim --> newSizeMap]}\n  rhs <- constant @a \"a\" [adim --> newSizeMap]\n  precondition [startMap] $ \\[start] -> start .>= 0\n  precondition [origSizeMap, startMap, newSizeMap] $\n    \\[origSize, start, newSize] -> start + newSize .<= origSize\n  rewrite \"DynamicSlice(Broadcast(Scalar)) ⇒ Broadcast(Scalar)\" lhs rhs\n",
+      "declaration_sha256": "ca0ab36d962e72233f07dd52bcd1ad83730ab0ac18070cdb2b842c1297bab915",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicSlice(Broadcast(Scalar)) ⇒ Broadcast(Scalar)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5937d19a54430a8eabea5a216aeb1855d1a8363e00136611efe0f96c5c2a0ba0",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 70,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule07 :: DSLContext Rewrite\nrule07 = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  lhs <- broadcast (iota [adim0 --> map0] (ByAdim adim0)) [adim1 --> map1]\n  rhs <- iota [adim0 --> map0, adim1 --> map1] (ByAdim adim0)\n  rewrite \"Broadcast(Iota) ⇒ Iota\" lhs rhs\n",
+      "declaration_sha256": "d1ad09dc7b1f5454739a14d4fb05c9c80051f9d29b9c89b3c44b4bb0521e16e6",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Broadcast(Iota) ⇒ Iota",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "8fc8a0ca0866af1be7410a2e5cda4081c86805d5063e1e00605c9522669efeb5",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "broadcast/rule08",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/broadcast/Main.hs",
+      "source_line": 79,
+      "source_sha256": "3345416a141fff6d3f5a203ec7a0d8e52f72d3af9997a552dc8ff72d85d1859a",
+      "rule_declaration": "rule08 :: forall a. AnyDTypeRule a\nrule08 _ = do\n  [adim0, adim1, adim2] <- newAdims [\"adim0\", \"adim1\", \"adim2\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  map2 <- newMap \"map2\" adim2\n  tensor <- newTensor @a \"tensor\" [adim0 --> map0]\n  lhs <- broadcast (broadcast tensor [adim1 --> map1]) [adim2 --> map2]\n  rhs <- broadcast tensor [adim1 --> map1, adim2 --> map2]\n  rewrite \"Broadcast(Broadcast(A, shape, dims), shape2, dims2) ⇒ Broadcast(A, shape3, dims3)\" lhs rhs\n",
+      "declaration_sha256": "c089c4019924df5c2aa8fab59028a4bdd21b370cf4dbd2119ffb00b57434c3a6",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Broadcast(Broadcast(A, shape, dims), shape2, dims2) ⇒ Broadcast(A, shape3, dims3)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "ecf2c42c85216e72f1537272bee40377d54676fb555c96ee0349bf076983fbdc",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "clamp/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/clamp/Main.hs",
+      "source_line": 8,
+      "source_sha256": "d4b71836ee263c55f26274b39345a6b2414b98d713d962aebdbf551d4dbf117e",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @a \"a\" [adim --> map]\n  const1 <- newTensor @a \"const1\" [adim --> map]\n  const2 <- newTensor @a \"const2\" [adim --> map]\n  lhs <- clamp const1 (clamp const1 a const2) const2\n  rhs <- clamp const1 a const2\n  rewrite \"Clamp(Const1,Clamp(Const1,A,Const2),Const2) ⇒ Clamp(Const1,A,Const2)\" lhs rhs\n",
+      "declaration_sha256": "10cbd7bc1be9418220e14378251530ece00757bafbebe1f66009e1814679a330",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Clamp(Const1,Clamp(Const1,A,Const2),Const2) ⇒ Clamp(Const1,A,Const2)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "56feb6ed99145fe1d531fe4ec895abd9b04cf88613114ed2700e81a8fb49801e",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "clamp/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/clamp/Main.hs",
+      "source_line": 19,
+      "source_sha256": "d4b71836ee263c55f26274b39345a6b2414b98d713d962aebdbf551d4dbf117e",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @a \"a\" [adim --> map]\n  const1 <- newTensor @a \"const1\" [adim --> map]\n  const2 <- newTensor @a \"const2\" [adim --> map]\n  forallIdx <- newMap \"forallIdx\" adim\n  numTensorAssumption\n    [const1, const2]\n    forallIdx\n    (\\[c1, c2] -> simpleMerge $ do\n      u <- runExceptT $ tensorValLt c1 c2\n      case u of\n        Left _ -> con True\n        Right v -> return v\n      )\n  lhs <- numBinOp Max const1 (numBinOp Min a const2)\n  rhs <- clamp const1 a const2\n  rewrite \"Max(Broadcast(Const), Min(A, Broadcast(Const2))) ⇒ Clamp(A,Const,Const2)\" lhs rhs\n",
+      "declaration_sha256": "83a547cfa7260e641c895701c2a60548a4dbc54f03a3f4ac435609682f11a2df",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Max(Broadcast(Const), Min(A, Broadcast(Const2))) ⇒ Clamp(A,Const,Const2)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "bbb76418e62bd79930c90924c80e5d6f5d74f75aeff6037a262cc4cd2502168c",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "clamp/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/clamp/Main.hs",
+      "source_line": 40,
+      "source_sha256": "d4b71836ee263c55f26274b39345a6b2414b98d713d962aebdbf551d4dbf117e",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @a \"a\" [adim --> map]\n  const1 <- newTensor @a \"const1\" [adim --> map]\n  const2 <- newTensor @a \"const2\" [adim --> map]\n  lhs <- numBinOp Min const1 (numBinOp Max a const2)\n  rhs <- clamp const2 a const1\n  rewrite \"Min(Broadcast(Const), Max(A, Broadcast(Const2))) ⇒ Clamp(A,Const,Const2)\" lhs rhs\n",
+      "declaration_sha256": "c1af26297f979d37a27bddc510a78e487eb9a661918e1db1099b887cdb564af9",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Min(Broadcast(Const), Max(A, Broadcast(Const2))) ⇒ Clamp(A,Const,Const2)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "352c2da27e6b503f3d2eea8c6f473483285f236f5a7b80e08ab5c5f5327dd4c7",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "compare/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/compare/Main.hs",
+      "source_line": 16,
+      "source_sha256": "3b7e665d873693c2831bdc5318e34ace113bdc5ccd528b53f97a9c93ead8b40a",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 = constructRule \"Gt(A, A) ⇒ False\" Gt False\n",
+      "declaration_sha256": "15acb1cabd382e53fb459e8f04e58df095e31c8b6712798e0d6ed4bee28b508f",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Gt(A, A) ⇒ False",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "b096be04b0ea5082c25102e55453c2831e09bc54d588e19c182e5f864791fb68",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "compare/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/compare/Main.hs",
+      "source_line": 19,
+      "source_sha256": "3b7e665d873693c2831bdc5318e34ace113bdc5ccd528b53f97a9c93ead8b40a",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 = constructRule \"Lt(A, A) ⇒ False\" Lt False\n",
+      "declaration_sha256": "6020bd14fc49948752ec9aa6e6dd2bae7891fce38a49ad59ab9b9f83c80b205e",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Lt(A, A) ⇒ False",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "285ad200ea622b200630160b9f1349edf7d15c28f2ef033549e32e760555a027",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "compare/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/compare/Main.hs",
+      "source_line": 22,
+      "source_sha256": "3b7e665d873693c2831bdc5318e34ace113bdc5ccd528b53f97a9c93ead8b40a",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 = constructRule \"Ne(A, A) ⇒ False\" Ne False\n",
+      "declaration_sha256": "77961bec6d7fa84641c448742bc35f5e09a1ed22af6bffc085582fb0c13401b6",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Ne(A, A) ⇒ False",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "0fba002d7fd03d7b9a2bb50d5f31e5c93a7aeac45cbd4892c969f44aa6000e8d",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "compare/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/compare/Main.hs",
+      "source_line": 25,
+      "source_sha256": "3b7e665d873693c2831bdc5318e34ace113bdc5ccd528b53f97a9c93ead8b40a",
+      "rule_declaration": "rule04 :: forall a. NumRule a\nrule04 = constructRule \"Ge(A, A) ⇒ True\" Ge True\n",
+      "declaration_sha256": "a986a3798ea84c939e74fe54f3213d3ffefea35ba986eedaa345e3263239a423",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Ge(A, A) ⇒ True",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "11bd29d94eec2399a1f7ccba55faddce3e34d5769c3977ae04ec7ff1489f7eb0",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "compare/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/compare/Main.hs",
+      "source_line": 28,
+      "source_sha256": "3b7e665d873693c2831bdc5318e34ace113bdc5ccd528b53f97a9c93ead8b40a",
+      "rule_declaration": "rule05 :: forall a. NumRule a\nrule05 = constructRule \"Le(A, A) ⇒ True\" Le True\n",
+      "declaration_sha256": "e4255be49ca7f4260a5c0ec35064cfb6af17bee237239e2ce9003b4b28720897",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Le(A, A) ⇒ True",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "f18f5bc501cea39a1a018b864320823f99bc203d5b14aeacba4296cf4ddc2f3d",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "compare/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/compare/Main.hs",
+      "source_line": 31,
+      "source_sha256": "3b7e665d873693c2831bdc5318e34ace113bdc5ccd528b53f97a9c93ead8b40a",
+      "rule_declaration": "rule06 :: forall a. NumRule a\nrule06 = constructRule \"Eqv(A, A) ⇒ True\" Eqv True\n",
+      "declaration_sha256": "c3d234b15a2873919e5ec1f553b5a9bf1356d34ac31acf1ceaec0dff2a6e5ae0",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Eqv(A, A) ⇒ True",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "15769a8583650f0ce0ad8d5cdaf8390bd320c1fb799c1b446a7952fab14ac506",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 6,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  adim0size <- newMap \"adim0size\" adim0\n  [adim1size0, adim1size1] <- newMaps [\"adim1size0\", \"adim1size1\"] adim1\n  t1 <- newTensor @a \"t1\" [adim0 --> adim0size, adim1 --> adim1size0 @@ \"label1\"]\n  t2 <- newTensor @a \"t2\" [adim0 --> adim0size, adim1 --> adim1size1 @@ \"label1\"]\n  lhs <- concatTensorList [t1, t2] (ByLabel \"label1\")\n  rhs <- concatTensor t1 t2 (ByLabel \"label1\")\n  rewrite \"ConcatList(A, B) ⇒ Concat(A, B)\" lhs rhs\n",
+      "declaration_sha256": "becf80e4ffcd4e4e128ae5691444fef5e427ac1399597507268bcc54f28cd171",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "ConcatList(A, B) ⇒ Concat(A, B)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "e169c7d508f681487761182c84b1ef43932b8c2d3822e58b1e5831f551c30bea",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 17,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  adim0size <- newMap \"adim0size\" adim0\n  [adim1size0, adim1size1, adim1size2] <- newMaps [\"adim1size0\", \"adim1size1\", \"adim1size2\"] adim1\n  t1 <- newTensor @a \"t1\" [adim0 --> adim0size, adim1 --> adim1size0 @@ \"label1\"]\n  t2 <- newTensor @a \"t2\" [adim0 --> adim0size, adim1 --> adim1size1 @@ \"label1\"]\n  t3 <- newTensor @a \"t3\" [adim0 --> adim0size, adim1 --> adim1size2 @@ \"label1\"]\n  lhs <- concatTensor t1 (concatTensor t2 t3 (ByLabel \"label1\")) (ByLabel \"label1\")\n  rhs <- concatTensor (concatTensor t1 t2 (ByLabel \"label1\")) t3 (ByLabel \"label1\")\n  rewrite \"Concat(A, Concat(B, C)) ⇒ Concat(Concat(A, B), C)\" lhs rhs\n",
+      "declaration_sha256": "2c2f933ddf3115fc7629a11ddfe40baaabe714a454a83b24d5276c4f9af482a5",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Concat(A, Concat(B, C)) ⇒ Concat(Concat(A, B), C)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "25215c9f1dffd4556b9f285ba52300e1dc4a41bf44d3002d62f50f3e9e65a6d2",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 29,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  adim0size <- newMap \"adim0size\" adim0\n  [adim1size0, adim1size1, adim1size2] <- newMaps [\"adim1size0\", \"adim1size1\", \"adim1size2\"] adim1\n  t1 <- newTensor @a \"t1\" [adim0 --> adim0size, adim1 --> adim1size0 @@ \"label1\"]\n  t2 <- newTensor @a \"t2\" [adim0 --> adim0size, adim1 --> adim1size1 @@ \"label1\"]\n  t3 <- newTensor @a \"t3\" [adim0 --> adim0size, adim1 --> adim1size2 @@ \"label1\"]\n  lhs <- concatTensorList [t1, t2, t3] (ByLabel \"label1\")\n  rhs <- concatTensor t1 (concatTensor t2 t3 (ByLabel \"label1\")) (ByLabel \"label1\")\n  rewrite \"ConcatList(A, B, C) ⇒ Concat(A, Concat(B, C))\" lhs rhs\n",
+      "declaration_sha256": "ee696f8efd90a5a15c6fb0557100d895c4d9d30da5dc0860bf62433be2d6a582",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "ConcatList(A, B, C) ⇒ Concat(A, Concat(B, C))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "722e2594a61b14b3aa1547dde6317f303826a6389ed83de2dd6fc05553bd693d",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 41,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [adim0sizeMap, adim0endMap, adim0startMap, adim0strideMap] <- newMaps [\"adim0sizeMap\", \"adim0endMap\", \"adim0startMap\", \"adim0strideMap\"] adim0\n  [adim1sizeMap, adim1startMap1, adim1endMap1, adim1startMap2, adim1endMap2, adim1strideMap] <- newMaps [\"adim1sizeMap\", \"adim1startMap1\", \"adim1endMap1\", \"adim1startMap2\", \"adim1endMap2\", \"adim1strideMap\"] adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> adim0sizeMap, adim1 --> adim1sizeMap]\n  lhs <- concatTensor (slice tensor [adim0 --> adim0startMap, adim1 --> adim1startMap1] [adim0 --> adim0endMap, adim1 --> adim1endMap1] [adim0 --> adim0strideMap, adim1 --> adim1strideMap]) (slice tensor [adim0 --> adim0startMap, adim1 --> adim1startMap2] [adim0 --> adim0endMap, adim1 --> adim1endMap2] [adim0 --> adim0strideMap, adim1 --> adim1strideMap]) (ByAdim adim1)\n  rhs <- slice tensor [adim0 --> adim0startMap, adim1 --> adim1startMap1] [adim0 --> adim0endMap, adim1 --> adim1endMap2] [adim0 --> adim0strideMap, adim1 --> adim1strideMap]\n  precondition [adim1strideMap] $ \\[adim1stride] -> adim1stride .== 1\n  precondition [adim1startMap1, adim1startMap2] $\n    \\[adim1start1, adim1start2] -> adim1start1 .<= adim1start2\n  precondition [adim1endMap1, adim1endMap2] $\n    \\[adim1end1, adim1end2] -> adim1end1 .<= adim1end2\n  precondition [adim1endMap1, adim1startMap2] $\n    \\[adim1end1, adim1start2] -> adim1end1 .== adim1start2\n  rewrite \"Concat(Slice(A), Slice(A)) ⇒ Slice(A)\" lhs rhs\n",
+      "declaration_sha256": "f6aeb88bac3f2826c185f5225e06b8c39767d745d6f49e106f3f3f9e6bc6e2d8",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Concat(Slice(A), Slice(A)) ⇒ Slice(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "d13d89da07f5ee1be3694cb82d6beccbb2fac9538195ccff645081ffc6984408",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 58,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule05 :: forall a. AnyDTypeRule a\nrule05 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, lowMap0, zeroMap0] <- newMaps [\"sizeMap0\", \"lowMap0\", \"zeroMap0\"] adim0\n  [sizeMap1, zeroMap1] <- newMaps [\"sizeMap1\", \"zeroMap1\"] adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0, adim1 --> sizeMap1]\n  lhs <- concatTensor (constant @a \"a\" [adim0 --> lowMap0, adim1 --> sizeMap1]) tensor (ByAdim adim0)\n  rhs <- pad tensor (\"a\" :: a) [adim0 --> lowMap0, adim1 --> zeroMap1] [adim0 --> zeroMap0, adim1 --> zeroMap1] [adim0 --> zeroMap0, adim1 --> zeroMap1]\n  precondition [lowMap0] $ \\[low0] -> low0 .>= 0\n  precondition [zeroMap0] $ \\[zero0] -> zero0 .== 0\n  precondition [zeroMap1] $ \\[zero1] -> zero1 .== 0\n  rewrite \"Concat(Broadcast(Scalar), B) ⇒ Pad(B, scalar, low)\" lhs rhs\n",
+      "declaration_sha256": "daa689649d778bbee5de4f7cfed9bc1df3739ddbad1d4fbf4b05f71af67d05a1",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Concat(Broadcast(Scalar), B) ⇒ Pad(B, scalar, low)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "fe46cf73d2d1383e5b2534904e671a7f5d768e230508b957f2242ae51f2a2f48",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 71,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule06 :: forall a. AnyDTypeRule a\nrule06 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, highMap0, zeroMap0] <- newMaps [\"sizeMap0\", \"highMap0\", \"zeroMap0\"] adim0\n  [sizeMap1, zeroMap1] <- newMaps [\"sizeMap1\", \"zeroMap1\"] adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0, adim1 --> sizeMap1]\n  lhs <- concatTensor tensor (constant @a \"a\" [adim0 --> highMap0, adim1 --> sizeMap1]) (ByAdim adim0)\n  rhs <- pad tensor (\"a\" :: a) [adim0 --> zeroMap0, adim1 --> zeroMap1] [adim0 --> zeroMap0, adim1 --> zeroMap1] [adim0 --> highMap0, adim1 --> zeroMap1]\n  precondition [highMap0] $ \\[high0] -> high0 .>= 0\n  precondition [zeroMap0] $ \\[zero0] -> zero0 .== 0\n  precondition [zeroMap1] $ \\[zero1] -> zero1 .== 0\n  rewrite \"Concat(A, Broadcast(Scalar)) ⇒ Pad(A, scalar, high)\" lhs rhs\n",
+      "declaration_sha256": "6b80ccf2e3d3e10098b3bc1a2d4329ac041edfdbefad373cd707d4540a8b0424",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Concat(A, Broadcast(Scalar)) ⇒ Pad(A, scalar, high)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "43703f0d0e8e7864aeba67a8cb45b6a8e6b9b124050ecd06b0f66fd87d36778a",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "concat/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/concat/Main.hs",
+      "source_line": 84,
+      "source_sha256": "47163e062d1097bce64db8301850fb26ef30ff61500268e97b4943c79f0f9f71",
+      "rule_declaration": "rule07 :: forall a. AnyDTypeRule a\nrule07 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  adim0size <- newMap \"adim0size\" adim0\n  [adim1size0, adim1size1, adim1size2] <- newMaps [\"adim1size0\", \"adim1size1\", \"adim1size2\"] adim1\n  t1 <- newTensor @a \"t1\" [adim0 --> adim0size, adim1 --> adim1size0 @@ \"label1\"]\n  t2 <- newTensor @a \"t2\" [adim0 --> adim0size, adim1 --> adim1size1 @@ \"label1\"]\n  t3 <- newTensor @a \"t3\" [adim0 --> adim0size, adim1 --> adim1size2 @@ \"label1\"]\n  lhs <- concatTensor t1 (concatTensor t2 t3 (ByLabel \"label1\")) (ByLabel \"label1\")\n  rhs <- concatTensorList [t1, t2, t3] (ByLabel \"label1\")\n  rewrite \"Concat(A, Concat(B, C)) ⇒ ConcatList(A, B, C)\" lhs rhs\n",
+      "declaration_sha256": "53e490b8ee2f275d98279f2c257468e2792ad4826480a8ab742558b6b0cec4aa",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Concat(A, Concat(B, C)) ⇒ ConcatList(A, B, C)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "aec43d7e514f6b8dbb117a6f7b07844399ec330df15c60a7f7bed106111842df",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "conv/rule00",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/conv/Main.hs",
+      "source_line": 8,
+      "source_sha256": "d320a560d865796477af4f93df6305c476083fd67fc0da1220eb22aa02ae0c37",
+      "rule_declaration": "rule00 :: forall a. NumRule a\nrule00 _ = do\n  [batch, feature, output, spatial] <-\n    newAdims [\"batch\", \"feature\", \"output\", \"spatial\"]\n\n  batchShape <- newMap \"batchShape\" batch\n  featureShape <- newMap \"featureShape\" feature\n  outputShape <- newMap \"outputShape\" output\n  inputSpatialShape <- newMap \"inputSpatialShape\" spatial\n  weightSpatialShape <- newMap \"weightSpatialShape\" spatial\n\n  inputs <-\n    newTensor @a\n      \"inputs\"\n      [ batch --> batchShape,\n        feature --> featureShape,\n        spatial --> inputSpatialShape\n      ]\n  weights <-\n    newTensor @a\n      \"weights\"\n      [ feature --> featureShape,\n        output --> outputShape,\n        spatial --> weightSpatialShape\n      ]\n\n  strides <- newConstMap \"strides\" 1 spatial\n  -- Turns out that non-negative is required, even if we support negative\n  -- padding. The reason is that when x contains negative indices,\n  -- and x + y >= 0, then\n  --\n  -- pad(pad(A, x), y) /= pad(A, x + y)\n  [low, high] <- newNonNegMaps [\"low\", \"high\"] spatial\n  ldilation <- newConstMap \"ldilation\" 1 spatial\n  rdilation <- newMap \"rdilation\" spatial\n  [plow, phigh] <- newNonNegMaps [\"plow\", \"phigh\"] spatial\n  pint <- newMap \"pint\" spatial\n  newlow <- sumMap \"newlow\" [low, plow]\n  newint <- combineMap \"newlow\" (\\[a, b] -> a + b) [ldilation, pint]\n  newhigh <- combineMap \"newhigh\" sum [high, phigh]\n\n  [siMapLhsFeature, siMapRhsFeature] <-\n    newMaps [\"siMapLhsFeature\", \"siMapRhsFeature\"] feature\n  [siMapLhsSpatial, siMapRhsSpatial] <-\n    newMaps [\"siMapLhsSpatial\", \"siMapRhsSpatial\"] spatial\n\n  lhsInputsPadded <-\n    pad inputs (0 :: a) $\n      Padding\n        { low = [spatial --> plow],\n          interior = [spatial --> pint],\n          high = [spatial --> phigh]\n        }\n  lhs <-\n    conv\n      lhsInputsPadded\n      weights\n      ConvConfig\n        { batchAdims = [ByAdim batch],\n          featureAdims = [ByAdim feature],\n          outputFeatureAdims = [ByAdim output],\n          strides = [spatial --> strides],\n          contractingSIMaps =\n            [feature --> siMapLhsFeature, spatial --> siMapLhsSpatial]\n        }\n      ConvPadding\n        { low = [spatial --> low],\n          ldilation = [spatial --> ldilation],\n          high = [spatial --> high],\n          rdilation = [spatial --> rdilation]\n        }\n  monitorExprOnFailure \"inputs\" inputs\n  monitorExprOnFailure \"weights\" weights\n  monitorExprOnFailure \"lhsInputPadded\" lhsInputsPadded\n  monitorExprOnFailure \"lhs\" lhs\n  monitorMapOnFailure \"plow\" (ByAdim spatial) plow\n  monitorMapOnFailure \"pint\" (ByAdim spatial) pint\n  monitorMapOnFailure \"phigh\" (ByAdim spatial) phigh\n  monitorMapOnFailure \"low\" (ByAdim spatial) low\n  monitorMapOnFailure \"ldilation\" (ByAdim spatial) ldilation\n  monitorMapOnFailure \"high\" (ByAdim spatial) high\n\n  monitorMapOnFailure \"newlow\" (ByAdim spatial) newlow\n  monitorMapOnFailure \"newint\" (ByAdim spatial) newint\n  monitorMapOnFailure \"newhigh\" (ByAdim spatial) newhigh\n  monitorMapOnFailure \"rdilation\" (ByAdim spatial) rdilation\n\n  rhs <-\n    conv\n      inputs\n      weights\n      ConvConfig\n        { batchAdims = [ByAdim batch],\n          featureAdims = [ByAdim feature],\n          outputFeatureAdims = [ByAdim output],\n          strides = [spatial --> strides],\n          contractingSIMaps =\n            [feature --> siMapRhsFeature, spatial --> siMapRhsSpatial]\n        }\n      ConvPadding\n        { low = [spatial --> newlow],\n          ldilation = [spatial --> newint],\n          high = [spatial --> newhigh],\n          rdilation = [spatial --> rdilation]\n        }\n\n  siRelation\n    [siMapLhsFeature, siMapRhsFeature]\n    $ \\[vsiMapLhsFeature, vsiMapRhsFeature] ->\n      vsiMapLhsFeature .== vsiMapRhsFeature\n  siRelation\n    [siMapLhsSpatial, siMapRhsSpatial]\n    $ \\[vsiMapLhsSpatial, vsiMapRhsSpatial] ->\n      vsiMapLhsSpatial .== vsiMapRhsSpatial\n  checkSIMap\n    [siMapLhsFeature, siMapLhsSpatial]\n    [siMapRhsFeature, siMapRhsSpatial]\n  rewrite\n    ( T.intercalate\n        \"\\n\"\n        [ \"Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)\",\n          \" ⇒ \",\n          \"Conv(input, weights, convLow + innerLow, innerInt, convHigh + innerHigh, rdilation)\"\n        ]\n    )\n    lhs\n    rhs\n",
+      "declaration_sha256": "a47a9b94a188ab6525652f45eb796d6eb71aacd096a22e6fb8a2e28e6fd39e79",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Conv(Pad(input, innerLow, innerInt, innerHigh), weights, convLow, 0, convHigh, rdilation)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "91e3a96a8059b14b2fd3c62e99f5cb73ac8e409bf7af2c968b694812c69ef18f",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "conv/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/conv/Main.hs",
+      "source_line": 136,
+      "source_sha256": "d320a560d865796477af4f93df6305c476083fd67fc0da1220eb22aa02ae0c37",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  [batch, feature, output, spatial] <-\n    newAdims [\"batch\", \"feature\", \"output\", \"spatial\"]\n\n  batchShape <- newMap \"batchShape\" batch\n  featureShape <- newMap \"featureShape\" feature\n  outputShape <- newMap \"outputShape\" output\n  inputSpatialShape <- newMap \"inputSpatialShape\" spatial\n  weightSpatialShape <- newMap \"weightSpatialShape\" spatial\n\n  inputs <-\n    newTensor @a\n      \"inputs\"\n      [ batch --> batchShape,\n        feature --> featureShape,\n        spatial --> inputSpatialShape\n      ]\n  weights <-\n    newTensor @a\n      \"weights\"\n      [ feature --> featureShape,\n        output --> outputShape,\n        spatial --> weightSpatialShape\n      ]\n\n  strides <- newConstMap \"strides\" 1 spatial\n  [convLow, convHigh] <- newNonNegMaps [\"convLow\", \"convHigh\"] spatial\n  ldilation <- newConstMap \"ldilation\" 0 spatial\n  [innerLow, innerHigh] <- newConstMaps [\"innerLow\", \"innerHigh\"] 0 spatial\n  innerInt <- newMap \"innerInt\" spatial\n  lhsRdilation <- newConstMap \"lhsRdilation\" 0 spatial\n\n  [siMapLhsFeature, siMapRhsFeature] <-\n    newMaps [\"siMapLhsFeature\", \"siMapRhsFeature\"] feature\n  [siMapLhsSpatial, siMapRhsSpatial] <-\n    newMaps [\"siMapLhsSpatial\", \"siMapRhsSpatial\"] spatial\n\n  lhsWeightPadded <-\n    pad weights (0 :: a) $\n      Padding\n        { low = [spatial --> innerLow],\n          interior = [spatial --> innerInt],\n          high = [spatial --> innerHigh]\n        }\n  lhs <-\n    conv\n      inputs\n      lhsWeightPadded\n      ConvConfig\n        { batchAdims = [ByAdim batch],\n          featureAdims = [ByAdim feature],\n          outputFeatureAdims = [ByAdim output],\n          strides = [spatial --> strides],\n          contractingSIMaps =\n            [feature --> siMapLhsFeature, spatial --> siMapLhsSpatial]\n        }\n      ConvPadding\n        { low = [spatial --> convLow],\n          ldilation = [spatial --> ldilation],\n          high = [spatial --> convHigh],\n          rdilation = [spatial --> lhsRdilation]\n        }\n\n  rhs <-\n    conv\n      inputs\n      weights\n      ConvConfig\n        { batchAdims = [ByAdim batch],\n          featureAdims = [ByAdim feature],\n          outputFeatureAdims = [ByAdim output],\n          strides = [spatial --> strides],\n          contractingSIMaps =\n            [feature --> siMapRhsFeature, spatial --> siMapRhsSpatial]\n        }\n      ConvPadding\n        { low = [spatial --> convLow],\n          ldilation = [spatial --> ldilation],\n          high = [spatial --> convHigh],\n          rdilation = [spatial --> innerInt]\n        }\n\n  siRelation\n    [siMapLhsFeature, siMapRhsFeature]\n    $ \\[vsiMapLhsFeature, vsiMapRhsFeature] -> vsiMapLhsFeature .== vsiMapRhsFeature\n  siRelation\n    [siMapLhsSpatial, siMapRhsSpatial]\n    $ \\[vsiMapLhsSpatial, vsiMapRhsSpatial] -> vsiMapLhsSpatial .== vsiMapRhsSpatial\n  checkSIMap\n    [siMapLhsFeature, siMapLhsSpatial]\n    [siMapRhsFeature, siMapRhsSpatial]\n  rewrite\n    ( T.intercalate\n        \"\\n\"\n        [ \"Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)\",\n          \" ⇒ \",\n          \"Conv(input, weights, stride=1, convLow, ldilation, convHigh, innerInt)\"\n        ]\n    )\n    lhs\n    rhs\n\n{-\n-- Skipped because the set being reduced in lhs and rhs are different\n",
+      "declaration_sha256": "5bf774cdb957559390205749a86c22fefcaca21cc3e72b003e001060e668e74d",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Conv(input, Pad(weights, 0, innerInt, 0), stride=1, convLow, ldilation, convHigh, 0)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "090027c9cf1cda43f4ad736f3bf68f9dae4aac229c0d219d29faf430e2715279",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "conv/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/conv/Main.hs",
+      "source_line": 354,
+      "source_sha256": "d320a560d865796477af4f93df6305c476083fd67fc0da1220eb22aa02ae0c37",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 _ = do\n  [batch, feature, output, spatialTrivial, spatialOne] <-\n    newAdims [\"batch\", \"feature\", \"output\", \"spatialTrivial\", \"spatialOne\"]\n\n  batchShape <- newMap \"batchShape\" batch\n  featureShape <- newMap \"featureShape\" feature\n  outputShape <- newMap \"outputShape\" output\n  spatialTrivialShape <- newMap \"spatialTrivialShape\" spatialTrivial\n  inputSpatialOneShape <- newMap \"inputSpatialOneShape\" spatialOne\n  weightSpatialOneShape <- newConstMap \"weightSpatialOneShape\" 1 spatialOne\n\n  inputs <-\n    newTensor @a\n      \"inputs\"\n      [ batch --> batchShape,\n        feature --> featureShape,\n        spatialTrivial --> spatialTrivialShape,\n        spatialOne --> inputSpatialOneShape\n      ]\n  weights <-\n    newTensor @a\n      \"weights\"\n      [ feature --> featureShape,\n        output --> outputShape,\n        spatialTrivial --> spatialTrivialShape,\n        spatialOne --> weightSpatialOneShape\n      ]\n  [lowTrivial, highTrivial] <- newConstMaps [\"low\", \"high\"] 0 spatialTrivial\n  [ldilationTrivial, rdilationTrivial] <-\n    newConstMaps [\"ldilation\", \"rdilation\"] 1 spatialTrivial\n  stridesTrivial <- newConstMap \"strides\" 1 spatialTrivial\n\n  [lowOne, highOne] <- newConstMaps [\"low\", \"high\"] 0 spatialOne\n  [ldilationOne, rdilationOne] <-\n    newConstMaps [\"ldilation\", \"rdilation\"] 1 spatialOne\n  stridesOne <- newConstMap \"strides\" 1 spatialOne\n\n  [siMapLhsFeature, siMapRhsFeature] <-\n    newMaps [\"siMapLhsFeature\", \"siMapRhsFeature\"] feature\n  [siMapLhsSpatialTrivial, siMapRhsSpatialTrivial] <-\n    newMaps\n      [\"siMapLhsSpatialTrivial\", \"siMapRhsSpatialTrivial\"]\n      spatialTrivial\n  [siMapLhsSpatialOne] <-\n    newMaps [\"siMapLhsSpatialOne\"] spatialOne\n\n  lhs <-\n    conv\n      inputs\n      weights\n      ConvConfig\n        { batchAdims = [ByAdim batch],\n          featureAdims = [ByAdim feature],\n          outputFeatureAdims = [ByAdim output],\n          strides =\n            [ spatialTrivial --> stridesTrivial,\n              spatialOne --> stridesOne\n            ],\n          contractingSIMaps =\n            [ feature --> siMapLhsFeature,\n              spatialTrivial --> siMapLhsSpatialTrivial,\n              spatialOne --> siMapLhsSpatialOne\n            ]\n        }\n      ConvPadding\n        { low = [spatialTrivial --> lowTrivial, spatialOne --> lowOne],\n          ldilation = [spatialTrivial --> ldilationTrivial, spatialOne --> ldilationOne],\n          high = [spatialTrivial --> highTrivial, spatialOne --> highOne],\n          rdilation = [spatialTrivial --> rdilationTrivial, spatialOne --> rdilationOne]\n        }\n\n  weightExcludeSpatialOne <- reshapeDegenerate weights [] [ByAdim spatialOne]\n  weightBroadcastSpatialOne <-\n    broadcast weightExcludeSpatialOne [spatialOne --> inputSpatialOneShape]\n  rhs <-\n    reshapeDegenerate\n      ( dot\n          inputs\n          weightBroadcastSpatialOne\n          [ spatialTrivial --> siMapRhsSpatialTrivial,\n            feature --> siMapRhsFeature\n          ]\n          [ByAdim spatialOne]\n      )\n      [(ByAdim spatialTrivial, spatialTrivial)]\n      []\n  siRelation [siMapLhsFeature, siMapRhsFeature] $\n    \\[vsiMapLhsFeature, vsiMapRhsFeature] ->\n      vsiMapLhsFeature .== vsiMapRhsFeature\n  siRelation [siMapLhsSpatialTrivial, siMapRhsSpatialTrivial] $\n    \\[vsiMapLhsSpatialTrivial, vsiMapRhsSpatialTrivial] ->\n      vsiMapLhsSpatialTrivial .== vsiMapRhsSpatialTrivial\n  siRelation [siMapLhsSpatialOne] $ \\[vsiMapLhsSpatialOne] ->\n    vsiMapLhsSpatialOne .== 0\n  checkSIMap\n    [siMapLhsFeature, siMapLhsSpatialTrivial, siMapLhsSpatialOne]\n    [siMapRhsFeature, siMapRhsSpatialTrivial]\n  monitorExprOnFailure \"rhs\" rhs\n  monitorMapOnFailure \"lso\" (ByAdim spatialOne) siMapLhsSpatialOne\n  monitorMapOnFailure \"lst\" (ByAdim spatialTrivial) siMapLhsSpatialTrivial\n  monitorMapOnFailure \"rst\" (ByAdim spatialTrivial) siMapRhsSpatialTrivial\n\n  rewrite \"Conv(A,B) => Dot(A, B)\" lhs rhs\n",
+      "declaration_sha256": "5e2487e5c1286dd661c0bcb16fb4d05dcfb967c6448b1ba87dc5ee88c9d4dd07",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Conv(A,B) => Dot(A, B)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5fd3304a29005fa1b609a8cf45a37ed4c214a8aae530e3cd09f54c6144659d83",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule00",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 8,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule00 :: forall a. NumRule a\nrule00 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 1 [adim --> map]\n  lhs <- numBinOp Div tensor constTensor\n  let rhs = tensor\n  rewrite \"Div(A,1) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "f25d64f655b4d2b2e7fb5450477c7c21053ba4e609e5b58f60b1386cbea632b6",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Div(A,1) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "80ccac99cae407c6b898d99d42982e42b8154f7a07e05708adab1bfa1ce05083",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 18,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule01 :: DSLContext Rewrite\nrule01 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @TensorReal \"tensor\" [adim --> map]\n  let c = \"c\" :: TensorReal\n  constTensor <- constant @TensorReal c [adim --> map]\n  let creci = tensorDiv 1 \"c\" :: TensorReal\n  constTensorreci <- constant @TensorReal creci [adim --> map]\n  lhs <- numBinOp Div tensor constTensor\n  rhs <- numBinOp Mul tensor constTensorreci\n  rewrite \"Div(A,Const) ⇒ Mul(A,1/Const)\" lhs rhs\n",
+      "declaration_sha256": "d52bb72a9d7f82afd9cc52c6c687703c9f4ad27d390a630ba2ca833796467b04",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Div(A,Const) ⇒ Mul(A,1/Const)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "6e54d1f30a9d4a76f8bd1f3f121f7796e097afa63a484e79e0e47ab2dd4c588e",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 31,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule02 :: DSLContext Rewrite\nrule02 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @TensorReal \"a\" [adim --> map]\n  b <- newTensor @TensorReal \"b\" [adim --> map]\n  c <- newTensor @TensorReal \"c\" [adim --> map]\n  d <- newTensor @TensorReal \"d\" [adim --> map]\n  lhs <- numBinOp Div (numBinOp Div a b) (numBinOp Div c d)\n  rhs <- numBinOp Div (numBinOp Mul a d) (numBinOp Mul b c)\n  rewrite \"Divide(Divide(A,B), Divide(C,D)) ⇒ Divide(Mul(A,D), Mul(B,C))\" lhs rhs\n",
+      "declaration_sha256": "a855c43f22ce5111139303322894e08d9e16e68f3c7aca1e3e265f6107bde025",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Divide(Divide(A,B), Divide(C,D)) ⇒ Divide(Mul(A,D), Mul(B,C))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "06a62762c448a857f2acdb8a33529f38be0a3e81e973a290a36afc6a5cc466ad",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 43,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule03 :: DSLContext Rewrite\nrule03 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @TensorReal \"a\" [adim --> map]\n  b <- newTensor @TensorReal \"b\" [adim --> map]\n  c <- newTensor @TensorReal \"c\" [adim --> map]\n  lhs <- numBinOp Div a (numBinOp Div b c)\n  rhs <- numBinOp Div (numBinOp Mul a c) b\n  rewrite \"Divide(A, Divide(B,C)) ⇒ Divide(Mul(A,C), B)\" lhs rhs\n",
+      "declaration_sha256": "8f2e3f4b13ff12fdde1349a30dfe3482365b5ebbca47ecaee7ab01cd3173760d",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Divide(A, Divide(B,C)) ⇒ Divide(Mul(A,C), B)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "aed437ff82e3dd0ee04b64b1299c7f594d21c85291b2a2a6ded1dc1f9d8ce62a",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 54,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule04 :: DSLContext Rewrite\nrule04 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @TensorInt \"a\" [adim --> map]\n  b <- newTensor @TensorInt \"b\" [adim --> map]\n  lhs <- numBinOp Rem (numBinOp Rem a b) b\n  rhs <- numBinOp Rem a b\n  rewrite \"Rem(Rem(A,B),B) ⇒ Rem(A,B)\" lhs rhs\n",
+      "declaration_sha256": "33b2371ff3cb846638c99fd9482bd94791f2f47fa3ca0e87a44fcf96d6e7c71d",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Rem(Rem(A,B),B) ⇒ Rem(A,B)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5e8cfd553716320a8dd6102ad2fb4cf0807591ca472e75d94b69047683c51b97",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 64,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule05 :: DSLContext Rewrite\nrule05 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  const <- constant @TensorInt \"c\" [adim --> map]\n  lhs <- numBinOp Rem (iota [adim --> map] (ByAdim adim)) const\n  rhs <- iota [adim --> map] (ByAdim adim)\n  precondition [map] $ \\[m] -> m .<= \"c\"\n  rewrite \"Rem(Iota,Const) ⇒ Iota\" lhs rhs\n",
+      "declaration_sha256": "544bf504c5771f5ac9c5eb2a7b0cbfc9d60d866b54f5f136651c09385a1915ea",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Rem(Iota,Const) ⇒ Iota",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "e3aaf256a5def3119e370a40d263740e9cd7d6a2a0e127e7037c58b0df203a9b",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 74,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule06 :: DSLContext Rewrite\nrule06 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  let c = \"c\" :: SymInteger\n  const <- constant @TensorInt (nonInf c) [adim --> map]\n  lhs <- numBinOp Rem (numBinOp Add (iota [adim --> map] (ByAdim adim)) const) const\n  rhs <- numBinOp Rem (iota [adim --> map] (ByAdim adim)) const\n  precondition [map] $ \\[m] -> c .>= 0\n  rewrite \"Rem(Add(Iota,Const), Const) ⇒ Rem(Iota,Const)\" lhs rhs\n",
+      "declaration_sha256": "414040d7ece9da0613ff00ba732772ddd5910ffa9da7273811b8cf4508646aab",
+      "invocation": [
+        "verifyDSLWith"
+      ],
+      "reported_label": "Rem(Add(Iota,Const), Const) ⇒ Rem(Iota,Const)",
+      "archived_result": "timeout_or_solver_failure",
+      "archived_result_block_sha256": "eb6e6a324829dde051b44e247c729b87180bc39117ee164c7e29dea1d488b7a9",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "divmod/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/divmod/Main.hs",
+      "source_line": 85,
+      "source_sha256": "dd1950d1b84500455348bb188eebcb4d53d9722a6bce92891616be0c23c94fd6",
+      "rule_declaration": "rule07 :: DSLContext Rewrite\nrule07 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  let xv = \"x\" :: SymInteger\n  let nv = \"n\" :: SymInteger\n  x <- constant @TensorInt (nonInf xv) [adim --> map]\n  n <- constant @TensorInt (nonInf nv) [adim --> map]\n  lhs <- numBinOp Rem (numBinOp Add x n) n\n  rhs <- numBinOp Rem x n\n  precondition [map] $ \\[m] ->\n    symIte (xv .>= 0) (xv + nv .>= 0) (xv + nv .< 0)\n  rewrite \"Rem(Add(X,Const), Const) ⇒ Rem(X,Const)\" lhs rhs\n",
+      "declaration_sha256": "a340b52f490b3e1d7f4a4b2ffa7c15cdba28cf1ba1b6549735bdd836da85afaf",
+      "invocation": [
+        "verifyDSLWith"
+      ],
+      "reported_label": "Rem(Add(X,Const), Const) ⇒ Rem(X,Const)",
+      "archived_result": "timeout_or_solver_failure",
+      "archived_result_block_sha256": "b62f9ab4b1ced8dc980b51968e9dbc3bb0c44b4fde5ed938dfa411046ebe4e29",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dot/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dot/Main.hs",
+      "source_line": 7,
+      "source_sha256": "93491cffb58dbf9c88e8f73231adaddf4334f7f06103d006febb08a51a437511",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  [adim0, adim1, adim2] <- newAdims [\"adim0\", \"adim1\", \"adim2\"]\n  [xs0, ys0, dotsi, sixc, siyd, sir, adim0AllOne] <-\n    newMaps\n      [\"xs0\", \"ys0\", \"dotsi\", \"sixc\", \"siyd\", \"sir\", \"allOne\"]\n      adim0\n  [xs1, ys1] <- newMaps [\"xs1\", \"ys1\"] adim1\n  [cs2, ds2] <- newMaps [\"cs2\", \"ds2\"] adim2\n  x <- newTensor @a \"x\" [adim0 --> xs0, adim1 --> xs1]\n  y <- newTensor @a \"y\" [adim0 --> ys0, adim1 --> ys1]\n  c <- newTensor @a \"c\" [adim0 --> xs0, adim2 --> cs2]\n  d <- newTensor @a \"d\" [adim0 --> ys0, adim2 --> ds2]\n  lhs <-\n    dot\n      (concatTensor x y $ ByAdim adim0)\n      (concatTensor c d $ ByAdim adim0)\n      [adim0 --> dotsi]\n      []\n  rhs <-\n    reduce\n      ( concatTensor\n          (broadcast (dot x c [adim0 --> sixc] []) [adim0 --> adim0AllOne])\n          (broadcast (dot y d [adim0 --> siyd] []) [adim0 --> adim0AllOne])\n          $ ByAdim adim0\n      )\n      [adim0 --> sir]\n  precondition [adim0AllOne] $ \\[adim0AllOne] -> adim0AllOne .== 1\n  let siCondition [vdotsi, vsixc, vsiyd, vsir, vxs0, vys0] =\n        symIte\n          (vsir .== 0)\n          (vdotsi .== vsixc)\n          (vdotsi .== vsiyd + vxs0)\n          .&& (vsixc .>= 0)\n          .&& (vsiyd .>= 0)\n          .&& (vsixc .< vxs0)\n          .&& (vsiyd .< vys0)\n          .&& (vsir .== 0 .|| vsir .== 1)\n      siCondition _ = undefined\n  siRelation [dotsi, sixc, siyd, sir, xs0, ys0] siCondition\n  checkSIMap [dotsi] [sir, sixc, siyd]\n  let lhsStr = \"Dot(Concat(X, Y), Concat(C, D))\"\n  let rhsStr = \"Reduce(Concat(Broadcast(Dot(X, C)), Broadcast(Dot(Y, D)))\"\n  rewrite (lhsStr <> \" ⇒ \" <> rhsStr) lhs rhs\n",
+      "declaration_sha256": "2b601cc1733e86af88f547b7833b5d066dcd063024f9406b38cd95557e77693b",
+      "invocation": [
+        "verifyNumDSLWith"
+      ],
+      "reported_label": "Dot(Concat(X, Y), Concat(C, D)) ⇒ Reduce(Concat(Broadcast(Dot(X, C)), Broadcast(Dot(Y, D)))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5771003f1062f399120c3e0dec89a51d977e8b8fa9bef9099f09914478e65c77",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dot/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dot/Main.hs",
+      "source_line": 52,
+      "source_sha256": "93491cffb58dbf9c88e8f73231adaddf4334f7f06103d006febb08a51a437511",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  [adim0, adim1, adim2, adim3] <- newAdims [\"adim0\", \"adim1\", \"adim2\", \"adim3\"]\n  [size0, lhssi0, rhssi0] <- newMaps [\"size0\", \"lhssi0\", \"rhssi0\"] adim0\n  size1 <- newMap \"size1\" adim1\n  size2 <- newMap \"size2\" adim2\n  size3 <- newMap \"size3\" adim3\n  a <- newTensor @a \"a\" [adim0 --> size0, adim1 --> size1, adim2 --> size2]\n  b <- newTensor @a \"b\" [adim0 --> size0, adim1 --> size1, adim3 --> size3]\n  lhs <- dot a b [adim0 --> lhssi0] [ByAdim adim1]\n  rhs <- dot b a [adim0 --> rhssi0] [ByAdim adim1]\n  siRelation [lhssi0, rhssi0] $ \\[vlhssi0, vrhssi0] -> vlhssi0 .== vrhssi0\n  checkSIMap [lhssi0] [rhssi0]\n  rewrite \"Dot(A, B) ⇒ Dot(B, A)\" lhs rhs\n",
+      "declaration_sha256": "9646dc0da5f62d04505dcdaa03977cc23f20c96ed4caa2435ed42ff49efa7e72",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Dot(A, B) ⇒ Dot(B, A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "bb0fab6ae4623cde29c8453f78bef0907138febce66b7c7a9565f99f5b3842c6",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dot/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dot/Main.hs",
+      "source_line": 67,
+      "source_sha256": "93491cffb58dbf9c88e8f73231adaddf4334f7f06103d006febb08a51a437511",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 _ = do\n  [adim0, adim1, adim2, adim3] <- newAdims [\"adim0\", \"adim1\", \"adim2\", \"adim3\"]\n  [sizea0] <- newMaps [\"sizea0\"] adim0\n  [sizea1, sizeb1, siabLhs, siabRhs] <- newMaps [\"sizea1\", \"sizeb1\", \"siabLhs\", \"siabRhs\"] adim1\n  [sizeb2, sizec2, sibcLhs, sibcRhs] <- newMaps [\"sizeb2\", \"sizec2\", \"sibcLhs\", \"sibcRhs\"] adim2\n  [sizec3] <- newMaps [\"sizec3\"] adim3\n\n  tensorA <- newTensor @a \"tensorA\" [adim0 --> sizea0, adim1 --> sizea1]\n  tensorB <- newTensor @a \"tensorB\" [adim1 --> sizeb1, adim2 --> sizeb2]\n  tensorC <- newTensor @a \"tensorC\" [adim2 --> sizec2, adim3 --> sizec3]\n\n  lhs <-\n    dot\n      tensorA\n      ( dot\n          tensorB\n          tensorC\n          [adim2 --> sibcLhs]\n          []\n      )\n      [adim1 --> siabLhs]\n      []\n  rhs <-\n    dot\n      ( dot\n          tensorA\n          tensorB\n          [adim1 --> siabRhs]\n          []\n      )\n      tensorC\n      [adim2 --> sibcRhs]\n      []\n\n  siRelation [siabLhs, siabRhs] $ \\[vsiabLhs, vsiabRhs] -> vsiabLhs .== vsiabRhs\n  siRelation [sibcLhs, sibcRhs] $ \\[vsibcLhs, vsibcRhs] -> vsibcLhs .== vsibcRhs\n  checkSIMap [siabLhs, sibcLhs] [siabRhs, sibcRhs]\n\n  rewrite \"Dot(A,Dot(B,C)) ⇒ Dot(Dot(A,B),C)\" lhs lhs\n",
+      "declaration_sha256": "158ef7d1d4794fd3dd6507ee816772ee6c36104e43ee2069263bef4d99b83fe3",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Dot(A,Dot(B,C)) ⇒ Dot(Dot(A,B),C)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "993df5508d92062ed8171bdb005578c0d7a4aafe2aba9a03be35f0154e7878b0",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dot/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dot/Main.hs",
+      "source_line": 108,
+      "source_sha256": "93491cffb58dbf9c88e8f73231adaddf4334f7f06103d006febb08a51a437511",
+      "rule_declaration": "rule04 :: forall a. NumRule a\nrule04 _ = do\n  [adim0, adim1, adim2] <- newAdims [\"adim0\", \"adim1\", \"adim2\"]\n  adim0Size <- newMap \"adim0Size\" adim0\n  adim1Size <- newMap \"adim1Size\" adim1\n  adim2Size <- newMap \"adim2Size\" adim2\n  x <- newTensor @a \"x\" [adim0 --> adim0Size, adim1 --> adim1Size]\n  y <- newTensor @a \"y\" [adim0 --> adim0Size, adim2 --> adim2Size]\n  lhs <- dot x y [] [ByAdim adim0]\n  rhs <-\n    numBinOp\n      Mul\n      (broadcast x [adim2 --> adim2Size])\n      (broadcast y [adim1 --> adim1Size])\n  rewrite \"Dot(A,B) ⇒ Mul(Broadcast(A), Broadcast(B)) when no contraction\" lhs rhs\n",
+      "declaration_sha256": "49a730f7550af4ec7ea92ae60f9f8e65eda6f762eabee3c6be91b92f96c1f4d0",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Dot(A,B) ⇒ Mul(Broadcast(A), Broadcast(B)) when no contraction",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "3160cd31c868e8a68de26f9e28eee9be74f06defd3113df36b810e0083cdc8b3",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dot/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dot/Main.hs",
+      "source_line": 124,
+      "source_sha256": "93491cffb58dbf9c88e8f73231adaddf4334f7f06103d006febb08a51a437511",
+      "rule_declaration": "rule05 :: forall a. NumRule a\nrule05 _ = do\n  [adim0, adim1, cadim0, cadim1, badim0, badim1] <-\n    newAdims [\"adim0\", \"adim1\", \"cadim0\", \"cadim1\", \"badim0\", \"badim1\"]\n  adim0Size <- newMap \"adim0Size\" adim0\n  adim1Size <- newMap \"adim1Size\" adim1\n  cadim0Size <- newMap \"cadim0Size\" cadim0\n  cadim1Size <- newMap \"cadim1Size\" cadim1\n  badim0Size <- newMap \"badimSize\" badim0\n  badim1Size <- newMap \"badimSize\" badim1\n  si0 <- newMap \"si0\" cadim0\n  si1 <- newMap \"si1\" cadim1\n  x <-\n    newTensor @a\n      \"x\"\n      [ adim0 --> adim0Size,\n        cadim0 --> cadim0Size,\n        cadim1 --> cadim1Size,\n        badim0 --> badim0Size,\n        badim1 --> badim1Size\n      ]\n  y <-\n    newTensor @a\n      \"y\"\n      [ adim1 --> adim1Size,\n        cadim0 --> cadim0Size,\n        cadim1 --> cadim1Size,\n        badim0 --> badim0Size,\n        badim1 --> badim1Size\n      ]\n  lhs <- dot x y [cadim0 --> si0, cadim1 --> si1] [ByAdim badim0, ByAdim badim1]\n  rhs <-\n    constant @a\n      0\n      [ adim0 --> adim0Size,\n        adim1 --> adim1Size,\n        badim0 --> badim0Size,\n        badim1 --> badim1Size\n      ]\n  precondition'\n    [ adim0Size,\n      adim1Size,\n      cadim0Size,\n      cadim1Size,\n      badim0Size,\n      badim1Size\n    ]\n    $ \\[adim0Size, adim1Size, cadim0Size, cadim1Size, badim0Size, badim1Size] ->\n      zipCondition (\\[adim0Size] -> adim0Size .== 0) [adim0Size]\n        .|| zipCondition (\\[adim1Size] -> adim1Size .== 0) [adim1Size]\n        .|| zipCondition (\\[cadimSize] -> cadimSize .== 0) [cadim0Size]\n        .|| zipCondition (\\[cadimSize] -> cadimSize .== 0) [cadim1Size]\n        .|| zipCondition (\\[badimSize] -> badimSize .== 0) [badim0Size]\n        .|| zipCondition (\\[badimSize] -> badimSize .== 0) [badim1Size]\n  rewrite \"Dot(A,B) ⇒ 0 when one of the dimensions is 0\" lhs rhs\n",
+      "declaration_sha256": "35d75cc4d4f147a5b0ed1c7246471f355ba44633d247fec99f8d6b2e083d2d04",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Dot(A,B) ⇒ 0 when one of the dimensions is 0",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "7792237011a0bf3a4f6d04fd1d28ba5716f020627f46c5864dfbe76384a4cc8b",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dot/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dot/Main.hs",
+      "source_line": 180,
+      "source_sha256": "93491cffb58dbf9c88e8f73231adaddf4334f7f06103d006febb08a51a437511",
+      "rule_declaration": "rule06 :: forall a. NumRule a\nrule06 _ = do\n  [adim, cadim, badim] <- newAdims [\"adim\", \"cadim\", \"badim\"]\n  adimSize <- newMap \"adimSize\" adim\n  cadimSize <- newMap \"cadimSize\" cadim\n  badimSize <- newMap \"badimSize\" badim\n  x <- newTensor @a \"x\" [adim --> adimSize, cadim --> cadimSize, badim --> badimSize]\n  y <- newTensor @a \"y\" [cadim --> cadimSize, badim --> badimSize]\n  si <- newMap \"si\" cadim\n  rsi <- newMap \"rsi\" cadim\n  lhs <- dot x y [cadim --> si] [ByAdim badim]\n  rhs <-\n    reduce\n      ( numBinOp\n          Mul\n          x\n          (broadcast y [adim --> adimSize])\n      )\n      [cadim --> rsi]\n  siRelation [si, rsi] $ \\[vsi, vrsi] -> vsi .== vrsi\n  checkSIMap [si] [rsi]\n  rewrite\n    ( \"Dot(A,B) ⇒ Reduce(Mul(Broadcast(Transpose(A)), Broadcast(Transpose(B)))) \"\n        <> \"when rhs only have contraction and batch adims\"\n    )\n    lhs\n    rhs\n",
+      "declaration_sha256": "b466a0bb7060b8814c36ff95c7f09e552531a18f71d0f14e67dbc0f40403c2e0",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Dot(A,B) ⇒ Reduce(Mul(Broadcast(Transpose(A)), Broadcast(Transpose(B)))) when rhs only have contraction and batch adims",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "bcbc5dd96e759e05a758d31b771eeb304863612f1b365a29429180c312da4bc7",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyslice/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyslice/Main.hs",
+      "source_line": 6,
+      "source_sha256": "bf80a23150e8874ba1fd99e76530c1049aa562d94a09fcf9e3c7b2bc6314dac3",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  [adimSize, adimStart, adimLength, adimEnd, adimStride] <-\n    newMaps [\"adimSize\", \"adimStart\", \"adimLength\", \"adimEnd\", \"adimStride\"] adim\n\n  tensor <- newTensor @a \"tensor\" [adim --> adimSize]\n\n  lhs <-\n    dynamicSlice tensor $\n      DySlice {start = [adim --> adimStart], sizes = [adim --> adimLength]}\n  rhs <-\n    slice tensor $\n      Slice\n        { start = [adim --> adimStart],\n          end = [adim --> adimEnd],\n          strides = [adim --> adimStride]\n        }\n\n  precondition [adimStride] $ \\[adimStride] -> adimStride .== 1\n  precondition [adimEnd, adimStart, adimLength] $\n    \\[adimEnd, adimStart, adimLength] -> adimEnd .== adimStart + adimLength\n\n  rewrite \"DynamicSlice(A) ⇒ Slice(A)\" lhs rhs\n",
+      "declaration_sha256": "38d64f9f70e9a8a99c1328ceaf80c5c70d10ae703cc5425b99f6ef590a3105be",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicSlice(A) ⇒ Slice(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "2dddd257fdf151ddd72254c68f2101f7fbc9ebfa362228f28e8004a2ef037df4",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyslice/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyslice/Main.hs",
+      "source_line": 31,
+      "source_sha256": "bf80a23150e8874ba1fd99e76530c1049aa562d94a09fcf9e3c7b2bc6314dac3",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, startMap, sliceSizeMap] <- newMaps [\"sizeMap\", \"startMap\", \"sliceSizeMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n  lhs <- dynamicSlice tensor DySlice {start = [adim --> startMap], sizes = [adim --> sliceSizeMap]}\n  let rhs = tensor\n  precondition [startMap] $ \\[start] -> start .== 0\n  precondition [sliceSizeMap, sizeMap] $ \\[sliceSize, size] -> sliceSize .== size\n  rewrite \"DynamicSlice(A,...) ⇒ A // output shape is the same as input shape\" lhs rhs\n",
+      "declaration_sha256": "af456b0343c7934602a518ddbd31e0abf97c1455fc1fbd3c2854a6aa9b240838",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicSlice(A,...) ⇒ A // output shape is the same as input shape",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "7cb17220631d1042e3efd2608843f84d650bc256ca740ffa92bf6dbf66313f71",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyslice/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyslice/Main.hs",
+      "source_line": 42,
+      "source_sha256": "bf80a23150e8874ba1fd99e76530c1049aa562d94a09fcf9e3c7b2bc6314dac3",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, startMap0, sliceSizeMap0] <- newMaps [\"sizeMap0\", \"startMap0\", \"sliceSizeMap0\"] adim0\n  [sizeMap1, startMap1, sliceSizeMap1] <- newMaps [\"sizeMap1\", \"startMap1\", \"sliceSizeMap1\"] adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0]\n  lhs <- dynamicSlice (broadcast tensor [adim1 --> sizeMap1]) DySlice {start = [adim0 --> startMap0, adim1 --> startMap1], sizes = [adim0 --> sliceSizeMap0, adim1 --> sliceSizeMap1]}\n  rhs <- broadcast (dynamicSlice tensor DySlice {start = [adim0 --> startMap0], sizes = [adim0 --> sliceSizeMap0]}) [adim1 --> sliceSizeMap1]\n  precondition [startMap1] $\n    \\[start1] -> start1 .>= 0\n  precondition [sizeMap1, startMap1, sliceSizeMap1] $\n    \\[size1, start1, sliceSize1] -> start1 + sliceSize1 .<= size1\n  rewrite \"DynamicSlice(Broadcast(A),...) ⇒ Broadcast(DynamicSlice(A,...))\" lhs rhs\n",
+      "declaration_sha256": "9966b1f8ca52a37d6a09cd02659401895bc6c200e06cccc84cbacda0f3c8ad90",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicSlice(Broadcast(A),...) ⇒ Broadcast(DynamicSlice(A,...))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "ef6c7b0e375bf43afc5ac82fa6c65b52220d9637e7eb7b2152532a882d96d191",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyslice/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyslice/Main.hs",
+      "source_line": 56,
+      "source_sha256": "bf80a23150e8874ba1fd99e76530c1049aa562d94a09fcf9e3c7b2bc6314dac3",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, startMap, sliceSizeMap] <- newMaps [\"sizeMap\", \"startMap\", \"sliceSizeMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap @@ \"label1\"]\n  lhs <- relabel (dynamicSlice tensor DySlice {start = [ByLabel \"label1\" --> startMap], sizes = [ByLabel \"label1\" --> sliceSizeMap]}) [ByLabel \"label1\" --> ByLabel \"label2\"]\n  rhs <- dynamicSlice (relabel tensor [ByLabel \"label1\" --> ByLabel \"label2\"]) DySlice {start = [ByLabel \"label2\" --> startMap], sizes = [ByLabel \"label2\" --> sliceSizeMap]}\n  rewrite \"DynamicSlice(Transpose(A),...) ⇒ Transpose(DynamicSlice(A,...))\" lhs rhs\n",
+      "declaration_sha256": "36c005c4146f24c9445f66da36f76fc78a5dba940fc3b1dab9faff7e6076e2e8",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicSlice(Transpose(A),...) ⇒ Transpose(DynamicSlice(A,...))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "1c1457aaa9cbf7c895c16f39dec6cc57ce5a21da86de6d9fec28df48389d8fa6",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyslice/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyslice/Main.hs",
+      "source_line": 65,
+      "source_sha256": "bf80a23150e8874ba1fd99e76530c1049aa562d94a09fcf9e3c7b2bc6314dac3",
+      "rule_declaration": "rule05 :: forall a. AnyDTypeRule a\nrule05 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, startMap1, startMap2, startMap3, sliceSizeMap1, sliceSizeMap2, sliceSizeMap3] <- newMaps [\"sizeMap\", \"startMap1\", \"startMap2\", \"startMap3\", \"sliceSizeMap1\", \"sliceSizeMap2\", \"sliceSizeMap3\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n  lhs <- dynamicSlice (dynamicSlice tensor DySlice {start = [adim --> startMap1], sizes = [adim --> sliceSizeMap1]}) DySlice {start = [adim --> startMap2], sizes = [adim --> sliceSizeMap2]}\n  rhs <- dynamicSlice tensor DySlice {start = [adim --> startMap3], sizes = [adim --> sliceSizeMap3]}\n  precondition [startMap1, startMap2, startMap3] $\n    \\[start1, start2, start3] -> start3 .== start1 + start2\n  precondition [sliceSizeMap2, sliceSizeMap3] $\n    \\[sliceSize2, sliceSize3] -> sliceSize3 .== sliceSize2\n  precondition [startMap1] $ \\[start1] -> start1 .>= 0\n  precondition [startMap2] $ \\[start2] -> start2 .>= 0\n  precondition [sizeMap, startMap1, sliceSizeMap1] $\n    \\[size, start1, sliceSize1] -> start1 + sliceSize1 .<= size\n  precondition [sliceSizeMap1, startMap2, sliceSizeMap2] $\n    \\[sliceSize1, start2, sliceSize2] -> start2 + sliceSize2 .<= sliceSize1\n  rewrite \"DynamicSlice(DynamicSlice(A,...),...) ⇒ DynamicSlice(A,...)\" lhs rhs\n",
+      "declaration_sha256": "0a9b710639732a32aba0781d76c50c5a591933102f5618022853b2d76ff66d54",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicSlice(DynamicSlice(A,...),...) ⇒ DynamicSlice(A,...)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "60cf495c5d5b7897d002d512ac5e0ddcf9c15d9118de3650e29730c910938448",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyupslice/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyupslice/Main.hs",
+      "source_line": 6,
+      "source_sha256": "dde1e8133f6f7f73facd5c203db0dfbd9d0fe0ccdaaa9fcf0d86f80ea8f07142",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap0, sizeMap1, startMap0] <- newMaps [\"sizeMap0\", \"sizeMap1\", \"startMap0\"] adim\n  t1 <- newTensor @a \"t1\" [adim --> sizeMap0]\n  t2 <- newTensor @a \"t2\" [adim --> sizeMap1]\n  lhs <- numBinOp Add t1 (dynamicUpdateSlice (constant @a 0 [adim --> sizeMap0]) t2 [adim --> startMap0])\n  rhs <- dynamicUpdateSlice t1 (numBinOp Add t2 (dynamicSlice t1 DySlice {start = [adim --> startMap0], sizes = [adim --> sizeMap1]})) [adim --> startMap0]\n  rewrite \"Add(A, DynamicUpdateSlice(Broadcast(0), B) ⇒ DynamicUpdateSlice(A,...)\" lhs rhs\n",
+      "declaration_sha256": "621e764028fac04bfd441970011bed66df79f3fc1f28be9d26829fd97993e8a6",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(A, DynamicUpdateSlice(Broadcast(0), B) ⇒ DynamicUpdateSlice(A,...)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "16737c5203ee6ea1e5f2e750bec62a17fbcc54131f42ce720baa6081468e4330",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyupslice/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyupslice/Main.hs",
+      "source_line": 16,
+      "source_sha256": "dde1e8133f6f7f73facd5c203db0dfbd9d0fe0ccdaaa9fcf0d86f80ea8f07142",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  [origSizeMap, newSizeMap, startMap, lowMap, interiorMap, highMap] <- newMaps [\"origSizeMap\", \"newSizeMap\", \"startMap\", \"lowMap\", \"interiorMap\", \"highMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> origSizeMap]\n  lhs <- dynamicUpdateSlice (constant @a \"a\" [adim --> newSizeMap]) tensor [adim --> startMap]\n  rhs <- pad tensor (\"a\" :: a) [adim --> lowMap] [adim --> interiorMap] [adim --> highMap]\n  precondition [lowMap] $ \\[low] -> low .>= 0\n  precondition [highMap] $ \\[high] -> high .>= 0\n  precondition [lowMap, startMap] $ \\[low, start] -> low .== start\n  precondition [interiorMap] $ \\[interior] -> interior .== 0\n  precondition [lowMap, highMap, origSizeMap, newSizeMap] $\n    \\[low, high, origSize, newSize] -> newSize .== origSize + low + high\n  rewrite \"DynamicUpdateSlice(Broadcast(Const),A,...) ⇒ Pad(\" lhs rhs\n",
+      "declaration_sha256": "2c83bc7e9a7676d8b6172d68667b6f2f0327483ce0b9abfd87314be9bd3057a2",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicUpdateSlice(Broadcast(Const),A,...) ⇒ Pad(",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "a56a75b328a5ef991cefcbcb4115cb4198959c5730964109129991cb26ebe3df",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyupslice/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyupslice/Main.hs",
+      "source_line": 31,
+      "source_sha256": "dde1e8133f6f7f73facd5c203db0dfbd9d0fe0ccdaaa9fcf0d86f80ea8f07142",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, startMap] <- newMaps [\"sizeMap\", \"startMap\"] adim\n  t1 <- newTensor @a \"t1\" [adim --> sizeMap]\n  t2 <- newTensor @a \"t2\" [adim --> sizeMap]\n  lhs <- dynamicUpdateSlice t1 t2 [adim --> startMap]\n  let rhs = t2\n  precondition [startMap] $ \\[start] -> start .== 0\n  rewrite \"DynamicUpdateSlice(A,...) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "22002140f665dd92c727c5780378be2a2ec2a2caa0aa09f0f9fb16044597047a",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicUpdateSlice(A,...) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "17f0be8fa9d3a5aca99b9f25c2b6f2aa55c9849d65313a2c68b52772027ab635",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "dyupslice/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/dyupslice/Main.hs",
+      "source_line": 42,
+      "source_sha256": "dde1e8133f6f7f73facd5c203db0dfbd9d0fe0ccdaaa9fcf0d86f80ea8f07142",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap0, sizeMap1, startMap0, sliceSizeMap0, startMap1, startMap2] <- newMaps [\"sizeMap0\", \"sizeMap1\", \"startMap0\", \"sliceSizeMap0\", \"startMap1\", \"startMap2\"] adim\n  t1 <- newTensor @a \"t1\" [adim --> sizeMap0]\n  t2 <- newTensor @a \"t2\" [adim --> sizeMap1]\n  lhs <- dynamicUpdateSlice t1 (dynamicUpdateSlice (dynamicSlice t1 DySlice {start = [adim --> startMap0], sizes = [adim --> sliceSizeMap0]}) t2 [adim --> startMap1]) [adim --> startMap0]\n  rhs <- dynamicUpdateSlice t1 t2 [adim --> startMap2]\n  precondition [startMap0, startMap1, startMap2] $\n    \\[start0, start1, start2] -> start2 .== start0 + start1\n  precondition [startMap0] $ \\[start0] -> start0 .>= 0\n  precondition [startMap1] $ \\[start1] -> start1 .>= 0\n  precondition [sliceSizeMap0, startMap1, sizeMap1] $\n    \\[sliceSize0, start1, size1] -> start1 + size1 .<= sliceSize0\n  precondition [startMap0, sliceSizeMap0, sizeMap0] $\n    \\[start0, sliceSize0, size0] -> start0 + sliceSize0 .<= size0\n  rewrite \"DynamicUpdateSlice(A, DynamicUpdateSlice(DynamicSlice(A,...), C ,...),...)) ⇒ DynamicUpdateSlice(A,C,...)\" lhs rhs\n",
+      "declaration_sha256": "fbabe4605608e6da852b90fc672ff7492343d4b7159de78ae5149d6624e0f901",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "DynamicUpdateSlice(A, DynamicUpdateSlice(DynamicSlice(A,...), C ,...),...)) ⇒ DynamicUpdateSlice(A,C,...)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "0391ab12a7a5be43e1bf4cd74060180da736767175178a7e756f3ba72802cbe0",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "iota/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/iota/Main.hs",
+      "source_line": 5,
+      "source_sha256": "3ba53886df62700b23b7d84fde00959ff3b50be9a88663c4cc46abad10fae79d",
+      "rule_declaration": "rule01 :: DSLContext Rewrite\nrule01 = do\n  adim <- newAdim \"adim\"\n  size <- newConstMap \"size\" 1 adim\n\n  lhs <- iota [adim --> size] (ByAdim adim)\n  rhs <- constant @TensorInt 0 [adim --> size]\n  rewrite \"Iota ⇒ Zero\" lhs rhs\n",
+      "declaration_sha256": "1b13c48315935c238267176c6139461bdbd57275a472acd350de18768e71e639",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Iota ⇒ Zero",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "56d7b9ad4d5528153887f23bfb66c178f842bbaa97d11f6ec30f0f7921d3ffa5",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 6,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule01 :: DSLContext Rewrite\nrule01 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp Or tensor (constant @SymBool (con True) [adim --> map])\n  rhs <- constant @SymBool (con True) [adim --> map]\n  rewrite \"Or(A,True) ⇒ True\" lhs rhs\n",
+      "declaration_sha256": "329cf9dc16d4e47ac3c646f2eb50d5985602d2daa56f2ae339a5254f37dae633",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Or(A,True) ⇒ True",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "7142b83d28b4cfddc521d996a33488b8be98321beee868c3db5db49e9bef10f2",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 15,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule02 :: DSLContext Rewrite\nrule02 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp Or (constant @SymBool (con True) [adim --> map]) tensor\n  rhs <- constant @SymBool (con True) [adim --> map]\n  rewrite \"Or(True,A) ⇒ True\" lhs rhs\n",
+      "declaration_sha256": "ad98e21e2dfca7648360e1470cb90d9a1efc8094871553ffa0492705caf15584",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Or(True,A) ⇒ True",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "3b4309ca0f54a0ae0238cbbbc82a374241726eac6de0975c47704645197c3664",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 24,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule03 :: DSLContext Rewrite\nrule03 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp Or tensor (constant @SymBool (con False) [adim --> map])\n  let rhs = tensor\n  rewrite \"Or(A,False) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "6f75e704f7843efb9676756c374cf809cb5bad08fb5312c8f06e487bee6d647e",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Or(A,False) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "1ea1ac34ec9aa4f8515cc3952ce7c649c538a42cb5f52814fc21c9e975344477",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 33,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule04 :: DSLContext Rewrite\nrule04 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp Or (constant @SymBool (con False) [adim --> map]) tensor\n  let rhs = tensor\n  rewrite \"Or(False,A) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "235dfdc62ed14f79c81730bf8a3dbebe72256497b49b7392d7fc1aa6de74ae8d",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Or(False,A) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "7f967c88a6d7598411122808fa87c7c25c18bf48ed989da9965db90b4efe530d",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 42,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule05 :: DSLContext Rewrite\nrule05 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp And tensor (constant @SymBool (con True) [adim --> map])\n  let rhs = tensor\n  rewrite \"And(A,1) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "eaab1e6aa91fa9a4d7fa20c256d624b973cbf4a63e112cb767886c94ff0863c3",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "And(A,1) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "d509bf265b64859f2b0b0448d2b4103e8a0108822c729631bb798209bf3a0e10",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 51,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule06 :: DSLContext Rewrite\nrule06 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp And (constant @SymBool (con True) [adim --> map]) tensor\n  let rhs = tensor\n  rewrite \"And(1,A) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "e206f2178d06dc67f5f7330aaf691c924e901b112d8db1f602aed48c76155dd5",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "And(1,A) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5d6f23c7cf6cd4a8e73fc36602305e1c08e0462b67386edb0ae75229413f8d44",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 60,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule07 :: DSLContext Rewrite\nrule07 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp And tensor (constant @SymBool (con False) [adim --> map])\n  rhs <- constant @SymBool (con False) [adim --> map]\n  rewrite \"And(A,0) ⇒ 0\" lhs rhs\n",
+      "declaration_sha256": "4cecdad713197d2e1dda56d142c2e00e4f3936b25d2c01a12c866b0fb255210a",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "And(A,0) ⇒ 0",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "9ebb6a4461203c08cd1dc7307edebe151f553ca34e512b989a7b406a8ce27d05",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule08",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 69,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule08 :: DSLContext Rewrite\nrule08 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @SymBool \"tensor\" [adim --> map]\n  lhs <- boolBinOp And (constant @SymBool (con False) [adim --> map]) tensor\n  rhs <- constant @SymBool (con False) [adim --> map]\n  rewrite \"And(0,A) ⇒ 0\" lhs rhs\n",
+      "declaration_sha256": "f2cb0265649ae62c4f3a13f88e508e4969aff4adcf7298ae8680cff016ca107e",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "And(0,A) ⇒ 0",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "e837edff42f9f8caaaad3b0f2497ead3df3acf89d50beea3e6693dc45dbb1275",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule09",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 78,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule09 :: forall a. NumRule a\nrule09 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor1 <- constant @a \"a\" [adim --> map]\n  constTensor2 <- constant @a \"b\" [adim --> map]\n  lhs <- boolBinOp And (compareOp Lt tensor constTensor1) (compareOp Gt constTensor2 tensor)\n  rhs <- compareOp Lt tensor (numBinOp Min constTensor1 constTensor2)\n  rewrite \"And(A < Const, Const1 > A) ⇒ Lt(A, min(Const, Const1))\" lhs rhs\n",
+      "declaration_sha256": "28bb1fa9b7fe6886278c351b6e9edb55ca71916cd6b6b6f55861aba22a3b78d0",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "And(A < Const, Const1 > A) ⇒ Lt(A, min(Const, Const1))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "c26d3f6c3744edb32c63035e6f9bd091448c86c456fb9c1e2ade95fe36e7eed5",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule10",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 89,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule10 :: forall a. NumRule a\nrule10 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  t1 <- newTensor @a \"t1\" [adim --> map]\n  t2 <- newTensor @a \"t2\" [adim --> map]\n  lhs <- compareOp Gt (numBinOp Max t1 t2) t2\n  rhs <- compareOp Gt t1 t2\n  rewrite \"Gt(Max(A,B),B) ⇒ Gt(A,B)\" lhs rhs\n",
+      "declaration_sha256": "175fd79667150bfc29a3bb97295920c11eec15fa773916a017e65a6e22a0de6e",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Gt(Max(A,B),B) ⇒ Gt(A,B)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "b603ece5102a7afeeb86dba3a9480101a053fabfb08cc03f2739d22ee137c13d",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "logical/rule11",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/logical/Main.hs",
+      "source_line": 99,
+      "source_sha256": "abdaaf53b842cc985984526d3f611cc97e21a9a76e4934abf67c0b61eefdf433",
+      "rule_declaration": "rule11 :: forall a. NumRule a\nrule11 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  t1 <- newTensor @a \"t1\" [adim --> map]\n  t2 <- newTensor @a \"t2\" [adim --> map]\n  lhs <- compareOp Gt (numBinOp Max t1 t2) t1\n  rhs <- compareOp Gt t2 t1\n  rewrite \"Gt(Max(A,B),A) ⇒ Gt(B,A)\" lhs rhs\n",
+      "declaration_sha256": "6040479d3c82599f1cb54dfe1222d5a97e888fd39169ce1d9db47ad97d826c4c",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Gt(Max(A,B),A) ⇒ Gt(B,A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "54de17e73bec5c70fc0653f820df29a3509ba0d12ab8854595b1f59dd2dad5f6",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "max/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/max/Main.hs",
+      "source_line": 5,
+      "source_sha256": "96ed226b3e2298e618cda4dbe24ec63e789ea382aa2399e27de46d7b46218e59",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @a \"a\" [adim --> map]\n  b <- constant @a (negInf :: a) [adim --> map]\n  lhs <- numBinOp Max a b\n  let rhs = a\n  rewrite \"Max(A,-inf) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "e097b07e3f10e5867f61817cc873757fa709a4ece6034a922534c86e6fdc4475",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Max(A,-inf) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "c7b2ddcea6befffd7561a653bf45b75ea75141b9e6ea53a0b8ad0548abf7b511",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "max/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/max/Main.hs",
+      "source_line": 15,
+      "source_sha256": "96ed226b3e2298e618cda4dbe24ec63e789ea382aa2399e27de46d7b46218e59",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @a \"a\" [adim --> map]\n  b <- constant @a (posInf :: a) [adim --> map]\n  lhs <- numBinOp Min a b\n  let rhs = a\n  rewrite \"Min(A,inf) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "aad76f5e11fc5fbd7f126d6c68128f1e2c933720b0006f66b1f295ef6b2f173b",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Min(A,inf) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "607a8049e6b92c48a98fefcc09796a27c7a620e2323bbbc1100404b67674949b",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 6,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 1 [adim --> map]\n  lhs <- numBinOp Mul tensor constTensor\n  let rhs = tensor\n  rewrite \"Mul(A,1) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "02a7b7d7031b2e29cd866805e2952608b01ea9b614314c555913742ecc19600f",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(A,1) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "f812867aadda8aaea568fa780442ccd2d80a7363ce6bd015807c712d352a7a5c",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 16,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 1 [adim --> map]\n  lhs <- numBinOp Mul constTensor tensor\n  let rhs = tensor\n  rewrite \"Mul(1,A) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "76454e63c8b7b05a4fc48253c378c235320c627adf897b0938a892d5e0acc2a4",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(1,A) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "99a483bbfe4d87e13578e232a2881df023c5df6039fc862050d6ecfe128a0528",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 26,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 0 [adim --> map]\n  lhs <- numBinOp Mul tensor constTensor\n  let rhs = constTensor\n  rewrite \"Mul(A,0) ⇒ 0\" lhs rhs\n",
+      "declaration_sha256": "b3544ff19aa3d39f71cb088891e691ca7ecd863e95bf972a73e239bb0fd24b92",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(A,0) ⇒ 0",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "a095ac0cfc1546083f5bf2e4faea95db8dd5c5580df9a0a80878a4afb961891c",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 36,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule04 :: forall a. NumRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 0 [adim --> map]\n  lhs <- numBinOp Mul constTensor tensor\n  let rhs = constTensor\n  rewrite \"Mul(0,A) ⇒ 0\" lhs rhs\n",
+      "declaration_sha256": "09c8c3ca3910029efca5451433f7b135546bf58894c4709a23e62fd219ca15e5",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(0,A) ⇒ 0",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "293438e5d108d723ff0ba1790162d5f2676adc5839b3c0e246a9c4b81ecb6374",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 46,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule05 :: forall a. NumRule a\nrule05 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  t1 <- newTensor @a \"t1\" [adim --> map]\n  t2 <- newTensor @a \"t2\" [adim --> map]\n  constTensor1 <- constant @a \"a\" [adim --> map]\n  constTensor2 <- constant @a \"b\" [adim --> map]\n  lhs <- numBinOp Mul (numBinOp Mul t1 constTensor1) (numBinOp Mul t2 constTensor2)\n  rhs <- numBinOp Mul (numBinOp Mul t1 t2) (numBinOp Mul constTensor1 constTensor2)\n  rewrite \"Mul(Mul(A, Const1), Mul(B, Const2)) ⇒ Mul(Mul(A, B),Mul(Const1,Const2))\" lhs rhs\n",
+      "declaration_sha256": "71bab62b57a3124ee243372e9409a86d0e3029ffb355b4ee5236042cb3b54649",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(Mul(A, Const1), Mul(B, Const2)) ⇒ Mul(Mul(A, B),Mul(Const1,Const2))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "42d7ca5e750984d8e705daad562c7e8eec70a94f40c26a1e910bcd745206d8a6",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 58,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule06 :: forall a. NumRule a\nrule06 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor1 <- constant @a \"a\" [adim --> map]\n  constTensor2 <- constant @a \"b\" [adim --> map]\n  lhs <- numBinOp Mul (numBinOp Mul tensor constTensor1) constTensor2\n  rhs <- numBinOp Mul tensor (numBinOp Mul constTensor1 constTensor2)\n  rewrite \"Mul(Mul(A, Const1), Const2) ⇒ Mul(A, Mul(Const1,Const2))\" lhs rhs\n",
+      "declaration_sha256": "ff0160f634c9cc9f9cde97ad81015de4129db5647b6412d425ec209592ecb222",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(Mul(A, Const1), Const2) ⇒ Mul(A, Mul(Const1,Const2))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "543fea8eaa0f8623628b85b22f4c97aff0f9ccdb0208b51623dd6a19e90179ec",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 69,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule07 :: forall a. NumRule a\nrule07 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  t1 <- newTensor @a \"t1\" [adim0 --> map0, adim1 --> map1]\n  t2 <- newTensor @a \"t2\" [adim0 --> map0]\n  lhs <- numBinOp Mul (numBinOp Mul t1 (constant @a \"a\" [adim0 --> map0, adim1 --> map1])) (broadcast t2 [adim1 --> map1])\n  rhs <- numBinOp Mul (broadcast (numBinOp Mul t2 (constant @a \"a\" [adim0 --> map0])) [adim1 --> map1]) t1\n  rewrite \"Mul(Mul(A, Const1), Broadcast(B)) ⇒ Mul(Broadcast(Mul(B, Const1), A))\" lhs rhs\n",
+      "declaration_sha256": "34f9b38f4ffd395f8d4f20066cae84959129598b129339253dc6534268332529",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(Mul(A, Const1), Broadcast(B)) ⇒ Mul(Broadcast(Mul(B, Const1), A))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "c01b6f9b249e14a50ff0fb8c28a85d27043cdb70092c4736c1e7eff4cadde58c",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule08",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 80,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule08 :: forall a. NumRule a\nrule08 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  t1 <- newTensor @a \"t1\" [adim --> map]\n  t2 <- newTensor @a \"t2\" [adim --> map]\n  t3 <- newTensor @a \"t3\" [adim --> map]\n  lhs <- numBinOp Add (numBinOp Mul t1 t3) (numBinOp Mul t2 t3)\n  rhs <- numBinOp Mul (numBinOp Add t1 t2) t3\n  rewrite \"Add(Mul(A,C),Mul(B,C)) ⇒ Mul(Add(A,B),C)\" lhs rhs\n",
+      "declaration_sha256": "f13b9fc0b97204dee4a669a43574e69eb1e977ffd5c5d8adb5c7b0452c70e7ce",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Add(Mul(A,C),Mul(B,C)) ⇒ Mul(Add(A,B),C)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "e9d8f5bc3c2850c3b9380707ccf87ba8d6e2381bc6bd87a876fd0e8702f2147a",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule09",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 91,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule09 :: forall a. NumRule a\nrule09 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  lhs <- numBinOp Mul (numUnaryOp Abs tensor) (numUnaryOp Abs tensor)\n  rhs <- numBinOp Mul tensor tensor\n  rewrite \"Mul(Abs(A),Abs(A)) ⇒ Mul(A,A)\" lhs rhs\n",
+      "declaration_sha256": "8c021bb1ee0088c204b5458cdb9350fdb57d55712c36ee8c51f4ee36d35334a1",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(Abs(A),Abs(A)) ⇒ Mul(A,A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "567076ea95a41adf177e4819b78cc191732775dbe794aec9e8f75ffd578f0e4a",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "mul/rule10",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/mul/Main.hs",
+      "source_line": 100,
+      "source_sha256": "9b73120ca2a3c859f2bd91a5319b9389009f12ecbf043d319c6edc2b54ed34b5",
+      "rule_declaration": "rule10 :: DSLContext Rewrite\nrule10 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  a <- newTensor @TensorReal \"a\" [adim --> map]\n  b <- newTensor @TensorReal \"b\" [adim --> map]\n  lhs <- numBinOp Mul (numUnaryOp Exp a) (numUnaryOp Exp b)\n  rhs <- numUnaryOp Exp (numBinOp Add a b)\n  rewrite \"Mul(Exp(A),Exp(B)) ⇒ Exp(Add(A,B))\" lhs rhs\n",
+      "declaration_sha256": "96df411b711d5b176c31baaa90aebb49e0d46fc85a4668352318ea42dd219674",
+      "invocation": [
+        "verifyDSLWith"
+      ],
+      "reported_label": "Mul(Exp(A),Exp(B)) ⇒ Exp(Add(A,B))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "dfbd6dabed8a29ec75b7e8e4e80678d50334d79ed0c44a1cecbf857d0b1a1690",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "not/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/not/Main.hs",
+      "source_line": 6,
+      "source_sha256": "e77d318663616498e6f3dc54e9527d53460d77e188c23e2f0812b2f9cd5a6de3",
+      "rule_declaration": "rule01 :: DSLContext Rewrite\nrule01 = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  input <- newTensor @SymBool \"input\" [adim --> map]\n  lhs <- boolUnaryOp Not (boolUnaryOp Not input)\n  let rhs = input\n  rewrite \"Not(Not(A)) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "e94622801c13d8a14c2cb006beeba744774f3fd99ccb8cae8fc88e118cc25aec",
+      "invocation": [
+        "verifyDSL"
+      ],
+      "reported_label": "Not(Not(A)) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "3064747b7db51f12ff115d177b12babe505c8ef21edc55576f0dca58930b9f1b",
+      "archived_result_types": [
+        "see declaration and result block"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "not/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/not/Main.hs",
+      "source_line": 15,
+      "source_sha256": "e77d318663616498e6f3dc54e9527d53460d77e188c23e2f0812b2f9cd5a6de3",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  input <- newTensor @a \"input\" [adim --> map]\n  lhs <- numUnaryOp Neg (numUnaryOp Neg input)\n  let rhs = input\n  rewrite \"Negate(Negate(A)) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "a8dc63e35123fbd2ee86cc933ae6c29b552152181b42c8e40f7c2b5cf1f4bf0e",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Negate(Negate(A)) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "db2b6d4d4e5da2dabc0a8835a69014a16a37f1dca724d7496e682c4e0975b278",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "pad/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/pad/Main.hs",
+      "source_line": 6,
+      "source_sha256": "18880ff6cb5246872724101dcc249809c567672df89028e827537d74fba812cf",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, lowMap, interiorMap, highMap] <- newMaps [\"sizeMap\", \"lowMap\", \"interiorMap\", \"highMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n  lhs <- pad tensor (\"a\" :: a) [adim --> lowMap] [adim --> interiorMap] [adim --> highMap]\n  let rhs = tensor\n  precondition [lowMap] $ \\[low] -> low .== 0\n  precondition [interiorMap] $ \\[interior] -> interior .== 0\n  precondition [highMap] $ \\[high] -> high .== 0\n  rewrite \"Pad(A,val, 0_0_0) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "d101ae101ffef2296b25cfd7c54cfcd857b47e5b602c3951034aba7c9082313c",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Pad(A,val, 0_0_0) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "b9503a29ecfcfcdc294059552d310aa891f343df966000b99979dbc6c7cfa50d",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "pad/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/pad/Main.hs",
+      "source_line": 18,
+      "source_sha256": "18880ff6cb5246872724101dcc249809c567672df89028e827537d74fba812cf",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, lowMap0, interiorMap0, highMap0] <- newMaps [\"sizeMap0\", \"lowMap0\", \"interiorMap0\", \"highMap0\"] adim0\n  [sizeMap1, lowMap1, interiorMap1lhs, interiorMap1rhs, highMap1] <- newMaps [\"sizeMap1\", \"lowMap1\", \"interiorMap1lhs\", \"interiorMap1rhs\", \"highMap1\"] adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0, adim1 --> sizeMap1]\n  lhs <- pad tensor (\"a\" :: a) [adim0 --> lowMap0, adim1 --> lowMap1] [adim0 --> interiorMap0, adim1 --> interiorMap1lhs] [adim0 --> highMap0, adim1 --> highMap1]\n  rhs <- pad tensor (\"a\" :: a) [adim0 --> lowMap0, adim1 --> lowMap1] [adim0 --> interiorMap0, adim1 --> interiorMap1rhs] [adim0 --> highMap0, adim1 --> highMap1]\n  precondition [interiorMap1lhs] $ \\[interior1lhs] -> interior1lhs .>= 0\n  precondition [interiorMap1rhs] $ \\[interior1rhs] -> interior1rhs .== 0\n  precondition [sizeMap1] $ \\[size1] -> size1 .== 1\n  rewrite \"Pad(A,val, low_int_high) ⇒ Pad(A,val,low_0_high)\" lhs rhs\n",
+      "declaration_sha256": "2740da4b128619596ac37166d3eeac4e1e196c1b24de95b8c294f094661c49a8",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Pad(A,val, low_int_high) ⇒ Pad(A,val,low_0_high)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "f06ff48c78e86a9e590176f8c5961013623c49abc37d343aee71c6a87251cc3e",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "pad/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/pad/Main.hs",
+      "source_line": 31,
+      "source_sha256": "18880ff6cb5246872724101dcc249809c567672df89028e827537d74fba812cf",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  [adim0, adim1, adim2] <- newAdims [\"adim0\", \"adim1\", \"adim2\"]\n  [sizeMap0, lowMap0, highMap0] <- newMaps [\"sizeMap0\", \"lowMap0\", \"highMap0\"] adim0\n  [sizeMap1, lowMap1, highMap1] <- newMaps [\"sizeMap1\", \"lowMap1\", \"highMap1\"] adim1\n  [sizeMap2, lowMap2, highMap2] <- newMaps [\"sizeMap2\", \"lowMap2\", \"highMap2\"] adim2\n  intMap0 <- newConstMap \"intMap0\" 0 adim0\n  intMap1 <- newConstMap \"intMap1\" 0 adim1\n  intMap2 <- newConstMap \"intMap2\" 0 adim2\n\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0]\n\n  lhs <- pad (broadcast tensor [adim1 --> sizeMap1, adim2 --> sizeMap2]) (\"a\" :: a) $\n    Padding\n      { low = [adim0 --> lowMap0, adim1 --> lowMap1, adim2 --> lowMap2],\n        interior = [adim0 --> intMap0, adim1 --> intMap1, adim2 --> intMap2],\n        high = [adim0 --> highMap0, adim1 --> highMap1, adim2 --> highMap2]\n      }\n  rhs <- broadcast (\n          pad (broadcast tensor [adim1 --> sizeMap1]) (\"a\" :: a) $\n            Padding\n              { low = [adim0 --> lowMap0, adim1 --> lowMap1],\n                interior = [adim0 --> intMap0, adim1 --> intMap1],\n                high = [adim0 --> highMap0, adim1 --> highMap1]\n              }) [adim2 --> sizeMap2]\n\n  precondition [lowMap2] $ \\[low2] -> low2 .== 0\n  precondition [highMap2] $ \\[high2] -> high2 .== 0\n\n  rewrite \"Pad(Broadcast(Const1), Const2, low_0_0) ⇒ Broadcast(Pad(Broadcast(Const1), Const2))\" lhs rhs\n",
+      "declaration_sha256": "8bc809b184115c5790fbb3236528e917bfd9383dd0bd6627d48ac0d4d0e352de",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Pad(Broadcast(Const1), Const2, low_0_0) ⇒ Broadcast(Pad(Broadcast(Const1), Const2))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "edbf8d67698c503f98bf9254f7b5d477eb0c5a498c710b56c15679a113f571de",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "pad/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/pad/Main.hs",
+      "source_line": 62,
+      "source_sha256": "18880ff6cb5246872724101dcc249809c567672df89028e827537d74fba812cf",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, lowMap0, highMap0, startMap0, endMap0] <- newMaps [\"sizeMap0\", \"lowMap0\", \"highMap0\", \"startMap0\", \"endMap0\"] adim0\n  [sizeMap1, lowMap1, highMap1, startMap1, endMap1] <- newMaps [\"sizeMap1\", \"lowMap1\", \"highMap1\", \"startMap1\", \"endMap1\"] adim1\n  intMap0 <- newConstMap \"intMap0\" 0 adim0\n  intMap1 <- newConstMap \"intMap1\" 0 adim1\n  strideMap0 <- newConstMap \"strideMap0\" 1 adim0\n  strideMap1 <- newConstMap \"strideMap1\" 1 adim1\n  lowMapRhs <- newConstMap \"lowMapRhs\" 0 adim0\n  highMapRhs <- newConstMap \"highMapRhs\" 0 adim0\n\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0, adim1 --> sizeMap1]\n\n  lhs <- pad tensor (\"a\" :: a) $\n    Padding\n      { low = [adim0 --> lowMap0, adim1 --> lowMap1],\n        interior = [adim0 --> intMap0, adim1 --> intMap1],\n        high = [adim0 --> highMap0, adim1 --> highMap1]\n      }\n  rhs <- slice (\n          pad tensor (\"a\" :: a) $\n            Padding\n              { low = [adim0 --> lowMapRhs, adim1 --> lowMap1],\n                interior = [adim0 --> intMap0, adim1 --> intMap1],\n                high = [adim0 --> highMapRhs, adim1 --> highMap1]\n              }\n          ) $ Slice\n                { start = [adim0 --> startMap0, adim1 --> startMap1],\n                  end = [adim0 --> endMap0, adim1 --> endMap1],\n                  strides = [adim0 --> strideMap0, adim1 --> strideMap1]\n                }\n  \n  precondition [lowMap0] $ \\[low0] -> low0 .< 0\n  precondition [highMap0] $ \\[high0] -> high0 .< 0\n  precondition [lowMap1] $ \\[low1] -> low1 .> 0\n  precondition [highMap1] $ \\[high1] -> high1 .> 0\n  precondition [startMap0, lowMap0] $ \\[start0, low0] -> start0 .== abs low0\n  precondition [sizeMap0, endMap0, highMap0] $ \\[size0, end0, high0] -> end0 .== size0 + high0\n  precondition [startMap1] $ \\[start1] -> start1 .== 0\n  precondition [sizeMap1, endMap1, lowMap1, highMap1] $ \\[size1, end1, low1, high1] -> end1 .== size1 + low1 + high1\n\n  rewrite \"Pad(A, val, negative_negative) ⇒ Slice(Pad(A, val, 0_0), abs(negative),negative+size)\" lhs rhs\n",
+      "declaration_sha256": "2493d89624c3868d1ee090d7828563b9c9be0d5b5bf5a8d865d57ea1f4907795",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Pad(A, val, negative_negative) ⇒ Slice(Pad(A, val, 0_0), abs(negative),negative+size)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "8545d3f84a6ad84c747687bbdd2f623e799731dcae3163b82bb1dbb8520d85be",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 6,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [adim0size, adim0exsize, adim0lhssi, adim0rhssi] <-\n    newMaps [\"adim0size\", \"adim0exsize\", \"adim0lhssi\", \"adim0rhssi\"] adim0\n  [adim1size, adim1exsize, adim1lhssi, adim1rhssi] <-\n    newMaps [\"adim1size\", \"adim1exsize\", \"adim1lhssi\", \"adim1rhssi\"] adim1\n  tensor0 <- newTensor @a \"tensor0\" [adim0 --> adim0size]\n  tensor1 <- newTensor @a \"tensor1\" [adim1 --> adim1size]\n  lhs <-\n    numBinOp\n      Mul\n      (reduce tensor0 [adim0 --> adim0lhssi])\n      (reduce tensor1 [adim1 --> adim1lhssi])\n  rhs <-\n    reduce\n      ( numBinOp\n          Mul\n          (broadcast tensor0 [adim1 --> adim1exsize])\n          (broadcast tensor1 [adim0 --> adim0exsize])\n      )\n      [adim0 --> adim0rhssi, adim1 --> adim1rhssi]\n  precondition [adim0size, adim0exsize] $\n    \\[adim0size, adim0exsize] -> adim0size .== adim0exsize\n  precondition [adim1size, adim1exsize] $\n    \\[adim1size, adim1exsize] -> adim1size .== adim1exsize\n  siRelation [adim0lhssi, adim0rhssi] $\n    \\[adim0lhssi, adim0rhssi] -> adim0lhssi .== adim0rhssi\n  siRelation [adim1lhssi, adim1rhssi] $\n    \\[adim1lhssi, adim1rhssi] -> adim1lhssi .== adim1rhssi\n  checkSIMap [adim0lhssi, adim1lhssi] [adim0rhssi, adim1rhssi]\n  rewrite\n    \"Mul(Reduce(X), Reduce(Y)) ⇒ Reduce(Mul(Broadcast(X), Broadcast(Y)))\"\n    lhs\n    rhs\n",
+      "declaration_sha256": "93827857dd2cd7611259889e4d1e8c48afc8ce4aaf4fddae000ecfa97dbfda3c",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Mul(Reduce(X), Reduce(Y)) ⇒ Reduce(Mul(Broadcast(X), Broadcast(Y)))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "8f91df35a930fff295eff0b810545e648c42039e6f80f445aa4b39ca6b0fb216",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 42,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  [concatAdim, otherAdim] <- newAdims [\"concatAdim\", \"otherAdim\"]\n  [concatSize0, concatSize1] <-\n    newMaps [\"concatSize0\", \"concatSize1\"] concatAdim\n  singletonConcat <- newConstMap \"singletonConcat\" 1 concatAdim\n  [otherSize] <- newMaps [\"otherSize\"] otherAdim\n  [lhsSIInnerX, lhsSIInnerY, lhsSIOuter, rhsSI] <-\n    newMaps [\"lhsSIInnerX\", \"lhsSIInnerY\", \"lhsSIOuter\", \"rhsSI\"] concatAdim\n  x <- newTensor @a \"x\" [concatAdim --> concatSize0, otherAdim --> otherSize]\n  y <- newTensor @a \"y\" [concatAdim --> concatSize1, otherAdim --> otherSize]\n  lhs <-\n    reduce\n      ( concatTensor\n          ( broadcast\n              (reduce x [concatAdim --> lhsSIInnerX])\n              [concatAdim --> singletonConcat]\n          )\n          ( broadcast\n              (reduce y [concatAdim --> lhsSIInnerY])\n              [concatAdim --> singletonConcat]\n          )\n          (ByAdim concatAdim)\n      )\n      [concatAdim --> lhsSIOuter]\n  rhs <- reduce (concatTensor x y (ByAdim concatAdim)) [concatAdim --> rhsSI]\n  monitorMapOnFailure \"concatSize0\" (ByAdim concatAdim) concatSize0\n  monitorMapOnFailure \"concatSize1\" (ByAdim concatAdim) concatSize1\n  monitorMapOnFailure \"lhsSIInnerX\" (ByAdim concatAdim) lhsSIInnerX\n  monitorMapOnFailure \"lhsSIInnerY\" (ByAdim concatAdim) lhsSIInnerY\n  monitorMapOnFailure \"lhsSIOuter\" (ByAdim concatAdim) lhsSIOuter\n\n  siRelation [lhsSIInnerX, lhsSIInnerY, lhsSIOuter, rhsSI, concatSize0, concatSize1] $\n    \\[lhsSIInnerX, lhsSIInnerY, lhsSIOuter, rhsSI, concatSize0, concatSize1] ->\n      (lhsSIInnerX .>= 0 .&& lhsSIInnerX .< concatSize0)\n        .&& (lhsSIInnerY .>= 0 .&& lhsSIInnerY .< concatSize1)\n        .&& (lhsSIOuter .== 0 .|| lhsSIOuter .== 1)\n        .&& symIte\n          (lhsSIOuter .== 0)\n          (lhsSIInnerX .== rhsSI)\n          (concatSize0 + lhsSIInnerY .== rhsSI)\n  checkSIMap [lhsSIInnerX, lhsSIInnerY, lhsSIOuter] [rhsSI]\n  rewrite \"Reduce(Concat(Reduce(X),Reduce(Y))) ⇒ Reduce(Concat(X,Y))\" lhs rhs\n",
+      "declaration_sha256": "9f5539a4c315d726d85c51c704b4ea24c54dc6e40b065e1601d8e091de3659de",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reduce(Concat(Reduce(X),Reduce(Y))) ⇒ Reduce(Concat(X,Y))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "f86fb02904bd9bfb8c0f8c47e8b851914fae89dfaf20fede058b8c4162fc49d2",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 86,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule03 :: forall a. NumRule a\nrule03 _ = do\n  [reductionAdim, adim1] <- newAdims [\"reductionAdim\", \"adim1\"]\n  [reductionSize] <- newMaps [\"reductionSize\"] reductionAdim\n  [lhsSI, rhsSI] <- newMaps [\"lhsSI\", \"rhsSI\"] reductionAdim\n  [otherSize] <- newMaps [\"otherSize\"] adim1\n  x <- newTensor @a \"x\" [reductionAdim --> reductionSize, adim1 --> otherSize]\n  lhs <-\n    numBinOp\n      Mul\n      (constant @a \"a\" [adim1 --> otherSize])\n      (reduce x [reductionAdim --> lhsSI])\n  rhs <-\n    reduce\n      ( numBinOp\n          Mul\n          ( constant @a\n              \"a\"\n              [reductionAdim --> reductionSize, adim1 --> otherSize]\n          )\n          x\n      )\n      [reductionAdim --> rhsSI]\n  siRelation [lhsSI, rhsSI] $ \\[lhsSI, rhsSI] -> lhsSI .== rhsSI\n  checkSIMap [lhsSI] [rhsSI]\n  rewrite \"Const * Reduce(X) ⇒ Reduce(Const * X)\" lhs rhs\n",
+      "declaration_sha256": "8ccfdba86076bc96a86b061414f854841a24746c3f737fc56efb1b36342e3b12",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Const Makefile package.yaml plot rules runall.sh src stack.yaml stack.yaml.lock tensor-right.cabal test Reduce(X) ⇒ Reduce(Const Makefile package.yaml plot rules runall.sh src stack.yaml stack.yaml.lock tensor-right.cabal test X)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "446ed5d909deeda1852116c4f8daceb846d32ef01bdfcae3829866a5bb3f9007",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 113,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule04 :: forall a. NumRule a\nrule04 _ = do\n  [reductionAdim, nonReductionAdim] <- newAdims [\"reductionAdim\", \"nonReductionAdim\"]\n  [reductionSize] <-\n    newMaps [\"reductionSize\"] reductionAdim\n  [otherSize] <-\n    newMaps [\"otherSize\"] nonReductionAdim\n  [lhsSI, rhsSI] <- newMaps [\"lhsSI\", \"rhsSI\"] reductionAdim\n  x <-\n    newTensor @a\n      \"x\"\n      [ reductionAdim --> reductionSize @@ \"l0\",\n        nonReductionAdim --> otherSize @@ \"l1\"\n      ]\n  lhs <-\n    reduce\n      ( relabel\n          x\n          [ ByLabel \"l0\" --> ByLabel \"l1\",\n            ByLabel \"l1\" --> ByLabel \"l0\"\n          ]\n      )\n      [ByLabel \"l1\" --> lhsSI]\n  rhs <-\n    relabel\n      (reduce x [ByLabel \"l0\" --> rhsSI])\n      [ByLabel \"l1\" --> ByLabel \"l0\"]\n  siRelation [lhsSI, rhsSI] $ \\[lhsSI, rhsSI] -> lhsSI .== rhsSI\n  checkSIMap [lhsSI] [rhsSI]\n  rewrite \"Reduce(Relabel(X)) ⇒ Relabel(Reduce(X))\" lhs rhs\n",
+      "declaration_sha256": "224e5f987538a71c2560ccd78118e5b0778acee2d92dbba3394c83a0c7f4fde4",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reduce(Relabel(X)) ⇒ Relabel(Reduce(X))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "53a5e1e9bacb02a18f5f7015910b18368030dbf19a34a3694f36dcf4f2a283ae",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 144,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule05 :: forall a. NumRule a\nrule05 _ = do\n  [adim0, adim1, adim2] <- newAdims [\"adim0\", \"adim1\", \"adim2\"]\n  [adim0size, adim0lsi, adim0rsi] <-\n    newMaps [\"adim0size\", \"adim0lsi\", \"adim0rsi\"] adim0\n  [adim1size, adim1lsi, adim1rsi] <-\n    newMaps [\"adim1size\", \"adim1lsi\", \"adim1rsi\"] adim1\n  adim2size <- newMap \"adim2size\" adim2\n  x <-\n    newTensor @a\n      \"x\"\n      [adim0 --> adim0size, adim1 --> adim1size, adim2 --> adim2size]\n  lhs <- reduce (reduce x [adim0 --> adim0lsi]) [adim1 --> adim1lsi]\n  rhs <- reduce x [adim0 --> adim0rsi, adim1 --> adim1rsi]\n  siRelation [adim0lsi, adim0rsi] $\n    \\[adim0lsi, adim0rsi] -> adim0lsi .== adim0rsi\n  siRelation [adim1lsi, adim1rsi] $\n    \\[adim1lsi, adim1rsi] -> adim1lsi .== adim1rsi\n  checkSIMap [adim0lsi, adim1lsi] [adim0rsi, adim1rsi]\n  rewrite \"Reduce(Reduce(X)) ⇒ Reduce(X)\" lhs rhs\n",
+      "declaration_sha256": "0517ecf0339143d78c2f0938effcbd5d0aa2ad4cb0e86d3d63f87b1ef37ae4f1",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reduce(Reduce(X)) ⇒ Reduce(X)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "2267e52ea765d6a09449dcd408e9eb604584775ffa00f56e12324d9347e3a4bc",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 165,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule06 :: forall a. NumRule a\nrule06 _ = do\n  [adim0, adim1, adim2, adim3] <- newAdims [\"adim0\", \"adim1\", \"adim2\", \"adim3\"]\n  [adim0size, adim0lsi, adim0rsi] <-\n    newMaps [\"adim0size\", \"adim0lsi\", \"adim0rsi\"] adim0\n  [adim1size, adim1lsi, adim1rsi] <-\n    newMaps [\"adim1size\", \"adim1lsi\", \"adim1rsi\"] adim1\n  adim2size <- newMap \"adim2size\" adim2\n  adim3size <- newMap \"adim3size\" adim3\n  x <-\n    newTensor @a\n      \"x\"\n      [adim0 --> adim0size, adim1 --> adim1size, adim2 --> adim2size]\n  y <-\n    newTensor @a\n      \"y\"\n      [adim0 --> adim0size, adim1 --> adim1size, adim3 --> adim3size]\n  lhs <-\n    reduce\n      (dot x y [adim0 --> adim0lsi] [ByAdim adim1])\n      [adim1 --> adim1lsi]\n  rhs <- dot x y [adim0 --> adim0rsi, adim1 --> adim1rsi] []\n  siRelation [adim0lsi, adim0rsi] $\n    \\[adim0lsi, adim0rsi] -> adim0lsi .== adim0rsi\n  siRelation [adim1lsi, adim1rsi] $\n    \\[adim1lsi, adim1rsi] -> adim1lsi .== adim1rsi\n  checkSIMap [adim0lsi, adim1lsi] [adim0rsi, adim1rsi]\n  rewrite \"Reduce(Dot(X,Y)) ⇒ Dot(X,Y)\" lhs rhs\n",
+      "declaration_sha256": "4d7cc35abc0c2e18839daedc4aa6fe16c83e9644d38ec8ad4736449f4708649b",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reduce(Dot(X,Y)) ⇒ Dot(X,Y)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "ed2fde75ace5ea1c714105e644cfd25228f28e40b4db35b0ffe09ba82e5a6178",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 194,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule07 :: forall a. NumRule a\nrule07 _ = do\n  [adimDegenerate, adim1] <- newAdims [\"adimDegenerate\", \"adim1\"]\n  adimDegenerateSize <- newConstMap \"adimDegenerateSize\" 1 adimDegenerate\n  adim1Size <- newMap \"adim1Size\" adim1\n  x <- newTensor @a \"x\" [adimDegenerate --> adimDegenerateSize, adim1 --> adim1Size]\n  siDegenerate <- newMap \"siDegenerate\" adimDegenerate\n\n  lhs <- reduce x [adimDegenerate --> siDegenerate]\n  rhs <- reshapeDegenerate x [] [ByAdim adimDegenerate]\n\n  siRelation [siDegenerate] $ \\[siDegenerate] -> siDegenerate .== 0\n  checkSIMap [siDegenerate] []\n  rewrite \"Reduce(X) ⇒ ReshapeDegenerate(X)\" lhs rhs\n",
+      "declaration_sha256": "6ac36ae5473811b1e2e2d860f99e993fd5366adeb8bf063f53d830e238cff5bc",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reduce(X) ⇒ ReshapeDegenerate(X)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "ca6435dc9c2330f0dfd02febf4174c1d11e8fb217aa6ce14ad8911005be62f70",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reduce/rule08",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reduce/Main.hs",
+      "source_line": 209,
+      "source_sha256": "e0345f09c40495ad7018e802ab31cb2a28e354327bc139823537803b8a9f81fb",
+      "rule_declaration": "rule08 :: forall a. NumRule a\nrule08 _ = do\n  [adimDegenerate, adim1] <- newAdims [\"adimDegenerate\", \"adim1\"]\n  adimDegenerateSize <- newConstMap \"adimDegenerateSize\" 1 adimDegenerate\n  adim1Size <- newMap \"adim1Size\" adim1\n  x <- newTensor @a \"x\" [adimDegenerate --> adimDegenerateSize, adim1 --> adim1Size]\n  siDegenerate <- newMap \"siDegenerate\" adimDegenerate\n\n  lhs <-\n    reduce\n      (relabel x [adimDegenerate --> ByLabel \"l0\"])\n      [ByLabel \"l0\" --> siDegenerate]\n  rhs <- reshapeDegenerate x [] [ByAdim adimDegenerate]\n\n  siRelation [siDegenerate] $ \\[siDegenerate] -> siDegenerate .== 0\n  checkSIMap [siDegenerate] []\n  rewrite \"Reduce(X) ⇒ ReshapeDegenerate(X)\" lhs rhs\n",
+      "declaration_sha256": "44c8057cdfee8080105355e8e35a19e82a20b57e8ab5ab7e69f19a8539df56d1",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reduce(X) ⇒ ReshapeDegenerate(X)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "10271cccd11c6dea11b5386af4180537bc5e061eb2c507d3ddaea915156e9332",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "relabel/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/relabel/Main.hs",
+      "source_line": 5,
+      "source_sha256": "3e6cfa781f572f3e40f2a5f768e860a44fa416fc5d90ef37e3cb9f2409707830",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  [adim] <- newAdims [\"adim\"]\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  lhs <-\n    relabel\n      (relabel tensor [adim --> ByLabel \"label\"])\n      [ByLabel \"label\" --> ByLabel \"label2\"]\n  rhs <- relabel tensor [adim --> ByLabel \"label2\"]\n  rewrite \"Transpose(Transpose(A)) ⇒ Transpose(A)\" lhs rhs\n",
+      "declaration_sha256": "c2663e5c9963e534b9f87f7fcc689f4e0c2fc68b2ef761c57e0d27cca54fb642",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Transpose(Transpose(A)) ⇒ Transpose(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "291c1789e19d81806ca73c818a4eb1316d543700a6348dd6836d7c8b612ee99c",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "relabel/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/relabel/Main.hs",
+      "source_line": 17,
+      "source_sha256": "3e6cfa781f572f3e40f2a5f768e860a44fa416fc5d90ef37e3cb9f2409707830",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  [adim] <- newAdims [\"adim\"]\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map @@ \"label\"]\n  lhs <- relabel tensor [ByLabel \"label\" --> ByLabel \"label\"]\n  let rhs = tensor\n  rewrite \"Transpose(A) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "b88ce7676485c0d6f7cfc728883601d8b612c2336c18dcb3d322aeb7371dbf1f",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Transpose(A) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "6178f0edac6ceb47338810384b87c526440d5e29a49b51a34dbf43e97f0d8df6",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reverse/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reverse/Main.hs",
+      "source_line": 6,
+      "source_sha256": "4cc6fa6bf86d328e857bd7e504a317a93eadf801e4e86ced67c258e0f2d456a0",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  t <- newTensor @a \"t\" [adim --> map]\n  lhs <- reverseTensor t [ByAdim adim]\n  let rhs = t\n  precondition [map] $ \\[map'] -> map' .== 1\n  rewrite\n    \"Reverse(A,dims) ⇒ A\"\n    lhs\n    rhs\n",
+      "declaration_sha256": "dbe9478506e233c61327d6759c0635f4e09d82998a589600f655d9b0cb6e5da7",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Reverse(A,dims) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "357d31f36cf760d225bfaabd54d3f6cb98342f69a339f00ab46fdb62e76cf018",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reverse/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reverse/Main.hs",
+      "source_line": 19,
+      "source_sha256": "4cc6fa6bf86d328e857bd7e504a317a93eadf801e4e86ced67c258e0f2d456a0",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  t <- newTensor @a \"t\" [adim0 --> map0, adim1 --> map1]\n  lhs <- reverseTensor (reverseTensor t [ByAdim adim0]) [ByAdim adim0]\n  let rhs = t\n  rewrite \"Reverse(Reverse(A,dims1),dims2) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "3df1280f92fd9a43e864011ad755e086f2450c77befd69d4aa94505bea6bc43e",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Reverse(Reverse(A,dims1),dims2) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5ecc0a14027cf0f18d6481759fcb60644437c5db2261c8b6127d594311301a1d",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reverse/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reverse/Main.hs",
+      "source_line": 29,
+      "source_sha256": "4cc6fa6bf86d328e857bd7e504a317a93eadf801e4e86ced67c258e0f2d456a0",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  [adim0, adim1, adim2] <- newAdims [\"adim0\", \"adim1\", \"adim2\"]\n  map0 <- newMap \"map0\" adim0\n  map1 <- newMap \"map1\" adim1\n  map2 <- newMap \"map2\" adim2\n  t <- newTensor @a \"t\" [adim0 --> map0, adim1 --> map1, adim2 --> map2]\n  lhs <-\n    reverseTensor\n      (reverseTensor t [ByAdim adim0, ByAdim adim1])\n      [ByAdim adim1, ByAdim adim2]\n  rhs <- reverseTensor t [ByAdim adim2, ByAdim adim0]\n  rewrite\n    \"Reverse(Reverse(A,dims1),dims2) ⇒ Reverse(A, disjoint union of dims1 and dims2)\"\n    lhs\n    rhs\n",
+      "declaration_sha256": "d1f5020cc19e5586f55c18f534b9ab95e8d35dcde71a4edc87359cda63186e40",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Reverse(Reverse(A,dims1),dims2) ⇒ Reverse(A, disjoint union of dims1 and dims2)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "06a455cb59108b58661988788fe6b3af52f486aacb4fceb13c1c419c99beb0ab",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "reverse/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/reverse/Main.hs",
+      "source_line": 46,
+      "source_sha256": "4cc6fa6bf86d328e857bd7e504a317a93eadf801e4e86ced67c258e0f2d456a0",
+      "rule_declaration": "rule04 :: forall a. NumRule a\nrule04 _ = do\n  [adim0] <- newAdims [\"adim0\"]\n  map0 <- newMap \"map0\" adim0\n  t <- newTensor @a \"t\" [adim0 --> map0]\n  const <- constant @a \"const\" [adim0 --> map0]\n  lhs <- reverseTensor (numBinOp Add t const) [ByAdim adim0]\n  rhs <- numBinOp Add (reverseTensor t [ByAdim adim0]) const\n  rewrite\n    \"Reverse(Binary(A,Const)) ⇒ Binary(Reverse(A),Const)\"\n    lhs\n    rhs\n",
+      "declaration_sha256": "c9ce0be5a56045550691e14a890eb9e1a34b92516d8a7c3e2e9b942204a2e658",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Reverse(Binary(A,Const)) ⇒ Binary(Reverse(A),Const)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "f309d55455c84a6f52447022717afebdec861ed57e208dbc390dbbcbfe649c44",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "select/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/select/Main.hs",
+      "source_line": 6,
+      "source_sha256": "25f36c608082aec1f0eaba4abb547ead0fac6429c05f594c7df7ceda85fa5eef",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  pred <- newTensor @SymBool \"pred\" [adim --> map]\n  a <- newTensor @a \"a\" [adim --> map]\n  lhs <- select pred a a\n  let rhs = a\n  rewrite \"Select(P,A,A) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "0be937195c61d0f19ae4632a078871bd10aa7a2552d951112f1d95e79b4c3216",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Select(P,A,A) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "8de225a14dfdacf25c470ad1cd1f6ee575a1f9ac8eb306ba5b4e2d1f41b8c505",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "select/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/select/Main.hs",
+      "source_line": 16,
+      "source_sha256": "25f36c608082aec1f0eaba4abb547ead0fac6429c05f594c7df7ceda85fa5eef",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  pred <- constant @SymBool true [adim --> map]\n  a <- newTensor @a \"a\" [adim --> map]\n  b <- newTensor @a \"b\" [adim --> map]\n  lhs <- select pred a b\n  let rhs = a\n  rewrite \"Select(True,A,B) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "54ea053ba1bd937cfe9f4a56206b5dcedbf7c1b41631e85dcfc983a2c2983209",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Select(True,A,B) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "b0282a9abbf1c3bd98b33e021371b98fb0347b03d8e1b6217bc03ca7ae4dd851",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "select/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/select/Main.hs",
+      "source_line": 27,
+      "source_sha256": "25f36c608082aec1f0eaba4abb547ead0fac6429c05f594c7df7ceda85fa5eef",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  pred <- constant @SymBool false [adim --> map]\n  a <- newTensor @a \"a\" [adim --> map]\n  b <- newTensor @a \"b\" [adim --> map]\n  lhs <- select pred a b\n  let rhs = b\n  rewrite \"Select(False,A,B) ⇒ B\" lhs rhs\n",
+      "declaration_sha256": "1e81b4ee45dad59c3370b9717adb1c0ec00e3637ebcd00bd7485ef52839d7ffc",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Select(False,A,B) ⇒ B",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "5296f6d0c631d2cb4c95bce2fc31a648c1a69ab690334406362d98eaf9c50b1c",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "select/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/select/Main.hs",
+      "source_line": 38,
+      "source_sha256": "25f36c608082aec1f0eaba4abb547ead0fac6429c05f594c7df7ceda85fa5eef",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  pred <- constant @SymBool false [adim --> map]\n  a <- newTensor @a \"a\" [adim --> map]\n  b <- newTensor @a \"b\" [adim --> map]\n  lhs <- select (boolUnaryOp Not pred) a b\n  rhs <- select pred b a\n  rewrite \"Select(Not(P),A,B) ⇒ Select(P,B,A)\" lhs rhs\n",
+      "declaration_sha256": "4533b5eef12f2892b5e0ff99b49304c6783d523fe270d8ff93c58c975dc3a0be",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Select(Not(P),A,B) ⇒ Select(P,B,A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "abb20924b263501b4601f5bde060c9fdcb7ca92255e47e4834c24a6e1ab11073",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 6,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule01 :: forall a. AnyDTypeRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, startMap, endMap, strideMap] <-\n    newMaps [\"sizeMap\", \"startMap\", \"endMap\", \"strideMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n  lhs <-\n    slice tensor $\n      Slice\n        { start = [adim --> startMap],\n          end = [adim --> endMap],\n          strides = [adim --> strideMap]\n        }\n  let rhs = tensor\n  precondition [startMap] $ \\[start] -> start .== 0\n  precondition [sizeMap, endMap] $ \\[size, end] -> end .== size\n  precondition [strideMap] $ \\[stride] -> stride .== 1\n  rewrite \"Slice(A) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "7b2433446728f91d07dcd8a33c5d9d766e301ce71d37c0ef5189b4acc730d287",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(A) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "25a9692483914750fce4cd1e475afcef062bfe8a15cc702595f2a7512ade9474",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 25,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule02 :: forall a. AnyDTypeRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  [origSizeMap, newSizeMap, startMap, endMap, strideMap] <- newMaps [\"origSizeMap\", \"newSizeMap\", \"startMap\", \"endMap\", \"strideMap\"] adim\n  lhs <- slice (constant @a \"a\" [adim --> origSizeMap]) [adim --> startMap] [adim --> endMap] [adim --> strideMap]\n  rhs <- constant @a \"a\" [adim --> newSizeMap]\n  precondition [startMap] $ \\[start] -> start .>= 0\n  precondition [strideMap] $ \\[stride] -> stride .>= 1\n  precondition [newSizeMap, startMap, endMap, strideMap] $\n    \\[newSize, start, end, stride] -> newSize .== divOr 0 (end - start + stride - 1) stride\n  precondition [origSizeMap, endMap] $ \\[origSize, end] -> end .<= origSize\n  rewrite \"Slice(Const) ⇒ Const\" lhs rhs\n",
+      "declaration_sha256": "025bca0e9e2e67192a7d77ebd9736b47a56658773803e0324e7756a68f51a2af",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Const) ⇒ Const",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "bbff2193c703695e4774d5785f44b3a8cb9719642680be9a42d2b119cdf5ddb2",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule03",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 38,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule03 :: forall a. AnyDTypeRule a\nrule03 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, startMap0, endMap0, strideMap0] <- newMaps [\"sizeMap0\", \"startMap0\", \"endMap0\", \"strideMap0\"] adim0\n  [origSizeMap1, startMap1, endMap1, strideMap1] <- newMaps [\"origSizeMap1\", \"startMap1\", \"endMap1\", \"strideMap1\"] adim1\n  newSizeMap1 <- newMap \"newSizeMap1\" adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0]\n  lhs <- slice (broadcast tensor [adim1 --> origSizeMap1]) [adim0 --> startMap0, adim1 --> startMap1] [adim0 --> endMap0, adim1 --> endMap1] [adim0 --> strideMap0, adim1 --> strideMap1]\n  rhs <- broadcast (slice tensor [adim0 --> startMap0] [adim0 --> endMap0] [adim0 --> strideMap0]) [adim1 --> newSizeMap1]\n  precondition [newSizeMap1, startMap1, endMap1, strideMap1] $\n    \\[newSize1, start1, end1, stride1] -> newSize1 .== divOr 0 (end1 - start1 + stride1 - 1) stride1\n  rewrite \"Slice(Broadcast(A)) ⇒ Broadcast(Slice(A))\" lhs rhs\n",
+      "declaration_sha256": "5ee7b08319412a6e4c9c05bc1af370ff9efb67695c68129729f4e473aa074651",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Broadcast(A)) ⇒ Broadcast(Slice(A))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "8d384fcc4e698c69f3d6c137d57aa516ff0491fa9099c1452c84681715ccfc1b",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule04",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 51,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule04 :: forall a. AnyDTypeRule a\nrule04 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, endMap, strideMap]\n    <- newMaps [\"sizeMap\", \"endMap\", \"strideMap\"] adim\n  [startMap, lowMap, highMap, intMap] <- newNonNegMaps [\"startMap\", \"lowMap\", \"highMap\", \"intMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n\n  lhs <- slice\n    (\n      pad tensor (\"a\" :: a) $\n      Padding\n        { low = [adim --> lowMap],\n          interior = [adim --> intMap],\n          high = [adim --> highMap]\n        }\n    ) $ Slice \n          { start = [adim --> startMap],\n            end = [adim --> endMap],\n            strides = [adim --> strideMap]\n          }\n  let rhs = tensor\n  precondition [startMap, lowMap] $ \\[start, low] -> start .== low\n  precondition [strideMap, intMap] $ \\[stride, int] -> stride .== int + 1\n  precondition [sizeMap, startMap, endMap, strideMap] $\n    \\[size, start, end, stride] -> size .== divOr 0 (end - start + stride - 1) stride\n  -- precondition [strideMap] $ \\[stride] -> stride .>= 1\n  precondition [sizeMap, endMap, lowMap, highMap, intMap] $\n    \\[size, end, low, high, int] -> end .<= size + low + high + (size - 1) * int\n  rewrite \"Slice(Pad(A)) ⇒ A\" lhs rhs\n",
+      "declaration_sha256": "d28abd49113e2731d153f1a945cf499ceca480032a7b6bddc28428f47d2c619c",
+      "invocation": [
+        "verifyAnyDTypeDSLWith"
+      ],
+      "reported_label": "Slice(Pad(A)) ⇒ A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "59dd6035475595a991c360faa1e756e4e24709e1de9617b376b2c2b2ca545f4c",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule05",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 82,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule05 :: forall a. AnyDTypeRule a\nrule05 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, endMap, strideMap, lowMap, highMap, broadcastMap]\n    <- newMaps [\"sizeMap\", \"endMap\", \"strideMap\", \"lowMap\", \"highMap\", \"broadcastMap\"] adim\n  [startMap, intMap] <- newNonNegMaps [\"startMap\", \"intMap\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n\n  lhs <- slice\n    (\n      pad tensor (\"a\" :: a) $\n      Padding\n        { low = [adim --> lowMap],\n          interior = [adim --> intMap],\n          high = [adim --> highMap]\n        }\n    ) $ Slice \n          { start = [adim --> startMap],\n            end = [adim --> endMap],\n            strides = [adim --> strideMap]\n          }\n  rhs <- constant @a \"a\" [adim --> broadcastMap]\n  precondition [broadcastMap, startMap, endMap, strideMap] $\n    \\[broadcastSize, start, end, stride] -> broadcastSize .== divOr 0 (end - start + stride - 1) stride\n  precondition [sizeMap, startMap, endMap, lowMap, intMap] $\n    \\[size, start, end, low, int] -> end .<= low .|| start .>= size + low + (size - 1) * int\n  rewrite \"Slice(Pad(A, v)) ⇒ Broadcast(v)\" lhs rhs\n",
+      "declaration_sha256": "5f2f69e55aeb3083c44f1659e4cc96e4932ffc33382136d96b53c99c9557a043",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Pad(A, v)) ⇒ Broadcast(v)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "158ff6c8a48dac2e457e8040f8a970f3b15a53f587c5355ba38a4311be7d1c74",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule06",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 110,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule06 :: forall a. AnyDTypeRule a\nrule06 _ = do\n  adim <- newAdim \"adim\"\n  sizeMap <- newMap \"sizeMap\" adim\n  [startMap, endMap, lowMap, highMap]\n    <- newNonNegMaps [\"startMap\", \"endMap\", \"lowMap\", \"highMap\"] adim\n  strideMap <- newConstMap \"strideMap\" 1 adim\n  intMap <- newConstMap \"intMap\" 0 adim\n  newStartMap <- combineMap \"newStartMap\" (\\[a, b] -> a - b) [startMap, lowMap]\n  newEndMap <- combineMap \"newEndMap\" (\\[a, b] -> a - b) [endMap, lowMap]\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n\n  lhs <- slice\n    (\n      pad tensor (\"a\" :: a) $\n      Padding\n        { low = [adim --> lowMap],\n          interior = [adim --> intMap],\n          high = [adim --> highMap]\n        }\n    ) $ Slice \n          { start = [adim --> startMap],\n            end = [adim --> endMap],\n            strides = [adim --> strideMap]\n          }\n  \n  rhs <- slice tensor $ Slice \n          { start = [adim --> newStartMap],\n            end = [adim --> newEndMap],\n            strides = [adim --> strideMap]\n          }\n  precondition [startMap, lowMap] $ \\[start, low] -> start .>= low\n  precondition [sizeMap, endMap, lowMap, intMap] $\n    \\[size, end, low, int] -> end .<= size + low + (size - 1) * int\n  rewrite \"Slice(Pad(A, v)) ⇒ Slice(A)\" lhs rhs\n",
+      "declaration_sha256": "2513c92b0e21a0a6f45041784c1f4ddb35bc521c54130f2c2c889831312bd1a8",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Pad(A, v)) ⇒ Slice(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "544b32163a6c0eeda29e45121b33bddccfdb7439ded88620c87a91644e5701d7",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule07",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 146,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule07 :: forall a. AnyDTypeRule a\nrule07 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, endMap0, innerEnd0] <- newMaps [\"sizeMap0\", \"endMap0\", \"innerEnd0\"] adim0\n  [startMap0, innerStart0] <- newNonNegMaps [\"startMap0\", \"innerStart0\"] adim0\n  [sizeMap1, endMap1, innerEnd1] <- newMaps [\"sizeMap1\", \"endMap1\", \"innerEnd1\"] adim1\n  [startMap1, innerStart1] <- newNonNegMaps [\"startMap1\", \"innerStart1\"] adim1\n  rhsStart0 <- combineMap \"rhsStart0\" (\\[a, b] -> a + b) [startMap0, innerStart0]\n  rhsStart1 <- combineMap \"rhsStart1\" (\\[a, b] -> a + b) [startMap1, innerStart1]\n  rhsEnd0 <- combineMap \"rhsEnd0\" (\\[a, b] -> a + b) [innerEnd0, startMap0]\n  rhsEnd1 <- combineMap \"rhsEnd1\" (\\[a, b] -> a + b) [innerEnd1, startMap1]\n  strideMap0 <- newConstMap \"strideMap0\" 1 adim0\n  strideMap1 <- newConstMap \"strideMap1\" 1 adim1\n\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0, adim1 --> sizeMap1]\n\n  lhs <- slice\n    (\n      slice tensor $\n        Slice\n          { start = [adim0 --> startMap0, adim1 --> startMap1],\n            end = [adim0 --> endMap0, adim1 --> endMap1],\n            strides = [adim0 --> strideMap0, adim1 --> strideMap1]\n          }\n    ) $ Slice\n          {\n            start = [adim0 --> innerStart0, adim1 --> innerStart1],\n            end = [adim0 --> innerEnd0, adim1 --> innerEnd1],\n            strides = [adim0 --> strideMap0, adim1 --> strideMap1]\n          }\n  rhs <- slice tensor $ Slice\n          {\n            start = [adim0 --> rhsStart0, adim1 --> rhsStart1],\n            end = [adim0 --> rhsEnd0, adim1 --> rhsEnd1],\n            strides = [adim0 --> strideMap0, adim1 --> strideMap1]\n          }\n  \n  rewrite \"Slice(Slice(A)) ⇒ Slice(A)\" lhs rhs\n",
+      "declaration_sha256": "6fe2d5ceb2b5d55d9b75fe7626253db0f84ed8197d761c1b2d5a098f39db0fb9",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Slice(A)) ⇒ Slice(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "4c78819cbe9f845191e580643136165fb6459528dbbf1c173313af18e4a4e867",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule08",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 185,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule08 :: forall a. AnyDTypeRule a\nrule08 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMapA0, sizeMapB0, endMap0, strideMap0] <- newMaps [\"sizeMapA0\", \"sizeMapB0\", \"endMap0\", \"strideMap0\"] adim0\n  startMap0 <- newNonNegMap \"startMap0\" adim0\n  [sizeMapA1, sizeMapB1, endMap1, strideMap1] <- newMaps [\"sizeMapA1\", \"sizeMapB1\", \"endMap1\", \"strideMap1\"] adim1\n  startMap1 <- newNonNegMap \"startMap1\" adim1\n  tensorA <- newTensor @a \"tensorA\" [adim0 --> sizeMapA0, adim1 --> sizeMapA1]\n  tensorB <- newTensor @a \"tensorB\" [adim0 --> sizeMapB0, adim1 --> sizeMapB1]\n\n  lhs <- slice (concatTensor tensorA tensorB (ByAdim adim0)) $\n          Slice\n            {\n              start = [adim0 --> startMap0, adim1 --> startMap1],\n              end = [adim0 --> endMap0, adim1 --> endMap1],\n              strides = [adim0 --> strideMap0, adim1 --> strideMap1]\n            }\n  let rhs = tensorB\n\n  precondition [startMap1] $ \\[start1] -> start1 .== 0\n  precondition [sizeMapA1, endMap1] $ \\[sizeA1, end1] -> end1 .== sizeA1\n  precondition [strideMap0] $ \\[stride0] -> stride0 .== 1\n  precondition [strideMap1] $ \\[stride1] -> stride1 .== 1\n  precondition [sizeMapA0, startMap0] $ \\[sizeA0, start0] -> start0 .== sizeA0\n  precondition [sizeMapA0, sizeMapB0, endMap0] $\n    \\[sizeA0, sizeB0, end0] -> end0 .== sizeA0 + sizeB0\n\n  rewrite \"Slice(Concat(A,B), A.size, A.size+B.size) ⇒ B\" lhs rhs\n",
+      "declaration_sha256": "d2abd90f21ec32fa1e2be15ea3c6a79435781ac2121e70a45bdbe17602ff9ee4",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Concat(A,B), A.size, A.size+B.size) ⇒ B",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "f77a9fc8a329118daf1cf9a3ec3638a2dfd40c938685f17b586f489eee7d1bce",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule09",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 214,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule09 :: forall a. AnyDTypeRule a\nrule09 _ = do\n  [adim0, adim1] <- newAdims [\"adim0\", \"adim1\"]\n  [sizeMap0, startMap0, endMap0, strideMap0]\n    <- newMaps [\"sizeMap0\", \"startMap0\", \"endMap0\", \"strideMap0\"] adim0\n  [sizeMap1, startMap1, endMap1, strideMap1, broadcastSize1]\n    <- newMaps [\"sizeMap1\", \"startMap1\", \"endMap1\", \"strideMap1\", \"broadcastSize1\"] adim1\n  tensor <- newTensor @a \"tensor\" [adim0 --> sizeMap0]\n\n  lhs <- slice (broadcast tensor [adim1 --> sizeMap1]) $\n          Slice\n            {\n              start = [adim0 --> startMap0, adim1 --> startMap1],\n              end = [adim0 --> endMap0, adim1 --> endMap1],\n              strides = [adim0 --> strideMap0, adim1 --> strideMap1]\n            }\n  rhs <- broadcast tensor [adim1 --> broadcastSize1]\n\n  precondition [broadcastSize1] $ \\[s] -> s .> 0\n  precondition [sizeMap1] $ \\[s] -> s .> 0\n  precondition [startMap0] $ \\[s] -> s .== 0\n  precondition [endMap0, sizeMap0] $ \\[e, s] -> e .== s\n  precondition [strideMap0] $ \\[p] -> p .== 1\n  precondition [broadcastSize1, startMap1, endMap1, strideMap1] $\n    \\[b, s, e, p] ->\n        symIte (modOr 0 (e - s) p .== 0)\n               (divOr 0 (e - s) p)\n               (divOr 0 (e - s) p + 1) .== b \n\n  rewrite \"Slice(Broadcast(A)) ⇒ Broadcast(A)\" lhs rhs\n",
+      "declaration_sha256": "9b77267d361e139f94f21a8105594ec9175157c07fab340c73e1e812ea26ceac",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Broadcast(A)) ⇒ Broadcast(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "cca2abbd21f3fb49350a956c22fa7e27507f602a0b98bf61513564bfe0c99469",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule10",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 245,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule10 :: forall a. AnyDTypeRule a\nrule10 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMapA, sizeMapB, endMap] <- newMaps [\"sizeMapA\", \"sizeMapB\", \"endMap\"] adim\n  startMap <- newNonNegMap \"startMap\" adim\n  strideMap <- newConstMap \"strideMap\" 1 adim\n  tensorA <- newTensor @a \"tensorA\" [adim --> sizeMapA]\n  tensorB <- newTensor @a \"tensorB\" [adim --> sizeMapB]\n\n  lhs <- slice (concatTensor tensorA tensorB (ByAdim adim)) $\n          Slice\n            {\n              start = [adim --> startMap],\n              end = [adim --> endMap],\n              strides = [adim --> strideMap]\n            }\n  rhs <- slice tensorA $\n          Slice\n            {\n              start = [adim --> startMap],\n              end = [adim --> endMap],\n              strides = [adim --> strideMap]\n            }\n  \n  precondition [sizeMapA, endMap] $\n    \\[sizeA, end] -> end .<= sizeA\n\n  rewrite \"Slice(Concat(A,B)) ⇒ Slice(A)\" lhs rhs\n",
+      "declaration_sha256": "fa203015f7e047eb6d9d4b4a5aaa3d3b2d4cc3296b9b44f15b9c1bb75299f2a5",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Concat(A,B)) ⇒ Slice(A)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "421854fdd11e055d153ac078eb89819590705b2db87529567e106cc2d1d33f2c",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule11",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 274,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule11 :: forall a. AnyDTypeRule a\nrule11 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMapA, sizeMapB, endMap] <- newMaps [\"sizeMapA\", \"sizeMapB\", \"endMap\"] adim\n  startMap <- newNonNegMap \"startMap\" adim\n  startMapB <- combineMap \"startMapB\" (\\[a, b] -> a - b) [startMap, sizeMapA]\n  endMapB <- combineMap \"endMapB\" (\\[a, b] -> a - b) [endMap, sizeMapA]\n  strideMap <- newConstMap \"strideMap\" 1 adim\n  tensorA <- newTensor @a \"tensorA\" [adim --> sizeMapA]\n  tensorB <- newTensor @a \"tensorB\" [adim --> sizeMapB]\n\n  lhs <- slice (concatTensor tensorA tensorB (ByAdim adim)) $\n          Slice\n            {\n              start = [adim --> startMap],\n              end = [adim --> endMap],\n              strides = [adim --> strideMap]\n            }\n  rhs <- slice tensorB $\n          Slice\n            {\n              start = [adim --> startMapB],\n              end = [adim --> endMapB],\n              strides = [adim --> strideMap]\n            }\n  \n  precondition [sizeMapA, startMap] $\n    \\[sizeA, start] -> start .> sizeA\n\n  rewrite \"Slice(Concat(A,B)) ⇒ Slice(B)\" lhs rhs\n",
+      "declaration_sha256": "ff32aec3a6f5265510cdd8fb7e4c4e04c0176d3e996374c3c57b89817fceb8fb",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Concat(A,B)) ⇒ Slice(B)",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "11200bd8c9c02b7a5497d0c85d3cb35b8a29dc4d3f5007a76a1e5f9e397e93a6",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule12",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 305,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule12 :: forall a. AnyDTypeRule a\nrule12 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMapA, sizeMapB, sizeMapC, startMap, endMap, strideMap]\n    <- newMaps [\"sizeMapA\", \"sizeMapB\", \"sizeMapC\", \"startMap\", \"endMap\", \"strideMap\"] adim\n  startMapB <- combineMap \"startMapB\" (\\[a, b] -> a - b) [startMap, sizeMapA]\n  endMapB <- combineMap \"endMapB\" (\\[a, b] -> a - b) [endMap, sizeMapA]\n\n  tensorA <- newTensor @a \"tensorA\" [adim --> sizeMapA]\n  tensorB <- newTensor @a \"tensorB\" [adim --> sizeMapB]\n  tensorC <- newTensor @a \"tensorC\" [adim --> sizeMapC]\n\n  lhs <- slice (concatTensorList [tensorA, tensorB, tensorC] (ByAdim adim)) $\n          Slice\n            {\n              start = [adim --> startMap],\n              end = [adim --> endMap],\n              strides = [adim --> strideMap]\n            }\n  rhs <- slice (concatTensor tensorB tensorC (ByAdim adim)) $\n          Slice\n            {\n              start = [adim --> startMapB],\n              end = [adim --> endMapB],\n              strides = [adim --> strideMap]\n            }\n  \n  precondition [sizeMapA, startMap] $ \\[sizeA, start] -> sizeA .<= start\n\n  rewrite \"Slice(Concat(A,B,C)) ⇒ Slice(Concat(B,C))\" lhs rhs\n",
+      "declaration_sha256": "60f897c6393e6fabdaee9ebcc87523c907471dee1bcecc99c1654d6711df9863",
+      "invocation": [
+        "verifyAnyDTypeDSL"
+      ],
+      "reported_label": "Slice(Concat(A,B,C)) ⇒ Slice(Concat(B,C))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "74862e4a13f57979551e70d38014d4d10ea7dc6932dc768b7a9afac200af8d2e",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "slice/rule13",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/slice/Main.hs",
+      "source_line": 336,
+      "source_sha256": "6651de266f18bd91b6a2191e73f3d513ae7f1c8129b873554a4482f6f77f77e5",
+      "rule_declaration": "rule13 :: forall a. AnyDTypeRule a\nrule13 _ = do\n  adim <- newAdim \"adim\"\n  [sizeMap, startMapLhs, endMapLhs, strideMap, startMapRhs, endMapRhs]\n    <- newMaps [\"sizeMap\", \"startMapLhs\", \"endMapLhs\", \"strideMap\", \"startMapRhs\", \"endMapRhs\"] adim\n  tensor <- newTensor @a \"tensor\" [adim --> sizeMap]\n\n  lhs <- slice (reverseTensor tensor [ByAdim adim]) $\n          Slice\n            {\n              start = [adim --> startMapLhs],\n              end = [adim --> endMapLhs],\n              strides = [adim --> strideMap]\n            }\n  rhs <- reverseTensor (slice tensor $\n          Slice\n            {\n              start = [adim --> startMapRhs],\n              end = [adim --> endMapRhs],\n              strides = [adim --> strideMap]\n            }) [ByAdim adim]\n  \n  let find_nth start end = divOr 0 (end - start)\n  let count start end stride =\n        symIte (modOr 0 (end - start) stride .== 0)\n               (find_nth start end stride - 1)\n               (find_nth start end stride)\n  let new_start size start end stride = start + stride * count start end stride + 1 - size\n  let new_end size start end stride = \n        symIte (size .>= new_start size start end stride + end - start)\n               (new_start size start end stride + end - start)\n               size\n                            \n  precondition [sizeMap, startMapLhs, endMapLhs, strideMap, startMapRhs] $\n    \\[size, startLhs, endLhs, stride, startRhs] -> startRhs .== new_start size startLhs endLhs stride\n  precondition [sizeMap, startMapLhs, endMapLhs, strideMap, endMapRhs] $\n    \\[size, startLhs, endLhs, stride, endRhs] -> endRhs .== new_end size startLhs endLhs stride\n\n  rewrite \"Slice(Reverse(A,dims),start,stride,end) ⇒ Reverse(Slice(A,...),dims)\" lhs rhs\n",
+      "declaration_sha256": "735a5f546125c79e87e8cc795faee736ff35e0505743f731d8961638a73f9896",
+      "invocation": [
+        "verifyAnyDTypeDSLWith"
+      ],
+      "reported_label": "Slice(Reverse(A,dims),start,stride,end) ⇒ Reverse(Slice(A,...),dims)",
+      "archived_result": "timeout_or_solver_failure",
+      "archived_result_block_sha256": "993b9f699aa71ddf20e3b307a8f020b411f9d38349777a692e6b0d6ea7642fdc",
+      "archived_result_types": [
+        "Bool",
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "sub/rule00",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/sub/Main.hs",
+      "source_line": 5,
+      "source_sha256": "397c34f5353600f442daab544017b97d075628e98fc6e998fd9c865e3109d2e9",
+      "rule_declaration": "rule00 :: forall a. NumRule a\nrule00 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 0 [adim --> map]\n  lhs <- numBinOp Sub tensor constTensor\n  let rhs = tensor\n  rewrite \"Sub(A,0)⇒A\" lhs rhs\n",
+      "declaration_sha256": "981e8ac1b4330e2d120b21a55925f2ccb73d8a4123b545c1b1cdc5dd20cc01b8",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Sub(A,0)⇒A",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "bce09d0046b654ec0741ccb791951f4f44cb0a362cff257012bfac6c7ca344b7",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "sub/rule01",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/sub/Main.hs",
+      "source_line": 15,
+      "source_sha256": "397c34f5353600f442daab544017b97d075628e98fc6e998fd9c865e3109d2e9",
+      "rule_declaration": "rule01 :: forall a. NumRule a\nrule01 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a \"x\" [adim --> map]\n  negConstTensor <- constant @a (-\"x\") [adim --> map]\n  lhs <- numBinOp Sub tensor constTensor\n  rhs <- numBinOp Add tensor negConstTensor\n  rewrite \"Sub(A,Const)⇒Add(A,Neg(Const))\" lhs rhs\n",
+      "declaration_sha256": "17064fc73ddf2e2d490b4a5646af1415c171fa15bd6660fec29d4af22f3c8a29",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Sub(A,Const)⇒Add(A,Neg(Const))",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "ff23cb19b9e8ae46bd291ee0ef18e54f5223ee9bd4eaffb7dfa6259e00230ba6",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    },
+    {
+      "id": "sub/rule02",
+      "source_path": "sources/tensorright/artifact/tr-artifact/rules/sub/Main.hs",
+      "source_line": 26,
+      "source_sha256": "397c34f5353600f442daab544017b97d075628e98fc6e998fd9c865e3109d2e9",
+      "rule_declaration": "rule02 :: forall a. NumRule a\nrule02 _ = do\n  adim <- newAdim \"adim\"\n  map <- newMap \"map\" adim\n  tensor <- newTensor @a \"tensor\" [adim --> map]\n  constTensor <- constant @a 0 [adim --> map]\n  lhs <- numBinOp Sub tensor tensor\n  let rhs = constTensor\n  rewrite \"Sub(A,A)⇒0\" lhs rhs\n",
+      "declaration_sha256": "a4e37c3d17bfd8f4dc2b5dd47b7abbe151ec86a55a713f3380679449f89ea585",
+      "invocation": [
+        "verifyNumDSL"
+      ],
+      "reported_label": "Sub(A,A)⇒0",
+      "archived_result": "proved",
+      "archived_result_block_sha256": "93fa2b7d78e493b0a622c70d8c5fef8d3aaad7ac867346ff8a2c3864fe0d064d",
+      "archived_result_types": [
+        "Int",
+        "Real"
+      ],
+      "lean_result": "not_attempted_in_comparison",
+      "lean_theorems": [],
+      "translation_confidence": "not assessed",
+      "implementation_result": "not established"
+    }
+  ]
+}

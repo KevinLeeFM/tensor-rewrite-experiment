@@ -4,7 +4,7 @@
 in Lean, assuming high-confidence translation from C++, and confirm implementation
 bugs with runnable counterexamples. Start with the paper's 118 implemented rules;
 keep IEEE/layout and other extensions separate. See the [updated plan](docs/experiment-plan.md)
-and [scope](docs/theory-scope.md). This planning update does not resume the paused campaign.
+and [scope](docs/theory-scope.md). The campaign resumed on 2026-11-12.
 The counts below describe the existing development, not completed paper-level cases.
 The current theory target is `TensorRewriteTheory`; run `python3 tools/check_theory.py`.
 The theory target now has 727 checked mathematical statements; custom Lean totals **12,341**.
@@ -23,7 +23,7 @@ plus 33 integration lines (category A). Imported library code is listed separate
 See `reports/library-setup.json` for build and axiom-audit evidence.
 
 Implementation/evidence workspace for the 2026-11-10 plan in `../notes/`.
-Scheduling remains in `../notes/TODO.md`. The campaign is paused; revised priorities
+Scheduling remains in `../notes/TODO.md`. The campaign is active; revised priorities
 are in docs/experiment-plan.md.
 
 The historical initial dependency order was source/artifact freeze → discovery inventory →
