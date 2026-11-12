@@ -1,8 +1,20 @@
 # Measuring tensor-rewrite feasibility by Lean code size
 
-**Current scope amendment (2026-11-10):** The user deferred code-correspondence
-work and proofs. The active goal is the full mathematical proof campaign; read
-[the scope amendment](theory-scope.md) before applying historical source-facing gates.
+[OBS 2026-11-12, current amendment] Follow [the revised plan](experiment-plan.md).
+Count completed mathematical cases under the paper's assumptions; correspondence
+is assumed and neither all-observation coverage nor independent per-case review
+is a size/acceptance gate. Report the existing baseline, new work and total code
+separately. Preserve prior proof reuse and human/author hints in provenance.
+The old per-source-obligation and global-ceiling wording below is historical where
+it conflicts with the new bounded campaign. No new maintainability threshold is
+required before work starts. Model successes and runnable compiler bugs have
+separate counts; optional extensions have separate comparison tables.
+
+[OBS 2026-11-12] Keep L = S + H + R + A for correctness development and a separate
+certificate subtotal C. When reporting total custom Lean including certificates,
+label it L + C (the existing 12,341-line total uses this inclusive convention).
+Operational tests/harness and failed work are separately disclosed. LOC measures
+artifact burden; the plan's work-block limits prevent indefinite unsuccessful search.
 
 [OBS 2026-11-10] Measurement companion to
 [the experiment plan](2026-11-10-planning-tensor-rewrite-verification.md).

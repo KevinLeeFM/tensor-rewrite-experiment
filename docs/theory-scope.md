@@ -1,48 +1,53 @@
-# Current scope: mathematical tensor-rewrite verification
+# Current scope: TensorRight-level model verification and runnable bug witnesses
 
-On 2026-11-10 the user explicitly deferred code-correspondence tasks and proofs
-to future work. This amendment supersedes source-correspondence and source-audit
-requirements as gates for the active experiment in the original planning documents.
-It is a user-authorized change of claim boundary, not evidence that those earlier
-requirements have been satisfied.
+The user's 2026-11-12 instruction supersedes the 2026-11-10 scope amendment.
+Follow [the updated experiment plan](experiment-plan.md). Planning has been updated;
+the proof campaign remains paused until resumed.
 
-## Active work
+For every uncertain requirement ask: **Is this required or assumed by the XLA
+rewrite paper we are comparing against?** Verify what it requires. Record and
+adopt what it assumes. Work beyond that is a separately labelled optional extension.
 
-Use the existing rewrite collection as the benchmark corpus. Formulate and prove
-its mathematical obligations under explicit tensor/operator/observation contracts.
-Retain all cases, dtype/shape/option partitions, false statements, semantic gaps and
-residuals. Arbitrary ranks and extents remain required where the statement permits
-them. Distinguish mathematical real/integer/Boolean semantics from finite-width
-integer and floating-point models. Partial or strengthened statements remain partial.
+## Primary task
 
-The campaign must still include a frozen mathematical obligation ledger and
-coverage accounting, diverse pilot, full-workload attempts, representative residual
-interventions, dependency/axiom audits, code-size attribution and independent replay.
-Successful or unsuccessful examples alone do not settle the research question.
-A positive result concerns all obligations in the declared mathematical workload;
-a negative workflow result requires the documented full campaign and diagnosis.
+Prove the paper's mathematical rewrite rules in Lean under the same conditions,
+or disprove the real implementation with a runnable counterexample. Start with
+the 118 implemented paper-artifact rules and compare to its 115 successes; retain
+unsupported/unimplemented cases and the newer 488 candidate entries separately.
+Maximize resolved cases with little new code and effort. Reuse existing proofs.
+A bounded campaign with explicit residuals can finish the comparison report.
 
-## Future work
+The translation from C++ to the mathematical rule is an explicit, permitted
+assumption. Establish high confidence through a short source/artifact explanation
+and targeted checks when useful. Independent review is selective, not a mandatory
+acceptance gate for every rule. Do not prove the translation, callers, graph
+mutation, machine code, or the correctness of Lean/imported libraries.
 
-Do not perform new code-correspondence tasks: C++ extraction/refinement proofs,
-matcher/API/caller/effect correspondence audits, native pass investigation, or
-proofs about compiled implementations are deferred. Existing source records,
-reviews and native results remain historical benchmark provenance. They do not
-certify that a mathematical theorem describes the real pass.
+The mathematical statement itself still needs proof: shapes, valid accesses and
+values agree for every input admitted by the modeled rule. Do not assume the
+rewrite equality, silently narrow its conditions, or replace arbitrary dimensions
+with tests. Model Boolean/integer/real rules first. Machine-word, IEEE, layout,
+effects and unsupported-operator extensions must not delay those results.
 
-Mathematical definitions and transformations within Lean remain in scope: for
-example, deriving bounded indices, proving equivalence of two mathematical
-reduction definitions or lifting a scalar law to tensors. These do not certify
-C++, external evaluators or generated machine code.
+## Implementation counterexamples
 
-## Reporting
+The former blanket deferral of native pass investigation is superseded for
+runnable counterexamples. Source reading and targeted XLA runs are in scope to
+understand a translation or confirm a suspected bug. Confirm valid original input,
+actual rewrite, observed wrong result/invalid output, and the relevant expected
+behavior. Archive a reproducer with exact version/options/command/output.
+A model-only refutation, timeout, harness failure or permitted numerical difference
+is not an established implementation bug. A Lean counterexample certificate is
+optional when a runnable compiler failure is already decisive.
 
-Keep mathematical proof/refutation acceptance separate from historical
-accepted-source-rewrite fields. Those source fields remain zero/pending without
-blocking a mathematical result. Never relabel historical source acceptance or
-claim verification of the real XLA implementation from this revised experiment.
-Library reuse, new adapters and new theory all remain separately measured.
+## Acceptance and effort
 
-For the full active objective, read this amendment together with experiment-plan.md,
-lean-size-protocol.md and agent-campaign-protocol.md. Their earlier source-facing
-requirements remain recorded as historical plans or future work.
+Use the plan's separate model/implementation outcome columns and bounded work
+blocks. Add support only for named terminal cases. Do not gate success on all dtype,
+layout or effect variants absent from the paper's model. Keep legacy frozen
+reports intact; their zero whole-record counters do not define current acceptance.
+Build a small successor case table instead of rewriting the entire old machinery.
+
+Positive results mean model proofs with correspondence assumed, not verified C++.
+Report proved cases, counterexamples, remaining failures, code burden and assistance.
+Retain evidence of prior work without relabelling it as fresh LLM discovery.
