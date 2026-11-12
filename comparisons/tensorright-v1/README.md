@@ -1,4 +1,4 @@
-# Paper-era comparison: 91 checked cases
+# Paper-era comparison: 94 checked cases
 
 This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -57,10 +57,10 @@ do not extrapolate this observation to all 118 rules.
 | `divmod/rule00–03` | divide by one, reciprocal and nested real division | exact totalized integer/real arithmetic |
 | `mul/rule09,10` | absolute-value square and real exponential addition | exact number theory |
 | `iota/rule01`, `broadcast/rule07,08` | unit-axis Iota and Broadcast Iota/composition | bounded integer coordinates and derived axis maps |
-| `slice/rule01,07` | full and nested Slice | bounded coordinate and output-shape reasoning |
+| `slice/rule01,07,10,11` | full, nested and partial-concatenation Slice | bounded coordinate and output-shape reasoning |
 | `slice/rule02`, `broadcast/rule05,06` | constant Slice and DynamicSlice | output-size and index reasoning |
 | `max/rule01,02` | Max with −∞ and Min with +∞ | extended orders for finite inputs |
-| `dyslice/rule01,02,05` | static, full and nested DynamicSlice | actual valid starts, including derived nested start |
+| `dyslice/rule01,02,04,05` | static, full, relabeled and nested DynamicSlice | actual valid starts, including derived nested start |
 | `dyupslice/rule01,03,04` | add to an update, full and nested update | actual DynamicUpdateSlice coordinates |
 | `relabel/rule01,02`, `broadcast/rule03` | relabel composition, identity and constant | bounded axis bijections |
 | `divmod/rule04–07` | idempotent, bounded-Iota and guarded integer remainder | truncating remainder including zero divisor |
@@ -97,16 +97,16 @@ python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 
 All nineteen Lean commands passed with either no axioms or only the standard
 `propext`, `Quot.sound` and `Classical.choice`; outputs are in the nineteen
-`*-check.log` files. The comparison modules have 1065 code lines total, including
-104 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 1065 is not the independent cost of these proofs. The earlier 12,341
+`*-check.log` files. The comparison modules have 1098 code lines total, including
+109 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 1098 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
 these cases. A precise shared-dependency cost remains future measurement. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-The other 27 rows have not yet been assessed in this comparison.
+The other 24 rows have not yet been assessed in this comparison.
 
-Of the 91 Lean-proved cases, 89 are among the paper archive's 115 successes,
+Of the 94 Lean-proved cases, 92 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the authors' archived outcomes were not independently rerun.
@@ -164,3 +164,8 @@ of unit axes is tied to the actual reshape coordinates and element count; the
 relabel variant uses the identity value-axis map because the renamed axis is
 subsequently reduced. The all-zero Pad proof uses a bounded edge-Pad model with
 zero interior padding and explicit shape transport.
+
+The partial-concatenation Slice cases derive the unit-stride interval length and
+second-operand offset, then reuse the checked contiguous-segment theorem. The
+dynamic-Slice relabel case represents a label rename by the identity value-axis
+map and retains the unchanged, valid dynamic start.

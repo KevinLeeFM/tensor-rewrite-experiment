@@ -102,6 +102,41 @@ theorem slice_second {rank : Nat} {frame : Frame rank} {α : Type}
   simpa only [List.cons_append, List.nil_append, List.append_nil, total, Nat.add_zero] using
     slice_exact_piece [first] [] second
 
+/-- Unit-stride paper start and limit infer an interval fitting within the first operand. -/
+theorem paper_interval {extent length : Nat} (axis : SliceShape.Axis)
+    (valid : SliceShape.IsWellFormed extent length axis) (unit : axis.stride = 1) :
+    axis.start + (length : Int) = axis.limit ∧ axis.start + length ≤ extent := by
+  have count := valid.2.2.2.2.2
+  simp [SliceShape.Axis.elementCount, unit] at count
+  have limit := valid.2.2.1
+  omega
+
+/-- A start beyond the first operand is exactly its extent plus the paper's shifted start. -/
+theorem paper_offset (extent start limit length : Nat) (after : extent ≤ start)
+    (endAt : start + length = limit) :
+    start = extent + (start - extent) ∧ limit - extent = (start - extent) + length := by
+  omega
+
+/-- `slice/rule10`: a unit-stride interval inside the first concatenated operand. -/
+theorem slice_first_piece {rank : Nat} {frame : Frame rank} {α : Type}
+    (first second : Block frame α) (start length : Nat) (fits : start + length ≤ first.extent) :
+    frame.slice (concatenate [first, second]) (0 + start) length (by simp [total]; omega) =
+      frame.slice first.values start length fits := by
+  simpa only [List.nil_append, total] using
+    slice_single_piece [] [second] first start length fits
+
+/-- `slice/rule11`: subtracting the first extent selects the matching second interval. -/
+theorem slice_second_piece {rank : Nat} {frame : Frame rank} {α : Type}
+    (first second : Block frame α) (start length : Nat) (fits : start + length ≤ second.extent) :
+    frame.slice (concatenate [first, second]) (first.extent + start) length
+        (by simp [total]; omega) = frame.slice second.values start length fits := by
+  simpa only [List.cons_append, List.nil_append, total, Nat.add_zero] using
+    slice_single_piece [first] [] second start length fits
+
+#print axioms paper_offset
+#print axioms paper_interval
+#print axioms slice_first_piece
+#print axioms slice_second_piece
 #print axioms list_pair
 #print axioms associate
 #print axioms list_three

@@ -53,7 +53,7 @@ See cases.json for exact source declarations, types, hashes and scope.
 | dyslice/rule01 | proved | proved |
 | dyslice/rule02 | proved | proved |
 | dyslice/rule03 | proved | not_attempted_in_comparison |
-| dyslice/rule04 | proved | not_attempted_in_comparison |
+| dyslice/rule04 | proved | proved |
 | dyslice/rule05 | proved | proved |
 | dyupslice/rule01 | proved | proved |
 | dyupslice/rule02 | proved | not_attempted_in_comparison |
@@ -116,8 +116,8 @@ See cases.json for exact source declarations, types, hashes and scope.
 | slice/rule07 | proved | proved |
 | slice/rule08 | proved | proved |
 | slice/rule09 | proved | not_attempted_in_comparison |
-| slice/rule10 | proved | not_attempted_in_comparison |
-| slice/rule11 | proved | not_attempted_in_comparison |
+| slice/rule10 | proved | proved |
+| slice/rule11 | proved | proved |
 | slice/rule12 | proved | not_attempted_in_comparison |
 | slice/rule13 | timeout_or_solver_failure | not_attempted_in_comparison |
 | sub/rule00 | proved | proved |

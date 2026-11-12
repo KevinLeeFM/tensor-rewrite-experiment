@@ -2,6 +2,7 @@ module
 
 public import TensorRewrite.Theory.DynamicUpdateStatic
 public import TensorRewrite.Theory.ArithmeticFamilyProof
+public import TensorRewrite.Pilot.Permutation
 
 /-! Paper-era valid DynamicSlice and DynamicUpdateSlice graphs. -/
 
@@ -104,6 +105,13 @@ theorem nested_update {α : Type} {rank : Nat} {outer middle inner : Shape rank}
   rw [← compose_eq_added first second firstValid secondValid]
   exact update_nested first second base update
 
+/-- `dyslice/rule04`: renaming the sliced axis changes labels, not coordinate values. -/
+theorem relabel_slice {α : Type} {rank : Nat} {outer inner : Shape rank}
+    (window : Window outer inner) (input : Tensor outer α) :
+    Tensor.transpose (AxisPermutation.identity rank) (fun _ => rfl) (window.slice input) =
+      window.slice (Tensor.transpose (AxisPermutation.identity rank) (fun _ => rfl) input) := rfl
+
+#print axioms relabel_slice
 #print axioms unclamped
 #print axioms static_start
 #print axioms static_slice

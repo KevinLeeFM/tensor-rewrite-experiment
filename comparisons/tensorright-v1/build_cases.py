@@ -95,6 +95,8 @@ def main():
         'concat/rule06': ('Concatenate', 'pad_high'),
         'concat/rule07': ('Concatenate', 'list_three_reverse'),
         'slice/rule08': ('Concatenate', 'slice_second'),
+        'slice/rule10': ('Concatenate', 'slice_first_piece'),
+        'slice/rule11': ('Concatenate', 'slice_second_piece'),
         'divmod/rule00': ('Numerical', 'divide_one_both'),
         'divmod/rule01': ('Numerical', 'divide_constant_real'),
         'divmod/rule02': ('Numerical', 'divide_fractions_real'),
@@ -119,6 +121,7 @@ def main():
         'reduce/rule08': ('Reduction', 'relabel_singleton_reshape'),
         'dyslice/rule01': ('Dynamic', 'static_slice'),
         'dyslice/rule02': ('Dynamic', 'full_slice'),
+        'dyslice/rule04': ('Dynamic', 'relabel_slice'),
         'dyslice/rule05': ('Dynamic', 'nested_slice'),
         'dyupslice/rule01': ('Dynamic', 'add_into_update'),
         'dyupslice/rule03': ('Dynamic', 'full_update'),
@@ -141,7 +144,10 @@ def main():
             'Remainder': 'remainder-check.log',
             'SliceGeometry': 'slice-geometry-check.log', 'Dot': 'dot-check.log',
             'Reduction': 'reduction-check.log', 'Pad': 'pad-check.log'}
-    shape_support = {'dot/rule05': ('Dot', 'grouped_empty'),
+    shape_support = {'dyslice/rule04': ('Dynamic', 'unclamped'),
+                     'slice/rule10': ('Concatenate', 'paper_interval'),
+                     'slice/rule11': ('Concatenate', 'paper_offset'),
+                     'dot/rule05': ('Dot', 'grouped_empty'),
                      'reduce/rule07': ('Reduction', 'singleton_count'),
                      'reduce/rule08': ('Reduction', 'singleton_count'),
                      'slice/rule01': ('SliceGeometry', 'full_shape'),
@@ -153,7 +159,8 @@ def main():
                      'dyupslice/rule04': ('Dynamic', 'compose_eq_added'),
                      'divmod/rule06': ('Remainder', 'signed_shift'),
                      'divmod/rule07': ('Remainder', 'signed_shift')}
-    audited = list(proofs.items()) + list(shape_support.items())
+    extra_support = {'slice/rule11': ('Concatenate', 'paper_interval')}
+    audited = list(proofs.items()) + list(shape_support.items()) + list(extra_support.items())
     for group, filename in logs.items():
         check = (OUT / filename).read_text()
         for key, (namespace, name) in audited:
@@ -243,6 +250,11 @@ def main():
                 confidence = ('Relabel preserves axis extents and values; the bounded bijective '
                               'axis mapping models a more general permutation and covers the '
                               'paper label renamings. C++ correspondence is assumed, not checked.')
+            elif namespace == 'Dynamic' and name == 'relabel_slice':
+                confidence = ('The paper renames one label without reordering axis values; '
+                              'the identity axis map captures that operation. Both sides use '
+                              'the same slice window and start; the unclamped lemma connects '
+                              'it to the paper valid-input semantics. C++ correspondence is assumed.')
             elif namespace == 'Dynamic':
                 confidence = ('The paper requires in-bounds dynamic starts; the auxiliary '
                               'unclamped theorem proves the existing clamped model uses exactly '
@@ -271,6 +283,12 @@ def main():
                               'uses the same zero-denominator default of zero; integer division '
                               'is used only by one. Exponential is exact real, not IEEE floating '
                               'point. C++ correspondence is assumed, not checked.')
+            elif namespace == 'Concatenate' and name in {'slice_first_piece', 'slice_second_piece'}:
+                confidence = ('The valid unit-stride paper Slice has length end minus start; '
+                              'paper_interval derives this, and paper_offset derives the '
+                              'second-operand offset. The frame has the single concrete '
+                              'concat axis required by the artifact and preserves the other '
+                              'dimensions. C++ correspondence is assumed, not checked.')
             elif namespace == 'Concatenate':
                 confidence = ('Actual bounded Concat coordinates, shapes and relevant Slice/Pad '
                               'operators model the paper graph. Recursive list Concat follows '
@@ -311,7 +329,7 @@ def main():
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
                                        'slice/rule02', 'broadcast/rule05', 'broadcast/rule06',
-                                       'dyslice/rule01', 'dyslice/rule02', 'dyslice/rule05',
+                                       'dyslice/rule01', 'dyslice/rule02', 'dyslice/rule04', 'dyslice/rule05',
                                        'dyupslice/rule03', 'dyupslice/rule04'}
                                    else ['Int'] if namespace == 'Remainder' or case['id'] in {
                                        'iota/rule01', 'broadcast/rule07'}
@@ -326,6 +344,10 @@ def main():
                 support_namespace, support_name = shape_support[case['id']]
                 row['lean_support_theorems'] = [
                     f'TensorRewrite.PaperComparison.{support_namespace}.{support_name}']
+            if case['id'] in extra_support:
+                support_namespace, support_name = extra_support[case['id']]
+                row.setdefault('lean_support_theorems', []).append(
+                    f'TensorRewrite.PaperComparison.{support_namespace}.{support_name}')
             if types:
                 assert set(row['lean_types']) == set(types), case['id']
             else:
