@@ -1,4 +1,4 @@
-# Paper-era comparison: first four cases
+# Paper-era comparison: 28 checked cases
 
 This is the first comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -11,12 +11,16 @@ solver results are author-provided archive results, not our rerun. The paper
 reports the three as timeouts. Every row preserves the exact rule declaration,
 source identity/hash, archived result block hash, types and current outcome.
 
-Four Addition rules have a checked mathematical Lean proof over all finite tensor
-shapes, integers and exact reals. Each is a direct specialization of the existing
-`ArithmeticFamily.rewrite_sound` theorem; the paper restricts some operands to
-constant tensors, while our result permits arbitrary tensors of the same shape.
+Four Addition, three Subtraction and seven Multiplication rules have checked Lean
+proofs over all finite tensor shapes, integers and exact reals. Each specializes
+`ArithmeticFamily.rewrite_sound`; some paper operands are constant tensors while
+the Lean results permit arbitrary same-shape tensor operands. Three Broadcast
+rules and the remaining Multiplication rule use actual bounded Broadcast or
+Reverse coordinate maps. One of the three Broadcast rules covers Boolean tensors
+as well as the two numeric types. Eight Boolean And/Or rules and two double-negation
+rules reuse the Boolean and exact-arithmetic theories.
 Paper numeric input tensors are introduced via `linearMemory` as `nonInf` symbolic
-integer/real values; constants in these four rules are also finite. Thus these
+integer/real values; constants in these numeric rules are also finite. Thus these
 checks match that input scope, without claiming IEEE floating-point results or
 proving correspondence to C++. Later rules can involve special numeric values;
 do not extrapolate this observation to all 118 rules.
@@ -27,21 +31,32 @@ do not extrapolate this observation to all 118 rules.
 | `add/rule02` | zero_right | `addZeroRight` |
 | `add/rule03` | zero_left | `addZeroLeft` |
 | `add/rule04` | commute | `addComm` |
+| `sub/rule00–02` | subtract zero; subtract negation; self-subtract | `subZero`, `subNeg`, `subSelf` |
+| `mul/rule01–06,08` | unit, zero, regrouping and factoring | `mulOne`, `mulZero`, `fourFactors`, `mulAssoc`, `factor` |
+| `mul/rule07` | move a scalar factor through Broadcast | `broadcast_uniform_factor` |
+| `broadcast/rule01,02` | Add and Multiply commute with Broadcast | actual Broadcast index projection |
+| `broadcast/rule04` | reverse a constant tensor | actual Reverse index map |
+| `logical/rule01–08` | Boolean identities with true/false | typed Boolean logical family |
+| `not/rule01,02` | Boolean and exact-numeric double negation | Boolean and commutative-ring families |
 
 Reproduce from the repository root:
 
 ```sh
 python3 comparisons/tensorright-v1/build_cases.py
 lake env lean comparisons/tensorright-v1/Add.lean
-python3 tools/lean_size.py comparisons/tensorright-v1/Add.lean
+lake env lean comparisons/tensorright-v1/ScalarArithmetic.lean
+lake env lean comparisons/tensorright-v1/Broadcast.lean
+lake env lean comparisons/tensorright-v1/Logical.lean
+python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 ```
 
-The Lean command passed with only `propext` and `Quot.sound` dependencies; its
-output is in `add-check.log`. The comparison module has 33 code lines, including
-four axiom-print commands. It reuses the existing mathematical development and
-Mathlib rather than rebuilding their cost; 33 is not an independent proof's total
-burden. The previous 12,341 custom Lean lines include unrelated work and are not
-attributed wholesale to these four cases. A precise shared-dependency cost remains
-future measurement. No correspondence proof or new compiler pass investigation
+All four Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the four
+`*-check.log` files. The comparison modules have 212 code lines total, including
+28 axiom-print commands. They reuse
+the existing mathematical development and Mathlib; 212 is not the independent
+cost of these proofs. The earlier 12,341 custom Lean lines include unrelated work
+and are not attributed wholesale to these cases. A precise shared-dependency cost
+remains future measurement. No correspondence proof or new compiler pass investigation
 was performed. These results reuse historical proofs and do not measure a fresh
-LLM discovery rate. The other 114 rows have not yet been assessed in this comparison.
+LLM discovery rate. The other 90 rows have not yet been assessed in this comparison.
