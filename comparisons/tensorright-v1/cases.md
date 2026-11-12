@@ -107,13 +107,13 @@ See cases.json for exact source declarations, types, hashes and scope.
 | select/rule02 | proved | proved |
 | select/rule03 | proved | proved |
 | select/rule04 | proved | proved |
-| slice/rule01 | proved | not_attempted_in_comparison |
+| slice/rule01 | proved | proved |
 | slice/rule02 | proved | proved |
 | slice/rule03 | proved | not_attempted_in_comparison |
 | slice/rule04 | proved | not_attempted_in_comparison |
 | slice/rule05 | proved | not_attempted_in_comparison |
 | slice/rule06 | proved | not_attempted_in_comparison |
-| slice/rule07 | proved | not_attempted_in_comparison |
+| slice/rule07 | proved | proved |
 | slice/rule08 | proved | proved |
 | slice/rule09 | proved | not_attempted_in_comparison |
 | slice/rule10 | proved | not_attempted_in_comparison |

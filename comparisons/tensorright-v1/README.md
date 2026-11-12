@@ -1,4 +1,4 @@
-# Paper-era comparison: 83 checked cases
+# Paper-era comparison: 85 checked cases
 
 This is a comparison checkpoint, not a full experiment or a fresh proof
 search trial. The 118 rows in `cases.json` and `cases.md` correspond to the paper
@@ -53,6 +53,7 @@ do not extrapolate this observation to all 118 rules.
 | `divmod/rule00–03` | divide by one, reciprocal and nested real division | exact totalized integer/real arithmetic |
 | `mul/rule09,10` | absolute-value square and real exponential addition | exact number theory |
 | `iota/rule01`, `broadcast/rule07,08` | unit-axis Iota and Broadcast Iota/composition | bounded integer coordinates and derived axis maps |
+| `slice/rule01,07` | full and nested Slice | bounded coordinate and output-shape reasoning |
 | `slice/rule02`, `broadcast/rule05,06` | constant Slice and DynamicSlice | output-size and index reasoning |
 | `max/rule01,02` | Max with −∞ and Min with +∞ | extended orders for finite inputs |
 | `dyslice/rule01,02,05` | static, full and nested DynamicSlice | actual valid starts, including derived nested start |
@@ -79,21 +80,22 @@ lake env lean comparisons/tensorright-v1/Extremes.lean
 lake env lean comparisons/tensorright-v1/Dynamic.lean
 lake env lean comparisons/tensorright-v1/Relabel.lean
 lake env lean comparisons/tensorright-v1/Remainder.lean
+lake env lean comparisons/tensorright-v1/SliceGeometry.lean
 python3 tools/lean_size.py comparisons/tensorright-v1/*.lean
 ```
 
-All fifteen Lean commands passed with either no axioms or only the standard
-`propext`, `Quot.sound` and `Classical.choice`; outputs are in the fifteen
-`*-check.log` files. The comparison modules have 865 code lines total, including
-89 axiom-print commands. They reuse the existing mathematical development and
-Mathlib; 865 is not the independent cost of these proofs. The earlier 12,341
+All sixteen Lean commands passed with either no axioms or only the standard
+`propext`, `Quot.sound` and `Classical.choice`; outputs are in the sixteen
+`*-check.log` files. The comparison modules have 944 code lines total, including
+93 axiom-print commands. They reuse the existing mathematical development and
+Mathlib; 944 is not the independent cost of these proofs. The earlier 12,341
 custom Lean lines include unrelated work and are not attributed wholesale to
 these cases. A precise shared-dependency cost remains future measurement. No
 correspondence proof or new compiler pass investigation was performed. These
 results reuse historical proofs and do not measure a fresh LLM discovery rate.
-The other 35 rows have not yet been assessed in this comparison.
+The other 33 rows have not yet been assessed in this comparison.
 
-Of the 83 Lean-proved cases, 81 are among the paper archive's 115 successes,
+Of the 85 Lean-proved cases, 83 are among the paper archive's 115 successes,
 and two (`divmod/rule06,07`) are among its three reported timeouts. These Lean
 proofs use the conditions written in the artifact and the previously available
 Lean libraries; the authors' archived outcomes were not independently rerun.
@@ -135,3 +137,7 @@ TensorRight calls Grisette `remOr` with the dividend as its default; the exact
 used by the artifact defines it as Haskell `rem` with that default. The Lean
 `unguarded_shift_refuted` theorem also demonstrates why the paper's sign guard
 for `divmod/rule07` matters: shifting −2 by 3 changes its remainder modulo 3.
+
+The full and nested Slice results separately derive their output shapes from the
+paper’s start, limit and unit-stride attributes, then prove equality of all bounded
+coordinates. They handle zero extents as well as nonempty shapes.

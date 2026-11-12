@@ -104,6 +104,8 @@ def main():
         'iota/rule01': ('Iota', 'unit_axis'),
         'broadcast/rule07': ('Iota', 'broadcast'),
         'broadcast/rule08': ('Iota', 'broadcast_composition'),
+        'slice/rule01': ('SliceGeometry', 'full'),
+        'slice/rule07': ('SliceGeometry', 'nested'),
         'slice/rule02': ('Slices', 'slice_constant'),
         'broadcast/rule05': ('Slices', 'slice_constant'),
         'broadcast/rule06': ('Slices', 'dynamic_slice_constant'),
@@ -130,8 +132,11 @@ def main():
             'Numerical': 'numerical-check.log', 'Iota': 'iota-check.log',
             'Slices': 'slices-check.log', 'Extremes': 'extremes-check.log',
             'Dynamic': 'dynamic-check.log', 'Relabel': 'relabel-check.log',
-            'Remainder': 'remainder-check.log'}
-    shape_support = {'slice/rule02': ('Slices', 'count_euclidean'),
+            'Remainder': 'remainder-check.log',
+            'SliceGeometry': 'slice-geometry-check.log'}
+    shape_support = {'slice/rule01': ('SliceGeometry', 'full_shape'),
+                     'slice/rule07': ('SliceGeometry', 'nested_count'),
+                     'slice/rule02': ('Slices', 'count_euclidean'),
                      'broadcast/rule05': ('Slices', 'count_exact'),
                      'dyslice/rule01': ('Dynamic', 'static_start'),
                      'dyslice/rule05': ('Dynamic', 'compose_eq_added'),
@@ -179,7 +184,12 @@ def main():
         }
         if case['id'] in proofs:
             namespace, name = proofs[case['id']]
-            if namespace == 'Remainder':
+            if namespace == 'SliceGeometry':
+                confidence = ('The bounded Slice indices use the paper unit strides and exact '
+                              'starts, including summed starts for nesting; companion theorems '
+                              'derive inferred output sizes from the actual end bounds. '
+                              'C++ correspondence is assumed, not checked.')
+            elif namespace == 'Remainder':
                 confidence = ('Finite TensorInt uses Grisette remOr with dividend as the zero '
                               'divisor default; the pinned Grisette revision specifies Haskell '
                               'rem, matching Lean truncating remainder. Iota coordinates and '
@@ -252,7 +262,7 @@ def main():
             row.update(lean_result='proved',
                        lean_theorems=[f'TensorRewrite.PaperComparison.{namespace}.{name}'],
                        translation_confidence=confidence,
-                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel'} or case['id'] in {
+                       lean_types=(['Bool', 'Int', 'Real'] if namespace in {'Concatenate', 'Relabel', 'SliceGeometry'} or case['id'] in {
                                        'broadcast/rule04', 'select/rule01', 'select/rule02',
                                        'select/rule03', 'select/rule04', 'reverse/rule01',
                                        'reverse/rule02', 'reverse/rule03', 'broadcast/rule08',
