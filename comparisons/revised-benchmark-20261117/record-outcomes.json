@@ -401,6 +401,160 @@
       "effort_by_model": {
         "forward": "sameShapeSlice"
       }
+    },
+    {
+      "name": "sliceBroadcastProjected",
+      "record_branches": {
+        "HandleSlice/broadcast-only-dims": [
+          "Only"
+        ],
+        "HandleSlice/broadcast-sink": [
+          "Sink"
+        ]
+      },
+      "models": {
+        "Only": "Only",
+        "Sink": "Sink"
+      },
+      "scope": "All finite ranks in the mathematical projection model. Derives projected Slice legality and exact matching extents from original verified shapes, then proves whole tensor equality. Only requires full-range unit stride on the mapped axes in the direct forwarding branch.",
+      "residual": "Mathematical lookup includes unsorted and repeated maps. Runtime HLO admission/interpretation for such maps, layout, overflow, status and graph effects unverified.",
+      "reviews": [
+        "slice-broadcast/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "Only": "projectedSlice",
+        "Sink": "projectedSlice"
+      }
+    },
+    {
+      "name": "actualBroadcastCompose",
+      "record_branches": {
+        "HandleBroadcast/compose": [
+          "composed"
+        ]
+      },
+      "models": {
+        "composed": "composed"
+      },
+      "scope": "Two concrete static projections compose to the source-ordered vector with proved extent equality; strict order carries through for strictly ordered inputs. Reuses historical broadcast/rule08.",
+      "residual": "HLO verifier optionally checks nondecreasing order. Client shape inference separately requires strict order. Executable interpretation/reachability for repeated maps not established.",
+      "reviews": [
+        "broadcast-compose-iota/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "composed": "composedAxes"
+      }
+    },
+    {
+      "name": "actualBroadcastIota",
+      "record_branches": {
+        "HandleBroadcast/iota": [
+          "encoded"
+        ]
+      },
+      "models": {
+        "encoded": "encoded"
+      },
+      "scope": "Broadcast remaps the Iota axis for any common coordinate encoding. For natural coordinates two choices agree everywhere iff the domain is empty, the axes coincide, or both extents are one.",
+      "residual": "Exact converse uses faithful coordinate observation. The positive law allows any deterministic shared encoder. Dynamic sizes, graph and executable mapping are unverified.",
+      "reviews": [
+        "broadcast-compose-iota/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "encoded": "composedAxes"
+      }
+    },
+    {
+      "name": "sliceOfClampedUpdate",
+      "record_branches": {
+        "HandleSlice/exact-dynamic-update": [
+          "exactMatch"
+        ],
+        "HandleSlice/inside-dynamic-update": [
+          "contained"
+        ]
+      },
+      "models": {
+        "exactMatch": "exactMatch",
+        "contained": "contained"
+      },
+      "scope": "One decoded constant start per axis, legal static extents and actual clamping. Exact unit-stride match forwards update values. Contained slicing derives all translated attributes and reads the update with its original positive strides.",
+      "residual": "Source layout/compatible replacement, integer decoding, graph status and overflow excluded. Admits empty axes; descriptor legality still proved.",
+      "reviews": [
+        "slice-update/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "exactMatch": "sliceOfUpdate",
+        "contained": "sliceOfUpdate"
+      }
+    },
+    {
+      "name": "reverseIdentityBoundary",
+      "record_branches": {
+        "HandleReverse/trivial-dimensions": [
+          "identityBoundary"
+        ]
+      },
+      "models": {
+        "identityBoundary": "identityBoundary"
+      },
+      "scope": "All typed static inputs are unchanged by reversing these axes exactly when the index domain is empty or every selected extent is one; source sufficient guard follows.",
+      "residual": "Pure mathematical tensor values. Source dispatch and dynamic extents open.",
+      "reviews": [
+        "reverse-masks/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "identityBoundary": "reverseMasks"
+      },
+      "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "nestedReverseMasks",
+      "record_branches": {
+        "HandleReverse/cancel": [
+          "cancel"
+        ],
+        "HandleReverse/symmetric-difference": [
+          "compose"
+        ]
+      },
+      "models": {
+        "cancel": "cancel",
+        "compose": "compose"
+      },
+      "scope": "Ranks arbitrary, canonical union-minus-intersection of axis memberships gives nested Reverse lookup, with cancellation on empty difference.",
+      "residual": "Input list order is immaterial to membership. C++ list mutation, sorting implementation, layout and effects unverified.",
+      "reviews": [
+        "reverse-masks/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "cancel": "reverseMasks",
+        "compose": "reverseMasks"
+      }
+    },
+    {
+      "name": "binaryReverseScalar",
+      "record_branches": {
+        "HandleReverse/binary-scalar-0": [
+          "constantLeft"
+        ],
+        "HandleReverse/binary-scalar-1": [
+          "constantRight"
+        ]
+      },
+      "models": {
+        "constantLeft": "constantLeft",
+        "constantRight": "constantRight"
+      },
+      "scope": "Moving the reverse onto the nonconstant operand preserves every value for deterministic pure homogeneous binary operations and keeps operand order.",
+      "residual": "Source excludes Compare, Fusion and side effects. No opcode-specific runtime or layout claim.",
+      "reviews": [
+        "reverse-masks/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "constantLeft": "reverseMasks",
+        "constantRight": "reverseMasks"
+      }
     }
   ],
   "counterexamples": [
@@ -1170,6 +1324,105 @@
         3.369
       ],
       "notes": "32s freeze to proof commit. Seven existing pinned base modules available to author; reviewer cleanly recompiled the closure. Positive nonconstant and negative controls described in review.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "projectedSlice": {
+      "review": "slice-broadcast/REVIEW.md",
+      "freeze_commit": "fae16ba",
+      "candidate_commit": "8aef974",
+      "worker_elapsed_seconds": 473,
+      "author_compiler_seconds": [
+        0.155,
+        0.409,
+        0.357,
+        0.377,
+        0.362,
+        0.522,
+        0.42
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        3.496
+      ],
+      "notes": "Two goals shared. Joint independent review 149s with composedAxes; 81s shared setup and source reading, ~35.5s dedicated here. Original historical slice/rule03 and rule09 directly overlap. Author reused prior oleans; three failing compiler calls included.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "composedAxes": {
+      "review": "broadcast-compose-iota/REVIEW.md",
+      "freeze_commit": "9c0afcb",
+      "candidate_commit": "e29daea",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.506,
+        0.472,
+        0.453,
+        0.471
+      ],
+      "independent_review_elapsed_seconds": 149,
+      "review_compiler_seconds": [
+        3.513
+      ],
+      "notes": "29s freeze-to-proof commit. One failed proof/control compile; combined reviewer wall includes projectedSlice, counted once. Historical paper Iota compiled byte-for-byte. See independent correction to general verifier interpretation in freeze.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "sliceOfUpdate": {
+      "review": "slice-update/REVIEW.md",
+      "freeze_commit": "f57aebd",
+      "candidate_commit": "1707ad8",
+      "worker_elapsed_seconds": 463,
+      "author_compiler_seconds": [
+        0.434,
+        0.476,
+        0.295,
+        0.33,
+        0.288,
+        0.292,
+        0.382,
+        0.329,
+        0.357,
+        0.278,
+        0.351,
+        0.347,
+        0.415,
+        0.305,
+        0.363,
+        0.337,
+        0.294,
+        0.461,
+        0.383
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        6.402,
+        0.364
+      ],
+      "notes": "Author original commits f368728/a8867d6; source-identical cherry-picks. First-pass proofs. Independent review 84s dedicated window overlapping reverseMasks; combined wall 149s recorded once there.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "reverseMasks": {
+      "review": "reverse-masks/REVIEW.md",
+      "freeze_commit": "68b9dee",
+      "candidate_commit": "9a14e7e",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.361,
+        0.376,
+        0.367,
+        0.369,
+        0.361,
+        0.514,
+        0.484
+      ],
+      "independent_review_elapsed_seconds": 149,
+      "review_compiler_seconds": [
+        1.904,
+        0.413
+      ],
+      "notes": "45s freeze-to-proof commit. Source guard/list adapters and exact forwarding boundary; homogeneous binary orientation directly reuses two existing laws. One failed concrete-control compile. Joint reviewer wall includes sliceOfUpdate; 69s dedicated Reverse window.",
       "active_seconds": null,
       "token_count": null
     }
