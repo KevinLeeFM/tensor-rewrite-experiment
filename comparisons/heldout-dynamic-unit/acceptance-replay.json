@@ -1,0 +1,116 @@
+{
+  "utc": "2026-11-17T14:06:09.897535+00:00",
+  "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "seconds": 6.589548288000515,
+  "result": "passed",
+  "records": [
+    {
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "seconds": 0.3092811889946461,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "seconds": 0.31836587600264465,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "seconds": 0.42853669300529873,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/DynamicIndexValue.lean",
+      "seconds": 0.268214313997305,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/DynamicIndexBounds.lean",
+      "seconds": 0.3801645919957082,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/DynamicIndex.lean",
+      "seconds": 0.298607650998747,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/Spec.lean",
+      "seconds": 0.30568721199961146,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "@[expose] def Heldout.DynamicUnit.Goal : Prop :=\n\u2200 (n m : Nat) (s : Shape n) (t : Shape m) (p : UnitInsertion s t) (sizes : Shape m) (starts : Fin m \u2192 Int)\n  (c : Conditions p sizes) (\u03b1 : Type) (input : Tensor s \u03b1),\n  slice starts \u22ef (reshape p input) = reshape (outputInsertion p sizes c) (slice (sourceStarts p starts) \u22ef input)\n'Heldout.DynamicUnit.Goal' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/SpecTests.lean",
+      "seconds": 0.30382254000141984,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/Guard.lean",
+      "seconds": 0.5018432240030961,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/candidate/Proof.lean",
+      "seconds": 0.3454343080011313,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "'Heldout.DynamicUnit.proof' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/Audit.lean",
+      "seconds": 0.5635045719973277,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "DYNAMIC_UNIT_BASELINE_GUARD checked=835\nDYNAMIC_UNIT_SIGNATURE exact\n'Heldout.DynamicUnit.proof' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-unit-reverse-v1/controls/Forbidden.lean",
+      "seconds": 0.348693069005094,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/controls/Leak.lean",
+      "seconds": 1.459429889000603,
+      "exit_code": 1,
+      "expected_failure": "DYNAMIC_UNIT_BASELINE_LEAK",
+      "output": "comparisons/heldout-dynamic-unit/controls/Leak.lean:3:0: error: DYNAMIC_UNIT_BASELINE_LEAK: TensorRewrite.Pilot.Tensor.reverseIndex_comp\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/controls/WrongSignature.lean",
+      "seconds": 0.42582771299930755,
+      "exit_code": 1,
+      "expected_failure": "DYNAMIC_UNIT_SIGNATURE_MISMATCH",
+      "output": "comparisons/heldout-dynamic-unit/controls/WrongSignature.lean:5:0: error: DYNAMIC_UNIT_SIGNATURE_MISMATCH: _private.comparisons.\u00abheldout-dynamic-unit\u00bb.controls.WrongSignature.0.wrongSignature versus Heldout.DynamicUnit.Goal\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-unit/controls/FalseReplacement.lean",
+      "seconds": 0.3287254130045767,
+      "exit_code": 1,
+      "expected_failure": "Tactic `decide` proved that the proposition",
+      "output": "comparisons/heldout-dynamic-unit/controls/FalseReplacement.lean:55:82: error: Tactic `decide` proved that the proposition\n  slice starts \u22ef (reshape p input) output =\n    reshape (outputInsertion p sizes conditions) (slice wrongStarts \u22ef input) output\nis false\n"
+    }
+  ],
+  "proof_sha256": "a291d262a438dfc3bbb11030fa8e376ab20bea242b706392d74f66d75925af8c",
+  "freeze_sha256": "fbdbf085b1c005a506e43012d3cbcb8a1c53f9ff1d519636198ab0f8ea90644e",
+  "forbidden_inventory_sha256": "f34738304844208c2464f2206ab10cbe9eac95760425d0cb428977e2a867c99a"
+}

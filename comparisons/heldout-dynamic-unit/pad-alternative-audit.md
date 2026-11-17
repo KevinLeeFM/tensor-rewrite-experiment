@@ -1,0 +1,5 @@
+# Second-case audit: singleton-axis interior Pad
+
+A scoped independent read-only audit inspected pinned `HandlePad` source at `algebraic_simplifier.cc:6201–6218`, where the visitor clears positive interior padding on input-size-one axes after an earlier empty-input return. It found direct semantic overlap with the already proved TensorRight paper `pad/rule02`: `comparisons/tensorright-v1/SignedPad.lean:unit_interior` proves arbitrary-rank equality when each axis either retains interior spacing or has input extent one, including signed low/high edges. The existing theorem generalizes this candidate, so the auditor recommended rejecting it as a fresh held-out rewrite. This is a scoped overlap conclusion, not a claim that every Pad branch is closed.
+
+No proof worker, source edit, or build was run for this alternative. The audit took approximately five minutes and overlapped the DynamicSlice proof work. The unresolved space-depth effort remains recorded separately and is not omitted from any batch analysis.

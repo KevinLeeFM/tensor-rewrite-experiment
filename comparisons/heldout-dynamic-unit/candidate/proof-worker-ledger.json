@@ -1,0 +1,39 @@
+{
+  "status": "proof compiled and externally importable; independent review pending",
+  "target": "Heldout.DynamicUnit.Goal (exact frozen statement, unchanged)",
+  "lean": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "proof_file": "comparisons/heldout-dynamic-unit/candidate/Proof.lean",
+  "proof_sha256": "a291d262a438dfc3bbb11030fa8e376ab20bea242b706392d74f66d75925af8c",
+  "public_exposure": "Proof module uses module header, public import of Spec (matching the frozen replay Spec.olean path), and @[expose] public section; separately verified by Audit.lean with `import Proof`.",
+  "wall_time": "Approximately 5 minutes from assignment start through separate-module audit; exact assignment-start timestamp was not captured.",
+  "active_proof_development": "Approximately 2 minutes; remaining time was frozen-input inspection, offline setup, compilation and audit.",
+  "setup": "No project .lake cache existed; used preinstalled pinned Lean at /workspace/toolchains/lean-4.35.0-linux/bin/lean and a temporary directory. No dependency download/build.",
+  "verification": {
+    "scope": [
+      "six frozen semantic modules in their TensorRewrite/Pilot module paths",
+      "frozen Spec.lean compiled to Spec.olean, matching the frozen replay module path",
+      "candidate Proof.lean compiled to Proof.olean",
+      "separate Audit.lean using exactly `import Proof`"
+    ],
+    "proof_and_audit_exit_codes": [
+      0,
+      0
+    ],
+    "focused_fresh_replay_seconds": 3.4,
+    "warnings": 0,
+    "axioms": "[propext, Classical.choice, Quot.sound]",
+    "nonvacuity_controls": "Not rerun by proof worker; frozen preproof controls remain available for parent/final integration.",
+    "separate_import_audit": "Passed: Heldout.DynamicUnit.proof : Heldout.DynamicUnit.Goal; axioms [propext, Classical.choice, Quot.sound]."
+  },
+  "proof_outline": "Function extensionality over output, then input-index extensionality. For each retained input axis, use the output-insertion extent to normalize the dependent Fin.cast value; split on input extent = 1. Unit axes use the explicit unitWidth condition and both clamps reduce to zero. Nonunit axes simplify sourceSizes/sourceStarts to the same extent, start, and output coordinate.",
+  "failures_and_repairs": [
+    "Initial shell PATH had no lean command; located and used the already-installed pinned Lean binary.",
+    "First temporary compilation did not mirror Lean module paths; corrected temporary output hierarchy without changing source imports.",
+    "Initial proof attempt had an incorrectly nested RHS operation; corrected to the actual slice-then-reshape graph.",
+    "Direct simplification did not normalize the dependent Fin.cast; used Fin.val_cast via the exact outputInsertion extent equality.",
+    "One axiom-print command used an unqualified theorem name outside its namespace; qualified it and separately verified external import.",
+    "First path-adjustment replay attempt placed semantic .olean files at temporary-root basenames, which could not satisfy TensorRewrite.Pilot imports; corrected to the frozen semantic module hierarchy, with Spec.olean and Proof.olean at the replay root. Proof compilation and external `import Proof` audit then passed."
+  ],
+  "scope_limits": "Proof candidate only. No independent acceptance, no changes to frozen statement/imports or generic library, no source correspondence theorem, no speedup claim.",
+  "elapsed_note": "Compilation attempts were focused and offline; no broad builds, downloads, or worker delegation."
+}
