@@ -1,0 +1,128 @@
+module
+public import TailCoordinateConnection
+public import MergedHeadConnection
+public import WorkerSuffix
+/-! Instantiate the reviewed merged-head equation on the actual plan tails. -/
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.ActualCastBridge
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex
+  Heldout.SpaceDepthCandidate Heldout.RecursiveShapeSplit
+  Heldout.MergedHeadConnection Heldout.TailCoordinateConnection
+  Heldout.TailHeadConnection Heldout.TailCountIntegration Heldout.WorkerSuffix
+  Heldout.PlanShapeSplit Heldout.OriginalSplitConnection
+
+theorem actual_merged_head_coordinate {rank outerRank : Nat} {shape : Shape rank}
+    {inner : Shape (rank + 1)} {outer : Shape outerRank} {α : Type}
+    (plan : Conditions shape inner outer) (input : Tensor shape α) (out : Index outer) :
+    let m := plan.axes.moved.val
+    let k := rank - m - 1
+    let leftRank : k + 2 = rank + 1 - m := by dsimp [k, m]; omega
+    let rightRank : k + 1 = rank - m := by dsimp [k, m]; omega
+    let leftShape : Shape (k + 2) := fun i =>
+      tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner) (Fin.cast leftRank i)
+    let rightShape : Shape (k + 1) := fun i =>
+      tailShape (m := m) (n := rank - m) (replacementCutShape plan input) (Fin.cast rightRank i)
+    let leftIndex : Index leftShape := fun i =>
+      tailIndex (m := m) (n := rank + 1 - m)
+        (cutIndex plan.axes inner (originalOuterIndex plan out)) (Fin.cast leftRank i)
+    let rightIndex : Index rightShape := fun i =>
+      tailIndex (m := m) (n := rank - m) (replacementCutIndex plan input out) (Fin.cast rightRank i)
+    (preIndex (m := 1) (n := k) rightIndex 0).val =
+      (preIndex (m := 2) (n := k) leftIndex 0).val := by
+  let m := plan.axes.moved.val
+  let k := rank - m - 1
+  have hm : m < rank := by
+    have before := moved_before_split plan.axes
+    have bound := plan.axes.split.isLt
+    dsimp [m]
+    omega
+  have leftRank : k + 2 = rank + 1 - m := by dsimp [k, m]; omega
+  have rightRank : k + 1 = rank - m := by dsimp [k, m]; omega
+  let leftShape : Shape (k + 2) := fun i =>
+    tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner) (Fin.cast leftRank i)
+  let rightShape : Shape (k + 1) := fun i =>
+    tailShape (m := m) (n := rank - m) (replacementCutShape plan input) (Fin.cast rightRank i)
+  let leftIndex : Index leftShape := fun i =>
+    tailIndex (m := m) (n := rank + 1 - m)
+      (cutIndex plan.axes inner (originalOuterIndex plan out)) (Fin.cast leftRank i)
+  let rightIndex : Index rightShape := fun i =>
+    tailIndex (m := m) (n := rank - m) (replacementCutIndex plan input out) (Fin.cast rightRank i)
+  have leftHead : preShape (m := 2) (n := k) leftShape 0 =
+      tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner) 0 := by
+    apply congrArg (fun s : Shape 2 => s 0)
+    funext i
+    apply congrArg (fun j : Fin (rank + 1 - m) =>
+      tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner) j)
+    apply Fin.ext
+    simp [leftShape, preShape]
+  have rightHead : preShape (m := 1) (n := k) rightShape 0 =
+      tailShape (m := m) (n := rank - m) (replacementCutShape plan input) 0 := by
+    apply congrArg (fun s : Shape 1 => s 0)
+    funext i
+    apply congrArg (fun j : Fin (rank - m) =>
+      tailShape (m := m) (n := rank - m) (replacementCutShape plan input) j)
+    apply Fin.ext
+    simp [rightShape, preShape]
+  have sameLeftHead : leftShape 0 =
+      tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner) 0 := by
+    dsimp [leftShape]
+    congr 1
+    apply Fin.ext
+    simp
+  have sameRightHead : rightShape 0 =
+      tailShape (m := m) (n := rank - m) (replacementCutShape plan input) 0 := by
+    dsimp [rightShape]
+    congr 1
+    apply Fin.ext
+    simp
+  have sameRows : elementCount (preShape (m := 2) (n := k) leftShape) =
+      elementCount (preShape (m := 1) (n := k) rightShape) := by
+    simp only [elementCount]
+    rw [sameLeftHead, sameRightHead, tail_extents_merge plan input]
+    simp [Nat.mul_comm]
+  have leftSuffix : (fun i : Fin k => leftShape i.succ.succ) =
+      tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner) ∘
+        (fun i : Fin k => (⟨2 + i.val, by dsimp [k,m]; omega⟩ : Fin (rank + 1 - m))) := by
+    funext i
+    dsimp [leftShape]
+    congr 1
+    apply Fin.ext
+    simp
+  have rightSuffix : (fun i : Fin k => rightShape i.succ) =
+      tailShape (m := m) (n := rank - m) (replacementCutShape plan input) ∘
+        (fun i : Fin k => (⟨1 + i.val, by dsimp [k,m]; omega⟩ : Fin (rank - m))) := by
+    funext i
+    dsimp [rightShape]
+    congr 1
+    apply Fin.ext
+    simp
+  have sameSuffix : ∀ i : Fin k, leftShape i.succ.succ = rightShape i.succ := by
+    intro i
+    rw [leftSuffix, rightSuffix]
+    exact suffix_extents plan i
+  have sameCols : elementCount (tailShape (m := 2) (n := k) leftShape) =
+      elementCount (tailShape (m := 1) (n := k) rightShape) := by
+    simp only [elementCount]
+    congr 1
+    funext i
+    exact sameSuffix i
+  have leftPacked : (linearize leftShape leftIndex).val =
+      (linearize (tailShape (m := m) (n := rank + 1 - m) (cutShape plan.axes inner))
+        (tailIndex (m := m) (n := rank + 1 - m)
+          (cutIndex plan.axes inner (originalOuterIndex plan out)))).val := by
+    exact rank_cast_packed leftRank _ _
+  have rightPacked : (linearize rightShape rightIndex).val =
+      (linearize (tailShape (m := m) (n := rank - m) (replacementCutShape plan input))
+        (tailIndex (m := m) (n := rank - m) (replacementCutIndex plan input out))).val := by
+    exact rank_cast_packed rightRank _ _
+  have packed : (linearize leftShape leftIndex).val =
+      (linearize rightShape rightIndex).val := by
+    rw [leftPacked, rightPacked]
+    exact actual_tail_packed_values_equal plan input out
+  have result := merged_head_of_tail_packing leftShape rightShape leftIndex rightIndex
+    sameRows sameCols packed
+  simpa [leftIndex, rightIndex, preIndex, preShape, m, k] using result
+
+#print axioms actual_cast_bridge
+end Heldout.ActualCastBridge

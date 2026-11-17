@@ -1,0 +1,11 @@
+Lean 4.35.0 targeted offline closure result:
+- 37 import/source modules compiled with exit 0 through MergedHeadConnection.
+- ActualCastBridge.lean failed.
+
+Key exact diagnostics:
+- At line 20: `omega could not prove the goal`; the dependent rank-equality let in the theorem type lacked an explicit moved-axis bound.
+- In `sameSuffix`: after rewriting the two suffix frames, the remaining goal is `leftShape i.succ.succ = rightShape i.succ`; the attempted `simp` made no progress on the dependent cast indices.
+- At line 125: `result` from `merged_head_of_tail_packing` proves the merged arithmetic equation, while the current theorem target was only equality of head coordinates.
+- `#print axioms actual_cast_bridge` then reports unknown constant because the declaration did not elaborate.
+
+The earlier first attempt's full first diagnostic is retained in `actual-merged-head-first-failure.log`; it identified the direct preIndex/tailIndex rank mismatch in the supplied failed draft.
