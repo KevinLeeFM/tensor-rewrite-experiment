@@ -1,0 +1,49 @@
+{
+  "inventory_versions": {
+    "paper_artifact": "10.5281/zenodo.14159871",
+    "retained_xla_commit": "e58e523b11f1fde802a493a776d158007486e1bf",
+    "manifest": "sources/manifest.json"
+  },
+  "observations": [
+    {
+      "name": "empty-reduction-dispatch",
+      "record_branches": {
+        "BroadcastReduce/single": ["single"],
+        "BroadcastReduce/tuple": ["tuple"],
+        "HandleReduce/empty-delegation": ["single", "tuple"]
+      },
+      "models": {"single": "reduceBroadcastSingle", "tuple": "reduceTupleEmpty"},
+      "scope": "All static exact-type single and finite nonempty heterogeneous tuple logical output values selected by either zero-element guard. Arbitrarily coupled pure whole-state reducers. Empty output has no positions.",
+      "residual": "Dynamic annotations, precision-changing initializer/accumulator options, graph replacement and effects are outside the declared model. The caller covers both helper branches and contributes no independent proof.",
+      "reviews": ["broadcast-reduce-single/RECORD-REVIEW.md", "reduce-tuple/REVIEW.md"]
+    },
+    {
+      "name": "same-count-reduction-dispatch",
+      "record_branches": {
+        "ReplaceReduceWithReshape/single": ["single"],
+        "ReplaceReduceWithReshape/tuple": ["tuple"],
+        "HandleReduce/same-element-count": ["single", "tuple"]
+      },
+      "models": {"single": "fixedPlanSameCount", "tuple": "tupleSameCount"},
+      "scope": "Static equal-count logical outputs over exact scalar types, including coupled whole tuple states. The actual initializer left-identity law is necessary and sufficient for all inputs of a fixed nonempty plan. Empty output is an additional model boundary.",
+      "residual": "Source assumes initializer identity; nonidentity model witnesses do not refute source-valid reductions. Caller runs zero-element dispatch and eligible singleton tuple normalization first. Layout/bitcast validity, precision-changing reducer signatures, dynamic annotations and graph operations are outside the model.",
+      "reviews": ["same-count-exact/REVIEW.md", "reduce-tuple/REVIEW.md"]
+    },
+    {
+      "name": "heterogeneous-tuple-projection",
+      "record_branches": {"HandleGetTupleElement/tuple-projection": ["selected-value"]},
+      "models": {"selected-value": "tupleProjection"},
+      "scope": "Every legal position in an ordered tuple of already evaluated, potentially heterogeneous operands, observing tag and value. Includes arbitrary finite arity and repeated tags.",
+      "residual": "The retained effect_graph partition, compatibility/status, metadata and graph mutation are outside this theorem.",
+      "reviews": ["tuple-projection/REVIEW.md"]
+    },
+    {
+      "name": "barrier-user-index-remapping",
+      "record_branches": {"HandleOptimizationBarrier/prune-tuple": ["tuple-operand"], "HandleOptimizationBarrier/prune-producer": ["projected-producer"]},
+      "models": {"tuple-operand": "barrierUserRemap", "projected-producer": "barrierUserRemap"},
+      "scope": "For each legal GTE user, compaction preserves its observed value at the new index equal to the retained-prefix length, using the keep mask for its operand kind.",
+      "residual": "The source graph transformations, actual metadata updates, scheduling and side-effect behavior are outside this mathematical observation. The two source records share a proof.",
+      "reviews": ["barrier-prune/REVIEW.md"]
+    }
+  ]
+}

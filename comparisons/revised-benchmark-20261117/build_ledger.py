@@ -32,6 +32,26 @@ for row in modern:
     if row['id'] in accepted:
         row['work_state'] = 'revised_model_partition_verified_whole_record_open'
         row['accepted_model_partitions'] = accepted[row['id']]
+# Evidence for precise source-record observations lives alongside the inherited whole-record state.
+packet = pathlib.Path(__file__).resolve().parent
+followup = load(packet / 'record-outcomes.json')
+source_manifest = load(root / followup['inventory_versions']['manifest'])
+assert source_manifest['xla_commit'] == followup['inventory_versions']['retained_xla_commit']
+assert source_manifest['historical_artifact'] == followup['inventory_versions']['paper_artifact']
+indexed = {row['id']: row for row in modern}
+for observation in followup['observations']:
+    for review in observation['reviews']:
+        assert (packet / review).is_file(), review
+    for case_id, branches in observation['record_branches'].items():
+        row = indexed[case_id]
+        assert 'reviewed_record_observation' not in row, case_id
+        row['reviewed_record_observation'] = {
+            'id': observation['name'], 'branches': branches,
+            'accepted_models': sorted({observation['models'][b] for b in branches}),
+            'outcome': 'proved_in_declared_logical_value_model',
+            'scope': observation['scope'], 'residual': observation['residual'],
+            'reviews': observation['reviews']}
+        row['work_state'] = 'revised_model_partition_verified_whole_record_open'
 historical = []
 for r in cases:
     old = r['lean_result']
@@ -58,6 +78,12 @@ out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection'
     'revised_review': 'comparisons/revised-benchmark-20261117/space-depth-review/REVIEW.md',
     'final_guard_history': 'failed final environment: five generic campaign inventory names; revised policy permits reuse and does not make that check pass',
     'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'partial phase records, downtime and overlap preclude defensible aggregate'}}}
+out['status'] = 'versioned_inventories_with_reviewed_record_observations'
+out['inventory_versions'] = followup['inventory_versions']
+out['sources'][str((packet / 'record-outcomes.json').relative_to(root))] = sha(packet / 'record-outcomes.json')
+out['sources'][followup['inventory_versions']['manifest']] = sha(root / followup['inventory_versions']['manifest'])
+out['source_candidates']['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))
+out['source_candidates']['records_with_reviewed_record_observation'] = sum('reviewed_record_observation' in row for row in modern)
 (root/'comparisons/revised-benchmark-20261117/outcome-ledger.json').write_text(json.dumps(out, indent=2)+'\n')
 print('source',out['source_candidates']['counts'],'inherited',out['source_candidates']['inherited_status_counts'])
 print('historical',out['historical_cases']['counts'])
