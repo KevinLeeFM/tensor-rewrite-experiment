@@ -1,0 +1,52 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--name",
+    "scout-tensor-source-bound-20261117",
+    "--user",
+    "1020:1022",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--rm",
+    "--network",
+    "none",
+    "--cpus",
+    "2",
+    "--memory",
+    "2g",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay-20261117/source,dst=/work,readonly",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay-20261117/lake,dst=/work/.lake",
+    "--mount",
+    "type=bind,src=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.lake/packages,dst=/work/.lake/packages,readonly",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay-20261117/reports,dst=/work/reports",
+    "--mount",
+    "type=bind,src=/home/k323lee/.elan/toolchains/leanprover--lean4---v4.35.0,dst=/toolchain,readonly",
+    "--workdir",
+    "/work",
+    "--entrypoint",
+    "/bin/sh",
+    "ghcr.io/seahorn/seahorn-llvm18:nightly",
+    "-c",
+    "export PATH=/toolchain/bin:$PATH; lean --version; python3 tools/check_theory.py"
+  ],
+  "source_commit": "938b193d4fadbd5e3209b775a88823b9d114715e",
+  "archive_sha256": "906ba13644f304b8b4de0094ec0a6e3ecb7727b7022acec70dfe32e045413663",
+  "returncode": 125,
+  "elapsed_seconds": 18.37464714050293,
+  "source_unchanged": true,
+  "closure_count": 242,
+  "stop_reason": null,
+  "samples": [
+    {
+      "elapsed": 5.431499481201172,
+      "free_bytes": 21174693888
+    }
+  ],
+  "approval": "Kevin: I approve that. Same 242-module/727-declaration full theory validation scope,2CPU/2GB,offline,10min supervision,5GB safety. Source-bound retry fixes prior attestation omission; previous successful run remains distinct."
+}
