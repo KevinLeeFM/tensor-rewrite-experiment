@@ -1,0 +1,293 @@
+{
+  "status": "proposed; no independent review; not a frozen proof baseline",
+  "base_commit": "e68c69cf7f6d987ac6df18bb177088d271647ba2",
+  "external": "Lean 4.35.0 Std only",
+  "modules": [
+    {
+      "path": "TensorRewrite/Pilot/Tensor.lean",
+      "sha256": "c1b41d38bee3d55c4a63df7333c7f0d23ea5917e4260062e2efad97edbeab122",
+      "imports": [
+        "Std"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "abbrev",
+          "name": "Shape"
+        },
+        {
+          "kind": "abbrev",
+          "name": "Index"
+        },
+        {
+          "kind": "abbrev",
+          "name": "Tensor"
+        },
+        {
+          "kind": "def",
+          "name": "constant"
+        },
+        {
+          "kind": "def",
+          "name": "map"
+        },
+        {
+          "kind": "def",
+          "name": "map\u2082"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/Indexing.lean",
+      "sha256": "73632c28e066f7651378c107bb7b9331b874138d6813d1571ed7386aaaa54c9c",
+      "imports": [
+        "TensorRewrite.Pilot.Tensor"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "def",
+          "name": "reindex"
+        },
+        {
+          "kind": "def",
+          "name": "reverseIndex"
+        },
+        {
+          "kind": "def",
+          "name": "reverse"
+        },
+        {
+          "kind": "def",
+          "name": "axisMask"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProduct.lean",
+      "sha256": "ac83afd5255db6543d7cd28a3c0adb2df86a0c2656835eb6f4f1a76138c1a0e1",
+      "imports": [
+        "Std"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "def",
+          "name": "join"
+        },
+        {
+          "kind": "def",
+          "name": "row"
+        },
+        {
+          "kind": "def",
+          "name": "column"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/FiniteProductLemmas.lean",
+      "sha256": "846b504cd4bd6bb2039dbc25d8cb6c325856393268b799b8438457a70ea29711",
+      "imports": [
+        "TensorRewrite.Pilot.FiniteProduct"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "theorem",
+          "name": "row_join"
+        },
+        {
+          "kind": "theorem",
+          "name": "column_join"
+        },
+        {
+          "kind": "theorem",
+          "name": "join_row_column"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/LinearIndex.lean",
+      "sha256": "f7a0fc59c7b31e4ba16748f1223a9f7fdb586e84d9f2f46fbc87f50c4e053978",
+      "imports": [
+        "TensorRewrite.Pilot.FiniteProduct",
+        "TensorRewrite.Pilot.Tensor"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "def",
+          "name": "elementCount"
+        },
+        {
+          "kind": "def",
+          "name": "linearize"
+        },
+        {
+          "kind": "def",
+          "name": "delinearize"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "sha256": "6d2e1b66b0284731f6f0289634a667adeffc9c65e76644a55a2b4d6d0d04398e",
+      "imports": [
+        "TensorRewrite.Pilot.Tensor"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "inductive",
+          "name": "Wrapper"
+        },
+        {
+          "kind": "def",
+          "name": "adjacentEqual"
+        },
+        {
+          "kind": "def",
+          "name": "matchesAll"
+        },
+        {
+          "kind": "structure",
+          "name": "DenseLiteral"
+        },
+        {
+          "kind": "def",
+          "name": "DenseLiteral.eval"
+        },
+        {
+          "kind": "inductive",
+          "name": "View"
+        },
+        {
+          "kind": "def",
+          "name": "View.eval"
+        },
+        {
+          "kind": "def",
+          "name": "View.isAll"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reshape.lean",
+      "sha256": "542164be841d856e88f310b37e70b2a98ccdd19ea18239bcfc3f35a99ca3bc2d",
+      "imports": [
+        "TensorRewrite.Pilot.LinearIndex",
+        "TensorRewrite.Pilot.ConstantGuard"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "def",
+          "name": "reshapeIndex"
+        },
+        {
+          "kind": "def",
+          "name": "reshapeTensor"
+        },
+        {
+          "kind": "def",
+          "name": "reshapeView"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/Permutation.lean",
+      "sha256": "5a57706897e2e1de8ab7cdff4fb880818f3d2931a4f3cc4f1a0b01eaf3a447c0",
+      "imports": [
+        "TensorRewrite.Pilot.Indexing"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "structure",
+          "name": "AxisPermutation"
+        },
+        {
+          "kind": "def",
+          "name": "identity"
+        },
+        {
+          "kind": "def",
+          "name": "comp"
+        },
+        {
+          "kind": "def",
+          "name": "transposeIndex"
+        },
+        {
+          "kind": "def",
+          "name": "transpose"
+        }
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/Concatenation.lean",
+      "sha256": "63442258c805c25bcc6147d877f6220036504e7a6bdcd95549dcb069a11bdd56",
+      "imports": [
+        "TensorRewrite.Pilot.Tensor"
+      ],
+      "direct_declarations": [
+        {
+          "kind": "structure",
+          "name": "Frame"
+        },
+        {
+          "kind": "def",
+          "name": "Frame.shape"
+        },
+        {
+          "kind": "def",
+          "name": "Frame.position"
+        },
+        {
+          "kind": "def",
+          "name": "Frame.withPosition"
+        },
+        {
+          "kind": "def",
+          "name": "Frame.rest"
+        },
+        {
+          "kind": "def",
+          "name": "Frame.castTensor"
+        },
+        {
+          "kind": "def",
+          "name": "Frame.slice"
+        },
+        {
+          "kind": "structure",
+          "name": "Block"
+        },
+        {
+          "kind": "def",
+          "name": "total"
+        },
+        {
+          "kind": "def",
+          "name": "readAt"
+        },
+        {
+          "kind": "def",
+          "name": "concatenate"
+        },
+        {
+          "kind": "def",
+          "name": "pack"
+        },
+        {
+          "kind": "def",
+          "name": "filterZero"
+        },
+        {
+          "kind": "def",
+          "name": "Block.hasElements"
+        },
+        {
+          "kind": "def",
+          "name": "filterEmpty"
+        }
+      ]
+    }
+  ],
+  "new_bridge_sha256": "57d6b7260c27aded4af8572e33680c3473cce4289dcff243eea3af92417be551",
+  "draft_statement_sha256": "ba8c42132e3f30798608c369de3f2f76ff0ff96e7382da85f8e090cbaa29cd6d",
+  "direct_import_note": "ConstantGuard included because Reshape imports it; FiniteProductLemmas optional generic inverse lemmas. No Theory proof modules included. Inspect generated/namespace declarations and full bodies before independent approval."
+}
