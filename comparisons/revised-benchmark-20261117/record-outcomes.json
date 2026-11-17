@@ -146,6 +146,145 @@
       "effort_by_model": {
         "trivialSortValues": "trivialSortValues"
       }
+    },
+    {
+      "name": "signed-pad-unit-interior",
+      "record_branches": {
+        "HandlePad/unit-interior": [
+          "static-logical"
+        ]
+      },
+      "models": {
+        "static-logical": "padUnit"
+      },
+      "scope": "The source loop clears precisely the positive gaps on singleton axes and retains signed edges, original output extents and all other gaps.",
+      "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+      "reviews": [
+        "signed-pad/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "padUnit": "padSigned"
+      }
+    },
+    {
+      "name": "signed-pad-empty-input",
+      "record_branches": {
+        "HandlePad/empty-input": [
+          "static-logical"
+        ]
+      },
+      "models": {
+        "static-logical": "padEmpty"
+      },
+      "scope": "Every output position returns the actual fill on a zero-extent input, including nonempty padded output.",
+      "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+      "reviews": [
+        "signed-pad/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "padEmpty": "padSigned"
+      }
+    },
+    {
+      "name": "signed-pad-compatible",
+      "record_branches": {
+        "HandlePad/compatible": [
+          "static-logical"
+        ]
+      },
+      "models": {
+        "static-logical": "padCompatible"
+      },
+      "scope": "With zero edges and equal logical shapes, legal static Pad preserves every tensor value. No all-interiors-zero premise; legal shapes force any remaining holes to be unobservable.",
+      "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+      "reviews": [
+        "signed-pad/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "padCompatible": "padCompatible"
+      }
+    },
+    {
+      "name": "signed-pad-negative-edges",
+      "record_branches": {
+        "HandlePad/negative-edges": [
+          "static-logical"
+        ]
+      },
+      "models": {
+        "static-logical": "padNegative"
+      },
+      "scope": "Clamping negative edges gives the constructed intermediate shape. Source start/limit/unit-stride bounds are valid and slicing the intermediate Pad recovers the original signed-Pad tensor, including empty output.",
+      "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+      "reviews": [
+        "pad-negative/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "padNegative": "padNegative"
+      }
+    },
+    {
+      "name": "signed-pad-broadcast-projection",
+      "record_branches": {
+        "HandlePad/broadcast-projection": [
+          "static-logical"
+        ]
+      },
+      "models": {
+        "static-logical": "padProjection"
+      },
+      "scope": "The exact sorted list of padded axes generates the smaller tensor shapes and remapped Broadcast slots. Occupied samples agree and holes give the fill. All mapped axes must appear in the retained list.",
+      "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof. The proof generalizes coordinate reads to arbitrary maps. The source interpretation relies on ordinary injective broadcast mappings and sorted-subshape deletion; no implementation semantics is inferred for repeated axes.",
+      "reviews": [
+        "pad-projection/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "padProjection": "padProjection"
+      }
+    },
+    {
+      "name": "scatterExactCondition",
+      "record_branches": {
+        "HandleAdd/scatter-single-lhs": [
+          "scatter-single-lhs"
+        ],
+        "HandleAdd/scatter-single-rhs": [
+          "scatter-single-rhs"
+        ]
+      },
+      "models": {
+        "scatter-single-lhs": "scatterExactCondition",
+        "scatter-single-rhs": "scatterExactCondition"
+      },
+      "scope": "For a single in-bounds modular-word update, either operand orientation preserves the full output vector iff reducer parameter roles differ or the extra addend at the target is zero.",
+      "residual": "Multiple updates/collisions, floats, other Scatter arms and graph status remain open.",
+      "reviews": [
+        "recovered-witnesses/SCATTER-GATHER-REVIEW.md"
+      ],
+      "effort_by_model": {
+        "scatterExactCondition": "scatterFixed"
+      },
+      "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "gatherSignedBoundary",
+      "record_branches": {
+        "HandleGather/small-select-chain": [
+          "small-select-chain"
+        ]
+      },
+      "models": {
+        "small-select-chain": "gatherSignedBoundary"
+      },
+      "scope": "For positive signed index width w, the full narrowed Select chain agrees with the clamped coordinate on all runtime indices iff extent \u2264 2^(w\u22121).",
+      "residual": "Source unrolling requires the configured threshold to admit that extent (default 4); unsigned, other types, layout/effects, backend execution outside this model. Extent zero is a model convention.",
+      "reviews": [
+        "gather-exact/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "gatherSignedBoundary": "gatherBound"
+      },
+      "outcome": "exact_preservation_condition_proved"
     }
   ],
   "counterexamples": [
@@ -194,6 +333,72 @@
       "classification_proof": "fc47972",
       "review": "trivial-sort/dynamic/REVIEW.md",
       "effort_group": "dynamicSort"
+    },
+    {
+      "id": "unboundedCompatiblePad",
+      "record": "HandlePad/compatible",
+      "theorem": "RevisedBenchmark.DynamicPad.classify; RevisedBenchmark.DynamicPad.witness",
+      "observation": "Rank-one equal stored shape with zero edges after earlier dispatches implies runtime output length is preserved.",
+      "outcome": "disproved_for_unbounded_positive_interior_model",
+      "positive_observation": "Uniform runtime length preservation for a fixed descriptor/gap holds iff descriptor is ordinary or gap is zero. The finite typed-value identity has independent evidence.",
+      "witness": "Unbounded descriptor, runtime length 2, interior 1, zero edges. Pad [7,8] with fill 99 produces length 3 and value 99 at index 1; forwarded input has length 2 and value 8 there.",
+      "limits": "Default verifier rejects unbounded outputs. No configured pipeline reachability, executable behavior or code correspondence established.",
+      "freeze": "d9113ad",
+      "proof": "e00b0df",
+      "review": "pad-compatible/dynamic/REVIEW.md",
+      "effort_group": "padDynamic"
+    },
+    {
+      "id": "scaledNestedSliceWord",
+      "record": "HandleDynamicSlice/nested-after-scaled-probe",
+      "theorem": "TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving",
+      "observation": "Universal preservation of the rank-one S32 residual multiply followed by a nested slice.",
+      "outcome": "disproved_in_frozen_word_or_index_model",
+      "witness": "Fixed input 1..10, inner width 6/start 1, outer width 1/start 2, multiplier 7: original 28 vs 4 after.",
+      "limits": "Ordinary direct nested slice is a different rewrite. Pinned archived host handler/full-pass results corroborate this specialization.",
+      "freeze": "d1b6ab0",
+      "review": "recovered-witnesses/SCALED-REVIEW.md",
+      "effort_group": "scaledArchive",
+      "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+    },
+    {
+      "id": "scatterRepeatedRole-lhs",
+      "record": "HandleAdd/scatter-single-lhs",
+      "theorem": "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving (extra+Scatter); commuted orientation checked in review",
+      "observation": "Single-target modular vector Add moved into a Scatter base under the opcode-only parameter matcher.",
+      "outcome": "disproved_in_frozen_word_or_index_model",
+      "witness": "Separate addend 1, base 3, update 5. Repeated current role gives 7 versus 8. Repeated update role gives 11 versus 10.",
+      "limits": "Historical theorem directly uses extra+Scatter. The other orientation uses commutativity for both Add occurrences, checked independently. Does not generalize to other Scatter rewrite branches or floating operations.",
+      "freeze": "d1b6ab0",
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "effort_group": "wordArchive",
+      "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+    },
+    {
+      "id": "scatterRepeatedRole-rhs",
+      "record": "HandleAdd/scatter-single-rhs",
+      "theorem": "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving (extra+Scatter); commuted orientation checked in review",
+      "observation": "Single-target modular vector Add moved into a Scatter base under the opcode-only parameter matcher.",
+      "outcome": "disproved_in_frozen_word_or_index_model",
+      "witness": "Separate addend 1, base 3, update 5. Repeated current role gives 7 versus 8. Repeated update role gives 11 versus 10.",
+      "limits": "Historical theorem directly uses extra+Scatter. The other orientation uses commutativity for both Add occurrences, checked independently. Does not generalize to other Scatter rewrite branches or floating operations.",
+      "freeze": "d1b6ab0",
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "effort_group": "wordArchive",
+      "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+    },
+    {
+      "id": "signedGatherThreshold",
+      "record": "HandleGather/small-select-chain",
+      "theorem": "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
+      "observation": "Universal clamped Gather coordinate equals the sequential signed-narrowed Select coordinate.",
+      "outcome": "disproved_in_frozen_word_or_index_model",
+      "witness": "Extent 129, S8 index 0, last literal narrows to \u2212128. Original selects 0, chain selects 128.",
+      "limits": "Executable host witness in archived configured threshold profile; exact arbitrary-width theorem is separate. No all-type/backend claim.",
+      "freeze": "d1b6ab0",
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "effort_group": "wordArchive",
+      "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
     }
   ],
   "effort_groups": {
@@ -372,6 +577,172 @@
         0.401
       ],
       "notes": "Two author attempts to reduce an irreducible mergeSort failed; used the Std mergeSort_pair theorem. Removed unused simp arguments before acceptance. Last three commands concern the classification extension. Separate reviewer timing in linked report. Both source records share the cost.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padSigned": {
+      "review": "signed-pad/REVIEW.md",
+      "freeze_commit": "8aae9c8",
+      "candidate_commit": "03ee170",
+      "worker_elapsed_seconds": 193,
+      "author_compiler_seconds": [
+        1.506,
+        1.929
+      ],
+      "independent_review_elapsed_seconds": 204,
+      "review_compiler_seconds": [
+        2.16,
+        3.128
+      ],
+      "notes": "Unit-interior and empty-input share the worker. Setup 132s, 61s from freeze to final replay. Two failed controls and historic proof-name qualification costs in ATTEMPT.md. 204s review shared with padCompatible; 3.128s joint supplemental replay.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padCompatible": {
+      "review": "signed-pad/REVIEW.md",
+      "freeze_commit": "c3a96fa",
+      "candidate_commit": "05ee7e9",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.303,
+        0.334,
+        0.335,
+        0.301,
+        0.291,
+        0.422
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        1.86
+      ],
+      "notes": "45s freeze-to-candidate commit interval. Joint review wall and extra replay charged to padSigned. A separate lemma-name query found two unavailable aliases.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padNegative": {
+      "review": "pad-negative/REVIEW.md",
+      "freeze_commit": "9e97f4a",
+      "candidate_commit": "da2162d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.337,
+        0.415,
+        0.408,
+        0.359
+      ],
+      "independent_review_elapsed_seconds": 176,
+      "review_compiler_seconds": [
+        4.703,
+        4.752
+      ],
+      "notes": "Author per-command selection; fresh total final closure about 4.5s. First historicalShift compile failed on unqualified one_mul; first three control proofs needed definitional reduction. Independent reviewer recorded two failed scratch controls.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padProjection": {
+      "review": "pad-projection/REVIEW.md",
+      "freeze_commit": "0cf196d",
+      "candidate_commit": "54eb4a0",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.332,
+        0.406,
+        0.391,
+        0.387,
+        0.386
+      ],
+      "independent_review_elapsed_seconds": 189,
+      "review_compiler_seconds": [
+        1.962
+      ],
+      "notes": "94s from freeze to commit. First spec probe corrected idxOf proof argument and explicit Fin.cast; first proof attempt unfolded dependent instances too early. Used the established pointwise assembly lemma instead.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padDynamic": {
+      "review": "pad-compatible/dynamic/REVIEW.md",
+      "freeze_commit": "d9113ad",
+      "candidate_commit": "e00b0df",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.345,
+        0.282,
+        0.407,
+        0.401
+      ],
+      "independent_review_elapsed_seconds": 153,
+      "review_compiler_seconds": [
+        2.461
+      ],
+      "notes": "32s freeze-to-commit. First proof compile needed explicit reduction of max 0 1; exact predicate and runtime tensor controls unchanged.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "scaledArchive": {
+      "review": "recovered-witnesses/SCALED-REVIEW.md",
+      "freeze_commit": "d1b6ab0",
+      "candidate_commit": "672928d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 175,
+      "review_compiler_seconds": [
+        4.597
+      ],
+      "notes": "Archive check 0.053s. Original proof discovery time unknown; original native suite has 33 runs with 8 changes. No new native run.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "wordArchive": {
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "freeze_commit": "d1b6ab0",
+      "candidate_commit": "672928d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 171,
+      "review_compiler_seconds": [
+        2.22
+      ],
+      "notes": "Three shared historical model results. Four-module replay and targeted orientation adapter; 75 archival records cross-checked to logs. Historical discovery time unknown.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "scatterFixed": {
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "freeze_commit": "ec092ea",
+      "candidate_commit": "fcec64d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.373,
+        0.445,
+        0.282,
+        0.409,
+        0.425
+      ],
+      "independent_review_elapsed_seconds": 59,
+      "review_compiler_seconds": [
+        2.211
+      ],
+      "notes": "Both operand orientations share one new theorem; one in-bounds update. Author compile included two dependencies; direct proof passed first time. Initial BitVec name search reported two absent aliases.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "gatherBound": {
+      "review": "gather-exact/REVIEW.md",
+      "freeze_commit": "4ae6622",
+      "candidate_commit": "b5a3d0a",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.328,
+        0.387,
+        0.404,
+        0.343,
+        0.338
+      ],
+      "independent_review_elapsed_seconds": 130,
+      "review_compiler_seconds": [
+        4.23
+      ],
+      "notes": "The representability direction is inherited; necessity at every larger extent after wraparounds is new. Two proof failures repaired, review harness axiom allowlist corrected and replayed.",
       "active_seconds": null,
       "token_count": null
     }

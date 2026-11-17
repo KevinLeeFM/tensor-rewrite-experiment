@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "a225c3599fe51e55d3aa08ed1d86524876fcb30375237dae22f23c31dfd84f6c",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "7567216694df9e624b4e3796bfa63b7fdb9bda37f5d0daeb8e2357a94930c4d7",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -553,7 +553,7 @@
         "id": "HandleAdd/scatter-single-lhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
@@ -573,14 +573,51 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "scatterFixed",
+            "wordArchive"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "scatterExactCondition",
+          "branches": [
+            "scatter-single-lhs"
+          ],
+          "accepted_models": [
+            "scatterExactCondition"
+          ],
+          "outcome": "exact_preservation_condition_proved",
+          "effort_groups": [
+            "scatterFixed"
+          ],
+          "scope": "For a single in-bounds modular-word update, either operand orientation preserves the full output vector iff reducer parameter roles differ or the extra addend at the target is zero.",
+          "residual": "Multiple updates/collisions, floats, other Scatter arms and graph status remain open.",
+          "reviews": [
+            "recovered-witnesses/SCATTER-GATHER-REVIEW.md"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "scatterRepeatedRole-lhs",
+            "record": "HandleAdd/scatter-single-lhs",
+            "theorem": "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving (extra+Scatter); commuted orientation checked in review",
+            "observation": "Single-target modular vector Add moved into a Scatter base under the opcode-only parameter matcher.",
+            "outcome": "disproved_in_frozen_word_or_index_model",
+            "witness": "Separate addend 1, base 3, update 5. Repeated current role gives 7 versus 8. Repeated update role gives 11 versus 10.",
+            "limits": "Historical theorem directly uses extra+Scatter. The other orientation uses commutativity for both Add occurrences, checked independently. Does not generalize to other Scatter rewrite branches or floating operations.",
+            "freeze": "d1b6ab0",
+            "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+            "effort_group": "wordArchive",
+            "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+          }
+        ]
       },
       {
         "id": "HandleAdd/scatter-single-rhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.current_update_preserves",
@@ -600,8 +637,45 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "scatterFixed",
+            "wordArchive"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "scatterExactCondition",
+          "branches": [
+            "scatter-single-rhs"
+          ],
+          "accepted_models": [
+            "scatterExactCondition"
+          ],
+          "outcome": "exact_preservation_condition_proved",
+          "effort_groups": [
+            "scatterFixed"
+          ],
+          "scope": "For a single in-bounds modular-word update, either operand orientation preserves the full output vector iff reducer parameter roles differ or the extra addend at the target is zero.",
+          "residual": "Multiple updates/collisions, floats, other Scatter arms and graph status remain open.",
+          "reviews": [
+            "recovered-witnesses/SCATTER-GATHER-REVIEW.md"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "scatterRepeatedRole-rhs",
+            "record": "HandleAdd/scatter-single-rhs",
+            "theorem": "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving (extra+Scatter); commuted orientation checked in review",
+            "observation": "Single-target modular vector Add moved into a Scatter base under the opcode-only parameter matcher.",
+            "outcome": "disproved_in_frozen_word_or_index_model",
+            "witness": "Separate addend 1, base 3, update 5. Repeated current role gives 7 versus 8. Repeated update role gives 11 versus 10.",
+            "limits": "Historical theorem directly uses extra+Scatter. The other orientation uses commutativity for both Add occurrences, checked independently. Does not generalize to other Scatter rewrite branches or floating operations.",
+            "freeze": "d1b6ab0",
+            "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+            "effort_group": "wordArchive",
+            "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+          }
+        ]
       },
       {
         "id": "HandleAllGather/uniform",
@@ -2851,15 +2925,33 @@
         "id": "HandleDynamicSlice/nested-after-scaled-probe",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "scaledArchive"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "scaledNestedSliceWord",
+            "record": "HandleDynamicSlice/nested-after-scaled-probe",
+            "theorem": "TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving",
+            "observation": "Universal preservation of the rank-one S32 residual multiply followed by a nested slice.",
+            "outcome": "disproved_in_frozen_word_or_index_model",
+            "witness": "Fixed input 1..10, inner width 6/start 1, outer width 1/start 2, multiplier 7: original 28 vs 4 after.",
+            "limits": "Ordinary direct nested slice is a different rewrite. Pinned archived host handler/full-pass results corroborate this specialization.",
+            "freeze": "d1b6ab0",
+            "review": "recovered-witnesses/SCALED-REVIEW.md",
+            "effort_group": "scaledArchive",
+            "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+          }
+        ]
       },
       {
         "id": "HandleDynamicSlice/same-shape",
@@ -3193,7 +3285,7 @@
         "id": "HandleGather/small-select-chain",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.literal_128_narrows",
@@ -3207,8 +3299,45 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "gatherBound",
+            "wordArchive"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "gatherSignedBoundary",
+          "branches": [
+            "small-select-chain"
+          ],
+          "accepted_models": [
+            "gatherSignedBoundary"
+          ],
+          "outcome": "exact_preservation_condition_proved",
+          "effort_groups": [
+            "gatherBound"
+          ],
+          "scope": "For positive signed index width w, the full narrowed Select chain agrees with the clamped coordinate on all runtime indices iff extent \u2264 2^(w\u22121).",
+          "residual": "Source unrolling requires the configured threshold to admit that extent (default 4); unsigned, other types, layout/effects, backend execution outside this model. Extent zero is a model convention.",
+          "reviews": [
+            "gather-exact/REVIEW.md"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "signedGatherThreshold",
+            "record": "HandleGather/small-select-chain",
+            "theorem": "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
+            "observation": "Universal clamped Gather coordinate equals the sequential signed-narrowed Select coordinate.",
+            "outcome": "disproved_in_frozen_word_or_index_model",
+            "witness": "Extent 129, S8 index 0, last literal narrows to \u2212128. Original selects 0, chain selects 128.",
+            "limits": "Executable host witness in archived configured threshold profile; exact arbitrary-width theorem is separate. No all-type/backend claim.",
+            "freeze": "d1b6ab0",
+            "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+            "effort_group": "wordArchive",
+            "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+          }
+        ]
       },
       {
         "id": "HandleGetTupleElement/tuple-projection",
@@ -4506,70 +4635,192 @@
         "id": "HandlePad/broadcast-projection",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "padProjection"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "signed-pad-broadcast-projection",
+          "branches": [
+            "static-logical"
+          ],
+          "accepted_models": [
+            "padProjection"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "padProjection"
+          ],
+          "scope": "The exact sorted list of padded axes generates the smaller tensor shapes and remapped Broadcast slots. Occupied samples agree and holes give the fill. All mapped axes must appear in the retained list.",
+          "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof. The proof generalizes coordinate reads to arbitrary maps. The source interpretation relies on ordinary injective broadcast mappings and sorted-subshape deletion; no implementation semantics is inferred for repeated axes.",
+          "reviews": [
+            "pad-projection/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandlePad/compatible",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "padCompatible",
+            "padDynamic"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "signed-pad-compatible",
+          "branches": [
+            "static-logical"
+          ],
+          "accepted_models": [
+            "padCompatible"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "padCompatible"
+          ],
+          "scope": "With zero edges and equal logical shapes, legal static Pad preserves every tensor value. No all-interiors-zero premise; legal shapes force any remaining holes to be unobservable.",
+          "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+          "reviews": [
+            "signed-pad/REVIEW.md"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "unboundedCompatiblePad",
+            "record": "HandlePad/compatible",
+            "theorem": "RevisedBenchmark.DynamicPad.classify; RevisedBenchmark.DynamicPad.witness",
+            "observation": "Rank-one equal stored shape with zero edges after earlier dispatches implies runtime output length is preserved.",
+            "outcome": "disproved_for_unbounded_positive_interior_model",
+            "positive_observation": "Uniform runtime length preservation for a fixed descriptor/gap holds iff descriptor is ordinary or gap is zero. The finite typed-value identity has independent evidence.",
+            "witness": "Unbounded descriptor, runtime length 2, interior 1, zero edges. Pad [7,8] with fill 99 produces length 3 and value 99 at index 1; forwarded input has length 2 and value 8 there.",
+            "limits": "Default verifier rejects unbounded outputs. No configured pipeline reachability, executable behavior or code correspondence established.",
+            "freeze": "d9113ad",
+            "proof": "e00b0df",
+            "review": "pad-compatible/dynamic/REVIEW.md",
+            "effort_group": "padDynamic"
+          }
+        ]
       },
       {
         "id": "HandlePad/empty-input",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "padSigned"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "signed-pad-empty-input",
+          "branches": [
+            "static-logical"
+          ],
+          "accepted_models": [
+            "padEmpty"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "padSigned"
+          ],
+          "scope": "Every output position returns the actual fill on a zero-extent input, including nonempty padded output.",
+          "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+          "reviews": [
+            "signed-pad/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandlePad/negative-edges",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "padNegative"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "signed-pad-negative-edges",
+          "branches": [
+            "static-logical"
+          ],
+          "accepted_models": [
+            "padNegative"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "padNegative"
+          ],
+          "scope": "Clamping negative edges gives the constructed intermediate shape. Source start/limit/unit-stride bounds are valid and slicing the intermediate Pad recovers the original signed-Pad tensor, including empty output.",
+          "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+          "reviews": [
+            "pad-negative/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandlePad/unit-interior",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "padSigned"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "signed-pad-unit-interior",
+          "branches": [
+            "static-logical"
+          ],
+          "accepted_models": [
+            "padUnit"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "padSigned"
+          ],
+          "scope": "The source loop clears precisely the positive gaps on singleton axes and retains signed edges, original output extents and all other gaps.",
+          "residual": "Static homogeneous pure values, unbounded mathematical arithmetic. Actual dispatch/reachability, mixed precision, overflow, dynamic shapes, layout, metadata, and replacement status are outside the proof.",
+          "reviews": [
+            "signed-pad/REVIEW.md"
+          ]
         }
       },
       {
@@ -8328,12 +8579,17 @@
       "partial_model_evidence_requires_partition_review": 151,
       "declared_value_family_complete_full_record_partitions_open": 122
     },
-    "work_state_counts": {
-      "no_attempt_evidence_in_inherited_ledger": 207,
-      "revised_model_partition_verified_whole_record_open": 14,
-      "inherited_checked_partial_evidence": 267
+    "records_with_reviewed_counterexample": 8,
+    "reviewed_observation_outcomes": {
+      "proved_in_declared_logical_value_model": 17,
+      "exact_preservation_condition_proved": 3
     },
-    "records_with_reviewed_record_observation": 12
+    "work_state_counts": {
+      "no_attempt_evidence_in_inherited_ledger": 201,
+      "revised_model_partition_verified_whole_record_open": 23,
+      "inherited_checked_partial_evidence": 264
+    },
+    "records_with_reviewed_record_observation": 20
   },
   "historical_cases": {
     "records": [
@@ -10597,6 +10853,172 @@
         0.401
       ],
       "notes": "Two author attempts to reduce an irreducible mergeSort failed; used the Std mergeSort_pair theorem. Removed unused simp arguments before acceptance. Last three commands concern the classification extension. Separate reviewer timing in linked report. Both source records share the cost.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padSigned": {
+      "review": "signed-pad/REVIEW.md",
+      "freeze_commit": "8aae9c8",
+      "candidate_commit": "03ee170",
+      "worker_elapsed_seconds": 193,
+      "author_compiler_seconds": [
+        1.506,
+        1.929
+      ],
+      "independent_review_elapsed_seconds": 204,
+      "review_compiler_seconds": [
+        2.16,
+        3.128
+      ],
+      "notes": "Unit-interior and empty-input share the worker. Setup 132s, 61s from freeze to final replay. Two failed controls and historic proof-name qualification costs in ATTEMPT.md. 204s review shared with padCompatible; 3.128s joint supplemental replay.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padCompatible": {
+      "review": "signed-pad/REVIEW.md",
+      "freeze_commit": "c3a96fa",
+      "candidate_commit": "05ee7e9",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.303,
+        0.334,
+        0.335,
+        0.301,
+        0.291,
+        0.422
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        1.86
+      ],
+      "notes": "45s freeze-to-candidate commit interval. Joint review wall and extra replay charged to padSigned. A separate lemma-name query found two unavailable aliases.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padNegative": {
+      "review": "pad-negative/REVIEW.md",
+      "freeze_commit": "9e97f4a",
+      "candidate_commit": "da2162d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.337,
+        0.415,
+        0.408,
+        0.359
+      ],
+      "independent_review_elapsed_seconds": 176,
+      "review_compiler_seconds": [
+        4.703,
+        4.752
+      ],
+      "notes": "Author per-command selection; fresh total final closure about 4.5s. First historicalShift compile failed on unqualified one_mul; first three control proofs needed definitional reduction. Independent reviewer recorded two failed scratch controls.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padProjection": {
+      "review": "pad-projection/REVIEW.md",
+      "freeze_commit": "0cf196d",
+      "candidate_commit": "54eb4a0",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.332,
+        0.406,
+        0.391,
+        0.387,
+        0.386
+      ],
+      "independent_review_elapsed_seconds": 189,
+      "review_compiler_seconds": [
+        1.962
+      ],
+      "notes": "94s from freeze to commit. First spec probe corrected idxOf proof argument and explicit Fin.cast; first proof attempt unfolded dependent instances too early. Used the established pointwise assembly lemma instead.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "padDynamic": {
+      "review": "pad-compatible/dynamic/REVIEW.md",
+      "freeze_commit": "d9113ad",
+      "candidate_commit": "e00b0df",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.345,
+        0.282,
+        0.407,
+        0.401
+      ],
+      "independent_review_elapsed_seconds": 153,
+      "review_compiler_seconds": [
+        2.461
+      ],
+      "notes": "32s freeze-to-commit. First proof compile needed explicit reduction of max 0 1; exact predicate and runtime tensor controls unchanged.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "scaledArchive": {
+      "review": "recovered-witnesses/SCALED-REVIEW.md",
+      "freeze_commit": "d1b6ab0",
+      "candidate_commit": "672928d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 175,
+      "review_compiler_seconds": [
+        4.597
+      ],
+      "notes": "Archive check 0.053s. Original proof discovery time unknown; original native suite has 33 runs with 8 changes. No new native run.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "wordArchive": {
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "freeze_commit": "d1b6ab0",
+      "candidate_commit": "672928d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 171,
+      "review_compiler_seconds": [
+        2.22
+      ],
+      "notes": "Three shared historical model results. Four-module replay and targeted orientation adapter; 75 archival records cross-checked to logs. Historical discovery time unknown.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "scatterFixed": {
+      "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "freeze_commit": "ec092ea",
+      "candidate_commit": "fcec64d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.373,
+        0.445,
+        0.282,
+        0.409,
+        0.425
+      ],
+      "independent_review_elapsed_seconds": 59,
+      "review_compiler_seconds": [
+        2.211
+      ],
+      "notes": "Both operand orientations share one new theorem; one in-bounds update. Author compile included two dependencies; direct proof passed first time. Initial BitVec name search reported two absent aliases.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "gatherBound": {
+      "review": "gather-exact/REVIEW.md",
+      "freeze_commit": "4ae6622",
+      "candidate_commit": "b5a3d0a",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.328,
+        0.387,
+        0.404,
+        0.343,
+        0.338
+      ],
+      "independent_review_elapsed_seconds": 130,
+      "review_compiler_seconds": [
+        4.23
+      ],
+      "notes": "The representability direction is inherited; necessity at every larger extent after wraparounds is new. Two proof failures repaired, review harness axiom allowlist corrected and replayed.",
       "active_seconds": null,
       "token_count": null
     }

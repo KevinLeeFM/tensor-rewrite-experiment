@@ -48,14 +48,16 @@ for observation in followup['observations']:
         row['reviewed_record_observation'] = {
             'id': observation['name'], 'branches': branches,
             'accepted_models': sorted({observation['models'][b] for b in branches}),
-            'outcome': 'proved_in_declared_logical_value_model',
+            'outcome': observation.get('outcome', 'proved_in_declared_logical_value_model'),
             'effort_groups': sorted({observation['effort_by_model'][observation['models'][b]] for b in branches}),
             'scope': observation['scope'], 'residual': observation['residual'],
             'reviews': observation['reviews']}
         row['work_state'] = 'revised_model_partition_verified_whole_record_open'
 for result in followup.get('counterexamples', []):
     assert (packet / result['review']).is_file(), result['review']
-    indexed[result['record']].setdefault('reviewed_model_counterexamples', []).append(result)
+    row = indexed[result['record']]
+    row.setdefault('reviewed_model_counterexamples', []).append(result)
+    row['work_state'] = 'revised_model_partition_verified_whole_record_open'
 
 historical = []
 for r in cases:
@@ -97,6 +99,8 @@ for group in followup['effort_groups'].values():
     assert (packet / group['review']).is_file(), group['review']
 out['sources'][str((packet / 'record-outcomes.json').relative_to(root))] = sha(packet / 'record-outcomes.json')
 out['sources'][followup['inventory_versions']['manifest']] = sha(root / followup['inventory_versions']['manifest'])
+out['source_candidates']['records_with_reviewed_counterexample'] = sum(bool(r.get('reviewed_model_counterexamples')) for r in modern)
+out['source_candidates']['reviewed_observation_outcomes'] = dict(collections.Counter(r['reviewed_record_observation']['outcome'] for r in modern if 'reviewed_record_observation' in r))
 out['source_candidates']['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))
 out['source_candidates']['records_with_reviewed_record_observation'] = sum('reviewed_record_observation' in row for row in modern)
 (root/'comparisons/revised-benchmark-20261117/outcome-ledger.json').write_text(json.dumps(out, indent=2)+'\n')
