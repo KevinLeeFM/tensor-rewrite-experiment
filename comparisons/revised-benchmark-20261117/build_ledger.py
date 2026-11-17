@@ -49,6 +49,7 @@ for observation in followup['observations']:
             'id': observation['name'], 'branches': branches,
             'accepted_models': sorted({observation['models'][b] for b in branches}),
             'outcome': 'proved_in_declared_logical_value_model',
+            'effort_groups': sorted({observation['effort_by_model'][observation['models'][b]] for b in branches}),
             'scope': observation['scope'], 'residual': observation['residual'],
             'reviews': observation['reviews']}
         row['work_state'] = 'revised_model_partition_verified_whole_record_open'
@@ -84,6 +85,16 @@ out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection'
     'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'partial phase records, downtime and overlap preclude defensible aggregate'}}}
 out['status'] = 'versioned_inventories_with_reviewed_record_observations'
 out['inventory_versions'] = followup['inventory_versions']
+out['revised_effort_groups'] = followup['effort_groups']
+for row in modern:
+    logical = row.get('reviewed_record_observation', {})
+    groups = set(logical.get('effort_groups', []))
+    groups.update(x['effort_group'] for x in row.get('reviewed_model_counterexamples', []))
+    if groups:
+        assert groups <= followup['effort_groups'].keys()
+        row['effort']['new_shared_measurement_groups'] = sorted(groups)
+for group in followup['effort_groups'].values():
+    assert (packet / group['review']).is_file(), group['review']
 out['sources'][str((packet / 'record-outcomes.json').relative_to(root))] = sha(packet / 'record-outcomes.json')
 out['sources'][followup['inventory_versions']['manifest']] = sha(root / followup['inventory_versions']['manifest'])
 out['source_candidates']['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))

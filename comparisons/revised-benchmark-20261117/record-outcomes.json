@@ -28,7 +28,11 @@
       "reviews": [
         "broadcast-reduce-single/RECORD-REVIEW.md",
         "reduce-tuple/REVIEW.md"
-      ]
+      ],
+      "effort_by_model": {
+        "reduceBroadcastSingle": "reduceBroadcastSingle",
+        "reduceTupleEmpty": "reduceTuple"
+      }
     },
     {
       "name": "same-count-reduction-dispatch",
@@ -53,7 +57,11 @@
       "reviews": [
         "same-count-exact/REVIEW.md",
         "reduce-tuple/REVIEW.md"
-      ]
+      ],
+      "effort_by_model": {
+        "fixedPlanSameCount": "fixedPlanSameCount",
+        "tupleSameCount": "reduceTuple"
+      }
     },
     {
       "name": "heterogeneous-tuple-projection",
@@ -69,7 +77,10 @@
       "residual": "The retained effect_graph partition, compatibility/status, metadata and graph mutation are outside this theorem.",
       "reviews": [
         "tuple-projection/REVIEW.md"
-      ]
+      ],
+      "effort_by_model": {
+        "tupleProjection": "tupleProjection"
+      }
     },
     {
       "name": "barrier-user-index-remapping",
@@ -89,7 +100,10 @@
       "residual": "The source graph transformations, actual metadata updates, scheduling and side-effect behavior are outside this mathematical observation. The two source records share a proof.",
       "reviews": [
         "barrier-prune/REVIEW.md"
-      ]
+      ],
+      "effort_by_model": {
+        "barrierUserRemap": "barrierUserRemap"
+      }
     },
     {
       "name": "singleton-tuple-reducer-unpacking",
@@ -105,7 +119,10 @@
       "residual": "The earlier empty dispatch preempts empty cases. Reducer graph cloning, evaluation effects, dynamic shape flags, metadata and source correspondence are outside the stated value observation. The window rewrite has different geometry.",
       "reviews": [
         "singleton-reduce/REVIEW.md"
-      ]
+      ],
+      "effort_by_model": {
+        "singletonReducerUnpack": "singletonReducerUnpack"
+      }
     },
     {
       "name": "guarded-trivial-sort",
@@ -125,7 +142,10 @@
       "residual": "The interpretation of sort as a fiber-local rearrangement is assumed. Comparator execution, effect order, graph and layout outcomes are separate.",
       "reviews": [
         "trivial-sort/REVIEW.md"
-      ]
+      ],
+      "effort_by_model": {
+        "trivialSortValues": "trivialSortValues"
+      }
     }
   ],
   "counterexamples": [
@@ -140,7 +160,220 @@
       "limits": "This is the explicit data-prerequisite model without extra effect/token ordering. No native execution, source guarantee or compiler bug established.",
       "freeze": "f46c888",
       "proof": "16d800d",
-      "review": "tuple-projection/order/REVIEW.md"
+      "review": "tuple-projection/order/REVIEW.md",
+      "effort_group": "tupleProjectionEffectOrder"
+    },
+    {
+      "id": "unboundedSort-single",
+      "record": "HandleSort/trivial-single",
+      "theorem": "RevisedBenchmark.DynamicSort.singleCounterexample",
+      "observation": "A rank-one raw stored-extent guard justifies forwarding an admitted runtime sort stream unchanged.",
+      "outcome": "disproved_for_unbounded_descriptor_model",
+      "positive_observation": "Classification proves both guarded laws hold uniformly exactly for descriptors other than unbounded. Static and bounded descriptors with stored extent greater than one have a vacuous guard; 0 and 1 bound admitted runtime length.",
+      "witness": "Stored INT64_MIN passes the signed guard. Runtime keys [1,0] sort to [0,1]. For paired values the payload [true,false] sorts to [false,true].",
+      "limits": "A default ShapeVerifier rejects unbounded output shapes. No backend authorization, pass reachability, actual binary execution or compiler bug has been established.",
+      "freeze": "1429679",
+      "proof": "a107382",
+      "classification_freeze": "7509a43",
+      "classification_proof": "fc47972",
+      "review": "trivial-sort/dynamic/REVIEW.md",
+      "effort_group": "dynamicSort"
+    },
+    {
+      "id": "unboundedSort-tuple",
+      "record": "HandleSort/trivial-tuple",
+      "theorem": "RevisedBenchmark.DynamicSort.tupleCounterexample",
+      "observation": "A rank-one raw stored-extent guard justifies forwarding an admitted runtime sort stream unchanged.",
+      "outcome": "disproved_for_unbounded_descriptor_model",
+      "positive_observation": "Classification proves both guarded laws hold uniformly exactly for descriptors other than unbounded. Static and bounded descriptors with stored extent greater than one have a vacuous guard; 0 and 1 bound admitted runtime length.",
+      "witness": "Stored INT64_MIN passes the signed guard. Runtime keys [1,0] sort to [0,1]. For paired values the payload [true,false] sorts to [false,true].",
+      "limits": "A default ShapeVerifier rejects unbounded output shapes. No backend authorization, pass reachability, actual binary execution or compiler bug has been established.",
+      "freeze": "1429679",
+      "proof": "a107382",
+      "classification_freeze": "7509a43",
+      "classification_proof": "fc47972",
+      "review": "trivial-sort/dynamic/REVIEW.md",
+      "effort_group": "dynamicSort"
     }
-  ]
+  ],
+  "effort_groups": {
+    "reduceBroadcastSingle": {
+      "review": "broadcast-reduce-single/RECORD-REVIEW.md",
+      "freeze_commit": null,
+      "candidate_commit": "7725b5b",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 178,
+      "review_compiler_seconds": [],
+      "notes": "Record-scope review reused earlier 38s independent proof review. Archive/hash checks 0.151s. Old discovery unknown.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "fixedPlanSameCount": {
+      "review": "same-count-exact/REVIEW.md",
+      "freeze_commit": "1e7c5de",
+      "candidate_commit": "55fce93",
+      "worker_elapsed_seconds": 80,
+      "author_compiler_seconds": [
+        5.041,
+        0.378,
+        0.362
+      ],
+      "independent_review_elapsed_seconds": 155,
+      "review_compiler_seconds": [
+        6.112,
+        5.61
+      ],
+      "notes": "First author number is summed setup compiler time; later numbers are proof and controls. Review repeated; includes expected negative.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "reduceTuple": {
+      "review": "reduce-tuple/REVIEW.md",
+      "freeze_commit": "5f2603a",
+      "candidate_commit": "abb52da",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.275,
+        0.338,
+        0.407
+      ],
+      "independent_review_elapsed_seconds": 242,
+      "review_compiler_seconds": [
+        5.639,
+        6.092,
+        6.417
+      ],
+      "notes": "One shared effort for both arms. Second author compile failed on control annotations. First two reviewer totals approximate and failed in control harness.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "tupleProjection": {
+      "review": "tuple-projection/REVIEW.md",
+      "freeze_commit": "977b006",
+      "candidate_commit": "84a81af",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.335,
+        0.425,
+        0.395
+      ],
+      "independent_review_elapsed_seconds": 153,
+      "review_compiler_seconds": [
+        1.052
+      ],
+      "notes": "Second author compile failed universe/control annotations. Review compiler total includes dependency inspection.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "barrierUserRemap": {
+      "review": "barrier-prune/REVIEW.md",
+      "freeze_commit": "4160b57",
+      "candidate_commit": "5e5c85f",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.369,
+        0.523,
+        0.361,
+        0.441
+      ],
+      "independent_review_elapsed_seconds": 193,
+      "review_compiler_seconds": [
+        1.128,
+        1.138,
+        1.589,
+        1.45
+      ],
+      "notes": "Shared across both operand variants. Initial prefix proof, then warning repairs. First three review trials encountered harness issues.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "tupleProjectionEffectOrder": {
+      "review": "tuple-projection/order/REVIEW.md",
+      "freeze_commit": "f46c888",
+      "candidate_commit": "16d800d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.419,
+        0.307,
+        0.442,
+        0.463
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        2.498
+      ],
+      "notes": "Review about 3 minutes, exact end unrecorded. Third author command failed due to reserved identifier.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "singletonReducerUnpack": {
+      "review": "singleton-reduce/REVIEW.md",
+      "freeze_commit": "4840655",
+      "candidate_commit": "4332540",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.292,
+        0.391,
+        0.353,
+        0.328
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        2.927
+      ],
+      "notes": "Review approximately four minutes. Author repaired redundant proof step and finite index annotation. Earlier review harness trials described in report.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "trivialSortValues": {
+      "review": "trivial-sort/REVIEW.md",
+      "freeze_commit": "94b8ded",
+      "candidate_commit": "700bf9c",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.373,
+        0.406,
+        0.399
+      ],
+      "independent_review_elapsed_seconds": 195,
+      "review_compiler_seconds": [
+        2.617
+      ],
+      "notes": "Shared finite result; reviewer total includes two repaired fixtures. Unknown-dimension model is separate.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "dynamicSort": {
+      "review": "trivial-sort/dynamic/REVIEW.md",
+      "freeze_commit": "1429679",
+      "candidate_commit": "fc47972",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.366,
+        0.376,
+        0.402,
+        0.326,
+        0.39,
+        0.335,
+        0.485,
+        0.339
+      ],
+      "independent_review_elapsed_seconds": 175,
+      "review_compiler_seconds": [
+        0.375,
+        0.344,
+        0.488,
+        0.264,
+        0.374,
+        0.39,
+        0.459,
+        0.464,
+        0.401
+      ],
+      "notes": "Two author attempts to reduce an irreducible mergeSort failed; used the Std mergeSort_pair theorem. Removed unused simp arguments before acceptance. Last three commands concern the classification extension. Separate reviewer timing in linked report. Both source records share the cost.",
+      "active_seconds": null,
+      "token_count": null
+    }
+  }
 }
