@@ -1,0 +1,20 @@
+import os, pathlib, subprocess, tempfile, time, json, hashlib, datetime
+root=pathlib.Path(__file__).resolve().parents[2]
+base='comparisons/heldout-space-depth-selection/'
+lean='/workspace/toolchains/lean-4.35.0-linux/bin/lean'
+files=[('TensorRewrite/Pilot/'+n+'.lean','TensorRewrite/Pilot/'+n+'.olean') for n in
+ ['Tensor','Indexing','Permutation','FiniteProduct','LinearIndex','ConstantGuard','Reshape','FiniteProductLemmas','LinearIndexLemmas']]
+files += [('TensorRewrite/Theory/'+n+'.lean','TensorRewrite/Theory/'+n+'.olean') for n in ['Concatenation','ConcatenationLemmas']]
+files += [(base+n+'.lean',n+'.olean') for n in ['ShapeBridge','SliceTransport','OrderedSlices','ChunkIntervals','SourceFrame','ElementCount','GoalCandidate','CoordinateBridge','CoordinateChunkAdapter','IndexTransportAttempt','ProductAssociation','ContextAssociation','PermutationCoordinate','PermutationRegions','RecursiveShapeSplit','PlanShapeSplit','RecursiveShapeSplitTests','OriginalSplitConnection','TailHeadConnection','WorkerSuffix','WorkerIndexJoin','WorkerIndexPrefix','TailCountIntegration','TailCoordinateConnection','MergedHeadConnection','ActualMergedHead']]
+rows=[]; start=time.monotonic()
+with tempfile.TemporaryDirectory(prefix='actual-merged-head-') as tmp:
+ env=os.environ.copy(); env['LEAN_PATH']=tmp
+ for src,dest in files:
+  out=pathlib.Path(tmp)/dest; out.parent.mkdir(parents=True,exist_ok=True)
+  t=time.monotonic(); p=subprocess.run([lean,src,'-o',str(out)],cwd=root,env=env,text=True,capture_output=True)
+  output=p.stdout+p.stderr; rows.append({'source':src,'seconds':round(time.monotonic()-t,4),'exit':p.returncode,'output':output}); print(src,p.returncode,flush=True)
+  if p.returncode: (root/base/'actual-merged-head-first-failure.log').write_text(output); break
+  if 'warning:' in output or 'sorryAx' in output: raise SystemExit(output)
+ result={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'lean':subprocess.check_output([lean,'--version'],text=True).strip(),'elapsed_seconds':round(time.monotonic()-start,3),'files':rows,'hashes':{n:hashlib.sha256((root/base+n).read_bytes()).hexdigest() for n in ['ActualMergedHead.lean','TailCoordinateConnection.lean','TailCountIntegration.lean','WorkerSuffix.lean','MergedHeadConnection.lean']}}
+ (root/base/'actual-merged-head-replay.json').write_text(json.dumps(result,indent=2)+'\n')
+ print(json.dumps(result,indent=2))
