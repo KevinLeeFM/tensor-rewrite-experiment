@@ -59,3 +59,22 @@ namespace Heldout.ChunkIntervals.Tests
 /-- Reordering the final two chunks is a well-formed but different sequence. -/
 example : (intervals 3 2).map (fun x => x.start) ≠ [0, 4, 2] := by decide
 end Heldout.ChunkIntervals.Tests
+namespace Heldout.ChunkIntervals.Tests
+/-- Correct concatenation axis, at row-major flat position three of shape [2,9]. -/
+def correctAxisIndex : Index (outputFrame.shape (total (chunkBlocks frame input axis))) :=
+  fun i => ⟨if i.val = 0 then 0 else 3, (show ∀ i : Fin 2,
+    (if i.val = 0 then 0 else 3) <
+      (outputFrame.shape (total (chunkBlocks frame input axis))) i by decide) i⟩
+/-- Wrong concatenation axis has shape [6,3]; [1,0] is also flat position three. -/
+def wrongAxis : Fin 2 := ⟨0, by decide⟩
+def wrongFrame := destinationFrame frame 2 wrongAxis
+def wrongAxisIndex : Index (wrongFrame.shape (total (chunkBlocks frame input wrongAxis))) :=
+  fun i => ⟨if i.val = 0 then 1 else 0, (show ∀ i : Fin 2,
+    (if i.val = 0 then 1 else 0) <
+      (wrongFrame.shape (total (chunkBlocks frame input wrongAxis))) i by decide) i⟩
+example : concatenate (chunkBlocks frame input axis) correctAxisIndex = 20 := by decide
+example : concatenate (chunkBlocks frame input wrongAxis) wrongAxisIndex = 10 := by decide
+/-- The wrong axis is well typed but changes the value at the corresponding flat position. -/
+example : concatenate (chunkBlocks frame input axis) correctAxisIndex ≠
+    concatenate (chunkBlocks frame input wrongAxis) wrongAxisIndex := by decide
+end Heldout.ChunkIntervals.Tests
