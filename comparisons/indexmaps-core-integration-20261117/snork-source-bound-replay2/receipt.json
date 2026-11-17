@@ -1,0 +1,192 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--name",
+    "scout-tensor-source-bound-20261117",
+    "--user",
+    "1020:1022",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--rm",
+    "--network",
+    "none",
+    "--cpus",
+    "2",
+    "--memory",
+    "2g",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay2-20261117/source,dst=/work,readonly",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay2-20261117/lake,dst=/work/.lake",
+    "--mount",
+    "type=bind,src=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.lake/packages,dst=/work/.lake/packages,readonly",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay2-20261117/reports,dst=/work/reports",
+    "--mount",
+    "type=bind,src=/home/k323lee/.elan/toolchains/leanprover--lean4---v4.35.0,dst=/toolchain,readonly",
+    "--workdir",
+    "/work",
+    "--entrypoint",
+    "/bin/sh",
+    "ghcr.io/seahorn/seahorn-llvm18:nightly",
+    "-c",
+    "export PATH=/toolchain/bin:$PATH; lean --version; python3 tools/check_theory.py"
+  ],
+  "source_commit": "938b193d4fadbd5e3209b775a88823b9d114715e",
+  "archive_sha256": "906ba13644f304b8b4de0094ec0a6e3ecb7727b7022acec70dfe32e045413663",
+  "returncode": 1,
+  "elapsed_seconds": 369.28008127212524,
+  "source_unchanged": true,
+  "closure_count": 242,
+  "stop_reason": null,
+  "samples": [
+    {
+      "elapsed": 5.537805795669556,
+      "free_bytes": 20802723840
+    },
+    {
+      "elapsed": 15.538374185562134,
+      "free_bytes": 20796194816
+    },
+    {
+      "elapsed": 25.539199352264404,
+      "free_bytes": 20795166720
+    },
+    {
+      "elapsed": 35.54018545150757,
+      "free_bytes": 20790370304
+    },
+    {
+      "elapsed": 45.541123390197754,
+      "free_bytes": 20788445184
+    },
+    {
+      "elapsed": 55.54191470146179,
+      "free_bytes": 20786642944
+    },
+    {
+      "elapsed": 65.54289054870605,
+      "free_bytes": 20782481408
+    },
+    {
+      "elapsed": 75.54379749298096,
+      "free_bytes": 20779802624
+    },
+    {
+      "elapsed": 85.54478931427002,
+      "free_bytes": 20778323968
+    },
+    {
+      "elapsed": 95.54560947418213,
+      "free_bytes": 20774932480
+    },
+    {
+      "elapsed": 105.5466697216034,
+      "free_bytes": 20770344960
+    },
+    {
+      "elapsed": 115.54758167266846,
+      "free_bytes": 20760621056
+    },
+    {
+      "elapsed": 125.54873085021973,
+      "free_bytes": 20757581824
+    },
+    {
+      "elapsed": 135.54956436157227,
+      "free_bytes": 20754104320
+    },
+    {
+      "elapsed": 145.55047845840454,
+      "free_bytes": 20751101952
+    },
+    {
+      "elapsed": 155.55136680603027,
+      "free_bytes": 20744552448
+    },
+    {
+      "elapsed": 165.5524446964264,
+      "free_bytes": 20739477504
+    },
+    {
+      "elapsed": 175.55375123023987,
+      "free_bytes": 20603318272
+    },
+    {
+      "elapsed": 185.55447840690613,
+      "free_bytes": 20596514816
+    },
+    {
+      "elapsed": 195.55538773536682,
+      "free_bytes": 20592369664
+    },
+    {
+      "elapsed": 205.5562343597412,
+      "free_bytes": 20591636480
+    },
+    {
+      "elapsed": 215.55733513832092,
+      "free_bytes": 20586110976
+    },
+    {
+      "elapsed": 225.55834245681763,
+      "free_bytes": 20581810176
+    },
+    {
+      "elapsed": 235.5593385696411,
+      "free_bytes": 20579160064
+    },
+    {
+      "elapsed": 245.56053805351257,
+      "free_bytes": 20574842880
+    },
+    {
+      "elapsed": 255.56190633773804,
+      "free_bytes": 20568289280
+    },
+    {
+      "elapsed": 265.5627748966217,
+      "free_bytes": 20565217280
+    },
+    {
+      "elapsed": 275.5639729499817,
+      "free_bytes": 20558196736
+    },
+    {
+      "elapsed": 285.56517004966736,
+      "free_bytes": 20540411904
+    },
+    {
+      "elapsed": 295.56599473953247,
+      "free_bytes": 20534542336
+    },
+    {
+      "elapsed": 305.56692719459534,
+      "free_bytes": 20529319936
+    },
+    {
+      "elapsed": 315.56854248046875,
+      "free_bytes": 20524654592
+    },
+    {
+      "elapsed": 325.5696699619293,
+      "free_bytes": 20518924288
+    },
+    {
+      "elapsed": 335.5707805156708,
+      "free_bytes": 20515180544
+    },
+    {
+      "elapsed": 345.57183814048767,
+      "free_bytes": 20514934784
+    },
+    {
+      "elapsed": 355.57303500175476,
+      "free_bytes": 20514934784
+    }
+  ],
+  "approval": "Kevin: I approve that. Same 242-module/727-declaration full theory validation scope,2CPU/2GB,offline,10min supervision,5GB safety. Source-bound retry fixes prior attestation omission; previous successful run remains distinct."
+}
