@@ -908,6 +908,26 @@
         "Inserted": "broadcastUnitEdits",
         "Dropped": "broadcastUnitEdits"
       }
+    },
+    {
+      "name": "reverseSourceRemap",
+      "record_branches": {
+        "HandleReverse/inserted-unit-dimensions": [
+          "reverse_remap"
+        ]
+      },
+      "models": {
+        "reverse_remap": "reverse_remap"
+      },
+      "scope": "Every static ordered insertion of unit axes, any valid ordered reverse list and any input values. Computes literal dimension subtraction, proves range and uniqueness, and preserves true row-major tensor values. Static applicability includes matched zero prefixes as discussed in the source recheck.",
+      "residual": "Runtime size propagation with a changed inferred_dimension is unresolved. See whole-record-audit/DYNAMIC-REVIEW.md for actual CommonFactors behavior and the narrow dynamic test.",
+      "reviews": [
+        "reverse-unit-remap/REVIEW.md",
+        "whole-record-audit/DYNAMIC-REVIEW.md"
+      ],
+      "effort_by_model": {
+        "reverse_remap": "reverseSourceRemap"
+      }
     }
   ],
   "counterexamples": [
@@ -2052,6 +2072,27 @@
         7.243
       ],
       "notes": "69s setup/hash freeze, 42s proof window, 62s controls/replay. Development checks include two proof failures and a failed control. First Git receipt contains both spec and proof. Two unused-binder warnings.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "reverseSourceRemap": {
+      "review": "reverse-unit-remap/REVIEW.md",
+      "freeze_commit": "3da0787",
+      "candidate_commit": "0a75757",
+      "worker_elapsed_seconds": 241,
+      "author_compiler_seconds": [
+        10.189,
+        0.459,
+        0.384,
+        0.446,
+        0.59,
+        8.995
+      ],
+      "independent_review_elapsed_seconds": 92,
+      "review_compiler_seconds": [
+        9.114
+      ],
+      "notes": "241s workspace inspection through full replay, plus 47s report/commit. Failed runner before Lean; a lemma probe ~0.6s tool wall excluded from compiler sum. Source-level zero-shape interpretation corrected in whole-record-audit/DYNAMIC-REVIEW.md. Dynamic domain remains open. 9.152s reviewer replay wall, 9.114s summed compiler times.",
       "active_seconds": null,
       "token_count": null
     }

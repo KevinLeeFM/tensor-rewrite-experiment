@@ -88,6 +88,50 @@ for entry in crosswalk['rows']:
     if row['work_state'] in {'no_attempt_evidence_in_inherited_ledger', 'inherited_checked_partial_evidence'}:
         row['work_state'] = 'earlier_independently_accepted_model_partition_whole_record_open'
 
+# Full mathematical record outcomes supplement the immutable inherited inventory.
+verdict_path = packet / 'whole-record-audit/record-verdicts.json'
+verdicts = load(verdict_path)
+effort_path = packet / 'whole-record-audit/effort.json'
+record_effort = load(effort_path)
+assert len({v['id'] for v in verdicts}) == len(verdicts)
+for verdict in verdicts:
+    row = indexed[verdict['id']]
+    assert sha(packet / verdict['review']) == verdict['review_sha256']
+    assert verdict['effort_group'] in record_effort
+    if verdict['outcome'] == 'disproved_record_preservation':
+        receipt = root / verdict['receipt']
+        assert sha(receipt) == verdict['receipt_sha256']
+        evidence = load(receipt)
+        assert evidence['source_commit'] == source_manifest['xla_commit']
+        assert evidence['exit_code'] == 0 and evidence['test_passed']
+        assert all(sha(root / f['path']) == f['sha256'] for f in evidence['files'])
+        matches = [c for c in evidence['cases'] if all(
+            c.get(k) == v for k, v in verdict['selector'].items())]
+        assert len(matches) == 1
+        witness = matches[0]
+        if 'before' in witness:
+            assert witness['rewritten_verified'] and witness['before'] != witness['after']
+        else:
+            assert witness['original_verified'] and not witness['rewritten_verified']
+    else:
+        assert verdict['outcome'] == 'proved_shape_inferred_operator_model'
+        assert sha(packet / verdict['proof']) == verdict['proof_sha256']
+        frozen = {}
+        for line in (packet / verdict['manifest']).read_text().splitlines():
+            digest, name = line.split(maxsplit=1)
+            assert sha(root / name) == digest
+            frozen[name] = digest
+        assert str((packet / verdict['spec']).relative_to(root)) in frozen
+        row['shape_inferred_operator_verdict'] = verdict
+        row['work_state'] = 'revised_model_partition_verified_whole_record_open'
+        continue
+    row['complete_record_verdict'] = verdict
+    row['outcome'] = verdict['outcome']
+    row['reason'] = verdict['scope']
+    row['scope'] = verdict['scope']
+    row['prior_partition_work_state'] = row['work_state']
+    row['work_state'] = 'reviewed_complete_record_outcome'
+
 historical = []
 for r in cases:
     old = r['lean_result']
@@ -102,7 +146,7 @@ out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection'
  'scope_note': 'Two separate inventories; do not sum or infer one-to-one correspondence. Source candidates are lexical records, not automatically distinct mathematical statements.',
  'sources': {str(p.relative_to(root)): sha(p) for p in [source, paper, site]},
  'source_candidates': {'records': modern, 'counts': dict(collections.Counter(r['outcome'] for r in modern)),
-    'inherited_status_counts': dict(collections.Counter(r['reason'] for r in modern))},
+    'inherited_status_counts': dict(collections.Counter(r['mathematical_target_status'] for r in records))},
  'historical_cases': {'records': historical, 'counts': dict(collections.Counter(r['outcome'] for r in historical))},
  'slice_tensor_partition': {'source_record': 'HandleSlice/compose-unstrided', 'case_id': 'HandleSlice/compose-unstrided-static-tensor-model', 'status': 'proved_model_independently_reviewed', 'scope': 'arbitrary-rank logical tensor model; Int attributes; no source correspondence or full-record claim', 'proof_commit': '29dd0d804b6896f0723f3b0d19920af93065a346', 'review': 'comparisons/revised-benchmark-20261117/slice-compose-rank/TENSOR-REVIEW.md', 'effort': {'active_seconds': None, 'reason': 'historical discovery and active reasoning not measured'}},
  'slice_validity_partition': {'source_record': 'HandleSlice/compose-unstrided', 'case_id': 'HandleSlice/compose-unstrided-validity-one-axis', 'status': 'proved_model_independently_reviewed', 'scope': 'one-axis mathematical Int attribute validity, not whole tensor/source rewrite', 'proof_commit': '4369484cedd5e367b4bdcdf3134509eb9360068d', 'review': 'comparisons/revised-benchmark-20261117/slice-compose-static/REVIEW.md', 'effort': {'active_seconds': None, 'reason': 'worker active time not instrumented'}},
@@ -115,11 +159,14 @@ out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection'
     'final_guard_history': 'failed final environment: five generic campaign inventory names; revised policy permits reuse and does not make that check pass',
     'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'partial phase records, downtime and overlap preclude defensible aggregate'}}}
 out['status'] = 'versioned_inventories_with_reviewed_record_observations'
+out['whole_record_review_effort_groups'] = record_effort
+out['sources'][str(effort_path.relative_to(root))] = sha(effort_path)
+out['sources'][str(verdict_path.relative_to(root))] = sha(verdict_path)
 out['sources'][str(crosswalk_path.relative_to(root))] = sha(crosswalk_path)
 out['source_candidates']['records_with_earlier_reviewed_partition'] = len(seen_earlier)
 out['source_candidates']['records_with_any_reviewed_partition'] = sum(
-    row['work_state'] == 'revised_model_partition_verified_whole_record_open' or
-    'earlier_reviewed_partition' in row for row in modern)
+    row.get('prior_partition_work_state', row['work_state']) == 'revised_model_partition_verified_whole_record_open' or
+    bool(row.get('complete_record_verdict')) or 'earlier_reviewed_partition' in row for row in modern)
 out['inventory_versions'] = followup['inventory_versions']
 out['revised_effort_groups'] = followup['effort_groups']
 for row in modern:
