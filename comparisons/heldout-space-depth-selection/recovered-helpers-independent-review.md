@@ -1,0 +1,7 @@
+# Independent review of recovered helpers
+
+Fresh gpt-6-luna reviewer, no subagents or edits; reviewed commit `821fbb849aa8495ae380d9d6835bc3d50d3ba525`. Verdict: accept `WorkerIndexJoin`, `WorkerIndexPrefix`, and `WorkerSuffix` as support lemmas in their actual scope, not as a proof of the frozen rewrite. The review took approximately five minutes, including an 11.7-second fresh 34-module offline replay and a separate 10.2-second suffix replay. A first reviewer replay harness had a module-path mapping error; correction passed, with no source change.
+
+Both freeze manifests and helper hashes matched. The replay showed only `propext`, `Classical.choice`, and `Quot.sound` dependencies, with no `sorryAx` or warnings. The join lemmas are generic component injectivity; `prefix_shapes_equal` follows from the actual plan and frame; `prefix_packed_values_equal` explicitly requires equal tail element counts; `suffix_extents` derives the remaining extents from the frozen conditions and permutation. The reviewer found no hidden target equality, circular import or new project axiom. Empty domains do not supply element indices, and the outer-rank condition remains a model restriction, not a source guard.
+
+The reviewer identified a bounded tail-count bridge from the checked merged head and suffix extents, including zeros, followed by the still-unproved relation between original count/moved coordinates and the replacement's merged coordinate via chunk selection and dependent casts. This review preceded `TailCountIntegration.lean` and does not review or accept it.
