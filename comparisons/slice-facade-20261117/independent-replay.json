@@ -1,0 +1,301 @@
+{
+  "result": "passed",
+  "lean": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "seconds": 12.353295963999699,
+  "same_printed_declarations_and_axioms": true,
+  "legacy_bounds_and_index_transitive_api": true,
+  "opt_in_bounds_core_excludes_transforms": true,
+  "mixed_import_orders": true,
+  "protected_source_sha256": {
+    "TensorRewrite/Pilot/SliceShape.lean": "94b8b41aabc6c75182fca18d1b45f9a0e623a4468247de03f0da650a43c7b7f8",
+    "TensorRewrite/Pilot/SliceIndexBounds.lean": "274dabb6a95babeae1dd07aec41fbb6cc2d09afcf687b23f7ada1753e475c280",
+    "TensorRewrite/Pilot/IndexMaps.lean": "4e5980165487d76cc7c4d798ef7acc33bc724bc9b74b8b0e032dbfb8508c75e1",
+    "TensorRewrite/Pilot/IndexMapLemmas.lean": "d499dcd95d963cc7e280c735c760fbdedc590aa408ab87507529272b31e74606",
+    "TensorRewrite/Pilot/EmptySliceRefutation.lean": "fbfb6e29794e1f6ce6c453dcdc8ea8bfb91491e5d06357239677f279fd0d33bf",
+    "comparisons/tensorright-v1/Iota.lean": "27353e56b0789be23114a08f5ceb4813f95ffa100cbf713f962c063f5c078fdd",
+    "comparisons/tensorright-v1/ReverseSliceFailure.lean": "79afbfc32ee666c0df9e31dea6a3c9a32cad34058af670ae2d5e7765a7aa726f",
+    "comparisons/tensorright-v1/dependency-costs.json": "1468aa5a971318ead46ea20c3f96e4521f34a4004a7de4fe109ef2288630b3d9"
+  },
+  "records": [
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "exit": 0,
+      "seconds": 0.3634738520049723,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "exit": 0,
+      "seconds": 0.31972369700088166,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "exit": 0,
+      "seconds": 0.4502461170050083,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+      "exit": 0,
+      "seconds": 0.3391223450016696,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/SliceShape.lean",
+      "exit": 0,
+      "seconds": 0.352450559992576,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/SliceIndexBounds.lean",
+      "exit": 0,
+      "seconds": 0.37169413300580345,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/IndexMaps.lean",
+      "exit": 0,
+      "seconds": 0.4176787110045552,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/IndexMapLemmas.lean",
+      "exit": 0,
+      "seconds": 0.39983578700048383,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "TensorRewrite/Pilot/EmptySliceRefutation.lean",
+      "exit": 0,
+      "seconds": 0.3509007499960717,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "original",
+      "source": "comparisons/tensorright-v1/Iota.lean",
+      "exit": 0,
+      "seconds": 0.36827049900603015,
+      "expected_failure": null,
+      "output": "'TensorRewrite.PaperComparison.Iota.unit_axis' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.PaperComparison.Iota.broadcast' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.PaperComparison.Iota.broadcast_composition' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "mode": "original",
+      "source": "comparisons/tensorright-v1/ReverseSliceFailure.lean",
+      "exit": 0,
+      "seconds": 0.361050648993114,
+      "expected_failure": null,
+      "output": "'TensorRewrite.PaperComparison.ReverseSliceFailure.lhs_valid' does not depend on any axioms\n'TensorRewrite.PaperComparison.ReverseSliceFailure.rhs_invalid' does not depend on any axioms\n"
+    },
+    {
+      "mode": "original",
+      "source": "Api.lean",
+      "exit": 0,
+      "seconds": 0.35865068100974895,
+      "expected_failure": null,
+      "output": "structure TensorRewrite.Pilot.SliceShape.Axis : Type\nnumber of parameters: 0\nfields:\n  TensorRewrite.Pilot.SliceShape.Axis.start : Int\n  TensorRewrite.Pilot.SliceShape.Axis.limit : Int\n  TensorRewrite.Pilot.SliceShape.Axis.stride : Int\nconstructor:\n  TensorRewrite.Pilot.SliceShape.Axis.mk (start limit stride : Int) : Axis\ndef TensorRewrite.Pilot.SliceShape.Axis.elementCount : Axis \u2192 Int :=\nfun axis => (axis.limit - axis.start + axis.stride - 1).tdiv axis.stride\ndef TensorRewrite.Pilot.SliceShape.IsWellFormed : Int \u2192 Int \u2192 Axis \u2192 Prop :=\nfun extent declared axis =>\n  0 \u2264 axis.start \u2227\n    axis.start \u2264 axis.limit \u2227 axis.limit \u2264 extent \u2227 0 < axis.stride \u2227 0 \u2264 declared \u2227 axis.elementCount = declared\ndef TensorRewrite.Pilot.SliceShape.removeRedundantStride : Axis \u2192 Axis :=\nfun axis =>\n  if axis.stride \u2260 1 \u2227 (axis.stride \u2265 axis.limit \u2228 axis.start + axis.stride \u2265 axis.limit) then\n    { start := axis.start, limit := axis.start + 1, stride := 1 }\n  else axis\ndef TensorRewrite.Pilot.SliceShape.reorderReverse : Int \u2192 Axis \u2192 Axis :=\nfun extent axis =>\n  have stepCount := (axis.limit - axis.start - 1).tdiv axis.stride;\n  have adjustedLimit := axis.start + stepCount * axis.stride + 1;\n  { start := extent - axis.start - (adjustedLimit - axis.start), limit := extent - axis.start, stride := axis.stride }\ntheorem TensorRewrite.Pilot.SliceShape.coordinate_bounds : \u2200 {extent declared : Int} {axis : Axis},\n  IsWellFormed extent declared axis \u2192\n    \u2200 (index : Int),\n      0 \u2264 index \u2192 index < declared \u2192 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent :=\nfun {extent declared} {axis} valid index nonnegative bounded =>\n  And.casesOn valid fun start_nonnegative right =>\n    And.casesOn right fun ordered right =>\n      And.casesOn right fun limit_bounded right =>\n        And.casesOn right fun positive right =>\n          And.casesOn right fun left count =>\n            have numerator_nonnegative :=\n              Decidable.byContradiction fun a =>\n                TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_1\u271d index ordered positive a;\n            have product_bound :=\n              Eq.mpr\n                (id (congrArg (fun _a => axis.stride * _a \u2264 axis.limit - axis.start + axis.stride - 1) (Eq.symm count)))\n                (Int.mul_tdiv_self_le numerator_nonnegative);\n            have step_bound :=\n              Int.mul_le_mul_of_nonneg_left\n                (Decidable.byContradiction fun a =>\n                  TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_2\u271d index bounded count a)\n                (Decidable.byContradiction fun a =>\n                  TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_3\u271d index positive a);\n            have product_nonnegative :=\n              Int.mul_nonneg\n                (Decidable.byContradiction fun a =>\n                  TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_3\u271d index positive a)\n                nonnegative;\n            \u27e8Decidable.byContradiction fun a =>\n                TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_4\u271d index start_nonnegative product_nonnegative\n                  a,\n              Decidable.byContradiction fun a =>\n                TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_5\u271d index limit_bounded product_bound\n                  (Eq.mp\n                    (congrArg (fun _a => axis.stride * index + _a \u2264 axis.stride * declared) (Int.mul_one axis.stride))\n                    (Eq.mp (congrArg (fun _a => _a \u2264 axis.stride * declared) (Int.mul_add axis.stride index 1))\n                      step_bound))\n                  a\u27e9\n'TensorRewrite.Pilot.SliceShape.coordinate_bounds' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.IndexMaps.sliceIndex_val' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "mode": "original",
+      "source": "LegacyBounds.lean",
+      "exit": 0,
+      "seconds": 0.31501984399801586,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.removeRedundantStride (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.reorderReverse (extent : Int) (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\n"
+    },
+    {
+      "mode": "original",
+      "source": "LegacyIndex.lean",
+      "exit": 0,
+      "seconds": 0.3503566909930669,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.removeRedundantStride (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.reorderReverse (extent : Int) (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "exit": 0,
+      "seconds": 0.3093741670018062,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "exit": 0,
+      "seconds": 0.33419983299972955,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "exit": 0,
+      "seconds": 0.44706325899460353,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+      "exit": 0,
+      "seconds": 0.36428643100953195,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/SliceShapeCore.lean",
+      "exit": 0,
+      "seconds": 0.3568528960022377,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/SliceShapeTransforms.lean",
+      "exit": 0,
+      "seconds": 0.38928073798888363,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/SliceShape.lean",
+      "exit": 0,
+      "seconds": 0.2664375970052788,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/SliceIndexBoundsCore.lean",
+      "exit": 0,
+      "seconds": 0.38305653499264736,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/SliceIndexBounds.lean",
+      "exit": 0,
+      "seconds": 0.2698220380116254,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/IndexMaps.lean",
+      "exit": 0,
+      "seconds": 0.3846510470029898,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/IndexMapLemmas.lean",
+      "exit": 0,
+      "seconds": 0.36963867300073616,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "TensorRewrite/Pilot/EmptySliceRefutation.lean",
+      "exit": 0,
+      "seconds": 0.364391927010729,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "mode": "prototype",
+      "source": "comparisons/tensorright-v1/Iota.lean",
+      "exit": 0,
+      "seconds": 0.407617160002701,
+      "expected_failure": null,
+      "output": "'TensorRewrite.PaperComparison.Iota.unit_axis' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.PaperComparison.Iota.broadcast' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.PaperComparison.Iota.broadcast_composition' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "comparisons/tensorright-v1/ReverseSliceFailure.lean",
+      "exit": 0,
+      "seconds": 0.34066573799645994,
+      "expected_failure": null,
+      "output": "'TensorRewrite.PaperComparison.ReverseSliceFailure.lhs_valid' does not depend on any axioms\n'TensorRewrite.PaperComparison.ReverseSliceFailure.rhs_invalid' does not depend on any axioms\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "Api.lean",
+      "exit": 0,
+      "seconds": 0.37139947300602216,
+      "expected_failure": null,
+      "output": "structure TensorRewrite.Pilot.SliceShape.Axis : Type\nnumber of parameters: 0\nfields:\n  TensorRewrite.Pilot.SliceShape.Axis.start : Int\n  TensorRewrite.Pilot.SliceShape.Axis.limit : Int\n  TensorRewrite.Pilot.SliceShape.Axis.stride : Int\nconstructor:\n  TensorRewrite.Pilot.SliceShape.Axis.mk (start limit stride : Int) : Axis\ndef TensorRewrite.Pilot.SliceShape.Axis.elementCount : Axis \u2192 Int :=\nfun axis => (axis.limit - axis.start + axis.stride - 1).tdiv axis.stride\ndef TensorRewrite.Pilot.SliceShape.IsWellFormed : Int \u2192 Int \u2192 Axis \u2192 Prop :=\nfun extent declared axis =>\n  0 \u2264 axis.start \u2227\n    axis.start \u2264 axis.limit \u2227 axis.limit \u2264 extent \u2227 0 < axis.stride \u2227 0 \u2264 declared \u2227 axis.elementCount = declared\ndef TensorRewrite.Pilot.SliceShape.removeRedundantStride : Axis \u2192 Axis :=\nfun axis =>\n  if axis.stride \u2260 1 \u2227 (axis.stride \u2265 axis.limit \u2228 axis.start + axis.stride \u2265 axis.limit) then\n    { start := axis.start, limit := axis.start + 1, stride := 1 }\n  else axis\ndef TensorRewrite.Pilot.SliceShape.reorderReverse : Int \u2192 Axis \u2192 Axis :=\nfun extent axis =>\n  have stepCount := (axis.limit - axis.start - 1).tdiv axis.stride;\n  have adjustedLimit := axis.start + stepCount * axis.stride + 1;\n  { start := extent - axis.start - (adjustedLimit - axis.start), limit := extent - axis.start, stride := axis.stride }\ntheorem TensorRewrite.Pilot.SliceShape.coordinate_bounds : \u2200 {extent declared : Int} {axis : Axis},\n  IsWellFormed extent declared axis \u2192\n    \u2200 (index : Int),\n      0 \u2264 index \u2192 index < declared \u2192 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent :=\nfun {extent declared} {axis} valid index nonnegative bounded =>\n  And.casesOn valid fun start_nonnegative right =>\n    And.casesOn right fun ordered right =>\n      And.casesOn right fun limit_bounded right =>\n        And.casesOn right fun positive right =>\n          And.casesOn right fun left count =>\n            have numerator_nonnegative :=\n              Decidable.byContradiction fun a =>\n                TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_1\u271d index ordered positive a;\n            have product_bound :=\n              Eq.mpr\n                (id (congrArg (fun _a => axis.stride * _a \u2264 axis.limit - axis.start + axis.stride - 1) (Eq.symm count)))\n                (Int.mul_tdiv_self_le numerator_nonnegative);\n            have step_bound :=\n              Int.mul_le_mul_of_nonneg_left\n                (Decidable.byContradiction fun a =>\n                  TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_2\u271d index bounded count a)\n                (Decidable.byContradiction fun a =>\n                  TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_3\u271d index positive a);\n            have product_nonnegative :=\n              Int.mul_nonneg\n                (Decidable.byContradiction fun a =>\n                  TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_3\u271d index positive a)\n                nonnegative;\n            \u27e8Decidable.byContradiction fun a =>\n                TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_4\u271d index start_nonnegative product_nonnegative\n                  a,\n              Decidable.byContradiction fun a =>\n                TensorRewrite.Pilot.SliceShape.coordinate_bounds._proof_1_5\u271d index limit_bounded product_bound\n                  (Eq.mp\n                    (congrArg (fun _a => axis.stride * index + _a \u2264 axis.stride * declared) (Int.mul_one axis.stride))\n                    (Eq.mp (congrArg (fun _a => _a \u2264 axis.stride * declared) (Int.mul_add axis.stride index 1))\n                      step_bound))\n                  a\u27e9\n'TensorRewrite.Pilot.SliceShape.coordinate_bounds' depends on axioms: [propext, Quot.sound]\n'TensorRewrite.Pilot.SliceShape.remove_redundant_stride_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.SliceShape.reorder_reverse_refutes' does not depend on any axioms\n'TensorRewrite.Pilot.IndexMaps.sliceIndex_val' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "LegacyBounds.lean",
+      "exit": 0,
+      "seconds": 0.30642514101054985,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.removeRedundantStride (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.reorderReverse (extent : Int) (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "LegacyIndex.lean",
+      "exit": 0,
+      "seconds": 0.3189393999928143,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.removeRedundantStride (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.reorderReverse (extent : Int) (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\nTensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "CorePositive.lean",
+      "exit": 0,
+      "seconds": 0.3441011149989208,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "CoreNegative.lean",
+      "exit": 1,
+      "seconds": 0.30374762701103464,
+      "expected_failure": "Unknown identifier",
+      "output": "CoreNegative.lean:2:7: error(lean.unknownIdentifier): Unknown identifier `TensorRewrite.Pilot.SliceShape.removeRedundantStride`\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "MixedCoreFirst.lean",
+      "exit": 0,
+      "seconds": 0.30459662299836054,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\nTensorRewrite.Pilot.SliceShape.removeRedundantStride (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\n"
+    },
+    {
+      "mode": "prototype",
+      "source": "MixedLegacyFirst.lean",
+      "exit": 0,
+      "seconds": 0.2908599439979298,
+      "expected_failure": null,
+      "output": "TensorRewrite.Pilot.SliceShape.coordinate_bounds {extent declared : Int} {axis : TensorRewrite.Pilot.SliceShape.Axis}\n  (valid : TensorRewrite.Pilot.SliceShape.IsWellFormed extent declared axis) (index : Int) (nonnegative : 0 \u2264 index)\n  (bounded : index < declared) : 0 \u2264 axis.start + axis.stride * index \u2227 axis.start + axis.stride * index < extent\nTensorRewrite.Pilot.SliceShape.removeRedundantStride (axis : TensorRewrite.Pilot.SliceShape.Axis) :\n  TensorRewrite.Pilot.SliceShape.Axis\n"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# Legacy-compatible slice façade and opt-in core prototype
+
+This isolated prototype addresses the specific transitive-import break found in the prior `27ae22bfbc3982b6f31eda34fcc21d83db96c6f8` experiment. It preserves the **tested** legacy import surfaces while offering a separate bounds-core import that does not expose the two source-shaped transforms. The prototype exists only under this comparison packet; the actual `TensorRewrite/` sources, frozen manifests and older worktrees are unchanged. It is not a production integration or a proof of compatibility with every external client.
+
+## Prototype graph
+
+The copied `SliceShapeCore` retains the exact original `Axis`, count, well-formedness and instance source; `SliceShapeTransforms` imports that core and contains the exact original two transform definitions; the old-name `SliceShape` is a public-import facade over transforms. A copied `SliceIndexBoundsCore` contains the unchanged original bounds theorem with only its import changed to `SliceShapeCore`. The old-name `SliceIndexBounds` publicly imports **both** bounds core and the legacy `SliceShape` facade. Consequently the existing unchanged `IndexMaps → SliceIndexBounds` path still exposes the transformations. An opt-in client can instead import `SliceIndexBoundsCore`, gaining `coordinate_bounds` without either transform. Both import paths share the same core declaration, so no duplicate declaration or cycle arose in the tested import orders.
+
+The tradeoff is explicit: the existing legacy `IndexMaps` closure remains rewrite-bearing. No existing internal consumer was migrated, and this prototype does not provide an opt-in clean `IndexMaps` module. A real module migration still changes historical source bytes/import identities and would require a new separately checked checkpoint while keeping old frozen snapshots accessible; historical hash records cannot be silently rewritten.
+
+## Focused compatibility checks
+
+`acceptance.py` constructs fresh original and prototype trees with pinned Lean 4.35.0, verifies original bytes against the parent Git revision, checks copied declaration bodies, and compares printed declarations and selected transitive axiom reports. Both graphs compile actual `SliceIndexBounds`, `IndexMaps`, `IndexMapLemmas`, `EmptySliceRefutation`, paper `Iota`, and `ReverseSliceFailure`. The legacy `SliceIndexBounds`-only and `IndexMaps`-only client checks both transform names and bounds; nonempty transform examples and existing empty-slice witnesses compile. In the prototype, core-only `coordinate_bounds` is available and an expected negative `#check` rejects the transform; a separate `core_negative.py` confirms both `removeRedundantStride` and `reorderReverse` are absent. Importing legacy and core paths together in both orders compiles. The printed original/prototype selected declarations and axiom reports match.
+
+The coordinator's fresh replay passed 35 subprocess checks in 11.783 seconds; the independent replay passed in 12.353 seconds. The separate two-name core isolation probe took 1.481 seconds. These elapsed durations include compiler startup and are not discovery-time measurements. No broad build or exhaustive downstream/API comparison was run. Existing nonempty and empty controls test only the stated examples; printed selected declarations/axioms are not a formal equivalence of all possible module consumers.
+
+The independently reviewed verdict and precise scope are in `independent-review.md`; raw receipts are `acceptance-replay.json`, `independent-replay.json` and `core-negative-replay.json`. Source/frozen byte checks cover the eight paths named in the receipt and the checkout contains no changes under `TensorRewrite/` or the paper comparison directory. No semantic definition or theorem statement was intentionally changed.
+
+## Separate diagnostic assessment
+
+`diagnostic-assessment.md` records an independent read-only review of the host-specific `evaluatorUnsigned64`. A similar core + evaluator + legacy facade appears feasible without a cycle, but it has not been implemented or Lean-tested. Legacy bounds/dynamic-index public-import exposure and the root's deliberate diagnostic imports must be preserved or explicitly versioned. Frozen DynamicSlice input hashes would change in any integrated migration, and old packets must remain at their pinned revisions.
+
+No production refactor, source-to-C++ correspondence, all-client compatibility or speedup is claimed. Worker review intervals overlap and exact coordinator/worker active and waiting times are unavailable; no token or cost telemetry is available.
