@@ -1,0 +1,306 @@
+[
+  {
+    "id": "and.zero",
+    "lhs": "And(x,0) or And(0,x)",
+    "rhs": "0",
+    "conditions": "Matched operand is uniformly 0 at all positions; 0 denotes false for Bool.",
+    "types": "Pure same-shape tensors over Bool or BitVec w, any natural width.",
+    "source_ids": [
+      "HandleAnd/lhs-zero",
+      "HandleAnd/rhs-zero"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Bitwise.lean",
+      "TensorRewrite/Pilot/Boolean.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Boolean.and_rhs_false",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "and.true",
+    "lhs": "And(x,true) or And(true,x)",
+    "rhs": "x",
+    "conditions": "Matched operand is uniformly true at all positions; 0 denotes false for Bool.",
+    "types": "Pure same-shape tensors of Bool.",
+    "source_ids": [
+      "HandleAnd/lhs-true",
+      "HandleAnd/rhs-true"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Boolean.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Boolean.and_rhs_true",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "or.zero",
+    "lhs": "Or(x,0) or Or(0,x)",
+    "rhs": "x",
+    "conditions": "Matched operand is uniformly 0 at all positions; 0 denotes false for Bool.",
+    "types": "Pure same-shape tensors over Bool or BitVec w, any natural width.",
+    "source_ids": [
+      "HandleOr/lhs-zero",
+      "HandleOr/rhs-zero"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Bitwise.lean",
+      "TensorRewrite/Pilot/Boolean.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Boolean.or_rhs_false",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "or.true",
+    "lhs": "Or(x,true) or Or(true,x)",
+    "rhs": "true",
+    "conditions": "Matched operand is uniformly true at all positions; 0 denotes false for Bool.",
+    "types": "Pure same-shape tensors of Bool.",
+    "source_ids": [
+      "HandleOr/lhs-true",
+      "HandleOr/rhs-true"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Boolean.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Boolean.or_rhs_true",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "xor.zero",
+    "lhs": "Xor(x,0) or Xor(0,x)",
+    "rhs": "x",
+    "conditions": "Matched operand is uniformly 0 at all positions; 0 denotes false for Bool.",
+    "types": "Pure same-shape tensors over Bool or BitVec w, any natural width.",
+    "source_ids": [
+      "HandleXor/lhs-zero",
+      "HandleXor/rhs-zero"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Bitwise.lean",
+      "TensorRewrite/Pilot/Boolean.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Boolean.xor_rhs_zero",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "xor.self",
+    "lhs": "Xor(x,x)",
+    "rhs": "0",
+    "conditions": "Same logical input at both operands. For Bool, 0 denotes false.",
+    "types": "Pure same-shape tensors over Bool or BitVec w, any natural width.",
+    "source_ids": [
+      "HandleXor/equal-inputs"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Bitwise.lean",
+      "TensorRewrite/Pilot/Boolean.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Boolean.xor_self",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.add-zero",
+    "lhs": "x+0 or 0+x",
+    "rhs": "x",
+    "conditions": "Zero is a uniform word tensor.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleAdd/lhs-zero",
+      "HandleAdd/rhs-zero"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ModularArithmetic.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_rhs_zero",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.add-sub-cancel",
+    "lhs": "x+(y−x) or (y−x)+x",
+    "rhs": "y",
+    "conditions": "Both occurrences of x denote the same tensor.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleAdd/cancel-subtract-lhs",
+      "HandleAdd/cancel-subtract-rhs"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ModularArithmetic.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.ModularArithmetic.add_sub_cancel_right",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.mul-one",
+    "lhs": "x*1 or 1*x",
+    "rhs": "x",
+    "conditions": "The matched constant is uniformly 1 at the input shape.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleMultiply/lhs-one",
+      "HandleMultiply/rhs-one"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ModularArithmetic.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_one",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.mul-zero",
+    "lhs": "x*0 or 0*x",
+    "rhs": "0",
+    "conditions": "The matched constant is uniformly 0 at the input shape.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleMultiply/lhs-zero",
+      "HandleMultiply/rhs-zero"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ModularArithmetic.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_rhs_zero",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.mul-neg-neg",
+    "lhs": "(−x)*(−y)",
+    "rhs": "x*y",
+    "conditions": "Ordinary pointwise modular negation on both operands.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleMultiply/negated-operands"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ModularArithmetic.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.ModularArithmetic.mul_neg_neg",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.negate-involution",
+    "lhs": "−(−x)",
+    "rhs": "x",
+    "conditions": "Both negations have the same width and shape.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleNegate/involution"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.neg_neg",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.sub-self",
+    "lhs": "x−x",
+    "rhs": "0",
+    "conditions": "Both operands denote the same tensor.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleSubtract/self"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.sub_self",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.sub-zero",
+    "lhs": "x−0",
+    "rhs": "x",
+    "conditions": "Right operand is uniformly zero.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleSubtract/zero"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.sub_zero",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.sub-constant",
+    "lhs": "x−c, or x−reindex(p,c)",
+    "rhs": "x+(−c), or x+reindex(p,−c)",
+    "conditions": "Direct constant of the result shape or a constant pulled back by a well-typed broadcast coordinate map p. Source matches nonconstant x. The proof allows all x,c and any such index map.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleSubtract/constant",
+      "HandleSubtract/broadcast-constant"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.sub_eq_add_neg",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.sub-sub-self",
+    "lhs": "x−(x−y)",
+    "rhs": "y",
+    "conditions": "Repeated x denotes the same tensor.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleSubtract/sub-sub-self"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.sub_sub_self",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.sub-add-self",
+    "lhs": "x−(x+y) or x−(y+x)",
+    "rhs": "−y",
+    "conditions": "Repeated x denotes the same tensor.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleSubtract/sub-add-self-left",
+      "HandleSubtract/sub-add-self-right"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.sub_add_self_left",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  },
+  {
+    "id": "word.add-sub-self",
+    "lhs": "(x+y)−x or (y+x)−x",
+    "rhs": "y",
+    "conditions": "Repeated x denotes the same tensor.",
+    "types": "Pure same-shape tensors of BitVec w, arithmetic modulo 2^w, any natural width.",
+    "source_ids": [
+      "HandleSubtract/add-sub-self-left",
+      "HandleSubtract/add-sub-self-right"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/Subtract.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited-review.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Subtract.add_sub_self_left",
+    "overlap": "One named calculation across the listed source bindings and typed variants. Full theorem list is in inherited-review.md."
+  }
+]

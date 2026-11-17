@@ -1,0 +1,751 @@
+[
+  {
+    "id": "slice.identity",
+    "lhs": "slice(x,a)",
+    "rhs": "x",
+    "conditions": "Legal per-axis static slice with equal declared input/output shapes.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/identity"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-identity/IdentitySpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-identity/IdentityProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-identity/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.StaticIdentity.forward",
+    "overlap": "slice/rule01 full-slice special case; equal extents suffice including nonunit stride on a singleton."
+  },
+  {
+    "id": "slice.compose",
+    "lhs": "slice(slice(x,a),b)",
+    "rhs": "slice(x,combined offsets)",
+    "conditions": "Two legal unit-stride mathematical-Int slices. Combined validity proved.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/compose-unstrided"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-compose-rank/TensorGoal.lean",
+      "comparisons/revised-benchmark-20261117/slice-compose-rank/TensorProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-compose-rank/TENSOR-REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceComposeRank.tensorCorrectness",
+    "overlap": "slice/rule07; validity supplied rather than assumed."
+  },
+  {
+    "id": "slice.broadcast-sink",
+    "lhs": "slice(broadcast(x,d),a)",
+    "rhs": "broadcast(slice(x,a restricted along d),d)",
+    "conditions": "Matched input/broadcast extents and legal static slice a. Derives replacement shapes.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/broadcast-sink"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-broadcast/ProjectedSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-broadcast/ProjectedProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-broadcast/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceBroadcast.broadcast_sink",
+    "overlap": "slice/rule03; legal projected metadata derived."
+  },
+  {
+    "id": "slice.broadcast-only",
+    "lhs": "slice(broadcast(x,d),a)",
+    "rhs": "broadcast(x,d) at sliced output shape",
+    "conditions": "Matched extents, legal slice, full-range unit stride on every mapped dimension.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/broadcast-only-dims"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-broadcast/ProjectedSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-broadcast/ProjectedProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-broadcast/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceBroadcast.only_broadcast",
+    "overlap": "slice/rule09 full retained dimensions; explicit valid operands."
+  },
+  {
+    "id": "slice.concat-piece",
+    "lhs": "slice(concat(bs),lo,hi−lo)",
+    "rhs": "selected operand b",
+    "conditions": "Ordered interval within concat length, successful scan selects [b], length=extent(b), common frame; off-axis dimensions unchanged.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/concat-exact-piece"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/ScanSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/ScanProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ConcatScan.exactPiece",
+    "overlap": "Related slice/rule10 and slice/rule11 for fixed pieces."
+  },
+  {
+    "id": "slice.concat-selected",
+    "lhs": "crop(concat(bs),starts,lengths)",
+    "rhs": "crop(concat(selected),adjusted starts,lengths)",
+    "conditions": "Legal unit-stride crop in a common frame, successful ordered scan on concat axis. Subtract leading extent only there; other axes can crop.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/concat-subrange-multi"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/crop/CropSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/crop/CropProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/crop/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ConcatCrop.multi",
+    "overlap": "Related special-case historical concat/slice laws; nested concat is explicit RHS."
+  },
+  {
+    "id": "slice.concat-single",
+    "lhs": "crop(concat(bs),starts,lengths)",
+    "rhs": "crop(b,adjusted starts,lengths)",
+    "conditions": "Same legal multidimensional crop and successful scan selecting singleton [b]. Output reads b directly.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/concat-subrange-single"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/crop/CropSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/crop/CropProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-concat-scan/crop/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ConcatCrop.single",
+    "overlap": "Single-operand RHS vs retained concatenation in multi; related slice/rule08."
+  },
+  {
+    "id": "slice.pad-inside",
+    "lhs": "slice(pad(x,fill),a)",
+    "rhs": "slice(x,a−low)",
+    "conditions": "Legal signed Pad and slice. Every axis stays between low and padded extent−high, interior=0 and stride=1.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/inside-pad"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-of-pad/SlicePadSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-of-pad/SlicePadProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-of-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceOfPad.inside",
+    "overlap": "Related slice/rule06; signed edges."
+  },
+  {
+    "id": "slice.pad-undo",
+    "lhs": "slice(pad(x,fill),a)",
+    "rhs": "x",
+    "conditions": "Legal signed Pad and slice with output shape of x; starts at low and stride minus one equals interior on every axis.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/undo-pad"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-of-pad/SlicePadSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-of-pad/SlicePadProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-of-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceOfPad.undo",
+    "overlap": "Related slice/rule04; signed edges."
+  },
+  {
+    "id": "slice.pad-outside",
+    "lhs": "slice(pad(x,fill),a)",
+    "rhs": "broadcast(fill)",
+    "conditions": "Legal signed Pad and slice. At least one axis has limit≤low or start≥padded extent−high.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/padding-only"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-of-pad/SlicePadSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-of-pad/SlicePadProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-of-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceOfPad.paddingOnly",
+    "overlap": "slice/rule05 with source guard adapter."
+  },
+  {
+    "id": "slice.update-exact",
+    "lhs": "slice(dynamicUpdate(base,upd),a)",
+    "rhs": "upd",
+    "conditions": "Fitting window with clamped mathematical Int starts; legal unit strides selecting exactly the updated window.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/exact-dynamic-update"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-update/SliceUpdateSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-update/SliceUpdateProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-update/REVIEW.md"
+    ],
+    "theorem": "SliceUpdate.exactMatch",
+    "overlap": "Existing unit-stride dynamic-update proofs reused; fresh discovery unestablished."
+  },
+  {
+    "id": "slice.update-contained",
+    "lhs": "slice(dynamicUpdate(base,upd),a)",
+    "rhs": "slice(upd,a translated by clamped start)",
+    "conditions": "Fitting clamped window, legal positive strides, all starts and limits contained. Derives relative validity.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleSlice/inside-dynamic-update"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-update/SliceUpdateSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-update/SliceUpdateProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-update/REVIEW.md"
+    ],
+    "theorem": "SliceUpdate.contained",
+    "overlap": "Existing generated unit-stride case; general positive stride proved."
+  },
+  {
+    "id": "slice.remove-stride",
+    "lhs": "slice(x,a)",
+    "rhs": "slice(x,removeRedundantStride(a))",
+    "conditions": "Original legal static slice at its declared shape, including zero length. Source stride transformation with no positive-span guard. Extent 4, [1,1) stride 2 gives legal length 0. Replacement [1,2) stride 1 requires length 1.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "RemoveRedundantStride/single-element-axes"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-shape-exact/rank/RankSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-shape-exact/rank/RankProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-shape-exact/rank/REVIEW.md",
+      "TensorRewrite/Pilot/EmptySliceRefutation.lean",
+      "comparisons/revised-benchmark-20261117/whole-record-audit/REVIEW.md",
+      "reports/empty-slice-replay-v2/result.json"
+    ],
+    "theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+    "overlap": "No exact paper ID established in this inspection; global novelty unassessed. The independently proved strongest positive domain at the declared shape requires unit stride or positive span on every axis. There the rank-wide value law TensorRewrite.Pilot.SliceShape.RankExact.stride holds; no second positive row.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "slice.reverse",
+    "lhs": "slice(reverse(mask,x),a)",
+    "rhs": "reverse(mask,slice(x,reordered(a,mask)))",
+    "conditions": "Original legal static slice at its declared shape, including zero length. Slice after Reverse, selected mask includes the transformed axis; no positive-span guard. Extent 4, [1,1) stride 2 gives legal length 0. Replacement inner [2,3) stride 2 requires length 1.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "TryToReorderSliceAndReverse/commute"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-shape-exact/rank/RankSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-shape-exact/rank/RankProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-shape-exact/rank/REVIEW.md",
+      "TensorRewrite/Pilot/EmptySliceRefutation.lean",
+      "comparisons/revised-benchmark-20261117/whole-record-audit/REVIEW.md",
+      "reports/empty-slice-replay-v2/result.json"
+    ],
+    "theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+    "overlap": "slice/rule13 contains counterexample outside the proven guard; preserve that verdict. The independently proved strongest positive domain at the declared shape requires unit stride or positive span on every reversed axis. There the rank-wide value law TensorRewrite.Pilot.SliceShape.RankExact.reverse holds; no second positive row.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "reverse.compose",
+    "lhs": "reverse(b,reverse(a,x))",
+    "rhs": "reverse(symDiff(a,b),x)",
+    "conditions": "Membership masks on finite axis lists, canonical symmetric difference.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleReverse/symmetric-difference"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskSpec.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskProof.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ReverseMasks.compose",
+    "overlap": "reverse/rule03; membership/order adapter."
+  },
+  {
+    "id": "reverse.cancel",
+    "lhs": "reverse(b,reverse(a,x))",
+    "rhs": "x",
+    "conditions": "Canonical symmetric difference empty.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleReverse/cancel"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskSpec.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskProof.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ReverseMasks.cancel",
+    "overlap": "reverse/rule02; equal masks suffice."
+  },
+  {
+    "id": "reverse.identity",
+    "lhs": "reverse(a,x)",
+    "rhs": "x",
+    "conditions": "Universal equality iff on inhabited index domains every selected axis has extent one.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleReverse/trivial-dimensions"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskSpec.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskProof.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ReverseMasks.identityBoundary",
+    "overlap": "reverse/rule01; adds necessity and empty domains."
+  },
+  {
+    "id": "reverse.binary-scalar",
+    "lhs": "reverse(mask,map₂(f,constant(v),x)) or operand-swapped form",
+    "rhs": "map₂(f,constant(v),reverse(mask,x)) retaining operand order",
+    "conditions": "Homogeneous pure binary map, one uniform operand, any mask; both positions in one theorem.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleReverse/binary-scalar-0",
+      "HandleReverse/binary-scalar-1"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskSpec.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/ReverseMaskProof.lean",
+      "comparisons/revised-benchmark-20261117/reverse-masks/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ReverseMasks.binary",
+    "overlap": "reverse/rule04 specializes to add. Operand variants counted together."
+  },
+  {
+    "id": "reverse.unit-reshape",
+    "lhs": "reverse(dims,unit-insertion reshape(x))",
+    "rhs": "unit-insertion reshape(reverse(remapped dims,x))",
+    "conditions": "Ordered retained shape, every omitted axis unit, equal element counts. Emits in input order after removing all unit extents and computing retained ordinals.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleReverse/inserted-unit-dimensions"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reverse-unit-remap/RemapSpec.lean",
+      "comparisons/revised-benchmark-20261117/reverse-unit-remap/RemapProof.lean",
+      "comparisons/revised-benchmark-20261117/reverse-unit-remap/REVIEW.md",
+      "comparisons/heldout-unit-reverse-v1/Spec.lean",
+      "comparisons/heldout-unit-reverse-v1/Proof.lean",
+      "comparisons/heldout-unit-reverse-v1/independent-final-review.md"
+    ],
+    "theorem": "RevisedBenchmark.ReverseRemap.reverse_remap",
+    "overlap": "Also original heldout projection theorem TensorRewrite.Heldout.UnitReverse.reverse_reshape, whose domain is an insertion witness. Stronger row-major/array adapter credited on this same case."
+  },
+  {
+    "id": "broadcast.compose",
+    "lhs": "broadcast(b,broadcast(a,x))",
+    "rhs": "broadcast(b∘a,x)",
+    "conditions": "Typed axis maps with matching extents; strict order preserved when both inputs strict. Equality is the existing pullback theorem.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/compose"
+    ],
+    "evidence": [
+      "comparisons/tensorright-v1/Iota.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-compose-iota/AxisSpec.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-compose-iota/AxisProof.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-compose-iota/REVIEW.md"
+    ],
+    "theorem": "TensorRewrite.PaperComparison.Iota.broadcast_composition",
+    "overlap": "broadcast/rule08 reused directly; no new value proof."
+  },
+  {
+    "id": "broadcast.iota",
+    "lhs": "broadcast(a,iota(k))",
+    "rhs": "iota(a[k])",
+    "conditions": "Matching extents, valid input iota axis, same arbitrary deterministic Nat encoding on both sides.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/iota"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/broadcast-compose-iota/AxisSpec.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-compose-iota/AxisProof.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-compose-iota/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastAxis.encoded",
+    "overlap": "broadcast/rule07; general encoding."
+  },
+  {
+    "id": "broadcast.reshape",
+    "lhs": "broadcast(d,x)",
+    "rhs": "rowMajorReshape(x)",
+    "conditions": "Strictly increasing in-range mapped dimensions, matching extents and equal element counts. Repeated-axis square is a separate model guard counterexample.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/reshape"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/broadcast-reshape-ordered/OrderedSpec.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-reshape-ordered/OrderedProof.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-reshape-ordered/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastOrdered.orderedReshape",
+    "overlap": "No exact paper ID established in this inspection; global novelty unassessed."
+  },
+  {
+    "id": "broadcast.bypass-unit-reshape",
+    "lhs": "broadcast(d,reshape(x,s))",
+    "rhs": "broadcast(d filtered to retained positions,x)",
+    "conditions": "Ordered keep mask describes input shape, equality of element counts, and matching extents. No claim that every source descriptor has these properties.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/inserted-unit-axes"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/broadcast-unit-edits/UnitSpec.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-unit-edits/UnitProof.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-unit-edits/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastUnits.inserted",
+    "overlap": "No exact paper ID established in this inspection; global novelty unassessed."
+  },
+  {
+    "id": "broadcast.drop-unit",
+    "lhs": "broadcast(d,x)",
+    "rhs": "broadcast(d filtered to nonunit axes,reshape(x,nonunitShape))",
+    "conditions": "Matched extents; ordered filter keeps exactly axes with extent≠1. Derives element-count equality.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/drop-unit-axes"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/broadcast-unit-edits/UnitSpec.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-unit-edits/UnitProof.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-unit-edits/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastUnits.dropped",
+    "overlap": "No exact paper ID established in this inspection; global novelty unassessed."
+  },
+  {
+    "id": "transpose.identity",
+    "lhs": "transpose(p,x)",
+    "rhs": "shape-transport(x)",
+    "conditions": "Invertible sorted (nondecreasing) permutation and corresponding extents. Derives equal shapes.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleTranspose/identity"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/transpose-arrays/TransSpec.lean",
+      "comparisons/revised-benchmark-20261117/transpose-arrays/TransProof.lean",
+      "comparisons/revised-benchmark-20261117/transpose-arrays/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TransArrays.sortedForward",
+    "overlap": "relabel/rule02 related relabel identity; numerical permutation guard is explicit."
+  },
+  {
+    "id": "transpose.compose",
+    "lhs": "transpose(q,transpose(p,x))",
+    "rhs": "transpose(p.comp(q),x)",
+    "conditions": "Invertible numerical permutations and corresponding extents; composition array order p[q[i]].",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleTranspose/compose"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/transpose-arrays/TransSpec.lean",
+      "comparisons/revised-benchmark-20261117/transpose-arrays/TransProof.lean",
+      "comparisons/revised-benchmark-20261117/transpose-arrays/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TransArrays.nested",
+    "overlap": "relabel/rule01 related relabel composition; numerical arrays explicit."
+  },
+  {
+    "id": "broadcast.transpose",
+    "lhs": "broadcast(d,x)",
+    "rhs": "transpose(inverse(p),x)",
+    "conditions": "Equal ranks, matching extents, and map entries equal p.outputToInput for an actual permutation p.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/transpose"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/transpose-arrays/TransSpec.lean",
+      "comparisons/revised-benchmark-20261117/transpose-arrays/TransProof.lean",
+      "comparisons/revised-benchmark-20261117/transpose-arrays/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TransArrays.broadcastTranspose",
+    "overlap": "No exact paper ID established in this inspection; global novelty unassessed."
+  },
+  {
+    "id": "uniform.sort",
+    "lhs": "sort(broadcast(v))",
+    "rhs": "broadcast(v) at operation result shape",
+    "conditions": "One homogeneous fiber of length n, any pure Boolean comparator; complete list equality for the declared fiber.",
+    "types": "List α, arbitrary n and α.",
+    "source_ids": [
+      "HandleBroadcast/scalar-user-sort"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ScalarUsers.sorted",
+    "overlap": "No claim about multi-array sorting, source layout, or a tensor-wide sort assembly."
+  },
+  {
+    "id": "uniform.reshape",
+    "lhs": "reshape(broadcast(v))",
+    "rhs": "broadcast(v) at operation result shape",
+    "conditions": "Equal element counts.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/scalar-user-reshape"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ScalarUsers.reshaped",
+    "overlap": "Uniform-value specialization of tensor reindexing."
+  },
+  {
+    "id": "uniform.transpose",
+    "lhs": "transpose(broadcast(v))",
+    "rhs": "broadcast(v) at operation result shape",
+    "conditions": "Invertible permutation and matched extents.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/scalar-user-transpose"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ScalarUsers.transposed",
+    "overlap": "broadcast/rule03 uniform relabel and scalar specialization of heldout transpose/broadcast."
+  },
+  {
+    "id": "uniform.reverse",
+    "lhs": "reverse(broadcast(v))",
+    "rhs": "broadcast(v) at operation result shape",
+    "conditions": "Any membership axis list.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/scalar-user-reverse"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ScalarUsers.reversed",
+    "overlap": "broadcast/rule04 direct structural overlap."
+  },
+  {
+    "id": "uniform.slice",
+    "lhs": "slice(broadcast(v))",
+    "rhs": "broadcast(v) at operation result shape",
+    "conditions": "Legal static slice attributes.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/scalar-user-slice"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ScalarUsers.sliced",
+    "overlap": "broadcast/rule05 and slice/rule02 direct structural overlap."
+  },
+  {
+    "id": "uniform.dynamic-slice",
+    "lhs": "dynamic-slice(broadcast(v))",
+    "rhs": "broadcast(v) at operation result shape",
+    "conditions": "Fitting slice, clamped mathematical integer starts.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleBroadcast/scalar-user-dynamicslice"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/ScalarUsersProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-broadcast-users/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ScalarUsers.dynamicSliced",
+    "overlap": "broadcast/rule06 direct structural overlap."
+  },
+  {
+    "id": "iota.zero",
+    "lhs": "iota(k)",
+    "rhs": "constant zero",
+    "conditions": "Every observed index on axis k is zero iff inhabited domain implies extent(k)≤1. Rank-zero has no k.",
+    "types": "Static finite-rank tensor of natural coordinates (faithful Nat observation).",
+    "source_ids": [
+      "HandleIota/trivial-axis"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/iota-zero/ZeroSpec.lean",
+      "comparisons/revised-benchmark-20261117/iota-zero/ZeroProof.lean",
+      "comparisons/revised-benchmark-20261117/iota-zero/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.IotaZero.staticBoundary",
+    "overlap": "iota/rule01; exact empty-domain guard classification. Dynamic unbounded descriptor counterexample separate."
+  },
+  {
+    "id": "transpose.broadcast",
+    "lhs": "transpose(p,broadcast(d,x))",
+    "rhs": "broadcast(movedAxes(p,d),x)",
+    "conditions": "Layout-insensitive partition, matched extents, original and moved dimension maps ordered, p invertible.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "SimplifyTransposeOfBroadcast/mapped-dims-logical"
+    ],
+    "evidence": [
+      "5f30c1be1c9237d90a2cb66352c4337903c30b69:comparisons/heldout-transpose-broadcast/Spec.lean",
+      "5f30c1be1c9237d90a2cb66352c4337903c30b69:comparisons/heldout-transpose-broadcast/candidate/Proof.lean",
+      "5f30c1be1c9237d90a2cb66352c4337903c30b69:comparisons/heldout-transpose-broadcast/independent-final-review.md"
+    ],
+    "theorem": "Heldout.TransposeBroadcast.proof",
+    "overlap": "broadcast/rule03 covers scalar special case. Retain general proof and scalar-user transpose as specific source rewrite with direct uniform RHS."
+  },
+  {
+    "id": "dynamic-slice.unit-reshape",
+    "lhs": "dynamicSlice(starts,sizes,unitInsertion(x))",
+    "rhs": "outputInsertion(dynamicSlice(sourceStarts,sourceSizes,x))",
+    "conditions": "UnitInsertion descriptor; all output widths fit, each target axis of extent one sliced at width one (model restriction). Signed starts are clamped.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleDynamicSlice/unit-reshape"
+    ],
+    "evidence": [
+      "a72d28dc23efedb4a5677c1237cea3d5ecb62600:comparisons/heldout-dynamic-unit/Spec.lean",
+      "a72d28dc23efedb4a5677c1237cea3d5ecb62600:comparisons/heldout-dynamic-unit/candidate/Proof.lean",
+      "a72d28dc23efedb4a5677c1237cea3d5ecb62600:comparisons/heldout-dynamic-unit/independent-final-review.md"
+    ],
+    "theorem": "Heldout.DynamicUnit.proof",
+    "overlap": "No matching terminal law found by historical bounded selection."
+  },
+  {
+    "id": "dynamic-slice.transpose",
+    "lhs": "dynamicSlice(starts,sizes,transpose(p,x))",
+    "rhs": "transpose(p,dynamicSlice(sourceStarts,sourceSizes,x))",
+    "conditions": "Invertible p; widths fit transposed extents, starts arbitrary Int and clamped.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleDynamicSlice/transpose"
+    ],
+    "evidence": [
+      "96dbc9fd86f208859428abecb704abae54f91548:comparisons/heldout-dynamic-transpose/Spec.lean",
+      "96dbc9fd86f208859428abecb704abae54f91548:comparisons/heldout-dynamic-transpose/candidate/Proof.lean",
+      "96dbc9fd86f208859428abecb704abae54f91548:comparisons/heldout-dynamic-transpose/independent-final-review.md"
+    ],
+    "theorem": "Heldout.DynamicTranspose.proof",
+    "overlap": "dyslice/rule04 related one-label relabel; general nonidentity numerical axes covered here."
+  },
+  {
+    "id": "remainder.drop-unsigned-casts",
+    "lhs": "truncate(remainder(zext(x),zext(y)))",
+    "rhs": "remainder(x,y)",
+    "conditions": "narrow≤wide; Lean unsigned remainder including its zero-divisor behavior.",
+    "types": "Arbitrary-rank equal-shape tensors of BitVec narrow, natural narrow and wide.",
+    "source_ids": [
+      "TryRemoveUpcastAndDowncastSurroundingBinaryOp/remainder"
+    ],
+    "evidence": [
+      "a9bb0ed6b8b1dafcbb2f57ec692a3190345bf092:comparisons/heldout-remainder-cast/Spec.lean",
+      "a9bb0ed6b8b1dafcbb2f57ec692a3190345bf092:comparisons/heldout-remainder-cast/candidate/Proof.lean",
+      "a9bb0ed6b8b1dafcbb2f57ec692a3190345bf092:comparisons/heldout-remainder-cast/independent-final-review.md"
+    ],
+    "theorem": "Heldout.RemainderCast.goal_proof",
+    "overlap": "Unsigned partition only; earlier signed exploration is not another accepted case."
+  },
+  {
+    "id": "reshape.space-depth",
+    "lhs": "reshape(transpose(reshape(x,inner)),outer)",
+    "rhs": "reshape(concat(ordered split slices of x),outer)",
+    "conditions": "Frozen Conditions: split into count×width, count≤5, first mismatch, prescribed prefix/suffix and permutation, matched element counts and output extents. outerRank≥inputRank is an explicit model restriction. Empty output has no coordinates.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
+    "source_ids": [
+      "HandleTranspose/space-depth-user-mutation"
+    ],
+    "evidence": [
+      "comparisons/heldout-space-depth-selection/GoalCandidate.lean",
+      "comparisons/heldout-space-depth-selection/OtherAxisIntegration.lean",
+      "comparisons/revised-benchmark-20261117/space-depth-review/REVIEW.md"
+    ],
+    "theorem": "Heldout.OtherAxisIntegration.rewrite",
+    "overlap": "Revised mathematical-reuse policy only. Historical noCampaignProofs final invocation failed; earlier fruitless and failed attempts remain part of cost."
+  },
+  {
+    "id": "dynamic-slice.nested",
+    "lhs": "dynamicSlice(dynamicSlice(x,inner),outer)",
+    "rhs": "dynamicSlice(x,sum of independently clamped starts)",
+    "conditions": "Static input/middle/output shapes with two per-axis fits; decoding consistently yields signed mathematical Int starts.",
+    "types": "Arbitrary-rank homogeneous logical tensors, arbitrary element type.",
+    "source_ids": [
+      "HandleDynamicSlice/nested"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/DynamicSliceComposition.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/NEST-PRED-REVIEW.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose",
+    "overlap": "dyslice/rule05. Existing complete tensor theorem reused.",
+    "outcome": "proved"
+  },
+  {
+    "id": "dynamic-slice.nested-evaluator-u64",
+    "lhs": "Original start after nested direct evaluator slices",
+    "rhs": "Start after unsigned clamps, addition and evaluator decoding",
+    "conditions": "Rank one, widths 10→6→2, words decoded as in the frozen evaluator profile. Inner start 2^63, outer 1: first coordinate 1 versus 5. Data 0…9 make that difference observable.",
+    "types": "BitVec 64 starts and integer coordinates.",
+    "source_ids": [
+      "HandleDynamicSlice/nested"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/NestedUnsigned64.lean",
+      "TensorRewrite/Pilot/NestedUnsigned64Certificates.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/NEST-PRED-REVIEW.md",
+      "reports/nested-slice-replay-v2/result.json"
+    ],
+    "theorem": "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving",
+    "overlap": "Distinct typed decoding model; consistent mathematical nested-slice case still holds. Native profile corroborates the observed values; intended backend agreement unresolved.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "dynamic-slice.scaled-nested",
+    "lhs": "dynamicSlice(multiply(dynamicSlice(x),broadcast(k)))",
+    "rhs": "direct dynamicSlice(x,combined starts), omitting k",
+    "conditions": "Rank-one S32 values 1…10, inner width 6/start 1, outer width 1/start 2, k=7 gives original 28 and replacement 4.",
+    "types": "BitVec 32 homogeneous input and scalar; signed-word source specialization.",
+    "source_ids": [
+      "HandleDynamicSlice/nested-after-scaled-probe"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ScaledNestedSlice.lean",
+      "TensorRewrite/Pilot/ScaledNestedSliceCertificates.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/SCALED-REVIEW.md",
+      "reports/scaled-nested-slice-replay-v1/result.json"
+    ],
+    "theorem": "TensorRewrite.Pilot.ScaledNestedSlice.not_universally_preserving",
+    "overlap": "Scaled probe fallthrough is a different calculation from direct nested slicing. Archival handler/full-pass evidence separately corroborates failure.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "iota.zero-runtime-descriptor",
+    "lhs": "Runtime iota along axis under stored descriptor guard ≤1",
+    "rhs": "Broadcast zero to its runtime length",
+    "conditions": "Runtime length admitted by rank-one descriptor; signed unbounded sentinel meets raw guard and admits length two. Coordinate one differs from zero.",
+    "types": "Rank-one vector of faithful natural coordinates, fixed/bounded/unbounded stored descriptor.",
+    "source_ids": [
+      "HandleIota/trivial-axis"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/iota-zero/ZeroSpec.lean",
+      "comparisons/revised-benchmark-20261117/iota-zero/ZeroProof.lean",
+      "comparisons/revised-benchmark-20261117/iota-zero/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.IotaZero.runtimeBoundary",
+    "overlap": "Distinct runtime descriptor contract from static exact Iota law. No proof this descriptor enters the actual production pipeline.",
+    "outcome": "disproved"
+  }
+]

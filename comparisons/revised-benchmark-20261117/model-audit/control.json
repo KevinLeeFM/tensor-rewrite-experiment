@@ -1,0 +1,201 @@
+[
+  {
+    "id": "control-equal-select",
+    "lhs": "Select(p,x,x)",
+    "rhs": "x",
+    "conditions": "Identical data operand on both branches, compatible result shape.",
+    "types": "Arbitrary finite shape, Bool predicate at each output coordinate, arbitrary branch element type; pure tensors.",
+    "source_ids": [
+      "HandleSelect/equal-values"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.select_equal",
+    "overlap": "Historical select/rule01 directly reuses select_equal."
+  },
+  {
+    "id": "control-uniform-select",
+    "lhs": "Select(uniform(b),x,y)",
+    "rhs": "x for b=true, y for b=false",
+    "conditions": "IsAll witness for b; compatible branch and result shapes.",
+    "types": "Arbitrary finite shape, Bool predicate at each output coordinate, arbitrary branch element type; pure tensors.",
+    "source_ids": [
+      "HandleSelect/true",
+      "HandleSelect/false"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.select_true, TensorRewrite.Theory.ControlValues.select_false",
+    "overlap": "Two truth values are exhaustive branches of one constant-predicate rewrite; historical select/rule02 and rule03 use these same two proofs."
+  },
+  {
+    "id": "control-negated-select",
+    "lhs": "Select(Not(p),x,y)",
+    "rhs": "Select(p,y,x)",
+    "conditions": "Predicate is pointwise Boolean negation; legal branch operand shapes.",
+    "types": "Arbitrary finite shape, Bool predicate at each output coordinate, arbitrary branch element type; pure tensors.",
+    "source_ids": [
+      "HandleSelect/not-predicate"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.select_not",
+    "overlap": "Historical select/rule04 Lean wrapper uses the identical general proof; Haskell executable artifact instantiates only constant false."
+  },
+  {
+    "id": "control-identity-select",
+    "lhs": "Select(p,true,false), expanding a scalar predicate over the output when necessary",
+    "rhs": "p at output shape, with scalar Broadcast when necessary",
+    "conditions": "PRED output, uniform true then false branches; p directly has output shape or is scalar with nonscalar output.",
+    "types": "Boolean logical tensors at arbitrary finite rank/extents, scalar and empty included.",
+    "source_ids": [
+      "HandleSelect/true-false-direct",
+      "HandleSelect/true-false-broadcast"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.select_true_false, TensorRewrite.Theory.ControlValues.select_true_false_broadcast",
+    "overlap": "One Boolean identity; typed Broadcast arm supplies the scalar-to-output rank change. General decoded projection law covers the legal scalar case."
+  },
+  {
+    "id": "control-complement-select",
+    "lhs": "Select(p,false,true), expanding a scalar predicate over the output when necessary",
+    "rhs": "Not(p), broadcasting that result from a scalar when necessary",
+    "conditions": "PRED output, uniform false then true branches; direct compatible shape or scalar predicate and nonscalar output.",
+    "types": "Boolean logical tensors at arbitrary finite rank/extents, scalar and empty included.",
+    "source_ids": [
+      "HandleSelect/false-true-direct",
+      "HandleSelect/false-true-broadcast"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.select_false_true, TensorRewrite.Theory.ControlValues.select_false_true_broadcast",
+    "overlap": "One complement identity with direct and scalar-Broadcast realizations. Negative direction differs from identity-select."
+  },
+  {
+    "id": "control-compare-select",
+    "lhs": "Select(Compare(direction,x,y),x,y)",
+    "rhs": "OR for GT/GE, AND for LT/LE, y for EQ, x for NE",
+    "conditions": "Comparison has exact branch operands in order and Boolean order false=0, true=1; direction is one of six explicit constructors.",
+    "types": "Boolean logical tensors at arbitrary finite rank/extents, scalar and empty included.",
+    "source_ids": [
+      "HandleSelect/boolean-compare-gt",
+      "HandleSelect/boolean-compare-ge",
+      "HandleSelect/boolean-compare-lt",
+      "HandleSelect/boolean-compare-le",
+      "HandleSelect/boolean-compare-eq",
+      "HandleSelect/boolean-compare-ne"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.select_compare_gt, TensorRewrite.Theory.ControlValues.select_compare_ge, TensorRewrite.Theory.ControlValues.select_compare_lt, TensorRewrite.Theory.ControlValues.select_compare_le, TensorRewrite.Theory.ControlValues.select_compare_eq, TensorRewrite.Theory.ControlValues.select_compare_ne",
+    "overlap": "One finite direction-dispatch calculation with proof for each constructor. No non-Boolean ordering promoted."
+  },
+  {
+    "id": "control-map-parameter",
+    "lhs": "Map(v ↦ v[j],inputs)",
+    "rhs": "inputs[j]",
+    "conditions": "Root selects a legal parameter j; forwarding succeeds at compatible shape.",
+    "types": "Any finite arity of same-shaped, potentially heterogeneous tensor inputs; arbitrary finite shape and pure scalar body.",
+    "source_ids": [
+      "HandleMap/parameter-root"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.map_parameter",
+    "overlap": "Parameter projection differs from elementwise-root application; a parameter exists only for nonzero arity."
+  },
+  {
+    "id": "control-map-constant",
+    "lhs": "Map(v ↦ k,inputs)",
+    "rhs": "Clone scalar k at rank zero; broadcast scalar k on empty dimension list at nonscalar result",
+    "conditions": "Scalar constant root, typed value k and legal output shape.",
+    "types": "Any finite arity of same-shaped, potentially heterogeneous tensor inputs; arbitrary finite shape and pure scalar body.",
+    "source_ids": [
+      "HandleMap/constant-root-scalar",
+      "HandleMap/constant-root-broadcast"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.map_scalar_constant, TensorRewrite.Theory.ControlValues.map_constant_broadcast",
+    "overlap": "One constant-return rewrite with rank-conditioned replacement; map_constant is supporting normalization only."
+  },
+  {
+    "id": "control-map-elementwise",
+    "lhs": "Map(v ↦ op(v[j₀],…,v[jₙ₋₁]),inputs)",
+    "rhs": "Elementwise op on the same ordered selected input tensors",
+    "conditions": "Pure nonfusion elementwise root, each root operand a valid parameter, repetitions permitted. Same scalar operator is cloned at output shape.",
+    "types": "Any finite arity of same-shaped, potentially heterogeneous tensor inputs; arbitrary finite shape and pure scalar body.",
+    "source_ids": [
+      "HandleMap/elementwise-root"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.map_elementwise",
+    "overlap": "Rank-polymorphic pointwise lifting; no commutation or arbitrary reordering."
+  },
+  {
+    "id": "control-conditional-bool-convert",
+    "lhs": "IndexedConditional(BoolToIndex(p), arguments, branches)",
+    "rhs": "PredicateConditional(p,arg1,branch1,arg0,branch0)",
+    "conditions": "Simplification enabled; converted PRED selector, exactly two branches. false ↦ index 0 and true ↦ index 1.",
+    "types": "Possibly distinct argument types per branch, each a total function to one common result type; scalar Boolean selector.",
+    "source_ids": [
+      "HandleConditional/predicate-convert"
+    ],
+    "evidence": [
+      "census/control-values-family-v1.json",
+      "census/scalar-control-cases.json",
+      "TensorRewrite/Theory/ControlValues.lean",
+      "TensorRewrite/Theory/ControlValuesProof.lean",
+      "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+    ],
+    "theorem": "TensorRewrite.Theory.ControlValues.conditional_convert",
+    "overlap": "Branch function and argument both exchanged. Distinct from elementwise Select; no trace erasure is assumed."
+  }
+]

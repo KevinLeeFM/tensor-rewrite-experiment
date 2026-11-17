@@ -1,0 +1,128 @@
+[
+  {
+    "id": "complex.reconstruct",
+    "lhs": "Complex(Real(c), Imag(c))",
+    "rhs": "c",
+    "conditions": "All ranks and extents including empty and scalar shapes; both components read the same tensor.",
+    "types": "complex tensor of ordered pairs of a common component type",
+    "source_ids": [
+      "HandleComplex/components"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentSpec.lean",
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.Components.reconstruction",
+    "overlap": "Direct product elimination/introduction and established tensor maps. These records had no proof evidence in the inherited census.",
+    "effort_group": "components"
+  },
+  {
+    "id": "complex.real-projection",
+    "lhs": "Real(Complex(a,b))",
+    "rhs": "a",
+    "conditions": "Legal same-shaped component arrays.",
+    "types": "real components in a common scalar domain",
+    "source_ids": [
+      "HandleReal/complex-projection"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentSpec.lean",
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.Components.realProjection",
+    "overlap": "Direct product elimination/introduction and established tensor maps. These records had no proof evidence in the inherited census.",
+    "effort_group": "components"
+  },
+  {
+    "id": "complex.imag-projection",
+    "lhs": "Imag(Complex(a,b))",
+    "rhs": "b",
+    "conditions": "Legal same-shaped component arrays.",
+    "types": "real components in a common scalar domain",
+    "source_ids": [
+      "HandleImag/complex-projection"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentSpec.lean",
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.Components.imagProjection",
+    "overlap": "Direct product elimination/introduction and established tensor maps. These records had no proof evidence in the inherited census.",
+    "effort_group": "components"
+  },
+  {
+    "id": "real.real-part",
+    "lhs": "Real(x)",
+    "rhs": "x",
+    "conditions": "Operand is real with unchanged output shape.",
+    "types": "real tensor; the component projection returns its real input",
+    "source_ids": [
+      "HandleReal/noncomplex"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentSpec.lean",
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.Components.realOfReal",
+    "overlap": "Direct product elimination/introduction and established tensor maps. These records had no proof evidence in the inherited census.",
+    "effort_group": "components"
+  },
+  {
+    "id": "real.imag-part",
+    "lhs": "Imag(x)",
+    "rhs": "BroadcastScalar(0,shape(x))",
+    "conditions": "Operand is real and the same designated zero is used by component extraction and the scalar broadcast.",
+    "types": "real tensor with designated scalar zero",
+    "source_ids": [
+      "HandleImag/noncomplex"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentSpec.lean",
+      "comparisons/revised-benchmark-20261117/complex-components/ComponentProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.Components.imagOfReal",
+    "overlap": "Direct product elimination/introduction and established tensor maps. These records had no proof evidence in the inherited census.",
+    "effort_group": "components"
+  },
+  {
+    "id": "divide.pow-two-unsigned",
+    "lhs": "UDiv(x,b)",
+    "rhs": "LSR(x, encodeAtWidth(log2(b)))",
+    "conditions": "The uniform word divisor represents a power of two.",
+    "types": "Arbitrary fixed-width bitvector tensor; pointwise signed truncation or unsigned quotient, including minimum dividend.",
+    "source_ids": [
+      "HandleDivide/power-two-unsigned"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/divide-power-two/ShiftSpec.lean",
+      "comparisons/revised-benchmark-20261117/divide-power-two/ShiftProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.DividePowerTwo.unsignedCase",
+    "overlap": "Reuses toolchain BitVec division/sign definitions and Nat.shiftRight_eq_div_pow; newly checked tensor and shift-count composition.",
+    "effort_group": "divide"
+  },
+  {
+    "id": "divide.pow-two-signed",
+    "lhs": "SDiv(x,b)",
+    "rhs": "Select(x<0,-q,q), q=LSR(Select(x<0,-x,x),encodeAtWidth(log2(b)))",
+    "conditions": "The uniform divisor is signed-positive and its unsigned representation is a power of two.",
+    "types": "Arbitrary fixed-width bitvector tensor; pointwise signed truncation or unsigned quotient, including minimum dividend.",
+    "source_ids": [
+      "HandleDivide/power-two-signed"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/divide-power-two/ShiftSpec.lean",
+      "comparisons/revised-benchmark-20261117/divide-power-two/ShiftProof.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/new-review.md"
+    ],
+    "theorem": "RevisedBenchmark.DividePowerTwo.signedCase",
+    "overlap": "Reuses toolchain BitVec division/sign definitions and Nat.shiftRight_eq_div_pow; newly checked tensor and shift-count composition.",
+    "effort_group": "divide"
+  }
+]

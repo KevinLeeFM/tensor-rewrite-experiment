@@ -1,0 +1,544 @@
+[
+  {
+    "id": "reduce-empty-single",
+    "lhs": "Reduce inputs with supplied initializer",
+    "rhs": "Broadcast initializer to the output shape",
+    "conditions": "Legal reduction plan. Input or output element count is zero.",
+    "types": "Tensor over any value type; pure binary reducer.",
+    "source_ids": [
+      "BroadcastReduce/single",
+      "HandleReduce/empty-delegation"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/broadcast-reduce-single/Goal.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-reduce-single/Proof.lean",
+      "comparisons/revised-benchmark-20261117/broadcast-reduce-single/RECORD-REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastReduceSingle.proved",
+    "overlap": "Single and heterogeneous tuple arms are separately typed; caller delegates to these same calculations."
+  },
+  {
+    "id": "reduce-reshape-single",
+    "lhs": "Reduce inputs with supplied initializer",
+    "rhs": "Row-major reshape to reduction output shape",
+    "conditions": "Legal plan with equal counts; empty output or op(init,x)=x for every value/state x. This is necessary and sufficient uniformly.",
+    "types": "Tensor over any value type; pure binary reducer.",
+    "source_ids": [
+      "ReplaceReduceWithReshape/single",
+      "HandleReduce/same-element-count"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/same-count-exact/SameCountProof.lean",
+      "comparisons/revised-benchmark-20261117/same-count-exact/SameCountSpec.lean",
+      "comparisons/revised-benchmark-20261117/same-count-exact/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SameCountExact.uniform_iff",
+    "overlap": "Earlier scalar sufficiency and pointwise characterization do not add cases. Caller delegates."
+  },
+  {
+    "id": "reduce-empty-tuple",
+    "lhs": "Reduce inputs with supplied initializer",
+    "rhs": "Broadcast initializer to the output shape componentwise",
+    "conditions": "Legal reduction plan. Input or output element count is zero.",
+    "types": "Nonempty finite heterogeneous tuple of tensor components; pure, potentially coupled whole-state reducer.",
+    "source_ids": [
+      "BroadcastReduce/tuple",
+      "HandleReduce/empty-delegation"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-tuple/TupleReduceProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-tuple/TupleReduceSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-tuple/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TupleReduce.empty",
+    "overlap": "Single and heterogeneous tuple arms are separately typed; caller delegates to these same calculations."
+  },
+  {
+    "id": "reduce-reshape-tuple",
+    "lhs": "Reduce inputs with supplied initializer",
+    "rhs": "Row-major reshape to reduction output shape for each component",
+    "conditions": "Legal plan with equal counts; empty output or op(init,x)=x for every value/state x. This is necessary and sufficient uniformly.",
+    "types": "Nonempty finite heterogeneous tuple of tensor components; pure, potentially coupled whole-state reducer.",
+    "source_ids": [
+      "ReplaceReduceWithReshape/tuple",
+      "HandleReduce/same-element-count"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-tuple/TupleReduceProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-tuple/TupleReduceSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-tuple/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TupleReduce.sameCount",
+    "overlap": "Earlier scalar sufficiency and pointwise characterization do not add cases. Caller delegates."
+  },
+  {
+    "id": "singleton-tuple-reduce",
+    "lhs": "Reduce with a singleton tuple-root body",
+    "rhs": "Singleton tuple containing scalar reduction by component zero",
+    "conditions": "Any legal reduction plan and scalar initializer, including empty fibers.",
+    "types": "Any scalar type; pure arbitrary reducer returning Fin 1 → α.",
+    "source_ids": [
+      "HandleReduce/singleton-tuple"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/singleton-reduce/SingletonProof.lean",
+      "comparisons/revised-benchmark-20261117/singleton-reduce/SingletonSpec.lean",
+      "comparisons/revised-benchmark-20261117/singleton-reduce/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SingletonReduce.unpack",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "tuple-project",
+    "lhs": "Look up component i of the constructed ordered tuple",
+    "rhs": "Return tagged operand i",
+    "conditions": "i is a valid index into n inputs.",
+    "types": "Heterogeneous, arbitrarily tagged payloads.",
+    "source_ids": [
+      "HandleGetTupleElement/tuple-projection"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/tuple-projection/TupleProof.lean",
+      "comparisons/revised-benchmark-20261117/tuple-projection/TupleSpec.lean",
+      "comparisons/revised-benchmark-20261117/tuple-projection/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TupleProjection.projection",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "barrier-user-compact",
+    "lhs": "Read original barrier tuple at user-selected position i",
+    "rhs": "Read compacted tuple at number of retained positions before i",
+    "conditions": "Finite ordered list, legal selected i appears in users. Keep user positions and tokens, plus protected producers for the tuple-operand variant.",
+    "types": "List of arbitrary values, which can be tagged. Pure selected value observation.",
+    "source_ids": [
+      "HandleOptimizationBarrier/prune-tuple",
+      "HandleOptimizationBarrier/prune-producer"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/barrier-prune/PruneProof.lean",
+      "comparisons/revised-benchmark-20261117/barrier-prune/PruneSpec.lean",
+      "comparisons/revised-benchmark-20261117/barrier-prune/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BarrierPrune.preserved",
+    "overlap": "Keep-mask parameter covers both operand kinds with the same compaction rewrite."
+  },
+  {
+    "id": "sort-trivial-single",
+    "lhs": "Fiber-local sort/rearrangement",
+    "rhs": "Forward input tensor",
+    "conditions": "An extent is zero or the chosen sort axis has extent at most one. Other coordinates fixed; all components share one bounded selector.",
+    "types": "Any static tensor shape and arbitrary element type.",
+    "source_ids": [
+      "HandleSort/trivial-single"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/trivial-sort/SortProof.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/SortSpec.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TrivialSort.correct",
+    "overlap": "Distinct single-array and tuple-output calculations share a theorem and review."
+  },
+  {
+    "id": "sort-descriptor-forward-single",
+    "lhs": "Ascending runtime sort of the input",
+    "rhs": "Forward input unchanged",
+    "conditions": "Rank one. Runtime length admitted by descriptor; raw stored extent zero or ≤1; unbounded sentinel admits unsorted length two.",
+    "types": "List Nat",
+    "source_ids": [
+      "HandleSort/trivial-single"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/ClassificationProof.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/ClassificationSpec.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/DynamicProof.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/DynamicSpec.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.DynamicSort.singleCounterexample",
+    "overlap": "Different frozen runtime-descriptor guard from the static sort law. Fixed/bounded classifications are not additional proofs counted here.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "sort-trivial-tuple",
+    "lhs": "Fiber-local sort/rearrangement of coupled components",
+    "rhs": "Forward ordered input tuple",
+    "conditions": "An extent is zero or the chosen sort axis has extent at most one. Other coordinates fixed; all components share one bounded selector.",
+    "types": "Any static tensor shape and arbitrary heterogeneous element types, at least two inputs.",
+    "source_ids": [
+      "HandleSort/trivial-tuple"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/trivial-sort/SortProof.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/SortSpec.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.TrivialSort.correct",
+    "overlap": "Distinct single-array and tuple-output calculations share a theorem and review."
+  },
+  {
+    "id": "sort-descriptor-forward-tuple",
+    "lhs": "Ascending runtime sort of a lockstep key/value pair",
+    "rhs": "Forward input unchanged",
+    "conditions": "Rank one. Runtime length admitted by descriptor; raw stored extent zero or ≤1; unbounded sentinel admits unsorted length two.",
+    "types": "Nat × Bool rows sorted by Nat key",
+    "source_ids": [
+      "HandleSort/trivial-tuple"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/ClassificationProof.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/ClassificationSpec.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/DynamicProof.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/DynamicSpec.lean",
+      "comparisons/revised-benchmark-20261117/trivial-sort/dynamic/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.DynamicSort.tupleCounterexample",
+    "overlap": "Different frozen runtime-descriptor guard from the static sort law. Fixed/bounded classifications are not additional proofs counted here.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "pad-unit-interior",
+    "lhs": "Pad(input, low, high, gaps)",
+    "rhs": "Pad with positive gaps reset only at singleton input axes",
+    "conditions": "Nonempty input; at least one positive-gap singleton axis. Signed edges; typed output extent agrees with signed-pad formula.",
+    "types": "Static arbitrary rank, arbitrary element type, scalar fill.",
+    "source_ids": [
+      "HandlePad/unit-interior"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/signed-pad/SignedPadProof.lean",
+      "comparisons/revised-benchmark-20261117/signed-pad/SignedPadSpec.lean",
+      "comparisons/revised-benchmark-20261117/signed-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.HandlePad.unit_interior",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "pad-empty-input",
+    "lhs": "Pad(input, fill)",
+    "rhs": "Broadcast fill to output",
+    "conditions": "Some input axis has extent zero; output may be inhabited. Signed edges; typed output extent agrees with signed-pad formula.",
+    "types": "Static arbitrary rank, arbitrary element type, scalar fill.",
+    "source_ids": [
+      "HandlePad/empty-input"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/signed-pad/SignedPadProof.lean",
+      "comparisons/revised-benchmark-20261117/signed-pad/SignedPadSpec.lean",
+      "comparisons/revised-benchmark-20261117/signed-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.HandlePad.empty_input",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "pad-compatible",
+    "lhs": "Pad(input, fill)",
+    "rhs": "Forward input",
+    "conditions": "Equal static input/output shapes and zero low/high edges on all axes; interior not required zero. Signed edges; typed output extent agrees with signed-pad formula.",
+    "types": "Static arbitrary rank, arbitrary element type, scalar fill.",
+    "source_ids": [
+      "HandlePad/compatible"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/pad-compatible/CompatibleProof.lean",
+      "comparisons/revised-benchmark-20261117/pad-compatible/CompatibleSpec.lean",
+      "comparisons/revised-benchmark-20261117/signed-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.CompatiblePad.correct",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "pad-negative-edges",
+    "lhs": "Pad with signed edges",
+    "rhs": "Pad with both edges clipped below at zero, then take the proved well-formed source crop",
+    "conditions": "Any signed Pad params with legal output shape; negative-edge branch is included. Signed edges; typed output extent agrees with signed-pad formula.",
+    "types": "Static arbitrary rank, arbitrary element type, scalar fill.",
+    "source_ids": [
+      "HandlePad/negative-edges"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/pad-negative/NegativeProof.lean",
+      "comparisons/revised-benchmark-20261117/pad-negative/NegativeSpec.lean",
+      "comparisons/revised-benchmark-20261117/pad-negative/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.NegativePad.correct",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "pad-broadcast-projection",
+    "lhs": "Pad(broadcast(x),fill)",
+    "rhs": "Broadcast the lower-rank pad of the projected broadcast operand",
+    "conditions": "Every original broadcast operand axis lies among axes with nonzero edges or interior. Retained axes are in rank order. Signed edges; typed output extent agrees with signed-pad formula.",
+    "types": "Static arbitrary rank, arbitrary element type, scalar fill.",
+    "source_ids": [
+      "HandlePad/broadcast-projection"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/pad-projection/ProjectionProof.lean",
+      "comparisons/revised-benchmark-20261117/pad-projection/ProjectionSpec.lean",
+      "comparisons/revised-benchmark-20261117/pad-projection/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.PadProjection.correct",
+    "overlap": "One named transformation in this catalog. No claim of historical discovery."
+  },
+  {
+    "id": "pad-descriptor-forward",
+    "lhs": "Zero-edge runtime Pad",
+    "rhs": "Forward input",
+    "conditions": "Rank-one local guard: nonzero stored extent, unit/interior fast path absent, compatible stored output. Unbounded marker and gap 1 admit length 2, yielding length 3.",
+    "types": "Descriptor-admitted runtime extents; shape mismatch alone refutes tensor equality.",
+    "source_ids": [
+      "HandlePad/compatible"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/pad-compatible/dynamic/DynamicPadProof.lean",
+      "comparisons/revised-benchmark-20261117/pad-compatible/dynamic/DynamicPadSpec.lean",
+      "comparisons/revised-benchmark-20261117/pad-compatible/dynamic/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.DynamicPad.witness",
+    "overlap": "Distinct raw-descriptor contract; classification is supporting evidence.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "not-involution",
+    "lhs": "Not(Not(x))",
+    "rhs": "x",
+    "conditions": "Both Not applications well-typed at the same realized shape.",
+    "types": "Bool and BitVec w at any rank and width.",
+    "source_ids": [
+      "HandleNot/involution"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/not-record/NotProof.lean",
+      "comparisons/revised-benchmark-20261117/not-record/NotRecord.lean",
+      "comparisons/revised-benchmark-20261117/whole-record-audit/LOGICAL-REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.NotRecord.verified",
+    "overlap": "Earlier Boolean.not_not and Bitwise.not_not reused; one double-Not rewrite across types."
+  },
+  {
+    "id": "pred-eq-forward",
+    "lhs": "Pointwise EQ of x and recognized true (either operand order)",
+    "rhs": "x",
+    "conditions": "ConstantGuard.View.isAll(true) succeeds.",
+    "types": "Same-shape Bool tensors.",
+    "source_ids": [
+      "HandleCompare/predicate-eq-lhs",
+      "HandleCompare/predicate-eq-rhs"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/compare-guards/CompareProof.lean",
+      "comparisons/revised-benchmark-20261117/compare-guards/CompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/compare-guards/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.CompareGuards.predGuards",
+    "overlap": "Symmetric equality/disequality operands identified; one of two distinct predicates."
+  },
+  {
+    "id": "pred-ne-forward",
+    "lhs": "Pointwise NE of x and recognized false (either operand order)",
+    "rhs": "x",
+    "conditions": "ConstantGuard.View.isAll(false) succeeds.",
+    "types": "Same-shape Bool tensors.",
+    "source_ids": [
+      "HandleCompare/predicate-ne-lhs",
+      "HandleCompare/predicate-ne-rhs"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/compare-guards/CompareProof.lean",
+      "comparisons/revised-benchmark-20261117/compare-guards/CompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/compare-guards/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.CompareGuards.predGuards",
+    "overlap": "Symmetric equality/disequality operands identified; one of two distinct predicates."
+  },
+  {
+    "id": "causal-select-ne",
+    "lhs": "CompareNE(Select(p,yes,no),rhs)",
+    "rhs": "p",
+    "conditions": "For each cell, yes differs from rhs and no equals rhs. Reviewed concrete GE/1/0 integer mask is an instance.",
+    "types": "Tensor Bool mask, equal shapes, any decidable equality of arm values.",
+    "source_ids": [
+      "HandleCompare/causal-mask"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/compare-guards/CompareProof.lean",
+      "comparisons/revised-benchmark-20261117/compare-guards/CompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/compare-guards/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.CompareGuards.causalBoundary",
+    "overlap": "CausalPred and integerGE instantiate the same replacement. Earlier source predicate simplification may preempt this matcher."
+  },
+  {
+    "id": "word-self-compare",
+    "lhs": "map₂(cmp signed d, x, x)",
+    "rhs": "constant(selfResult(d))",
+    "conditions": "d ranges over lt/le/gt/ge/eq/ne, with result true exactly for le/ge/eq.",
+    "types": "Any shape and BitVec width; signed and unsigned order.",
+    "source_ids": [
+      "HandleCompare/integral-self-lt",
+      "HandleCompare/integral-self-le",
+      "HandleCompare/integral-self-gt",
+      "HandleCompare/integral-self-ge",
+      "HandleCompare/integral-self-eq",
+      "HandleCompare/integral-self-ne"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareProof.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.WordCompare.sameWord",
+    "overlap": "One direction-parameterized rule, six lexical specializations; earlier abstract OrderFamily."
+  },
+  {
+    "id": "word-lt-zero",
+    "lhs": "Unsigned LT(x,0) or reversed equivalent predicate",
+    "rhs": "constant false",
+    "conditions": "Pointwise zero threshold; source zero recognizer is sufficient.",
+    "types": "Unsigned BitVec, arbitrary shape and width.",
+    "source_ids": [
+      "HandleCompare/unsigned-lt-zero",
+      "HandleCompare/unsigned-zero-gt"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareProof.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.WordCompare.unsignedBoundary",
+    "overlap": "Uses reverse direction of joint threshold iff. Reversed comparator is identical; abstract OrderFamily pre-exists."
+  },
+  {
+    "id": "word-ge-zero",
+    "lhs": "Unsigned GE(x,0) or reversed equivalent predicate",
+    "rhs": "constant true",
+    "conditions": "Pointwise zero threshold; source zero recognizer is sufficient.",
+    "types": "Unsigned BitVec, arbitrary shape and width.",
+    "source_ids": [
+      "HandleCompare/unsigned-ge-zero",
+      "HandleCompare/unsigned-zero-le"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareProof.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.WordCompare.unsignedBoundary",
+    "overlap": "Uses reverse direction of joint threshold iff. Reversed comparator is identical; abstract OrderFamily pre-exists."
+  },
+  {
+    "id": "word-maximum-compare",
+    "lhs": "max(a,b)>a",
+    "rhs": "b>a",
+    "conditions": "Same signedness on both sides, shared operand; exchange a/b for other matched slot.",
+    "types": "Scalar integral words of arbitrary width; pointwise exact comparison.",
+    "source_ids": [
+      "HandleCompare/maximum-first",
+      "HandleCompare/maximum-second"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareProof.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.WordCompare.extrema",
+    "overlap": "Two shared-operand orientations agree by argument renaming and extremum symmetry. Earlier abstract OrderFamily."
+  },
+  {
+    "id": "word-minimum-compare",
+    "lhs": "a>min(a,b)",
+    "rhs": "a>b",
+    "conditions": "Same signedness on both sides, shared operand; exchange a/b for other matched slot.",
+    "types": "Scalar integral words of arbitrary width; pointwise exact comparison.",
+    "source_ids": [
+      "HandleCompare/minimum-first",
+      "HandleCompare/minimum-second"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareProof.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/WordCompareSpec.lean",
+      "comparisons/revised-benchmark-20261117/integral-compare/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.WordCompare.extrema",
+    "overlap": "Two shared-operand orientations agree by argument renaming and extremum symmetry. Earlier abstract OrderFamily."
+  },
+  {
+    "id": "scatter-add-hoist",
+    "lhs": "Add(extra, Scatter(base,target,update)) in either literal orientation",
+    "rhs": "Scatter(base + extra,target,update) retaining Add order",
+    "conditions": "One legal rank-one update; reducer adds two freely selected parameter roles; opcode-only guard permits duplicate roles. Repeating current changes 7 to 8.",
+    "types": "BitVec 32 vectors for witness, addition modulo word width.",
+    "source_ids": [
+      "HandleAdd/scatter-single-lhs",
+      "HandleAdd/scatter-single-rhs"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ReducerIndexCertificates.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "comparisons/revised-benchmark-20261117/scatter-exact/ScatterSpec.lean",
+      "comparisons/revised-benchmark-20261117/scatter-exact/ScatterProof.lean"
+    ],
+    "theorem": "TensorRewrite.Pilot.ReducerIndex.ScatterRoles.not_universally_preserving",
+    "overlap": "One commutative Add case; independent review contains literal other-order adapter. Exact iff with distinct roles or zero extra at target is a boundary, not another success.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "gather-small-select-chain",
+    "lhs": "Gather from rank-one data at signed-clamped coordinate",
+    "rhs": "Select chain comparing against index-width narrowed literals",
+    "conditions": "Admitted one-coordinate gather with extent and unroll threshold 129, S8 index 0 gives 0 versus 128. Distinct coordinate labels distinguish values.",
+    "types": "Signed 8-bit index, coordinate-labelled rank-one values.",
+    "source_ids": [
+      "HandleGather/small-select-chain"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/ReducerIndexCertificates.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/SCATTER-GATHER-REVIEW.md",
+      "comparisons/revised-benchmark-20261117/gather-exact/GatherSpec.lean",
+      "comparisons/revised-benchmark-20261117/gather-exact/GatherProof.lean",
+      "comparisons/revised-benchmark-20261117/gather-exact/REVIEW.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.ReducerIndex.GatherLiterals.not_universally_preserving",
+    "overlap": "Representability extent ≤ 2^k is the exact uniform boundary for width k+1. Its sufficient half is not a success for the original unroll guard.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "contraction-select-scale-hoist",
+    "lhs": "Sum branches selected after scaling by 2 or 3",
+    "rhs": "Hoist 2×3 onto the sum of the unscaled selected branches",
+    "conditions": "Uniform predicate, unit filter and four ones give 8 or 12 versus 24.",
+    "types": "Exact integer scalar contractions.",
+    "source_ids": [
+      "ScalarMultiplyReduction/target-output"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/SelectContractionRefutation.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/COMPARE-SCALAR-REVIEW.md",
+      "comparisons/revised-benchmark-20261117/scalar-select-exact/ScalarSelectSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-select-exact/ScalarSelectProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-select-exact/REVIEW.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.SelectContraction.not_universally_valid",
+    "overlap": "Mixed-cell characterization for arbitrary branch factors proves correctness for all cells iff both zero or both one. These repairs do not answer the unrestricted original positively.",
+    "outcome": "disproved"
+  },
+  {
+    "id": "pred-mul-select-strict",
+    "lhs": "Multiply a converted Boolean and binary32 operand",
+    "rhs": "Select operand when predicate is true, otherwise binary32 zero",
+    "conditions": "Strict exceptional-class observation: zero times infinity or NaN must yield NaN; false times positive infinity suffices.",
+    "types": "Bool, binary32 bit patterns; every refinement respecting MulCompatible.",
+    "source_ids": [
+      "HandleMultiply/predicate-convert"
+    ],
+    "evidence": [
+      "TensorRewrite/Pilot/PredMulRefutation.lean",
+      "comparisons/revised-benchmark-20261117/recovered-witnesses/NEST-PRED-REVIEW.md"
+    ],
+    "theorem": "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid",
+    "overlap": "One refutation covering an exception profile, independently supported by opposite operand-order certificates. It does not reject an exact-real identity.",
+    "outcome": "disproved"
+  }
+]

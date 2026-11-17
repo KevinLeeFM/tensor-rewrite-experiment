@@ -1,5 +1,6 @@
 """Build an honest ID-preserving status overlay; does not alter historical ledgers."""
 import collections, hashlib, json, pathlib
+from model_cases import attach_model_cases
 root = pathlib.Path(__file__).resolve().parents[2]
 source = root / 'census/mathematical-ledger.json'
 paper = root / 'comparisons/tensorright-v1/cases.json'
@@ -187,6 +188,8 @@ out['source_candidates']['records_with_reviewed_counterexample'] = sum(bool(r.ge
 out['source_candidates']['reviewed_observation_outcomes'] = dict(collections.Counter(r['reviewed_record_observation']['outcome'] for r in modern if 'reviewed_record_observation' in r))
 out['source_candidates']['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))
 out['source_candidates']['records_with_reviewed_record_observation'] = sum('reviewed_record_observation' in row for row in modern)
+attach_model_cases(out, packet, root, modern, crosswalk)
+out['status'] = 'reviewed_mathematical_cases_with_separate_whole_source_assurance'
 (root/'comparisons/revised-benchmark-20261117/outcome-ledger.json').write_text(json.dumps(out, indent=2)+'\n')
 print('source',out['source_candidates']['counts'],'inherited',out['source_candidates']['inherited_status_counts'])
 print('historical',out['historical_cases']['counts'])
