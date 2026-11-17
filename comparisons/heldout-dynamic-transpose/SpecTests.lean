@@ -35,4 +35,22 @@ def emptyShape : Shape 3 := fun i => if i.val = 0 then 0 else if i.val = 1 then 
 def emptySizes : Shape 3 := fun i => if i.val = 0 then 0 else 1
 theorem emptyFits : ∀ i, emptySizes i ≤ transposedShape emptyShape perm i := by decide
 example : ¬ Nonempty (Index emptySizes) := by intro ⟨i⟩; exact Fin.elim0 (i ⟨0, by decide⟩)
+/-- Direct empty-output graph equality, for arbitrary input values on the empty source. -/
+example (x : Tensor emptyShape Nat) :
+    slice starts emptyFits (Tensor.transpose perm (fun i => by simp [transposedShape, perm.output_input]) x) =
+      Tensor.transpose perm (fun _ => rfl) (slice (sourceStarts starts perm) (sourceFits emptyShape emptySizes perm emptyFits) x) := by
+  funext i
+  exact Fin.elim0 (i ⟨0, by decide⟩)
+
+/-- Scalar rank has one empty coordinate and retains its input value. -/
+def scalarShape : Shape 0 := fun i => Fin.elim0 i
+def scalarStarts : Fin 0 → Int := fun i => Fin.elim0 i
+theorem scalarFits : ∀ i, scalarShape i ≤ transposedShape scalarShape (AxisPermutation.identity 0) i := fun i => Fin.elim0 i
+def scalarInput : Tensor scalarShape Nat := fun _ => 42
+def scalarOut : Index scalarShape := fun i => Fin.elim0 i
+example : slice scalarStarts scalarFits (Tensor.transpose (AxisPermutation.identity 0)
+    (fun i => by simp [transposedShape, AxisPermutation.identity]) scalarInput) scalarOut = 42 := by decide
+example : Tensor.transpose (AxisPermutation.identity 0) (fun _ => rfl)
+    (slice (sourceStarts scalarStarts (AxisPermutation.identity 0))
+      (sourceFits scalarShape scalarShape (AxisPermutation.identity 0) scalarFits) scalarInput) scalarOut = 42 := by decide
 end Heldout.DynamicTranspose.Tests
