@@ -1,5 +1,7 @@
 # Tensor assignment-level exit gate, revision 1
 
+**2026-11-17 status update:** The scoped IndexMaps integration is accepted at source `938b193d4fadbd5e3209b775a88823b9d114715e` by independent source/evidence review at `83c3f9d4b234437749d65f7102162c5d53d67ad5`; it remains unmerged. This supersedes the older blocked integration status below only for that scoped gate. See [integration status](INTEGRATION-STATUS-20261117.md) for trust limits and the next-action assessment. Historical case verdicts and the unresolved space-depth disposition are unchanged.
+
 Recorded retrospectively on 2026-11-17 after the comparison and held-out cases, as instructed on continuation; not a preregistration. This gate reconciles completed work without redefining historical outcomes. Governed by `docs/experiment-plan.md` and the newer request for a finite independently accepted held-out set, reusable-library assessment, and honest effort accounting. No fresh-agent speedup or C++ correspondence is required or claimed.
 
 The assessment succeeds only if all of the following are evidenced at preserved revisions:
@@ -11,3 +13,7 @@ The assessment succeeds only if all of the following are evidenced at preserved 
 5. **Accounting and delivery:** report selection, development, compiler/replay and review/setup effort as available; distinguish elapsed from worker time and overlap, retain failures and unknowns, and do not infer comparative efficiency. Preserve clean prior worktrees and deliver a reproducible report with immutable revision links.
 
 The six-case held-out inventory comprises the five accepted partitions and one explicitly parked unresolved case. Thus this is a successful bounded *assessment and report* if all five evidence obligations and the unresolved disposition are verified, not success in proving space-depth or every compiler rewrite. The 118-case paper comparison is a separate inventory; do not add the two sets as new paper rules. C++ model translation is a disclosed assumption, not a theorem.
+
+## Reconciliation after IndexMaps integration, 2026-11-17
+
+This original bounded-assessment gate and case denominator remain unchanged. A later, separate IndexMaps integration obligation is **blocked/incomplete**, despite its passed 19-target replay. See [integration status](INTEGRATION-STATUS-20261117.md) for the parent-to-obligation map, 2026-11-17 cache/setup observations, explicit pending theory gate, ownership, and review boundaries. This supplement does not retroactively turn the earlier successful bounded *report* into an accepted new-source integration, count the unresolved space-depth case as proved, or amend any frozen proposition.
