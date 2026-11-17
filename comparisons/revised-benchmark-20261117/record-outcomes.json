@@ -555,6 +555,99 @@
         "constantLeft": "reverseMasks",
         "constantRight": "reverseMasks"
       }
+    },
+    {
+      "name": "scalarBroadcastUsers",
+      "record_branches": {
+        "HandleBroadcast/scalar-user-reshape": [
+          "reshape"
+        ],
+        "HandleBroadcast/scalar-user-reverse": [
+          "reverse"
+        ],
+        "HandleBroadcast/scalar-user-transpose": [
+          "transpose"
+        ],
+        "HandleBroadcast/scalar-user-slice": [
+          "slice"
+        ],
+        "HandleBroadcast/scalar-user-dynamicslice": [
+          "dynamicslice"
+        ],
+        "HandleBroadcast/scalar-user-sort": [
+          "sort"
+        ]
+      },
+      "models": {
+        "reshape": "reshape",
+        "reverse": "reverse",
+        "transpose": "transpose",
+        "slice": "slice",
+        "dynamicslice": "dynamicslice",
+        "sort": "sort"
+      },
+      "scope": "Uniform scalar values are preserved by concrete logical reshape, reverse, transpose, static Slice and DynamicSlice data reads. Non-tuple sort is a per-fiber theorem: mergeSort on a replicated list returns the same list for any comparator.",
+      "residual": "Static shapes only. Source skips dead users, chooses first eligible and clears dynamic dimensions and layout prefix. Operands for subset cases must be the single data occurrence. No graph operation, runtime-shape or full sort evaluator verdict.",
+      "reviews": [
+        "scalar-broadcast-users/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "reshape": "uniformBroadcastUsers",
+        "reverse": "uniformBroadcastUsers",
+        "transpose": "uniformBroadcastUsers",
+        "slice": "uniformBroadcastUsers",
+        "dynamicslice": "uniformBroadcastUsers",
+        "sort": "uniformBroadcastUsers"
+      }
+    },
+    {
+      "name": "iotaZeroBoundary",
+      "record_branches": {
+        "HandleIota/trivial-axis": [
+          "staticBoundary"
+        ]
+      },
+      "models": {
+        "staticBoundary": "staticBoundary"
+      },
+      "scope": "Faithful static Iota is everywhere zero iff the entire output has no indices or the selected extent is at most one. Rank-one fixed/bounded stored extent models preserve the property whenever the raw <=1 guard fires.",
+      "residual": "Unbounded descriptor admits counterexample; native pipeline reachability and all encoded primitive types unresolved.",
+      "reviews": [
+        "iota-zero/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "staticBoundary": "iotaStored"
+      },
+      "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "transposeSourceArrays",
+      "record_branches": {
+        "HandleTranspose/identity": [
+          "sortedForward"
+        ],
+        "HandleTranspose/compose": [
+          "nested"
+        ],
+        "HandleBroadcast/transpose": [
+          "broadcastTranspose"
+        ]
+      },
+      "models": {
+        "sortedForward": "sortedForward",
+        "nested": "nested",
+        "broadcastTranspose": "broadcastTranspose"
+      },
+      "scope": "A sorted genuine permutation is identity, so static input/output shapes and all logical values agree. Nested transpose uses the explicit array loop composition order. Same-rank Broadcast with valid permutation axes equals transpose with the inverse orientation.",
+      "residual": "HLO verifier checks inspected do not guarantee injectivity; permutation is an explicit precondition for the Broadcast theorem. Prior sorted equal-count branch may preempt it. Source mutation, recovery metadata, status and layouts excluded.",
+      "reviews": [
+        "transpose-arrays/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "sortedForward": "transposeSourceArrays",
+        "nested": "transposeSourceArrays",
+        "broadcastTranspose": "transposeSourceArrays"
+      }
     }
   ],
   "counterexamples": [
@@ -826,6 +919,19 @@
         "outcome": "different_before_after_values",
         "scope": "Strict exceptional-class requirement under recorded host profile. The six tests do not distinguish the sign of zero and do not establish the full optimizer numerical contract."
       }
+    },
+    {
+      "id": "iotaStoredUnbounded",
+      "record": "HandleIota/trivial-axis",
+      "theorem": "RevisedBenchmark.IotaZero.runtimeBoundary",
+      "observation": "Stored extent at most one implies that every admitted rank-one runtime Iota value equals zero.",
+      "outcome": "disproved_runtime_descriptor_strengthening",
+      "witness": "Stored INT64_MIN, admitted runtime length 2 and position 1. Iota gives 1, zero fill gives 0.",
+      "limits": "Rank-one abstract descriptor. Default verifier rejects unbounded outputs; a configuration admitting this Iota was not located. No native execution.",
+      "freeze": "ae9fba3",
+      "review": "iota-zero/REVIEW.md",
+      "effort_group": "iotaStored",
+      "provenance": "New static/runtime classification and independent Lean review."
     }
   ],
   "effort_groups": {
@@ -1423,6 +1529,89 @@
         0.413
       ],
       "notes": "45s freeze-to-proof commit. Source guard/list adapters and exact forwarding boundary; homogeneous binary orientation directly reuses two existing laws. One failed concrete-control compile. Joint reviewer wall includes sliceOfUpdate; 69s dedicated Reverse window.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "uniformBroadcastUsers": {
+      "review": "scalar-broadcast-users/REVIEW.md",
+      "freeze_commit": "3cb15a3",
+      "candidate_commit": "294de96",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.453,
+        0.374,
+        0.311,
+        0.321,
+        0.443,
+        0.439,
+        0.36,
+        0.371,
+        0.373,
+        0.447,
+        0.375,
+        0.346,
+        0.335,
+        0.304,
+        0.305,
+        0.376,
+        0.371
+      ],
+      "independent_review_elapsed_seconds": 175,
+      "review_compiler_seconds": [
+        5.186,
+        0.399,
+        0.449,
+        0.46
+      ],
+      "notes": "Six finite models share one proof packet. Freeze 8a5c901 plus transitive dependency hash before proof. One guessed library symbol missing, initial proof/controls failed on unfolded goals/opaque mergeSort. Joint reviewer wall includes iotaStored, charged here once.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "iotaStored": {
+      "review": "iota-zero/REVIEW.md",
+      "freeze_commit": "ae9fba3",
+      "candidate_commit": "1ae1e7b",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.412,
+        0.278,
+        0.378,
+        0.401
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        0.826,
+        0.353,
+        0.382
+      ],
+      "notes": "One failed concrete witness Decidable synthesis, repaired. Joint 175s reviewer wall in uniformBroadcastUsers. Prior static paper Iota lemma and existing dimension descriptor reused.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "transposeSourceArrays": {
+      "review": "transpose-arrays/REVIEW.md",
+      "freeze_commit": "522483b",
+      "candidate_commit": "5ee4796",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.511,
+        0.43,
+        0.388,
+        0.423,
+        0.295,
+        0.344,
+        0.386,
+        0.439,
+        0.495
+      ],
+      "independent_review_elapsed_seconds": 164,
+      "review_compiler_seconds": [
+        5.271,
+        0.467,
+        0.503,
+        0.435
+      ],
+      "notes": "Freeze 8d413a3 had unused binder warning. Refroze before proof under identical quantifiers. Corrected induction coercion and vector control; reviewer also repaired concrete dependent numeral. Historical composition loop and tensor laws directly reused.",
       "active_seconds": null,
       "token_count": null
     }
