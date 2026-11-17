@@ -1,0 +1,83 @@
+module
+public import ActualSplitFactorGoal
+public import ActualTransportProof
+public import ActualSuffixProof
+public import OriginalCoordinateProof
+public import ActualMovedExtractionProof
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.ActualSplitFactorProof
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex TensorRewrite.Pilot.Reshape
+  TensorRewrite.Pilot.FiniteProduct TensorRewrite.Theory.Concatenation
+  Heldout.SpaceDepthCandidate Heldout.SourceFrame Heldout.IndexTransportAttempt
+  Heldout.OriginalSplitConnection Heldout.TailHeadConnection Heldout.PermutationCoordinate
+  Heldout.ChunkIntervals
+
+def badShape : Shape 3 := fun i => if i.val = 2 then 4 else 2
+def badInner : Shape 4 := fun _ => 2
+def badOuter : Shape 3 := fun i => if i.val = 0 then 4 else 2
+def swap12 : AxisPermutation 4 where
+  outputToInput := fun i => if i.val = 1 then ⟨2, by decide⟩ else if i.val = 2 then ⟨1, by decide⟩ else i
+  inputToOutput := fun i => if i.val = 1 then ⟨2, by decide⟩ else if i.val = 2 then ⟨1, by decide⟩ else i
+  output_input := by decide
+  input_output := by decide
+
+def badAxes : AxisConditions 3 where
+  split := ⟨2, by decide⟩
+  moved := ⟨1, by decide⟩
+  permutation := swap12
+  selected := by decide
+  different := by decide
+  offset := by decide
+
+def badPlan : Conditions badShape badInner badOuter where
+  axes := badAxes
+  count := 2
+  width := 2
+  innerCountAxis := by decide
+  innerWidthAxis := by decide
+  splitProduct := by decide
+  firstMismatch := by decide
+  prefixAxes := by decide
+  suffixAxes := by decide
+  countCap := by decide
+  innerCount := by decide
+  outerCount := by decide
+  outerRankAtLeast := by decide
+  outputShape := by decide
+
+def badInput : Tensor badShape Bool := fun _ => false
+def badOut : Index badOuter := fun i =>
+  ⟨if i.val = 0 then 2 else 1, by
+    by_cases h : i.val = 0 <;> simp [badOuter, h] <;> decide⟩
+
+theorem Goal_refuted : ¬ Heldout.ActualSplitFactorGoal.Goal := by
+  intro h
+  have hbad := h badPlan badInput badOut
+  dsimp only [Heldout.ActualSplitFactorGoal.Goal] at hbad
+  change
+    (Heldout.IndexTransportAttempt.originalIndex badPlan badOut badAxes.split).val =
+      (TensorRewrite.Pilot.FiniteProduct.row
+        (Fin.cast (Heldout.ChunkIntervals.chunkBlocks_total
+          (Heldout.SourceFrame.splitFrame badShape badAxes.split)
+          (Heldout.SourceFrame.framedInput badShape badAxes.split badPlan.splitProduct badInput)
+          (Heldout.SourceFrame.concatAxis badAxes))
+          ((Heldout.SourceFrame.concatFrame badShape badAxes badPlan.width).position
+            (Heldout.OriginalSplitConnection.replacementOuterIndex badPlan badInput badOut)))).val *
+      badPlan.width +
+        (Heldout.OriginalSplitConnection.replacementOuterIndex badPlan badInput badOut badAxes.split).val at hbad
+  have hne :
+    (Heldout.IndexTransportAttempt.originalIndex badPlan badOut badAxes.split).val ≠
+      (TensorRewrite.Pilot.FiniteProduct.row
+        (Fin.cast (Heldout.ChunkIntervals.chunkBlocks_total
+          (Heldout.SourceFrame.splitFrame badShape badAxes.split)
+          (Heldout.SourceFrame.framedInput badShape badAxes.split badPlan.splitProduct badInput)
+          (Heldout.SourceFrame.concatAxis badAxes))
+          ((Heldout.SourceFrame.concatFrame badShape badAxes badPlan.width).position
+            (Heldout.OriginalSplitConnection.replacementOuterIndex badPlan badInput badOut)))).val *
+      badPlan.width +
+        (Heldout.OriginalSplitConnection.replacementOuterIndex badPlan badInput badOut badAxes.split).val := by
+    decide
+  exact hne hbad
+
+end Heldout.ActualSplitFactorProof
