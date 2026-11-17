@@ -1,0 +1,244 @@
+### other-axis-proof-1.log
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-2.log
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:171:53: error(lean.unknownIdentifier): Unknown identifier `cutShape`
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:173:51: error(lean.unknownIdentifier): Unknown identifier `cutIndex`
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:169:54: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+hi : ↑i < ↑plan.axes.moved
+m : Nat := ↑plan.axes.moved
+left : Shape m := preShape sorry
+right : Shape m := preShape (replacementCutShape plan input)
+⊢ ↑(originalOuterIndex plan out ⟨↑i, ⋯⟩) = ↑(replacementOuterIndex plan input out i)
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+
+### other-axis-proof-3.log
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:194:64: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  q ≥ 0
+  p ≥ 0
+  o ≥ 0
+  n ≥ 0
+  k ≥ 0
+  k - n ≤ -1
+  k - o ≤ -1
+  h ≥ 0
+  g ≥ 0
+  g - h ≤ -1
+  f ≥ 0
+  e ≥ 0
+  d ≥ 0
+  d - e ≥ 1
+  d - f ≥ 1
+  c ≥ 0
+  c - f ≥ 1
+  b ≥ 0
+  b - p ≥ 0
+  b - p ≤ 0
+  b - q ≥ 0
+  a ≥ 0
+  a - b ≤ -1
+  a - b + q ≤ -1
+where
+ a := ↑↑i
+ b := ↑rank
+ c := ↑(elementCount left)
+ d := ↑(elementCount right)
+ e := ↑↑(Fin.cast ⋯ (linearize left li))
+ f := ↑↑(linearize right trans)
+ g := ↑↑(ri j)
+ h := ↑(right j)
+ k := ↑↑(replacementOuterIndex plan input out (Fin.cast ⋯ ⟨↑j, ⋯⟩))
+ n := ↑(transposedShape inner plan.axes.permutation (Fin.cast ⋯ ⟨↑j, ⋯⟩))
+ o := ↑((concatFrame shape plan.axes plan.width).shape
+    (TensorRewrite.Theory.Concatenation.total
+      (ChunkIntervals.chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+        (concatAxis plan.axes)))
+    (Fin.cast ⋯ ⟨↑j, ⋯⟩))
+ p := ↑↑⟨↑i, ⋯⟩
+ q := ↑(rank - ↑plan.axes.moved)
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+
+### other-axis-proof-4.log
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-5.log
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:204:94: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+hc : i ≠ concatAxis plan.axes
+hs : i ≠ plan.axes.split
+⊢ ↑(Fin.cast ⋯
+        (Fin.cast ⋯
+          (Fin.cast ⋯
+            (Fin.cast ⋯
+              (reshapeIndex
+                ({ extents := { extents := shape, axis := plan.axes.split }.shape plan.width,
+                      axis := concatAxis plan.axes }.shape
+                  (TensorRewrite.Theory.Concatenation.total
+                    (ChunkIntervals.chunkBlocks { extents := shape, axis := plan.axes.split }
+                      (framedInput shape plan.axes.split ⋯ input) (concatAxis plan.axes))))
+                outer ⋯ out i))))) =
+    ↑(reshapeIndex
+        ({ extents := { extents := shape, axis := plan.axes.split }.shape plan.width,
+              axis := concatAxis plan.axes }.shape
+          (TensorRewrite.Theory.Concatenation.total
+            (ChunkIntervals.chunkBlocks { extents := shape, axis := plan.axes.split }
+              (framedInput shape plan.axes.split ⋯ input) (concatAxis plan.axes))))
+        outer ⋯ out i)
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-6.log
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:204:94: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+hc : i ≠ concatAxis plan.axes
+hs : i ≠ plan.axes.split
+⊢ ↑(Fin.cast ⋯
+        (Fin.cast ⋯
+          (Fin.cast ⋯
+            (Fin.cast ⋯
+              (reshapeIndex
+                ({ extents := { extents := shape, axis := plan.axes.split }.shape plan.width,
+                      axis := concatAxis plan.axes }.shape
+                  (TensorRewrite.Theory.Concatenation.total
+                    (ChunkIntervals.chunkBlocks { extents := shape, axis := plan.axes.split }
+                      (framedInput shape plan.axes.split ⋯ input) (concatAxis plan.axes))))
+                outer ⋯ out i))))) =
+    ↑(reshapeIndex
+        ({ extents := { extents := shape, axis := plan.axes.split }.shape plan.width,
+              axis := concatAxis plan.axes }.shape
+          (TensorRewrite.Theory.Concatenation.total
+            (ChunkIntervals.chunkBlocks { extents := shape, axis := plan.axes.split }
+              (framedInput shape plan.axes.split ⋯ input) (concatAxis plan.axes))))
+        outer ⋯ out i)
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:208:53: warning: This simp argument is unused:
+  Fin.val_cast
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [replacementIndex, replacementOuterIndex, Heldout.OrderedSlices.sourceIndex,
+    Heldout.SliceTransport.destinationIndex, TensorRewrite.Theory.Concatenation.Frame.withPosition,
+    TensorRewrite.Theory.Concatenation.Frame.rest, splitFrame, concatFrame, Heldout.SliceTransport.destinationFrame, hc,
+    hs]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-7.log
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-8.log
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-9.log
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:321:4: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  g ≥ 0
+  f ≥ 0
+  e ≥ 0
+  e - f ≥ 1
+  e - g ≤ -1
+  c ≥ 0
+  c - e ≥ 1
+  b ≥ 0
+  b - c ≥ 1
+  b - e ≥ 1
+  b - f ≥ 0
+  b - g ≥ 1
+  a ≥ 0
+  a - b ≤ 0
+  a - e ≤ -1
+where
+ a := ↑↑plan.axes.moved
+ b := ↑rank
+ c := ↑↑plan.axes.split
+ e := ↑↑(plan.axes.permutation.outputToInput ⟨↑i + 1, ⋯⟩)
+ f := ↑↑(plan.axes.permutation.outputToInput d)
+ g := ↑↑(concatAxis plan.axes)
+'Heldout.OtherAxisProof.between_moved_split' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-10.log
+'Heldout.OtherAxisProof.between_moved_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-11.log
+'Heldout.OtherAxisProof.between_moved_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-12.log
+comparisons/heldout-space-depth-selection/OtherAxisProof.lean:515:80: error: `simp` made no progress
+'Heldout.OtherAxisProof.original_suffix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.after_split' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.other' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.between_moved_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-proof-13.log
+'Heldout.OtherAxisProof.original_suffix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.after_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.other' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.between_moved_split' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.before_moved' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.original_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisProof.outer_prefix' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+### other-axis-integration-1.log
+theorem Heldout.OtherAxisIntegration.full_index : ActualFullIndexGoal.Goal :=
+fun {rank outerRank} {shape} {inner} {outer} {α} plan input out =>
+  funext fun i =>
+    if hc : i = concatAxis plan.axes then
+      Eq.symm hc ▸ Fin.ext (OriginalCoordinateIntegration.moved_axis_equality plan input out)
+    else
+      if hs : i = plan.axes.split then
+        Eq.ndrec (motive := fun i =>
+          ¬i = concatAxis plan.axes → originalIndex plan out i = replacementIndex plan input out i)
+          (fun hc => RowMajorSplitIntegration.split plan input out) (Eq.symm hs) hc
+      else OtherAxisProof.other plan input out i hc hs
+theorem Heldout.OtherAxisIntegration.rewrite : Goal :=
+fun rank outerRank shape inner outer plan α input =>
+  funext fun out => read_equal_of_index_equal plan input out (full_index plan input out)
+'Heldout.OtherAxisIntegration.full_index' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.OtherAxisIntegration.rewrite' depends on axioms: [propext, Classical.choice, Quot.sound]
