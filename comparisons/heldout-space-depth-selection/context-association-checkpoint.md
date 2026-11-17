@@ -1,0 +1,17 @@
+# Arbitrary-context and permutation checkpoint
+
+The frozen goal and all 28 manifest inputs remain unchanged. These are unreviewed prerequisite lemmas, not a proof of the rewrite. The outer-rank condition remains a model restriction, not an established source guard; no C++ correspondence or speedup is claimed.
+
+`ContextAssociation.shape_context_associate` lifts adjacent finite-product reassociation into arbitrary-rank prefix and suffix shapes and their valid coordinates. It states equality of actual packed `Fin` values with the dependent extent cast, including rank-zero contexts. A zero extent in either context admits no full index. The theorem works with already-separated prefix and suffix indices; it does not prove that the frozen plan's original full index decomposes into these contexts.
+
+`PermutationCoordinate.selected_inverse` proves that the inverse permutation maps the split count axis to the checked moved output axis, and `count_coordinate` carries its numeric value through the transpose cast. `width_axis_fixed` and `width_inverse` derive that the other split axis remains at `split.succ` under the source offset and moved-before-split conditions. The new files are separate from the frozen goal and generic project library; no equality of original and replacement indices is assumed.
+
+## Remaining obstacle
+
+To finish the target, construct the dependent `Fin`/`Index` decomposition of the frozen shape and permutation into prefix, merged-axis, middle, width and suffix pieces, prove that `linearize` of each actual plan-defined shape agrees with the corresponding contextual pack, and connect the resulting coordinates to `originalIndex` and `replacementIndex`. The current context theorem takes already packed contexts, and the permutation facts identify only the count and width axes; they do not establish the arbitrary other-axis mappings or those full-shape packing equalities. Therefore these lemmas do not settle the remaining coordinate equality. Stop here for a bounded review of whether the necessary arbitrary-axis decomposition is worthwhile before expanding the framework.
+
+## Controls, failures, effort
+
+`ContextAssociationTests` checks scalar contexts, two-axis prefix and suffix contexts, zero-context impossibility, and a wrong middle-axis order. The fresh replay additionally runs frozen nonempty and zero-domain controls, six concrete input-coordinate checks, and the count/width inverse facts for the frozen nonempty fixture. It rebuilds 26 modules offline in an empty directory using Lean 4.35.0 and verifies all 28 input hashes. The final replay took 8.454 seconds; records and candidate hashes are in `context-association-replay.json`. Reported transitive theorem axioms are within `propext` and `Quot.sound`.
+
+Initial compilation failed because `prefix` was used as an identifier despite being Lean syntax; renaming it fixed parsing. A first dependent permutation simplification did not rewrite under an indexed value; a congruence on its natural value fixed it. The first inverse-width rewrite also rewrote both sides and left a symmetry goal; an explicit `calc` fixed it. A context test initially attempted to decide a proposition containing a free axis; unfolding the constant shape resolved it. These failures did not change frozen inputs. Focused work ran from approximately 05:37:03 to 05:39:20 UTC (137 seconds, including replay); prior development and review are separate. No independent review of this checkpoint or final rewrite review was performed.
