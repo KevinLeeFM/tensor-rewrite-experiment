@@ -1,0 +1,46 @@
+comparisons/heldout-space-depth-selection/ActualFullIndexProof.lean:10:58: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+⊢ ↑(Reshape.reshapeIndex shape inner ⋯
+        (Tensor.transposeIndex plan.axes.permutation ⋯
+          (Reshape.reshapeIndex (transposedShape inner plan.axes.permutation) outer ⋯ out))
+        i) =
+    ↑(OrderedSlices.sourceIndex (SourceFrame.splitFrame shape plan.axes.split) (SourceFrame.concatAxis plan.axes)
+        (ChunkIntervals.interval plan.count plan.width
+          (FiniteProduct.row
+            (Fin.cast ⋯
+              ((SourceFrame.concatFrame shape plan.axes plan.width).position
+                (Reshape.reshapeIndex
+                  ((SourceFrame.concatFrame shape plan.axes plan.width).shape
+                    (TensorRewrite.Theory.Concatenation.total
+                      (ChunkIntervals.chunkBlocks (SourceFrame.splitFrame shape plan.axes.split)
+                        (SourceFrame.framedInput shape plan.axes.split ⋯ input) (SourceFrame.concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        ((SourceFrame.concatFrame shape plan.axes plan.width).withPosition
+          ((SourceFrame.concatFrame shape plan.axes plan.width).rest
+            (Reshape.reshapeIndex
+              ((SourceFrame.concatFrame shape plan.axes plan.width).shape
+                (TensorRewrite.Theory.Concatenation.total
+                  (ChunkIntervals.chunkBlocks (SourceFrame.splitFrame shape plan.axes.split)
+                    (SourceFrame.framedInput shape plan.axes.split ⋯ input) (SourceFrame.concatAxis plan.axes))))
+              outer ⋯ out))
+          (FiniteProduct.column
+            (Fin.cast ⋯
+              ((SourceFrame.concatFrame shape plan.axes plan.width).position
+                (Reshape.reshapeIndex
+                  ((SourceFrame.concatFrame shape plan.axes plan.width).shape
+                    (TensorRewrite.Theory.Concatenation.total
+                      (ChunkIntervals.chunkBlocks (SourceFrame.splitFrame shape plan.axes.split)
+                        (SourceFrame.framedInput shape plan.axes.split ⋯ input) (SourceFrame.concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        i)
+'Heldout.ActualFullIndexProof.Goal_proved' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+
+RC=1

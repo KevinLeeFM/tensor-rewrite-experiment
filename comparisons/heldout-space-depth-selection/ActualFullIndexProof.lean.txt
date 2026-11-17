@@ -1,0 +1,17 @@
+module
+public import ActualFullIndexGoal
+public import ActualSuffixProof
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.ActualFullIndexProof
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex Heldout.SpaceDepthCandidate
+  Heldout.IndexTransportAttempt
+
+theorem Goal_proved : Heldout.ActualFullIndexGoal.Goal := by
+  intro rank outerRank shape inner outer α plan input out
+  funext i
+  apply Fin.ext
+  simp only [originalIndex, replacementIndex, Fin.val_cast]
+
+#print axioms Goal_proved
+end Heldout.ActualFullIndexProof
