@@ -382,6 +382,25 @@
       "effort_by_model": {
         "sliceTensor_compose": "nestedPredicateArchive"
       }
+    },
+    {
+      "name": "sameShapeStaticSliceForward",
+      "record_branches": {
+        "HandleSlice/identity": [
+          "compatible-operand"
+        ]
+      },
+      "models": {
+        "compatible-operand": "forward"
+      },
+      "scope": "Every legal equal-shape static slice of an arbitrary-rank homogeneous logical tensor equals its input. No unit-stride, zero-start, or nonempty hypothesis.",
+      "residual": "Native shape compatibility and status, runtime sizes, conversion, layout and graph state remain open.",
+      "reviews": [
+        "slice-identity/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "forward": "sameShapeSlice"
+      }
     }
   ],
   "counterexamples": [
@@ -1129,9 +1148,28 @@
       ],
       "independent_review_elapsed_seconds": 113,
       "review_compiler_seconds": [
-        4.159
+        4.159,
+        4.114,
+        0.343
       ],
       "notes": "Author times are shell-command windows including compiler invocations; see per-module final timings in rank/replay.log. One failed proof and one failed control compile, corrected. Independent exact type/extra controls separately logged.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "sameShapeSlice": {
+      "review": "slice-identity/REVIEW.md",
+      "freeze_commit": "d8671ee",
+      "candidate_commit": "5514a3c",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.344,
+        0.361
+      ],
+      "independent_review_elapsed_seconds": 125,
+      "review_compiler_seconds": [
+        3.369
+      ],
+      "notes": "32s freeze to proof commit. Seven existing pinned base modules available to author; reviewer cleanly recompiled the closure. Positive nonconstant and negative controls described in review.",
       "active_seconds": null,
       "token_count": null
     }
