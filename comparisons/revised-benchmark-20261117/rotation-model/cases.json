@@ -1,0 +1,22 @@
+[
+  {
+    "id": "shuffle.rotation-canonicalization",
+    "lhs": "Sequential left rotations of a base tensor by a finite chain of signed axis shifts.",
+    "rhs": "Base when the sorted normalized shift list is empty; otherwise one rotation with that list.",
+    "conditions": "Finite in-range axis/shift pairs flattened from the chain in outer-to-inner order. Base values depend only on declared visible coordinates (all-visible admits arbitrary tensors). Exact integer sums, no host overflow claim.",
+    "types": "Arbitrary finite rank, natural static extents, arbitrary logical element type, signed mathematical shifts; scalar and empty tensor domains included.",
+    "source_ids": [
+      "HandleShuffle/rotate-identity",
+      "HandleShuffle/rotate-canonical"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/rotation-model/RotationSpec.lean",
+      "comparisons/revised-benchmark-20261117/rotation-model/RotationProof.lean",
+      "comparisons/revised-benchmark-20261117/rotation-model/RotationControls.lean",
+      "comparisons/revised-benchmark-20261117/rotation-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Rotation.rotation_normalization",
+    "overlap": "Both source returns are branches of one canonicalization. The historical 118 have no rotation rule; previous candidate worksheets have no checked cyclic rotation operator. Reuses tensor/index definitions and shipped modular arithmetic.",
+    "effort_group": "rotation-model"
+  }
+]
