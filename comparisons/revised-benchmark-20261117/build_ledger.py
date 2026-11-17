@@ -16,6 +16,7 @@ modern = []
 for r in records:
     modern.append({'id': r['benchmark_id'], 'outcome': 'unresolved',
         'reason': r['mathematical_target_status'],
+        'work_state': 'inherited_checked_partial_evidence' if r['evidence'] else 'no_attempt_evidence_in_inherited_ledger',
         'scope': 'complete retained source record; formulation/domain coverage not yet established',
         'existing_evidence': r['evidence'], 'whole_record_closed_in_inherited_ledger': r['whole_record_mathematically_closed'],
         'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'not measured per record in inherited ledger'}})
@@ -26,6 +27,7 @@ for r in cases:
     outcome = {'proved': 'proved_model_inherited', 'disproved_in_model': 'disproved_model_inherited',
                'vacuous_in_paper_model': 'unresolved_vacuous_model'}[old]
     historical.append({'id': r['id'], 'outcome': outcome, 'historical_result': old,
+        'work_state': 'historical_model_result_with_checked_evidence_not_fresh_trial',
         'evidence_theorems': r['lean_theorems'], 'proof_file': r['lean_proof_file'],
         'proof_sha256': r['lean_proof_sha256'], 'scope': r['translation_confidence'],
         'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'per-case development effort not recovered'}})
