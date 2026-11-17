@@ -654,12 +654,6 @@
       "record_branches": {
         "HandleSlice/concat-exact-piece": [
           "exactPiece"
-        ],
-        "HandleSlice/concat-subrange-single": [
-          "unary"
-        ],
-        "HandleSlice/concat-subrange-multi": [
-          "subrange"
         ]
       },
       "models": {
@@ -667,8 +661,8 @@
         "unary": "unary",
         "subrange": "subrange"
       },
-      "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
-      "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+      "scope": "For a successful source-style unit-stride scan selecting one full operand with its shape, the logical result is the actual block. Derives zero local shift and full extent.",
+      "residual": "Compatible static frame and successful scan. Layout, exact source status and execution unverified.",
       "reviews": [
         "slice-concat-scan/REVIEW.md"
       ],
@@ -731,6 +725,53 @@
         "causalBoundary": "compareGuardValues"
       },
       "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "orderedBroadcastReshape",
+      "record_branches": {
+        "HandleBroadcast/reshape": [
+          "orderedReshape"
+        ]
+      },
+      "models": {
+        "orderedReshape": "orderedReshape"
+      },
+      "scope": "All strictly increasing in-range matched-axis Broadcasts with equal element counts preserve the actual row-major reshape value for every static input. Derives skipped-unit extents where an output coordinate exists; empty outputs require no such assumption.",
+      "residual": "Source guard uses nondecreasing axes. Strict domain follows for valid distinct sorted mappings; duplicate-axis square diagnostic separate. Dynamic extents, native evaluator, graph/status and layout unverified.",
+      "reviews": [
+        "broadcast-reshape-ordered/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "orderedReshape": "strictBroadcastReshape"
+      }
+    },
+    {
+      "name": "concatAllAxisCrop",
+      "record_branches": {
+        "HandleSlice/concat-subrange-single": [
+          "single"
+        ],
+        "HandleSlice/concat-subrange-multi": [
+          "multi"
+        ]
+      },
+      "models": {
+        "single": "single",
+        "multi": "multi"
+      },
+      "scope": "For all static legal unit-stride slices on all axes and successful ordered scan, shifting only the concat axis yields legal replacement starts/limits. Single reads the actual operand; multi reads the ordered selected concatenation. Whole output tensors agree.",
+      "residual": "Source proper-sublist checks, exact-piece priority and layout changes affect dispatch. Signed representability, dynamic shape and implementation correspondence remain outside.",
+      "reviews": [
+        "slice-concat-scan/REVIEW.md",
+        "slice-concat-scan/crop/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "single": "concatCropped",
+        "multi": "concatCropped"
+      },
+      "additional_effort_groups": [
+        "concatOrderedScan"
+      ]
     }
   ],
   "counterexamples": [
@@ -1774,6 +1815,61 @@
         0.359
       ],
       "notes": "58s setup/freeze, 40s through proof commit, one failed tactic. Review shared with compareGuardValues. Diagnostic excluded from accepted source/model-coverage count.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "strictBroadcastReshape": {
+      "review": "broadcast-reshape-ordered/REVIEW.md",
+      "freeze_commit": "05bb8d3",
+      "candidate_commit": "ec8a9c4",
+      "worker_elapsed_seconds": 145,
+      "author_compiler_seconds": [
+        0.33,
+        0.46,
+        0.518,
+        0.456,
+        0.454,
+        0.306,
+        0.436,
+        0.324,
+        0.312,
+        0.363,
+        0.394,
+        0.317,
+        0.297,
+        0.266,
+        0.303,
+        0.247,
+        0.523,
+        0.421
+      ],
+      "independent_review_elapsed_seconds": 88,
+      "review_compiler_seconds": [
+        4.706,
+        0.329
+      ],
+      "notes": "44s setup/freeze, 58s proof, 43s through controls and fresh author replay. Two failed proof compiles and warning-bearing control, corrected. Independent review covers all strictly increasing maps, zero counts and arbitrary rank.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "concatCropped": {
+      "review": "slice-concat-scan/crop/REVIEW.md",
+      "freeze_commit": "62ac7cb",
+      "candidate_commit": "c4ff54a",
+      "worker_elapsed_seconds": 129,
+      "author_compiler_seconds": [
+        0.388,
+        0.463,
+        0.404,
+        0.404,
+        0.438,
+        0.447
+      ],
+      "independent_review_elapsed_seconds": 90,
+      "review_compiler_seconds": [
+        3.678
+      ],
+      "notes": "Reuses accepted ScanProof without editing it. Three failed compiler calls (transports and control), corrected. Nonzero off-axis start discriminates reset-to-zero; accepted with no remaining static off-axis crop gap.",
       "active_seconds": null,
       "token_count": null
     }

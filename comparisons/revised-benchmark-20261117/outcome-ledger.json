@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "3bb60972b63c25c9cea28a1fab171e234df95ad6d5f58b042204e1212bdf8bb0",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "ff82933cc048d740ac4cd5a391202a66e4a12304a579afa805125fe55fd60c3a",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -1160,7 +1160,7 @@
         "id": "HandleBroadcast/reshape",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "attempted_guard_diagnostic_source_obligation_open",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -1169,7 +1169,26 @@
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger",
           "new_shared_measurement_groups": [
-            "squareDuplicateDiagnostic"
+            "squareDuplicateDiagnostic",
+            "strictBroadcastReshape"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "orderedBroadcastReshape",
+          "branches": [
+            "orderedReshape"
+          ],
+          "accepted_models": [
+            "orderedReshape"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "strictBroadcastReshape"
+          ],
+          "scope": "All strictly increasing in-range matched-axis Broadcasts with equal element counts preserve the actual row-major reshape value for every static input. Derives skipped-unit extents where an output coordinate exists; empty outputs require no such assumption.",
+          "residual": "Source guard uses nondecreasing axes. Strict domain follows for valid distinct sorted mappings; duplicate-axis square diagnostic separate. Dynamic extents, native evaluator, graph/status and layout unverified.",
+          "reviews": [
+            "broadcast-reshape-ordered/REVIEW.md"
           ]
         },
         "reviewed_guard_diagnostics": [
@@ -7479,8 +7498,8 @@
           "effort_groups": [
             "concatOrderedScan"
           ],
-          "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
-          "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+          "scope": "For a successful source-style unit-stride scan selecting one full operand with its shape, the logical result is the actual block. Derives zero local shift and full extent.",
+          "residual": "Compatible static frame and successful scan. Layout, exact source status and execution unverified.",
           "reviews": [
             "slice-concat-scan/REVIEW.md"
           ]
@@ -7501,25 +7520,28 @@
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger",
           "new_shared_measurement_groups": [
+            "concatCropped",
             "concatOrderedScan"
           ]
         },
         "reviewed_record_observation": {
-          "id": "concatScanSelection",
+          "id": "concatAllAxisCrop",
           "branches": [
-            "subrange"
+            "multi"
           ],
           "accepted_models": [
-            "subrange"
+            "multi"
           ],
           "outcome": "proved_in_declared_logical_value_model",
           "effort_groups": [
+            "concatCropped",
             "concatOrderedScan"
           ],
-          "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
-          "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+          "scope": "For all static legal unit-stride slices on all axes and successful ordered scan, shifting only the concat axis yields legal replacement starts/limits. Single reads the actual operand; multi reads the ordered selected concatenation. Whole output tensors agree.",
+          "residual": "Source proper-sublist checks, exact-piece priority and layout changes affect dispatch. Signed representability, dynamic shape and implementation correspondence remain outside.",
           "reviews": [
-            "slice-concat-scan/REVIEW.md"
+            "slice-concat-scan/REVIEW.md",
+            "slice-concat-scan/crop/REVIEW.md"
           ]
         }
       },
@@ -7538,25 +7560,28 @@
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger",
           "new_shared_measurement_groups": [
+            "concatCropped",
             "concatOrderedScan"
           ]
         },
         "reviewed_record_observation": {
-          "id": "concatScanSelection",
+          "id": "concatAllAxisCrop",
           "branches": [
-            "unary"
+            "single"
           ],
           "accepted_models": [
-            "unary"
+            "single"
           ],
           "outcome": "proved_in_declared_logical_value_model",
           "effort_groups": [
+            "concatCropped",
             "concatOrderedScan"
           ],
-          "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
-          "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+          "scope": "For all static legal unit-stride slices on all axes and successful ordered scan, shifting only the concat axis yields legal replacement starts/limits. Single reads the actual operand; multi reads the ordered selected concatenation. Whole output tensors agree.",
+          "residual": "Source proper-sublist checks, exact-piece priority and layout changes affect dispatch. Signed representability, dynamic shape and implementation correspondence remain outside.",
           "reviews": [
-            "slice-concat-scan/REVIEW.md"
+            "slice-concat-scan/REVIEW.md",
+            "slice-concat-scan/crop/REVIEW.md"
           ]
         }
       },
@@ -9684,16 +9709,15 @@
     "records_with_archived_configured_native_counterexample": 11,
     "records_with_reviewed_counterexample": 16,
     "reviewed_observation_outcomes": {
-      "proved_in_declared_logical_value_model": 48,
+      "proved_in_declared_logical_value_model": 49,
       "exact_preservation_condition_proved": 9
     },
     "work_state_counts": {
       "no_attempt_evidence_in_inherited_ledger": 179,
-      "revised_model_partition_verified_whole_record_open": 63,
-      "inherited_checked_partial_evidence": 245,
-      "attempted_guard_diagnostic_source_obligation_open": 1
+      "revised_model_partition_verified_whole_record_open": 64,
+      "inherited_checked_partial_evidence": 245
     },
-    "records_with_reviewed_record_observation": 57
+    "records_with_reviewed_record_observation": 58
   },
   "historical_cases": {
     "records": [
@@ -12538,6 +12562,61 @@
         0.359
       ],
       "notes": "58s setup/freeze, 40s through proof commit, one failed tactic. Review shared with compareGuardValues. Diagnostic excluded from accepted source/model-coverage count.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "strictBroadcastReshape": {
+      "review": "broadcast-reshape-ordered/REVIEW.md",
+      "freeze_commit": "05bb8d3",
+      "candidate_commit": "ec8a9c4",
+      "worker_elapsed_seconds": 145,
+      "author_compiler_seconds": [
+        0.33,
+        0.46,
+        0.518,
+        0.456,
+        0.454,
+        0.306,
+        0.436,
+        0.324,
+        0.312,
+        0.363,
+        0.394,
+        0.317,
+        0.297,
+        0.266,
+        0.303,
+        0.247,
+        0.523,
+        0.421
+      ],
+      "independent_review_elapsed_seconds": 88,
+      "review_compiler_seconds": [
+        4.706,
+        0.329
+      ],
+      "notes": "44s setup/freeze, 58s proof, 43s through controls and fresh author replay. Two failed proof compiles and warning-bearing control, corrected. Independent review covers all strictly increasing maps, zero counts and arbitrary rank.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "concatCropped": {
+      "review": "slice-concat-scan/crop/REVIEW.md",
+      "freeze_commit": "62ac7cb",
+      "candidate_commit": "c4ff54a",
+      "worker_elapsed_seconds": 129,
+      "author_compiler_seconds": [
+        0.388,
+        0.463,
+        0.404,
+        0.404,
+        0.438,
+        0.447
+      ],
+      "independent_review_elapsed_seconds": 90,
+      "review_compiler_seconds": [
+        3.678
+      ],
+      "notes": "Reuses accepted ScanProof without editing it. Three failed compiler calls (transports and control), corrected. Nonzero off-axis start discriminates reset-to-zero; accepted with no remaining static off-axis crop gap.",
       "active_seconds": null,
       "token_count": null
     }
