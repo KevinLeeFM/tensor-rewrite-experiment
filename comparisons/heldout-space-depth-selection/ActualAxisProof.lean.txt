@@ -1,0 +1,54 @@
+module
+public import ActualMergedProof
+public import ActualSuffixProof
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.ActualAxisProof
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex
+  TensorRewrite.Theory.Concatenation Heldout.SliceTransport
+  Heldout.RecursiveShapeSplit
+  Heldout.SpaceDepthCandidate Heldout.SourceFrame Heldout.ChunkIntervals
+  Heldout.OriginalSplitConnection Heldout.TailHeadConnection
+  Heldout.ActualMergedProof
+
+theorem tailIndex_axis {m n : Nat} {shape : Shape (n + m)} (index : Index shape)
+    (i : Fin n) :
+    (tailIndex (m := m) (n := n) index i).val =
+      (index ⟨m + i.val, by omega⟩).val := by
+  induction m with
+  | zero =>
+    change (index i).val = (index ⟨0 + i.val, by omega⟩).val
+    have hidx : i = (⟨0 + i.val, by omega⟩ : Fin n) := by
+      apply Fin.ext
+      simp
+    exact congrArg (fun j => (index j).val) hidx
+  | succ m ih =>
+    change (tailIndex (m := m) (n := n) (fun j => index j.succ) i).val =
+      (index ⟨m + 1 + i.val, by omega⟩).val
+    have h := ih (fun j => index j.succ)
+    have hidx : (⟨m + i.val + 1, by omega⟩ : Fin (n + (m + 1))) =
+        ⟨m + 1 + i.val, by omega⟩ := by
+      apply Fin.ext
+      simp
+      omega
+    simpa [tailIndex] using h.trans (congrArg (fun j => (index j).val) hidx)
+
+/-- The reviewed merged-head equation in the actual concatenation output frame. -/
+theorem merged_axis_position {rank outerRank : Nat} {shape : Shape rank}
+    {inner : Shape (rank + 1)} {outer : Shape outerRank} {α : Type}
+    (plan : Conditions shape inner outer) (input : Tensor shape α) (out : Index outer) :
+    ((concatFrame shape plan.axes plan.width).position (replacementOuterIndex plan input out)).val =
+      (originalOuterIndex plan out plan.axes.moved).val * shape (concatAxis plan.axes) +
+        (originalOuterIndex plan out ⟨plan.axes.moved.val + 1, by
+          have hm := Heldout.SourceFrame.moved_before_split plan.axes
+          have hs := plan.axes.split.isLt
+          omega⟩).val := by
+  have h := ActualMergedProof.Goal_proved plan input out
+  dsimp [ActualMergedGoal.Goal] at h
+  dsimp [preIndex] at h
+  simpa [replacementCutIndex, replacementCutShape, replacementOuterIndex,
+    replacement_cut_rank, concatFrame, destinationFrame, splitFrame,
+    Frame.position, tailIndex_axis, PlanShapeSplit.cutIndex,
+    PlanShapeSplit.cutShape, Fin.val_cast] using h
+
+end Heldout.ActualAxisProof

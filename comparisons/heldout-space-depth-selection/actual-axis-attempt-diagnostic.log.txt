@@ -1,0 +1,30 @@
+UTC start 2026-11-17T17:39:04.677677+00:00
+elapsed 0.511s
+rc 1
+comparisons/heldout-space-depth-selection/ActualAxisProof.lean:49:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  ↑(Fin.cases (tailIndex (replacementCutIndex plan input out) (Fin.cast ⋯ 0)) (fun i => i.elim0) 0) =
+    ↑(Fin.cases (tailIndex (PlanShapeSplit.cutIndex plan.axes inner (originalOuterIndex plan out)) (Fin.cast ⋯ 0))
+            (fun i =>
+              Fin.cases
+                (tailIndex (PlanShapeSplit.cutIndex plan.axes inner (originalOuterIndex plan out)) (Fin.cast ⋯ 1))
+                (fun i => i.elim0) i)
+            0) *
+        preShape (fun i => tailShape (PlanShapeSplit.cutShape plan.axes inner) (Fin.cast ⋯ i)) 1 +
+      ↑(Fin.cases (tailIndex (PlanShapeSplit.cutIndex plan.axes inner (originalOuterIndex plan out)) (Fin.cast ⋯ 0))
+          (fun i =>
+            Fin.cases (tailIndex (PlanShapeSplit.cutIndex plan.axes inner (originalOuterIndex plan out)) (Fin.cast ⋯ 1))
+              (fun i => i.elim0) i)
+          1)
+but is expected to have type
+  ↑(Fin.cast ⋯
+        (Reshape.reshapeIndex
+          ({ extents := { extents := shape, axis := plan.axes.split }.shape plan.width,
+                axis := concatAxis plan.axes }.shape
+            (total
+              (chunkBlocks { extents := shape, axis := plan.axes.split } (framedInput shape plan.axes.split ⋯ input)
+                (concatAxis plan.axes))))
+          outer ⋯ out (concatAxis plan.axes))) =
+    ↑(originalOuterIndex plan out plan.axes.moved) * shape (concatAxis plan.axes) +
+      ↑(originalOuterIndex plan out ⟨↑plan.axes.moved + 1, ⋯⟩)
