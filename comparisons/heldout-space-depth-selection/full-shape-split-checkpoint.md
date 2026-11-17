@@ -1,0 +1,15 @@
+# Full-shape split attempt and independent review
+
+The exact frozen goal and all 28 input hashes remain unchanged. No original/replacement index equality or rewrite has been proved. The outer-rank condition is still an explicit model restriction, not a source invariant; C++–Lean correspondence and speedup are not claimed.
+
+`PermutationRegions.lean` derives three regional equations from the plan's actual offset rule: output axes before the moved axis remain in place; axes after it through the split map to the preceding input axis; axes after the split remain in place. Together with the earlier selected-count and width-axis facts these describe the checked permutation, but they do not yet connect the two full indices.
+
+The attempted generic full-shape prefix/tail decomposition is preserved as non-buildable `full-shape-split-failed.lean.txt`, with exact Lean diagnostics in `full-shape-split-failure.log`. The first intended lemma, `count_split`, remains unproved: its zero branch requires identifying the dependent tail shape after normalizing `0 + n`, and its successor branch requires factoring the head extent and identifying the recursive pre/post shapes under `Fin` casts. The candidate never assumed the desired rewrite equality; it explicitly stops with `fail` in both branches. The source is retained as failure evidence, not an accepted Lean module.
+
+The clean offline replay rebuilt 27 modules and the isolated controls from scratch in Lean 4.35.0, checked the 28 frozen hashes, and passed in 9.64 seconds. It exercises regional equations on the frozen nonempty fixture and retains existing empty-output, one-chunk, zero-width and wrong-axis controls. These are finite model checks; the zero-domain controls do not produce an index. Details and theorem axiom output are in `permutation-regions-replay.json`; `replay_permutation_regions.py` reproduces it. The focused author attempt ran approximately 05:49:21–05:51:06 UTC (105 seconds), including replay, separate from prior work and review.
+
+## Independent review
+
+A fresh gpt-6-luna reviewer, with no further agents, inspected the requested sources, failure, frozen goal, controls and imports. The reviewer verified all 28 hashes and independently replayed the 27 modules and isolated controls from a temporary copy in 9.43 seconds without changing the checkout. It accepted the three regional permutation facts as correctly derived; axiom reports stayed within `propext`, `Quot.sound`, and inherited `Classical.choice`, with no `sorryAx` or new project axiom. The reviewer reported about five minutes of focused review including replay.
+
+The reviewer confirmed that the immediate blocker is generic prefix/tail element-count and coordinate decomposition, not the yet-unproved final rewrite. The smallest next step is a narrowly scoped rank-recursive decomposition lemma, including zero extents, followed by use of the regional equations to transport actual coordinates. It may require a small reusable rank-recursion/cast lemma; this checkpoint does not establish that bridge or authorize assuming it. Independent final review remains required if a full proof succeeds.

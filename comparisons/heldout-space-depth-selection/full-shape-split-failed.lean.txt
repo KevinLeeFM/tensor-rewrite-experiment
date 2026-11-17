@@ -1,0 +1,33 @@
+module
+public import TensorRewrite.Pilot.LinearIndex
+/-! An arbitrary full-rank shape and index split at a statically bounded prefix length. -/
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.FullShapeSplitAttempt
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex TensorRewrite.Pilot.FiniteProduct
+
+/-- The leading axes of a full shape. -/
+def preShape {m n : Nat} (shape : Shape (m + n)) : Shape m :=
+  fun i => shape (Fin.castAdd n i)
+/-- The trailing axes of a full shape. -/
+def postShape {m n : Nat} (shape : Shape (m + n)) : Shape n :=
+  fun i => shape (Fin.natAdd m i)
+/-- The leading coordinate of a full valid index. -/
+def preIndex {m n : Nat} {shape : Shape (m + n)} (index : Index shape) : Index (preShape shape) :=
+  fun i => index (Fin.castAdd n i)
+/-- The trailing coordinate of a full valid index. -/
+def postIndex {m n : Nat} {shape : Shape (m + n)} (index : Index shape) : Index (postShape shape) :=
+  fun i => index (Fin.natAdd m i)
+
+/-- Full element count is the product of the two derived counts. -/
+theorem count_split (m n : Nat) (shape : Shape (m + n)) :
+    elementCount shape = elementCount (preShape (m := m) (n := n) shape) * elementCount (postShape (m := m) (n := n) shape) := by
+  induction m with
+  | zero =>
+    simp only [Nat.zero_add] at shape ⊢
+    trace_state
+    fail "zero"
+  | succ m ih =>
+    simp only [elementCount]
+    trace_state
+    fail "remaining"
