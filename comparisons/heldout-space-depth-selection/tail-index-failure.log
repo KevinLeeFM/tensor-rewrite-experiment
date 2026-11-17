@@ -1,0 +1,47 @@
+/tmp/TailGoalFailed.lean:9:111: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+⊢ ↑(Reshape.reshapeIndex shape inner ⋯
+        (Tensor.transposeIndex plan.axes.permutation ⋯
+          (Reshape.reshapeIndex (transposedShape inner plan.axes.permutation) outer ⋯ out))
+        i) =
+    ↑(Heldout.OrderedSlices.sourceIndex (Heldout.SourceFrame.splitFrame shape plan.axes.split)
+        (Heldout.SourceFrame.concatAxis plan.axes)
+        (Heldout.ChunkIntervals.interval plan.count plan.width
+          (FiniteProduct.row
+            (Fin.cast ⋯
+              ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).position
+                (Reshape.reshapeIndex
+                  ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).shape
+                    (TensorRewrite.Theory.Concatenation.total
+                      (Heldout.ChunkIntervals.chunkBlocks (Heldout.SourceFrame.splitFrame shape plan.axes.split)
+                        (Heldout.SourceFrame.framedInput shape plan.axes.split ⋯ input)
+                        (Heldout.SourceFrame.concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).withPosition
+          ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).rest
+            (Reshape.reshapeIndex
+              ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).shape
+                (TensorRewrite.Theory.Concatenation.total
+                  (Heldout.ChunkIntervals.chunkBlocks (Heldout.SourceFrame.splitFrame shape plan.axes.split)
+                    (Heldout.SourceFrame.framedInput shape plan.axes.split ⋯ input)
+                    (Heldout.SourceFrame.concatAxis plan.axes))))
+              outer ⋯ out))
+          (FiniteProduct.column
+            (Fin.cast ⋯
+              ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).position
+                (Reshape.reshapeIndex
+                  ((Heldout.SourceFrame.concatFrame shape plan.axes plan.width).shape
+                    (TensorRewrite.Theory.Concatenation.total
+                      (Heldout.ChunkIntervals.chunkBlocks (Heldout.SourceFrame.splitFrame shape plan.axes.split)
+                        (Heldout.SourceFrame.framedInput shape plan.axes.split ⋯ input)
+                        (Heldout.SourceFrame.concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        i)

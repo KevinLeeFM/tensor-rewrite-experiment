@@ -1,0 +1,12 @@
+module
+import TailHeadConnection
+import IndexTransportAttempt
+open TensorRewrite.Pilot Heldout.SpaceDepthCandidate Heldout.IndexTransportAttempt
+set_option autoImplicit false
+/-- Failed bounded attempt: exact remaining original/replacement index equality. -/
+theorem index_equal {rank outerRank : Nat} {shape : Shape rank} {inner : Shape (rank + 1)}
+    {outer : Shape outerRank} {α : Type} (plan : Conditions shape inner outer)
+    (input : Tensor shape α) (out : Index outer) : originalIndex plan out = replacementIndex plan input out := by
+  funext i
+  apply Fin.ext
+  simp only [originalIndex, replacementIndex, Fin.val_cast]
