@@ -56,6 +56,12 @@ for observation in followup['observations']:
 for result in followup.get('counterexamples', []):
     assert (packet / result['review']).is_file(), result['review']
     row = indexed[result['record']]
+    witness = result.get('archived_native_witness')
+    if witness:
+        receipt = root / witness['receipt']
+        assert load(receipt)['source_commit'] == source_manifest['xla_commit']
+        row.setdefault('archived_configured_native_counterexamples', []).append({
+            **witness, 'receipt_sha256': sha(receipt), 'review': result['review']})
     row.setdefault('reviewed_model_counterexamples', []).append(result)
     row['work_state'] = 'revised_model_partition_verified_whole_record_open'
 
@@ -99,6 +105,8 @@ for group in followup['effort_groups'].values():
     assert (packet / group['review']).is_file(), group['review']
 out['sources'][str((packet / 'record-outcomes.json').relative_to(root))] = sha(packet / 'record-outcomes.json')
 out['sources'][followup['inventory_versions']['manifest']] = sha(root / followup['inventory_versions']['manifest'])
+out['source_candidates']['records_with_archived_configured_native_counterexample'] = sum(
+    bool(row.get('archived_configured_native_counterexamples')) for row in modern)
 out['source_candidates']['records_with_reviewed_counterexample'] = sum(bool(r.get('reviewed_model_counterexamples')) for r in modern)
 out['source_candidates']['reviewed_observation_outcomes'] = dict(collections.Counter(r['reviewed_record_observation']['outcome'] for r in modern if 'reviewed_record_observation' in r))
 out['source_candidates']['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))
