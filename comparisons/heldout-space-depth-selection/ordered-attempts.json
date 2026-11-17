@@ -1,0 +1,61 @@
+[
+  {
+    "utc": "2026-11-17T04:44:32.017314+00:00",
+    "seconds": 0.36820539200198255,
+    "code": 1,
+    "output": "comparisons/heldout-space-depth-selection/OrderedSlices.lean:30:11: error: Tactic `rfl` failed: The left-hand side\n  total (blocks source input axis [])\nis not definitionally equal to the right-hand side\n  [].length * source.shape length axis\n\ncase nil\nrank extent length : Nat\n\u03b1 : Type\nsource : Frame rank\ninput : Tensor (source.shape extent) \u03b1\naxis : Fin rank\n\u22a2 total (blocks source input axis []) = [].length * source.shape length axis\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:31:17: error: unsolved goals\ncase cons\nrank extent length : Nat\n\u03b1 : Type\nsource : Frame rank\ninput : Tensor (source.shape extent) \u03b1\naxis : Fin rank\ni : Interval extent length\nis : List (Interval extent length)\nih : total (blocks source input axis is) = is.length * source.shape length axis\n\u22a2 source.shape length axis +\n      total\n        (List.map\n          (fun interval =>\n            { extent := source.shape length axis,\n              values := fun index =>\n                source.slice input interval.start length \u22ef (destinationIndex source length axis index) })\n          is) =\n    is.length * source.shape length axis + source.shape length axis\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:31:53: warning: This simp argument is unused:\n  ih\n\nHint: Omit it from the simp argument list.\n  [apply] simp [blocks, total, sliceBlock, Nat.succ_mul]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:47:5: error: unexpected token 'local'; expected '_' or identifier\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:47:10: error: unexpected token ':'; expected 'binder_predicate', 'builtin_cbv_simproc', 'builtin_dsimproc', 'builtin_simproc', 'cbv_simproc', 'dsimproc', 'elab', 'elab_rules', 'grind_pattern', 'infix', 'infixl', 'infixr', 'instance', 'macro', 'macro_rules', 'notation', 'postfix', 'prefix', 'simproc', 'syntax' or 'unif_hint'\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:53:70: error: unexpected token ')'; expected 'binder_predicate', 'builtin_cbv_simproc', 'builtin_dsimproc', 'builtin_simproc', 'cbv_simproc', 'dsimproc', 'elab', 'elab_rules', 'grind_pattern', 'infix', 'infixl', 'infixr', 'instance', 'macro', 'macro_rules', 'notation', 'postfix', 'prefix', 'simproc', 'syntax' or 'unif_hint'\n'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, sorryAx, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, sorryAx, Quot.sound]\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:65:14: error(lean.unknownIdentifier): Unknown constant `select_block`\n"
+  },
+  {
+    "utc": "2026-11-17T04:44:42.946526+00:00",
+    "seconds": 0.3658934209997824,
+    "code": 1,
+    "output": "comparisons/heldout-space-depth-selection/OrderedSlices.lean:59:48: warning: `simp` already closes the goal\n\nHint: Use `simp` instead of `simpa`:\n  [apply] simp [total, b, sliceBlock]\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:65:2: error: Type mismatch: After simplification, term\n  h\n has type\n  readAt\n      (List.map (fun interval => sliceBlock source input interval.start length \u22ef axis) leading ++\n        sliceBlock source input chosen.start length \u22ef axis ::\n          List.map (fun interval => sliceBlock source input interval.start length \u22ef axis) trailing)\n      rest\n      (total (List.map (fun interval => sliceBlock source input interval.start length \u22ef axis) leading) + \u2191coordinate)\n      \u22ef =\n    if before : \u2191coordinate < (sliceBlock source input chosen.start length \u22ef axis).extent then\n      (sliceBlock source input chosen.start length \u22ef axis).values\n        ((destinationFrame source length axis).withPosition rest \u27e8\u2191coordinate, before\u27e9)\n    else \u22ef.elim\nbut is expected to have type\n  readAt\n      (List.map (fun interval => sliceBlock source input interval.start length \u22ef axis) leading ++\n        sliceBlock source input chosen.start length \u22ef axis ::\n          List.map (fun interval => sliceBlock source input interval.start length \u22ef axis) trailing)\n      rest\n      (total (List.map (fun interval => sliceBlock source input interval.start length \u22ef axis) leading) + \u2191coordinate)\n      \u22ef =\n    (sliceBlock source input chosen.start length \u22ef axis).values\n      ((destinationFrame source length axis).withPosition rest coordinate)\n'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_block' depends on axioms: [propext, sorryAx, Quot.sound]\n"
+  },
+  {
+    "utc": "2026-11-17T04:44:54.372187+00:00",
+    "seconds": 0.37703463299840223,
+    "code": 0,
+    "output": "'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_block' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "utc": "2026-11-17T04:45:20.083147+00:00",
+    "seconds": 0.37839049700050964,
+    "code": 0,
+    "output": "'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_block' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_source' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.sourceIndex_split_value' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "file": "OrderedSlicesTests.lean",
+    "utc": "2026-11-17T04:45:49.964470+00:00",
+    "seconds": 0.37137075799910235,
+    "code": 0,
+    "output": ""
+  },
+  {
+    "file": "OrderedSlices.lean",
+    "utc": "2026-11-17T04:46:05.963189+00:00",
+    "seconds": 0.4462555620011699,
+    "code": 1,
+    "output": "comparisons/heldout-space-depth-selection/OrderedSlices.lean:51:97: error: unsolved goals\nrank extent length : Nat\n\u03b1 : Type\nsource : Frame rank\ninput : Tensor (source.shape extent) \u03b1\naxis i : Fin rank\nintervals : List (Interval extent length)\n\u22a2 (if i = axis then total (blocks source input axis intervals)\n    else if i = source.axis then length else source.extents i) =\n    if i = axis then intervals.length * if axis = source.axis then length else source.extents axis\n    else if i = source.axis then length else source.extents i\ncomparisons/heldout-space-depth-selection/OrderedSlices.lean:52:39: warning: This simp argument is unused:\n  blocks_total\n\nHint: Omit it from the simp argument list.\n  [apply] simp [destinationFrame, Frame.shape]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape_axis' depends on axioms: [propext, sorryAx, Quot.sound]\n'Heldout.OrderedSlices.select_block' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_source' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.sourceIndex_split_value' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "file": "OrderedSlices.lean",
+    "utc": "2026-11-17T04:46:14.701233+00:00",
+    "seconds": 0.37386080999931437,
+    "code": 0,
+    "output": "'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape_axis' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_block' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_source' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.sourceIndex_split_value' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "file": "OrderedSlicesTests.lean",
+    "utc": "2026-11-17T04:46:33.087666+00:00",
+    "seconds": 0.40790856500098016,
+    "code": 0,
+    "output": ""
+  },
+  {
+    "file": "OrderedSlices.lean",
+    "utc": "2026-11-17T04:47:21.014205+00:00",
+    "seconds": 0.39269116099967505,
+    "code": 0,
+    "output": "'Heldout.OrderedSlices.blocks_total' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.output_shape_axis' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_block' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.select_source' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.sourceIndex_split_value' depends on axioms: [propext, Quot.sound]\n'Heldout.OrderedSlices.segment_quotient_remainder' depends on axioms: [propext, Quot.sound]\n"
+  }
+]
