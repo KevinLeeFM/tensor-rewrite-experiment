@@ -35,6 +35,7 @@ out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection'
  'source_candidates': {'records': modern, 'counts': dict(collections.Counter(r['outcome'] for r in modern)),
     'inherited_status_counts': dict(collections.Counter(r['reason'] for r in modern))},
  'historical_cases': {'records': historical, 'counts': dict(collections.Counter(r['outcome'] for r in historical))},
+ 'empty_reduction_partition': {'source_record': 'BroadcastReduce/single', 'case_id': 'BroadcastReduce/single-empty-input-or-output', 'status': 'proved_model_independently_reviewed_reuse', 'scope': 'single-output logical value, empty input or empty output; output-empty branch vacuous; whole source record unresolved', 'proof_commit': '7725b5b6156fc776ca0673483c2030abcf02994f', 'review': 'comparisons/revised-benchmark-20261117/broadcast-reduce-single/REVIEW.md', 'effort': {'historical_discovery_seconds': None, 'reason': 'direct reuse; not measured as fresh proof'}},
  'space_depth_partition': {'source_record': 'HandleTranspose/space-depth-user-mutation', 'status': 'proved_model_independently_reviewed_revised_policy',
     'scope': 'frozen layout-insensitive Nat model with outerRankAtLeast; not full source record/correspondence',
     'candidate_commit': 'aa5521b38e8304a14350a684f9cef914d1f65158',
