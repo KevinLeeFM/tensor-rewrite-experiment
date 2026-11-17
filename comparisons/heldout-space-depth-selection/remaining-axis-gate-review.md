@@ -1,5 +1,19 @@
 # Split and other axes: bounded unresolved gate
 
+## Subsequent finite-case status (2026-11-17)
+
+The following supersedes only the earlier case status, which remains below as historical evidence. At candidate proof commit `aa5521b38e8304a14350a684f9cef914d1f65158`:
+
+| Frozen case | Current status |
+|---|---|
+| Moved axis | Previously independently accepted at `3b4ef9d`. |
+| Split axis | Previously independently accepted at `7d3840c`. |
+| Other axes | Compiled as `Heldout.OtherAxisProof.other`; independently replayed and source-reviewed as part of the full candidate. |
+| Full input index and original rewrite | Exact `ActualFullIndexGoal.Goal` and `SpaceDepthCandidate.Goal` compile, exact-goal check and permitted-axiom audit pass. **Final acceptance remains pending**: the reviewer returned REVISE because the frozen `noCampaignProofs` guard rejects five generic inverse-lemma names in the final environment, and its preproof-baseline versus final-closure scope is not adjudicated. See [final review](final-review-aa5521/REVIEW.md). |
+
+All cases form an exhaustive mathematical partition, but compiled case coverage is not final acceptance. Historical verdicts are preserved. The outer-rank condition remains a model restriction; C++ correspondence, source reachability and speedup remain out of scope.
+
+
 **Partition valid; both new cases unresolved.** The existing moved-axis proof covers `concatAxis`. The frozen `RemainingAxisGoals.Split` requires equality at `plan.axes.split`, and `RemainingAxisGoals.Other` requires it for every axis unequal to both. Independent source review confirms `concat_distinct` makes split distinct from moved, and the three cases exhaust `Fin rank`; closing all three would imply `ActualFullIndexGoal.Goal` by function extensionality and the original rewrite through the existing read lemma. Neither new case compiled. The full input-index equality and frozen space-depth rewrite remain unproved.
 
 The exact failed `Split` and `Other` drafts and diagnostics are retained in `RemainingAxisProof.lean.txt` and `remaining-axis-attempt-diagnostic.log.txt`. Both leave the full original `reshapeIndex` versus replacement `sourceIndex` coordinate equation. The attempted case inequalities and imported transport/suffix facts do not resolve those goals. The earlier failed proof's `sorryAx` is a failed-elaboration artifact, not an accepted assumption or a counterexample. Existing Conditions, outer-rank model restriction and original freezes remain unchanged; empty output domains are vacuous. No C++ correspondence or speedup is claimed.
