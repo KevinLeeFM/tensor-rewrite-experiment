@@ -9,7 +9,7 @@ def inverse {r : Nat} (p : AxisPermutation r) : AxisPermutation r :=
 
 def SortedForward : Prop := ∀ {r : Nat} (s t : Shape r) (p : AxisPermutation r)
     (h : ∀ i, t (p.inputToOutput i) = s i)
-    (ordered : ∀ i j, i < j → p.outputToInput i ≤ p.outputToInput j),
+    (_ordered : ∀ i j, i < j → p.outputToInput i ≤ p.outputToInput j),
     ∃ same : t = s, ∀ (α : Type) (x : Tensor s α), transpose p h x = same.symm ▸ x
 
 def Nested : Prop := ∀ {r : Nat} (s t u : Shape r) (p q : AxisPermutation r)
