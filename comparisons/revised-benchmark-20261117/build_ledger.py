@@ -21,6 +21,17 @@ for r in records:
         'existing_evidence': r['evidence'], 'whole_record_closed_in_inherited_ledger': r['whole_record_mathematically_closed'],
         'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'not measured per record in inherited ledger'}})
 assert not any(x['whole_record_closed_in_inherited_ledger'] for x in modern)
+accepted = {
+    'HandleTranspose/space-depth-user-mutation': ['space-depth-frozen-nat-model'],
+    'BroadcastReduce/single': ['BroadcastReduce/single-empty-input-or-output'],
+    'HandleReduce/same-element-count': ['HandleReduce/same-element-count-single-output-left-identity'],
+    'ReplaceReduceWithReshape/single': ['HandleReduce/same-element-count-single-output-left-identity'],
+    'HandleSlice/compose-unstrided': ['HandleSlice/compose-unstrided-static-tensor-model'],
+}
+for row in modern:
+    if row['id'] in accepted:
+        row['work_state'] = 'revised_model_partition_verified_whole_record_open'
+        row['accepted_model_partitions'] = accepted[row['id']]
 historical = []
 for r in cases:
     old = r['lean_result']
