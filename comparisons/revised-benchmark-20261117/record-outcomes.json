@@ -359,6 +359,25 @@
         "Boundary": "selectContractionBoundary"
       },
       "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "nestedDecodedLogicalSlice",
+      "record_branches": {
+        "HandleDynamicSlice/nested": [
+          "consistent-decoding"
+        ]
+      },
+      "models": {
+        "consistent-decoding": "sliceTensor_compose"
+      },
+      "scope": "Arbitrary-rank consistent mathematical decoding and bounded static extents. Nested slicing equals a direct slice whose start sums the separately clamped starts.",
+      "residual": "The native high-bit u64 profile decodes inconsistently. Backend semantics, layout, mutation, status and physical representation remain open.",
+      "reviews": [
+        "recovered-witnesses/NEST-PRED-REVIEW.md"
+      ],
+      "effort_by_model": {
+        "sliceTensor_compose": "nestedPredicateArchive"
+      }
     }
   ],
   "counterexamples": [
@@ -591,6 +610,44 @@
         "property": "preserves evaluator output",
         "outcome": "different_before_after_values",
         "scope": "configured strict F32 evaluator; original and transformed HLO verified; no new native run"
+      }
+    },
+    {
+      "id": "directNestedEvaluatorU64",
+      "record": "HandleDynamicSlice/nested",
+      "theorem": "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving",
+      "observation": "Preserves each output under the named profile.",
+      "outcome": "disproved_in_admitted_model_specialization",
+      "witness": "A u64 high-bit inner start with outer start one selects position 1 versus 5.",
+      "limits": "Explicit disagreement in index interpretation between direct evaluator slicing and generated unsigned clamp. Mathematical composition is independently valid with consistent decoded starts. Backend contract unresolved.",
+      "freeze": "672928d",
+      "review": "recovered-witnesses/NEST-PRED-REVIEW.md",
+      "effort_group": "nestedPredicateArchive",
+      "provenance": "Historical proof and native receipt, fresh independent mathematical replay and archive inspection.",
+      "archived_native_witness": {
+        "receipt": "reports/nested-slice-replay-v2/result.json",
+        "property": "preserves evaluator output in stated profile",
+        "outcome": "different_before_after_values",
+        "scope": "Explicit disagreement in index interpretation between direct evaluator slicing and generated unsigned clamp. Mathematical composition is independently valid with consistent decoded starts. Backend contract unresolved."
+      }
+    },
+    {
+      "id": "predicateFalseF32",
+      "record": "HandleMultiply/predicate-convert",
+      "theorem": "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid",
+      "observation": "Preserves each output under the named profile.",
+      "outcome": "disproved_in_admitted_model_specialization",
+      "witness": "A converted false predicate multiplied by infinity should yield a NaN under strict exceptional-class semantics. Selecting the zero branch produces zero; archive exercises both orders.",
+      "limits": "Strict exceptional-class requirement under recorded host profile. The six tests do not distinguish the sign of zero and do not establish the full optimizer numerical contract.",
+      "freeze": "672928d",
+      "review": "recovered-witnesses/NEST-PRED-REVIEW.md",
+      "effort_group": "nestedPredicateArchive",
+      "provenance": "Historical proof and native receipt, fresh independent mathematical replay and archive inspection.",
+      "archived_native_witness": {
+        "receipt": "reports/xla-replay-v3/result.json",
+        "property": "preserves evaluator output in stated profile",
+        "outcome": "different_before_after_values",
+        "scope": "Strict exceptional-class requirement under recorded host profile. The six tests do not distinguish the sign of zero and do not establish the full optimizer numerical contract."
       }
     }
   ],
@@ -1023,6 +1080,34 @@
         0.334
       ],
       "notes": "23s freeze to proof commit, first proof compiled; selected factors and inputs generalized beyond the historical fixed witness.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "nestedPredicateArchive": {
+      "review": "recovered-witnesses/NEST-PRED-REVIEW.md",
+      "freeze_commit": "672928d",
+      "candidate_commit": "672928d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 124,
+      "review_compiler_seconds": [
+        0.377,
+        0.519,
+        0.268,
+        0.326,
+        0.301,
+        0.252,
+        0.33,
+        0.397,
+        0.466,
+        0.305,
+        0.316,
+        0.391,
+        0.515,
+        0.386,
+        0.343
+      ],
+      "notes": "Archive checks .047 and .055s. Three retained model verdicts across two record IDs; witness discovery and native execution historical.",
       "active_seconds": null,
       "token_count": null
     }

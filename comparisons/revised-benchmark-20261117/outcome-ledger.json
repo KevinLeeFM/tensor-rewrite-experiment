@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "16cb1e3c60273a74ff5b571a53afcff2ea2eeab16a321e61f1989bbf3ee8a5b4",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "7096f44abf5ce6e2a754ef15b7b8321537bb6441fe065a30ea1252a7f6560bb0",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -3008,7 +3008,7 @@
         "id": "HandleDynamicSlice/nested",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.DynamicIndex.sliceTensor_compose",
@@ -3018,8 +3018,60 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "nestedPredicateArchive"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "nestedDecodedLogicalSlice",
+          "branches": [
+            "consistent-decoding"
+          ],
+          "accepted_models": [
+            "sliceTensor_compose"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "nestedPredicateArchive"
+          ],
+          "scope": "Arbitrary-rank consistent mathematical decoding and bounded static extents. Nested slicing equals a direct slice whose start sums the separately clamped starts.",
+          "residual": "The native high-bit u64 profile decodes inconsistently. Backend semantics, layout, mutation, status and physical representation remain open.",
+          "reviews": [
+            "recovered-witnesses/NEST-PRED-REVIEW.md"
+          ]
+        },
+        "archived_configured_native_counterexamples": [
+          {
+            "receipt": "reports/nested-slice-replay-v2/result.json",
+            "property": "preserves evaluator output in stated profile",
+            "outcome": "different_before_after_values",
+            "scope": "Explicit disagreement in index interpretation between direct evaluator slicing and generated unsigned clamp. Mathematical composition is independently valid with consistent decoded starts. Backend contract unresolved.",
+            "receipt_sha256": "e9ce15d18ad2b1c3707ee1bf2372a4a1592e206757a67aa4c258476be48e4324",
+            "review": "recovered-witnesses/NEST-PRED-REVIEW.md"
+          }
+        ],
+        "reviewed_model_counterexamples": [
+          {
+            "id": "directNestedEvaluatorU64",
+            "record": "HandleDynamicSlice/nested",
+            "theorem": "TensorRewrite.Pilot.NestedUnsigned64.not_universally_preserving",
+            "observation": "Preserves each output under the named profile.",
+            "outcome": "disproved_in_admitted_model_specialization",
+            "witness": "A u64 high-bit inner start with outer start one selects position 1 versus 5.",
+            "limits": "Explicit disagreement in index interpretation between direct evaluator slicing and generated unsigned clamp. Mathematical composition is independently valid with consistent decoded starts. Backend contract unresolved.",
+            "freeze": "672928d",
+            "review": "recovered-witnesses/NEST-PRED-REVIEW.md",
+            "effort_group": "nestedPredicateArchive",
+            "provenance": "Historical proof and native receipt, fresh independent mathematical replay and archive inspection.",
+            "archived_native_witness": {
+              "receipt": "reports/nested-slice-replay-v2/result.json",
+              "property": "preserves evaluator output in stated profile",
+              "outcome": "different_before_after_values",
+              "scope": "Explicit disagreement in index interpretation between direct evaluator slicing and generated unsigned clamp. Mathematical composition is independently valid with consistent decoded starts. Backend contract unresolved."
+            }
+          }
+        ]
       },
       {
         "id": "HandleDynamicSlice/nested-after-scaled-probe",
@@ -4471,7 +4523,7 @@
         "id": "HandleMultiply/predicate-convert",
         "outcome": "unresolved",
         "reason": "declared_value_family_complete_full_record_partitions_open",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.Float32Exceptional.any_refining_relation_rejects",
@@ -4496,8 +4548,42 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "nestedPredicateArchive"
+          ]
+        },
+        "archived_configured_native_counterexamples": [
+          {
+            "receipt": "reports/xla-replay-v3/result.json",
+            "property": "preserves evaluator output in stated profile",
+            "outcome": "different_before_after_values",
+            "scope": "Strict exceptional-class requirement under recorded host profile. The six tests do not distinguish the sign of zero and do not establish the full optimizer numerical contract.",
+            "receipt_sha256": "92f02fec73416aa5b5d45cf7f4087e7a54884677148218ec06e40422939894cf",
+            "review": "recovered-witnesses/NEST-PRED-REVIEW.md"
+          }
+        ],
+        "reviewed_model_counterexamples": [
+          {
+            "id": "predicateFalseF32",
+            "record": "HandleMultiply/predicate-convert",
+            "theorem": "TensorRewrite.Pilot.Float32Exceptional.not_universally_valid",
+            "observation": "Preserves each output under the named profile.",
+            "outcome": "disproved_in_admitted_model_specialization",
+            "witness": "A converted false predicate multiplied by infinity should yield a NaN under strict exceptional-class semantics. Selecting the zero branch produces zero; archive exercises both orders.",
+            "limits": "Strict exceptional-class requirement under recorded host profile. The six tests do not distinguish the sign of zero and do not establish the full optimizer numerical contract.",
+            "freeze": "672928d",
+            "review": "recovered-witnesses/NEST-PRED-REVIEW.md",
+            "effort_group": "nestedPredicateArchive",
+            "provenance": "Historical proof and native receipt, fresh independent mathematical replay and archive inspection.",
+            "archived_native_witness": {
+              "receipt": "reports/xla-replay-v3/result.json",
+              "property": "preserves evaluator output in stated profile",
+              "outcome": "different_before_after_values",
+              "scope": "Strict exceptional-class requirement under recorded host profile. The six tests do not distinguish the sign of zero and do not establish the full optimizer numerical contract."
+            }
+          }
+        ]
       },
       {
         "id": "HandleMultiply/rhs-one",
@@ -8931,18 +9017,18 @@
       "partial_model_evidence_requires_partition_review": 151,
       "declared_value_family_complete_full_record_partitions_open": 122
     },
-    "records_with_archived_configured_native_counterexample": 9,
-    "records_with_reviewed_counterexample": 13,
+    "records_with_archived_configured_native_counterexample": 11,
+    "records_with_reviewed_counterexample": 15,
     "reviewed_observation_outcomes": {
-      "proved_in_declared_logical_value_model": 20,
+      "proved_in_declared_logical_value_model": 21,
       "exact_preservation_condition_proved": 6
     },
     "work_state_counts": {
       "no_attempt_evidence_in_inherited_ledger": 198,
-      "revised_model_partition_verified_whole_record_open": 31,
-      "inherited_checked_partial_evidence": 259
+      "revised_model_partition_verified_whole_record_open": 33,
+      "inherited_checked_partial_evidence": 257
     },
-    "records_with_reviewed_record_observation": 26
+    "records_with_reviewed_record_observation": 27
   },
   "historical_cases": {
     "records": [
@@ -11459,6 +11545,34 @@
         0.334
       ],
       "notes": "23s freeze to proof commit, first proof compiled; selected factors and inputs generalized beyond the historical fixed witness.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "nestedPredicateArchive": {
+      "review": "recovered-witnesses/NEST-PRED-REVIEW.md",
+      "freeze_commit": "672928d",
+      "candidate_commit": "672928d",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 124,
+      "review_compiler_seconds": [
+        0.377,
+        0.519,
+        0.268,
+        0.326,
+        0.301,
+        0.252,
+        0.33,
+        0.397,
+        0.466,
+        0.305,
+        0.316,
+        0.391,
+        0.515,
+        0.386,
+        0.343
+      ],
+      "notes": "Archive checks .047 and .055s. Three retained model verdicts across two record IDs; witness discovery and native execution historical.",
       "active_seconds": null,
       "token_count": null
     }
