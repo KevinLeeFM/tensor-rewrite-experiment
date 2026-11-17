@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "3d4213f7e1c3cabf05d95a8ef7bcaa7bf9ee3961cb05b15cbdf2e1358eee22f1",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "60316e049212a75431b11572ce97cd177ef65e89bc8e2162b387614550c1efa0",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -7661,7 +7661,7 @@
         "id": "RemoveRedundantStride/single-element-axes",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
@@ -7673,8 +7673,44 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "staticSliceShape"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "staticSliceAxisShapeBoundary",
+          "branches": [
+            "removeRedundantStride"
+          ],
+          "accepted_models": [
+            "removeRedundantStride"
+          ],
+          "outcome": "exact_preservation_condition_proved",
+          "effort_groups": [
+            "staticSliceShape"
+          ],
+          "scope": "For every well-formed static axis, transformed bounds retain the declared shape exactly iff stride=1 or start<limit. Input coordinates agree on the admitted domain, with mirrored output coordinate on the reversed axis.",
+          "residual": "One axis, mathematical Int. Whole-tensor assembly, machine overflow, runtime extents, layout and graph behavior remain open.",
+          "reviews": [
+            "slice-shape-exact/REVIEW.md"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "removeRedundantStrideEmptyStride",
+            "record": "RemoveRedundantStride/single-element-axes",
+            "theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+            "observation": "All legal static slice axes retain their declared shape.",
+            "outcome": "disproved_static_shape_legality",
+            "witness": "Extent 4, bounds [1,1), stride 2 and declared output extent 0. Rewritten interval selects one point.",
+            "limits": "Archived configured native failure, original verified then transformed HLO rejected. New exact classification concerns static one-axis model.",
+            "freeze": "49caa1d",
+            "review": "slice-shape-exact/REVIEW.md",
+            "effort_group": "staticSliceShape",
+            "provenance": "Historical model and native receipts; targeted fresh independent Lean replay. No native rerun."
+          }
+        ]
       },
       {
         "id": "RemoveTransposesFromDotOperands/keep-order",
@@ -8604,7 +8640,7 @@
         "id": "TryToReorderSliceAndReverse/commute",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
@@ -8616,8 +8652,44 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "staticSliceShape"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "staticSliceAxisShapeBoundary",
+          "branches": [
+            "reorderReverse"
+          ],
+          "accepted_models": [
+            "reorderReverse"
+          ],
+          "outcome": "exact_preservation_condition_proved",
+          "effort_groups": [
+            "staticSliceShape"
+          ],
+          "scope": "For every well-formed static axis, transformed bounds retain the declared shape exactly iff stride=1 or start<limit. Input coordinates agree on the admitted domain, with mirrored output coordinate on the reversed axis.",
+          "residual": "One axis, mathematical Int. Whole-tensor assembly, machine overflow, runtime extents, layout and graph behavior remain open.",
+          "reviews": [
+            "slice-shape-exact/REVIEW.md"
+          ]
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "reorderReverseEmptyStride",
+            "record": "TryToReorderSliceAndReverse/commute",
+            "theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+            "observation": "All legal static slice axes retain their declared shape.",
+            "outcome": "disproved_static_shape_legality",
+            "witness": "Extent 4, bounds [1,1), stride 2 and declared output extent 0. Rewritten interval selects one point.",
+            "limits": "Archived configured native failure, original verified then transformed HLO rejected. New exact classification concerns static one-axis model.",
+            "freeze": "49caa1d",
+            "review": "slice-shape-exact/REVIEW.md",
+            "effort_group": "staticSliceShape",
+            "provenance": "Historical model and native receipts; targeted fresh independent Lean replay. No native rerun."
+          }
+        ]
       },
       {
         "id": "TryToSinkBroadcastAfterElementwiseOps/eligible-user",
@@ -8642,17 +8714,17 @@
       "partial_model_evidence_requires_partition_review": 151,
       "declared_value_family_complete_full_record_partitions_open": 122
     },
-    "records_with_reviewed_counterexample": 8,
+    "records_with_reviewed_counterexample": 10,
     "reviewed_observation_outcomes": {
       "proved_in_declared_logical_value_model": 20,
-      "exact_preservation_condition_proved": 3
+      "exact_preservation_condition_proved": 5
     },
     "work_state_counts": {
       "no_attempt_evidence_in_inherited_ledger": 198,
-      "revised_model_partition_verified_whole_record_open": 26,
-      "inherited_checked_partial_evidence": 264
+      "revised_model_partition_verified_whole_record_open": 28,
+      "inherited_checked_partial_evidence": 262
     },
-    "records_with_reviewed_record_observation": 23
+    "records_with_reviewed_record_observation": 25
   },
   "historical_cases": {
     "records": [
@@ -11106,6 +11178,34 @@
         0.374
       ],
       "notes": "63s freeze-to-proof commit. Compiler durations include one failed empty-case proof; review elapsed approximate. Review reused historical slice/rule05 with a proof-only arithmetic port and identified overlapping older rules 04/06.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "staticSliceShape": {
+      "review": "slice-shape-exact/REVIEW.md",
+      "freeze_commit": "49caa1d",
+      "candidate_commit": "4d1b69c",
+      "worker_elapsed_seconds": 191,
+      "author_compiler_seconds": [
+        0.407,
+        0.396,
+        0.283,
+        0.417,
+        0.437,
+        0.531,
+        0.391,
+        0.293,
+        0.297,
+        0.63
+      ],
+      "independent_review_elapsed_seconds": 55,
+      "review_compiler_seconds": [
+        0.353,
+        0.295,
+        0.266,
+        0.6
+      ],
+      "notes": "191s setup to first complete replay; individual measured compilations include three unsuccessful proof compilations. Reused historic negative certificates, two new exact classifications and two coordinate equations. Missing archive-discovery time.",
       "active_seconds": null,
       "token_count": null
     }

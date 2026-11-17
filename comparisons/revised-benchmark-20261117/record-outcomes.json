@@ -314,6 +314,31 @@
         "Undo": "slicePad",
         "PaddingOnly": "slicePad"
       }
+    },
+    {
+      "name": "staticSliceAxisShapeBoundary",
+      "record_branches": {
+        "RemoveRedundantStride/single-element-axes": [
+          "removeRedundantStride"
+        ],
+        "TryToReorderSliceAndReverse/commute": [
+          "reorderReverse"
+        ]
+      },
+      "models": {
+        "removeRedundantStride": "removeRedundantStride",
+        "reorderReverse": "reorderReverse"
+      },
+      "scope": "For every well-formed static axis, transformed bounds retain the declared shape exactly iff stride=1 or start<limit. Input coordinates agree on the admitted domain, with mirrored output coordinate on the reversed axis.",
+      "residual": "One axis, mathematical Int. Whole-tensor assembly, machine overflow, runtime extents, layout and graph behavior remain open.",
+      "reviews": [
+        "slice-shape-exact/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "removeRedundantStride": "staticSliceShape",
+        "reorderReverse": "staticSliceShape"
+      },
+      "outcome": "exact_preservation_condition_proved"
     }
   ],
   "counterexamples": [
@@ -428,6 +453,32 @@
       "review": "recovered-witnesses/SCATTER-GATHER-REVIEW.md",
       "effort_group": "wordArchive",
       "provenance": "historical proof plus fresh targeted independent Lean review; archived native evidence inspected, no fresh native run"
+    },
+    {
+      "id": "removeRedundantStrideEmptyStride",
+      "record": "RemoveRedundantStride/single-element-axes",
+      "theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
+      "observation": "All legal static slice axes retain their declared shape.",
+      "outcome": "disproved_static_shape_legality",
+      "witness": "Extent 4, bounds [1,1), stride 2 and declared output extent 0. Rewritten interval selects one point.",
+      "limits": "Archived configured native failure, original verified then transformed HLO rejected. New exact classification concerns static one-axis model.",
+      "freeze": "49caa1d",
+      "review": "slice-shape-exact/REVIEW.md",
+      "effort_group": "staticSliceShape",
+      "provenance": "Historical model and native receipts; targeted fresh independent Lean replay. No native rerun."
+    },
+    {
+      "id": "reorderReverseEmptyStride",
+      "record": "TryToReorderSliceAndReverse/commute",
+      "theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
+      "observation": "All legal static slice axes retain their declared shape.",
+      "outcome": "disproved_static_shape_legality",
+      "witness": "Extent 4, bounds [1,1), stride 2 and declared output extent 0. Rewritten interval selects one point.",
+      "limits": "Archived configured native failure, original verified then transformed HLO rejected. New exact classification concerns static one-axis model.",
+      "freeze": "49caa1d",
+      "review": "slice-shape-exact/REVIEW.md",
+      "effort_group": "staticSliceShape",
+      "provenance": "Historical model and native receipts; targeted fresh independent Lean replay. No native rerun."
     }
   ],
   "effort_groups": {
@@ -796,6 +847,34 @@
         0.374
       ],
       "notes": "63s freeze-to-proof commit. Compiler durations include one failed empty-case proof; review elapsed approximate. Review reused historical slice/rule05 with a proof-only arithmetic port and identified overlapping older rules 04/06.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "staticSliceShape": {
+      "review": "slice-shape-exact/REVIEW.md",
+      "freeze_commit": "49caa1d",
+      "candidate_commit": "4d1b69c",
+      "worker_elapsed_seconds": 191,
+      "author_compiler_seconds": [
+        0.407,
+        0.396,
+        0.283,
+        0.417,
+        0.437,
+        0.531,
+        0.391,
+        0.293,
+        0.297,
+        0.63
+      ],
+      "independent_review_elapsed_seconds": 55,
+      "review_compiler_seconds": [
+        0.353,
+        0.295,
+        0.266,
+        0.6
+      ],
+      "notes": "191s setup to first complete replay; individual measured compilations include three unsuccessful proof compilations. Reused historic negative certificates, two new exact classifications and two coordinate equations. Missing archive-discovery time.",
       "active_seconds": null,
       "token_count": null
     }
