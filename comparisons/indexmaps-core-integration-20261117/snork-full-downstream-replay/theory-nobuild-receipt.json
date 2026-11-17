@@ -1,0 +1,30 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network",
+    "none",
+    "--cpus",
+    "2",
+    "--memory",
+    "2g",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-theory-gate-20261117,dst=/work",
+    "--mount",
+    "type=bind,src=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.lake/packages,dst=/work/.lake/packages,readonly",
+    "--mount",
+    "type=bind,src=/home/k323lee/.elan/toolchains/leanprover--lean4---v4.35.0,dst=/toolchain,readonly",
+    "--workdir",
+    "/work",
+    "--entrypoint",
+    "/bin/sh",
+    "ghcr.io/seahorn/seahorn-llvm18:nightly",
+    "-c",
+    "export PATH=/toolchain/bin:$PATH; lean --version; timeout 60s lake --no-cache --no-build build"
+  ],
+  "returncode": 1,
+  "seconds": 0.622262922115624,
+  "source_commit": "938b193d4fadbd5e3209b775a88823b9d114715e",
+  "purpose": "No-build assessment only; not theory acceptance"
+}
