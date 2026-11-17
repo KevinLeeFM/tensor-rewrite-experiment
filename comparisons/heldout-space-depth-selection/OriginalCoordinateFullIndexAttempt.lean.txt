@@ -1,0 +1,15 @@
+module
+public import ActualFullIndexGoal
+public import OriginalCoordinateIntegration
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.OriginalCoordinateFullIndexAttempt
+open TensorRewrite.Pilot Heldout.SpaceDepthCandidate Heldout.IndexTransportAttempt Heldout.SourceFrame
+
+theorem full_index : Heldout.ActualFullIndexGoal.Goal := by
+  intro rank outerRank shape inner outer α plan input out
+  funext i
+  by_cases hm : i = concatAxis plan.axes
+  · subst i
+    exact Fin.ext (Heldout.OriginalCoordinateIntegration.moved_axis_equality plan input out)
+end Heldout.OriginalCoordinateFullIndexAttempt
