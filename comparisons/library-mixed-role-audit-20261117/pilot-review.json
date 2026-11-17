@@ -1,0 +1,173 @@
+[
+  {
+    "path": "TensorRewrite/Pilot/ConstantGuard.lean",
+    "role": "mixed",
+    "summary": "Boolean constant-detection model plus target-specific wrapper vocabulary and literal storage abstraction. `DenseLiteral` maps every logical coordinate into a finite Bool list; `View` models literals, opaque unrecognized values, and reindex wrappers.",
+    "evidence": "Lines 15-24 hard-code the seven operand-zero wrapper kinds; 26-34 define adjacent/uniform storage recognition (empty storage returns true); 36-64 define finite addressed literals and recursive views/evaluation/recognition.",
+    "dependencies_and_assumptions": "Imports only Pilot.Tensor. The module comment at 5-7 explicitly leaves memory/attribute decoding and construction of bounded maps as source-correspondence obligations. Wrapper enum is specific to UnwrapToConstant; no source parser or dynamic values are modeled.",
+    "consumer": "Maintained direct consumers per frozen inventory: ConstantGuardLemmas.lean (soundness), DynamicIndex.lean:26-31, IndexMaps.lean:44-56, Reshape.lean:29-34. No direct paper-packet consumer recorded.",
+    "inspection_limit": "Read all declarations/imports; did not audit Tensor definitions or prove correspondence to XLA memory/UnwrapToConstant implementation."
+  },
+  {
+    "path": "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+    "role": "generic or operation-specific helper",
+    "summary": "Small soundness proof family for the constant guard: successful list check implies every stored Bool equals the requested value, lifted through literal addressing and arbitrary reindex chains.",
+    "evidence": "Lines 12-28 `matchesAll_all`; 31-35 derives literal tensor constancy from `List.getElem_mem`; 38-45 inducts over View and proves reindex preserves constant output.",
+    "dependencies_and_assumptions": "Imports ConstantGuard; no target-specific theorem assumptions or axioms apparent in source. Depends on the model\u2019s total bounded address and View recognition semantics.",
+    "consumer": "Maintained direct consumers: DynamicIndexLemmas.lean:34-40, IndexMapLemmas.lean:31-46, ReshapeLemmas.lean:41-46.",
+    "inspection_limit": "Declaration-level reading only; no kernel replay or transitive axiom audit in this task."
+  },
+  {
+    "path": "TensorRewrite/Pilot/Contraction.lean",
+    "role": "semantic model",
+    "summary": "Ordered logical contraction model with explicit batch/free/contract shapes, operand axis permutations, reconstructed operand coordinates, ordered term enumeration, initialized fold, finish conversion, and zero-contract outer product.",
+    "evidence": "Lines 16-35 shape/index concatenation and projections; 38-50 Plan and bijective permutations; 52-83 output/input shapes and coordinate reconstruction; 85-105 term order, fold, and outer product.",
+    "dependencies_and_assumptions": "Imports Permutation and LinearIndex. The module comment lines 6-8 explicitly treats precision, scalar conversions and finish as inputs and does not assume floating reassociation. C++ Dot matching, dimension decoding, and correspondence are not established here.",
+    "consumer": "Maintained consumers: ContractionLemmas.lean, ConvolutionDot.lean:22-65; fixed statement consumer also recorded in inventory. No direct paper packet consumer recorded.",
+    "inspection_limit": "Did not verify Permutation bijection implementation, ConvolutionDot transport theorem, or source-level Dot semantics."
+  },
+  {
+    "path": "TensorRewrite/Pilot/ContractionLemmas.lean",
+    "role": "mixed",
+    "summary": "Two generic block-coordinate inverse laws and contraction-specific enumeration/empty-fiber facts.",
+    "evidence": "Lines 13-24 prove first/second projection inverses for appendIndex; 27-40 give term length and no-contract singleton; 42-64 show an existing output coordinate plus empty operand forces zero contract count.",
+    "dependencies_and_assumptions": "Imports Contraction and LinearIndexLemmas. The last two results are tied to Plan.lhsIndex/rhsIndex; no explicit source assumptions beyond those model definitions.",
+    "consumer": "Maintained consumers: ContractionRules.lean:48-62; ConvolutionDotLemmas.lean. No packet consumer recorded.",
+    "inspection_limit": "No build or theorem axiom audit; inspected all declarations in the file."
+  },
+  {
+    "path": "TensorRewrite/Pilot/DynamicIndex.lean",
+    "role": "semantic model",
+    "summary": "Concrete same-rank DynamicSlice coordinate map and construction of the recognized constant-guard view.",
+    "evidence": "Lines 16-24 clamp each axis start and add the output coordinate, using coordinate_bounds; 26-31 wraps the map as `.dynamicSlice`.",
+    "dependencies_and_assumptions": "Imports ConstantGuard and DynamicIndexBounds. Comment lines 6-8 explicitly models decoded starts as mathematical Int and separates unsigned evaluator conversion. Requires per-axis output extent \u2264 input extent; no runtime decoding or physical layout.",
+    "consumer": "Maintained consumers: DynamicIndexLemmas.lean:23-31 and DynamicSliceTensor.lean:11-20; downstream composition packet is SliceBroadcast via lemma family.",
+    "inspection_limit": "Did not audit external source lowering or pinned C++ evaluator behavior."
+  },
+  {
+    "path": "TensorRewrite/Pilot/DynamicIndexBounds.lean",
+    "role": "generic or operation-specific helper",
+    "summary": "Arithmetic bounds for the clampStart operation: a legal width yields a bounded nonnegative start and every declared slice coordinate lies in the input extent.",
+    "evidence": "Lines 12-16 clampStart_bounds; 19-25 coordinate_bounds.",
+    "dependencies_and_assumptions": "Imports DynamicIndexValue. Explicit fit premise `width \u2264 extent`; all arithmetic is mathematical Int/Nat. No target-specific assumptions visible.",
+    "consumer": "Maintained consumer: DynamicIndex.lean:20-22 and 26-31. No packet consumer recorded.",
+    "inspection_limit": "Inspected complete file; no fresh proof replay or dependency audit."
+  },
+  {
+    "path": "TensorRewrite/Pilot/DynamicIndexLemmas.lean",
+    "role": "mixed",
+    "summary": "DynamicSlice-specific correctness bridge plus finite-word conversion fact and constant-guard corollary.",
+    "evidence": "Lines 13-16 full extent clamps to zero; 19-21 equates signed/unsigned bit decoding only under a no-sign-bit-set bound; 24-31 identifies constructed coordinate value; 34-40 lifts constant guard.",
+    "dependencies_and_assumptions": "Imports DynamicIndex and ConstantGuardLemmas. `signedValue_eq_unsignedValue` is explicitly conditional; it is not a general signed/unsigned equivalence. Model uses Int starts and fit constraints.",
+    "consumer": "Maintained consumer: DynamicSliceCompositionLemmas.lean; paper consumer recorded in inventory: comparisons/tensorright-v1/SliceBroadcast.lean:21,41-68 uses dynamic/slice index equations.",
+    "inspection_limit": "Read declarations and cited call sites; did not independently establish source rewrite hypotheses or inspect packet proof closure."
+  },
+  {
+    "path": "TensorRewrite/Pilot/DynamicIndexValue.lean",
+    "role": "mixed",
+    "summary": "Primitive index-value model combining generic signed/unsigned bit-vector interpretations, a host-observation-specific u64 conversion, and the dynamic-slice clamping function.",
+    "evidence": "Lines 12-16 define signedValue/unsignedValue; 18-19 define evaluatorUnsigned64 as `bits.toInt` and label it the pinned evaluator on the test host; 21-22 define clampStart.",
+    "dependencies_and_assumptions": "Imports Std only. `evaluatorUnsigned64` is explicitly host/pinned-evaluator-specific, not a generic conversion law; no architecture/version evidence in this file. Clamp formula is mathematical Int.",
+    "consumer": "Maintained consumer: DynamicIndexBounds.lean:12-24 and UnsignedIndexBoundary.lean (the latter is a concrete boundary packet module).",
+    "inspection_limit": "Did not independently validate pinned evaluator implementation or host/version in this module audit."
+  },
+  {
+    "path": "TensorRewrite/Pilot/DynamicSliceComposition.lean",
+    "role": "rewrite-specific proof",
+    "summary": "A target-operation theorem stating nested logical DynamicSlice tensor values equal one DynamicSlice with summed independently clamped starts.",
+    "evidence": "Lines 11-21 state and prove `sliceTensor_compose` by extensionality plus `dynamicSliceIndex_compose`.",
+    "dependencies_and_assumptions": "Imports DynamicSliceCompositionLemmas (which owns the coordinate law); assumes both slices fit coordinatewise. This is a bounded semantic rewrite theorem, not an implementation correspondence result.",
+    "consumer": "Maintained consumers: ScaledNestedSlice.lean:34 and Theory/DynamicUpdate.lean:59. No direct packet consumer recorded.",
+    "inspection_limit": "The proof body is short but its key arithmetic identity lives in imported module; not re-audited in full here."
+  },
+  {
+    "path": "TensorRewrite/Pilot/DynamicSliceTensor.lean",
+    "role": "semantic model",
+    "summary": "Defines the logical value semantics for bounded DynamicSlice by indexing the input through dynamicSliceIndex and defines the nested start-combination expression.",
+    "evidence": "Lines 11-15 `sliceTensor`; 17-19 `combinedStart`.",
+    "dependencies_and_assumptions": "Imports DynamicIndex. Requires a per-axis fit proof at each operation; no source extraction, unsigned conversion, or physical behavior represented in these definitions.",
+    "consumer": "Maintained consumers: DynamicSliceCompositionLemmas.lean and NestedUnsigned64.lean (concrete experiment path).",
+    "inspection_limit": "Did not inspect NestedUnsigned64 assumptions/evidence beyond confirming direct use."
+  },
+  {
+    "path": "TensorRewrite/Pilot/IndexMapLemmas.lean",
+    "role": "mixed",
+    "summary": "Concrete projection and coordinate-arithmetic facts for broadcast/slice maps, plus operation-specific constant-view soundness corollaries.",
+    "evidence": "Lines 12-18 establish broadcast coordinate projection; 20-29 establish static slice arithmetic; 31-46 prove broadcast/slice view constant preservation.",
+    "dependencies_and_assumptions": "Imports IndexMaps and ConstantGuardLemmas. Lemmas inherit `BroadcastAxes` range/length-only model and SliceShape well-formedness; no target matcher premise is proven.",
+    "consumer": "Maintained consumers: Theory/DynamicUpdate.lean and Theory/SlicePadFactor.lean. Paper packet callers: InteriorSlice, PadSlice, SignedPad, SliceBroadcast, SliceGeometry, StrideConcat; SliceBroadcast:21-68 directly consumes the map/coordinate facts.",
+    "inspection_limit": "Consumer list is from frozen prior inventory; only representative packet source lines were inspected, not every packet proof."
+  },
+  {
+    "path": "TensorRewrite/Pilot/IndexMaps.lean",
+    "role": "mixed",
+    "summary": "Concrete logical map model for static HLO-style Broadcast and Slice, plus View constructors that are operation-specific.",
+    "evidence": "Lines 16-25 define BroadcastAxes and range-checked decode; 27-32 define projection; 34-42 define static slice indexing; 44-56 build recognized broadcast/slice views.",
+    "dependencies_and_assumptions": "Imports ConstantGuard and SliceIndexBounds. Module comment lines 6-8 explicitly excludes C++ decoding, overflow, physical layout and unbounded dynamic dimensions. BroadcastAxes validates each signed value is within range but has no ordering or uniqueness field/guard. Slice attributes require explicit IsWellFormed per axis.",
+    "consumer": "High-fan-in maintained consumers: IndexMapLemmas.lean, ModularArithmeticBridges.lean, ArithmeticFamily.lean, BroadcastWindowTarget.lean, ControlValues.lean, NumericalField.lean, OrderedScatter.lean, SlicePad.lean, UnitAxis.lean. Packet consumer Iota.lean:28-35 uses broadcast; :37-90 composes two BroadcastAxes by decode/re-encode.",
+    "inspection_limit": "Inspected the declaration and actual callers listed. Did not prove all clients supply source-valid axis order/uniqueness; model allows duplicates and non-monotone arrays. No C++ correspondence audit."
+  },
+  {
+    "path": "TensorRewrite/Pilot/OperandOrder.lean",
+    "role": "semantic model",
+    "summary": "A small pointwise map\u2082 model selected by an explicit Bool indicating captured operand orientation.",
+    "evidence": "Lines 14-18 define false as lhs/rhs and true as rhs/lhs.",
+    "dependencies_and_assumptions": "Imports Indexing for tensor map semantics. File comment lines 5-7 explicitly says flag records matcher-captured order and does not implement the C++ matcher. Bool selector is the entire model input.",
+    "consumer": "Maintained consumer: OperandOrderLemmas.lean:12-18 and :21-30. No direct packet consumer recorded.",
+    "inspection_limit": "No source matcher audit; only model definition checked."
+  },
+  {
+    "path": "TensorRewrite/Pilot/OperandOrderLemmas.lean",
+    "role": "generic or operation-specific helper",
+    "summary": "Generic pointwise facts: commutativity erases selected orientation; reindex commutes with pointwise map\u2082; reindex preserves uniform tensors.",
+    "evidence": "Lines 12-18 commutative map\u2082; 21-25 reindex/map\u2082; 28-30 reindex/constant.",
+    "dependencies_and_assumptions": "Imports OperandOrder. First theorem requires an explicit commutativity premise; remaining facts are definitional and independent of target rewrite.",
+    "consumer": "Maintained consumers: ModularArithmeticBridges.lean:47-90, Theory/ArithmeticBroadcast.lean:20-83, NumericalField.lean, OrderedScatterTransport.lean.",
+    "inspection_limit": "No audit of downstream algebra assumptions or theorem axiom closures."
+  },
+  {
+    "path": "TensorRewrite/Pilot/Reduction.lean",
+    "role": "semantic model",
+    "summary": "Static ordered-axis reduction model, recursively describing kept/reduced axes, output shape, fiber enumeration order, explicit initializer and left fold.",
+    "evidence": "Lines 14-52 define plan ranks/shapes/counts and unit reduced axes; 55-66 reconstruct unit coordinates; 68-83 enumerate fibers and fold.",
+    "dependencies_and_assumptions": "Imports LinearIndex. The header lines 5-7 explicitly limits this to one logical fold order and separates floating reassociation/graph effects. Operation and initializer are unrestricted explicit inputs; IEEE equivalence is not asserted.",
+    "consumer": "High-fan-in consumers: ReductionLemmas.lean, Theory/BroadcastWindow.lean, FiniteSum.lean:30-32, FullSpanWindow.lean; fixed statement consumer recorded in inventory.",
+    "inspection_limit": "Did not inspect all model-to-source reduction correspondences or downstream scalar law assumptions."
+  },
+  {
+    "path": "TensorRewrite/Pilot/ReductionLemmas.lean",
+    "role": "mixed",
+    "summary": "Generic list block-length combinator plus reduction-specific fiber cardinality, element-count, unit-axis and reshape-index consequences.",
+    "evidence": "Lines 15-22 `length_flatMap_constant`; 25-50 fiber length and count factorization; 54-81 singleton fibers/equal counts/unit-axis count; 84-130 fiber value and linear-index/reshape equalities.",
+    "dependencies_and_assumptions": "Imports Reduction and ReshapeLemmas. Some lemmas are generic combinator/count algebra; most quantify the target `Reduction.Plan` and rely on its enumeration definition. No target-specific equality is assumed.",
+    "consumer": "Maintained consumers: ReductionRules.lean:40-51 and Theory/ReductionFiber.lean.",
+    "inspection_limit": "Inspected declarations; did not re-audit ReductionRules proof closure or import dependencies transitively."
+  },
+  {
+    "path": "TensorRewrite/Pilot/Reshape.lean",
+    "role": "semantic model",
+    "summary": "Logical rank-changing reshape modeled by equal element count and preserving row-major/dim0-major logical linear position; includes tensor and constant-view constructors.",
+    "evidence": "Lines 14-21 define reshapeIndex by linearize then delinearize; 23-27 define tensor semantics; 29-34 build recognized wrapper.",
+    "dependencies_and_assumptions": "Imports LinearIndex and ConstantGuard. Equal count is the sole shape guard. Comment says independent of physical layout; no physical layout or C++ correspondence is modeled.",
+    "consumer": "Maintained consumers: ReshapeLemmas.lean and Theory/BroadcastWindowTarget.lean. No direct packet consumer recorded.",
+    "inspection_limit": "Did not audit LinearIndex encoding convention against the external implementation."
+  },
+  {
+    "path": "TensorRewrite/Pilot/ReshapeLemmas.lean",
+    "role": "mixed",
+    "summary": "Generic empty-domain extensionality and reshape-index composition, plus a target-model constant-guard corollary.",
+    "evidence": "Lines 16-20 prove all tensors over zero-element shapes extensionally equal; 23-39 compose arbitrary-rank reshape maps under equal-count hypotheses; 42-46 lift constant recognition.",
+    "dependencies_and_assumptions": "Imports Reshape, LinearIndexLemmas and ConstantGuardLemmas. Empty tensor theorem is vacuous by lack of coordinates; composition is definitional linear-position transport. No target-specific premise beyond the model map.",
+    "consumer": "Maintained consumers: ContractionRules.lean, ReductionLemmas.lean, ReshapeRules.lean, Theory/FiniteSum.lean, FullSpanWindowLemmas.lean, ReductionWindowAlgebra.lean, UnitAxis.lean.",
+    "inspection_limit": "Did not inspect every direct consumer\u2019s use of empty cases; theorem is explicitly empty-shape specific."
+  },
+  {
+    "path": "TensorRewrite/Pilot/SliceShape.lean",
+    "role": "mixed",
+    "summary": "Foundational per-axis static-slice representation/well-formedness is colocated with two rewrite-specific axis transformations (redundant-stride removal and slice/reverse reordering).",
+    "evidence": "Lines 15-36 define Axis, elementCount, IsWellFormed and decidability; lines 38-44 define removeRedundantStride; 46-53 define reorderReverse including truncating division behavior for empty slices.",
+    "dependencies_and_assumptions": "Imports Std only. Header lines 5-7 explicitly treats arithmetic as mathematical integers and separates overflow/extraction. The two transforms encode target rewrite formulas and should not be mistaken for generic slice semantics. Their only direct maintained consumer is EmptySliceRefutation.lean, which supplies counterexamples, not reusable rewrite proofs.",
+    "consumer": "Maintained consumer: SliceIndexBounds.lean:11-27 uses IsWellFormed; EmptySliceRefutation.lean:14-55 exercises both transformations. Paper packet consumer ReverseSliceFailure.lean:3-4 imports this module for Axis/IsWellFormed while independently defining paperReplacement at :21-44.",
+    "inspection_limit": "Read full module and direct call sites. Did not verify formulas against upstream C++ rewrite or inspect whether any out-of-scope file uses these transformations."
+  }
+]

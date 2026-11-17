@@ -1,0 +1,837 @@
+{
+  "method": "hash, field and case-set reconciliation; descriptions are independent reviewer judgments and not mechanically proven",
+  "basis_inventory_sha256": "d43b9721baa431d5d7824b7a97db2949c339ea16c6811d99b2c170dd0ee928c7",
+  "assigned": 42,
+  "review_rows": 42,
+  "unresolved": [],
+  "roles": {
+    "mixed": 9,
+    "generic or operation-specific helper": 8,
+    "semantic model": 16,
+    "rewrite-specific proof": 9
+  },
+  "rows": [
+    {
+      "path": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "role": "mixed",
+      "summary": "Boolean constant-detection model plus target-specific wrapper vocabulary and literal storage abstraction. `DenseLiteral` maps every logical coordinate into a finite Bool list; `View` models literals, opaque unrecognized values, and reindex wrappers.",
+      "evidence": "Lines 15-24 hard-code the seven operand-zero wrapper kinds; 26-34 define adjacent/uniform storage recognition (empty storage returns true); 36-64 define finite addressed literals and recursive views/evaluation/recognition.",
+      "dependencies_and_assumptions": "Imports only Pilot.Tensor. The module comment at 5-7 explicitly leaves memory/attribute decoding and construction of bounded maps as source-correspondence obligations. Wrapper enum is specific to UnwrapToConstant; no source parser or dynamic values are modeled.",
+      "consumer": "Maintained direct consumers per frozen inventory: ConstantGuardLemmas.lean (soundness), DynamicIndex.lean:26-31, IndexMaps.lean:44-56, Reshape.lean:29-34. No direct paper-packet consumer recorded.",
+      "inspection_limit": "Read all declarations/imports; did not audit Tensor definitions or prove correspondence to XLA memory/UnwrapToConstant implementation.",
+      "sha256": "6d2e1b66b0284731f6f0289634a667adeffc9c65e76644a55a2b4d6d0d04398e",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+        "TensorRewrite/Pilot/DynamicIndex.lean",
+        "TensorRewrite/Pilot/IndexMaps.lean",
+        "TensorRewrite/Pilot/Reshape.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/ConstantGuardLemmas.lean",
+      "role": "generic or operation-specific helper",
+      "summary": "Small soundness proof family for the constant guard: successful list check implies every stored Bool equals the requested value, lifted through literal addressing and arbitrary reindex chains.",
+      "evidence": "Lines 12-28 `matchesAll_all`; 31-35 derives literal tensor constancy from `List.getElem_mem`; 38-45 inducts over View and proves reindex preserves constant output.",
+      "dependencies_and_assumptions": "Imports ConstantGuard; no target-specific theorem assumptions or axioms apparent in source. Depends on the model\u2019s total bounded address and View recognition semantics.",
+      "consumer": "Maintained direct consumers: DynamicIndexLemmas.lean:34-40, IndexMapLemmas.lean:31-46, ReshapeLemmas.lean:41-46.",
+      "inspection_limit": "Declaration-level reading only; no kernel replay or transitive axiom audit in this task.",
+      "sha256": "a36b32ecd2f1edaeccabf133ce17bb792c91055b96cce7b290bc405f4f982e15",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/DynamicIndexLemmas.lean",
+        "TensorRewrite/Pilot/GuardedBooleanDag.lean",
+        "TensorRewrite/Pilot/IndexMapLemmas.lean",
+        "TensorRewrite/Pilot/ReshapeLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/Contraction.lean",
+      "role": "semantic model",
+      "summary": "Ordered logical contraction model with explicit batch/free/contract shapes, operand axis permutations, reconstructed operand coordinates, ordered term enumeration, initialized fold, finish conversion, and zero-contract outer product.",
+      "evidence": "Lines 16-35 shape/index concatenation and projections; 38-50 Plan and bijective permutations; 52-83 output/input shapes and coordinate reconstruction; 85-105 term order, fold, and outer product.",
+      "dependencies_and_assumptions": "Imports Permutation and LinearIndex. The module comment lines 6-8 explicitly treats precision, scalar conversions and finish as inputs and does not assume floating reassociation. C++ Dot matching, dimension decoding, and correspondence are not established here.",
+      "consumer": "Maintained consumers: ContractionLemmas.lean, ConvolutionDot.lean:22-65; fixed statement consumer also recorded in inventory. No direct paper packet consumer recorded.",
+      "inspection_limit": "Did not verify Permutation bijection implementation, ConvolutionDot transport theorem, or source-level Dot semantics.",
+      "sha256": "f46ad9843e5a7b66fd91ddf5814b04cc155684d5c1adc0c804fe5cdb6413b73c",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Comparisons/FixedTacticsStatements.lean",
+        "TensorRewrite/Pilot/ContractionLemmas.lean",
+        "TensorRewrite/Theory/ContractionAlgebra.lean",
+        "TensorRewrite/Theory/ConvolutionDot.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/ContractionLemmas.lean",
+      "role": "mixed",
+      "summary": "Two generic block-coordinate inverse laws and contraction-specific enumeration/empty-fiber facts.",
+      "evidence": "Lines 13-24 prove first/second projection inverses for appendIndex; 27-40 give term length and no-contract singleton; 42-64 show an existing output coordinate plus empty operand forces zero contract count.",
+      "dependencies_and_assumptions": "Imports Contraction and LinearIndexLemmas. The last two results are tied to Plan.lhsIndex/rhsIndex; no explicit source assumptions beyond those model definitions.",
+      "consumer": "Maintained consumers: ContractionRules.lean:48-62; ConvolutionDotLemmas.lean. No packet consumer recorded.",
+      "inspection_limit": "No build or theorem axiom audit; inspected all declarations in the file.",
+      "sha256": "bd6d81c1089dd71ba211befe634bf25e9399f499979ca32dd4de63c154e5d657",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ContractionRules.lean",
+        "TensorRewrite/Theory/ConvolutionDotLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndex.lean",
+      "role": "semantic model",
+      "summary": "Concrete same-rank DynamicSlice coordinate map and construction of the recognized constant-guard view.",
+      "evidence": "Lines 16-24 clamp each axis start and add the output coordinate, using coordinate_bounds; 26-31 wraps the map as `.dynamicSlice`.",
+      "dependencies_and_assumptions": "Imports ConstantGuard and DynamicIndexBounds. Comment lines 6-8 explicitly models decoded starts as mathematical Int and separates unsigned evaluator conversion. Requires per-axis output extent \u2264 input extent; no runtime decoding or physical layout.",
+      "consumer": "Maintained consumers: DynamicIndexLemmas.lean:23-31 and DynamicSliceTensor.lean:11-20; downstream composition packet is SliceBroadcast via lemma family.",
+      "inspection_limit": "Did not audit external source lowering or pinned C++ evaluator behavior.",
+      "sha256": "7bee1bb77eaf9a249d4a0b96abd78510dec028c6f0dd73e178f3c26f77e8d35c",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/DynamicIndexLemmas.lean",
+        "TensorRewrite/Pilot/DynamicSliceTensor.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndexBounds.lean",
+      "role": "generic or operation-specific helper",
+      "summary": "Arithmetic bounds for the clampStart operation: a legal width yields a bounded nonnegative start and every declared slice coordinate lies in the input extent.",
+      "evidence": "Lines 12-16 clampStart_bounds; 19-25 coordinate_bounds.",
+      "dependencies_and_assumptions": "Imports DynamicIndexValue. Explicit fit premise `width \u2264 extent`; all arithmetic is mathematical Int/Nat. No target-specific assumptions visible.",
+      "consumer": "Maintained consumer: DynamicIndex.lean:20-22 and 26-31. No packet consumer recorded.",
+      "inspection_limit": "Inspected complete file; no fresh proof replay or dependency audit.",
+      "sha256": "2c93c567374e4a4002edad2cc5934d9c75579ba19fe982c36cb8a1e008882fc1",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/DynamicIndex.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndexLemmas.lean",
+      "role": "mixed",
+      "summary": "DynamicSlice-specific correctness bridge plus finite-word conversion fact and constant-guard corollary.",
+      "evidence": "Lines 13-16 full extent clamps to zero; 19-21 equates signed/unsigned bit decoding only under a no-sign-bit-set bound; 24-31 identifies constructed coordinate value; 34-40 lifts constant guard.",
+      "dependencies_and_assumptions": "Imports DynamicIndex and ConstantGuardLemmas. `signedValue_eq_unsignedValue` is explicitly conditional; it is not a general signed/unsigned equivalence. Model uses Int starts and fit constraints.",
+      "consumer": "Maintained consumer: DynamicSliceCompositionLemmas.lean; paper consumer recorded in inventory: comparisons/tensorright-v1/SliceBroadcast.lean:21,41-68 uses dynamic/slice index equations.",
+      "inspection_limit": "Read declarations and cited call sites; did not independently establish source rewrite hypotheses or inspect packet proof closure.",
+      "sha256": "c56888eb39aa5d8bab016555be9cd7d6907935a1d2b30974fbd0b1a65f0f8f8d",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/DynamicSliceCompositionLemmas.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/SliceBroadcast.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicIndexValue.lean",
+      "role": "mixed",
+      "summary": "Primitive index-value model combining generic signed/unsigned bit-vector interpretations, a host-observation-specific u64 conversion, and the dynamic-slice clamping function.",
+      "evidence": "Lines 12-16 define signedValue/unsignedValue; 18-19 define evaluatorUnsigned64 as `bits.toInt` and label it the pinned evaluator on the test host; 21-22 define clampStart.",
+      "dependencies_and_assumptions": "Imports Std only. `evaluatorUnsigned64` is explicitly host/pinned-evaluator-specific, not a generic conversion law; no architecture/version evidence in this file. Clamp formula is mathematical Int.",
+      "consumer": "Maintained consumer: DynamicIndexBounds.lean:12-24 and UnsignedIndexBoundary.lean (the latter is a concrete boundary packet module).",
+      "inspection_limit": "Did not independently validate pinned evaluator implementation or host/version in this module audit.",
+      "sha256": "561ed00bcef5a2019e56208e2c4db4263c36682518c0c8f87234eeffedcd46a7",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/DynamicIndexBounds.lean",
+        "TensorRewrite/Pilot/UnsignedIndexBoundary.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicSliceComposition.lean",
+      "role": "rewrite-specific proof",
+      "summary": "A target-operation theorem stating nested logical DynamicSlice tensor values equal one DynamicSlice with summed independently clamped starts.",
+      "evidence": "Lines 11-21 state and prove `sliceTensor_compose` by extensionality plus `dynamicSliceIndex_compose`.",
+      "dependencies_and_assumptions": "Imports DynamicSliceCompositionLemmas (which owns the coordinate law); assumes both slices fit coordinatewise. This is a bounded semantic rewrite theorem, not an implementation correspondence result.",
+      "consumer": "Maintained consumers: ScaledNestedSlice.lean:34 and Theory/DynamicUpdate.lean:59. No direct packet consumer recorded.",
+      "inspection_limit": "The proof body is short but its key arithmetic identity lives in imported module; not re-audited in full here.",
+      "sha256": "432069bdce416faa7f4baed75bd8e122378eaa4de79927b3de388a9364f50bf8",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ScaledNestedSlice.lean",
+        "TensorRewrite/Theory/DynamicUpdate.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/DynamicSliceTensor.lean",
+      "role": "semantic model",
+      "summary": "Defines the logical value semantics for bounded DynamicSlice by indexing the input through dynamicSliceIndex and defines the nested start-combination expression.",
+      "evidence": "Lines 11-15 `sliceTensor`; 17-19 `combinedStart`.",
+      "dependencies_and_assumptions": "Imports DynamicIndex. Requires a per-axis fit proof at each operation; no source extraction, unsigned conversion, or physical behavior represented in these definitions.",
+      "consumer": "Maintained consumers: DynamicSliceCompositionLemmas.lean and NestedUnsigned64.lean (concrete experiment path).",
+      "inspection_limit": "Did not inspect NestedUnsigned64 assumptions/evidence beyond confirming direct use.",
+      "sha256": "d7dcd9b90dc8df5157295534c00bce6369deaea0cd7bb1b55cf0ee7e59edb344",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/DynamicSliceCompositionLemmas.lean",
+        "TensorRewrite/Pilot/NestedUnsigned64.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMapLemmas.lean",
+      "role": "mixed",
+      "summary": "Concrete projection and coordinate-arithmetic facts for broadcast/slice maps, plus operation-specific constant-view soundness corollaries.",
+      "evidence": "Lines 12-18 establish broadcast coordinate projection; 20-29 establish static slice arithmetic; 31-46 prove broadcast/slice view constant preservation.",
+      "dependencies_and_assumptions": "Imports IndexMaps and ConstantGuardLemmas. Lemmas inherit `BroadcastAxes` range/length-only model and SliceShape well-formedness; no target matcher premise is proven.",
+      "consumer": "Maintained consumers: Theory/DynamicUpdate.lean and Theory/SlicePadFactor.lean. Paper packet callers: InteriorSlice, PadSlice, SignedPad, SliceBroadcast, SliceGeometry, StrideConcat; SliceBroadcast:21-68 directly consumes the map/coordinate facts.",
+      "inspection_limit": "Consumer list is from frozen prior inventory; only representative packet source lines were inspected, not every packet proof.",
+      "sha256": "d499dcd95d963cc7e280c735c760fbdedc590aa408ab87507529272b31e74606",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/DynamicUpdate.lean",
+        "TensorRewrite/Theory/SlicePadFactor.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/InteriorSlice.lean",
+        "comparisons/tensorright-v1/PadSlice.lean",
+        "comparisons/tensorright-v1/SignedPad.lean",
+        "comparisons/tensorright-v1/SliceBroadcast.lean",
+        "comparisons/tensorright-v1/SliceGeometry.lean",
+        "comparisons/tensorright-v1/StrideConcat.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/IndexMaps.lean",
+      "role": "mixed",
+      "summary": "Concrete logical map model for static HLO-style Broadcast and Slice, plus View constructors that are operation-specific.",
+      "evidence": "Lines 16-25 define BroadcastAxes and range-checked decode; 27-32 define projection; 34-42 define static slice indexing; 44-56 build recognized broadcast/slice views.",
+      "dependencies_and_assumptions": "Imports ConstantGuard and SliceIndexBounds. Module comment lines 6-8 explicitly excludes C++ decoding, overflow, physical layout and unbounded dynamic dimensions. BroadcastAxes validates each signed value is within range but has no ordering or uniqueness field/guard. Slice attributes require explicit IsWellFormed per axis.",
+      "consumer": "High-fan-in maintained consumers: IndexMapLemmas.lean, ModularArithmeticBridges.lean, ArithmeticFamily.lean, BroadcastWindowTarget.lean, ControlValues.lean, NumericalField.lean, OrderedScatter.lean, SlicePad.lean, UnitAxis.lean. Packet consumer Iota.lean:28-35 uses broadcast; :37-90 composes two BroadcastAxes by decode/re-encode.",
+      "inspection_limit": "Inspected the declaration and actual callers listed. Did not prove all clients supply source-valid axis order/uniqueness; model allows duplicates and non-monotone arrays. No C++ correspondence audit.",
+      "sha256": "4e5980165487d76cc7c4d798ef7acc33bc724bc9b74b8b0e032dbfb8508c75e1",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/IndexMapLemmas.lean",
+        "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "TensorRewrite/Theory/ArithmeticFamily.lean",
+        "TensorRewrite/Theory/BroadcastWindowTarget.lean",
+        "TensorRewrite/Theory/ControlValues.lean",
+        "TensorRewrite/Theory/NumericalField.lean",
+        "TensorRewrite/Theory/OrderedScatter.lean",
+        "TensorRewrite/Theory/SlicePad.lean",
+        "TensorRewrite/Theory/UnitAxis.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/Iota.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Pilot/OperandOrder.lean",
+      "role": "semantic model",
+      "summary": "A small pointwise map\u2082 model selected by an explicit Bool indicating captured operand orientation.",
+      "evidence": "Lines 14-18 define false as lhs/rhs and true as rhs/lhs.",
+      "dependencies_and_assumptions": "Imports Indexing for tensor map semantics. File comment lines 5-7 explicitly says flag records matcher-captured order and does not implement the C++ matcher. Bool selector is the entire model input.",
+      "consumer": "Maintained consumer: OperandOrderLemmas.lean:12-18 and :21-30. No direct packet consumer recorded.",
+      "inspection_limit": "No source matcher audit; only model definition checked.",
+      "sha256": "ef6e0ef30f28f08ddd5c41b830bdce979de1ad140838ef5010b0922170513767",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/OperandOrderLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/OperandOrderLemmas.lean",
+      "role": "generic or operation-specific helper",
+      "summary": "Generic pointwise facts: commutativity erases selected orientation; reindex commutes with pointwise map\u2082; reindex preserves uniform tensors.",
+      "evidence": "Lines 12-18 commutative map\u2082; 21-25 reindex/map\u2082; 28-30 reindex/constant.",
+      "dependencies_and_assumptions": "Imports OperandOrder. First theorem requires an explicit commutativity premise; remaining facts are definitional and independent of target rewrite.",
+      "consumer": "Maintained consumers: ModularArithmeticBridges.lean:47-90, Theory/ArithmeticBroadcast.lean:20-83, NumericalField.lean, OrderedScatterTransport.lean.",
+      "inspection_limit": "No audit of downstream algebra assumptions or theorem axiom closures.",
+      "sha256": "a9f671b11cd655e5c76b569d690301abc9aef45a0153ba3f67d78a7268214792",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ModularArithmeticBridges.lean",
+        "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+        "TensorRewrite/Theory/NumericalField.lean",
+        "TensorRewrite/Theory/OrderedScatterTransport.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reduction.lean",
+      "role": "semantic model",
+      "summary": "Static ordered-axis reduction model, recursively describing kept/reduced axes, output shape, fiber enumeration order, explicit initializer and left fold.",
+      "evidence": "Lines 14-52 define plan ranks/shapes/counts and unit reduced axes; 55-66 reconstruct unit coordinates; 68-83 enumerate fibers and fold.",
+      "dependencies_and_assumptions": "Imports LinearIndex. The header lines 5-7 explicitly limits this to one logical fold order and separates floating reassociation/graph effects. Operation and initializer are unrestricted explicit inputs; IEEE equivalence is not asserted.",
+      "consumer": "High-fan-in consumers: ReductionLemmas.lean, Theory/BroadcastWindow.lean, FiniteSum.lean:30-32, FullSpanWindow.lean; fixed statement consumer recorded in inventory.",
+      "inspection_limit": "Did not inspect all model-to-source reduction correspondences or downstream scalar law assumptions.",
+      "sha256": "bea0cf586bdf37c77ed80435eea287930f6b15a3e44a0c725373859c02d15499",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Comparisons/FixedTacticsStatements.lean",
+        "TensorRewrite/Pilot/ReductionLemmas.lean",
+        "TensorRewrite/Theory/BroadcastWindow.lean",
+        "TensorRewrite/Theory/FiniteSum.lean",
+        "TensorRewrite/Theory/FullSpanWindow.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReductionLemmas.lean",
+      "role": "mixed",
+      "summary": "Generic list block-length combinator plus reduction-specific fiber cardinality, element-count, unit-axis and reshape-index consequences.",
+      "evidence": "Lines 15-22 `length_flatMap_constant`; 25-50 fiber length and count factorization; 54-81 singleton fibers/equal counts/unit-axis count; 84-130 fiber value and linear-index/reshape equalities.",
+      "dependencies_and_assumptions": "Imports Reduction and ReshapeLemmas. Some lemmas are generic combinator/count algebra; most quantify the target `Reduction.Plan` and rely on its enumeration definition. No target-specific equality is assumed.",
+      "consumer": "Maintained consumers: ReductionRules.lean:40-51 and Theory/ReductionFiber.lean.",
+      "inspection_limit": "Inspected declarations; did not re-audit ReductionRules proof closure or import dependencies transitively.",
+      "sha256": "1bb1f7d4b0dc13ce6b58b59928b83f2e0704f9d6550adb07ad826d751c4ea24f",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ReductionRules.lean",
+        "TensorRewrite/Theory/ReductionFiber.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/Reshape.lean",
+      "role": "semantic model",
+      "summary": "Logical rank-changing reshape modeled by equal element count and preserving row-major/dim0-major logical linear position; includes tensor and constant-view constructors.",
+      "evidence": "Lines 14-21 define reshapeIndex by linearize then delinearize; 23-27 define tensor semantics; 29-34 build recognized wrapper.",
+      "dependencies_and_assumptions": "Imports LinearIndex and ConstantGuard. Equal count is the sole shape guard. Comment says independent of physical layout; no physical layout or C++ correspondence is modeled.",
+      "consumer": "Maintained consumers: ReshapeLemmas.lean and Theory/BroadcastWindowTarget.lean. No direct packet consumer recorded.",
+      "inspection_limit": "Did not audit LinearIndex encoding convention against the external implementation.",
+      "sha256": "542164be841d856e88f310b37e70b2a98ccdd19ea18239bcfc3f35a99ca3bc2d",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ReshapeLemmas.lean",
+        "TensorRewrite/Theory/BroadcastWindowTarget.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/ReshapeLemmas.lean",
+      "role": "mixed",
+      "summary": "Generic empty-domain extensionality and reshape-index composition, plus a target-model constant-guard corollary.",
+      "evidence": "Lines 16-20 prove all tensors over zero-element shapes extensionally equal; 23-39 compose arbitrary-rank reshape maps under equal-count hypotheses; 42-46 lift constant recognition.",
+      "dependencies_and_assumptions": "Imports Reshape, LinearIndexLemmas and ConstantGuardLemmas. Empty tensor theorem is vacuous by lack of coordinates; composition is definitional linear-position transport. No target-specific premise beyond the model map.",
+      "consumer": "Maintained consumers: ContractionRules.lean, ReductionLemmas.lean, ReshapeRules.lean, Theory/FiniteSum.lean, FullSpanWindowLemmas.lean, ReductionWindowAlgebra.lean, UnitAxis.lean.",
+      "inspection_limit": "Did not inspect every direct consumer\u2019s use of empty cases; theorem is explicitly empty-shape specific.",
+      "sha256": "5615961108dc75baa7daca9748b8b2c2a434ef8cfe2b51bbe978c1e6fe0e9731",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/ContractionRules.lean",
+        "TensorRewrite/Pilot/ReductionLemmas.lean",
+        "TensorRewrite/Pilot/ReshapeRules.lean",
+        "TensorRewrite/Theory/FiniteSum.lean",
+        "TensorRewrite/Theory/FullSpanWindowLemmas.lean",
+        "TensorRewrite/Theory/ReductionWindowAlgebra.lean",
+        "TensorRewrite/Theory/UnitAxis.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Pilot/SliceShape.lean",
+      "role": "mixed",
+      "summary": "Foundational per-axis static-slice representation/well-formedness is colocated with two rewrite-specific axis transformations (redundant-stride removal and slice/reverse reordering).",
+      "evidence": "Lines 15-36 define Axis, elementCount, IsWellFormed and decidability; lines 38-44 define removeRedundantStride; 46-53 define reorderReverse including truncating division behavior for empty slices.",
+      "dependencies_and_assumptions": "Imports Std only. Header lines 5-7 explicitly treats arithmetic as mathematical integers and separates overflow/extraction. The two transforms encode target rewrite formulas and should not be mistaken for generic slice semantics. Their only direct maintained consumer is EmptySliceRefutation.lean, which supplies counterexamples, not reusable rewrite proofs.",
+      "consumer": "Maintained consumer: SliceIndexBounds.lean:11-27 uses IsWellFormed; EmptySliceRefutation.lean:14-55 exercises both transformations. Paper packet consumer ReverseSliceFailure.lean:3-4 imports this module for Axis/IsWellFormed while independently defining paperReplacement at :21-44.",
+      "inspection_limit": "Read full module and direct call sites. Did not verify formulas against upstream C++ rewrite or inspect whether any out-of-scope file uses these transformations.",
+      "sha256": "94b8b41aabc6c75182fca18d1b45f9a0e623a4468247de03f0da650a43c7b7f8",
+      "reachable_root_modules": [
+        "TensorRewrite.lean",
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Pilot/EmptySliceRefutation.lean",
+        "TensorRewrite/Pilot/SliceIndexBounds.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/ReverseSliceFailure.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Five rank-general exact CommRing equalities move arithmetic across the actual bounded Broadcast reindexing: subtraction, add/multiply constant rebuilding, and uniform-factor movement. Boolean operand-order flags are explicit.",
+      "evidence": "Five rank-general exact CommRing equalities move arithmetic across the actual bounded Broadcast reindexing: subtraction, add/multiply constant rebuilding, and uniform-factor movement. Boolean operand-order flags are explicit. Evidence: 3:public import TensorRewrite.Theory.ArithmeticFamilyProof; 4:public import TensorRewrite.Pilot.OperandOrderLemmas; source declarations as specified in details: Theorem declarations at lines 18\u201389; all take BroadcastAxes plus per-input-axis extent equalities. Imports ArithmeticFamilyProof and OperandOrderLemmas. No additional source matcher/overflow assumptions are modeled here.",
+      "dependencies_and_assumptions": "Theorem declarations at lines 18\u201389; all take BroadcastAxes plus per-input-axis extent equalities. Imports ArithmeticFamilyProof and OperandOrderLemmas. No additional source matcher/overflow assumptions are modeled here.",
+      "consumer": "maintained: none listed; paper packet: comparisons/tensorright-v1/Broadcast.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "4f1ee4f8abf04a8a6acd5d901f26ab997aee0e32320a1d6f9e1384faa7f491d0",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/Broadcast.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/Concatenation.lean",
+      "role": "semantic model",
+      "summary": "Defines arbitrary-axis framed blocks, total concatenated extent, indexed read, ordered concatenate and packing, plus filters for zero-width and element-empty blocks. Frames enforce all off-axis extents through their dependent shape.",
+      "evidence": "Defines arbitrary-axis framed blocks, total concatenated extent, indexed read, ordered concatenate and packing, plus filters for zero-width and element-empty blocks. Frames enforce all off-axis extents through their dependent shape. Evidence: 3:public import TensorRewrite.Pilot.Tensor; source declarations as specified in details: Declarations at lines 18\u2013109",
+      "dependencies_and_assumptions": "Declarations at lines 18\u2013109; imports only Pilot.Tensor. Block validity and shape frame are model inputs; no source-specific restrictions.",
+      "consumer": "maintained: TensorRewrite/Theory/ConcatenationLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "63442258c805c25bcc6147d877f6220036504e7a6bdcd95549dcb069a11bdd56",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/ConcatenationLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/ConcatenationLemmas.lean",
+      "role": "generic/operation-specific helper",
+      "summary": "Proves frame-coordinate transport, append/flatten reads and totals, zero/empty filtering, live operand selection and slice/cast laws for the Concatenation model.",
+      "evidence": "Proves frame-coordinate transport, append/flatten reads and totals, zero/empty filtering, live operand selection and slice/cast laws for the Concatenation model. Evidence: 3:public import TensorRewrite.Theory.Concatenation; source declarations as specified in details: Theorem families lines 16\u2013357",
+      "dependencies_and_assumptions": "Theorem families lines 16\u2013357; imports Concatenation only. Depends on explicit equal-shape frame premises and list order; no graph matcher assumptions.",
+      "consumer": "maintained: TensorRewrite/Theory/ConcatenationProof.lean; paper packet: comparisons/tensorright-v1/GroupedSums.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "68d5180c0e4defa8a0e7f08efdff40a10cc51e709995e2a7e900c06b6d566309",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/ConcatenationProof.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/GroupedSums.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/ControlValues.lean",
+      "role": "semantic model",
+      "summary": "Defines pure Select, Broadcast, scalar-axis embedding, comparison direction, heterogeneous maps, elementwise operators and indexed/predicate conditional value semantics.",
+      "evidence": "Defines pure Select, Broadcast, scalar-axis embedding, comparison direction, heterogeneous maps, elementwise operators and indexed/predicate conditional value semantics. Evidence: 3:public import TensorRewrite.Pilot.IndexMaps; source declarations as specified in details: Definitions lines 18\u201379",
+      "dependencies_and_assumptions": "Definitions lines 18\u201379; imports Pilot.IndexMaps. Rank/shape maps and argument type families are explicit. Pure values only; effects and graph scheduling are outside model.",
+      "consumer": "maintained: TensorRewrite/Theory/ConcatenationGraphs.lean, TensorRewrite/Theory/ControlValuesProof.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "ccb0b5f40f3d0143391460345ac03c44262a4d63bbd9cd07caf1b35ef0655830",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/ConcatenationGraphs.lean",
+        "TensorRewrite/Theory/ControlValuesProof.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/ControlValuesProof.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Proves general value laws for select simplification, select/comparison combinations, broadcasted select/constant, map parameter/constant/broadcast, and conditional conversion.",
+      "evidence": "Proves general value laws for select simplification, select/comparison combinations, broadcasted select/constant, map parameter/constant/broadcast, and conditional conversion. Evidence: 3:public import TensorRewrite.Theory.ControlValues; source declarations as specified in details: Theorems lines 18\u2013162",
+      "dependencies_and_assumptions": "Theorems lines 18\u2013162; imports ControlValues only. Requires explicit operation/value equality and bounded Broadcast shape premises where applicable; no operational side-effect theorem.",
+      "consumer": "maintained: TensorRewrite/Theory/ControlValuesCounterexamples.lean; paper packet: comparisons/tensorright-v1/Select.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "57531505dad9601db8e0e07156603b45618a6b903b32a42d21f1d8305c67a318",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/ControlValuesCounterexamples.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/Select.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/Convolution.lean",
+      "role": "semantic model",
+      "summary": "Defines signed window-axis geometry, dilated extents and bounded sampling, grouped batch/feature shapes, output index, pointwise product terms and exact semiring convolution.",
+      "evidence": "Defines signed window-axis geometry, dilated extents and bounded sampling, grouped batch/feature shapes, output index, pointwise product terms and exact semiring convolution. Evidence: 3:public import Mathlib.Data.Fintype.Pi; 4:public import Mathlib.Algebra.BigOperators.Ring.List; 5:public import TensorRewrite.Pilot.FiniteProduct; 6:public import TensorRewrite.Pilot.LinearIndex; source declarations as specified in details: Definitions lines 21\u2013137",
+      "dependencies_and_assumptions": "Definitions lines 21\u2013137; imports FiniteProduct and LinearIndex plus Mathlib finite products. Positive stride/dilation and group-factorization conditions are structure fields; mathematical signed padding, exact semiring and row-major logical enumeration are model choices.",
+      "consumer": "maintained: TensorRewrite/Comparisons/FixedTacticsStatements.lean, TensorRewrite/Theory/ConvolutionLemmas.lean, TensorRewrite/Theory/ConvolutionPointwise.lean, TensorRewrite/Theory/LatticeIndex.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "a8de43c44f6c77904afdde43afde33e771b51132244a327acc2db121fe39bfb4",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Comparisons/FixedTacticsStatements.lean",
+        "TensorRewrite/Theory/ConvolutionLemmas.lean",
+        "TensorRewrite/Theory/ConvolutionPointwise.lean",
+        "TensorRewrite/Theory/LatticeIndex.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwise.lean",
+      "role": "generic/operation-specific helper",
+      "summary": "Specializes convolution to unit spatial kernel/stride/base dilation and zero padding, then defines the channel-only sum over arbitrary rank.",
+      "evidence": "Specializes convolution to unit spatial kernel/stride/base dilation and zero padding, then defines the channel-only sum over arbitrary rank. Evidence: 3:public import Mathlib.Algebra.BigOperators.Fin; 4:public import TensorRewrite.Theory.Convolution; source declarations as specified in details: IsPointwiseAxis / IsPointwise lines 18\u201327; kernelIndex/inputIndex/channelSum lines 29\u201350. Imports Convolution. Restrictions are explicit pointwise premises; kernel dilation/reversal are irrelevant to the sole coordinate.",
+      "dependencies_and_assumptions": "IsPointwiseAxis / IsPointwise lines 18\u201327; kernelIndex/inputIndex/channelSum lines 29\u201350. Imports Convolution. Restrictions are explicit pointwise premises; kernel dilation/reversal are irrelevant to the sole coordinate.",
+      "consumer": "maintained: TensorRewrite/Comparisons/FixedTacticsStatements.lean, TensorRewrite/Theory/BroadcastWindow.lean, TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean, TensorRewrite/Theory/ReductionWindow.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "c6341f8168c2ce4374c3d0465089edbd64e2f8d0175c26fd1bfe3dfb57d15bb5",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Comparisons/FixedTacticsStatements.lean",
+        "TensorRewrite/Theory/BroadcastWindow.lean",
+        "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+        "TensorRewrite/Theory/ReductionWindow.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/ConvolutionPointwiseLemmas.lean",
+      "role": "generic/operation-specific helper",
+      "summary": "Derives equal input/output extents, unit kernel cardinality, unique kernel coordinate, and spatial input identity under explicit pointwise conditions.",
+      "evidence": "Derives equal input/output extents, unit kernel cardinality, unique kernel coordinate, and spatial input identity under explicit pointwise conditions. Evidence: 3:public import TensorRewrite.Theory.ConvolutionPointwise; source declarations as specified in details: Theorems lines 16\u201389",
+      "dependencies_and_assumptions": "Theorems lines 16\u201389; imports ConvolutionPointwise. All equivalences are conditional on IsPointwise; no source matching evidence in this module.",
+      "consumer": "maintained: TensorRewrite/Theory/BroadcastWindowGeometry.lean, TensorRewrite/Theory/ConvolutionPointwiseAlgebra.lean, TensorRewrite/Theory/ConvolutionSeparable.lean, TensorRewrite/Theory/FullSpanWindowLemmas.lean, TensorRewrite/Theory/PadWindowLemmas.lean, TensorRewrite/Theory/PrefixWindowStride.lean, TensorRewrite/Theory/ReductionWindowLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "61db9787b4c2f5b632045de177889552ff281547bf76e9980f649cde48a64402",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/BroadcastWindowGeometry.lean",
+        "TensorRewrite/Theory/ConvolutionPointwiseAlgebra.lean",
+        "TensorRewrite/Theory/ConvolutionSeparable.lean",
+        "TensorRewrite/Theory/FullSpanWindowLemmas.lean",
+        "TensorRewrite/Theory/PadWindowLemmas.lean",
+        "TensorRewrite/Theory/PrefixWindowStride.lean",
+        "TensorRewrite/Theory/ReductionWindowLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/DynamicUpdate.lean",
+      "role": "semantic model",
+      "summary": "Defines bounded same-rank window start/embed/locate maps, slice/update, nested window composition, zero-full axes and static-axis construction.",
+      "evidence": "Defines bounded same-rank window start/embed/locate maps, slice/update, nested window composition, zero-full axes and static-axis construction. Evidence: 3:public import TensorRewrite.Pilot.DynamicSliceComposition; 4:public import TensorRewrite.Pilot.IndexMapLemmas; source declarations as specified in details: Definitions lines 18\u201370",
+      "dependencies_and_assumptions": "Definitions lines 18\u201370; imports Pilot.DynamicSliceComposition and IndexMapLemmas. Shapes, starts, extents are explicit model parameters; source integer decoding/clamping behavior not proved here.",
+      "consumer": "maintained: TensorRewrite/Theory/DynamicUpdateLemmas.lean; paper packet: comparisons/tensorright-v1/UpdatePad.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "9e6206541b6aa6e95a8a953e60efada0c7fc234fdd4ac2f5d4813a96588a5dc3",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/DynamicUpdateLemmas.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/UpdatePad.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "role": "generic/operation-specific helper",
+      "summary": "Proves bounds, embed/locate inverses, composition and full-window/zero-start special cases for DynamicUpdate windows.",
+      "evidence": "Proves bounds, embed/locate inverses, composition and full-window/zero-start special cases for DynamicUpdate windows. Evidence: 3:public import TensorRewrite.Theory.DynamicUpdate; source declarations as specified in details: Theorems lines 16\u2013134",
+      "dependencies_and_assumptions": "Theorems lines 16\u2013134; imports DynamicUpdate only. Explicit coordinate bounds/equalities; no rewrite matcher assumptions.",
+      "consumer": "maintained: TensorRewrite/Theory/DynamicUpdateProof.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "14bc21758c49c4e784d01258ff00f639f4dad3de14a2ee17a30b363c0d4347fd",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/DynamicUpdateProof.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/NumericalField.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Proves exact pointwise field division identities, including nested fractions and actual bounded Broadcast movement.",
+      "evidence": "Proves exact pointwise field division identities, including nested fractions and actual bounded Broadcast movement. Evidence: 3:public import TensorRewrite.Pilot.OperandOrderLemmas; 4:public import TensorRewrite.Pilot.IndexMaps; 5:public import Mathlib.Algebra.Field.Basic; 6:public import Mathlib.Tactic.Ring; source declarations as specified in details: Theorems lines 22\u201391",
+      "dependencies_and_assumptions": "Theorems lines 22\u201391; imports OperandOrderLemmas, IndexMaps, Mathlib Field and Ring tactic. Requires Field semantics (totalized inverse at zero per Lean instance), with positivity only where stated; floating IEEE behavior is not covered.",
+      "consumer": "maintained: TensorRewrite/Theory/NumericalReal.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "3e5810210b32ca8c9c1f67cecd5115702c13b94ff4811e30f56e376870e19a09",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/NumericalReal.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/NumericalReal.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Proves real-valued exp, real-power, log, sqrt and reciprocal-sqrt identities over actual tensors.",
+      "evidence": "Proves real-valued exp, real-power, log, sqrt and reciprocal-sqrt identities over actual tensors. Evidence: 3:public import TensorRewrite.Theory.NumericalField; 4:public import Mathlib.Analysis.SpecialFunctions.Pow.Real; source declarations as specified in details: Theorems lines 20\u2013177",
+      "dependencies_and_assumptions": "Theorems lines 20\u2013177; imports NumericalField and Real power library. Positivity/nonnegativity appears explicitly on selected log/power laws; real-valued semantics do not establish floating-point rewrite soundness.",
+      "consumer": "maintained: TensorRewrite/Theory/NumericalComplex.lean; paper packet: comparisons/tensorright-v1/Numerical.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "a8cd5330541ac601ea1c9f026c2e9e2d596230ddf07e792b5d6ce955202a7f2a",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/NumericalComplex.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/Numerical.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderInstances.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Instantiates the declared order-rule family for Int, Real, unsigned BitVec and signed BitVec tracks, and proves unsigned nonnegativity/zero controls.",
+      "evidence": "Instantiates the declared order-rule family for Int, Real, unsigned BitVec and signed BitVec tracks, and proves unsigned nonnegativity/zero controls. Evidence: 3:public import TensorRewrite.Theory.OrderFamilyProof; 4:public import TensorRewrite.Theory.OrderWord; 5:public import Mathlib.Basic.Real.Basic; source declarations as specified in details: Theorems lines 18\u201357",
+      "dependencies_and_assumptions": "Theorems lines 18\u201357; imports OrderFamilyProof, OrderWord, Mathlib Real. Rule family and scalar profiles are target-specific; word ordering follows explicit signedness model.",
+      "consumer": "maintained: TensorRewrite/Theory/OrderCounterexamples.lean; paper packet: comparisons/tensorright-v1/Comparisons.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "0b83fbf7981fff50c1150006883b85c59e428d7504e1966e2e73356eb7803907",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/OrderCounterexamples.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/Comparisons.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/OrderWord.lean",
+      "role": "semantic model",
+      "summary": "Wraps BitVec values with a signedness parameter, decodes signed/unsigned order into Int, and installs the corresponding linear order and zero.",
+      "evidence": "Wraps BitVec values with a signedness parameter, decodes signed/unsigned order into Int, and installs the corresponding linear order and zero. Evidence: 3:public import TensorRewrite.Theory.OrderFamily; 4:public import Mathlib.Data.BitVec; source declarations as specified in details: Structure and instances lines 15\u201325",
+      "dependencies_and_assumptions": "Structure and instances lines 15\u201325; imports OrderFamily and Mathlib.BitVec. Signedness affects order only; underlying modular word arithmetic is unchanged.",
+      "consumer": "maintained: TensorRewrite/Theory/OrderInstances.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "17a4c4372881375bcc2c6e9ada8f79f9071b7754c78de6d283bc7a114633efb8",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/OrderInstances.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/PadWindow.lean",
+      "role": "semantic model",
+      "summary": "Defines nonnegative edge padding with positive occupied spacing, sample option, pure pad tensor and fused window geometry, including high-edge derivation from padded/occupied extents.",
+      "evidence": "Defines nonnegative edge padding with positive occupied spacing, sample option, pure pad tensor and fused window geometry, including high-edge derivation from padded/occupied extents. Evidence: 3:public import TensorRewrite.Theory.ReductionWindow; 4:public import TensorRewrite.Theory.LatticeIndex; source declarations as specified in details: Declarations lines 17\u201393",
+      "dependencies_and_assumptions": "Declarations lines 17\u201393; imports ReductionWindow and LatticeIndex. Nonnegative padding and positive spacing are model restrictions; fused operation uses explicit existing Convolution.Axis attributes.",
+      "consumer": "maintained: TensorRewrite/Theory/PadWindowLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "f405f33a614c72bd3145e1490b134b337b28260ca38dbddafae46330f294c06b",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/PadWindowLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/PadWindowLemmas.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Proves occupied-lattice bounds, sample/embedding equivalences and one-axis/tensor geometry for composing Pad with window sampling.",
+      "evidence": "Proves occupied-lattice bounds, sample/embedding equivalences and one-axis/tensor geometry for composing Pad with window sampling. Evidence: 3:public import TensorRewrite.Theory.PadWindow; 4:public import TensorRewrite.Theory.ConvolutionPointwiseLemmas; 5:public import Mathlib.Tactic.Ring; 6:public import Mathlib.Tactic.LinearCombination; source declarations as specified in details: Theorems lines 19\u2013149",
+      "dependencies_and_assumptions": "Theorems lines 19\u2013149; imports PadWindow, ConvolutionPointwiseLemmas, ring/linear-combination tactics. Some formulas have explicit nonempty-input conditions; no source-level pass conditions are established.",
+      "consumer": "maintained: TensorRewrite/Theory/PadWindowProof.lean; paper packet: comparisons/tensorright-v1/InteriorSlice.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "83934f05ba159d1282c37e6e491751a888d349b06f2b67b8d683059b7f2bd0c4",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/PadWindowProof.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/InteriorSlice.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionAlgebra.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Proves reduction/fold identities for constants, Boolean and min/max folds, negated sums, concatenated blocks, coordinate sums, component maps and empty components.",
+      "evidence": "Proves reduction/fold identities for constants, Boolean and min/max folds, negated sums, concatenated blocks, coordinate sums, component maps and empty components. Evidence: 3:public import Mathlib.Algebra.BigOperators.Group.List.Basic; 4:public import TensorRewrite.Pilot.ReductionRules; 5:public import TensorRewrite.Theory.ReductionFiberLemmas; source declarations as specified in details: Theorems lines 19\u2013152",
+      "dependencies_and_assumptions": "Theorems lines 19\u2013152; imports Pilot.ReductionRules and ReductionFiberLemmas. Identity initializers/nonemptiness and scalar algebra laws are explicit, varying by theorem; order/reassociation is not silently generic.",
+      "consumer": "maintained: TensorRewrite/Theory/ReductionCounterexamples.lean; paper packet: comparisons/tensorright-v1/GroupedSums.lean, comparisons/tensorright-v1/Reduction.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "84f2ed192304fe6f90633c618d21665b7812989c102139b1ce69b3d22d2b9655",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/ReductionCounterexamples.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/GroupedSums.lean",
+        "comparisons/tensorright-v1/Reduction.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiber.lean",
+      "role": "semantic model",
+      "summary": "Defines reduction plan axis count, reduced shape, merge of kept/reduced coordinates, and projection of input coordinates to outputs and reduced fiber.",
+      "evidence": "Defines reduction plan axis count, reduced shape, merge of kept/reduced coordinates, and projection of input coordinates to outputs and reduced fiber. Evidence: 3:public import TensorRewrite.Pilot.ReductionLemmas; 4:public import TensorRewrite.Theory.FiniteSum; source declarations as specified in details: Definitions lines 17\u201352",
+      "dependencies_and_assumptions": "Definitions lines 17\u201352; imports Pilot.ReductionLemmas and FiniteSum. Semantics preserve source-axis order by construction; this is a plan model, not a source matcher.",
+      "consumer": "maintained: TensorRewrite/Theory/ReductionFiberLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "6c5666e00f969ab00e53a3a4eaefcbfb10e2527ae3c97832d781615a623ba6a1",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/ReductionFiberLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionFiberLemmas.lean",
+      "role": "generic/operation-specific helper",
+      "summary": "Proves element-count and split/merge coordinate inverses, fiber list/sum correspondence, constant/fold laws, head-tail summation and map homomorphism for reduction fibers.",
+      "evidence": "Proves element-count and split/merge coordinate inverses, fiber list/sum correspondence, constant/fold laws, head-tail summation and map homomorphism for reduction fibers. Evidence: 3:public import Mathlib.Data.Fintype.BigOperators; 4:public import Mathlib.Algebra.BigOperators.Fin; 5:public import TensorRewrite.Theory.ReductionFiber; source declarations as specified in details: Theorems lines 18\u2013179",
+      "dependencies_and_assumptions": "Theorems lines 18\u2013179; imports ReductionFiber plus finite-sum libraries. Some fold facts require AddCommMonoid/AddMonoid; no optimizer-specific guard assumed.",
+      "consumer": "maintained: TensorRewrite/Theory/OrderedCoordinates.lean, TensorRewrite/Theory/ReductionAlgebra.lean, TensorRewrite/Theory/ScatterLayout.lean, TensorRewrite/Theory/WindowTransportLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "a71056600ecf1eb98c95d9469c22549903e5285683f0c1a131c88f6beda70cb7",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/OrderedCoordinates.lean",
+        "TensorRewrite/Theory/ReductionAlgebra.lean",
+        "TensorRewrite/Theory/ScatterLayout.lean",
+        "TensorRewrite/Theory/WindowTransportLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/ReductionWindow.lean",
+      "role": "semantic model",
+      "summary": "Defines windows via Convolution geometry, ordered flattened sample values including invalid-position padding, and left fold from explicit initializer; separately defines affine gather map.",
+      "evidence": "Defines windows via Convolution geometry, ordered flattened sample values including invalid-position padding, and left fold from explicit initializer; separately defines affine gather map. Evidence: 3:public import TensorRewrite.Theory.ConvolutionPointwise; source declarations as specified in details: Definitions lines 17\u2013103",
+      "dependencies_and_assumptions": "Definitions lines 17\u2013103; imports ConvolutionPointwise. Hard-coded unused grouping factors are one in asConvolution lines 20\u201327; positive axis geometry inherited from Convolution. Fold order and pad value are explicit model choices.",
+      "consumer": "maintained: TensorRewrite/Theory/FullSpanWindow.lean, TensorRewrite/Theory/PadWindow.lean, TensorRewrite/Theory/ReductionWindowLemmas.lean, TensorRewrite/Theory/SlicePad.lean, TensorRewrite/Theory/WindowTransport.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/FullSpanWindow.lean",
+        "TensorRewrite/Theory/PadWindow.lean",
+        "TensorRewrite/Theory/ReductionWindowLemmas.lean",
+        "TensorRewrite/Theory/SlicePad.lean",
+        "TensorRewrite/Theory/WindowTransport.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/Remainder.lean",
+      "role": "semantic model",
+      "summary": "Defines signed bit-mask graph with modular negation, axis Iota tensor, and mathematical signed truncating remainder.",
+      "evidence": "Defines signed bit-mask graph with modular negation, axis Iota tensor, and mathematical signed truncating remainder. Evidence: 3:public import TensorRewrite.Pilot.Indexing; 4:public import Init.Data.BitVec.Bitblast; 5:public import Mathlib.Tactic; source declarations as specified in details: Definitions lines 17\u201330",
+      "dependencies_and_assumptions": "Definitions lines 17\u201330; imports Pilot.Indexing and BitVec bitblast. Signed-mask graph is operation-specific; integer divisor-zero behavior follows Lean Int.tmod totalization. Width/layout/source decoding not modeled.",
+      "consumer": "maintained: TensorRewrite/Theory/RemainderLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "848e0616865cf19cddec9cb5c4be1c6778ddda8fbbf751af7ef24a974f7962e7",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/RemainderLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    },
+    {
+      "path": "TensorRewrite/Theory/RemainderScalar.lean",
+      "role": "rewrite-specific proof",
+      "summary": "Proves nested integer/unsigned/signed remainder, power-of-two masks, and offset removal under exact representability/nonnegative-side hypotheses.",
+      "evidence": "Proves nested integer/unsigned/signed remainder, power-of-two masks, and offset removal under exact representability/nonnegative-side hypotheses. Evidence: 3:public import TensorRewrite.Theory.RemainderLemmas; source declarations as specified in details: Theorems lines 14\u201373",
+      "dependencies_and_assumptions": "Theorems lines 14\u201373; imports RemainderLemmas. Width/exponent/no-wrap hypotheses are explicit and theorem-dependent; signed minimum and width-zero are covered only in stated nested law.",
+      "consumer": "maintained: TensorRewrite/Theory/RemainderProof.lean; paper packet: comparisons/tensorright-v1/Remainder.lean",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "6b81d7399a4d8419f6a12cf322226a6173a37ed317161eda5a423db5249bb1f1",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/RemainderProof.lean"
+      ],
+      "direct_paper_consumers": [
+        "comparisons/tensorright-v1/Remainder.lean"
+      ]
+    },
+    {
+      "path": "TensorRewrite/Theory/SlicePad.lean",
+      "role": "semantic model",
+      "summary": "Defines affine Slice axis clipping/count/start/limit derivation, well-formed typed Slice and tensor lookup, plus nonnegative Pad shape and optional input map.",
+      "evidence": "Defines affine Slice axis clipping/count/start/limit derivation, well-formed typed Slice and tensor lookup, plus nonnegative Pad shape and optional input map. Evidence: 3:public import TensorRewrite.Theory.ReductionWindow; 4:public import TensorRewrite.Pilot.IndexMaps; source declarations as specified in details: Declarations lines 17\u2013100",
+      "dependencies_and_assumptions": "Declarations lines 17\u2013100; imports ReductionWindow and Pilot.IndexMaps. Positive stride and SliceShape well-formedness are explicit; pad axes are Nat (nonnegative); source integer conversion/layout remain outside this model.",
+      "consumer": "maintained: TensorRewrite/Theory/SlicePadLemmas.lean; paper packet: none listed",
+      "inspection_limit": "Read complete source file and direct downstream consumer list from frozen inventory. Did not inspect every transitive caller body, source C++ implementation, imported Mathlib implementation, generated proof term or runtime behavior; no build/replay was run.",
+      "sha256": "2856e59ff9980581b9a1dc834c9119d817bc44a2a48e2b76dbb051bc30a154b0",
+      "reachable_root_modules": [
+        "TensorRewriteTheory.lean"
+      ],
+      "direct_maintained_consumers": [
+        "TensorRewrite/Theory/SlicePadLemmas.lean"
+      ],
+      "direct_paper_consumers": []
+    }
+  ]
+}
