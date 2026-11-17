@@ -772,6 +772,142 @@
       "additional_effort_groups": [
         "concatOrderedScan"
       ]
+    },
+    {
+      "name": "integralSelf",
+      "record_branches": {
+        "HandleCompare/integral-self-eq": [
+          "integral-self-eq"
+        ],
+        "HandleCompare/integral-self-ne": [
+          "integral-self-ne"
+        ],
+        "HandleCompare/integral-self-gt": [
+          "integral-self-gt"
+        ],
+        "HandleCompare/integral-self-lt": [
+          "integral-self-lt"
+        ],
+        "HandleCompare/integral-self-ge": [
+          "integral-self-ge"
+        ],
+        "HandleCompare/integral-self-le": [
+          "integral-self-le"
+        ]
+      },
+      "models": {
+        "integral-self-eq": "integral-self-eq",
+        "integral-self-ne": "integral-self-ne",
+        "integral-self-gt": "integral-self-gt",
+        "integral-self-lt": "integral-self-lt",
+        "integral-self-ge": "integral-self-ge",
+        "integral-self-le": "integral-self-le"
+      },
+      "scope": "All six same-word comparisons on signed and unsigned BitVec values and static tensors.",
+      "residual": "Integral logical semantics only. Operand identity and executed dispatch remain source assumptions.",
+      "reviews": [
+        "integral-compare/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "integral-self-eq": "integralComparisons",
+        "integral-self-ne": "integralComparisons",
+        "integral-self-gt": "integralComparisons",
+        "integral-self-lt": "integralComparisons",
+        "integral-self-ge": "integralComparisons",
+        "integral-self-le": "integralComparisons"
+      }
+    },
+    {
+      "name": "unsignedZero",
+      "record_branches": {
+        "HandleCompare/unsigned-ge-zero": [
+          "unsigned-ge-zero"
+        ],
+        "HandleCompare/unsigned-lt-zero": [
+          "unsigned-lt-zero"
+        ],
+        "HandleCompare/unsigned-zero-gt": [
+          "unsigned-zero-gt"
+        ],
+        "HandleCompare/unsigned-zero-le": [
+          "unsigned-zero-le"
+        ]
+      },
+      "models": {
+        "unsigned-ge-zero": "unsigned-ge-zero",
+        "unsigned-lt-zero": "unsigned-lt-zero",
+        "unsigned-zero-gt": "unsigned-zero-gt",
+        "unsigned-zero-le": "unsigned-zero-le"
+      },
+      "scope": "All four unsigned threshold replacements jointly hold for every input iff the threshold tensor is everywhere zero. Individual zero-threshold conclusions follow.",
+      "residual": "The mathematical iff does not characterize source recognizer success. Four separate converses were not compiled.",
+      "reviews": [
+        "integral-compare/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "unsigned-ge-zero": "integralComparisons",
+        "unsigned-lt-zero": "integralComparisons",
+        "unsigned-zero-gt": "integralComparisons",
+        "unsigned-zero-le": "integralComparisons"
+      }
+    },
+    {
+      "name": "integralExtrema",
+      "record_branches": {
+        "HandleCompare/maximum-first": [
+          "maximum-first"
+        ],
+        "HandleCompare/maximum-second": [
+          "maximum-second"
+        ],
+        "HandleCompare/minimum-first": [
+          "minimum-first"
+        ],
+        "HandleCompare/minimum-second": [
+          "minimum-second"
+        ]
+      },
+      "models": {
+        "maximum-first": "maximum-first",
+        "maximum-second": "maximum-second",
+        "minimum-first": "minimum-first",
+        "minimum-second": "minimum-second"
+      },
+      "scope": "Four strict greater-than orientations for signed and unsigned integer extrema, respecting shared operand position.",
+      "residual": "Nonintegral element types, IEEE modes, matching and runtime execution remain open.",
+      "reviews": [
+        "integral-compare/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "maximum-first": "integralComparisons",
+        "maximum-second": "integralComparisons",
+        "minimum-first": "integralComparisons",
+        "minimum-second": "integralComparisons"
+      }
+    },
+    {
+      "name": "broadcastUnitEdits",
+      "record_branches": {
+        "HandleBroadcast/inserted-unit-axes": [
+          "Inserted"
+        ],
+        "HandleBroadcast/drop-unit-axes": [
+          "Dropped"
+        ]
+      },
+      "models": {
+        "Inserted": "Inserted",
+        "Dropped": "Dropped"
+      },
+      "scope": "Arbitrary static logical ranks. Inserted transports the decoded retained projection through the existing shape-preserving count equality. Dropped computes nonunit axes in order and proves the intermediate element count, including zero extents and all-unit input.",
+      "residual": "Inserted assumes the descriptor matches the operand. Graph admission, dynamic extents, earlier source guards and physical layout are outside the theorems.",
+      "reviews": [
+        "broadcast-unit-edits/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "Inserted": "broadcastUnitEdits",
+        "Dropped": "broadcastUnitEdits"
+      }
     }
   ],
   "counterexamples": [
@@ -1870,6 +2006,52 @@
         3.678
       ],
       "notes": "Reuses accepted ScanProof without editing it. Three failed compiler calls (transports and control), corrected. Nonzero off-axis start discriminates reset-to-zero; accepted with no remaining static off-axis crop gap.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "integralComparisons": {
+      "review": "integral-compare/REVIEW.md",
+      "freeze_commit": "fcb7128",
+      "candidate_commit": "8d3179c",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.435,
+        0.423,
+        0.509
+      ],
+      "independent_review_elapsed_seconds": 90,
+      "review_compiler_seconds": [
+        0.34,
+        0.369,
+        0.363,
+        0.375,
+        0.33,
+        0.427,
+        0.43,
+        0.478
+      ],
+      "notes": "24s freeze-to-proof commit. Comparator laws shared across fourteen lexical records, with historical exact-order overlap. Includes repaired author and independent control failures.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "broadcastUnitEdits": {
+      "review": "broadcast-unit-edits/REVIEW.md",
+      "freeze_commit": "31d4779",
+      "candidate_commit": "31d4779",
+      "worker_elapsed_seconds": 173,
+      "author_compiler_seconds": [
+        0.381,
+        0.489,
+        0.591,
+        0.577,
+        0.556,
+        8.421
+      ],
+      "independent_review_elapsed_seconds": 80,
+      "review_compiler_seconds": [
+        7.243
+      ],
+      "notes": "69s setup/hash freeze, 42s proof window, 62s controls/replay. Development checks include two proof failures and a failed control. First Git receipt contains both spec and proof. Two unused-binder warnings.",
       "active_seconds": null,
       "token_count": null
     }

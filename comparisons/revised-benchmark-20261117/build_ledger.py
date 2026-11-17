@@ -73,6 +73,21 @@ for diagnostic in followup.get('guard_diagnostics', []):
     if row['work_state'] != 'revised_model_partition_verified_whole_record_open':
         row['work_state'] = 'attempted_guard_diagnostic_source_obligation_open'
 
+crosswalk_path = packet / 'recovered-witnesses/heldout-crosswalk.json'
+crosswalk = load(crosswalk_path)
+assert crosswalk['xla_commit'] == source_manifest['xla_commit']
+site_by_case = {binding['case_id']: binding['site_id'] for binding in bindings if 'site_id' in binding}
+seen_earlier = set()
+for entry in crosswalk['rows']:
+    case_id = entry['source_id']
+    assert case_id not in seen_earlier and site_by_case[case_id] == entry['site_id']
+    assert entry['whole_source_record_closed'] is False
+    seen_earlier.add(case_id)
+    row = indexed[case_id]
+    row['earlier_reviewed_partition'] = entry
+    if row['work_state'] in {'no_attempt_evidence_in_inherited_ledger', 'inherited_checked_partial_evidence'}:
+        row['work_state'] = 'earlier_independently_accepted_model_partition_whole_record_open'
+
 historical = []
 for r in cases:
     old = r['lean_result']
@@ -100,6 +115,11 @@ out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection'
     'final_guard_history': 'failed final environment: five generic campaign inventory names; revised policy permits reuse and does not make that check pass',
     'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'partial phase records, downtime and overlap preclude defensible aggregate'}}}
 out['status'] = 'versioned_inventories_with_reviewed_record_observations'
+out['sources'][str(crosswalk_path.relative_to(root))] = sha(crosswalk_path)
+out['source_candidates']['records_with_earlier_reviewed_partition'] = len(seen_earlier)
+out['source_candidates']['records_with_any_reviewed_partition'] = sum(
+    row['work_state'] == 'revised_model_partition_verified_whole_record_open' or
+    'earlier_reviewed_partition' in row for row in modern)
 out['inventory_versions'] = followup['inventory_versions']
 out['revised_effort_groups'] = followup['effort_groups']
 for row in modern:
