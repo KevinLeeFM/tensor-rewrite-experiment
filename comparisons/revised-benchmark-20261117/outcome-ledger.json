@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "599dd4ab529fecd72e9e4c1a4afd15423240048c8411e55d648f5efc971531bb",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "cd7bd726392b7d1b1578fe1db783f7c3723e598865a51e5e936552977f5ddca7",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -3225,7 +3225,22 @@
           "reviews": [
             "tuple-projection/REVIEW.md"
           ]
-        }
+        },
+        "reviewed_model_counterexamples": [
+          {
+            "id": "tupleProjectionEffectOrder",
+            "record": "HandleGetTupleElement/tuple-projection",
+            "theorem": "RevisedBenchmark.TupleProjection.Order.noRefinement",
+            "observation": "For every post schedule there exists an original schedule with the same relative A/B order.",
+            "outcome": "disproved_for_concrete_data_prerequisite_graph_pair",
+            "positive_observation": "The selected typed value is preserved. A combined demand for its preservation and matching effect order is false in this schedule model.",
+            "witness": "Original path A \u2192 tuple \u2192 projection \u2192 B. After forwarding x, post schedule [x,B,A,root] is valid and both events remain reachable from the root. No original schedule places B before A.",
+            "limits": "This is the explicit data-prerequisite model without extra effect/token ordering. No native execution, source guarantee or compiler bug established.",
+            "freeze": "f46c888",
+            "proof": "16d800d",
+            "review": "tuple-projection/order/REVIEW.md"
+          }
+        ]
       },
       {
         "id": "HandleImag/complex-projection",
@@ -5018,7 +5033,7 @@
         "id": "HandleReduce/singleton-tuple",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -5026,6 +5041,21 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
+        },
+        "reviewed_record_observation": {
+          "id": "singleton-tuple-reducer-unpacking",
+          "branches": [
+            "singleton-root"
+          ],
+          "accepted_models": [
+            "singletonReducerUnpack"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "scope": "One-result tuple-root reduction. The ordered fold with a singleton state agrees at every coordinate with the scalar body selecting the old tuple root operand. Arbitrary static shape, actual initializer, pure total body and fiber length.",
+          "residual": "The earlier empty dispatch preempts empty cases. Reducer graph cloning, evaluation effects, dynamic shape flags, metadata and source correspondence are outside the stated value observation. The window rewrite has different geometry.",
+          "reviews": [
+            "singleton-reduce/REVIEW.md"
+          ]
         }
       },
       {
@@ -6630,7 +6660,7 @@
         "id": "HandleSort/trivial-single",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -6638,13 +6668,28 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
+        },
+        "reviewed_record_observation": {
+          "id": "guarded-trivial-sort",
+          "branches": [
+            "single-array"
+          ],
+          "accepted_models": [
+            "trivialSortValues"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "scope": "All static logical array or heterogeneous tuple values when some extent is zero or the selected sort axis has length at most one. Every bounded row-local selection is covered; every permutation within a fiber is among them.",
+          "residual": "The interpretation of sort as a fiber-local rearrangement is assumed. Comparator execution, effect order, graph and layout outcomes are separate.",
+          "reviews": [
+            "trivial-sort/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandleSort/trivial-tuple",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -6652,6 +6697,21 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
+        },
+        "reviewed_record_observation": {
+          "id": "guarded-trivial-sort",
+          "branches": [
+            "coupled-sort-of-multiple-arrays"
+          ],
+          "accepted_models": [
+            "trivialSortValues"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "scope": "All static logical array or heterogeneous tuple values when some extent is zero or the selected sort axis has length at most one. Every bounded row-local selection is covered; every permutation within a fiber is among them.",
+          "residual": "The interpretation of sort as a fiber-local rearrangement is assumed. Comparator execution, effect order, graph and layout outcomes are separate.",
+          "reviews": [
+            "trivial-sort/REVIEW.md"
+          ]
         }
       },
       {
@@ -8153,11 +8213,11 @@
       "declared_value_family_complete_full_record_partitions_open": 122
     },
     "work_state_counts": {
-      "no_attempt_evidence_in_inherited_ledger": 210,
-      "revised_model_partition_verified_whole_record_open": 11,
+      "no_attempt_evidence_in_inherited_ledger": 207,
+      "revised_model_partition_verified_whole_record_open": 14,
       "inherited_checked_partial_evidence": 267
     },
-    "records_with_reviewed_record_observation": 9
+    "records_with_reviewed_record_observation": 12
   },
   "historical_cases": {
     "records": [

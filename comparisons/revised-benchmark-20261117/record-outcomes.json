@@ -8,42 +8,139 @@
     {
       "name": "empty-reduction-dispatch",
       "record_branches": {
-        "BroadcastReduce/single": ["single"],
-        "BroadcastReduce/tuple": ["tuple"],
-        "HandleReduce/empty-delegation": ["single", "tuple"]
+        "BroadcastReduce/single": [
+          "single"
+        ],
+        "BroadcastReduce/tuple": [
+          "tuple"
+        ],
+        "HandleReduce/empty-delegation": [
+          "single",
+          "tuple"
+        ]
       },
-      "models": {"single": "reduceBroadcastSingle", "tuple": "reduceTupleEmpty"},
+      "models": {
+        "single": "reduceBroadcastSingle",
+        "tuple": "reduceTupleEmpty"
+      },
       "scope": "All static exact-type single and finite nonempty heterogeneous tuple logical output values selected by either zero-element guard. Arbitrarily coupled pure whole-state reducers. Empty output has no positions.",
       "residual": "Dynamic annotations, precision-changing initializer/accumulator options, graph replacement and effects are outside the declared model. The caller covers both helper branches and contributes no independent proof.",
-      "reviews": ["broadcast-reduce-single/RECORD-REVIEW.md", "reduce-tuple/REVIEW.md"]
+      "reviews": [
+        "broadcast-reduce-single/RECORD-REVIEW.md",
+        "reduce-tuple/REVIEW.md"
+      ]
     },
     {
       "name": "same-count-reduction-dispatch",
       "record_branches": {
-        "ReplaceReduceWithReshape/single": ["single"],
-        "ReplaceReduceWithReshape/tuple": ["tuple"],
-        "HandleReduce/same-element-count": ["single", "tuple"]
+        "ReplaceReduceWithReshape/single": [
+          "single"
+        ],
+        "ReplaceReduceWithReshape/tuple": [
+          "tuple"
+        ],
+        "HandleReduce/same-element-count": [
+          "single",
+          "tuple"
+        ]
       },
-      "models": {"single": "fixedPlanSameCount", "tuple": "tupleSameCount"},
+      "models": {
+        "single": "fixedPlanSameCount",
+        "tuple": "tupleSameCount"
+      },
       "scope": "Static equal-count logical outputs over exact scalar types, including coupled whole tuple states. The actual initializer left-identity law is necessary and sufficient for all inputs of a fixed nonempty plan. Empty output is an additional model boundary.",
       "residual": "Source assumes initializer identity; nonidentity model witnesses do not refute source-valid reductions. Caller runs zero-element dispatch and eligible singleton tuple normalization first. Layout/bitcast validity, precision-changing reducer signatures, dynamic annotations and graph operations are outside the model.",
-      "reviews": ["same-count-exact/REVIEW.md", "reduce-tuple/REVIEW.md"]
+      "reviews": [
+        "same-count-exact/REVIEW.md",
+        "reduce-tuple/REVIEW.md"
+      ]
     },
     {
       "name": "heterogeneous-tuple-projection",
-      "record_branches": {"HandleGetTupleElement/tuple-projection": ["selected-value"]},
-      "models": {"selected-value": "tupleProjection"},
+      "record_branches": {
+        "HandleGetTupleElement/tuple-projection": [
+          "selected-value"
+        ]
+      },
+      "models": {
+        "selected-value": "tupleProjection"
+      },
       "scope": "Every legal position in an ordered tuple of already evaluated, potentially heterogeneous operands, observing tag and value. Includes arbitrary finite arity and repeated tags.",
       "residual": "The retained effect_graph partition, compatibility/status, metadata and graph mutation are outside this theorem.",
-      "reviews": ["tuple-projection/REVIEW.md"]
+      "reviews": [
+        "tuple-projection/REVIEW.md"
+      ]
     },
     {
       "name": "barrier-user-index-remapping",
-      "record_branches": {"HandleOptimizationBarrier/prune-tuple": ["tuple-operand"], "HandleOptimizationBarrier/prune-producer": ["projected-producer"]},
-      "models": {"tuple-operand": "barrierUserRemap", "projected-producer": "barrierUserRemap"},
+      "record_branches": {
+        "HandleOptimizationBarrier/prune-tuple": [
+          "tuple-operand"
+        ],
+        "HandleOptimizationBarrier/prune-producer": [
+          "projected-producer"
+        ]
+      },
+      "models": {
+        "tuple-operand": "barrierUserRemap",
+        "projected-producer": "barrierUserRemap"
+      },
       "scope": "For each legal GTE user, compaction preserves its observed value at the new index equal to the retained-prefix length, using the keep mask for its operand kind.",
       "residual": "The source graph transformations, actual metadata updates, scheduling and side-effect behavior are outside this mathematical observation. The two source records share a proof.",
-      "reviews": ["barrier-prune/REVIEW.md"]
+      "reviews": [
+        "barrier-prune/REVIEW.md"
+      ]
+    },
+    {
+      "name": "singleton-tuple-reducer-unpacking",
+      "record_branches": {
+        "HandleReduce/singleton-tuple": [
+          "singleton-root"
+        ]
+      },
+      "models": {
+        "singleton-root": "singletonReducerUnpack"
+      },
+      "scope": "One-result tuple-root reduction. The ordered fold with a singleton state agrees at every coordinate with the scalar body selecting the old tuple root operand. Arbitrary static shape, actual initializer, pure total body and fiber length.",
+      "residual": "The earlier empty dispatch preempts empty cases. Reducer graph cloning, evaluation effects, dynamic shape flags, metadata and source correspondence are outside the stated value observation. The window rewrite has different geometry.",
+      "reviews": [
+        "singleton-reduce/REVIEW.md"
+      ]
+    },
+    {
+      "name": "guarded-trivial-sort",
+      "record_branches": {
+        "HandleSort/trivial-single": [
+          "single-array"
+        ],
+        "HandleSort/trivial-tuple": [
+          "coupled-sort-of-multiple-arrays"
+        ]
+      },
+      "models": {
+        "single-array": "trivialSortValues",
+        "coupled-sort-of-multiple-arrays": "trivialSortValues"
+      },
+      "scope": "All static logical array or heterogeneous tuple values when some extent is zero or the selected sort axis has length at most one. Every bounded row-local selection is covered; every permutation within a fiber is among them.",
+      "residual": "The interpretation of sort as a fiber-local rearrangement is assumed. Comparator execution, effect order, graph and layout outcomes are separate.",
+      "reviews": [
+        "trivial-sort/REVIEW.md"
+      ]
+    }
+  ],
+  "counterexamples": [
+    {
+      "id": "tupleProjectionEffectOrder",
+      "record": "HandleGetTupleElement/tuple-projection",
+      "theorem": "RevisedBenchmark.TupleProjection.Order.noRefinement",
+      "observation": "For every post schedule there exists an original schedule with the same relative A/B order.",
+      "outcome": "disproved_for_concrete_data_prerequisite_graph_pair",
+      "positive_observation": "The selected typed value is preserved. A combined demand for its preservation and matching effect order is false in this schedule model.",
+      "witness": "Original path A \u2192 tuple \u2192 projection \u2192 B. After forwarding x, post schedule [x,B,A,root] is valid and both events remain reachable from the root. No original schedule places B before A.",
+      "limits": "This is the explicit data-prerequisite model without extra effect/token ordering. No native execution, source guarantee or compiler bug established.",
+      "freeze": "f46c888",
+      "proof": "16d800d",
+      "review": "tuple-projection/order/REVIEW.md"
     }
   ]
 }

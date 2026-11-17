@@ -52,6 +52,10 @@ for observation in followup['observations']:
             'scope': observation['scope'], 'residual': observation['residual'],
             'reviews': observation['reviews']}
         row['work_state'] = 'revised_model_partition_verified_whole_record_open'
+for result in followup.get('counterexamples', []):
+    assert (packet / result['review']).is_file(), result['review']
+    indexed[result['record']].setdefault('reviewed_model_counterexamples', []).append(result)
+
 historical = []
 for r in cases:
     old = r['lean_result']
