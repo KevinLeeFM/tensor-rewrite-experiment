@@ -1,0 +1,67 @@
+{
+  "command": [
+    "docker",
+    "run",
+    "--name",
+    "scout-tensor-source-bound-20261117",
+    "--user",
+    "1020:1022",
+    "--env",
+    "HOME=/tmp",
+    "--env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "--rm",
+    "--network",
+    "none",
+    "--cpus",
+    "2",
+    "--memory",
+    "2g",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay3-20261117/source,dst=/work,readonly",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay2-20261117/lake,dst=/work/.lake",
+    "--mount",
+    "type=bind,src=/home/k323lee/type-inf-project/type-inference-toy/tensor-rewrite-experiment/.lake/packages,dst=/work/.lake/packages,readonly",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay3-20261117/reports/theory-build.log,dst=/work/reports/theory-build.log",
+    "--mount",
+    "type=bind,src=/tmp/scout-tensor-source-bound-replay3-20261117/reports/theory-progress.json,dst=/work/reports/theory-progress.json",
+    "--mount",
+    "type=bind,src=/home/k323lee/.elan/toolchains/leanprover--lean4---v4.35.0,dst=/toolchain,readonly",
+    "--workdir",
+    "/work",
+    "--entrypoint",
+    "/bin/sh",
+    "ghcr.io/seahorn/seahorn-llvm18:nightly",
+    "-c",
+    "export PATH=/toolchain/bin:$PATH; lean --version; python3 tools/check_theory.py"
+  ],
+  "source_commit": "938b193d4fadbd5e3209b775a88823b9d114715e",
+  "archive_sha256": "906ba13644f304b8b4de0094ec0a6e3ecb7727b7022acec70dfe32e045413663",
+  "returncode": 0,
+  "elapsed_seconds": 48.57312846183777,
+  "source_unchanged": true,
+  "cached_build_origin": "source-bound-replay2 exact same Git archive; successful fresh build retained, checker report input mount corrected",
+  "closure_count": 242,
+  "stop_reason": null,
+  "samples": [
+    {
+      "elapsed": 5.747424364089966,
+      "free_bytes": 20121182208
+    },
+    {
+      "elapsed": 15.747749090194702,
+      "free_bytes": 20121022464
+    },
+    {
+      "elapsed": 25.748436212539673,
+      "free_bytes": 20121018368
+    },
+    {
+      "elapsed": 35.749013900756836,
+      "free_bytes": 20121018368
+    }
+  ],
+  "approval": "Kevin: I approve that. Same 242-module/727-declaration full theory validation scope,2CPU/2GB,offline,10min supervision,5GB safety. Source-bound retry fixes prior attestation omission; previous successful run remains distinct."
+}
