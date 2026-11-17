@@ -1,0 +1,95 @@
+{
+  "utc": "2026-11-17T07:50:34.124138+00:00",
+  "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "seconds": 5.1165042870052275,
+  "result": "passed",
+  "records": [
+    {
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "seconds": 0.3108950320020085,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "seconds": 0.2836195400013821,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/Permutation.lean",
+      "seconds": 0.32119512100325665,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/Spec.lean",
+      "seconds": 0.31843878499785205,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "@[expose] def Heldout.TransposeBroadcast.Goal : Prop :=\n\u2200 (small rank : Nat) (inputShape : Shape small) (middle : Shape rank) (perm : AxisPermutation rank)\n  (axes : Fin small \u2192 Fin rank) (conditions : Conditions inputShape middle perm axes) (\u03b1 : Type)\n  (input : Tensor inputShape \u03b1),\n  Tensor.transpose perm \u22ef (broadcast axes \u22ef input) = broadcast (movedAxes perm axes) \u22ef input\n'Heldout.TransposeBroadcast.Goal' depends on axioms: [propext]\n"
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/SpecTests.lean",
+      "seconds": 0.318411295003898,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/Guard.lean",
+      "seconds": 0.4700734169964562,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/candidate/Proof.lean",
+      "seconds": 0.25753443900612183,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "'Heldout.TransposeBroadcast.proof' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/Audit.lean",
+      "seconds": 0.4340251539979363,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "BROADCAST_BASELINE_GUARD checked=835\nBROADCAST_SIGNATURE exact\n'Heldout.TransposeBroadcast.proof' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-unit-reverse-v1/controls/Forbidden.lean",
+      "seconds": 0.328394254000159,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/controls/Leak.lean",
+      "seconds": 1.2698829210057738,
+      "exit_code": 1,
+      "expected_failure": "BROADCAST_BASELINE_LEAK",
+      "output": "comparisons/heldout-transpose-broadcast/controls/Leak.lean:3:0: error: BROADCAST_BASELINE_LEAK: TensorRewrite.Pilot.Tensor.reverseIndex_comp\n"
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/controls/WrongSignature.lean",
+      "seconds": 0.5005880099997739,
+      "exit_code": 1,
+      "expected_failure": "BROADCAST_SIGNATURE_MISMATCH",
+      "output": "comparisons/heldout-transpose-broadcast/controls/WrongSignature.lean:5:0: error: BROADCAST_SIGNATURE_MISMATCH: _private.comparisons.\u00abheldout-transpose-broadcast\u00bb.controls.WrongSignature.0.wrongSignature versus Heldout.TransposeBroadcast.Goal\n"
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/controls/FalseReplacement.lean",
+      "seconds": 0.3010208630003035,
+      "exit_code": 1,
+      "expected_failure": "Tactic `decide` proved that the proposition",
+      "output": "comparisons/heldout-transpose-broadcast/controls/FalseReplacement.lean:57:98: error: Tactic `decide` proved that the proposition\n  Tensor.transpose perm \u22ef (broadcast axes \u22ef input) cubeOut = broadcast axes wrongExtents input cubeOut\nis false\n"
+    }
+  ],
+  "proof_sha256": "2bed229f3787955bd0f8068b8922a1d94b113c6665d6682cc35cb7f53b13bdd0",
+  "freeze_sha256": "b6dab54154413f95fdeaf6663ea4cf1f3c6070568b77934c04503d542d0c6f31",
+  "forbidden_inventory_sha256": "f34738304844208c2464f2206ab10cbe9eac95760425d0cb428977e2a867c99a"
+}

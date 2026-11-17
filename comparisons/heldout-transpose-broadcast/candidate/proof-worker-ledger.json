@@ -1,0 +1,101 @@
+{
+  "worker": "fresh scoped proof worker; no subagents",
+  "workspace": "/workspace/tensor-heldout-broadcast-20261117",
+  "base_commit": "95ef633c081c468ece1981d950816f08d4480214",
+  "proof_interval": {
+    "start_utc": "2026-11-17T07:47:29Z",
+    "start_monotonic_seconds": 38897.802176845,
+    "end_utc": "2026-11-17T07:48:20Z",
+    "end_monotonic_seconds": 38948.849170817,
+    "elapsed_seconds": 51.046993972,
+    "note": "Includes instruction/spec inspection and one direct proof attempt; no setup or download."
+  },
+  "owned_files": [
+    "comparisons/heldout-transpose-broadcast/candidate/Proof.lean",
+    "comparisons/heldout-transpose-broadcast/candidate/proof-worker-ledger.json"
+  ],
+  "proof_file_sha256": "2bed229f3787955bd0f8068b8922a1d94b113c6665d6682cc35cb7f53b13bdd0",
+  "frozen_statement": "Heldout.TransposeBroadcast.Goal",
+  "frozen_statement_or_import_edits": false,
+  "proof": "intro all quantified arguments; funext output coordinate; rfl",
+  "lean": "/workspace/toolchains/lean-4.35.0-linux/bin/lean",
+  "lean_version": "Lean (version 4.35.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc)",
+  "compile_invocation": "For each source in order, run LEAN_PATH=<temporary directory> /workspace/toolchains/lean-4.35.0-linux/bin/lean <source> -o <temporary directory>/<module>.olean. Ordered sources: TensorRewrite/Pilot/Tensor.lean, TensorRewrite/Pilot/Indexing.lean, TensorRewrite/Pilot/Permutation.lean, comparisons/heldout-transpose-broadcast/Spec.lean, comparisons/heldout-transpose-broadcast/candidate/Proof.lean.",
+  "compile_results": [
+    {
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "seconds": 0.342,
+      "exit_code": 0,
+      "warnings_or_errors": false
+    },
+    {
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "seconds": 0.298,
+      "exit_code": 0,
+      "warnings_or_errors": false
+    },
+    {
+      "source": "TensorRewrite/Pilot/Permutation.lean",
+      "seconds": 0.289,
+      "exit_code": 0,
+      "warnings_or_errors": false
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/Spec.lean",
+      "seconds": 0.287,
+      "exit_code": 0,
+      "warnings_or_errors": false
+    },
+    {
+      "source": "comparisons/heldout-transpose-broadcast/candidate/Proof.lean",
+      "seconds": 0.244,
+      "exit_code": 0,
+      "warnings_or_errors": false
+    }
+  ],
+  "failures": [
+    "During theorem exposure, first compile with private import Spec and @[expose] public section failed: unknown identifier Goal. Fixed by changing only import visibility to public import Spec; final proof and importing Audit module compile."
+  ],
+  "axiom_audit": "#print axioms proof reports [propext, Quot.sound]; no sorryAx, project axiom, native_decide, admit, or added hypothesis.",
+  "status": "proof candidate compiled and theorem exposed to an importing Audit module; not independently reviewed or accepted; coordinator owns controls, final replay, and review",
+  "reexposure_update": {
+    "utc": "2026-11-17T07:49:49Z",
+    "monotonic_seconds": 39037.596834657,
+    "changes": "Changed import to public import Spec and added @[expose] public section; theorem body unchanged. This makes the frozen statement dependency and proof theorem available through a separate import.",
+    "compile_results": [
+      {
+        "source": "TensorRewrite/Pilot/Tensor.lean",
+        "seconds": 0.333,
+        "exit_code": 0
+      },
+      {
+        "source": "TensorRewrite/Pilot/Indexing.lean",
+        "seconds": 0.275,
+        "exit_code": 0
+      },
+      {
+        "source": "TensorRewrite/Pilot/Permutation.lean",
+        "seconds": 0.293,
+        "exit_code": 0
+      },
+      {
+        "source": "comparisons/heldout-transpose-broadcast/Spec.lean",
+        "seconds": 0.293,
+        "exit_code": 0
+      },
+      {
+        "source": "comparisons/heldout-transpose-broadcast/candidate/Proof.lean",
+        "seconds": 0.266,
+        "exit_code": 0
+      },
+      {
+        "source": "temporary Audit.lean importing Proof",
+        "seconds": 1.12,
+        "exit_code": 0,
+        "output": "Heldout.TransposeBroadcast.proof : Heldout.TransposeBroadcast.Goal; axioms [propext, Quot.sound]"
+      }
+    ],
+    "resolved_compile_failure": "An initial attempt with @[expose] public section but private import Spec failed because Goal was not available for re-export in the proof module (unknown identifier Goal). Resolved by public import Spec; no extra import was added.",
+    "final_proof_file_sha256": "2bed229f3787955bd0f8068b8922a1d94b113c6665d6682cc35cb7f53b13bdd0"
+  }
+}
