@@ -1,0 +1,102 @@
+{
+  "utc": "2026-11-17T14:21:04.247125+00:00",
+  "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "seconds": 6.784045927000989,
+  "result": "passed",
+  "records": [
+    {
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "seconds": 0.34607553900423227,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/Spec.lean",
+      "seconds": 0.3016154029974132,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "@[expose] def Heldout.RemainderCast.Goal : Prop :=\n\u2200 (rank narrow wide : Nat) (shape : Shape rank),\n  narrow \u2264 wide \u2192 \u2200 (left right : Tensor shape (BitVec narrow)), original wide left right = replacement left right\n'Heldout.RemainderCast.Goal' depends on axioms: [propext]\n"
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/SpecTests.lean",
+      "seconds": 0.3601435019954806,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/Guard.lean",
+      "seconds": 1.5493429409980308,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/candidate/Proof.lean",
+      "seconds": 0.34178488299949095,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "'Heldout.RemainderCast.goal_proof' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/controls/EmptyTensor.lean",
+      "seconds": 0.29089280699554365,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/Audit.lean",
+      "seconds": 0.4342499339982169,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "REMAINDER_CAST_BASELINE_GUARD checked=835\nREMAINDER_CAST_SIGNATURE exact\n'Heldout.RemainderCast.goal_proof' depends on axioms: [propext, Quot.sound]\n"
+    },
+    {
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "seconds": 0.28212931899906835,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "seconds": 0.2704474779966404,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-unit-reverse-v1/controls/Forbidden.lean",
+      "seconds": 0.3090072039994993,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/controls/Leak.lean",
+      "seconds": 1.4343078450037865,
+      "exit_code": 1,
+      "expected_failure": "REMAINDER_CAST_BASELINE_LEAK",
+      "output": "comparisons/heldout-remainder-cast/controls/Leak.lean:3:0: error: REMAINDER_CAST_BASELINE_LEAK: TensorRewrite.Pilot.Tensor.reverseIndex_comp\n"
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/controls/WrongSignature.lean",
+      "seconds": 0.5395668130004196,
+      "exit_code": 1,
+      "expected_failure": "REMAINDER_CAST_SIGNATURE_MISMATCH",
+      "output": "comparisons/heldout-remainder-cast/controls/WrongSignature.lean:5:0: error: REMAINDER_CAST_SIGNATURE_MISMATCH: _private.comparisons.\u00abheldout-remainder-cast\u00bb.controls.WrongSignature.0.wrongSignature versus Heldout.RemainderCast.Goal\n"
+    },
+    {
+      "source": "comparisons/heldout-remainder-cast/controls/FalseReplacement.lean",
+      "seconds": 0.3181795160053298,
+      "exit_code": 1,
+      "expected_failure": "Tactic `decide` proved that the proposition",
+      "output": "comparisons/heldout-remainder-cast/controls/FalseReplacement.lean:35:55: error: Tactic `decide` proved that the proposition\n  original 16 left right at0 = wrong at0\nis false\n"
+    }
+  ],
+  "proof_sha256": "31bce3bf0b4da3a020a2086ddda5e780804967286595a7470f84c3bd6ecc1242",
+  "freeze_sha256": "8b194e187273add3ad77395b37cfad15419a4e216c834b075f3a2a198b1e78ec",
+  "forbidden_inventory_sha256": "f34738304844208c2464f2206ab10cbe9eac95760425d0cb428977e2a867c99a"
+}

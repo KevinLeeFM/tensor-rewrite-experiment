@@ -1,0 +1,38 @@
+{
+  "worker": "fresh bounded proof worker; no subagents",
+  "basis_commit": "8f02b5b6efe15e5b3dd9a93867e969fadb395a98",
+  "frozen_goal": "Heldout.RemainderCast.Goal",
+  "status": "proof candidate compiled; awaiting independent audit/review",
+  "toolchain": "Lean 4.35.0 eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+  "effort": {
+    "active_wall_time_minutes_approx": 3,
+    "worker_sum_minutes_approx": 3,
+    "setup_minutes": 0,
+    "review_minutes": 0,
+    "note": "Start/end were not separately timestamped; elapsed is approximate from the focused task interval."
+  },
+  "proof": {
+    "file": "comparisons/heldout-remainder-cast/candidate/Proof.lean",
+    "method": "Reduce BitVec equality to toNat; simplify width extension and unsigned modulo using Std BitVec lemmas; bound the narrow remainder with an explicit zero-divisor split; lift pointwise by function extensionality.",
+    "edge_cases": ["narrow = 0", "wide = 0 when permitted by narrow <= wide", "divisor = 0", "arbitrary rank and empty shapes"],
+    "axioms": ["propext", "Quot.sound"],
+    "new_assumptions": [],
+    "source_backend_correspondence_claim": false
+  },
+  "hashes": {
+    "Spec.lean": "ddc53bb47944edb0dec0d016c33ce22b85f8869cf32d7114f9a27f7f27140721",
+    "freeze.json": "8b194e187273add3ad77395b37cfad15419a4e216c834b075f3a2a198b1e78ec",
+    "Proof.lean": "31bce3bf0b4da3a020a2086ddda5e780804967286595a7470f84c3bd6ecc1242"
+  },
+  "attempts_and_failures": [
+    "Initial module path assumed a dotted directory name; corrected to the local Spec module.",
+    "Initial relation-lemma namespace was not imported by Std spelling; corrected to Nat.lt_of_lt_of_le.",
+    "Replay after deleting a temporary in-tree Spec.olean could not resolve Spec; compiled Spec.olean to /tmp and replayed successfully.",
+    "Initial axiom print outside namespace used an unqualified theorem name; corrected to Heldout.RemainderCast.goal_proof."
+  ],
+  "replay": {
+    "command": "LEAN_PATH=<pinned Tensor build>:<Lean 4.35 lib>:<temporary Spec build> <Lean 4.35>/bin/lean -o /tmp/remainder-cast-proof.olean comparisons/heldout-remainder-cast/candidate/Proof.lean",
+    "result": "exit 0; exact frozen goal elaborated and proved; axiom report emitted",
+    "proof_output": "/tmp/remainder-cast-proof.olean"
+  }
+}
