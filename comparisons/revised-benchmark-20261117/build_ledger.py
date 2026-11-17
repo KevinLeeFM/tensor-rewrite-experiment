@@ -1,0 +1,46 @@
+"""Build an honest ID-preserving status overlay; does not alter historical ledgers."""
+import collections, hashlib, json, pathlib
+root = pathlib.Path(__file__).resolve().parents[2]
+source = root / 'census/mathematical-ledger.json'
+paper = root / 'comparisons/tensorright-v1/cases.json'
+site = root / 'census/site-case-map.json'
+load = lambda p: json.loads(p.read_text())
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+a, b, c = load(source), load(paper), load(site)
+records, cases, bindings = a['benchmark_records'], b['cases'], c['bindings']
+assert len(records) == len(bindings) == 488 and len(cases) == 118
+ids = [r['benchmark_id'] for r in records]
+assert len(set(ids)) == len(ids) and set(ids) == {r['case_id'] for r in bindings}
+assert len({r['id'] for r in cases}) == len(cases)
+modern = []
+for r in records:
+    modern.append({'id': r['benchmark_id'], 'outcome': 'unresolved',
+        'reason': r['mathematical_target_status'],
+        'scope': 'complete retained source record; formulation/domain coverage not yet established',
+        'existing_evidence': r['evidence'], 'whole_record_closed_in_inherited_ledger': r['whole_record_mathematically_closed'],
+        'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'not measured per record in inherited ledger'}})
+assert not any(x['whole_record_closed_in_inherited_ledger'] for x in modern)
+historical = []
+for r in cases:
+    old = r['lean_result']
+    outcome = {'proved': 'proved_model_inherited', 'disproved_in_model': 'disproved_model_inherited',
+               'vacuous_in_paper_model': 'unresolved_vacuous_model'}[old]
+    historical.append({'id': r['id'], 'outcome': outcome, 'historical_result': old,
+        'evidence_theorems': r['lean_theorems'], 'proof_file': r['lean_proof_file'],
+        'proof_sha256': r['lean_proof_sha256'], 'scope': r['translation_confidence'],
+        'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'per-case development effort not recovered'}})
+out = {'schema': 1, 'status': 'initial_reconciliation_not_final_scope_selection',
+ 'scope_note': 'Two separate inventories; do not sum or infer one-to-one correspondence. Source candidates are lexical records, not automatically distinct mathematical statements.',
+ 'sources': {str(p.relative_to(root)): sha(p) for p in [source, paper, site]},
+ 'source_candidates': {'records': modern, 'counts': dict(collections.Counter(r['outcome'] for r in modern)),
+    'inherited_status_counts': dict(collections.Counter(r['reason'] for r in modern))},
+ 'historical_cases': {'records': historical, 'counts': dict(collections.Counter(r['outcome'] for r in historical))},
+ 'space_depth_partition': {'source_record': 'HandleTranspose/space-depth-user-mutation', 'status': 'proved_model_independently_reviewed_revised_policy',
+    'scope': 'frozen layout-insensitive Nat model with outerRankAtLeast; not full source record/correspondence',
+    'candidate_commit': 'aa5521b38e8304a14350a684f9cef914d1f65158',
+    'revised_review': 'comparisons/revised-benchmark-20261117/space-depth-review/REVIEW.md',
+    'final_guard_history': 'failed final environment: five generic campaign inventory names; revised policy permits reuse and does not make that check pass',
+    'effort': {'active_seconds': None, 'elapsed_seconds': None, 'reason': 'partial phase records, downtime and overlap preclude defensible aggregate'}}}
+(root/'comparisons/revised-benchmark-20261117/outcome-ledger.json').write_text(json.dumps(out, indent=2)+'\n')
+print('source',out['source_candidates']['counts'],'inherited',out['source_candidates']['inherited_status_counts'])
+print('historical',out['historical_cases']['counts'])
