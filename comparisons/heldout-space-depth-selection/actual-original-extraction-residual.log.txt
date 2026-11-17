@@ -1,0 +1,17 @@
+comparisons/heldout-space-depth-selection/ActualMovedExtractionProof.lean:98:64: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+⊢ ↑(delinearize shape
+        ⟨↑(linearize inner
+              (Tensor.transposeIndex plan.axes.permutation ⋯
+                (delinearize (transposedShape inner plan.axes.permutation) ⟨↑(linearize outer out), ⋯⟩))),
+          ⋯⟩
+        (concatAxis plan.axes)) =
+    ↑(delinearize (transposedShape inner plan.axes.permutation) ⟨↑(linearize outer out), ⋯⟩ ⟨↑plan.axes.moved + 1, ⋯⟩)
+'Heldout.ActualMovedExtractionProof.ReplacementGoal_proved' depends on axioms: [propext, Classical.choice, Quot.sound]
