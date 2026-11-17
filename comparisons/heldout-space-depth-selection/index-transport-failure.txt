@@ -1,0 +1,52 @@
+/tmp/IndexTransportFailed.lean:52:111: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+⊢ ↑(reshapeIndex shape inner ⋯
+        (Tensor.transposeIndex plan.axes.permutation ⋯
+          (reshapeIndex (transposedShape inner plan.axes.permutation) outer ⋯ out))
+        i) =
+    ↑(sourceIndex (splitFrame shape plan.axes.split) (concatAxis plan.axes)
+        (interval plan.count plan.width
+          (row
+            (Fin.cast ⋯
+              ((concatFrame shape plan.axes plan.width).position
+                (reshapeIndex
+                  ((concatFrame shape plan.axes plan.width).shape
+                    (total
+                      (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                        (concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        ((concatFrame shape plan.axes plan.width).withPosition
+          ((concatFrame shape plan.axes plan.width).rest
+            (reshapeIndex
+              ((concatFrame shape plan.axes plan.width).shape
+                (total
+                  (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                    (concatAxis plan.axes))))
+              outer ⋯ out))
+          (column
+            (Fin.cast ⋯
+              ((concatFrame shape plan.axes plan.width).position
+                (reshapeIndex
+                  ((concatFrame shape plan.axes plan.width).shape
+                    (total
+                      (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                        (concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        i)
+/tmp/IndexTransportFailed.lean:55:46: warning: This simp argument is unused:
+  Tensor.transposeIndex
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [originalIndex, replacementIndex, Fin.val_cast]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'Heldout.IndexTransportAttempt.original_read' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Heldout.IndexTransportAttempt.replacement_read' depends on axioms: [propext, Classical.choice, Quot.sound]
