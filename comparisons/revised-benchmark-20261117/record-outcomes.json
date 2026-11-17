@@ -339,6 +339,26 @@
         "reorderReverse": "staticSliceShape"
       },
       "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "selectContractionScaleBoundary",
+      "record_branches": {
+        "ScalarMultiplyReduction/target-output": [
+          "select-output-scales"
+        ]
+      },
+      "models": {
+        "select-output-scales": "Boundary"
+      },
+      "scope": "Exact Int unit-filter contraction with arbitrary finite cell list, selected left/right inputs and per-cell predicates. Universal equality for fixed factors holds iff (0,0) or (1,1).",
+      "residual": "Other traversals, floating-point behavior, layouts, multiple graph uses and source effects open. Configured historical counterexample is separate.",
+      "reviews": [
+        "scalar-select-exact/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "Boundary": "selectContractionBoundary"
+      },
+      "outcome": "exact_preservation_condition_proved"
     }
   ],
   "counterexamples": [
@@ -514,6 +534,63 @@
         "property": "retains HLO verifier acceptance",
         "outcome": "original_verified_replacement_rejected",
         "scope": "pinned source and recorded configured HLO fixture; independently inspected in linked review; no new native execution"
+      }
+    },
+    {
+      "id": "nanLeftGE",
+      "record": "HandleCompare/nonnegative-ge",
+      "theorem": "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_left_refutes",
+      "observation": "Preserves every configured logical output value.",
+      "outcome": "disproved_in_admitted_model_specialization",
+      "witness": "Ordered GE of Abs(quiet NaN) against zero folds false to true.",
+      "limits": "For Compare, necessary ordinary ordered-NaN condition; for contraction, exact Int sum under a unit filter. Individual archived F32 host fixtures show the executable change. No complete IEEE or backend model.",
+      "freeze": "a8b2bf1",
+      "review": "recovered-witnesses/COMPARE-SCALAR-REVIEW.md",
+      "effort_group": "compareScalarArchive",
+      "provenance": "Historical proof/source and archive, freshly independently replayed mathematical evidence.",
+      "archived_native_witness": {
+        "receipt": "reports/compare-nonnegative-replay-v1/result.json",
+        "property": "preserves evaluator output",
+        "outcome": "different_before_after_values",
+        "scope": "configured strict F32 evaluator; original and transformed HLO verified; no new native run"
+      }
+    },
+    {
+      "id": "nanRightLE",
+      "record": "HandleCompare/nonnegative-le",
+      "theorem": "TensorRewrite.Pilot.OrderedCompareProfile.quiet_nan_right_refutes",
+      "observation": "Preserves every configured logical output value.",
+      "outcome": "disproved_in_admitted_model_specialization",
+      "witness": "Zero ordered LE Abs(quiet NaN) folds false to true.",
+      "limits": "For Compare, necessary ordinary ordered-NaN condition; for contraction, exact Int sum under a unit filter. Individual archived F32 host fixtures show the executable change. No complete IEEE or backend model.",
+      "freeze": "a8b2bf1",
+      "review": "recovered-witnesses/COMPARE-SCALAR-REVIEW.md",
+      "effort_group": "compareScalarArchive",
+      "provenance": "Historical proof/source and archive, freshly independently replayed mathematical evidence.",
+      "archived_native_witness": {
+        "receipt": "reports/compare-nonnegative-replay-v1/result.json",
+        "property": "preserves evaluator output",
+        "outcome": "different_before_after_values",
+        "scope": "configured strict F32 evaluator; original and transformed HLO verified; no new native run"
+      }
+    },
+    {
+      "id": "selectContractionProduct",
+      "record": "ScalarMultiplyReduction/target-output",
+      "theorem": "TensorRewrite.Pilot.SelectContraction.not_universally_valid",
+      "observation": "Preserves every configured logical output value.",
+      "outcome": "disproved_in_admitted_model_specialization",
+      "witness": "For unit data/filter, width four, factors 2 and 3 and uniform predicate, 8 or 12 becomes 24.",
+      "limits": "For Compare, necessary ordinary ordered-NaN condition; for contraction, exact Int sum under a unit filter. Individual archived F32 host fixtures show the executable change. No complete IEEE or backend model.",
+      "freeze": "a8b2bf1",
+      "review": "recovered-witnesses/COMPARE-SCALAR-REVIEW.md",
+      "effort_group": "compareScalarArchive",
+      "provenance": "Historical proof/source and archive, freshly independently replayed mathematical evidence.",
+      "archived_native_witness": {
+        "receipt": "reports/scalar-select-replay-v2/result.json",
+        "property": "preserves evaluator output",
+        "outcome": "different_before_after_values",
+        "scope": "configured strict F32 evaluator; original and transformed HLO verified; no new native run"
       }
     }
   ],
@@ -911,6 +988,41 @@
         0.6
       ],
       "notes": "191s setup to first complete replay; individual measured compilations include three unsuccessful proof compilations. Reused historic negative certificates, two new exact classifications and two coordinate equations. Missing archive-discovery time.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "compareScalarArchive": {
+      "review": "recovered-witnesses/COMPARE-SCALAR-REVIEW.md",
+      "freeze_commit": "a8b2bf1",
+      "candidate_commit": "a8b2bf1",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [],
+      "independent_review_elapsed_seconds": 135,
+      "review_compiler_seconds": [
+        4.205
+      ],
+      "notes": "Archive checks 0.153s. All three proofs and native witnesses historical; no new native execution. Review compiler total includes expected rejections.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "selectContractionBoundary": {
+      "review": "scalar-select-exact/REVIEW.md",
+      "freeze_commit": "bb8328a",
+      "candidate_commit": "f4b9747",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.365,
+        0.315,
+        0.327
+      ],
+      "independent_review_elapsed_seconds": 82,
+      "review_compiler_seconds": [
+        0.34,
+        0.32,
+        0.345,
+        0.334
+      ],
+      "notes": "23s freeze to proof commit, first proof compiled; selected factors and inputs generalized beyond the historical fixed witness.",
       "active_seconds": null,
       "token_count": null
     }
