@@ -66,6 +66,13 @@ for result in followup.get('counterexamples', []):
     row.setdefault('reviewed_model_counterexamples', []).append(result)
     row['work_state'] = 'revised_model_partition_verified_whole_record_open'
 
+for diagnostic in followup.get('guard_diagnostics', []):
+    assert (packet / diagnostic['review']).is_file(), diagnostic['review']
+    row = indexed[diagnostic['record']]
+    row.setdefault('reviewed_guard_diagnostics', []).append(diagnostic)
+    if row['work_state'] != 'revised_model_partition_verified_whole_record_open':
+        row['work_state'] = 'attempted_guard_diagnostic_source_obligation_open'
+
 historical = []
 for r in cases:
     old = r['lean_result']
@@ -99,6 +106,7 @@ for row in modern:
     logical = row.get('reviewed_record_observation', {})
     groups = set(logical.get('effort_groups', []))
     groups.update(x['effort_group'] for x in row.get('reviewed_model_counterexamples', []))
+    groups.update(x['effort_group'] for x in row.get('reviewed_guard_diagnostics', []))
     if groups:
         assert groups <= followup['effort_groups'].keys()
         row['effort']['new_shared_measurement_groups'] = sorted(groups)

@@ -648,6 +648,89 @@
         "nested": "transposeSourceArrays",
         "broadcastTranspose": "transposeSourceArrays"
       }
+    },
+    {
+      "name": "concatScanSelection",
+      "record_branches": {
+        "HandleSlice/concat-exact-piece": [
+          "exactPiece"
+        ],
+        "HandleSlice/concat-subrange-single": [
+          "unary"
+        ],
+        "HandleSlice/concat-subrange-multi": [
+          "subrange"
+        ]
+      },
+      "models": {
+        "exactPiece": "exactPiece",
+        "unary": "unary",
+        "subrange": "subrange"
+      },
+      "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
+      "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+      "reviews": [
+        "slice-concat-scan/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "exactPiece": "concatOrderedScan",
+        "unary": "concatOrderedScan",
+        "subrange": "concatOrderedScan"
+      }
+    },
+    {
+      "name": "predicateCompareBranches",
+      "record_branches": {
+        "HandleCompare/predicate-eq-lhs": [
+          "eq-lhs"
+        ],
+        "HandleCompare/predicate-eq-rhs": [
+          "eq-rhs"
+        ],
+        "HandleCompare/predicate-ne-lhs": [
+          "ne-lhs"
+        ],
+        "HandleCompare/predicate-ne-rhs": [
+          "ne-rhs"
+        ]
+      },
+      "models": {
+        "eq-lhs": "eq-lhs",
+        "eq-rhs": "eq-rhs",
+        "ne-lhs": "ne-lhs",
+        "ne-rhs": "ne-rhs"
+      },
+      "scope": "For arbitrary-rank PRED tensors the four source orientations forward the unguarded operand under the executable constant recognizer: eq with true; ne with false.",
+      "residual": "Pure Bool model and literal wrapper maps. Physical storage, dynamic type details, dispatch success and graph effects unverified.",
+      "reviews": [
+        "compare-guards/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "eq-lhs": "compareGuardValues",
+        "eq-rhs": "compareGuardValues",
+        "ne-lhs": "compareGuardValues",
+        "ne-rhs": "compareGuardValues"
+      }
+    },
+    {
+      "name": "causalValueCriterion",
+      "record_branches": {
+        "HandleCompare/causal-mask": [
+          "causalBoundary"
+        ]
+      },
+      "models": {
+        "causalBoundary": "causalBoundary"
+      },
+      "scope": "For fixed yes/no/RHS values under decidable ordinary equality, Select followed by NE equals every predicate exactly iff at each index yes differs from RHS and no equals RHS. Positive integer GE specialization uses one/zero/zero; PRED executable guards also imply the conclusion.",
+      "residual": "All-mask necessity can be stronger than needed by one fixed GE expression. PRED NE-zero may preempt the causal branch. Integer recognizing guards and floating comparison modes have distinct source obligations.",
+      "reviews": [
+        "compare-guards/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "causalBoundary": "compareGuardValues"
+      },
+      "outcome": "exact_preservation_condition_proved"
     }
   ],
   "counterexamples": [
@@ -1614,6 +1697,95 @@
       "notes": "Freeze 8d413a3 had unused binder warning. Refroze before proof under identical quantifiers. Corrected induction coercion and vector control; reviewer also repaired concrete dependent numeral. Historical composition loop and tensor laws directly reused.",
       "active_seconds": null,
       "token_count": null
+    },
+    "concatOrderedScan": {
+      "review": "slice-concat-scan/REVIEW.md",
+      "freeze_commit": "590ceb5",
+      "candidate_commit": "f8f4a46",
+      "worker_elapsed_seconds": 97,
+      "author_compiler_seconds": [
+        0.47,
+        0.534,
+        0.314,
+        0.351,
+        0.318,
+        0.463,
+        0.483,
+        0.445,
+        0.448,
+        0.579,
+        0.621,
+        0.487
+      ],
+      "independent_review_elapsed_seconds": 87,
+      "review_compiler_seconds": [
+        3.204
+      ],
+      "notes": "Coordinator first five dependency/spec compilations precede worker. Two-phase successful ordered scan, 3.526s author proof and controls including five failed invocations. Historical segment lemmas reused. Review includes independent endpoint tests.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "compareGuardValues": {
+      "review": "compare-guards/REVIEW.md",
+      "freeze_commit": "445145c",
+      "candidate_commit": "6e149c0",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.334,
+        0.316,
+        0.401,
+        0.388
+      ],
+      "independent_review_elapsed_seconds": 127,
+      "review_compiler_seconds": [
+        0.776,
+        1.006,
+        0.496,
+        0.51
+      ],
+      "notes": "Combined reviewer wall includes squareDuplicateDiagnostic; .776s common Tensor/ConstantGuard time charged here only. One failed proof compile on dependent controls. Concrete integer GE specialization and PRED guards have separate reachability.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "squareDuplicateDiagnostic": {
+      "review": "broadcast-reshape-square/REVIEW.md",
+      "freeze_commit": "543634b",
+      "candidate_commit": "58b9a42",
+      "worker_elapsed_seconds": 98,
+      "author_compiler_seconds": [
+        0.331,
+        0.446,
+        0.347,
+        0.343,
+        0.379,
+        0.293,
+        0.291,
+        0.26,
+        0.269,
+        0.29,
+        0.284,
+        0.346,
+        0.387
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        2.774,
+        0.303,
+        0.359
+      ],
+      "notes": "58s setup/freeze, 40s through proof commit, one failed tactic. Review shared with compareGuardValues. Diagnostic excluded from accepted source/model-coverage count.",
+      "active_seconds": null,
+      "token_count": null
     }
-  }
+  },
+  "guard_diagnostics": [
+    {
+      "record": "HandleBroadcast/reshape",
+      "id": "duplicateProjectionSquare",
+      "scope": "Same-size square with [0,0]. Pure projection agrees with row-major reshape for all tensor inputs exactly when side <=1. Witness (0,1) on side two gives 0 vs 1.",
+      "source_boundary": "Client rejects duplicates; inspected HLO shape checks alone do not enforce uniqueness. Native literal write semantics differ from the projection model. Neither source counterexample nor positive legal-domain proof.",
+      "review": "broadcast-reshape-square/REVIEW.md",
+      "effort_group": "squareDuplicateDiagnostic"
+    }
+  ]
 }

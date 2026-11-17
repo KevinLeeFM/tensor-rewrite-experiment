@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "6a7afdef96ed5b34cfe7cc3fb07faff80746e0a449894765dce368d9d1997889",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "3bb60972b63c25c9cea28a1fab171e234df95ad6d5f58b042204e1212bdf8bb0",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -1160,15 +1160,28 @@
         "id": "HandleBroadcast/reshape",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "attempted_guard_diagnostic_source_obligation_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
-        }
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "squareDuplicateDiagnostic"
+          ]
+        },
+        "reviewed_guard_diagnostics": [
+          {
+            "record": "HandleBroadcast/reshape",
+            "id": "duplicateProjectionSquare",
+            "scope": "Same-size square with [0,0]. Pure projection agrees with row-major reshape for all tensor inputs exactly when side <=1. Witness (0,1) on side two gives 0 vs 1.",
+            "source_boundary": "Client rejects duplicates; inspected HLO shape checks alone do not enforce uniqueness. Native literal write semantics differ from the projection model. Neither source counterexample nor positive legal-domain proof.",
+            "review": "broadcast-reshape-square/REVIEW.md",
+            "effort_group": "squareDuplicateDiagnostic"
+          }
+        ]
       },
       {
         "id": "HandleBroadcast/scalar-user-dynamicslice",
@@ -1473,14 +1486,35 @@
         "id": "HandleCompare/causal-mask",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "compareGuardValues"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "causalValueCriterion",
+          "branches": [
+            "causalBoundary"
+          ],
+          "accepted_models": [
+            "causalBoundary"
+          ],
+          "outcome": "exact_preservation_condition_proved",
+          "effort_groups": [
+            "compareGuardValues"
+          ],
+          "scope": "For fixed yes/no/RHS values under decidable ordinary equality, Select followed by NE equals every predicate exactly iff at each index yes differs from RHS and no equals RHS. Positive integer GE specialization uses one/zero/zero; PRED executable guards also imply the conclusion.",
+          "residual": "All-mask necessity can be stronger than needed by one fixed GE expression. PRED NE-zero may preempt the causal branch. Integer recognizing guards and floating comparison modes have distinct source obligations.",
+          "reviews": [
+            "compare-guards/REVIEW.md"
+          ]
         }
       },
       {
@@ -1847,56 +1881,140 @@
         "id": "HandleCompare/predicate-eq-lhs",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "compareGuardValues"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "predicateCompareBranches",
+          "branches": [
+            "eq-lhs"
+          ],
+          "accepted_models": [
+            "eq-lhs"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "compareGuardValues"
+          ],
+          "scope": "For arbitrary-rank PRED tensors the four source orientations forward the unguarded operand under the executable constant recognizer: eq with true; ne with false.",
+          "residual": "Pure Bool model and literal wrapper maps. Physical storage, dynamic type details, dispatch success and graph effects unverified.",
+          "reviews": [
+            "compare-guards/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandleCompare/predicate-eq-rhs",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "compareGuardValues"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "predicateCompareBranches",
+          "branches": [
+            "eq-rhs"
+          ],
+          "accepted_models": [
+            "eq-rhs"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "compareGuardValues"
+          ],
+          "scope": "For arbitrary-rank PRED tensors the four source orientations forward the unguarded operand under the executable constant recognizer: eq with true; ne with false.",
+          "residual": "Pure Bool model and literal wrapper maps. Physical storage, dynamic type details, dispatch success and graph effects unverified.",
+          "reviews": [
+            "compare-guards/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandleCompare/predicate-ne-lhs",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "compareGuardValues"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "predicateCompareBranches",
+          "branches": [
+            "ne-lhs"
+          ],
+          "accepted_models": [
+            "ne-lhs"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "compareGuardValues"
+          ],
+          "scope": "For arbitrary-rank PRED tensors the four source orientations forward the unguarded operand under the executable constant recognizer: eq with true; ne with false.",
+          "residual": "Pure Bool model and literal wrapper maps. Physical storage, dynamic type details, dispatch success and graph effects unverified.",
+          "reviews": [
+            "compare-guards/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandleCompare/predicate-ne-rhs",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "compareGuardValues"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "predicateCompareBranches",
+          "branches": [
+            "ne-rhs"
+          ],
+          "accepted_models": [
+            "ne-rhs"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "compareGuardValues"
+          ],
+          "scope": "For arbitrary-rank PRED tensors the four source orientations forward the unguarded operand under the executable constant recognizer: eq with true; ne with false.",
+          "residual": "Pure Bool model and literal wrapper maps. Physical storage, dynamic type details, dispatch success and graph effects unverified.",
+          "reviews": [
+            "compare-guards/REVIEW.md"
+          ]
         }
       },
       {
@@ -7335,7 +7453,7 @@
         "id": "HandleSlice/concat-exact-piece",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Concatenation.slice_exact_piece"
@@ -7344,14 +7462,35 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "concatOrderedScan"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "concatScanSelection",
+          "branches": [
+            "exactPiece"
+          ],
+          "accepted_models": [
+            "exactPiece"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "concatOrderedScan"
+          ],
+          "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
+          "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+          "reviews": [
+            "slice-concat-scan/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandleSlice/concat-subrange-multi",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Concatenation.slice_selected"
@@ -7360,14 +7499,35 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "concatOrderedScan"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "concatScanSelection",
+          "branches": [
+            "subrange"
+          ],
+          "accepted_models": [
+            "subrange"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "concatOrderedScan"
+          ],
+          "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
+          "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+          "reviews": [
+            "slice-concat-scan/REVIEW.md"
+          ]
         }
       },
       {
         "id": "HandleSlice/concat-subrange-single",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "revised_model_partition_verified_whole_record_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Concatenation.slice_single_piece"
@@ -7376,7 +7536,28 @@
         "effort": {
           "active_seconds": null,
           "elapsed_seconds": null,
-          "reason": "not measured per record in inherited ledger"
+          "reason": "not measured per record in inherited ledger",
+          "new_shared_measurement_groups": [
+            "concatOrderedScan"
+          ]
+        },
+        "reviewed_record_observation": {
+          "id": "concatScanSelection",
+          "branches": [
+            "unary"
+          ],
+          "accepted_models": [
+            "unary"
+          ],
+          "outcome": "proved_in_declared_logical_value_model",
+          "effort_groups": [
+            "concatOrderedScan"
+          ],
+          "scope": "Derived prefix, selected extent, offset and fit from actual strict-start/inclusive-end scan over ordered blocks; complete static tensor equality for exact/full piece or selected single/multi operand slice when other axes retained.",
+          "residual": "Mathematical unit-stride indices and successful scan. General off-axis cropping for subranges is a separate obligation. C++ mutation, layout and dispatch unverified.",
+          "reviews": [
+            "slice-concat-scan/REVIEW.md"
+          ]
         }
       },
       {
@@ -9503,15 +9684,16 @@
     "records_with_archived_configured_native_counterexample": 11,
     "records_with_reviewed_counterexample": 16,
     "reviewed_observation_outcomes": {
-      "proved_in_declared_logical_value_model": 41,
-      "exact_preservation_condition_proved": 8
+      "proved_in_declared_logical_value_model": 48,
+      "exact_preservation_condition_proved": 9
     },
     "work_state_counts": {
-      "no_attempt_evidence_in_inherited_ledger": 185,
-      "revised_model_partition_verified_whole_record_open": 55,
-      "inherited_checked_partial_evidence": 248
+      "no_attempt_evidence_in_inherited_ledger": 179,
+      "revised_model_partition_verified_whole_record_open": 63,
+      "inherited_checked_partial_evidence": 245,
+      "attempted_guard_diagnostic_source_obligation_open": 1
     },
-    "records_with_reviewed_record_observation": 49
+    "records_with_reviewed_record_observation": 57
   },
   "historical_cases": {
     "records": [
@@ -12277,6 +12459,85 @@
         0.435
       ],
       "notes": "Freeze 8d413a3 had unused binder warning. Refroze before proof under identical quantifiers. Corrected induction coercion and vector control; reviewer also repaired concrete dependent numeral. Historical composition loop and tensor laws directly reused.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "concatOrderedScan": {
+      "review": "slice-concat-scan/REVIEW.md",
+      "freeze_commit": "590ceb5",
+      "candidate_commit": "f8f4a46",
+      "worker_elapsed_seconds": 97,
+      "author_compiler_seconds": [
+        0.47,
+        0.534,
+        0.314,
+        0.351,
+        0.318,
+        0.463,
+        0.483,
+        0.445,
+        0.448,
+        0.579,
+        0.621,
+        0.487
+      ],
+      "independent_review_elapsed_seconds": 87,
+      "review_compiler_seconds": [
+        3.204
+      ],
+      "notes": "Coordinator first five dependency/spec compilations precede worker. Two-phase successful ordered scan, 3.526s author proof and controls including five failed invocations. Historical segment lemmas reused. Review includes independent endpoint tests.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "compareGuardValues": {
+      "review": "compare-guards/REVIEW.md",
+      "freeze_commit": "445145c",
+      "candidate_commit": "6e149c0",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.334,
+        0.316,
+        0.401,
+        0.388
+      ],
+      "independent_review_elapsed_seconds": 127,
+      "review_compiler_seconds": [
+        0.776,
+        1.006,
+        0.496,
+        0.51
+      ],
+      "notes": "Combined reviewer wall includes squareDuplicateDiagnostic; .776s common Tensor/ConstantGuard time charged here only. One failed proof compile on dependent controls. Concrete integer GE specialization and PRED guards have separate reachability.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "squareDuplicateDiagnostic": {
+      "review": "broadcast-reshape-square/REVIEW.md",
+      "freeze_commit": "543634b",
+      "candidate_commit": "58b9a42",
+      "worker_elapsed_seconds": 98,
+      "author_compiler_seconds": [
+        0.331,
+        0.446,
+        0.347,
+        0.343,
+        0.379,
+        0.293,
+        0.291,
+        0.26,
+        0.269,
+        0.29,
+        0.284,
+        0.346,
+        0.387
+      ],
+      "independent_review_elapsed_seconds": null,
+      "review_compiler_seconds": [
+        2.774,
+        0.303,
+        0.359
+      ],
+      "notes": "58s setup/freeze, 40s through proof commit, one failed tactic. Review shared with compareGuardValues. Diagnostic excluded from accepted source/model-coverage count.",
       "active_seconds": null,
       "token_count": null
     }
