@@ -1,0 +1,59 @@
+{
+  "utc_start": "2026-11-17T05:18:31Z",
+  "utc_end": "2026-11-17T05:20:34Z",
+  "monotonic_start_seconds": 29959.367381984,
+  "monotonic_end_seconds": 30082.875639423,
+  "elapsed_development_seconds": 123.5086,
+  "setup_seconds": 0,
+  "build_wait_seconds": 0,
+  "review_seconds": 0,
+  "compiler_version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "frozen_hashes": "All 28 entries in goal-freeze.json matched at start; frozen files were not edited.",
+  "successful_local_prerequisite": {
+    "file": "SpaceDepthProof.lean",
+    "theorem": "delinearize_linearize",
+    "result": "compiled successfully to ordered-build/SpaceDepthProof.olean",
+    "axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "scope": "Local generic row-major index inverse prerequisite only; not the candidate rewrite."
+  },
+  "proof_attempts": [
+    {
+      "command": "LEAN=/workspace/toolchains/lean-4.35.0-linux/bin/lean LEAN_PATH=comparisons/heldout-space-depth-selection/ordered-build:/workspace/tensor-heldout-chunk-20261117 /workspace/toolchains/lean-4.35.0-linux/bin/lean comparisons/heldout-space-depth-selection/SpaceDepthProof.lean",
+      "reported_compiler_wall_seconds": 0.8,
+      "result": "failed; simp reduced original/replacement to a direct source-index versus concatenate/readAt equality.",
+      "error": "unsolved goal: input (delinearize shape \u27e8\u2191(linearize inner (Tensor.transposeIndex plan.axes.permutation \u22ef (delinearize (transposedShape inner plan.axes.permutation) \u27e8\u2191(linearize outer out), \u22ef\u27e9))), \u22ef\u27e9) = concatenate (chunkBlocks ...) (delinearize (destinationFrame...shape...) \u27e8\u2191(linearize outer out), \u22ef\u27e9)."
+    },
+    {
+      "command": "Same Lean command after appending row_join and column_join, initially attempted with omega.",
+      "reported_compiler_wall_seconds": 0.8,
+      "result": "failed; omega could not discharge Euclidean division/modulo identities in row/column recovery.",
+      "error": "row goal involved (r.val * cols + c.val) / cols = r.val; column goal involved (r.val * cols + c.val) % cols = c.val. Omega did not infer the needed positive-divisor and remainder identities."
+    },
+    {
+      "command": "Same Lean command after replacing omega with direct rewrite lemmas; first rewrite pattern had operands in the wrong multiplication order.",
+      "reported_compiler_wall_seconds": 0.8,
+      "result": "failed.",
+      "error": "rewrite failed: no occurrence of (cols * ?x + ?y) / cols; actual target was (\u2191r * cols + \u2191c) / cols = \u2191r (and analogous modulo target)."
+    },
+    {
+      "command": "Same Lean command after commuting the multiplication factors and using Nat.mul_add_div/Nat.mul_add_mod.",
+      "reported_compiler_wall_seconds": 0.9,
+      "result": "failed on the main Goal, but row_join and column_join compiled; added induction over rank to prove delinearize_linearize.",
+      "error": "main Goal remained the same direct equality between the reshape/transpose-derived input index and concatenate over chunkBlocks."
+    },
+    {
+      "command": "LEAN=/workspace/toolchains/lean-4.35.0-linux/bin/lean LEAN_PATH=comparisons/heldout-space-depth-selection/ordered-build:/workspace/tensor-heldout-chunk-20261117 /workspace/toolchains/lean-4.35.0-linux/bin/lean -o comparisons/heldout-space-depth-selection/ordered-build/SpaceDepthProof.olean comparisons/heldout-space-depth-selection/SpaceDepthProof.lean",
+      "reported_compiler_wall_seconds": 0.6,
+      "result": "passed for the standalone index inverse prerequisite only.",
+      "output": "_private...delinearize_linearize depends on axioms: [propext, Classical.choice, Quot.sound]"
+    }
+  ],
+  "exact_failed_candidate_proof_source": "theorem proof : Goal := by\n  unfold Goal\n  intro rank outerRank shape inner outer plan \u03b1 input\n  funext out\n  simp only [original, replacement, reshapeTensor, Tensor.transpose, Tensor.reindex, reshapeIndex, TensorRewrite.Pilot.Tensor.reindex]\n",
+  "blocker": "No frozen theorem connects the outer reshape coordinate through the transpose and inner reshape to the actual output coordinates of the ordered chunk concatenation. The attempt now needs (1) exact index transport across plan-derived shape equalities and reshape/transpose, and (2) a quotient/remainder decomposition of the concat-axis coordinate tied to chunk_select and source-frame casts. The local delinearize/linearize inverse does not establish either. Proving these is a multi-lemma coordinate-algebra task beyond this bounded proof attempt; no candidate theorem proof was produced.",
+  "outcome": "proof attempt stopped at concrete coordinate-identity blocker; independent final review and adversarial controls not run because there is no candidate proof.",
+  "speedup_claim": null
+}
