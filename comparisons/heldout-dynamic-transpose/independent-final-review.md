@@ -1,0 +1,9 @@
+# Independent final review
+
+Fresh gpt-6-luna reviewer, no subagents or checkout edits: **ACCEPT** the exact frozen `Heldout.DynamicTranspose.Goal` for its declared logical model. The reviewer independently verified baseline commit `ae976de69ee0bbfeb00a3fa03f50969917fcf361` and all 14 frozen input hashes, and read repository and experiment instructions, source, test, TensorRight DSL and Lean comparison, selection/checkpoint, frozen goal, proof, all seven semantic imports, guard, audit, tests and negative controls.
+
+The actual inverse permutation maps starts and widths; the proof handles per-axis clamped mathematical `Int` starts and does not assume the desired equality. Import inspection found no hidden target-specific equality. The 835-name guard has two generic frozen exceptions, clamping and coordinate bounds; that finite inventory is not an exhaustive contamination test, so this verdict also rests on actual closure inspection.
+
+In a fresh temporary working-tree copy, pinned Lean 4.35.0 acceptance replay passed in 7.03 seconds. Exact theorem signature and `[propext, Classical.choice, Quot.sound]` axioms were confirmed. Wrong-start, wrong-signature and known-contamination controls failed with intended diagnostics; nonidentity permutation, clamped nonempty, empty-output and scalar controls passed. Proof SHA256 `8488815e16cf16c57695c0cae1351fc756b680d53ad05521213bffe1a79d2701`; manifest SHA256 `d93f89179b10c7ea2d5a416d3293117dad0d5509e8d66c1ab687336302230496`. Focused review approximately four minutes, with replay reported separately; exact overlap is unknown.
+
+This proves a layout-insensitive logical model, not native start decoding, source reachability, physical layout or C++ correspondence. The inspected paper comparison uses identity-permutation relabeling; broader mathematical scope here does not establish global novelty or a new paper-suite rule. No speedup follows.

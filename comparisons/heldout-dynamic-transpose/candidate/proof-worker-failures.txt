@@ -1,0 +1,7 @@
+Proof attempt failure log (base ae976de69ee0bbfeb00a3fa03f50969917fcf361)
+
+1. `lake env lean ...` could not start: `/bin/bash: lake: command not found`. The installed pinned Lean binary was found at /workspace/toolchains/lean-4.35.0-linux/bin/lean. No setup or downloads were needed; the bounded replay proceeded with direct Lean and a temporary LEAN_PATH.
+2. The first proof shape used `funext outputIndex; funext axis; apply Fin.ext`. Lean correctly reported that after output extensionality the goal was equality of α-valued tensor observations, not yet equality of Fin coordinates. Reduced reindexing and used congruence before extensionality on the index.
+3. `omega` initially failed on the coordinate equality because a `Fin.cast` across the permutation-dependent extent remained opaque. The residual goal compared equal clamp expressions, with the cast witnessing the extent equality. Adding `Fin.cast` reduction and `p.output_input` to the simp set solved the goal; no hypothesis or statement change was needed.
+
+4. Coordinator integration required the frozen replay module path `Spec` (with Spec.olean at the LEAN_PATH root), rather than the namespaced import path. Changed only the first import in Proof.lean to `public import Spec`; the theorem body and frozen inputs are unchanged. Fresh offline compilation of seven semantic imports, Spec.olean, Proof.olean, and a separate `import Proof` axiom audit all passed.

@@ -1,0 +1,37 @@
+{
+  "assignment": "Prove the unchanged Heldout.DynamicTranspose.Goal",
+  "base_commit": "ae976de69ee0bbfeb00a3fa03f50969917fcf361",
+  "result": "proof candidate compiled; coordinator acceptance and independent review pending",
+  "scope": "Arbitrary-permutation logical DynamicSlice/transpose, including zero dimensions; mathematical Int starts and legal widths as frozen in Spec.lean. No C++ correspondence claim.",
+  "frozen_spec_sha256": "b23267a40298bcdb358c9b5b985afb7a9d85183106841c51ba6fed53814de26b",
+  "freeze_manifest_sha256": "d93f89179b10c7ea2d5a416d3293117dad0d5509e8d66c1ab687336302230496",
+  "proof_sha256": "8488815e16cf16c57695c0cae1351fc756b680d53ad05521213bffe1a79d2701",
+  "lean": "/workspace/toolchains/lean-4.35.0-linux/bin/lean (Lean 4.35.0, eb6cafb7290e8bd5f2937522d8d804f58f02bafc)",
+  "imports": [
+    "TensorRewrite.Pilot.Tensor",
+    "TensorRewrite.Pilot.Indexing",
+    "TensorRewrite.Pilot.Permutation",
+    "TensorRewrite.Pilot.ConstantGuard",
+    "TensorRewrite.Pilot.DynamicIndexValue",
+    "TensorRewrite.Pilot.DynamicIndexBounds",
+    "TensorRewrite.Pilot.DynamicIndex",
+    "Comparisons.HeldoutDynamicTranspose.Spec"
+  ],
+  "proof_file_imports_only_spec": true,
+  "proof_technique": "Function extensionality reduces tensor equality to input-index equality. Simplification exposes per-axis clamps; Fin.ext plus simp [Fin.cast, ..., p.output_input] resolves dependent permutation casts and identical clamped coordinates.",
+  "active_effort_minutes_approx": 11,
+  "wall_elapsed_minutes_approx": 11,
+  "compiler_time_seconds": 7.8,
+  "setup_time": "Lean binary was already present; no setup/download. Initial `lake env lean` attempt failed because `lake` is not on PATH; switched to direct Lean with isolated temporary LEAN_PATH.",
+  "proof_compile_command": "LEAN=/workspace/toolchains/lean-4.35.0-linux/bin/lean; compile the seven TensorRewrite/Pilot imports in dependency order to a temporary LEAN_PATH, compile the frozen Spec.lean as <temp>/Spec.olean, compile candidate/Proof.lean as <temp>/Proof.olean, then compile a separate audit containing `import Proof` and `#print axioms Heldout.DynamicTranspose.proof`.",
+  "axiom_audit": "Imported Proof.olean into a fresh temporary Audit.lean and ran #print axioms Heldout.DynamicTranspose.proof; result [propext, Classical.choice, Quot.sound].",
+  "controls": "Not run by proof worker; coordinator owns controls and acceptance.",
+  "failures": [
+    "Initial direct tactic attempt applied Fin.ext while the goal was still equality of tensor values; corrected by reducing reindexing and applying congruence before index extensionality.",
+    "First coordinate arithmetic attempt left a dependent Fin.cast opaque, so omega could not prove the coordinate equality. Simplifying Fin.cast and the permutation inverse law discharged the actual goal."
+  ],
+  "new_axioms_sorry_admit_native_decide": false,
+  "statement_or_frozen_input_changed": false,
+  "review_status": "unreviewed proof candidate; independent final review required",
+  "import_path_repair": "Changed only the module import from Comparisons.HeldoutDynamicTranspose.Spec to public import Spec to match the frozen replay module layout; body, theorem, assumptions and frozen Spec remain unchanged. Fresh import Proof audit passed."
+}

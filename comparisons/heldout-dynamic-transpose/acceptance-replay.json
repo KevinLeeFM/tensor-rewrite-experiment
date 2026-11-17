@@ -1,0 +1,123 @@
+{
+  "utc": "2026-11-17T14:40:10.688712+00:00",
+  "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "seconds": 7.905264649001765,
+  "result": "passed",
+  "records": [
+    {
+      "source": "TensorRewrite/Pilot/Tensor.lean",
+      "seconds": 0.3515868410031544,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/Indexing.lean",
+      "seconds": 0.3394573420009692,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/Permutation.lean",
+      "seconds": 0.3419533539999975,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/ConstantGuard.lean",
+      "seconds": 0.44298343999980716,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/DynamicIndexValue.lean",
+      "seconds": 0.27649962300347397,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/DynamicIndexBounds.lean",
+      "seconds": 0.3646695520001231,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "TensorRewrite/Pilot/DynamicIndex.lean",
+      "seconds": 0.3615285310006584,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/Spec.lean",
+      "seconds": 0.33670222000364447,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "@[expose] def Heldout.DynamicTranspose.Goal : Prop :=\n\u2200 (rank : Nat) (s : Shape rank) (p : AxisPermutation rank) (sizes : Shape rank) (starts : Fin rank \u2192 Int)\n  (fits : \u2200 (i : Fin rank), sizes i \u2264 transposedShape s p i) (\u03b1 : Type) (input : Tensor s \u03b1),\n  slice starts fits (Tensor.transpose p \u22ef input) = Tensor.transpose p \u22ef (slice (sourceStarts starts p) \u22ef input)\n'Heldout.DynamicTranspose.Goal' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/SpecTests.lean",
+      "seconds": 0.4009250000017346,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/Guard.lean",
+      "seconds": 0.5894288829949801,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/candidate/Proof.lean",
+      "seconds": 0.4040803070020047,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/Audit.lean",
+      "seconds": 0.5036083939994569,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": "DYNAMIC_TRANSPOSE_BASELINE_GUARD checked=835\nDYNAMIC_TRANSPOSE_SIGNATURE exact\n'Heldout.DynamicTranspose.proof' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+    },
+    {
+      "source": "comparisons/heldout-unit-reverse-v1/controls/Forbidden.lean",
+      "seconds": 0.38097772000037367,
+      "exit_code": 0,
+      "expected_failure": null,
+      "output": ""
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/controls/Leak.lean",
+      "seconds": 1.8662786569984746,
+      "exit_code": 1,
+      "expected_failure": "DYNAMIC_TRANSPOSE_BASELINE_LEAK",
+      "output": "comparisons/heldout-dynamic-transpose/controls/Leak.lean:3:0: error: DYNAMIC_TRANSPOSE_BASELINE_LEAK: TensorRewrite.Pilot.Tensor.reverseIndex_comp\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/controls/WrongSignature.lean",
+      "seconds": 0.5371788310003467,
+      "exit_code": 1,
+      "expected_failure": "DYNAMIC_TRANSPOSE_SIGNATURE_MISMATCH",
+      "output": "comparisons/heldout-dynamic-transpose/controls/WrongSignature.lean:5:0: error: DYNAMIC_TRANSPOSE_SIGNATURE_MISMATCH: _private.comparisons.\u00abheldout-dynamic-transpose\u00bb.controls.WrongSignature.0.wrongSignature versus Heldout.DynamicTranspose.Goal\n"
+    },
+    {
+      "source": "comparisons/heldout-dynamic-transpose/controls/FalseReplacement.lean",
+      "seconds": 0.40281602600589395,
+      "exit_code": 1,
+      "expected_failure": "Tactic `decide` proved that the proposition",
+      "output": "comparisons/heldout-dynamic-transpose/controls/FalseReplacement.lean:58:107: error: Tactic `decide` proved that the proposition\n  slice starts fits (Tensor.transpose perm \u22ef input) out = Tensor.transpose perm \u22ef (slice starts \u22ef input) out\nis false\n"
+    }
+  ],
+  "proof_sha256": "8488815e16cf16c57695c0cae1351fc756b680d53ad05521213bffe1a79d2701",
+  "freeze_sha256": "d93f89179b10c7ea2d5a416d3293117dad0d5509e8d66c1ab687336302230496",
+  "forbidden_inventory_sha256": "f34738304844208c2464f2206ab10cbe9eac95760425d0cb428977e2a867c99a"
+}
