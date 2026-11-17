@@ -1,0 +1,31 @@
+Focused compiler-repair log (Lean 4.35.0):
+
+1. Initial compile: discovered that the tail-indexed original and replacement
+   dimensions use different Fin constructors across the split boundary. The
+   first attempt also lacked the `OriginalSplitConnection` and
+   `ChunkIntervals` namespaces for the replacement cut shape and chunk list.
+2. Second compile: exposed the three exact regions needed (pre-split,
+   split-width, post-split); the initial attempt incorrectly treated the
+   post-split source index as `castSucc`.
+3. Third compile: showed local Fin aliases did not syntactically match casts
+   remaining after `tail_axis`. Defining `d` and `e` using the exact casts in
+   the goal and normalizing addition association resolved this.
+4. Fourth compile: the split-width replacement extent needed a direct
+   specialization of `chunk_output_shape`; the final proof now supplies that
+   equality explicitly. The extensional distinction `split ≠ concatAxis` is
+   used in the shape reduction.
+5. A separate attempted test module could not access named test plans because
+   GoalCandidateTests declarations are not exported. The temporary test module
+   was removed; no source fixture was modified.
+
+Final command:
+  LEAN_PATH=/tmp/suffix-proof-olean \
+    /workspace/toolchains/lean-4.35.0-linux/bin/lean \
+    comparisons/heldout-space-depth-selection/WorkerSuffix.lean \
+    -o /tmp/suffix-proof-olean/WorkerSuffix.olean
+
+Final output:
+  'Heldout.WorkerSuffix.suffix_extents' depends on axioms:
+  [propext, Classical.choice, Quot.sound]
+
+No sorryAx or warning is present in the final worker module output.
