@@ -285,6 +285,35 @@
         "gatherSignedBoundary": "gatherBound"
       },
       "outcome": "exact_preservation_condition_proved"
+    },
+    {
+      "name": "staticSignedSliceOfPad",
+      "record_branches": {
+        "HandleSlice/inside-pad": [
+          "inside-pad"
+        ],
+        "HandleSlice/undo-pad": [
+          "undo-pad"
+        ],
+        "HandleSlice/padding-only": [
+          "padding-only"
+        ]
+      },
+      "models": {
+        "inside-pad": "Inside",
+        "undo-pad": "Undo",
+        "padding-only": "PaddingOnly"
+      },
+      "scope": "Arbitrary-rank legal static Slice of a signed Pad over pure homogeneous values. Inside derives legal shifted bounds; undo reconstructs input data; an outside-axis witness returns fill.",
+      "residual": "Source branch precedence, runtime extents, conversion, replacement status, layout, machine overflow and graph effects remain outside the three observations.",
+      "reviews": [
+        "slice-of-pad/REVIEW.md"
+      ],
+      "effort_by_model": {
+        "Inside": "slicePad",
+        "Undo": "slicePad",
+        "PaddingOnly": "slicePad"
+      }
     }
   ],
   "counterexamples": [
@@ -743,6 +772,30 @@
         4.23
       ],
       "notes": "The representability direction is inherited; necessity at every larger extent after wraparounds is new. Two proof failures repaired, review harness axiom allowlist corrected and replayed.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "slicePad": {
+      "review": "slice-of-pad/REVIEW.md",
+      "freeze_commit": "113b078",
+      "candidate_commit": "b2235b0",
+      "worker_elapsed_seconds": null,
+      "author_compiler_seconds": [
+        0.329,
+        0.48,
+        0.39,
+        0.379,
+        0.453
+      ],
+      "independent_review_elapsed_seconds": 185,
+      "review_compiler_seconds": [
+        4.492,
+        0.495,
+        0.471,
+        0.512,
+        0.374
+      ],
+      "notes": "63s freeze-to-proof commit. Compiler durations include one failed empty-case proof; review elapsed approximate. Review reused historical slice/rule05 with a proof-only arithmetic port and identified overlapping older rules 04/06.",
       "active_seconds": null,
       "token_count": null
     }
