@@ -1,0 +1,39 @@
+{
+  "status": "not_frozen_for_trial; no proof attempt authorized by this file",
+  "warning": "No ledger evidence does not establish semantic novelty. Cross-check old proofs, paper cases and source guards before acceptance.",
+  "cases": [
+    {
+      "benchmark_id": "HandleDynamicSlice/transpose",
+      "batch": "tensor-index-cases",
+      "retained_lhs": "DynamicSlice(Transpose(x,p),indices,sizes)",
+      "retained_rhs": "Transpose(DynamicSlice(x,inverse-permuted indices/sizes),p)",
+      "unreviewed_benchmark_notes_not_assumptions": "not in async computation; layout insensitive; Transpose operand",
+      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
+      "evidence": [],
+      "whole_record_mathematically_closed": false,
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReshape/iota-mixed-radix",
+      "batch": "shape-cases",
+      "retained_lhs": "Reshape(Iota(s,axis),t)",
+      "retained_rhs": "mixed-radix sum of output Iotas",
+      "unreviewed_benchmark_notes_not_assumptions": "CommonFactors contains a nontrivial output boundary at iota axis and a boundary at iota axis+1; source loop bounds determine terms",
+      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
+      "evidence": [],
+      "whole_record_mathematically_closed": false,
+      "code_correspondence": "future_work"
+    },
+    {
+      "benchmark_id": "HandleReverse/inserted-unit-dimensions",
+      "batch": "shape-cases",
+      "retained_lhs": "Reverse(Reshape(x),dims)",
+      "retained_rhs": "Reshape(Reverse(x,remapped_dims))",
+      "unreviewed_benchmark_notes_not_assumptions": "layout insensitive; inner Reshape merely inserts/deletes 1-sized dims; deleted_dimensions empty",
+      "mathematical_target_status": "needs_formal_statement_and_domain_partition",
+      "evidence": [],
+      "whole_record_mathematically_closed": false,
+      "code_correspondence": "future_work"
+    }
+  ]
+}
