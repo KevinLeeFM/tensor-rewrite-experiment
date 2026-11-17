@@ -1,0 +1,70 @@
+{
+  "development_start_utc": "2026-11-17T01:56:34.078643155Z",
+  "prior_exposure": "Only the task supplied by the coordinator and the permitted Spec.lean, Guard.lean, baseline Tensor.lean and Indexing.lean; no other project proof or solution inspected.",
+  "helper_lemmas": 0,
+  "inspection_failures": [
+    {
+      "command": "rg -n [rev patterns] /workspace/toolchains/lean-4.35.0-linux/src/lean/Init/Data/Fin /workspace/toolchains/lean-4.35.0-linux/src/lean/Std/Data/Fin*",
+      "exit_code": 2,
+      "output": "rg: /workspace/toolchains/lean-4.35.0-linux/src/lean/Init/Data/Fin: No such file or directory (os error 2)\nrg: /workspace/toolchains/lean-4.35.0-linux/src/lean/Std/Data/Fin*: No such file or directory (os error 2)\n"
+    }
+  ],
+  "compile_attempts": [
+    {
+      "attempt": 1,
+      "start_utc": "2026-11-17T01:57:23.202264+00:00",
+      "elapsed_monotonic_seconds": 0.7771145270016859,
+      "command": [
+        "/workspace/toolchains/lean-4.35.0-linux/bin/lean",
+        "-o",
+        "build/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit_code": 1,
+      "stdout": "Proof.lean:22:10: error: Tactic `rewrite` failed: motive is not type correct:\n  fun _a => \u2191(index (p.keptAxis i)) < _a\nError: Application type mismatch: The argument\n  index (p.keptAxis i)\nhas type\n  Fin (t (p.keptAxis i))\nbut is expected to have type\n  Fin _a\nin the application\n  \u2191(index (p.keptAxis i))\n\nExplanation: The rewrite tactic rewrites an expression 'e' using an equality 'a = b' by the following process. First, it looks for all 'a' in 'e'. Second, it tries to abstract these occurrences of 'a' to create a function 'm := fun _a => ...', called the *motive*, with the property that 'm a' is definitionally equal to 'e'. Third, we observe that 'congrArg' implies that 'm a = m b', which can be used with lemmas such as 'Eq.mpr' to change the goal. However, if 'e' depends on specific properties of 'a', then the motive 'm' might not typecheck.\n\nPossible solutions: use rewrite's 'occs' configuration option to limit which occurrences are rewritten, or use 'simp' or 'conv' mode, which have strategies for certain kinds of dependencies (these tactics can handle proofs and 'Decidable' instances whose types depend on the rewritten term, and 'simp' can apply user-defined '@[congr]' theorems as well).\n\n\u03b1 : Type\nn m : Nat\ns : Shape n\nt : Shape m\np : UnitInsertion s t\naxes : Fin m \u2192 Bool\ninput : Tensor s \u03b1\nindex : Index t\ni : Fin n\nunit : s i = 1\nhb : \u2191(index (p.keptAxis i)) < t (p.keptAxis i)\n\u22a2 \u2191(index (p.keptAxis i)) = 0\n'TensorRewrite.Heldout.UnitReverse.reverse_reshape' depends on axioms: [propext, sorryAx, Quot.sound]\nProof.lean:34:0: error: HELDOUT_BASELINE_LEAK: TensorRewrite.Pilot.Tensor.reverseIndex.eq_1\nProof.lean:35:8: error: Type mismatch\n  HeldoutOperational.exactGoal\nhas type\n  Lean.Name \u2192 Lean.Name \u2192 Lean.Elab.Command.CommandElabM Unit\nbut is expected to have type\n  Lean.Elab.Command.CommandElabM ?m.2\nProof.lean:36:2: error: unexpected token '`'; expected command\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 2,
+      "start_utc": "2026-11-17T01:58:10.498057+00:00",
+      "elapsed_monotonic_seconds": 0.9380028670020693,
+      "command": [
+        "/workspace/toolchains/lean-4.35.0-linux/bin/lean",
+        "-o",
+        "build/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit_code": 0,
+      "stdout": "Proof.lean:30:18: warning: This simp argument is unused:\n  h\n\nHint: Omit it from the simp argument list.\n  [apply] simp [unit, Fin.rev, Fin.cast, hz, p.extent]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\nProof.lean:32:18: warning: This simp argument is unused:\n  h\n\nHint: Omit it from the simp argument list.\n  [apply] simp [unit, Fin.rev, Fin.cast, p.extent]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'TensorRewrite.Heldout.UnitReverse.reverse_reshape' depends on axioms: [propext, Quot.sound]\nHELDOUT_BASELINE_GUARD passed\nHELDOUT_SIGNATURE exact\n",
+      "stderr": ""
+    },
+    {
+      "attempt": 3,
+      "start_utc": "2026-11-17T01:58:38.686812+00:00",
+      "elapsed_monotonic_seconds": 0.8520571169974573,
+      "command": [
+        "/workspace/toolchains/lean-4.35.0-linux/bin/lean",
+        "-o",
+        "build/Proof.olean",
+        "Proof.lean"
+      ],
+      "exit_code": 0,
+      "stdout": "'TensorRewrite.Heldout.UnitReverse.reverse_reshape' depends on axioms: [propext, Quot.sound]\nHELDOUT_BASELINE_GUARD passed\nHELDOUT_SIGNATURE exact\n",
+      "stderr": ""
+    }
+  ],
+  "development_end_utc": "2026-11-17T01:58:39.569004+00:00",
+  "elapsed_wall_seconds": 125.490361,
+  "compile_total_monotonic_seconds": 2.5671745110012125,
+  "development_elapsed_excluding_compile_seconds": 122.92318648899878,
+  "timing_definition": "Development elapsed is UTC wall interval less all measured compiler subprocess durations; includes reading, reasoning, editing, tool overhead and diagnostics. No separate setup or review undertaken by proof worker.",
+  "compiler_version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "final_proof_sha256": "a70d794b2c5e58d2de029bda2e8e4c8ac3945cabef2c996307077f42504299a0",
+  "outcome": "exact Goal proved; final compile exit 0, axiom and operational guards passed",
+  "final_axioms": [
+    "propext",
+    "Quot.sound"
+  ],
+  "setup_seconds": 0,
+  "independent_review_seconds": 0
+}
