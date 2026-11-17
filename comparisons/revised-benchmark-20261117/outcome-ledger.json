@@ -6,7 +6,7 @@
     "census/mathematical-ledger.json": "cefcf623237b5e841c3f3b736bd8743b0b1b7eae76843100f5685d0bb33fd695",
     "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
     "census/site-case-map.json": "9ccd3cd7759a20f0e129d3be899d1dec623ba82f98e8a92bebcb27f6bb0fdee9",
-    "comparisons/revised-benchmark-20261117/record-outcomes.json": "7096f44abf5ce6e2a754ef15b7b8321537bb6441fe065a30ea1252a7f6560bb0",
+    "comparisons/revised-benchmark-20261117/record-outcomes.json": "a63eeb8117c5d83955425e10a1960330445d058545687ec97f37b5ba90cbcbed",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59"
   },
   "source_candidates": {
@@ -7893,7 +7893,8 @@
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger",
           "new_shared_measurement_groups": [
-            "staticSliceShape"
+            "staticSliceShape",
+            "wholeStaticSlice"
           ]
         },
         "reviewed_record_observation": {
@@ -7906,12 +7907,14 @@
           ],
           "outcome": "exact_preservation_condition_proved",
           "effort_groups": [
-            "staticSliceShape"
+            "staticSliceShape",
+            "wholeStaticSlice"
           ],
-          "scope": "For every well-formed static axis, transformed bounds retain the declared shape exactly iff stride=1 or start<limit. Input coordinates agree on the admitted domain, with mirrored output coordinate on the reversed axis.",
-          "residual": "One axis, mathematical Int. Whole-tensor assembly, machine overflow, runtime extents, layout and graph behavior remain open.",
+          "scope": "At arbitrary static rank, preserving the declared shape and legal attributes is equivalent to stride=1 or start<limit on each transformed axis (masked axes only for reverse). Whenever legal, the complete original and replacement logical tensors agree for all input values. Unmasked axes are unchanged. Empty extents and rank zero admitted.",
+          "residual": "Signed mathematical attributes; native overflow, runtime extents, physical layout, graph dispatch/status and source correspondence open.",
           "reviews": [
-            "slice-shape-exact/REVIEW.md"
+            "slice-shape-exact/REVIEW.md",
+            "slice-shape-exact/rank/REVIEW.md"
           ]
         },
         "archived_configured_native_counterexamples": [
@@ -8941,7 +8944,8 @@
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger",
           "new_shared_measurement_groups": [
-            "staticSliceShape"
+            "staticSliceShape",
+            "wholeStaticSlice"
           ]
         },
         "reviewed_record_observation": {
@@ -8954,12 +8958,14 @@
           ],
           "outcome": "exact_preservation_condition_proved",
           "effort_groups": [
-            "staticSliceShape"
+            "staticSliceShape",
+            "wholeStaticSlice"
           ],
-          "scope": "For every well-formed static axis, transformed bounds retain the declared shape exactly iff stride=1 or start<limit. Input coordinates agree on the admitted domain, with mirrored output coordinate on the reversed axis.",
-          "residual": "One axis, mathematical Int. Whole-tensor assembly, machine overflow, runtime extents, layout and graph behavior remain open.",
+          "scope": "At arbitrary static rank, preserving the declared shape and legal attributes is equivalent to stride=1 or start<limit on each transformed axis (masked axes only for reverse). Whenever legal, the complete original and replacement logical tensors agree for all input values. Unmasked axes are unchanged. Empty extents and rank zero admitted.",
+          "residual": "Signed mathematical attributes; native overflow, runtime extents, physical layout, graph dispatch/status and source correspondence open.",
           "reviews": [
-            "slice-shape-exact/REVIEW.md"
+            "slice-shape-exact/REVIEW.md",
+            "slice-shape-exact/rank/REVIEW.md"
           ]
         },
         "archived_configured_native_counterexamples": [
@@ -11573,6 +11579,26 @@
         0.343
       ],
       "notes": "Archive checks .047 and .055s. Three retained model verdicts across two record IDs; witness discovery and native execution historical.",
+      "active_seconds": null,
+      "token_count": null
+    },
+    "wholeStaticSlice": {
+      "review": "slice-shape-exact/rank/REVIEW.md",
+      "freeze_commit": "7867851",
+      "candidate_commit": "5b4a9c6",
+      "worker_elapsed_seconds": 146,
+      "author_compiler_seconds": [
+        3.71,
+        4.13,
+        4.05,
+        4.05,
+        4.69
+      ],
+      "independent_review_elapsed_seconds": 113,
+      "review_compiler_seconds": [
+        4.159
+      ],
+      "notes": "Author times are shell-command windows including compiler invocations; see per-module final timings in rank/replay.log. One failed proof and one failed control compile, corrected. Independent exact type/extra controls separately logged.",
       "active_seconds": null,
       "token_count": null
     }

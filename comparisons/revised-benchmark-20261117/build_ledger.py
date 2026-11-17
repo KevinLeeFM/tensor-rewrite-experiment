@@ -49,7 +49,8 @@ for observation in followup['observations']:
             'id': observation['name'], 'branches': branches,
             'accepted_models': sorted({observation['models'][b] for b in branches}),
             'outcome': observation.get('outcome', 'proved_in_declared_logical_value_model'),
-            'effort_groups': sorted({observation['effort_by_model'][observation['models'][b]] for b in branches}),
+            'effort_groups': sorted({observation['effort_by_model'][observation['models'][b]] for b in branches}
+                | set(observation.get('additional_effort_groups', []))),
             'scope': observation['scope'], 'residual': observation['residual'],
             'reviews': observation['reviews']}
         row['work_state'] = 'revised_model_partition_verified_whole_record_open'
