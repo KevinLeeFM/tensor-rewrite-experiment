@@ -1,0 +1,39 @@
+[
+  {
+    "utc": "2026-11-17T05:03:35.848891+00:00",
+    "seconds": 0.3662960719993862,
+    "code": 1,
+    "output": "comparisons/heldout-space-depth-selection/ElementCount.lean:18:4: error: unsolved goals\ncase succ.refine_1\nfactor rank : Nat\nih :\n  \u2200 (shape : Shape rank) (axis : Fin rank),\n    elementCount (setExtent shape axis (factor * shape axis)) = factor * elementCount shape\nshape : Shape (rank + 1)\naxis : Fin (rank + 1)\n\u22a2 factor * (shape 0 * elementCount fun axis => if axis.succ = 0 then factor * shape 0 else shape axis.succ) =\n    factor * (shape 0 * elementCount fun axis => shape axis.succ)\ncomparisons/heldout-space-depth-selection/ElementCount.lean:25:28: error(lean.unknownIdentifier): Unknown constant `Fin.zero_ne_succ`\ncomparisons/heldout-space-depth-selection/ElementCount.lean:26:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern\n  fun i => setExtent shape tail.succ (factor * shape tail.succ) i.succ\nin the target expression\n  ((if 0 = tail.succ then factor * shape tail.succ else shape 0) *\n      elementCount fun axis => if axis.succ = tail.succ then factor * shape tail.succ else shape axis.succ) =\n    factor * (shape 0 * elementCount fun axis => shape axis.succ)\n\ncase succ.refine_2\nfactor rank : Nat\nih :\n  \u2200 (shape : Shape rank) (axis : Fin rank),\n    elementCount (setExtent shape axis (factor * shape axis)) = factor * elementCount shape\nshape : Shape (rank + 1)\naxis : Fin (rank + 1)\ntail : Fin rank\nh :\n  (fun i => setExtent shape tail.succ (factor * shape tail.succ) i.succ) =\n    setExtent (fun i => shape i.succ) tail (factor * shape tail.succ)\n\u22a2 ((if 0 = tail.succ then factor * shape tail.succ else shape 0) *\n      elementCount fun axis => if axis.succ = tail.succ then factor * shape tail.succ else shape axis.succ) =\n    factor * (shape 0 * elementCount fun axis => shape axis.succ)\ncomparisons/heldout-space-depth-selection/ElementCount.lean:18:52: warning: This simp argument is unused:\n  Nat.mul_comm\n\nHint: Omit it from the simp argument list.\n  [apply] simp [elementCount, setExtent, Nat.mul_assoc, Nat.mul_left_comm]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\ncomparisons/heldout-space-depth-selection/ElementCount.lean:18:66: warning: This simp argument is unused:\n  Nat.mul_left_comm\n\nHint: Omit it from the simp argument list.\n  [apply] simp [elementCount, setExtent, Nat.mul_assoc, Nat.mul_comm]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\ncomparisons/heldout-space-depth-selection/ElementCount.lean:25:46: warning: This simp argument is unused:\n  \u2193reduceIte\n\nHint: Omit it from the simp argument list.\n  [apply] simp only [setExtent, Fin.zero_ne_succ]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'Heldout.ElementCount.scale_axis' depends on axioms: [propext, sorryAx]\n"
+  },
+  {
+    "utc": "2026-11-17T05:03:59.824444+00:00",
+    "seconds": 0.41868117099875235,
+    "code": 0,
+    "output": "comparisons/heldout-space-depth-selection/ElementCount.lean:37:56: warning: This simp argument is unused:\n  Nat.mul_assoc\n\nHint: Omit it from the simp argument list.\n  [apply] simp [setExtent, Ne.symm (Fin.succ_ne_zero tail), Nat.mul_comm, Nat.mul_left_comm]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\ncomparisons/heldout-space-depth-selection/ElementCount.lean:37:71: warning: This simp argument is unused:\n  Nat.mul_comm\n\nHint: Omit it from the simp argument list.\n  [apply] simp [setExtent, Ne.symm (Fin.succ_ne_zero tail), Nat.mul_assoc, Nat.mul_left_comm]\n\nNote: This linter can be disabled with `set_option linter.unusedSimpArgs false`\n'Heldout.ElementCount.scale_axis' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "utc": "2026-11-17T05:04:18.896195+00:00",
+    "seconds": 0.3383415270000114,
+    "code": 0,
+    "output": "'Heldout.ElementCount.scale_axis' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.redistribute' depends on axioms: [propext, Quot.sound]\n"
+  },
+  {
+    "utc": "2026-11-17T05:06:01.404184+00:00",
+    "seconds": 0.3486983689981571,
+    "code": 1,
+    "output": "comparisons/heldout-space-depth-selection/ElementCount.lean:74:12: error: Function expected at\n  different\nbut this term has type\n  ?m.47 a b\n\nNote: Expected a function because this term is being applied to the argument\n  (injective a b equal)\n'Heldout.ElementCount.scale_axis' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.redistribute' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.count_as_list' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.permuted_axes' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n'Heldout.ElementCount.permute_count' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]\n"
+  },
+  {
+    "utc": "2026-11-17T05:06:12.432553+00:00",
+    "seconds": 0.3508672959978867,
+    "code": 0,
+    "output": "'Heldout.ElementCount.scale_axis' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.redistribute' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.count_as_list' depends on axioms: [propext, Quot.sound]\n'Heldout.ElementCount.permuted_axes' depends on axioms: [propext, Classical.choice, Quot.sound]\n'Heldout.ElementCount.permute_count' depends on axioms: [propext, Classical.choice, Quot.sound]\n"
+  },
+  {
+    "file": "ElementCountTests.lean",
+    "utc": "2026-11-17T05:10:31.185597+00:00",
+    "seconds": 0.3661221980000846,
+    "code": 0,
+    "output": ""
+  }
+]

@@ -1,0 +1,4 @@
+module
+import GoalCandidate
+import GoalCandidateGuard
+run_cmd Heldout.GoalCandidateGuard.noCampaignProofs
