@@ -1,0 +1,27 @@
+module
+public import RemainingAxisGoals
+public import OriginalCoordinateIntegration
+public import ActualTransportProof
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.RemainingAxisProof
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex TensorRewrite.Pilot.Reshape
+  TensorRewrite.Theory.Concatenation Heldout.SpaceDepthCandidate
+  Heldout.SourceFrame Heldout.IndexTransportAttempt Heldout.ChunkIntervals
+
+theorem split_case : Heldout.RemainingAxisGoals.Split := by
+  intro rank outerRank shape inner outer α plan input out
+  have htransport := Heldout.ActualTransportProof.Goal_proved plan input out
+  simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, Heldout.SpaceDepthCandidate.chunk_count]
+
+theorem other_case : Heldout.RemainingAxisGoals.Other := by
+  intro rank outerRank shape inner outer α plan input out i hconcat hsplit
+  have hmoved := Heldout.OriginalCoordinateIntegration.moved_axis_equality plan input out
+  have htransport := Heldout.ActualTransportProof.Goal_proved plan input out
+  have hsuffix := Heldout.ActualSuffixProof.Goal_proved plan input out
+  simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, Heldout.SpaceDepthCandidate.chunk_count,
+    hconcat, hsplit]
+
+end Heldout.RemainingAxisProof

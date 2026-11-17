@@ -1,0 +1,163 @@
+start 2026-11-17T19:01:44.794505+00:00 elapsed 0.446s rc 1
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:12:57: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+htransport :
+  ↑((concatFrame shape plan.axes plan.width).position (OriginalSplitConnection.replacementOuterIndex plan input out)) =
+    ↑(OriginalSplitConnection.originalOuterIndex plan out plan.axes.moved) * shape (concatAxis plan.axes) +
+      ↑(OriginalSplitConnection.originalOuterIndex plan out ⟨↑plan.axes.moved + 1, ⋯⟩)
+⊢ reshapeIndex shape inner ⋯
+      (Tensor.transposeIndex plan.axes.permutation ⋯
+        (reshapeIndex (transposedShape inner plan.axes.permutation) outer ⋯ out))
+      plan.axes.split =
+    Fin.cast ⋯
+      (OrderedSlices.sourceIndex (splitFrame shape plan.axes.split) (concatAxis plan.axes)
+        (interval plan.count plan.width
+          (FiniteProduct.row
+            (Fin.cast ⋯
+              ((concatFrame shape plan.axes plan.width).position
+                (reshapeIndex
+                  ((concatFrame shape plan.axes plan.width).shape
+                    (total
+                      (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                        (concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        ((concatFrame shape plan.axes plan.width).withPosition
+          ((concatFrame shape plan.axes plan.width).rest
+            (reshapeIndex
+              ((concatFrame shape plan.axes plan.width).shape
+                (total
+                  (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                    (concatAxis plan.axes))))
+              outer ⋯ out))
+          (FiniteProduct.column
+            (Fin.cast ⋯
+              ((concatFrame shape plan.axes plan.width).position
+                (reshapeIndex
+                  ((concatFrame shape plan.axes plan.width).shape
+                    (total
+                      (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                        (concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        plan.axes.split)
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:16:4: warning: This simp argument is unused:
+  Heldout.ChunkIntervals.chunkBlocks_total
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.SpaceDepthCandidate.chunk_count]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:16:46: warning: This simp argument is unused:
+  Heldout.SpaceDepthCandidate.chunk_count
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:18:57: error: unsolved goals
+rank outerRank : Nat
+shape : Shape rank
+inner : Shape (rank + 1)
+outer : Shape outerRank
+α : Type
+plan : Conditions shape inner outer
+input : Tensor shape α
+out : Index outer
+i : Fin rank
+hconcat : i ≠ concatAxis plan.axes
+hsplit : i ≠ plan.axes.split
+hmoved : ↑(originalIndex plan out (concatAxis plan.axes)) = ↑(replacementIndex plan input out (concatAxis plan.axes))
+htransport :
+  ↑((concatFrame shape plan.axes plan.width).position (OriginalSplitConnection.replacementOuterIndex plan input out)) =
+    ↑(OriginalSplitConnection.originalOuterIndex plan out plan.axes.moved) * shape (concatAxis plan.axes) +
+      ↑(OriginalSplitConnection.originalOuterIndex plan out ⟨↑plan.axes.moved + 1, ⋯⟩)
+hsuffix :
+  let m := ↑plan.axes.moved;
+  let k := rank - m - 1;
+  have leftRank := ⋯;
+  have rightRank := ⋯;
+  let leftShape := fun i =>
+    RecursiveShapeSplit.tailShape (PlanShapeSplit.cutShape plan.axes inner) (Fin.cast leftRank i);
+  let rightShape := fun i =>
+    RecursiveShapeSplit.tailShape (OriginalSplitConnection.replacementCutShape plan input) (Fin.cast rightRank i);
+  have leftIndex := fun i =>
+    RecursiveShapeSplit.tailIndex
+      (PlanShapeSplit.cutIndex plan.axes inner (OriginalSplitConnection.originalOuterIndex plan out))
+      (Fin.cast leftRank i);
+  have rightIndex := fun i =>
+    RecursiveShapeSplit.tailIndex (OriginalSplitConnection.replacementCutIndex plan input out) (Fin.cast rightRank i);
+  ∀ (i : Fin k), ↑(RecursiveShapeSplit.tailIndex leftIndex i) = ↑(RecursiveShapeSplit.tailIndex rightIndex i)
+⊢ reshapeIndex shape inner ⋯
+      (Tensor.transposeIndex plan.axes.permutation ⋯
+        (reshapeIndex (transposedShape inner plan.axes.permutation) outer ⋯ out))
+      i =
+    Fin.cast ⋯
+      (OrderedSlices.sourceIndex (splitFrame shape plan.axes.split) (concatAxis plan.axes)
+        (interval plan.count plan.width
+          (FiniteProduct.row
+            (Fin.cast ⋯
+              ((concatFrame shape plan.axes plan.width).position
+                (reshapeIndex
+                  ((concatFrame shape plan.axes plan.width).shape
+                    (total
+                      (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                        (concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        ((concatFrame shape plan.axes plan.width).withPosition
+          ((concatFrame shape plan.axes plan.width).rest
+            (reshapeIndex
+              ((concatFrame shape plan.axes plan.width).shape
+                (total
+                  (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                    (concatAxis plan.axes))))
+              outer ⋯ out))
+          (FiniteProduct.column
+            (Fin.cast ⋯
+              ((concatFrame shape plan.axes plan.width).position
+                (reshapeIndex
+                  ((concatFrame shape plan.axes plan.width).shape
+                    (total
+                      (chunkBlocks (splitFrame shape plan.axes.split) (framedInput shape plan.axes.split ⋯ input)
+                        (concatAxis plan.axes))))
+                  outer ⋯ out)))))
+        i)
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:24:4: warning: This simp argument is unused:
+  Heldout.ChunkIntervals.chunkBlocks_total
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.SpaceDepthCandidate.chunk_count, hconcat, hsplit]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:24:46: warning: This simp argument is unused:
+  Heldout.SpaceDepthCandidate.chunk_count
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, hconcat, hsplit]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:25:4: warning: This simp argument is unused:
+  hconcat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, Heldout.SpaceDepthCandidate.chunk_count, hsplit]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+comparisons/heldout-space-depth-selection/RemainingAxisProof.lean:25:13: warning: This simp argument is unused:
+  hsplit
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, Heldout.SpaceDepthCandidate.chunk_count, hconcat]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
