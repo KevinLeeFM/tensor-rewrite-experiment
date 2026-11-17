@@ -1,0 +1,39 @@
+module
+public import ActualTransportProof
+public import ActualFullIndexGoal
+@[expose] public section
+set_option autoImplicit false
+namespace Heldout.ActualTransportAxes
+open TensorRewrite.Pilot TensorRewrite.Pilot.LinearIndex TensorRewrite.Pilot.Reshape
+  TensorRewrite.Theory.Concatenation Heldout.SpaceDepthCandidate Heldout.SourceFrame
+  Heldout.ChunkIntervals Heldout.OriginalSplitConnection Heldout.IndexTransportAttempt
+  Heldout.ActualTransportProof
+
+theorem moved_axis {rank outerRank : Nat} {shape : Shape rank} {inner : Shape (rank + 1)}
+    {outer : Shape outerRank} {α : Type} (plan : Conditions shape inner outer)
+    (input : Tensor shape α) (out : Index outer) :
+    (originalIndex plan out (concatAxis plan.axes)).val =
+      (replacementIndex plan input out (concatAxis plan.axes)).val := by
+  have htransport := Goal_proved plan input out
+  simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, Heldout.SpaceDepthCandidate.chunk_count] 
+
+theorem split_axis {rank outerRank : Nat} {shape : Shape rank} {inner : Shape (rank + 1)}
+    {outer : Shape outerRank} {α : Type} (plan : Conditions shape inner outer)
+    (input : Tensor shape α) (out : Index outer) :
+    (originalIndex plan out plan.axes.split).val =
+      (replacementIndex plan input out plan.axes.split).val := by
+  have htransport := Goal_proved plan input out
+  simp [IndexTransportAttempt.originalIndex, IndexTransportAttempt.replacementIndex,
+    Heldout.ChunkIntervals.chunkBlocks_total, Heldout.SpaceDepthCandidate.chunk_count]
+/-! Failed direct simplification diagnostics are preserved with this draft.
+For the moved case, the residual is the value of the original nested reshape /
+transpose index at `concatAxis` versus `sourceIndex` at `concatAxis`, whose
+interval is selected by `row q` and whose local coordinate is `column q`.
+For the split case, the same residual remains at `plan.axes.split`.
+`htransport` gives the merged position equation, but does not identify these
+component coordinates. No theorem below compiled; the file is an attempt record,
+not an accepted proof. See the Lean diagnostics retained at
+`/tmp/space-transport-worker/axes-attempt.log` in the execution environment.
+-/
+end Heldout.ActualTransportAxes
