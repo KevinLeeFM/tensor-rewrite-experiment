@@ -1,0 +1,9 @@
+# Independent statement review
+
+Fresh gpt-6-luna reviewer, no further agents or proof work. **Accepted for a bounded proof attempt** at the frozen proposition and 12-file closure; not an acceptance of a proof or C++ correspondence.
+
+The reviewer read the exact source branch and relevant reshape helpers, all six local semantic imports, frozen statement/tests/manifest, prior unit-reverse and transpose/broadcast results, and relevant paper comparisons. The modeled mapped starts and sizes follow the inspected source's nonunit/retained-axis behavior under the disclosed unit-insertion interpretation. `unitWidth` is an explicit model restriction: the source branch does not establish it. Deletion, layout, integer decoding, source reachability and whole-branch equivalence remain outside the result. The goal's assumptions do not encode the target equality.
+
+All 12 input hashes matched. Fresh offline Lean 4.35.0 replay compiled the eight semantic/spec/control modules in 2.55 seconds with no warnings or `sorryAx`; the printed proposition uses only `propext`, `Classical.choice`, and `Quot.sound`. The actual frozen nonempty fixture uses `[5] → [1,5]`: retained start 99 clamps to 3, while the well-typed wrong start gives 0. A bounded zero-width unit slice is shown excluded by the disclosed restriction, and a zero-width non-unit output is empty. Scalar behavior was inspected from definitions but has no separate frozen scalar test.
+
+The reviewer initially described an unrelated `[2,3] → [1,2,1,3,1]` witness from a prior review; when asked, it withdrew that claim and confirmed the actual fixture above. No such extra witness was constructed or replayed. The limited overlap search found no equivalent terminal DynamicSlice-through-unit-insertion theorem in the inspected comparison and prior cases; this is not certified global novelty. Review time was not measured precisely.
