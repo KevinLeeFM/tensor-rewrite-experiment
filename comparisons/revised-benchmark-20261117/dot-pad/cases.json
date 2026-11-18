@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dot.paired-zero-padding-to-strided-slice",
+    "effort_group": "dot-pad",
+    "lhs": "Exact dot over the entire padded contraction grid with the zero-filled operand in either orientation.",
+    "rhs": "Dot of the retained-padded operand with the other operand sliced at low, exclusive extent-minus-high and stride interior-plus-one on each moved contracting axis.",
+    "conditions": "Normalized paired contracting fibers at each output coordinate, arbitrary finite number of axes and widths including zero. Moved edges are nonnegative with a zero fill. Identity effective padding leaves all other axes and already-evaluated retained padding, including negative crops, in place. Source profitability and at least one moved axis restrict when the rewrite fires.",
+    "types": "Exact mathematical Int; natural extents and interior padding. Arrays observed extensionally, pointwise at any fixed batch/free coordinate.",
+    "source_ids": ["HandleDot/mirror-pad-lhs-to-rhs", "HandleDot/mirror-pad-rhs-to-lhs"],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-pad/PadDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-pad/PadDotProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-pad/PadDotControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-pad/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.PadDot.verified",
+    "overlap": "One sparsity/reindexing equality for two operand orientations. Existing dot-reverse permutes every contracting position, and dot-concat splits a dense contracting domain; neither proves sparse zero-extension support or strided slice width."
+  }
+]

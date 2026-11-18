@@ -1,0 +1,26 @@
+PadDotProof.lean:7:69: warning: This simp argument is unused:
+  Nat.mul_div_cancel
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [sliced, sliceWidth, limit, extent, body, step]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PadDotProof.lean:26:11: error: Type mismatch: After simplification, term
+  hi
+ has type
+  i = []
+but is expected to have type
+  address [] i = []
+PadDotProof.lean:103:3: error: unknown tactic
+PadDotProof.lean:95:27: error: unsolved goals
+ds : List Axis
+b : Bool
+x y : List Nat → Int
+hw : List.map sliced ds = List.map Axis.width ds
+ids : List (List Nat) := grid (List.map Axis.width ds)
+ps : List (List Nat) := grid (List.map extent ds)
+⊢ (total ps fun p =>
+      times b (total (grid (List.map Axis.width ds)) fun i => if address ds i = p then x i else 0) (y p)) =
+    total ids fun i => times b (x i) (y (address ds i))
+'RevisedBenchmark.PadDot.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'RevisedBenchmark.PadDot.address_unique' depends on axioms: [propext, Quot.sound]
