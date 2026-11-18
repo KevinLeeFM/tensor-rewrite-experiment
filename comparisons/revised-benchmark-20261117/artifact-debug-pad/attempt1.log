@@ -1,0 +1,105 @@
+comparisons/revised-benchmark-20261117/artifact-debug-pad/PadSpec.lean: OK
+comparisons/revised-benchmark-20261117/artifact-debug-pad/FREEZE.md: OK
+sources/tensorright/artifact/tr-artifact/rules/debug/Main.hs: OK
+sources/tensorright/artifact/tr-artifact/src/TensorRight/Internal/Core/Tensor/Typed.hs: OK
+PadSpec 0.362 0
+PadProof.lean:31:17: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+PadProof.lean:31:28: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+PadProof.lean:31:74: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+PadProof.lean:32:6: error: Tactic `apply` failed: could not unify the conclusion of `congrArg x`
+  x ?m.136 = x ?m.137
+with the goal
+  (if ∀ (i : Fin r), decide (occupied (extent s l h t i) (u i) 0 (q i)) = true then
+      x fun i => (q i - u i - l i) / (t i + 1)
+    else z) =
+    x fun i => (q i - plus l u i) / (t i + 1)
+
+Note: The full type of `congrArg x` is
+  ?m.136 = ?m.137 → x ?m.136 = x ?m.137
+
+case pos
+r : Nat
+s l h t u v : V r
+hyp : ∀ (i : Fin r), 0 ≤ s i ∧ 0 ≤ l i ∧ 0 ≤ h i ∧ 0 ≤ t i
+_nonnegative : ∀ (i : Fin r), 0 ≤ extent (extent s l h t) u v zero i
+α : Type
+z : α
+x : V r → α
+q : V r
+_valid : valid (extent (extent s l h t) u v zero) q
+rhs : ∀ (i : Fin r), decide (occupied (s i) (plus l u i) (t i) (q i)) = true
+ho : ∀ (i : Fin r), decide (occupied (extent s l h t i) (u i) (zero i) (q i)) = true
+hi : ∀ (i : Fin r), decide (occupied (s i) (l i) (t i) (q i - u i)) = true
+⊢ (if ∀ (i : Fin r), decide (occupied (extent s l h t i) (u i) 0 (q i)) = true then
+      x fun i => (q i - u i - l i) / (t i + 1)
+    else z) =
+    x fun i => (q i - plus l u i) / (t i + 1)
+PadProof.lean:38:10: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+PadProof.lean:42:14: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+PadProof.lean:31:17: warning: This simp argument is unused:
+  if_pos ho
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [if_pos rhs, zero, Int.zero_add, Int.ediv_one, if_pos hi]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PadProof.lean:59:10: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+PadProof.lean:59:20: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+PadProof.lean:59:30: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+PadProof.lean:60:47: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  a - b - c ≥ 1
+where
+ a := q i
+ b := u i
+ c := (fun i => q i - u i) i
+PadProof.lean:61:10: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+PadProof.lean:64:14: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+PadProof.lean:70:8: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  b + c - d ≥ 1
+  a - b ≥ 0
+where
+ a := (fun i => q i - u i) i
+ b := l i
+ c := u i
+ d := q i
+'Auxiliary.DebugPad.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Auxiliary.DebugPad.low_verified' depends on axioms: [propext, sorryAx, Quot.sound]
+PadProof 0.445 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/artifact-debug-pad/replay.py", line 20, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'PadProof.olean', 'PadProof.lean']' returned non-zero exit status 1.
