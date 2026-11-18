@@ -1,0 +1,57 @@
+MappedSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/service/hlo_verifier.cc: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+MappedSpec 0.390s return code 0
+MappedProof.lean:17:16: error: unsolved goals
+case cons.added
+f : Nat → Nat
+t : List Axis
+ih : ∀ (p d : Nat), d ≤ p → List.map f (emitted t p d) = pick t fun i => f (p - d + i)
+p d : Nat
+h : d ≤ p
+e : ∀ (i : Nat), p + 1 - d + i = p - d + (i + 1)
+n✝ : Nat
+⊢ List.map f (emitted t (p + 1) d) = pick t fun i => f (p - d + (i + 1))
+
+case cons.kept
+f : Nat → Nat
+t : List Axis
+ih : ∀ (p d : Nat), d ≤ p → List.map f (emitted t p d) = pick t fun i => f (p - d + i)
+p d : Nat
+h : d ≤ p
+e : ∀ (i : Nat), p + 1 - d + i = p - d + (i + 1)
+n✝ : Nat
+⊢ List.map f (emitted t (p + 1) d) = pick t fun i => f (p - d + (i + 1))
+
+case cons.reduced
+f : Nat → Nat
+t : List Axis
+ih : ∀ (p d : Nat), d ≤ p → List.map f (emitted t p d) = pick t fun i => f (p - d + i)
+p d : Nat
+h : d ≤ p
+e : ∀ (i : Nat), p + 1 - d + i = p - d + (i + 1)
+n✝ : Nat
+⊢ List.map f (emitted t (p + 1) (d + 1)) = pick t fun i => f (p - d + i)
+MappedProof.lean:19:37: warning: This simp argument is unused:
+  ih _ _ (by omega)
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [emitted, pick, e]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MappedProof.lean:19:56: warning: This simp argument is unused:
+  e
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [emitted, pick, ih _ _ (by omega)]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.ReduceMapped.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+MappedProof 1.029s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'MappedProof.olean', 'MappedProof.lean']' returned non-zero exit status 1.

@@ -1,0 +1,81 @@
+MappedSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/service/hlo_verifier.cc: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+MappedSpec 0.411s return code 0
+MappedProof.lean:83:6: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 0
+  e ≥ 0
+  c ≥ 0
+  b ≥ 0
+  b - c - e ≤ 0
+  b - e ≥ 1
+  b - e - f ≥ 0
+  a ≥ 0
+  a + e ≥ 0
+where
+ a := ↑d
+ b := ↑i
+ c := ↑(List.map Prod.fst (List.filter (fun d => !d.snd) (dims t))).length
+ e := ↑(p - d)
+ f := ↑(List.map Prod.fst
+      (if (!false) = true then (n, false) :: List.filter (fun d => !d.snd) (dims t)
+      else List.filter (fun d => !d.snd) (dims t))).length
+MappedProof.lean:95:10: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 0
+  e ≥ 0
+  c ≥ 0
+  b ≥ 0
+  b - c - e ≤ 0
+  b - e ≥ 1
+  b - e - f ≥ 0
+  a ≥ 0
+  a + e ≥ 0
+where
+ a := ↑d
+ b := ↑i
+ c := ↑(List.map Prod.fst (List.filter (fun d => !d.snd) (dims t))).length
+ e := ↑(p - d)
+ f := ↑(List.map Prod.fst
+      (if (!false) = true then (n, false) :: List.filter (fun d => !d.snd) (dims t)
+      else List.filter (fun d => !d.snd) (dims t))).length
+MappedProof.lean:82:54: warning: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [dims, outputShape, List.filter_cons, List.length_cons] at *
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MappedProof.lean:82:69: warning: This simp argument is unused:
+  List.length_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [dims, outputShape, List.filter_cons, List.map_cons] at *
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MappedProof.lean:86:26: warning: This simp argument is unused:
+  List.map_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [emitted, List.pairwise_cons, List.mem_cons, dims, outputShape, List.filter_cons, List.length_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MappedProof.lean:86:41: warning: This simp argument is unused:
+  List.length_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [emitted, List.pairwise_cons, List.mem_cons, dims, outputShape, List.filter_cons, List.map_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.ReduceMapped.legalTargets' depends on axioms: [propext, sorryAx, Quot.sound]
+'RevisedBenchmark.ReduceMapped.selectedExtents' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.ReduceMapped.verified' depends on axioms: [propext, Quot.sound]
+MappedProof 1.064s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'MappedProof.olean', 'MappedProof.lean']' returned non-zero exit status 1.

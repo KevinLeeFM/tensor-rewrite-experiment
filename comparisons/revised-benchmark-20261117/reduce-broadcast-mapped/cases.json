@@ -1,0 +1,23 @@
+[
+  {
+    "id": "reduce.broadcast-mapped-axes",
+    "effort_group": "reduce-broadcast-mapped",
+    "source_ids": [
+      "HandleReduce/broadcast-base-axes"
+    ],
+    "lhs": "Reduce a broadcast along a subset of its mapped target axes.",
+    "rhs": "Reduce corresponding base axes, then broadcast the surviving base axes at each old target minus the number of preceding deleted target axes.",
+    "conditions": "Strictly increasing equal-extent broadcast map, arbitrary finite static shapes including zeros and rank zero, single-output logical ordered fold, any subset of mapped axes selected.",
+    "types": "Any element type, same on both sides, pure binary reducer, arbitrary initializer.",
+    "theorem": "RevisedBenchmark.ReduceMapped.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/MappedSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/MappedProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/MappedControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/acceptance.log"
+    ],
+    "overlap": "Different from reducing newly introduced axes or eliminating an empty reduction; equal-extent HLO broadcast, excluding client-level mapped singleton expansion."
+  }
+]

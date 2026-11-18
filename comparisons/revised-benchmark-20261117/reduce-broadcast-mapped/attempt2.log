@@ -1,0 +1,22 @@
+MappedSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/service/hlo_verifier.cc: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+MappedSpec 0.436s return code 0
+'RevisedBenchmark.ReduceMapped.verified' depends on axioms: [propext, Quot.sound]
+MappedProof 0.999s return code 0
+MappedControls.lean:11:56: error: failed to synthesize
+  Decidable (valid (outputShape (dims ds)) [4, 2, 6, 3])
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+MappedControls.lean:17:70: error: failed to synthesize
+  Decidable ¬valid (outputShape (dims [Axis.added 0, Axis.kept 3])) [0, 1]
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+MappedControls 0.340s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'MappedControls.olean', 'MappedControls.lean']' returned non-zero exit status 1.
