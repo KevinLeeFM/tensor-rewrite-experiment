@@ -1,0 +1,112 @@
+[
+  {
+    "id": "slice.dot-project-operands",
+    "effort_group": "slice-dot",
+    "lhs": "Apply a static positive-stride slice to the output of an arbitrary paired-axis Int dot.",
+    "rhs": "Apply each projected slice on each changed operand, retaining every contracting dimension whole, then dot with the original paired-axis order.",
+    "conditions": "Arbitrary well-formed operand role permutations, legal natural start/limit/positive stride, compatible paired batch and contraction extents; source guards and profitability only restrict dispatch. Shows both projected shapes and all admitted output values.",
+    "types": "Static logical tensors of exact mathematical Int, arbitrary batch/free/contract ranks and extents, Cartesian contraction.",
+    "source_ids": [
+      "HandleSlice/dot-operands"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-dot/SliceDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-dot/SliceDotProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-dot/SliceDotControls.lean",
+      "comparisons/revised-benchmark-20261117/slice-dot/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/slice-dot/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/slice-dot/FREEZE.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceDot.verified",
+    "overlap": "Dynamic constant lookup moves the opposite direction in a rank-two singleton subcase. Zero-pad dot changes contraction supports. Projected slice/broadcast has no summation or second operand. No independent increment for the two operand orientations or output axes."
+  },
+  {
+    "id": "reduce-dot.contracting-pair-order",
+    "outcome": "disproved",
+    "effort_group": "reduce-dot-operands",
+    "lhs": "Reduce both free axes with add/zero after dot pairs lhs contracting axes [1,2] to rhs [2,1].",
+    "rhs": "Reduce axis 0 of each operand first; reconstruct each new contracting list in its physical dimension order [0,1] and dot to a scalar.",
+    "conditions": "Layout-insensitive, enabled option, threshold two, no batches, static operand shapes [m,2,2] and [n,2,2], scalar output, nonempty and nontrivial reduction. The witness m=n=3 satisfies the strict profitability comparison 80/24>2.",
+    "types": "Exact Int; every witness intermediate fits S32; ordinary dense dot and additive zero-seeded reductions.",
+    "source_ids": [
+      "ReorderReduceDotToDotReduce/profitable",
+      "HandleReduce/dot-reorder-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ReduceDotOperands.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/author-replay.log",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/REVIEW.md"
+    ],
+    "overlap": "The HandleReduce call invokes the same profitable helper. Distinct from stale partner dimension numbers after broadcast/dot and from sum distributivity with preserved contraction pairing."
+  },
+  {
+    "id": "slice.leading-reshape-box",
+    "lhs": "Slice a leading unit-stride interval from a row-major reshape.",
+    "rhs": "Generate the pre-reshape rectangular operand slice by the minor-to-major quotient/remainder loop and reshape it to the sliced result.",
+    "conditions": "Matched element counts, valid interval, successful construction with positive input-axis divisors. Empty results allowed. All output addresses and generated axis bounds checked.",
+    "types": "Arbitrary element type and rank, static logical natural extents and offsets.",
+    "source_ids": [
+      "TryToReorderSliceAndReshape/leading-slice",
+      "HandleSlice/reshape-reorder-delegation"
+    ],
+    "theorem": "RevisedBenchmark.LeadingSlice.verified",
+    "overlap": "Builds the complete box and proves every address. Neither slice composition nor reshape cardinality suffices. Caller and callee count once.",
+    "effort_group": "slice-leading-reshape",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-leading-reshape/LeadingControls.lean",
+      "comparisons/revised-benchmark-20261117/slice-leading-reshape/LeadingProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-leading-reshape/LeadingSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-leading-reshape/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/slice-leading-reshape/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/slice-leading-reshape/REVIEW.md"
+    ]
+  },
+  {
+    "id": "scatter.transpose-simplified-windows",
+    "lhs": "Transpose a simplified single-base, single-update scatter.",
+    "rhs": "Transpose the base and window axes, preserve the entry axis, remap indexed axes by the inverse permutation and scatter.",
+    "conditions": "Common arbitrary entry schedule and update operation, unbatched simplified scatter, signed origins and whole-window drop. Physical layout and write-run cost are outside the equality.",
+    "types": "Arbitrary element type, arbitrary finite rank and natural extents, including zero, and typed output positions.",
+    "source_ids": [
+      "TryFoldTransposeIntoScatter/simplified-scatter",
+      "HandleTranspose/scatter-fold-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ScatterT.verified",
+    "overlap": "Transports index-vector destinations and update windows together. Existing raw elementwise-drop and common-update maps have different operators. Caller delegates to callee.",
+    "effort_group": "scatter-transpose",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scatter-transpose/ScatterTransposeControls.lean",
+      "comparisons/revised-benchmark-20261117/scatter-transpose/ScatterTransposeProof.lean",
+      "comparisons/revised-benchmark-20261117/scatter-transpose/ScatterTransposeSpec.lean",
+      "comparisons/revised-benchmark-20261117/scatter-transpose/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/scatter-transpose/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/scatter-transpose/REVIEW.md"
+    ]
+  },
+  {
+    "id": "abs.signed-iota-prefix",
+    "lhs": "Take pointwise wrapping absolute value of a signed integral Iota.",
+    "rhs": "Forward the signed Iota.",
+    "conditions": "Width w=k+2; at every coordinate equality holds iff the other-coordinate type is empty or the Iota extent is at most 2^(w−1)+1. Source selects signed Iota only in the sufficient nonnegative range, including the int64 extent bound for wide words.",
+    "types": "Wrapping two’s-complement words with arbitrary other-axis coordinate type and Fin n Iota coordinate.",
+    "source_ids": [
+      "HandleAbs/nonnegative"
+    ],
+    "theorem": "RevisedBenchmark.AbsIota.verified",
+    "overlap": "Only the signed-Iota producer variant. Other Iota laws alter dimension generation or reduce indices, and do not characterize abs. The first excluded index is a sharpness control outside the source guard.",
+    "effort_group": "abs-iota",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/abs-iota/AbsIotaControls.lean",
+      "comparisons/revised-benchmark-20261117/abs-iota/AbsIotaProof.lean",
+      "comparisons/revised-benchmark-20261117/abs-iota/AbsIotaSpec.lean",
+      "comparisons/revised-benchmark-20261117/abs-iota/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/abs-iota/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/abs-iota/REVIEW.md"
+    ]
+  }
+]
