@@ -1,0 +1,277 @@
+[
+  {
+    "id": "reuse.order-max-self",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(x,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "The same array supplies both operands, including the same reads on empty or nonempty shapes.",
+    "source_ids": [
+      "HandleMaximum/self"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxSelf",
+    "overlap": "Distinct min/max constructors reflect dual equal-input rules. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-max-extreme",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(x,e) or max(e,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "e ≤ x pointwise. A matching homogeneous integral minimum/maximum literal supplies this bound. The result and surviving operand share the type; both orders checked.",
+    "source_ids": [
+      "HandleMaximum/lhs-extreme",
+      "HandleMaximum/rhs-extreme"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxExtreme reverse",
+    "overlap": "Related to paper max/rule01; this conditional finite-order law does not introduce an infinity into Int. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-max-nested",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(max(x,y),z) or max(z,max(x,y)), z exactly x or y",
+    "rhs": "max(x,y) in the two left-inner cases and right-inner z=x; max(y,x) for right-inner z=y.",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Repeated operand identity. All four placements retain the actual output operand order.",
+    "source_ids": [
+      "HandleMaximum/nested-left-lhs",
+      "HandleMaximum/nested-left-rhs",
+      "HandleMaximum/nested-right-first",
+      "HandleMaximum/nested-right-second"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxNestedLeft b and Rule.maxNestedRight b",
+    "overlap": "One nested-idempotence family with four source placements. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-max-mixed-clamp",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(lo,min(x,hi))",
+    "rhs": "clamp(lo,x,hi) = min(max(x,lo),hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Both bounds are broadcasts of effective scalar constants, either placement at each node. Source evaluator compares lo < hi and constructs Clamp only on true. This implies lo ≤ hi pointwise under the declared homogeneous exact order.",
+    "source_ids": [
+      "HandleMaximum/clamp-lhs-lhs",
+      "HandleMaximum/clamp-lhs-rhs",
+      "HandleMaximum/clamp-rhs-lhs",
+      "HandleMaximum/clamp-rhs-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxMinClamp outer inner",
+    "overlap": "Historical clamp/rule02 overlaps. Parametric constructors include all four inner/outer placements. The alternative operand orders are part of the original expression. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-self",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(x,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "The same array supplies both operands, including the same reads on empty or nonempty shapes.",
+    "source_ids": [
+      "HandleMinimum/self"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minSelf",
+    "overlap": "Distinct min/max constructors reflect dual equal-input rules. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-extreme",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(x,e) or min(e,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "x ≤ e pointwise. A matching homogeneous integral minimum/maximum literal supplies this bound. The result and surviving operand share the type; both orders checked.",
+    "source_ids": [
+      "HandleMinimum/lhs-extreme",
+      "HandleMinimum/rhs-extreme"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minExtreme reverse",
+    "overlap": "Related to paper max/rule02; this conditional finite-order law does not introduce an infinity into Int. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-nested",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(min(x,y),z) or min(z,min(x,y)), z exactly x or y",
+    "rhs": "min(x,y) in the two left-inner cases and right-inner z=x; min(y,x) for right-inner z=y.",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Repeated operand identity. All four placements retain the actual output operand order.",
+    "source_ids": [
+      "HandleMinimum/nested-left-lhs",
+      "HandleMinimum/nested-left-rhs",
+      "HandleMinimum/nested-right-first",
+      "HandleMinimum/nested-right-second"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minNestedLeft b and Rule.minNestedRight b",
+    "overlap": "One nested-idempotence family with four source placements. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-mixed-clamp",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(hi,max(x,lo))",
+    "rhs": "clamp(lo,x,hi) = min(max(x,lo),hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Both bounds are broadcasts of effective scalar constants, either placement at each node. Source evaluator compares lo < hi and constructs Clamp only on true. This implies lo ≤ hi pointwise under the declared homogeneous exact order.",
+    "source_ids": [
+      "HandleMinimum/clamp-lhs-lhs",
+      "HandleMinimum/clamp-lhs-rhs",
+      "HandleMinimum/clamp-rhs-lhs",
+      "HandleMinimum/clamp-rhs-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minMaxClamp outer inner",
+    "overlap": "Historical clamp/rule03 overlaps. Parametric constructors include all four inner/outer placements. The alternative operand orders are part of the original expression. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-clamp-lower-ordered",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(lo,clamp(lo,x,hi)) or max(clamp(lo,x,hi),lo)",
+    "rhs": "clamp(lo,x,hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Same lower operand reference; lo ≤ hi pointwise is a MODEL RESTRICTION. Source compatibility does not test this inequality.",
+    "source_ids": [
+      "HandleMaximum/clamp-lower-lhs",
+      "HandleMaximum/clamp-lower-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxClampLower reverse",
+    "overlap": "Ordered subcase only; reversed bounds can disagree over Int. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "reuse.order-clamp-idempotent",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "clamp(lo,clamp(lo,x,hi),hi)",
+    "rhs": "clamp(lo,x,hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Repeated lower and upper operand identities; clamp has min(max(x,lo),hi) semantics. No ordered-bound condition is necessary, including when hi < lo. Scalars are pointwise broadcasts if used.",
+    "source_ids": [
+      "HandleClamp/idempotent"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.clampIdempotent",
+    "overlap": "Direct overlap with historical clamp/rule01; historical constructor allows nonuniform shared bounds. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  }
+]
