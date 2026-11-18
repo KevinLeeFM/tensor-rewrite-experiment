@@ -1,0 +1,43 @@
+comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FactorSpec.lean: OK
+comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FREEZE.md: OK
+sources/xla/xla/shape_util.cc: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+FactorSpec.lean:8:24: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  HAppend ((q : ?m.1) → (s : ?m.4 q) → ?m.5 q s → List Nat) (List Nat) ?m.10
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+FactorSpec.lean:8:2: error: stuck at solving universe constraint
+  ?u.18 + 1 =?= max (max (max 1 ?u.8) ?u.9) ?u.10
+while trying to unify
+  (q : ?m.1) → (s : ?m.4 q) → ?m.5 q s → List Nat : Sort (max (max (max 1 ?u.8) ?u.9) ?u.10)
+with
+  (q : ?m.1) → (s : ?m.4 q) → ?m.5 q s → List Nat : Sort (max (max (max 1 ?u.8) ?u.9) ?u.10)
+FactorSpec.lean:10:10: error: unexpected identifier; expected prec
+FactorSpec.lean:13:20: error: Function expected at
+  Match
+but this term has type
+  ?m.1
+
+Note: Expected a function because this term is being applied to the argument
+  oldShape
+
+Hint: The identifier `Match` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.
+FactorSpec.lean:18:20: error: Function expected at
+  Match
+but this term has type
+  ?m.1
+
+Note: Expected a function because this term is being applied to the argument
+  oldShape
+
+Hint: The identifier `Match` is unknown, and Lean's `autoImplicit` option causes an unknown identifier to be treated as an implicitly bound variable with an unknown type. However, the unknown type cannot be a function, and a function is what Lean expects here. This is often the result of a typo or a missing `import` or `open` statement.
+FactorSpec.lean:23:20: error(lean.unknownIdentifier): Unknown identifier `Match`
+FactorSpec.lean:25:6: error(lean.unknownIdentifier): Unknown identifier `oldRead`
+FactorSpec.lean:25:34: error(lean.unknownIdentifier): Unknown identifier `newRead`
+FactorSpec 0.394 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reshape-broadcast-factors/replay.py", line 19, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'FactorSpec.olean', 'FactorSpec.lean']' returned non-zero exit status 1.

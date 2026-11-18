@@ -4,10 +4,13 @@ namespace RevisedBenchmark.ReshapeBroadcast
 /-- A matched input broadcast dimension and its output reshape partner at
 common-factor boundaries. The two prefix lists can have different lengths. -/
 structure Match (oldShape newShape : List Nat) (width : Nat) where
-  p q s t : List Nat
+  p : List Nat
+  q : List Nat
+  s : List Nat
+  t : List Nat
   oldSplit : oldShape = p ++ width :: s
   newSplit : newShape = q ++ width :: t
-  prefix : p.prod = q.prod
+  equalPrefix : p.prod = q.prod
 
 def oldRead {m : Nat} {oldShape newShape : List Nat} {width : Fin m → Nat}
     (mapping : ∀ i, Match oldShape newShape (width i)) (flat : Fin newShape.prod)
