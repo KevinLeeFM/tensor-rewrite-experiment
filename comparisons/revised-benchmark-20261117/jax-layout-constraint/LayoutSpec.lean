@@ -10,5 +10,5 @@ def replacement {I α : Type} {n} (same : Bool) (src dst : Layout I n)
 
 def Goal := ∀ (I α : Type) (n) (same : Bool) (src dst : Layout I n),
     (same = true → ∀ i, src.address i = dst.address i) →
-    ∀ data i, original src data i = replacement same src dst data i
+    ∀ (data : Fin n → α) i, original src data i = replacement same src dst data i
 end RevisedBenchmark.LayoutConstraint
