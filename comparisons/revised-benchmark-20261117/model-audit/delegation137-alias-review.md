@@ -10,3 +10,5 @@ Other audit137 delegation labels were not inferred from helper names. In particu
 Alias audit completed 03:12:47 UTC.
 
 The parameter-swap helper and its caller specialize the earlier integer case with the identity batch permutation. The nonidentity output transposes in nested reassociation remain open. Exact source and precision-vector qualifications and historical hashes are in [the additional review](dot-swap-tail.md) at b03c9ae. Review coverage took 258 seconds.
+
+Four further dense-layout specializations were reviewed at 9d63928. See the [source substitutions, requirements and receipt checks](layout-tail-map-review.md). The related terminal outcomes keep their original identities.

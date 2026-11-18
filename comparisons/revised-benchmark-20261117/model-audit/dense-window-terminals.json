@@ -1,0 +1,118 @@
+[
+  {
+    "id": "reduce.concat-f32-strict",
+    "effort_group": "reduce-concat-round",
+    "outcome": "disproved",
+    "source_ids": [
+      "HandleReduce/concat"
+    ],
+    "theorem": "RevisedBenchmark.ReduceConcat.refuted",
+    "lhs": "Strict binary32 nearest-even left fold of scalar add from +0 over concatenation A++B.",
+    "rhs": "Independently fold A and B from +0 and add their scalar results in binary32.",
+    "types": "Two static F32[2] tensors, scalar F32 output. Nonnegative exact integer inputs ≤ 2^24.",
+    "conditions": "Axis zero concatenated and reduced; equal block shapes, single output, layout-insensitive. Fixed strict order with binary32 RNE per add. Pinned evaluator slow reduction path; default fast double accumulator and backend reassociation excluded.",
+    "overlap": "Historical exact AddMonoid.concat-style identity; established r32 arithmetic reused. Counterexample concerns sequential value preservation under the stated grouping. Documented backend reassociation permitted.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/ConcatRoundSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/ConcatRoundProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/ConcatRoundControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/author.log",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "copy.reshape-reorder-physical-and-logical",
+    "effort_group": "copy-reshape-reorder",
+    "source_ids": [
+      "HandleCopy/reshape-reorder-new-copy-reshape",
+      "HandleCopy/reshape-reorder-new-copy-bitcast",
+      "HandleCopy/reshape-reorder-omit-copy-reshape",
+      "HandleCopy/reshape-reorder-omit-copy-bitcast"
+    ],
+    "theorem": "RevisedBenchmark.CopyReshape.verified",
+    "lhs": "Copy the materialized reshape of an operand, which may itself have been copied.",
+    "rhs": "Omit or produce a copy into the chosen aligned layout, then materialize the reshape or reinterpret its buffer.",
+    "conditions": "Equal row-major index across reshapes; omission requires a preceding copy and the same aligned layout as the base. Raw bitcast requires that the final and aligned layouts agree at every logical row. Cost and use-count selection only restrict this theorem. Source reachability for all four flag combinations has not been established.",
+    "types": "Untiled static dense equal-width arrays over an arbitrary cell type, represented by bijections between logical row-major index and physical address.",
+    "overlap": "Extends the historical copy pair with the original and new reshape paths. One mathematical result for four branch labels.",
+    "outcome": "proved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/ReorderControls.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/ReorderProof.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/ReorderSpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/author.log",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/failed-freeze-keyword.log",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/failed-let-reduction.log",
+      "comparisons/revised-benchmark-20261117/copy-reshape-reorder/replay.py",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopyProof.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "copy.finite-reshape-chain-to-bitcast",
+    "effort_group": "copy-reshape-chain-terminal",
+    "source_ids": [
+      "HandleCopy/chain-bitcast",
+      "HandleReshape/bitcast-chain"
+    ],
+    "theorem": "RevisedBenchmark.DenseChain.raw_verified",
+    "lhs": "Materialize every reshape or copy along a finite nonempty chain, including its terminal operation.",
+    "rhs": "Raw bitcast directly from the selected ancestor.",
+    "conditions": "One homogeneous logical row-major index over equal extents in total count; same physical row address at both ends. No memory-space side effects, padding or tiling. For the source paths the pass is layout-sensitive, and a terminal copy between different memory spaces is excluded.",
+    "types": "Untiled static dense equal-width arrays over an arbitrary cell type, represented by bijections between logical row-major index and physical address.",
+    "overlap": "Prior two-copy law is used inside a new induction over arbitrary intermediate layouts.",
+    "outcome": "proved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainControls.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainProof.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainSpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/author.log",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/replay.py",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopyProof.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "copy.compatible-logical-forward",
+    "effort_group": "copy-reshape-chain-terminal",
+    "source_ids": [
+      "HandleCopy/compatible"
+    ],
+    "theorem": "RevisedBenchmark.DenseChain.forward_verified",
+    "lhs": "Read the output of a copy at the destination address of a requested coordinate.",
+    "rhs": "Read the original value at the source address of the same coordinate.",
+    "conditions": "Static same logical shape, dense layouts. For the source, the compatible replacement, control predecessor, sharding/root and earlier path guards apply. Retains logical data even when physical addresses differ.",
+    "types": "Untiled static dense equal-width arrays over an arbitrary cell type, represented by bijections between logical row-major index and physical address.",
+    "overlap": "Distinct observation from raw byte equality. No claim about memory or object identity.",
+    "outcome": "proved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainControls.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainProof.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainSpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/author.log",
+      "comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/replay.py",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopyProof.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  }
+]

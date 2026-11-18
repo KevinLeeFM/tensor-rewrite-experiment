@@ -1,0 +1,29 @@
+[
+  {
+    "id": "reuse.rankzero-dus-concat",
+    "outcome": "proved",
+    "effort_group": "rankzero-dus-historical-reuse",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/pad-concatenate"
+    ],
+    "theorem": "RevisedBenchmark.UpdateConstantPad.verified",
+    "lhs": "Dynamic update of uniform base at signed decoded constant starts.",
+    "rhs": "Pad the update by fill with low clamped starts and complementary high padding.",
+    "conditions": "Rank-zero signed-32 same-shape scalar base and update, one legacy integral start vector of length zero constructed by concatenating two empty vectors, enabled option and no host offload. Empty per-axis loop emits rank-zero Pad. The positive-rank matcher requires scalar concat operands, excluded by concat shape inference.",
+    "types": "Arbitrary homogeneous payloads, static integral extents.",
+    "overlap": "Specialization of previously reviewed UpdateConstantPad.verified with empty geometry and unit empty product. Native reachability was not replayed.",
+    "evidence": [
+      "comparisons/tensorright-v1/UpdatePad.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/reuse-updates-concat.md",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateControls.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateProof.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateSpec.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/replay.py",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/UpdatePad.lean"
+  }
+]

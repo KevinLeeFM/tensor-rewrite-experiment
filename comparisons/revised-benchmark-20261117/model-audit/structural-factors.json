@@ -1,0 +1,214 @@
+[
+  {
+    "id": "copy-bitcast.swap-even-square-minor-tile",
+    "outcome": "proved",
+    "effort_group": "swap-copy-bitcast",
+    "source_ids": [
+      "SwapCopyBitcastCopy/move-bitcast",
+      "SwapCopyBitcastCopy/move-copy",
+      "HandleCopy/swap-delegation"
+    ],
+    "theorem": "RevisedBenchmark.SwapCopyBitcast.verified",
+    "conditions": "Static even square side n>=2, both dimension orders, one fully populated physical minor tile of width 1 or 2 per layout, fixed same-width cells, ordinary non-host memory, successful tiling checks and new layout acceptance. Old raw bitcast(s) preserve cell buffer. No allocation/effects or native reachability claim.",
+    "types": "Arbitrary cell payloads; equality of every final physical address Fin(n*n).",
+    "lhs": "Copy between operand layouts, preserve cells in the intervening bitcast(s), then copy from the bitcast output layout to the final layout.",
+    "rhs": "If bitcast and source tile widths agree, move the bitcast to x and copy from its mapped layout. Otherwise, if old copy and final tile widths agree, copy x to the inverse-mapped layout and bitcast that storage directly.",
+    "overlap": "Reuses CopyChain.copy and its bounded layout representation. New terminal instantiates both directional dimension maps and the distinct tile-success branches. A pure untiled copy-composition theorem cannot select the second arm.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SwapCopySpec.lean",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SwapCopyProof.lean",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SwapCopyControls.lean",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/final.log",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/first.log",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/freeze.log",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/freeze1.log",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/replay.py",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/second.log",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.h",
+      "lean-toolchain"
+    ]
+  },
+  {
+    "id": "pad-tail-reuse.direct",
+    "effort_group": "pad-tail-historical-reuse",
+    "source_ids": [
+      "HandleReduceWindow/pad-fold-direct"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/PadWindowProof.lean",
+    "theorem": "TensorRewrite.Theory.PadWindow.reduce_fusion",
+    "lhs": "ReduceWindow on an independently edge/interior padded tensor; each ordered kernel position is represented by its sampled input or the common explicit/implicit fill, folded from the actual initializer.",
+    "rhs": "ReduceWindow on the original tensor under the derived fused low/high padding and base-dilation geometry, with the same operation, initializer and fill.",
+    "conditions": "Historical exact mathematical theorem: static Nat geometry with nonnegative Pad low/high/interior spacing (positive spacing), arbitrary outer-window geometry, explicitly derived empty-safe fused high padding, same fill at explicit Pad and modelled invalid window positions; arbitrary pure operation and initializer. Source branch at algebraic_simplifier.cc:10106 requires operand=Pad, no negative Pad, not (interior Pad and base-dilated outer window), pad scalar equal to ReduceWindow init (same node or constant literal equal after conversion), and neither effective-broadcast alternative. For actual XLA skip-padding evaluation, deleting explicit Pad values from the fused input event stream additionally requires op(acc, init)=acc (right identity); XLA operation_semantics.md states initial values form an identity under the computation. This source-law/evaluator transfer is not a premise of reduce_fusion.",
+    "types": "Historical proof is polymorphic over α and operation with no algebraic law; source application additionally requires the HLO reducer identity/reassociation contract and type-specific observation semantics. No IEEE/implementation claim.",
+    "overlap": "One historical ordered-list/ordered-fold theorem, not a fresh proof and not complete source-record closure. It preserves fill contributions, whereas hlo_evaluator.cc IterateThroughWindow visits only in-bounds coordinates and HandleReduceWindow initializes the accumulator once. A source bridge must show the materialized-Pad event list becomes the fused in-bounds list by deleting init-valued entries using right identity. In the converted label use converted Pad fill and require it equal the result-type init. Source simple edge-high formula also needs separate empty-input alignment with the model's empty-corrected formula; do not credit empty-source coverage from this theorem alone. BroadcastSequence alternatives are separate records.",
+    "outcome": "proved",
+    "evidence": [
+      "TensorRewrite/Theory/PadWindow.lean",
+      "TensorRewrite/Theory/PadWindowLemmas.lean",
+      "TensorRewrite/Theory/PadWindowProof.lean",
+      "TensorRewrite/Theory/ReductionWindow.lean",
+      "reports/pad-window.json",
+      "reports/theory-progress.json",
+      "docs/pad-window-fusion.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "census/pad-window-v1.json",
+      "census/reduction-window-domains-v5.json",
+      "comparisons/revised-benchmark-20261117/model-audit/pad-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/pad-tail-reuse-review.md"
+    ],
+    "timing": {
+      "elapsed_seconds": null,
+      "elapsed_upper_bound_seconds": 628,
+      "compiler_seconds": 0,
+      "note": "Read-only review; start timestamp was not captured. Completed by 2026-11-18T04:19:18Z, less than 628 seconds after the prior measured checkpoint at 04:08:50Z. No fresh build or replay."
+    },
+    "hashes": {
+      "manifest": "census/pad-window-v1.json sha256=a838908d33293aecdb6d8d1bebc0a220cb73c7488d15dc95735911545ba1a388",
+      "PadWindow.lean": "f405f33a614c72bd3145e1490b134b337b28260ca38dbddafae46330f294c06b",
+      "PadWindowLemmas.lean": "83934f05ba159d1282c37e6e491751a888d349b06f2b67b8d683059b7f2bd0c4",
+      "PadWindowProof.lean": "b3a0bdb41ce03a3e73687154afb7c8967693fffe64e09453aa548f730df452a4",
+      "ReductionWindow.lean": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2",
+      "algebraic_simplifier.cc": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+      "hlo_evaluator.cc": "de28ed7f92830af0a81b2f9c56bf974742837883ee35db088cb56868d3071521"
+    }
+  },
+  {
+    "id": "pad-tail-reuse.convert",
+    "effort_group": "pad-tail-historical-reuse",
+    "source_ids": [
+      "HandleReduceWindow/pad-fold-convert"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/PadWindowProof.lean",
+    "theorem": "TensorRewrite.Theory.PadWindow.map_pad, convert_reduce_fusion, convert_initial_fusion",
+    "lhs": "Convert the explicit Pad tensor, then apply the outer ReduceWindow using the result-type init.",
+    "rhs": "Convert the original input, fold Pad geometry into ReduceWindow, and use the converted Pad fill as the shared invalid value; substitute it for the actual init only under convert(fill)=init.",
+    "conditions": "Historical convert_reduce_fusion is for any pure scalar convert, arbitrary result operation and initializer, provided the converted explicit and modelled implicit fills agree; convert_initial_fusion additionally requires convert fill = initializer. Source branch at algebraic_simplifier.cc:9919–10112 requires operand=Convert(Pad), rejects negative Pad and the interior-Pad/base-dilation combination, accepts differing Pad/init literals only when both are constants equal after literal conversion, and must fall through both effective-broadcast cases to the fold at :10106. Its one-nontrivial-window-dimension padding-ratio check can decline small-padding candidates. The actual skip-padding evaluator transfer again needs right identity op(acc, init)=acc for deleting explicit Pad values that become out-of-bounds; the theorem itself makes no such assumption.",
+    "types": "Historical theorem supports heterogeneous α→β pure conversion and arbitrary reducer/initializer. Source branch is limited by constant literal matching when the source and result types differ, and by the HLO identity/reassociation contract. No conversion-through-reducer law is used.",
+    "overlap": "Same Pad/window geometry family as pad-tail-reuse.direct, with a distinct converted graph and source ID. `map_pad` preserves the actual converted fill; `convert_initial_fusion` handles the source initializer substitution only with the explicit converted-fill equality. The missing evaluator bridge is a typed ordered-fold erasure argument over interleaved `convert fill` entries, not a scalar homomorphism. Source formula for empty original input also remains unmatched. No broadcast-sequence closure or whole-record acceptance is claimed.",
+    "outcome": "proved",
+    "evidence": [
+      "TensorRewrite/Theory/PadWindow.lean",
+      "TensorRewrite/Theory/PadWindowLemmas.lean",
+      "TensorRewrite/Theory/PadWindowProof.lean",
+      "TensorRewrite/Theory/ReductionWindow.lean",
+      "reports/pad-window.json",
+      "reports/theory-progress.json",
+      "docs/pad-window-fusion.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "census/pad-window-v1.json",
+      "census/reduction-window-domains-v5.json",
+      "comparisons/revised-benchmark-20261117/model-audit/pad-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/pad-tail-reuse-review.md"
+    ],
+    "timing": {
+      "elapsed_seconds": null,
+      "elapsed_upper_bound_seconds": 628,
+      "compiler_seconds": 0,
+      "note": "Read-only review; start timestamp was not captured. Completed by 2026-11-18T04:19:18Z, less than 628 seconds after the prior measured checkpoint at 04:08:50Z. No fresh build or replay."
+    },
+    "hashes": {
+      "manifest": "census/pad-window-v1.json sha256=a838908d33293aecdb1c6d8d1bebc0a220cb73c7488d15dc95735911545ba1a388",
+      "PadWindow.lean": "f405f33a614c72bd3145e1490b134b337b28260ca38dbddafae46330f294c06b",
+      "PadWindowLemmas.lean": "83934f05ba159d1282c37e6e491751a888d349b06f2b67b8d683059b7f2bd0c4",
+      "PadWindowProof.lean": "b3a0bdb41ce03a3e73687154afb7c8967693fffe64e09453aa548f730df452a4",
+      "ReductionWindow.lean": "6e2a7ea41201730c1fb72c5715305aa7cd7cf00b7b032e3df734318cdb3fa7e2",
+      "algebraic_simplifier.cc": "1ecfd7d4ba958ac0e795d8663c14f7f6b1ebd147a8a83ed0e99661740105628f",
+      "hlo_evaluator.cc": "de28ed7f92830af0a81b2f9c56bf974742837883ee35db088cb56868d3071521"
+    }
+  },
+  {
+    "id": "transpose.sorted-nonunit-reshape",
+    "effort_group": "transpose-degenerate-reshape",
+    "source_ids": [
+      "HandleTranspose/degenerate-reshape"
+    ],
+    "theorem": "RevisedBenchmark.UnitOrder.verified",
+    "lhs": "Read the input coordinate through a legal transpose.",
+    "rhs": "Read the operand at the unchanged row-major ordinal of the output coordinate.",
+    "conditions": "At least one unit extent; after removing output positions of extent one, corresponding input axis numbers are sorted. The visible input axes are a permutation of the visible output axes.",
+    "types": "Static logical, homogeneous tensors of arbitrary element type and finite rank; zero extents admitted.",
+    "overlap": "Arbitrary static rank and number of unit axes; earlier unit-axis insertion/reverse identities concerned different calculations.",
+    "outcome": "proved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/UnitOrderControls.lean",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/UnitOrderProof.lean",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/UnitOrderSpec.lean",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/author.log",
+      "comparisons/revised-benchmark-20261117/transpose-degenerate-reshape/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reshape.broadcast-preserved-factors",
+    "effort_group": "reshape-broadcast-factors",
+    "source_ids": [
+      "HandleReshape/broadcast"
+    ],
+    "theorem": "RevisedBenchmark.ReshapeBroadcast.verified; RevisedBenchmark.ReshapeBroadcast.legal_read",
+    "lhs": "Reshape the broadcast and recover each selected axis from the common linear output position.",
+    "rhs": "Broadcast directly using the remapped dimension list.",
+    "conditions": "Each mapped axis is a common rank-one factor, splitting both shapes at equal prefix products around equal axis width; total counts equal. A valid output forces positive widths and equal suffix volumes. Empty outputs have no reads.",
+    "types": "Static logical, homogeneous tensors of arbitrary element type and finite rank; zero extents admitted.",
+    "overlap": "Different terminal from replacing a broadcast by a reshape. The source common-factor coordinate hypothesis is checked separately from the value conclusion.",
+    "outcome": "proved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FactorControls.lean",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FactorProof.lean",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FactorSpec.lean",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/author.log",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/failed-dependent-rewrite.log",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/failed-empty-control.log",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/failed-field-syntax.log",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/failed-lemma-name.log",
+      "comparisons/revised-benchmark-20261117/reshape-broadcast-factors/replay.py",
+      "sources/xla/xla/shape_util.cc",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.rankzero-dus-concat",
+    "outcome": "proved",
+    "effort_group": "rankzero-dus-historical-reuse",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/pad-concatenate"
+    ],
+    "theorem": "RevisedBenchmark.UpdateConstantPad.verified",
+    "lhs": "Dynamic update of uniform base at signed decoded constant starts.",
+    "rhs": "Pad the update by fill with low clamped starts and complementary high padding.",
+    "conditions": "Rank-zero signed-32 same-shape scalar base and update, one legacy integral start vector of length zero constructed by concatenating two empty vectors, enabled option and no host offload. Empty per-axis loop emits rank-zero Pad. The positive-rank matcher requires scalar concat operands, excluded by concat shape inference.",
+    "types": "Arbitrary homogeneous payloads, static integral extents.",
+    "overlap": "Specialization of previously reviewed UpdateConstantPad.verified with empty geometry and unit empty product. Native reachability was not replayed.",
+    "evidence": [
+      "comparisons/tensorright-v1/UpdatePad.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/reuse-updates-concat.md",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateControls.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateProof.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateSpec.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/replay.py",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/dus-index-container-scope.md",
+      "comparisons/revised-benchmark-20261117/model-audit/rankzero-dus-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/rankzero-dus-reuse-review.md"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/UpdatePad.lean"
+  }
+]
