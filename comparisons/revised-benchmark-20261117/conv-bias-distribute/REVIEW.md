@@ -34,4 +34,4 @@ This is an exact counterexample to the stated integer-rounding model of the full
 
 ## Timing
 
-Review group ran 2026-11-18 02:07–02:11 UTC, sharing inspection time with `conv-select-scale`. The fresh replay took about 1.5 seconds; summed Lean compilation time was 1.246 seconds. No separate active-token measure was available.
+Source/model inspection was underway by about 02:07 UTC; its exact start was not instrumented. The group ended with the reviews committed at 02:12:57 UTC. From the first timestamped replay (02:10:06) through commit, elapsed wall time was 2m51s; the earlier source-inspection interval is approximate and shared with `conv-select-scale`. The fresh replay took about 1.5 seconds; summed Lean compilation time was 1.246 seconds. No separate active-token measure was available.
