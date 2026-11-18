@@ -1,0 +1,313 @@
+[
+  {
+    "id": "reduce.reshape-reduced-axes",
+    "effort_group": "reduce-reshape-fibers",
+    "source_ids": [
+      "HandleReduce/reshape-reduced-axes"
+    ],
+    "lhs": "Reduce the row-major reshaped dense operand on the selected axes.",
+    "rhs": "Reduce the original dense operand on all axes except the paired surviving axes.",
+    "conditions": "The same surviving shape, including every extent. All surviving axes are paired singleton-to-singleton factors. Static ordered equal-volume common-factor groups, arbitrary rank including scalar and zero extents; source-to-descriptor normalization assumed.",
+    "types": "Arbitrary scalar type, total pure binary reducer, arbitrary seed; fixed logical row-major left fold.",
+    "theorem": "RevisedBenchmark.ReduceReshape.dropReshape",
+    "overlap": "Two replacement programs: removing reshape preserves surviving shape; moving reshape preserves surviving volume. Shared projection proof and effort. Distinct from deleting unit reduction axes and reducing a transposed input.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/attempt2.log",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "outcome": "proved"
+  },
+  {
+    "id": "reduce.reshape-surviving-axes",
+    "effort_group": "reduce-reshape-fibers",
+    "source_ids": [
+      "HandleReduce/reshape-output-axes"
+    ],
+    "lhs": "Reduce the row-major reshaped dense operand on the selected axes.",
+    "rhs": "Reduce the original operand on the paired reduced axes, then reshape its output to the original surviving shape.",
+    "conditions": "Equal surviving volumes suffice for the final reshape. All reduced axes are paired singleton-to-singleton factors. Static ordered equal-volume common-factor groups, arbitrary rank including scalar and zero extents; source-to-descriptor normalization assumed.",
+    "types": "Arbitrary scalar type, total pure binary reducer, arbitrary seed; fixed logical row-major left fold.",
+    "theorem": "RevisedBenchmark.ReduceReshape.moveReshape",
+    "overlap": "Two replacement programs: removing reshape preserves surviving shape; moving reshape preserves surviving volume. Shared projection proof and effort. Distinct from deleting unit reduction axes and reducing a transposed input.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/attempt2.log",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "outcome": "proved"
+  },
+  {
+    "id": "reduce.broadcast-mapped-axes",
+    "effort_group": "reduce-broadcast-mapped",
+    "source_ids": [
+      "HandleReduce/broadcast-base-axes"
+    ],
+    "lhs": "Reduce a broadcast along a subset of its mapped target axes.",
+    "rhs": "Reduce corresponding base axes, then broadcast the surviving base axes at each old target minus the number of preceding deleted target axes.",
+    "conditions": "Strictly increasing equal-extent broadcast map, arbitrary finite static shapes including zeros and rank zero, single-output logical ordered fold, any subset of mapped axes selected.",
+    "types": "Any element type, same on both sides, pure binary reducer, arbitrary initializer.",
+    "theorem": "RevisedBenchmark.ReduceMapped.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/MappedSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/MappedProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/MappedControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/acceptance.log",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/BaseControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/BaseProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/BaseSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/INDEPENDENT-REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/author.log",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-base/replay.py",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-broadcast-mapped/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "overlap": "Different from reducing newly introduced axes or eliminating an empty reduction; equal-extent HLO broadcast, excluding client-level mapped singleton expansion.",
+    "excluded_diagnostic": {
+      "theorem": "RevisedBenchmark.ReduceBase.refuted",
+      "reason": "Client [1,2]→[3,2] mapped expansion violates ShapeVerifier::HandleBroadcast equal-extents guard; compute [12,-9] vs [4,-3] but no benchmark refutation."
+    },
+    "outcome": "proved"
+  },
+  {
+    "id": "broadcast.sink-mixed-elementwise",
+    "outcome": "proved",
+    "effort_group": "sink-mixed-broadcast",
+    "source_ids": [
+      "HandleBroadcast/sink-users-delegation",
+      "TryToSinkBroadcastAfterElementwiseOps/eligible-user"
+    ],
+    "theorem": "RevisedBenchmark.SinkMixed.expanded",
+    "lhs": "Apply a pure elementwise user to an ordered sequence of array and scalar broadcasts.",
+    "rhs": "Apply the same user on the smaller frame after rebroadcasting scalar operands, then broadcast its result.",
+    "conditions": "Arbitrary finite ranks/arity, common ordered map for arrays, arbitrary result type; static HLO has equal mapped extents. Client singleton expansion selects coordinate zero.",
+    "types": "Heterogeneous argument types, pure extensional values, dense static arrays.",
+    "overlap": "Binary homogeneous add/multiply are historical specializations. Broad theorem and equal-extent theorem count once; the caller and helper denote the same transformation.",
+    "evidence": [
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/tensorright-v1/Broadcast.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandControls.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandProof.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandSpec.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkControls.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkProof.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkSpec.lean",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/EXPAND-SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/INDEPENDENT-REVIEW.md",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/replay.py",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/replay_expanded.py",
+      "comparisons/revised-benchmark-20261117/sink-mixed-broadcast/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reduce.negate-signed-zero",
+    "outcome": "disproved",
+    "effort_group": "reduce-negate-zero",
+    "source_ids": [
+      "HandleReduce/negate-sum"
+    ],
+    "theorem": "RevisedBenchmark.NegatedReduction.refuted",
+    "lhs": "Sum negated rank-one values with a two-sided zero initializer.",
+    "rhs": "Sum original values with the same initializer and negate the resulting scalar.",
+    "conditions": "Closed binary32 zero-sign fragment, RNE, identity -0, at least two input elements. [+0,-0] yields +0 versus -0.",
+    "types": "Strict binary32 signed-zero bits.",
+    "overlap": "Exact additive-group result has a single zero; a distinct strict-bit observation with order-independent witness. Native permissions and reachability are open.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "precision.full-width-f32",
+    "outcome": "proved",
+    "effort_group": "full-width-precision",
+    "source_ids": [
+      "HandleReducePrecision/full-width"
+    ],
+    "theorem": "RevisedBenchmark.FullWidth.verified",
+    "lhs": "Reduce the mantissa precision of a binary32 tensor on the nearest-even grid with full exponent budget.",
+    "rhs": "Return the original tensor.",
+    "conditions": "Eight exponent bits and m+1=24, every binary32 word, logical observation by all 32 bits at each coordinate.",
+    "types": "Raw binary32, including signed zero, subnormals and NaN payloads in the declared encoding.",
+    "overlap": "No earlier terminal for ReducePrecision. Earlier integer/binary32 conversion changes element type.",
+    "evidence": [
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "sources/xla/xla/primitive_util.h",
+      "comparisons/revised-benchmark-20261117/full-width-precision/WidthControls.lean",
+      "comparisons/revised-benchmark-20261117/full-width-precision/WidthProof.lean",
+      "comparisons/revised-benchmark-20261117/full-width-precision/WidthSpec.lean",
+      "comparisons/revised-benchmark-20261117/full-width-precision/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/full-width-precision/INDEPENDENT-REVIEW.md",
+      "comparisons/revised-benchmark-20261117/full-width-precision/replay.py",
+      "comparisons/revised-benchmark-20261117/full-width-precision/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "scatter.empty-vector-equal-shapes",
+    "outcome": "disproved",
+    "effort_group": "scatter-empty-vector-map",
+    "source_ids": [
+      "HandleScatter/empty-indices"
+    ],
+    "theorem": "RevisedBenchmark.EmptyVecMap.refuted",
+    "lhs": "Scatter a nonempty batch of empty index vectors using scalar inserted windows and modular addition.",
+    "rhs": "Map addition pointwise over the original array and same-shaped updates.",
+    "conditions": "Operand/update/result all [n], indices [n,0], explicit vector axis 1, no start components, inserted operand axis 0. Duplicate indices allowed. At n=2 the outputs are [8,0] and [3,5].",
+    "types": "Static dense 32-bit modular words; exact order-independent observation.",
+    "overlap": "Earlier empty-index witness used different operand/update shapes and a first-update map. This witness meets equal-shape guard under stated dimension numbers. No native run.",
+    "evidence": [
+      "sources/xla/docs/operation_semantics.md",
+      "sources/xla/xla/service/shape_inference.cc",
+      "TensorRewrite/Theory/ScatterIndicesCounterexample.lean",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/EmptyVecControls.lean",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/EmptyVecProof.lean",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/EmptyVecSpec.lean",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/replay.py",
+      "comparisons/revised-benchmark-20261117/scatter-empty-vector-map/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "copy.compose-dense-layouts",
+    "outcome": "proved",
+    "effort_group": "copy-layout-chain",
+    "source_ids": [
+      "HandleCopy/compose-copy",
+      "HandleCopy/compose-identity"
+    ],
+    "theorem": "RevisedBenchmark.CopyChain.verified",
+    "lhs": "Copy from original storage into a middle layout and then to a final layout.",
+    "rhs": "Copy directly to final layout; forward the original memory when final layout equals original.",
+    "conditions": "Each dense static layout bijects logical coordinates and all n storage slots. Includes zero extent and differing intermediate/final layouts.",
+    "types": "Arbitrary element payload, equality at every final physical element address.",
+    "overlap": "Single composition law and its identity-layout specialization counted together. Lifetime/placement and padded or tiled holes are outside the observation.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopyControls.lean",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopyProof.lean",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/replay.py",
+      "comparisons/revised-benchmark-20261117/copy-layout-chain/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.reduce-constant-and",
+    "outcome": "proved",
+    "effort_group": "historical-constant-reduction",
+    "source_ids": [
+      "HandleReduce/scalar-broadcast-and"
+    ],
+    "theorem": "TensorRewrite.Theory.ReductionAlgebra.constant_and",
+    "lhs": "Reduce a nonempty scalar broadcast over every axis with its actual initializer.",
+    "rhs": "Apply the reducer once to the scalar and initializer in source argument order.",
+    "conditions": "Nonempty static fiber, rank-zero output. True identity seeds are included.",
+    "types": "Bool conjunction",
+    "overlap": "Previously certified by ReductionAlgebra; reviewed source/receipt reuse only.",
+    "evidence": [
+      "TensorRewrite/Theory/ReductionAlgebra.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/remaining-family-audit.md",
+      "reports/reduction-algebra.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/ReductionAlgebra.lean"
+  },
+  {
+    "id": "reuse.reduce-constant-or",
+    "outcome": "proved",
+    "effort_group": "historical-constant-reduction",
+    "source_ids": [
+      "HandleReduce/scalar-broadcast-or"
+    ],
+    "theorem": "TensorRewrite.Theory.ReductionAlgebra.constant_or",
+    "lhs": "Reduce a nonempty scalar broadcast over every axis with its actual initializer.",
+    "rhs": "Apply the reducer once to the scalar and initializer in source argument order.",
+    "conditions": "Nonempty static fiber, rank-zero output. True identity seeds are included.",
+    "types": "Bool disjunction",
+    "overlap": "Previously certified by ReductionAlgebra; reviewed source/receipt reuse only.",
+    "evidence": [
+      "TensorRewrite/Theory/ReductionAlgebra.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/remaining-family-audit.md",
+      "reports/reduction-algebra.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/ReductionAlgebra.lean"
+  },
+  {
+    "id": "reuse.reduce-constant-minimum",
+    "outcome": "proved",
+    "effort_group": "historical-constant-reduction",
+    "source_ids": [
+      "HandleReduce/scalar-broadcast-minimum"
+    ],
+    "theorem": "TensorRewrite.Theory.ReductionAlgebra.constant_min",
+    "lhs": "Reduce a nonempty scalar broadcast over every axis with its actual initializer.",
+    "rhs": "Apply the reducer once to the scalar and initializer in source argument order.",
+    "conditions": "Nonempty static fiber, rank-zero output. True identity seeds are included.",
+    "types": "mathematical linear order",
+    "overlap": "Previously certified by ReductionAlgebra; reviewed source/receipt reuse only.",
+    "evidence": [
+      "TensorRewrite/Theory/ReductionAlgebra.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/remaining-family-audit.md",
+      "reports/reduction-algebra.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/ReductionAlgebra.lean"
+  },
+  {
+    "id": "reuse.reduce-constant-maximum",
+    "outcome": "proved",
+    "effort_group": "historical-constant-reduction",
+    "source_ids": [
+      "HandleReduce/scalar-broadcast-maximum"
+    ],
+    "theorem": "TensorRewrite.Theory.ReductionAlgebra.constant_max",
+    "lhs": "Reduce a nonempty scalar broadcast over every axis with its actual initializer.",
+    "rhs": "Apply the reducer once to the scalar and initializer in source argument order.",
+    "conditions": "Nonempty static fiber, rank-zero output. True identity seeds are included.",
+    "types": "mathematical linear order",
+    "overlap": "Previously certified by ReductionAlgebra; reviewed source/receipt reuse only.",
+    "evidence": [
+      "TensorRewrite/Theory/ReductionAlgebra.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/remaining-family-audit.md",
+      "reports/reduction-algebra.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/ReductionAlgebra.lean"
+  }
+]
