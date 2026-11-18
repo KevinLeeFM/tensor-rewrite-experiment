@@ -1,0 +1,46 @@
+[
+  {
+    "id": "reduce.replicated-multiplicity-exact-int",
+    "outcome": "proved",
+    "effort_group": "reduce-replicated-multiplicity",
+    "source_ids": [
+      "HandleReduce/broadcast-replicated-axes"
+    ],
+    "lhs": "Broadcast the operand and reduce precisely the chosen introduced axes in row-major order.",
+    "rhs": "Multiply the original operand by the converted product of reduced extents, add a broadcast zero seed, then broadcast the result on the renumbered surviving axes.",
+    "conditions": "Static ordered equal-mapped-extent broadcast with reductions only on inserted dimensions. Logical output coordinates valid. Unbounded exact Int, seed 0; arbitrary static rank/shape including zero.",
+    "types": "Unbounded exact Int, seed 0; arbitrary static rank/shape including zero.",
+    "theorem": "RevisedBenchmark.ReduceMultiplicity.exactInt",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicitySpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/attempt1.log"
+    ],
+    "overlap": "New terminal tensor relation uses prior mapped-axis transport and RNE integer rounding. Known constant-fold coefficient identity and prior fixed-order scalar uniform-sum rounding discrepancy are inherited arithmetic; not first discoveries."
+  },
+  {
+    "id": "reduce.replicated-multiplicity-rne-binary32",
+    "outcome": "disproved",
+    "effort_group": "reduce-replicated-multiplicity",
+    "source_ids": [
+      "HandleReduce/broadcast-replicated-axes"
+    ],
+    "lhs": "Broadcast the operand and reduce precisely the chosen introduced axes in row-major order.",
+    "rhs": "Multiply the original operand by the converted product of reduced extents, add a broadcast zero seed, then broadcast the result on the renumbered surviving axes.",
+    "conditions": "Static ordered equal-mapped-extent broadcast with reductions only on inserted dimensions. Logical output coordinates valid. Fixed-order RNE binary32, finite nonnegative integer-valued inputs \u22642^24, seed +0, common count 1..256.",
+    "types": "Fixed-order RNE binary32, finite nonnegative integer-valued inputs \u22642^24, seed +0, common count 1..256.",
+    "theorem": "RevisedBenchmark.ReduceMultiplicity.refuted",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicitySpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/attempt1.log"
+    ],
+    "overlap": "New terminal tensor relation uses prior mapped-axis transport and RNE integer rounding. Known constant-fold coefficient identity and prior fixed-order scalar uniform-sum rounding discrepancy are inherited arithmetic; not first discoveries."
+  }
+]
