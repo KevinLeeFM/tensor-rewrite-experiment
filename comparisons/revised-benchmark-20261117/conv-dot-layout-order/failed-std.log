@@ -1,0 +1,25 @@
+comparisons/revised-benchmark-20261117/conv-dot-layout-order/LayoutSpec.lean: OK
+comparisons/revised-benchmark-20261117/conv-dot-layout-order/FREEZE.md: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+sources/xla/xla/service/shape_inference.cc: OK
+LayoutSpec 0.588s exit=0
+LayoutProof.lean:20:7: error: unknown tactic
+LayoutProof.lean:19:11: error: unsolved goals
+case mp.true
+B S : Nat
+h : ∀ (b : Fin B) (s : Fin S), ↑b * S + ↑s = outputRow true B S ↑b ↑s
+⊢ true = false ∨ B ≤ 1 ∨ S ≤ 1
+LayoutProof.lean:13:48: error: unsolved goals
+case mpr
+sw : Bool
+B S : Nat
+⊢ sw = false ∨ B ≤ 1 ∨ S ≤ 1 → ∀ (b : Fin B) (s : Fin S), ↑b * S + ↑s = outputRow sw B S ↑b ↑s
+'RevisedBenchmark.ConvDotOrder.criterion' depends on axioms: [propext, sorryAx, Quot.sound]
+'RevisedBenchmark.ConvDotOrder.refuted' depends on axioms: [propext, sorryAx, Quot.sound]
+LayoutProof 0.337s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/conv-dot-layout-order/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'LayoutProof.olean', 'LayoutProof.lean']' returned non-zero exit status 1.
