@@ -1,0 +1,56 @@
+[
+  {
+    "id": "literal.uniform",
+    "lhs": "Stored dense literal (dims,xs)",
+    "rhs": "Broadcast(first(xs), dims)",
+    "conditions": "Any rank and extents with product > 1 and length-matched storage; adjacent scalar representations compare equal.",
+    "types": "A fixed exact scalar domain with decidable equality.",
+    "source_ids": [
+      "HandleConstant/uniform"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralSpec.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralProof.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Literal.uniform",
+    "overlap": "Pilot.ConstantGuardLemmas proves a Bool storage-recognition lemma for an externally supplied value; first-scalar reconstruction for arbitrary exact element types is the terminal case here.",
+    "effort_group": "literal-model"
+  },
+  {
+    "id": "literal.iota",
+    "lhs": "Stored dense rank-one literal xs",
+    "rhs": "Iota(xs.length, axis 0, encode)",
+    "conditions": "Length > 1; prior uniform branch declined; serial recognition checks each literal element against the fixed encoding of its index.",
+    "types": "Exact scalar equality with an eligible fixed coordinate encoding. Exact integer embedding is an instance.",
+    "source_ids": [
+      "HandleConstant/iota"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralSpec.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralProof.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Literal.plain",
+    "overlap": "Earlier iota-to-zero and broadcast-iota identities concern different original expressions.",
+    "effort_group": "literal-model"
+  },
+  {
+    "id": "literal.strided-iota",
+    "lhs": "Stored dense rank-one integer literal xs",
+    "rhs": "Multiply(Iota(xs.length, axis 0), BroadcastScalar(xs[1]))",
+    "conditions": "At least two elements, earlier uniform and iota guards declined, nonzero second value, serial integer scan succeeds using that inferred stride.",
+    "types": "Unbounded mathematical integers; machine overflow and representation conversion excluded.",
+    "source_ids": [
+      "HandleConstant/strided-iota"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralSpec.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralProof.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Literal.strided",
+    "overlap": "Reuses position scan induction in this batch; computes stride from the input and separately constructs iota, broadcast multiplier and product values.",
+    "effort_group": "literal-model"
+  }
+]
