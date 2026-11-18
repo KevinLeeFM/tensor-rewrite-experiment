@@ -1,0 +1,39 @@
+comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngSpec.lean: OK
+comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngProof.lean: OK
+comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngControls.lean: OK
+comparisons/revised-benchmark-20261117/rng-reshape-transpose/FREEZE.md: OK
+RngSpec 0.467s exit=0
+RngProof.lean:11:69: error: Tactic `rfl` failed: equality lhs
+  g y * (h y * (List.map (fun y => g y * h y) ys).prod)
+is not definitionally equal to rhs
+  g y * (h y * ((List.map g ys).prod * (List.map h ys).prod))
+
+case cons
+α β : Type
+xs : List α
+f : α → β → Nat
+g h : β → Nat
+y : β
+ys : List β
+ih :
+  (List.map (fun x => 1) ys).prod = 1 →
+    (List.map (fun y => g y * h y) ys).prod = (List.map g ys).prod * (List.map h ys).prod
+units : (List.map (fun x => 1) (y :: ys)).prod = 1
+⊢ g y * (h y * (List.map (fun y => g y * h y) ys).prod) = g y * (h y * ((List.map g ys).prod * (List.map h ys).prod))
+RngProof.lean:11:64: warning: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.map_cons, List.prod_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.RandomShape.transposeLaw' depends on axioms: [propext, sorryAx, Quot.sound]
+'RevisedBenchmark.RandomShape.reshapeStream' depends on axioms: [propext]
+'RevisedBenchmark.RandomShape.differentSeedObservation' depends on axioms: [propext]
+RngProof 0.421s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/rng-reshape-transpose/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'RngProof.olean', 'RngProof.lean']' returned non-zero exit status 1.
