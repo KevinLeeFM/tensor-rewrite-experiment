@@ -11,7 +11,7 @@
     "outcome": "disproved",
     "theorem": "TensorRewrite.Pilot.SliceShape.remove_redundant_stride_not_preserving",
     "conditions": "Original legal static slice at its declared shape, including zero length. Source stride transformation with no positive-span guard. Extent 4, [1,1) stride 2 gives legal length 0. Replacement [1,2) stride 1 requires length 1.",
-    "types": "Static logical tensors over arbitrary homogeneous \u03b1 : Type, finite ranks and natural extents.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
     "historical_review_or_receipt": "reports/empty-slice-replay-v2/result.json",
     "receipt_sha256": "d2b6eab91a74b189c01cdd4ef7f1181ea05f37aab9708990309eb04d8008552d",
     "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
@@ -28,7 +28,7 @@
     "outcome": "disproved",
     "theorem": "TensorRewrite.Pilot.SliceShape.reorder_reverse_not_preserving",
     "conditions": "Original legal static slice at its declared shape, including zero length. Slice after Reverse, selected mask includes the transformed axis; no positive-span guard. Extent 4, [1,1) stride 2 gives legal length 0. Replacement inner [2,3) stride 2 requires length 1.",
-    "types": "Static logical tensors over arbitrary homogeneous \u03b1 : Type, finite ranks and natural extents.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
     "historical_review_or_receipt": "reports/empty-slice-replay-v2/result.json",
     "receipt_sha256": "d2b6eab91a74b189c01cdd4ef7f1181ea05f37aab9708990309eb04d8008552d",
     "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
@@ -45,7 +45,7 @@
     "outcome": "proved",
     "theorem": "Heldout.TransposeBroadcast.proof",
     "conditions": "Layout-insensitive partition, matched extents, original and moved dimension maps ordered, p invertible.",
-    "types": "Static logical tensors over arbitrary homogeneous \u03b1 : Type, finite ranks and natural extents.",
+    "types": "Static logical tensors over arbitrary homogeneous α : Type, finite ranks and natural extents.",
     "historical_review_or_receipt": "5f30c1be1c9237d90a2cb66352c4337903c30b69:comparisons/heldout-transpose-broadcast/independent-final-review.md",
     "receipt_sha256": "9674329ad3c5cbdd6f682130b60e23be225124dba2debc67fe76cfefc980e73d",
     "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
@@ -61,7 +61,7 @@
     "callee": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
     "outcome": "proved",
     "theorem": "RevisedBenchmark.Widen.verified .add",
-    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Either both signed or both unsigned.",
+    "conditions": "Common shape, same signedness across conversions, n ≤ w. Either both signed or both unsigned.",
     "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
     "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md",
     "receipt_sha256": "bee1d59ee1e7c8ee6adf8c8e233814774dbc1476cedb9d9b40d86892e13464ed",
@@ -78,7 +78,7 @@
     "callee": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
     "outcome": "proved",
     "theorem": "RevisedBenchmark.Widen.verified .sub",
-    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Either both signed or both unsigned.",
+    "conditions": "Common shape, same signedness across conversions, n ≤ w. Either both signed or both unsigned.",
     "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
     "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md",
     "receipt_sha256": "bee1d59ee1e7c8ee6adf8c8e233814774dbc1476cedb9d9b40d86892e13464ed",
@@ -95,7 +95,7 @@
     "callee": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
     "outcome": "proved",
     "theorem": "RevisedBenchmark.Widen.verified .mul",
-    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Either both signed or both unsigned.",
+    "conditions": "Common shape, same signedness across conversions, n ≤ w. Either both signed or both unsigned.",
     "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
     "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md",
     "receipt_sha256": "bee1d59ee1e7c8ee6adf8c8e233814774dbc1476cedb9d9b40d86892e13464ed",
@@ -112,7 +112,7 @@
     "callee": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
     "outcome": "proved",
     "theorem": "RevisedBenchmark.Widen.verified .udiv",
-    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Unsigned only; total BitVec.udiv zero convention.",
+    "conditions": "Common shape, same signedness across conversions, n ≤ w. Unsigned only; total BitVec.udiv zero convention.",
     "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
     "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md",
     "receipt_sha256": "bee1d59ee1e7c8ee6adf8c8e233814774dbc1476cedb9d9b40d86892e13464ed",
@@ -129,10 +129,42 @@
     "callee": "TryRemoveUpcastAndDowncastSurroundingBinaryOp",
     "outcome": "proved",
     "theorem": "Heldout.RemainderCast.goal_proof",
-    "conditions": "narrow\u2264wide; Lean unsigned remainder including its zero-divisor behavior.",
+    "conditions": "narrow≤wide; Lean unsigned remainder including its zero-divisor behavior.",
     "types": "Arbitrary-rank equal-shape tensors of BitVec narrow, natural narrow and wide.",
     "historical_review_or_receipt": "a9bb0ed6b8b1dafcbb2f57ec692a3190345bf092:comparisons/heldout-remainder-cast/independent-final-review.md",
     "receipt_sha256": "f5925d10870805d8a131973946684e714da4f6878fabab033cd68766d0b585f6",
+    "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+  },
+  {
+    "source_id": "MoveDotParamToRhs/parameter-left",
+    "existing_case_id": "transpose.swap-batched-dot",
+    "existing_source_ids": [
+      "HandleTranspose/dot-canonical",
+      "HandleTranspose/dot-general"
+    ],
+    "relation": "source-instance-of-existing-outcome",
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.DotSwap.verified",
+    "conditions": "identity batch permutation, full free-coordinate blocks exchanged, common ordered contraction; both precision slots readable; helper enabled and parameter-like orientation as specified",
+    "types": "Static exact integer logical tensors",
+    "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/dot-transpose/REVIEW.md",
+    "receipt_sha256": "0d99c48b95de8284d39126523f40b39678d5ad90df910750d18b1ddcbec6401c",
+    "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+  },
+  {
+    "source_id": "HandleDot/parameter-swap-delegation",
+    "existing_case_id": "transpose.swap-batched-dot",
+    "existing_source_ids": [
+      "HandleTranspose/dot-canonical",
+      "HandleTranspose/dot-general"
+    ],
+    "relation": "source-instance-of-existing-outcome",
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.DotSwap.verified",
+    "conditions": "identity batch permutation, full free-coordinate blocks exchanged, common ordered contraction; both precision slots readable; helper enabled and parameter-like orientation as specified",
+    "types": "Static exact integer logical tensors",
+    "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/dot-transpose/REVIEW.md",
+    "receipt_sha256": "0d99c48b95de8284d39126523f40b39678d5ad90df910750d18b1ddcbec6401c",
     "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
   }
 ]

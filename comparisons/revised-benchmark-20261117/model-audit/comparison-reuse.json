@@ -1,0 +1,60 @@
+[
+  {
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "effort_group": "order-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/site-case-map.json",
+      "comparisons/revised-benchmark-20261117/model-audit/order-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/order-tail-reuse-review.md"
+    ],
+    "id": "reuse.order-tail.nonnegative-exact",
+    "source_ids": [
+      "HandleCompare/nonnegative-lt",
+      "HandleCompare/nonnegative-gt",
+      "HandleCompare/nonnegative-ge",
+      "HandleCompare/nonnegative-le"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound (.compareZero direction), with integer_family, signed_family and real_family",
+    "lhs": "x < 0, 0 > x, x ≥ 0, or 0 ≤ x pointwise.",
+    "rhs": "Respectively false, false, true, true at every output position.",
+    "conditions": "The value tensor actually satisfies ∀ i, 0 ≤ x i in the declared order. Source tests IsNonNegative and IsAll(other,0) in the appropriate operand roles after the unsigned zero fast paths.",
+    "types": "Exact linear order with zero, including signed words under signed interpretation, Int and mathematical Real.",
+    "overlap": "Historical compareZero family. F32 NaN truth-changing GE/LE examples are retained separately in the existing ledger (nanLeftGE, nanRightLE). No universal source guard or IEEE claim."
+  },
+  {
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "effort_group": "order-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/site-case-map.json",
+      "comparisons/revised-benchmark-20261117/model-audit/order-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/order-tail-reuse-review.md"
+    ],
+    "id": "reuse.order-tail.threshold-min",
+    "source_ids": [
+      "TrySimplifyTautologicalCompare/Gt-Gt",
+      "TrySimplifyTautologicalCompare/Gt-Lt",
+      "TrySimplifyTautologicalCompare/Lt-Gt",
+      "TrySimplifyTautologicalCompare/Lt-Lt"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.signed_family 32 (.tautological firstReverse secondReverse)",
+    "lhs": "(x < a or, by orientation, a > x) AND (x < b or, by orientation, b > x).",
+    "rhs": "x < min(a,b) in signed order.",
+    "conditions": "Both bounds direct effective-scalar S32 constants and both comparisons share the same variable instruction. Each orientation flag selects one syntactic form; source-shape-valid signed comparisons and scalar-like bound construction. Minimum of signed int64 lifts of S32 bounds is one of those bounds and representable.",
+    "types": "Signed S32 words, homogeneous operands and signed LT/GT comparison. Constants as uniform inputs; common legal comparison/result dimensions.",
+    "overlap": "Four orientations instantiate one existing tautological conjunction family. HandleAnd dispatch is one call; no additional retained caller ID or new discovery."
+  }
+]

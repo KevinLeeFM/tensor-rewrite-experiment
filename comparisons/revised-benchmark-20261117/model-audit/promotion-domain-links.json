@@ -1,0 +1,250 @@
+[
+  {
+    "id": "reuse.numerical-tail.exp-zero",
+    "source_ids": [
+      "HandleExp/zero-scalar",
+      "HandleExp/zero-broadcast"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/NumericalComplex.lean",
+    "theorem": "TensorRewrite.Theory.Numerical.real_exp_zero, TensorRewrite.Theory.Numerical.complex_exp_zero",
+    "lhs": "Apply exp to scalar zero or the pointwise constant zero tensor.",
+    "rhs": "Pointwise constant one at the original shape.",
+    "conditions": "Direct rank-zero literal or immediate broadcast of that literal. Exact zero input, arbitrary valid broadcast output shape, no fast-math gate.",
+    "types": "Homogeneous exact real or complex logical tensors.",
+    "overlap": "Two constructors instantiate one existing constant-function identity family.",
+    "outcome": "proved",
+    "effort_group": "numerical-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalComplex.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/numerical-typed-domains-v1.json",
+      "census/mathematical-ledger.json",
+      "reports/theory-progress.json",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.numerical-tail.abs-square",
+    "source_ids": [
+      "HandleMultiply/abs-square"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "theorem": "TensorRewrite.Theory.Numerical.real_abs_square",
+    "lhs": "abs(a) * abs(a) pointwise.",
+    "rhs": "a * a pointwise.",
+    "conditions": "Both multiply operands are the same Abs instruction; its input is noncomplex. The selected model restricts the element type to exact reals.",
+    "types": "Homogeneous exact real tensor at arbitrary shape.",
+    "overlap": "Historical real identity. No concluded integer-overflow or encoded floating profile.",
+    "outcome": "proved",
+    "effort_group": "numerical-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/numerical-typed-domains-v1.json",
+      "census/mathematical-ledger.json",
+      "reports/theory-progress.json",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.numerical-tail.exp-product",
+    "source_ids": [
+      "HandleMultiply/exp-product"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "theorem": "TensorRewrite.Theory.Numerical.real_exp_product, TensorRewrite.Theory.Numerical.complex_exp_product",
+    "lhs": "exp(a) * exp(b) pointwise.",
+    "rhs": "exp(a + b) pointwise.",
+    "conditions": "Source fast math enabled and both operands Exp. On the exact real/complex model there is no positivity, range, or principal-log condition.",
+    "types": "Same-shaped homogeneous exact real or complex tensors.",
+    "overlap": "Historical exponential addition identity family; fast math is source admission, not a mathematical axiom or a guarantee about rounding.",
+    "outcome": "proved",
+    "effort_group": "numerical-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "TensorRewrite/Theory/NumericalComplex.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/numerical-typed-domains-v1.json",
+      "census/mathematical-ledger.json",
+      "reports/theory-progress.json",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.bitcast-same-layout",
+    "source_ids": [
+      "HandleBitcast/compatible-stage"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCell.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_refl",
+    "lhs": "Bitcast dense cells to the same shape and layout.",
+    "rhs": "Return the input.",
+    "conditions": "Static untiled same element type, identical layout, dimensions and cell count; no control dependencies and compatible replacement metadata.",
+    "types": "Fixed logical cell type.",
+    "overlap": "Identical-layout partition of the historical cell-read/write law.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCell.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.bitcast-compose",
+    "source_ids": [
+      "HandleBitcast/compose-stage"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCell.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_compose",
+    "lhs": "Two successive physical cell bitcasts.",
+    "rhs": "One bitcast with the original input and final output shape/layout.",
+    "conditions": "The two-bitcast pattern still matches after recursion on the inner instruction. Both steps preserve element count in their three dense views; no outer control dependencies.",
+    "types": "Same fixed cell type, static untiled shapes, arbitrary ranks.",
+    "overlap": "Historical cancellation of the intermediate storage view. The later compatible-stage is a separate test.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCell.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.bitcast-unary",
+    "source_ids": [
+      "HandleBitcast/unary-sandwich"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCell.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich",
+    "lhs": "Bitcast(map(f,bitcast(input))).",
+    "rhs": "Bitcast(map(f,input)) in the final view.",
+    "conditions": "One-operand, one-user, nonfusion elementwise instruction with same element type across all nodes and untiled inner bitcast and inner operand. Here the unary is a pure shape-independent cell function and all views are dense untiled with matching cell counts.",
+    "types": "Same fixed element type throughout, static dense logical tensors.",
+    "overlap": "Historical map transport plus composition. Op-dependent effects and tiled outer views excluded.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCell.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.convert-same",
+    "source_ids": [
+      "HandleBitcastConvert/compatible"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingProof.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.logical_convert_refl, TensorRewrite.Theory.BitPacking.physical_convert_refl",
+    "lhs": "Bitcast-convert identically typed words at the same shape.",
+    "rhs": "Return the input.",
+    "conditions": "Same logical shape, word width and bit order. The physical theorem additionally needs the same dense layout. Final compatibility branch reached after earlier rewrites decline.",
+    "types": "Homogeneous fixed-width words on static arrays.",
+    "overlap": "Existing logical identity and equal-layout physical specialization. Neither requires ignoring observable layout differences.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingProof.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.transpose",
+    "source_ids": [
+      "HandleTranspose/layout-bitcast"
+    ],
+    "historical_reuse": "TensorRewrite/Pilot/DenseLayoutRules.lean",
+    "theorem": "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast",
+    "lhs": "Transpose by the specified output-to-input permutation.",
+    "rhs": "Physical same-cell bitcast into the transpose output view.",
+    "conditions": "Layout-sensitive source; both layouts assigned; output extents permute the input extents and composition of the permutation with output minor-to-major equals input minor-to-major. Untiled, equal-byte-size, same-cell-type profile. Earlier transpose branches decline.",
+    "types": "Static untiled dense arrays at arbitrary rank.",
+    "overlap": "Existing certified dense transpose theorem. Tiled size and layout policy remain outside this profile.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Pilot/DenseLayoutRules.lean",
+      "census/dense-layout-contract.json",
+      "reports/transpose-bitcast-replay-v2/result.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.mismatched-layout-erasure",
+    "source_ids": [
+      "HandleBitcast/compatible-stage",
+      "HandleBitcastConvert/compatible"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCounterexamples.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.layout_identity_refuted, TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+    "lhs": "Observe the row-major to column-major same-width physical reinterpretation at coordinate (0,1).",
+    "rhs": "Delete the operation and observe the unchanged logical input at (0,1).",
+    "conditions": "Explicit dense 2×2 U8 layouts, row-major input x(i,j)=10*i+j and column-major result. Layout-insensitive compatibility, unsharded parameter, no control edges. Fix physical input/output views for this evaluator-profile observation.",
+    "types": "Static U8 words at identical numeric shape.",
+    "overlap": "One historical physical-layout counterexample; same-width theorem connects cell bitcast with word reinterpretation. No new native execution or general abstract HLO disproof.",
+    "outcome": "disproved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCounterexamples.lean",
+      "TensorRewrite/Theory/BitPackingProof.lean",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/literal.cc",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/dense-tail-reuse-review.md"
+    ]
+  },
+  {
+    "id": "conv.bfloat-promotion-early-round",
+    "source_ids": [
+      "HandleConvolution/onednn-delegation",
+      "PromoteConvolutionToF32IfNotOnednnCompatible/promote-and-continue"
+    ],
+    "effort_group": "conv-bfloat-promotion",
+    "outcome": "disproved",
+    "theorem": "RevisedBenchmark.ConvPromotion.refuted",
+    "conditions": "Static rank-three forward CPU convolution, F32 input, BF16 kernel/result, base dilation 2 on length two, unit-width kernel, no groups beyond one, parameter operands; oneDNN enabled, earlier folds/swap disabled or inapplicable. Finite integer-valued inputs through 511 and filters through 15, BF16 ties to even, exact F32 intermediate values.",
+    "lhs": "Convert input to BF16 result type, widen into F32 convolution arithmetic and convert output back to BF16.",
+    "rhs": "Widen operands directly to F32, convolve, then convert output to BF16.",
+    "types": "F32 × BF16 with BF16 result, numerical equality on these integer-valued inputs.",
+    "overlap": "The source swaps early and late rounding on an operand. A separate dot-strength counterexample depended on rounding a product. No native execution or generic low-precision backend verdict.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/PromotionControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/PromotionProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/PromotionSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/author.log",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "sources/xla/xla/service/hlo_verifier.cc"
+    ]
+  }
+]

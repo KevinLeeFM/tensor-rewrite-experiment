@@ -8,3 +8,5 @@ Use the companion alias table to append source IDs to existing case rows. It con
 
 Other audit137 delegation labels were not inferred from helper names. In particular, a bitcast/transpose call requires a physical address bridge, oneDNN promotion can mutate and continue, and dot strength has its own newly reviewed profile. None were added to this alias set. Review was read-only apart from this report and the eight-edge table. Shared lookup began 03:09:08 UTC on 2026-11-18 during the F16 packet review; dedicated alias finalization followed 03:11:15. No additional compiler time, downloads or builds.
 Alias audit completed 03:12:47 UTC.
+
+The parameter-swap helper and its caller specialize the earlier integer case with the identity batch permutation. The nonidentity output transposes in nested reassociation remain open. Exact source and precision-vector qualifications and historical hashes are in [the additional review](dot-swap-tail.md) at b03c9ae. Review coverage took 258 seconds.
