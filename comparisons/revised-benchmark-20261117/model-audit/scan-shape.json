@@ -1,0 +1,655 @@
+[
+  {
+    "id": "concat.adjacent-slice-maximal-scan",
+    "effort_group": "concat-adjacent-scanner",
+    "source_ids": [
+      "HandleConcatenate/adjacent-slices"
+    ],
+    "lhs": "Dense concatenation of the original ordered list of arbitrary compatible source blocks.",
+    "rhs": "Dense concatenation after the left-to-right scanner replaces maximal touching unit-slice runs by their merged slices.",
+    "conditions": "Shared arbitrary static prefix/suffix shapes; instruction identity, crop start equality and touching legal unit-stride intervals gate each merge. Noneligible operands are opaque barriers with arbitrary values/widths.",
+    "types": "Any payload type, Nat indices and lengths, including zero widths and empty output shapes.",
+    "theorem": "RevisedBenchmark.AdjacentScan.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/AdjacentSpec.lean",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/AdjacentProof.lean",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/AdjacentControls.lean",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/verified.log",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "overlap": "Paper concat/rule04 is the historical two-slice case; slice_merge_run accepts a supplied run on a fixed source/crop. This proof computes the maximal grouping and proves the whole mixed-list result. No separate count for maximality or the historical pair.",
+    "outcome": "proved"
+  },
+  {
+    "effort_group": "gather-empty-output",
+    "id": "gather.empty-operand-u8",
+    "source_ids": [
+      "HandleGather/empty-input"
+    ],
+    "theorem": "RevisedBenchmark.GatherEmpty.verified",
+    "lhs": "Observe a static U8 Gather whose source has zero elements, after successful index setup.",
+    "rhs": "Broadcast the byte encoding of scalar zero to the inferred result shape.",
+    "types": "Static dense U8, literal allocation zeroes every byte, successful evaluator setup.",
+    "conditions": "Precisely characterize empty output from zero retained-window width or nonvector index extent. Paired batching dimensions have matching extents; a collapsed zero input axis can yield an inhabited result.",
+    "overlap": "Checked as one complete result, including the observable [0] operand with [3,1] indices; earlier Gather select/effective scalar results concern nonempty operands.",
+    "outcome": "proved",
+    "evidence": [
+      "sources/xla/xla/literal.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/GatherEmptyControls.lean",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/GatherEmptyProof.lean",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/GatherEmptySpec.lean",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/replay.py",
+      "comparisons/revised-benchmark-20261117/gather-empty-output/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "effort_group": "rng-reshape-transpose",
+    "id": "rng.rectangular-reshape-stream",
+    "source_ids": [
+      "HandleReshape/rng-shape"
+    ],
+    "theorem": "RevisedBenchmark.RandomShape.reshapeStream",
+    "lhs": "Generate on a rectangular source frame, then reshape by row-major flat position.",
+    "rhs": "Generate directly on the same-volume destination frame.",
+    "types": "Arbitrary draw payload; common shape-independent linear stream.",
+    "conditions": "Rectangular frames of equal cardinality, zero extents admitted. Every reachable old source coordinate proven in bounds.",
+    "overlap": "This is a common-stream calculation. It assumes a shape-insensitive generator; shape-dependent algorithms are outside the model.",
+    "outcome": "proved",
+    "evidence": [
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngControls.lean",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngProof.lean",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngSpec.lean",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/replay.py",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "effort_group": "rng-reshape-transpose",
+    "id": "rng.rectangular-transpose-joint-law",
+    "source_ids": [
+      "HandleTranspose/rng-shape"
+    ],
+    "theorem": "RevisedBenchmark.RandomShape.transposeLaw",
+    "lhs": "Observe the probability of each complete transposed rectangular Boolean array drawn from an iid source.",
+    "rhs": "Generate that matrix directly in the transposed shape with the same finite iid weights.",
+    "types": "Integer-weighted binary draws, strictly positive total weight, including point support and fair Boolean uniforms.",
+    "conditions": "Inverse transpose selects the old matrix. Row-major products of all cell weights and both normalizers agree. Shared-seed pointwise observations and purely marginal constraints do not imply this law.",
+    "overlap": "One joint-law result, not a second refutation for a stronger same-seed property; correlated balanced-marginal controls distinguish the assumptions.",
+    "outcome": "proved",
+    "evidence": [
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngControls.lean",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngProof.lean",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/RngSpec.lean",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/replay.py",
+      "comparisons/revised-benchmark-20261117/rng-reshape-transpose/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-exp-denominator",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleDivide/exp-denominator"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_exp_denominator",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Any real inputs. Source selection: enable_fast_math",
+    "lhs": "Divide(a,Exp(b))",
+    "rhs": "Multiply(a,Exp(Negate(b)))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-exp-pair",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleDivide/exp-pair"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_exp_quotient",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Any real inputs. Source selection: enable_fast_math",
+    "lhs": "Divide(Exp(a),Exp(b))",
+    "rhs": "Exp(Subtract(a,b))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-power-denominator",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleDivide/power-denominator"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_denominator",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Nonnegative real power base at every index; source only excludes integral results. Source selection: output not integral; no local fast-math guard",
+    "lhs": "Divide(a,Power(b,c))",
+    "rhs": "Multiply(a,Power(b,Negate(c)))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-rsqrt-denominator",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleDivide/rsqrt-denominator"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_divide_rsqrt",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Use strictly positive radicands for conventional real reciprocal-square-root interpretation. Source selection: Rsqrt one use; no local fast-math guard",
+    "lhs": "Divide(a,Rsqrt(b))",
+    "rhs": "Multiply(a,Sqrt(b))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-sqrt-denominator",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleDivide/sqrt-denominator"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_divide_sqrt",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Use strictly positive radicands for conventional real reciprocal-square-root interpretation. Source selection: Sqrt one use; no local fast-math guard",
+    "lhs": "Divide(a,Sqrt(b))",
+    "rhs": "Multiply(a,Rsqrt(b))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-one",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalField.lean",
+    "source_ids": [
+      "HandleDivide/one"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.divide_one",
+    "types": "Exact commutative field (including real/rational), totalized inverse; no integer division. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Pointwise unit divisor. Source selection: IsAll(denominator,1); compatibility succeeds",
+    "lhs": "Divide(a,1)",
+    "rhs": "a",
+    "overlap": "Historical NumericalField pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalField.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-divide-predicate-scalar-broadcast",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalField.lean",
+    "source_ids": [
+      "HandleDivide/predicate-scalar-broadcast"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.divide_predicate_broadcast",
+    "types": "Exact commutative field (including real/rational), totalized inverse; no integer division. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Scalar denominator broadcast on empty axis map; predicate converted to field zero/one. Replacement reciprocal broadcast is left multiplicand. Source selection: after integral-output early return; Convert input PRED; denominator broadcast input scalar; no local fast-math guard",
+    "lhs": "Divide(Convert(pred),Broadcast(scalar_b))",
+    "rhs": "Multiply(Broadcast(Divide(1,b)),Convert(pred))",
+    "overlap": "Historical NumericalField pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalField.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-zero",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/zero"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_zero",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Exponent uniformly 0. Source selection: IsAll(exponent,0)",
+    "lhs": "Power(a,0)",
+    "rhs": "MakeScalarLike(output,1)",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-one",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/one"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_one",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Exponent uniformly 1. Source selection: IsAll(exponent,1); compatibility replacement succeeds",
+    "lhs": "Power(a,1)",
+    "rhs": "a",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-two",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/two"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_two",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Exponent uniformly 2. Source selection: IsAll(exponent,2); no local fast-math guard",
+    "lhs": "Power(a,2)",
+    "rhs": "Multiply(a,a)",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-three",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/three"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_three",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Exponent uniformly 3. Source selection: IsAll(exponent,3); no local fast-math guard",
+    "lhs": "Power(a,3)",
+    "rhs": "Multiply(a,Multiply(a,a))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-minus-one",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/minus-one"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_minus_one",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Exponent uniformly -1. Source selection: output not integral; IsAll(exponent,-1)",
+    "lhs": "Power(a,-1)",
+    "rhs": "Divide(1,a)",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-half",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/half"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_half",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Pointwise nonnegative base for the half-power branch; exponent is exactly 1/2. Source selection: IsAllFloat(exponent,0.5); IsNonNegative(a,options)",
+    "lhs": "Power(a,0.5)",
+    "rhs": "Sqrt(a)",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-power-exp-base",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandlePower/exp-base"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_power_exp",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Any real input and exponent, exponential base, fast-math source option. Source selection: enable_fast_math; Exp matcher",
+    "lhs": "Power(Exp(a),b)",
+    "rhs": "Exp(Multiply(a,b))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-log-exp",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ScalarDomains.lean",
+    "source_ids": [
+      "HandleLog/exp"
+    ],
+    "theorem": "TensorRewrite.Theory.ScalarDomains.real_log_exp_tensor",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "All exact real inputs; no principal-complex claim. Source selection: enable_fast_math; compatibility replacement succeeds",
+    "lhs": "Log(Exp(a))",
+    "rhs": "a",
+    "overlap": "Historical ScalarDomains pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/ScalarDomains.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-log-rsqrt",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleLog/rsqrt"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_log_rsqrt_pos",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Every input strictly positive. Source selection: Rsqrt matcher; no local fast-math or domain guard",
+    "lhs": "Log(Rsqrt(a))",
+    "rhs": "Multiply(Log(a),-0.5)",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-log-power-real",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleLog/power-real"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_log_power_pos",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Every base strictly positive. Preserve zero-exponent select and source multiply order. Source selection: enable_fast_math; a element type not complex",
+    "lhs": "Log(Power(a,b))",
+    "rhs": "Select(b == 0,0,Multiply(Log(Abs(a)),b))",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-log-power-complex",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalComplex.lean",
+    "source_ids": [
+      "HandleLog/power-complex"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.complex_log_power_iff",
+    "types": "Exact complex principal log and power. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Every base nonzero and each Im(log(a)*b) in (-π,π]; the iff theorem gives equality in this domain. Preserve zero-exponent select. Source selection: enable_fast_math; a element type complex",
+    "lhs": "Log(Power(a,b))",
+    "rhs": "Select(b == 0,0,Multiply(Log(a),b))",
+    "overlap": "Historical NumericalComplex pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalComplex.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-rsqrt-inverse-square",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleRsqrt/inverse-square"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_inverse_square_iff",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Every base nonnegative; for nonzero ordinary reciprocal use positive bases. The iff theorem identifies the exact nonnegative set under totalization. Source selection: Power opcode; IsAll(exponent,-2); IsNonNegative(a,options); no local fast-math guard",
+    "lhs": "Rsqrt(Power(a,-2))",
+    "rhs": "a",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-rsqrt-reciprocal",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "source_ids": [
+      "HandleRsqrt/reciprocal"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_reciprocal",
+    "types": "Exact real arithmetic using Mathlib real power, sqrt and totalized field operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Nonnegative real input as recognized by source; zero interpreted by totalized operations. Source selection: Divide opcode; IsAll(numerator,1); IsNonNegative(a,options); no local fast-math guard",
+    "lhs": "Rsqrt(Divide(1,a))",
+    "rhs": "Sqrt(a)",
+    "overlap": "Historical NumericalReal pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/numerical-values.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-remainder-nested",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/RemainderProof.lean",
+    "source_ids": [
+      "HandleRemainder/nested"
+    ],
+    "theorem": "TensorRewrite.Theory.Remainder.signed_nested_tensor, TensorRewrite.Theory.Remainder.unsigned_nested_tensor",
+    "types": "Homogeneous fixed-width signed or unsigned integral words, with their respective truncating remainder operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Same divisor reference; restrict to nonzero divisors and defined signed division inputs for the source-associated profile. Source selection: denominator pointer identity; no local scalar-type/fast-math guard",
+    "lhs": "Remainder(Remainder(a,b),b)",
+    "rhs": "inner Remainder(a,b)",
+    "overlap": "Historical RemainderProof pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/RemainderProof.lean",
+      "reports/remainder.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-remainder-power-two-signed",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/RemainderProof.lean",
+    "source_ids": [
+      "HandleRemainder/power-two-signed"
+    ],
+    "theorem": "TensorRewrite.Theory.Remainder.signed_mask_tensor",
+    "types": "Homogeneous fixed-width signed or unsigned integral words, with their respective truncating remainder operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Signed positive divisor 2^k, k+1 < word width; sign-select, modular negate, mask and sign restore. Source selection: integral primitive dispatch; denominator effective-scalar Constant direct or broadcast; signed denominator >0 and has_single_bit",
+    "lhs": "Remainder(a,constant_power_two)",
+    "rhs": "Select(a<0,Negate(And(Select(a<0,Negate(a),a),b-1)),And(Select(a<0,Negate(a),a),b-1))",
+    "overlap": "Historical RemainderProof pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/RemainderProof.lean",
+      "reports/remainder.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-remainder-power-two-unsigned",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/RemainderProof.lean",
+    "source_ids": [
+      "HandleRemainder/power-two-unsigned"
+    ],
+    "theorem": "TensorRewrite.Theory.Remainder.unsigned_mask_tensor",
+    "types": "Homogeneous fixed-width signed or unsigned integral words, with their respective truncating remainder operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Unsigned divisor 2^k, k < word width. Source selection: integral primitive dispatch; denominator effective-scalar Constant direct or broadcast; unsigned denominator has_single_bit",
+    "lhs": "Remainder(a,constant_power_two)",
+    "rhs": "And(a,b-1)",
+    "overlap": "Historical RemainderProof pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/RemainderProof.lean",
+      "reports/remainder.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-remainder-iota-in-range",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/RemainderProof.lean",
+    "source_ids": [
+      "HandleRemainder/iota-in-range"
+    ],
+    "theorem": "TensorRewrite.Theory.Remainder.signed_iota, TensorRewrite.Theory.Remainder.unsigned_iota",
+    "types": "Homogeneous fixed-width signed or unsigned integral words, with their respective truncating remainder operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Positive decoded divisor at least selected axis extent; signed divisor has clear sign bit. Largest emitted iota is representable. Source selection: divisor ConstantEffectiveScalar; GetFirstInteger succeeds; divisor>0 and divisor>=axis extent; extent==0 OR extent-1 FitsInIntegralType",
+    "lhs": "Remainder(Iota(axis),Broadcast(divisor))",
+    "rhs": "Iota(axis)",
+    "overlap": "Historical RemainderProof pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/RemainderProof.lean",
+      "reports/remainder.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.num-remainder-iota-add-lhs",
+    "outcome": "proved",
+    "effort_group": "num-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/RemainderProof.lean",
+    "source_ids": [
+      "HandleRemainder/iota-add-lhs",
+      "HandleRemainder/iota-add-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.Remainder.unsigned_iota_offset_rhs, TensorRewrite.Theory.Remainder.unsigned_iota_offset_lhs, TensorRewrite.Theory.Remainder.signed_iota_offset_rhs, TensorRewrite.Theory.Remainder.signed_iota_offset_lhs",
+    "types": "Homogeneous fixed-width signed or unsigned integral words, with their respective truncating remainder operations. Static homogeneous tensor; equality at every coordinate.",
+    "conditions": "Same broadcast effective scalar N, positive decoded value, positive iota extent. Per-index x+N below 2^w unsigned, below 2^(w-1) signed. Both addend placements. Source explicitly checks no wrap of largest sum. Source selection: same addend/divisor ConstantEffectiveScalar pointer; GetFirstInteger positive; extent>0; extent-1 FitsInIntegralType; OverflowSafeAdd(N,extent-1) succeeds and result fits element type",
+    "lhs": "Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at lhs; Remainder(Add(Iota, Broadcast(N)),Broadcast(N)) with Iota at rhs",
+    "rhs": "Remainder(Iota,Broadcast(N))",
+    "overlap": "Historical RemainderProof pointwise result linked to its source expression; no newly discovered rule. Source guard notes describe selection only.",
+    "evidence": [
+      "TensorRewrite/Theory/RemainderProof.lean",
+      "reports/remainder.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/numerical-reuse-rows.json"
+    ]
+  }
+]
