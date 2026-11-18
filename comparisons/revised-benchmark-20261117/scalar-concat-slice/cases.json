@@ -1,0 +1,21 @@
+[
+  {
+    "id": "scalar-concat-slice.start-only",
+    "outcome": "proved",
+    "effort_group": "scalar-concat-slice",
+    "lhs": "Legal positive-stride rank-one slice of an ordered concatenation with a singleton result.",
+    "rhs": "Return the selected compatible singleton operand or slice the first operand whose prefix endpoint strictly exceeds the original start, retaining the stride and using a unit local window.",
+    "conditions": "Rank-one static arrays; nonnegative representable prefix and index arithmetic, positive stride, legal half-open limit, computed output extent exactly one. Direct reuse requires compatibility and hence a logical singleton; the fallback also covers singleton operands.",
+    "types": "Lists over any element type; equality of the full rank-one output including length.",
+    "source_ids": ["TrySimplifyScalarSlice/concat-piece", "TrySimplifyScalarSlice/concat-slice", "HandleSlice/scalar-slice-delegation"],
+    "theorem": "RevisedBenchmark.ScalarConcatSlice.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/ScalarSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/ScalarProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/ScalarControls.lean",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/author-replay.log"
+    ],
+    "overlap": "Prior HandleSlice concat scan/crop results model unit stride and both endpoint searches. A scalar-output window at larger stride may cross multiple operands. These two helper branches and their delegating caller form one mathematical case."
+  }
+]

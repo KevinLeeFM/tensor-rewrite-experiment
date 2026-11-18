@@ -1,0 +1,33 @@
+2026-11-18T01:01:23.842018+00:00 ScalarSpec
+seconds=0.350 return=0
+2026-11-18T01:01:24.192000+00:00 ScalarProof
+ScalarProof.lean:29:5: error: unknown tactic
+ScalarProof.lean:28:26: error: unsolved goals
+α : Type
+bs : List (List α)
+lo hi k : Nat
+hk : 0 < k
+bound : hi ≤ bs.flatten.length
+size : extent lo hi k = 1
+⊢ lo < hi
+ScalarProof.lean:26:27: error: unsolved goals
+α : Type
+bs : List (List α)
+lo hi k : Nat
+hk : 0 < k
+bound : hi ≤ bs.flatten.length
+size : extent lo hi k = 1
+start : lo < hi
+⊢ ∃ b j,
+    locate bs lo = some (b, j) ∧
+      j < b.length ∧
+        (slice bs.flatten lo hi k).length = 1 ∧
+          slice bs.flatten lo hi k = slice b j (j + 1) k ∧ (b.length = 1 → slice bs.flatten lo hi k = b)
+'RevisedBenchmark.ScalarConcatSlice.verified' depends on axioms: [propext, sorryAx]
+seconds=0.331 return=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/scalar-concat-slice/replay.py", line 18, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', '/tmp/tmpnsn11wyi/ScalarProof.olean', 'ScalarProof.lean']' returned non-zero exit status 1.
