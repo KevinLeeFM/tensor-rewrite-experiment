@@ -1,0 +1,135 @@
+[
+  {
+    "id": "reuse.dense-tail.bitcast-same-layout",
+    "source_ids": [
+      "HandleBitcast/compatible-stage"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCell.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_refl",
+    "lhs": "Bitcast dense cells to the same shape and layout.",
+    "rhs": "Return the input.",
+    "conditions": "Static untiled same element type, identical layout, dimensions and cell count; no control dependencies and compatible replacement metadata.",
+    "types": "Fixed logical cell type.",
+    "overlap": "Identical-layout partition of the historical cell-read/write law.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCell.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.bitcast-compose",
+    "source_ids": [
+      "HandleBitcast/compose-stage"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCell.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_compose",
+    "lhs": "Two successive physical cell bitcasts.",
+    "rhs": "One bitcast with the original input and final output shape/layout.",
+    "conditions": "The two-bitcast pattern still matches after recursion on the inner instruction. Both steps preserve element count in their three dense views; no outer control dependencies.",
+    "types": "Same fixed cell type, static untiled shapes, arbitrary ranks.",
+    "overlap": "Historical cancellation of the intermediate storage view. The later compatible-stage is a separate test.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCell.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.bitcast-unary",
+    "source_ids": [
+      "HandleBitcast/unary-sandwich"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCell.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.cell_bitcast_sandwich",
+    "lhs": "Bitcast(map(f,bitcast(input))).",
+    "rhs": "Bitcast(map(f,input)) in the final view.",
+    "conditions": "One-operand, one-user, nonfusion elementwise instruction with same element type across all nodes and untiled inner bitcast and inner operand. Here the unary is a pure shape-independent cell function and all views are dense untiled with matching cell counts.",
+    "types": "Same fixed element type throughout, static dense logical tensors.",
+    "overlap": "Historical map transport plus composition. Op-dependent effects and tiled outer views excluded.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCell.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.convert-same",
+    "source_ids": [
+      "HandleBitcastConvert/compatible"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingProof.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.logical_convert_refl, TensorRewrite.Theory.BitPacking.physical_convert_refl",
+    "lhs": "Bitcast-convert identically typed words at the same shape.",
+    "rhs": "Return the input.",
+    "conditions": "Same logical shape, word width and bit order. The physical theorem additionally needs the same dense layout. Final compatibility branch reached after earlier rewrites decline.",
+    "types": "Homogeneous fixed-width words on static arrays.",
+    "overlap": "Existing logical identity and equal-layout physical specialization. Neither requires ignoring observable layout differences.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingProof.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.transpose",
+    "source_ids": [
+      "HandleTranspose/layout-bitcast"
+    ],
+    "historical_reuse": "TensorRewrite/Pilot/DenseLayoutRules.lean",
+    "theorem": "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast",
+    "lhs": "Transpose by the specified output-to-input permutation.",
+    "rhs": "Physical same-cell bitcast into the transpose output view.",
+    "conditions": "Layout-sensitive source; both layouts assigned; output extents permute the input extents and composition of the permutation with output minor-to-major equals input minor-to-major. Untiled, equal-byte-size, same-cell-type profile. Earlier transpose branches decline.",
+    "types": "Static untiled dense arrays at arbitrary rank.",
+    "overlap": "Existing certified dense transpose theorem. Tiled size and layout policy remain outside this profile.",
+    "outcome": "proved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Pilot/DenseLayoutRules.lean",
+      "census/dense-layout-contract.json",
+      "reports/transpose-bitcast-replay-v2/result.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log"
+    ]
+  },
+  {
+    "id": "reuse.dense-tail.mismatched-layout-erasure",
+    "source_ids": [
+      "HandleBitcast/compatible-stage",
+      "HandleBitcastConvert/compatible"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/BitPackingCounterexamples.lean",
+    "theorem": "TensorRewrite.Theory.BitPacking.layout_identity_refuted, TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+    "lhs": "Observe the row-major to column-major same-width physical reinterpretation at coordinate (0,1).",
+    "rhs": "Delete the operation and observe the unchanged logical input at (0,1).",
+    "conditions": "Explicit dense 2\u00d72 U8 layouts, row-major input x(i,j)=10*i+j and column-major result. Layout-insensitive compatibility, unsharded parameter, no control edges. Fix physical input/output views for this evaluator-profile observation.",
+    "types": "Static U8 words at identical numeric shape.",
+    "overlap": "One historical physical-layout counterexample; same-width theorem connects cell bitcast with word reinterpretation. No new native execution or general abstract HLO disproof.",
+    "outcome": "disproved",
+    "effort_group": "dense-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingCounterexamples.lean",
+      "TensorRewrite/Theory/BitPackingProof.lean",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/literal.cc",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/shape_util.cc",
+      "reports/mathematical-ledger-audit.log"
+    ]
+  }
+]
