@@ -1,0 +1,8 @@
+One model refutation, two lexical records. This terminal result is the negation of the proposed guarded universal identity. Witness values are 9 and 0, respectively; restoring the original paired order gives 9 again. Native rewrite reachability remains open, including the ordering of earlier passes. This witness does not use floating-point reassociation or overflow.
+
+First clock reading 2026-11-18 00:32:33 UTC; task arrived just before that, exact start unavailable. Contract, source/overlap review, statement construction and spec compile through 00:33:51 (78 seconds). Frozen exact Case at 0f92728. Proof, controls and fresh author replay through 00:34:07 (16 seconds). Compiler intervals in spec.log and author-replay.log are nested. No failed proof compilations. Packaging continued afterward. Review is separately owned and pending. Active reasoning/token cost unknown; no speedup estimate. Counts use wc -l including comments and blank lines. No imported custom Lean modules beyond this packet, no new project-wide library lemmas; finite-axis sum uses Lean Std List.ofFn and List.sum, as in sibling dot cases. Proof body and controls are new. Replay from this worktree with LEAN=/workspace/toolchains/lean-4.35.0-linux/bin/lean python3 comparisons/revised-benchmark-20261117/reduce-dot-operands/replay.py.
+  21 comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotControls.lean
+  23 comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotProof.lean
+  38 comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotSpec.lean
+  82 total
+Packaging finished 2026-11-18 00:34:38 UTC.

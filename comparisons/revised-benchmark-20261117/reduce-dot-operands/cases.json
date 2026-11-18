@@ -1,0 +1,25 @@
+[
+  {
+    "id": "reduce-dot.contracting-pair-order",
+    "outcome": "disproved",
+    "effort_group": "reduce-dot-operands",
+    "lhs": "Reduce both free axes with add/zero after dot pairs lhs contracting axes [1,2] to rhs [2,1].",
+    "rhs": "Reduce axis 0 of each operand first; reconstruct each new contracting list in its physical dimension order [0,1] and dot to a scalar.",
+    "conditions": "Layout-insensitive, enabled option, threshold two, no batches, static operand shapes [m,2,2] and [n,2,2], scalar output, nonempty and nontrivial reduction. The witness m=n=3 satisfies the strict profitability comparison 80/24>2.",
+    "types": "Exact Int; every witness intermediate fits S32; ordinary dense dot and additive zero-seeded reductions.",
+    "source_ids": [
+      "ReorderReduceDotToDotReduce/profitable",
+      "HandleReduce/dot-reorder-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ReduceDotOperands.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/ReduceDotControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-dot-operands/author-replay.log"
+    ],
+    "overlap": "The HandleReduce call invokes the same profitable helper. Distinct from stale partner dimension numbers after broadcast/dot and from sum distributivity with preserved contraction pairing."
+  }
+]
