@@ -1,0 +1,53 @@
+comparisons/revised-benchmark-20261117/compressed-unit-chain/ChainSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+TensorRewrite/Pilot/Permutation.lean: OK
+comparisons/revised-benchmark-20261117/compressed-unit-chain/RawSpec.lean: OK
+TensorRewrite/Pilot/Tensor 0.368s exit=0
+TensorRewrite/Pilot/Indexing 0.319s exit=0
+TensorRewrite/Pilot/Permutation 0.313s exit=0
+ChainSpec 0.496s exit=0
+'CompressedChain.step_verified' depends on axioms: [propext, Quot.sound]
+'CompressedChain.edit_verified' depends on axioms: [propext, Quot.sound]
+'CompressedChain.chain_verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+ChainProof 0.410s exit=0
+RawSpec 0.292s exit=0
+'CompressedChain.raw_verified' depends on axioms: [propext, Quot.sound]
+RawProof 0.312s exit=0
+ChainControls.lean:12:25: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (rank Frame.plain)) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin (rank Frame.plain)
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+ChainControls.lean:12:48: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (rank Frame.plain)) 1
+numerals are polymorphic in Lean, but the numeral `1` cannot be used in a context where the expected type is
+  Fin (rank Frame.plain)
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+fun {n} {s t} =>
+  step_verified : ∀ {n : Nat} {s t : Frame n} (op : Step n s t) (y : Digits t) (i : Fin n),
+  pull op y (slot s (eff op i)) = y (slot t i)
+fun {n} =>
+  edit_verified : ∀ {n : Nat} (s t : Frame n) (w : Fin n → Nat) (y : Digits t),
+  validUnit t y → ordinal (pairs s w (pull (Step.edit s t) y)) 0 = ordinal (pairs t w y) 0
+fun {n} {s} =>
+  chain_verified : ∀ {n : Nat} {s : Frame n} (c : Chain n s s),
+  (∀ (i : Fin n), total c i = i) →
+    ∀ (y : Digits s), validUnit s y → ∀ (α : Type) (data : Digits s → α), data (back c y) = data y
+fun {n} {s t} =>
+  raw_verified : ∀ {n : Nat} {s t : Frame n} (c : Chain n s t),
+  (∀ (i : Fin n), total c i = i) →
+    ∀ (su tu : Fin (n + 1)) (order : AxisPermutation n) (w : Fin n → Nat) (y : Digits t),
+      validUnit t y →
+        ∀ (α : Type) (storage : Nat → α), storage (address s su order w (back c y)) = storage (address t tu order w y)
+ChainControls 0.389s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/compressed-unit-chain/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ChainControls.olean', 'ChainControls.lean']' returned non-zero exit status 1.

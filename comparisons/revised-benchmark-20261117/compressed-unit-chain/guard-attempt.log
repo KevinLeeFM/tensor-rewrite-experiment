@@ -1,0 +1,45 @@
+comparisons/revised-benchmark-20261117/compressed-unit-chain/ChainSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+TensorRewrite/Pilot/Permutation.lean: OK
+comparisons/revised-benchmark-20261117/compressed-unit-chain/RawSpec.lean: OK
+comparisons/revised-benchmark-20261117/compressed-unit-chain/GuardSpec.lean: OK
+TensorRewrite/Pilot/Tensor 0.317s exit=0
+TensorRewrite/Pilot/Indexing 0.268s exit=0
+TensorRewrite/Pilot/Permutation 0.298s exit=0
+ChainSpec 0.463s exit=0
+'CompressedChain.step_verified' depends on axioms: [propext, Quot.sound]
+'CompressedChain.edit_verified' depends on axioms: [propext, Quot.sound]
+'CompressedChain.chain_verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+ChainProof 0.429s exit=0
+RawSpec 0.277s exit=0
+'CompressedChain.raw_verified' depends on axioms: [propext, Quot.sound]
+RawProof 0.322s exit=0
+GuardSpec 0.277s exit=0
+GuardProof.lean:11:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  expand ?s ?f (slot ?s ?i)
+in the target expression
+  back c y (slot s i) = pull (Step.edit s t) y (slot s i)
+
+n : Nat
+s t : Frame n
+c : Chain n s t
+hi : ∀ (i : Fin n), total c i = i
+a : Digits s → Nat
+b : Digits t → Nat
+hab : SameAddress a b
+y : Digits t
+hy : validUnit t y
+α : Type
+storage : Nat → α
+i : Fin n
+⊢ back c y (slot s i) = pull (Step.edit s t) y (slot s i)
+'CompressedChain.guard_verified' depends on axioms: [propext, sorryAx, Quot.sound]
+'CompressedChain.concrete_guard' depends on axioms: [propext, Quot.sound]
+GuardProof 0.319s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/compressed-unit-chain/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'GuardProof.olean', 'GuardProof.lean']' returned non-zero exit status 1.
