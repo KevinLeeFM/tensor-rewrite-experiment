@@ -1,0 +1,19 @@
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkSpec.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandSpec.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandProof.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandControls.lean: OK
+SinkSpec 0.417s exit=0
+ExpandSpec 0.381s exit=0
+'RevisedBenchmark.SinkMixed.expanded' depends on axioms: [propext, Quot.sound]
+ExpandProof 0.322s exit=0
+ExpandControls.lean:5:0: warning: Definition `legal` is a proposition; use `theorem` instead of `def`
+
+Note: This linter can be disabled with `set_option linter.defProp false`
+fun {r q n} {s} {t} =>
+  expanded : ∀ {r q n : Nat} {s : Fin r → Nat} {t : Fin q → Nat} (axis : Fin r → Fin q),
+  (∀ (i j : Fin r), i < j → axis i < axis j) →
+    ∀ (fit : ∀ (i : Fin r), s i = 1 ∨ t (axis i) = s i) (types : Fin n → Type) (β : Type)
+      (args : (k : Fin n) → Arg (Coord s) (types k)) (user : ((k : Fin n) → types k) → β),
+      (fun o => user fun k => before (expandProject axis fit) (args k) o) = fun o =>
+        (fun x => user fun k => after (args k) x) (expandProject axis fit o)
+ExpandControls 0.406s exit=0
