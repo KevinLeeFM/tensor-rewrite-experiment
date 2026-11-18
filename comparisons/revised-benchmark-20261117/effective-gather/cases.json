@@ -1,0 +1,23 @@
+[
+  {
+    "id": "effective-scalar-gather",
+    "effort_group": "effective-gather",
+    "lhs": "Gather from an array of arbitrary rank, scattering decoded starts, clamping to each operand window, then adding in-window offsets.",
+    "rhs": "Broadcast the original scalar if rank is zero, otherwise broadcast its element after a logical row-major reshape to scalar, at the exact Gather result shape.",
+    "conditions": "Every operand extent is one (vacuous at rank zero). Arbitrary realized result shape, decoded integer starts or explicit batching, windows that fit, and bounded output-to-offset maps. Legal empty results included.",
+    "types": "Arbitrary logical element type, natural extents and finite-rank multidimensional bounded coordinates.",
+    "source_ids": [
+      "HandleGather/effective-scalar-rank-zero",
+      "HandleGather/effective-scalar-unit-array"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/effective-gather/EffectiveGatherSpec.lean",
+      "comparisons/revised-benchmark-20261117/effective-gather/EffectiveGatherProof.lean",
+      "comparisons/revised-benchmark-20261117/effective-gather/EffectiveGatherControls.lean",
+      "comparisons/revised-benchmark-20261117/effective-gather/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/effective-gather/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.EffectiveGather.verified",
+    "overlap": "One case covers both return variants. It proves replacement by scalar broadcast. The small Select-chain signed narrowing case and the participant-block collective AllGather have different calculations."
+  }
+]
