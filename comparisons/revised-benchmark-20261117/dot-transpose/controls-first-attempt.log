@@ -1,0 +1,50 @@
+comparisons/revised-benchmark-20261117/dot-transpose/SwapSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+TensorRewrite/Pilot/Permutation.lean: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+TensorRewrite/Pilot/Tensor 0.326s exit=0
+TensorRewrite/Pilot/Indexing 0.309s exit=0
+TensorRewrite/Pilot/Permutation 0.303s exit=0
+SwapSpec 0.337s exit=0
+'RevisedBenchmark.DotSwap.verified' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.DotSwap.operandBound' does not depend on any axioms
+SwapProof 0.323s exit=0
+SwapControls.lean:5:12: error: a non-private declaration `flip` has already been declared
+SwapControls.lean:11:25: error: Application type mismatch: The argument
+  flip
+has type
+  (?m.7 → ?m.8 → ?m.9) → ?m.8 → ?m.7 → ?m.9
+but is expected to have type
+  AxisPermutation ?m.4
+in the application
+  dot 2 flip
+SwapControls.lean:12:75: error: Application type mismatch: The argument
+  cycle
+has type
+  AxisPermutation 3
+but is expected to have type
+  ?m.11 → ?m.8 → ?m.9 → ?m.10
+in the application
+  flip ∘ cycle
+SwapControls.lean:14:76: error: Application type mismatch: The argument
+  flip
+has type
+  (?m.9 → ?m.10 → ?m.11) → ?m.10 → ?m.9 → ?m.11
+but is expected to have type
+  AxisPermutation 3
+in the application
+  cycle.comp flip
+SwapControls.lean:16:51: error: Application type mismatch: The argument
+  flip
+has type
+  (?m.7 → ?m.8 → ?m.9) → ?m.8 → ?m.7 → ?m.9
+but is expected to have type
+  AxisPermutation ?m.6
+in the application
+  dot 2 (AxisPermutation.identity ?m.6) flip
+SwapControls.lean:16:75: error: maximum recursion depth has been reached
+use `set_option maxRecDepth <num>` to increase limit
+use `set_option diagnostics true` to get diagnostic information
+SwapControls 0.463s exit=1
