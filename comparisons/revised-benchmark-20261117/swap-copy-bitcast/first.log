@@ -1,0 +1,49 @@
+SwapCopySpec.lean: OK
+FREEZE.md: OK
+../copy-layout-chain/CopySpec.lean: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.h: OK
+../../../lean-toolchain: OK
+CopySpec 0.405 0
+SwapCopySpec 0.387 0
+SwapCopyProof.lean:20:4: error: unsolved goals
+case left.false
+k : Nat
+pos : Cell (2 * (k + 1))
+⊢ ↑pos.snd % 1 = 0
+SwapCopyProof.lean:21:34: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+SwapCopyProof.lean:21:4: error: unsolved goals
+case left.true
+k : Nat
+pos : Cell (2 * (k + 1))
+⊢ ↑pos.fst * (k + 1) * 2 = ↑pos.fst * ((k + 1) * 2)
+SwapCopyProof.lean:27:17: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+SwapCopyProof.lean:30:17: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+SwapCopyProof.lean:30:26: warning: `if_pos` has been deprecated: Use `ite_eq_left` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵p̵o̵s̵i̲t̲e̲_̲e̲q̲_̲l̲e̲f̲t̲
+SwapCopyProof.lean:23:25: warning: This simp argument is unused:
+  Nat.mul_left_comm
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Nat.mul_comm]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.SwapCopyBitcast.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+SwapCopyProof 0.488 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/swap-copy-bitcast/replay.py", line 15, in <module>
+    p.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'SwapCopyProof.olean', 'SwapCopyProof.lean']' returned non-zero exit status 1.

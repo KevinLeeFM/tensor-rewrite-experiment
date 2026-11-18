@@ -1,0 +1,27 @@
+[
+  {
+    "id": "copy-bitcast.swap-even-square-minor-tile",
+    "outcome": "proved",
+    "effort_group": "swap-copy-bitcast",
+    "source_ids": [
+      "SwapCopyBitcastCopy/move-bitcast",
+      "SwapCopyBitcastCopy/move-copy",
+      "HandleCopy/swap-delegation"
+    ],
+    "theorem": "RevisedBenchmark.SwapCopyBitcast.verified",
+    "conditions": "Static even square side n>=2, both dimension orders, one fully populated physical minor tile of width 1 or 2 per layout, fixed same-width cells, ordinary non-host memory, successful tiling checks and new layout acceptance. Old raw bitcast(s) preserve cell buffer. No allocation/effects or native reachability claim.",
+    "types": "Arbitrary cell payloads; equality of every final physical address Fin(n*n).",
+    "lhs": "Copy between operand layouts, preserve cells in the intervening bitcast(s), then copy from the bitcast output layout to the final layout.",
+    "rhs": "If bitcast and source tile widths agree, move the bitcast to x and copy from its mapped layout. Otherwise, if old copy and final tile widths agree, copy x to the inverse-mapped layout and bitcast that storage directly.",
+    "overlap": "Reuses CopyChain.copy and its bounded layout representation. New terminal instantiates both directional dimension maps and the distinct tile-success branches. A pure untiled copy-composition theorem cannot select the second arm.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SwapCopySpec.lean",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SwapCopyProof.lean",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SwapCopyControls.lean",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/final.log",
+      "comparisons/revised-benchmark-20261117/swap-copy-bitcast/AUTHOR.md"
+    ]
+  }
+]

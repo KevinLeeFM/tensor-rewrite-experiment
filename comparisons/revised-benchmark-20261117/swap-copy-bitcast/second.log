@@ -1,0 +1,32 @@
+SwapCopySpec.lean: OK
+FREEZE.md: OK
+../copy-layout-chain/CopySpec.lean: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.h: OK
+../../../lean-toolchain: OK
+CopySpec 0.361 0
+SwapCopySpec 0.396 0
+SwapCopyProof.lean:28:6: error: Type mismatch
+  congrArg some (maps ?m.106 ?m.107 ?m.108 ?m.109 ?m.110 ?m.111).left
+has type
+  some (copy (view ?m.106 (remap ?m.108 ?m.109 ?m.107)) (view ?m.106 ?m.110) ?m.111) =
+    some (copy (view ?m.106 ?m.109) (view ?m.106 ?m.110) (copy (view ?m.106 ?m.107) (view ?m.106 ?m.108) ?m.111))
+but is expected to have type
+  copy (view ⋯ (remap c.order b.order s.order)) (view ⋯ d.order) x =
+    copy (view ⋯ b.order) (view ⋯ d.order) (copy (view ⋯ s.order) (view ⋯ c.order) x)
+SwapCopyProof.lean:31:6: error: Type mismatch
+  congrArg some (maps ?m.127 ?m.128 ?m.129 ?m.130 ?m.131 ?m.132).right
+has type
+  some (copy (view ?m.127 ?m.128) (view ?m.127 (remap ?m.130 ?m.129 ?m.131)) ?m.132) =
+    some (copy (view ?m.127 ?m.130) (view ?m.127 ?m.131) (copy (view ?m.127 ?m.128) (view ?m.127 ?m.129) ?m.132))
+but is expected to have type
+  copy (view ⋯ s.order) (view ⋯ (remap b.order c.order d.order)) x =
+    copy (view ⋯ b.order) (view ⋯ d.order) (copy (view ⋯ s.order) (view ⋯ c.order) x)
+'RevisedBenchmark.SwapCopyBitcast.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+SwapCopyProof 0.486 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/swap-copy-bitcast/replay.py", line 15, in <module>
+    p.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'SwapCopyProof.olean', 'SwapCopyProof.lean']' returned non-zero exit status 1.
