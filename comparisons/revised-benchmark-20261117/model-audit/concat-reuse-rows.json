@@ -1,0 +1,122 @@
+[
+  {
+    "id": "reuse.concat.unary",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_unary",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Exactly one operand; common positive rank and legal axis.",
+    "lhs": "Concatenate a single array.",
+    "rhs": "Return the operand.",
+    "source_ids": [
+      "HandleConcatenate/unary"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.concat.filter-all-empty",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Arrays share the off-axis frame. The first axis length must equal the output axis length. A zero off-axis extent alone does not force this.",
+    "lhs": "Concatenate a nonempty operand list in which every array has zero elements.",
+    "rhs": "Return the first operand if replacement shapes are compatible.",
+    "source_ids": [
+      "HandleConcatenate/filter-all-empty"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.concat.filter-one-nonempty",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "The filtered list is exactly the singleton; the other operands are truly empty arrays.",
+    "lhs": "Concatenate blocks with exactly one nonempty array.",
+    "rhs": "Forward the sole nonempty operand.",
+    "source_ids": [
+      "HandleConcatenate/filter-one-nonempty"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.concat.filter-many-nonempty",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_filtered",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "At least two nonempty arrays remain and at least one was removed; a surviving array witnesses off-axis nonemptiness.",
+    "lhs": "Concatenate a list of arrays including empty ones.",
+    "rhs": "Rebuild from nonempty operands only.",
+    "source_ids": [
+      "HandleConcatenate/filter-many-nonempty"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.concat.flatten",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationGraphLemmas.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.pack_flatten",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Only same-axis nested Concatenate nodes are flattened; ordinary operands are singleton groups. Layout-insensitive and a changed operand count.",
+    "lhs": "Concatenate grouped blocks along one common axis.",
+    "rhs": "Flatten the nested groups in operand order.",
+    "source_ids": [
+      "HandleConcatenate/flatten"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationGraphLemmas.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.concat.repeat-unit-axis",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationRepeat.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_repeated",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Legal static rank and axis, same operand each time, layout-insensitive; forwarding and prior guards are separate.",
+    "lhs": "Concatenate repeated references to one array whose chosen axis is unit.",
+    "rhs": "Remove the unit dimension and broadcast back on the other dimensions.",
+    "source_ids": [
+      "HandleConcatenate/repeat-unit-axis"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationRepeat.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  }
+]
