@@ -1,0 +1,180 @@
+[
+  {
+    "id": "reuse.window-handleselect-update-true-tensor-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_true",
+    "types": "Arbitrary common element type; same-shaped tensor of Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Slice the tensor predicate at the same starts and widths.",
+    "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+    "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
+    "source_ids": [
+      "HandleSelect/update-true-tensor-pred"
+    ],
+    "overlap": "Explicit true branch choice, tensor predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-true-scalar-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_true",
+    "types": "Arbitrary common element type; scalar Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Retain the identical scalar predicate inside.",
+    "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+    "rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
+    "source_ids": [
+      "HandleSelect/update-true-scalar-pred"
+    ],
+    "overlap": "Explicit true branch choice, scalar predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-false-tensor-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_false",
+    "types": "Arbitrary common element type; same-shaped tensor of Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Slice the tensor predicate at the same starts and widths.",
+    "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+    "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleSelect/update-false-tensor-pred"
+    ],
+    "overlap": "Explicit false branch choice, tensor predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-false-scalar-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_false",
+    "types": "Arbitrary common element type; scalar Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Retain the identical scalar predicate inside.",
+    "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+    "rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleSelect/update-false-scalar-pred"
+    ],
+    "overlap": "Explicit false branch choice, scalar predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handledynamicslice-zero-full-axis-indices",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes, via equality symmetry",
+    "types": "Arbitrary common payload; mathematical index values.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Serve the non-async scalar-list source branch after earlier exits and require at least one syntactically nonconstant-zero full axis. Starts already literal zero retain equal values.",
+    "lhs": "DynamicSlice(x,indices)",
+    "rhs": "cloned DynamicSlice with full-axis indices zero",
+    "source_ids": [
+      "HandleDynamicSlice/zero-full-axis-indices"
+    ],
+    "overlap": "Cloned opcode retains its original result shape; operation-specific read/write law. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handledynamicupdateslice-zero-full-axis-indices",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes, via equality symmetry",
+    "types": "Arbitrary common payload; mathematical index values.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Serve the non-async scalar-list source branch after earlier exits and require at least one syntactically nonconstant-zero full axis. Starts already literal zero retain equal values.",
+    "lhs": "DynamicUpdateSlice(base,update,indices)",
+    "rhs": "cloned DUS with full-axis indices zero",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/zero-full-axis-indices"
+    ],
+    "overlap": "Cloned opcode retains its original result shape; operation-specific read/write law. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handleadd-partial-update-rhs",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_right",
+    "types": "Elements in AddZeroClass, including exact Int.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Add of x and DUS of a zero base; use literal broadcast zero and unchanged decoded starts.",
+    "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at rhs",
+    "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleAdd/partial-update-rhs"
+    ],
+    "overlap": "Matches actual emitted sliced base plus update; paper dyupslice/rule01 swaps that inner add. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.window-handleadd-partial-update-lhs",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_left, (TensorRewrite.PaperComparison.Dynamic.add_into_update).symm, TensorRewrite.Theory.DynamicUpdate.add_update_right (equality transitivity)",
+    "types": "CommRing, including exact Int.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Outer addition has the zero-base DUS on the left; emitted addition has sliced base on the left.",
+    "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at lhs",
+    "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleAdd/partial-update-lhs"
+    ],
+    "overlap": "Three previously checked equality endpoints compose over the same window. The first theorem alone would preserve the wrong inner operand order. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/tensorright-v1/Dynamic.lean",
+      "comparisons/tensorright-v1/dynamic-check.log"
+    ]
+  }
+]
