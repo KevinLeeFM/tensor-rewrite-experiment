@@ -1,0 +1,125 @@
+[
+  {
+    "id": "reduce-window.empty-pad-retained-shape",
+    "outcome": "disproved",
+    "effort_group": "window-empty-pad-shape",
+    "historical_reuse": "TensorRewrite/Theory/PadWindowCounterexamples.lean",
+    "source_ids": [
+      "HandleReduceWindow/pad-fold-direct",
+      "HandleReduceWindow/pad-fold-convert"
+    ],
+    "theorem": "RevisedBenchmark.EmptyFold.refuted",
+    "lhs": "Declared shape from width-two ReduceWindow on explicitly edge-padded [n,3] (optionally converted).",
+    "rhs": "Inferred shape of emitted ReduceWindow on original base with base-dilation-scaled edges, under the same retained result annotation.",
+    "conditions": "Nonnegative symmetric one-cell first-axis Pad edges, no interior, static rank two, both kernel bounds two, stride and kernel dilation one, first base dilation positive, no preexisting window padding. Counterexample n=0, first base dilation two. Compatible scalar zero fill/init; converted path S16 to S32. The pinned XLA padding and stride helper bodies were subsequently inspected; a full optimizer pass or native verifier was not run.",
+    "types": "Static signed integer arrays and exact mathematical output extents. Source-shaped direct-handler profile.",
+    "overlap": "Prior empty_high_formula_refuted gives the one-axis geometry; this two-axis adapter and direct/converted dispatch mapping are timed separately. Operand-first HandlePad can remove the source pattern.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/EmptyFoldSpec.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/EmptyFoldProof.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/EmptyFoldControls.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/author.log",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/replay.py",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/AUTHOR.md",
+      "TensorRewrite/Theory/PadWindowCounterexamples.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/SOURCE-SUPPLEMENT.md",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlySpec.lean",
+      "sources/xla/xla/window_util.h",
+      "sources/xla/xla/service/shape_inference.cc",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/hlo/ir/hlo_instructions.h",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "conv.swap-operands-strict-f32",
+    "effort_group": "conv-swap-order",
+    "outcome": "disproved",
+    "source_ids": [
+      "HandleConvolution/operand-swap-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvSwapOrder.refuted",
+    "lhs": "F32 forward rank-three convolution with input width three, kernel width four, padding (0,1), ascending spatial taps and one output.",
+    "rhs": "Convolve the reversed old kernel against the old input with new window reversed, width three and signed padding (-1,0).",
+    "conditions": "Layout insensitive, swap option enabled, groups one, no sparsity or scaling, dense parameter tensors, one spatial axis, unit strides/dilations, original reversal false, singleton batch/features, two DEFAULT precision fields and a successful lowerable callback. Kernel-product benefit is 4>3.",
+    "types": "Finite nonnegative exactly represented input integers through 2^24, strict binary32 RNE multiply and accumulating addition from positive zero; no required backend reduction schedule.",
+    "overlap": "Different terminal from pointwise/reduce convolution-to-multiply or integer type profiles: an exact operand exchange reverses the order of spatial products.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-swap-order/ConvSwapSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/ConvSwapProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/ConvSwapControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/author.log",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/freeze.log",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/replay.py",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.h",
+      "sources/xla/xla/hlo/transforms/simplifiers/conv_operand_swapper.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/service/shape_inference.cc"
+    ]
+  },
+  {
+    "id": "dot.reordered-contracting-sequence",
+    "effort_group": "dot-contract-traversal",
+    "source_ids": [
+      "HandleDot/reorder-contracting-lhs",
+      "HandleDot/reorder-contracting-rhs"
+    ],
+    "theorem": "RevisedBenchmark.DotTraversal.refuted",
+    "lhs": "Flatten a transposed 2×2 input into a length-four contraction and multiply in ascending index order.",
+    "rhs": "Flatten the original input and apply the inverse axis transformation to the constant tensor before contracting.",
+    "conditions": "One side is the transposed parameter, the other a nonuniform vector constant; modeled strict binary32 RNE. Both operand orientations. Finite nonnegative integers up to 2^24 and weights 0,1,2.",
+    "types": "Binary32 values, fixed sequential contraction order; no backend-independent equivalence claim.",
+    "overlap": "Existing associative exact dot and other numerical discrepancies do not test transferring the contracting-axis transpose onto the constant.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/TraversalControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/TraversalProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/TraversalSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/author.log",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/failed-explicit-types.log",
+      "comparisons/revised-benchmark-20261117/dot-contract-traversal/replay.py",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "outcome": "disproved"
+  },
+  {
+    "id": "gather.reshape-then-pad-feature",
+    "effort_group": "gather-reshape-pad",
+    "source_ids": [
+      "HandleGather/reshape-pad-hoist"
+    ],
+    "theorem": "RevisedBenchmark.GatherReshapePad.verified",
+    "lhs": "Pad the feature axis, flatten two outer dimensions and gather on the resulting row dimension.",
+    "rhs": "Flatten the unpadded operand, gather with the full unpadded feature extent and then pad that output axis.",
+    "conditions": "Static compatible dense [p,q,n] and [p*q,m] shapes, signed edge/interior padding, legal bitcast-compatible reshape, one indexed row axis and pass-through full feature axis. Start clamped, width within row extent.",
+    "types": "Arbitrary cell values and legal finite coordinates. Empty observations are explicit.",
+    "overlap": "The direct gather-of-pad case omits the rank-changing reshape and changed gather slice size; the same decoder and clamping function are reused.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/HoistControls.lean",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/HoistProof.lean",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/HoistSpec.lean",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/author.log",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/failed-positivity.log",
+      "comparisons/revised-benchmark-20261117/gather-reshape-pad/replay.py",
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/GatherHoistSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "outcome": "proved"
+  }
+]
