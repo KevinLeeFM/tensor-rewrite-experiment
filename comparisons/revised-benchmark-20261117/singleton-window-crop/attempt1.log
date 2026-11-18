@@ -1,0 +1,62 @@
+WindowSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/evaluator/hlo_evaluator.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+WindowSpec 0.418s return code 0
+WindowProof.lean:27:44: error(lean.unknownIdentifier): Unknown identifier `min_comm`
+WindowProof.lean:27:54: error(lean.unknownIdentifier): Unknown identifier `max_comm`
+WindowProof.lean:27:44: error(lean.unknownIdentifier): Unknown identifier `min_comm`
+WindowProof.lean:27:54: error(lean.unknownIdentifier): Unknown identifier `max_comm`
+WindowProof.lean:27:44: error(lean.unknownIdentifier): Unknown identifier `min_comm`
+WindowProof.lean:27:54: error(lean.unknownIdentifier): Unknown identifier `max_comm`
+WindowProof.lean:26:80: error: unsolved goals
+case minimum
+a b : Int
+⊢ min a b = min b a
+
+case maximum
+a b : Int
+⊢ max a b = max b a
+WindowProof.lean:51:12: error(lean.unknownIdentifier): Unknown identifier `ended`
+WindowProof.lean:43:4: error: unsolved goals
+case pos
+r : Nat
+x✝ : 0 < r
+ds : Fin r → Axis
+live : ∀ (d : Fin r), 0 < (ds d).n ∧ 0 < output (ds d)
+y : Fin r → Int
+valid : ∀ (d : Fin r), 0 ≤ y d ∧ y d < output (ds d)
+op : Op
+seed : Int
+x : (Fin r → Int) → Int
+left✝ : ∃ d, (ds d).low < 0 ∨ (ds d).high < 0
+d : Fin r
+cutAt : cut (ds d)
+never : ¬∀ (j : Fin r), 0 ≤ y j - (ds j).low ∧ y j - (ds j).low < ↑(ds j).n
+⊢ (if ∀ (d : Fin r), (ds d).low ≤ y d ∧ y d - (ds d).low < ↑(ds d).n then applyOp op seed (x fun d => y d - (ds d).low)
+    else seed) =
+    if full ds then seed
+    else
+      if ∀ (d : Fin r), padLo (ds d) ≤ y d ∧ y d - padLo (ds d) < stop (ds d) - start (ds d) then
+        applyOp op (x fun d => start (ds d) + (y d - padLo (ds d))) seed
+      else seed
+WindowProof.lean:55:17: warning: `if_neg` has been deprecated: Use `ite_eq_right` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵n̵e̵g̵i̲t̲e̲_̲e̲q̲_̲r̲i̲g̲h̲t̲
+WindowProof.lean:51:19: warning: This simp argument is unused:
+  never
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [ended]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.SingletonWindow.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+WindowProof 0.491s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/singleton-window-crop/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'WindowProof.olean', 'WindowProof.lean']' returned non-zero exit status 1.

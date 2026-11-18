@@ -1,0 +1,56 @@
+WindowSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/evaluator/hlo_evaluator.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+WindowSpec 0.452s return code 0
+WindowProof.lean:27:34: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c - d ≥ 1
+where
+ c := (match (motive := Op → Int → Int → Int) Op.add with
+  | Op.add => fun x1 x2 => x1 + x2
+  | Op.minimum => min
+  | Op.maximum => max)
+  b a
+ d := (match (motive := Op → Int → Int → Int) Op.add with
+  | Op.add => fun x1 x2 => x1 + x2
+  | Op.minimum => min
+  | Op.maximum => max)
+  a b
+WindowProof.lean:27:34: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c - d ≥ 1
+where
+ c := (match (motive := Op → Int → Int → Int) Op.minimum with
+  | Op.add => fun x1 x2 => x1 + x2
+  | Op.minimum => min
+  | Op.maximum => max)
+  b a
+ d := (match (motive := Op → Int → Int → Int) Op.minimum with
+  | Op.add => fun x1 x2 => x1 + x2
+  | Op.minimum => min
+  | Op.maximum => max)
+  a b
+WindowProof.lean:27:34: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c - d ≥ 1
+where
+ c := (match (motive := Op → Int → Int → Int) Op.maximum with
+  | Op.add => fun x1 x2 => x1 + x2
+  | Op.minimum => min
+  | Op.maximum => max)
+  b a
+ d := (match (motive := Op → Int → Int → Int) Op.maximum with
+  | Op.add => fun x1 x2 => x1 + x2
+  | Op.minimum => min
+  | Op.maximum => max)
+  a b
+'RevisedBenchmark.SingletonWindow.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+WindowProof 0.511s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/singleton-window-crop/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'WindowProof.olean', 'WindowProof.lean']' returned non-zero exit status 1.

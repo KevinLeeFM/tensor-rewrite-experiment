@@ -1,0 +1,37 @@
+[
+  {
+    "id": "reduce-window.singleton-signed-crop-pad",
+    "effort_group": "singleton-window-crop",
+    "source_ids": [
+      "HandleReduceWindow/singleton-crop-all-add",
+      "HandleReduceWindow/singleton-add-no-pad-no-crop",
+      "HandleReduceWindow/singleton-add-no-pad-crop",
+      "HandleReduceWindow/singleton-add-pad-no-crop",
+      "HandleReduceWindow/singleton-add-pad-crop",
+      "HandleReduceWindow/singleton-crop-all-minimum",
+      "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+      "HandleReduceWindow/singleton-minimum-no-pad-crop",
+      "HandleReduceWindow/singleton-minimum-pad-no-crop",
+      "HandleReduceWindow/singleton-minimum-pad-crop",
+      "HandleReduceWindow/singleton-crop-all-maximum",
+      "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+      "HandleReduceWindow/singleton-maximum-no-pad-crop",
+      "HandleReduceWindow/singleton-maximum-pad-no-crop",
+      "HandleReduceWindow/singleton-maximum-pad-crop"
+    ],
+    "lhs": "Unit-window reduction at each valid output point, evaluating the selected add/min/max with its actual initializer and translated input sample, or returning the seed when no sample exists.",
+    "rhs": "When the signed whole-axis crop guard fires, broadcast the seed; otherwise pointwise-op the operand and seed, slice at the computed static endpoints, and pad with the seed.",
+    "conditions": "Static nonempty single-input and single-output arrays, positive rank and positive output extents; no reversal, all sizes, stride and dilations one. Signed host integers assumed representable for source interpretation.",
+    "types": "Exact integers. Any seed for the evaluator\u2019s skip-outside calculation; documented identity-seed execution subdomain distinguished.",
+    "theorem": "RevisedBenchmark.SingletonWindow.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowSpec.lean",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowProof.lean",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowControls.lean",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/acceptance.log"
+    ],
+    "overlap": "One parameterized case for three reducers, four optional-pad/crop combinations and early crop-all. Historical unit_gather proves affine reads and exact fixed-point reductions; existing signed Pad reverses the Slice/Pad order. Distinct work is proving actual interval validity, output shape, whole-axis exception and coordinates."
+  }
+]
