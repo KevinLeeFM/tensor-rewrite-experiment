@@ -1,0 +1,58 @@
+[
+  {
+    "id": "reuse.inherited137b.mul-sqrt-square-real",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "outcome": "proved",
+    "source_ids": ["HandleMultiply/sqrt-square"],
+    "theorem": "TensorRewrite.Theory.Numerical.real_sqrt_square_iff (forward direction)",
+    "lhs": "sqrt(x) * sqrt(x)",
+    "rhs": "x",
+    "conditions": "Exact-real pointwise model with 0 ≤ x at every tensor index. The source matcher additionally requires the two sqrt operands to be the same HLO node; IsNonNegative is the source guard. This row credits only this real nonnegative mathematical partition.",
+    "types": "Exact real values and Real.sqrt; no binary floating rounding, NaN, infinity, signed-zero or fast-math implementation claim.",
+    "overlap": "Historical theorem reuse only; the whole source record remains unresolved. Complex input is not admitted by this HandleMultiply rule: IsNonNegative rejects complex operands.",
+    "evidence": ["TensorRewrite/Theory/NumericalReal.lean", "reports/theory-progress.json", "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc#L5390-L5402", "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"]
+  },
+  {
+    "id": "reuse.inherited137b.mul-rsqrt-square-real",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "outcome": "proved",
+    "source_ids": ["HandleMultiply/rsqrt-square"],
+    "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff (forward direction)",
+    "lhs": "rsqrt(x) * rsqrt(x)",
+    "rhs": "1 / x",
+    "conditions": "Exact-real pointwise model with 0 ≤ x at every tensor index. The theorem is an iff, including the totalized zero case. Source matcher requires a repeated identical rsqrt operand and source IsNonNegative guard; row credits this real partition only.",
+    "types": "Exact real values, Real.sqrt and totalized field reciprocal; no machine division or IEEE claim.",
+    "overlap": "Historical theorem reuse only; whole source record remains unresolved. The inherited complex_rsqrt_square pointer is not source-applicable because IsNonNegative rejects complex operands.",
+    "evidence": ["TensorRewrite/Theory/NumericalReal.lean", "reports/theory-progress.json", "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc#L5404-L5414", "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"]
+  },
+  {
+    "id": "reuse.inherited137b.sqrt-square-real",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ScalarDomains.lean",
+    "outcome": "proved",
+    "source_ids": ["HandleSqrt/square-real"],
+    "theorem": "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor",
+    "lhs": "sqrt(x * x)",
+    "rhs": "abs(x)",
+    "conditions": "Exact-real pointwise model; no sign premise is needed. Source branch requires fast-math and a repeated identical multiply operand.",
+    "types": "Exact real values, Real.sqrt and absolute value; not a rounded floating-point equivalence.",
+    "overlap": "Historical theorem reuse only; establishes the complete real exact-value partition, not implementation correspondence or whole-record closure.",
+    "evidence": ["TensorRewrite/Theory/ScalarDomains.lean", "reports/theory-progress.json", "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc#L10275-L10301", "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"]
+  },
+  {
+    "id": "reuse.inherited137b.sqrt-square-complex",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ScalarDomains.lean; TensorRewrite/Theory/ScalarDomainCounterexamples.lean",
+    "outcome": "disproved",
+    "source_ids": ["HandleSqrt/square-complex"],
+    "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff and complex_sqrt_square_counterexample",
+    "lhs": "Complex.sqrt(z * z)",
+    "rhs": "(‖z‖ : ℂ) (the source computes abs then converts to the complex output type)",
+    "conditions": "Exact principal-complex model. The equality holds exactly when every z is real; the source fast-math matcher has no real-axis guard. At z = Complex.I the unguarded rewrite is false.",
+    "types": "Complex.sqrt, complex norm embedded into ℂ, and exact conversion; no rounded complex implementation claim.",
+    "overlap": "The iff theorem provides the exact real-axis subset; the explicit imaginary-unit counterexample disproves the source's unguarded complex model. This is not a native execution claim and does not close the source record across floating types.",
+    "evidence": ["TensorRewrite/Theory/ScalarDomains.lean", "TensorRewrite/Theory/ScalarDomainCounterexamples.lean", "reports/theory-progress.json", "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc#L10275-L10301", "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"]
+  }
+]
