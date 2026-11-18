@@ -1,0 +1,23 @@
+[
+  {
+    "id": "bitcast-convert.concat-raw-words",
+    "effort_group": "bitcast-concat-pack",
+    "lhs": "Concatenate converted operands along a shared logical axis, then bitcast-convert back to the original word type.",
+    "rhs": "Concatenate the original operands in their original order along that axis.",
+    "conditions": "Nonempty ordered operand list; arbitrary shared static prefix/suffix shapes and per-operand concat-axis extents; equal bit widths or integral ratio k > 1. Rank-changing conversions use the final lane axis, disjoint from concat. One consistent least-first or most-first order. Covers zero extents.",
+    "types": "Positive-width raw BitVec words or a complete trailing axis of k narrow words; arbitrary payload including sign bits. Exact logical bit observation; no physical-layout or implementation-level claim.",
+    "source_ids": [
+      "TrySimplifyTautologicalBitcastConvert/concat",
+      "HandleBitcastConvert/concat-delegation"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/PackSpec.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/PackProof.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/PackControls.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.BitcastConcat.verified",
+    "overlap": "BitPackingProof.repack_compose/repack_refl and BitPackingShapeProof split/join are inherited inverse results without intervening concatenation. Ordered many-operand concatenation and all three width directions are one mathematical case; the caller delegates directly."
+  }
+]
