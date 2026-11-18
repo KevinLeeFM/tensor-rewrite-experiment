@@ -1,0 +1,34 @@
+FiberSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/shape_util.cc: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/util.h: OK
+FiberSpec 0.389s return code 0
+FiberProof.lean:13:8: error: unsolved goals
+case nil.true
+ds : Axes
+k : Nat
+⊢ k % 1 = 0
+FiberProof.lean:34:15: error: unsolved goals
+case edit.false
+a c : List Nat
+h : a.prod = c.prod
+⊢ (List.map Prod.fst (List.filter (fun d => d.snd) (List.map (fun n => (n, false)) a))).prod =
+      (List.map Prod.fst (List.filter (fun d => d.snd) (List.map (fun n => (n, false)) c))).prod ∧
+    List.map Prod.fst (List.filter (fun d => d.snd) (List.map (fun n => (n, false)) a)) =
+      List.map Prod.fst (List.filter (fun d => d.snd) (List.map (fun n => (n, false)) c))
+
+case edit.true
+a c : List Nat
+h : a.prod = c.prod
+⊢ (List.map Prod.fst (List.filter (fun d => d.snd) (List.map (fun n => (n, true)) a))).prod =
+    (List.map Prod.fst (List.filter (fun d => d.snd) (List.map (fun n => (n, true)) c))).prod
+'RevisedBenchmark.ReduceReshape.dropReshape' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'RevisedBenchmark.ReduceReshape.moveReshape' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+FiberProof 0.344s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reduce-reshape-fibers/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'FiberProof.olean', 'FiberProof.lean']' returned non-zero exit status 1.

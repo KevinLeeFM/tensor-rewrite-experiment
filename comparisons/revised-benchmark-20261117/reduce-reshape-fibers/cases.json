@@ -1,0 +1,44 @@
+[
+  {
+    "id": "reduce.reshape-reduced-axes",
+    "effort_group": "reduce-reshape-fibers",
+    "source_ids": [
+      "HandleReduce/reshape-reduced-axes"
+    ],
+    "lhs": "Reduce the row-major reshaped dense operand on the selected axes.",
+    "rhs": "Reduce the original dense operand on all axes except the paired surviving axes.",
+    "conditions": "The same surviving shape, including every extent. All surviving axes are paired singleton-to-singleton factors. Static ordered equal-volume common-factor groups, arbitrary rank including scalar and zero extents; source-to-descriptor normalization assumed.",
+    "types": "Arbitrary scalar type, total pure binary reducer, arbitrary seed; fixed logical row-major left fold.",
+    "theorem": "RevisedBenchmark.ReduceReshape.dropReshape",
+    "overlap": "Two replacement programs: removing reshape preserves surviving shape; moving reshape preserves surviving volume. Shared projection proof and effort. Distinct from deleting unit reduction axes and reducing a transposed input.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/attempt2.log"
+    ]
+  },
+  {
+    "id": "reduce.reshape-surviving-axes",
+    "effort_group": "reduce-reshape-fibers",
+    "source_ids": [
+      "HandleReduce/reshape-output-axes"
+    ],
+    "lhs": "Reduce the row-major reshaped dense operand on the selected axes.",
+    "rhs": "Reduce the original operand on the paired reduced axes, then reshape its output to the original surviving shape.",
+    "conditions": "Equal surviving volumes suffice for the final reshape. All reduced axes are paired singleton-to-singleton factors. Static ordered equal-volume common-factor groups, arbitrary rank including scalar and zero extents; source-to-descriptor normalization assumed.",
+    "types": "Arbitrary scalar type, total pure binary reducer, arbitrary seed; fixed logical row-major left fold.",
+    "theorem": "RevisedBenchmark.ReduceReshape.moveReshape",
+    "overlap": "Two replacement programs: removing reshape preserves surviving shape; moving reshape preserves surviving volume. Shared projection proof and effort. Distinct from deleting unit reduction axes and reducing a transposed input.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FiberControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-reshape-fibers/attempt2.log"
+    ]
+  }
+]
