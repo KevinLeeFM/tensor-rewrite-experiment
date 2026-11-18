@@ -1,0 +1,96 @@
+comparisons/revised-benchmark-20261117/conv-filter-exact/FilterSpec.lean: OK
+comparisons/revised-benchmark-20261117/conv-filter-exact/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/dot-pad/PadDotSpec.lean: OK
+comparisons/revised-benchmark-20261117/dot-pad/PadDotProof.lean: OK
+TensorRewrite/Theory/Convolution.lean: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+PadDotSpec 0.426s exit=0
+'RevisedBenchmark.PadDot.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RevisedBenchmark.PadDot.address_unique' depends on axioms: [propext, Quot.sound]
+PadDotProof 0.452s exit=0
+FilterSpec 0.432s exit=0
+FilterProof.lean:25:2: error: unsolved goals
+case inl
+a : Window
+j : Nat
+hj : j < a.kernel
+hn : a.kernel ≠ 0
+left✝² : a.stride > 0
+left✝¹ : a.baseDilation > 0
+left✝ : a.oldDilation > 0
+hg : a.gap = 0
+⊢ (if a.reverse = true then extent { width := a.kernel, low := 0, high := 0, interior := 0 } - 1 - j else j) *
+      a.oldDilation =
+    (if a.reverse = true then a.kernel - 1 - j else j) * a.oldDilation
+FilterProof.lean:26:2: error: unsolved goals
+case inr.true
+a : Window
+j : Nat
+hj : j < a.kernel
+hn : a.kernel ≠ 0
+left✝² : a.stride > 0
+left✝¹ : a.baseDilation > 0
+left✝ : a.oldDilation > 0
+hd : a.oldDilation = 1
+dh : newDil a = a.gap + 1
+⊢ extent { width := a.kernel, low := 0, high := 0, interior := a.gap } - 1 - j * (a.gap + 1) =
+    a.kernel * (a.gap + 1) - (a.gap + 1) - j * (a.gap + 1)
+FilterProof.lean:25:41: warning: This simp argument is unused:
+  extent_at
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [oldOff, newOff, pos, support, step, span, hn, hg, newDil, offset]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+FilterProof.lean:25:51: warning: This simp argument is unused:
+  span
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [oldOff, newOff, pos, support, step, extent_at, hn, hg, newDil, offset]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+FilterProof.lean:25:56: warning: This simp argument is unused:
+  hn
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [oldOff, newOff, pos, support, step, extent_at, span, hg, newDil, offset]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+FilterProof.lean:27:29: warning: This simp argument is unused:
+  extent_at
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [oldOff, newOff, pos, support, step, Nat.zero_add, offset, hd, Nat.mul_one, dh]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+FilterProof.lean:28:30: warning: This simp argument is unused:
+  span
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hn, Nat.sub_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+FilterProof.lean:28:35: warning: This simp argument is unused:
+  hn
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [span, Nat.sub_mul]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+FilterProof.lean:45:51: error: Application type mismatch: The argument
+  x2✝
+has type
+  x1✝ ∈ ws
+of sort `Prop` but is expected to have type
+  Window
+of sort `Type` in the application
+  law x2✝
+'RevisedBenchmark.ConvFilter.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+FilterProof 0.407s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/conv-filter-exact/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'FilterProof.olean', 'FilterProof.lean']' returned non-zero exit status 1.
