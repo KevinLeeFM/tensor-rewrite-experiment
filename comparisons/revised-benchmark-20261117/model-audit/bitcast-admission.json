@@ -1,0 +1,86 @@
+[
+  {
+    "id": "bitcast-convert.packed-u4-literal-copy",
+    "outcome": "disproved",
+    "effort_group": "bitcast-packed-literal",
+    "source_ids": [
+      "HandleBitcastConvert/last-contiguous-axis"
+    ],
+    "lhs": "BitcastConvert packs two U4 literal bytes into one U8 result, or unpacks one U8 into two U4 result cells.",
+    "rhs": "Ordinary evaluator bitcast copies the result literal byte count from the input prefix, reporting failure if input storage is too short.",
+    "conditions": "Little-endian, static dense U8 scalar and U4[2] with minor-most axis 0 and explicit four-bit HLO element size, common memory space and one-byte HLO storage, layout-sensitive rewrite enabled; operand a parameter.",
+    "types": "Two unsigned nibble lanes and one unsigned byte. Observations distinguish successful result bytes from an evaluation error.",
+    "theorem": "RevisedBenchmark.BitcastPacked.verified",
+    "overlap": "Ideal packed physical split/join and same-width word reindexing are existing library results. This observation distinguishes unpacked evaluator literal backing from packed HLO size. It establishes no native backend discrepancy.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/NibbleSpec.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/NibbleProof.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/NibbleControls.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/final.log",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/first.log",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/freeze.log",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/replay.py",
+      "lean-toolchain",
+      "sources/xla/xla/literal.cc",
+      "sources/xla/xla/literal.h",
+      "sources/xla/xla/util.h",
+      "sources/xla/xla/primitive_util.h",
+      "sources/xla/xla/shape_util.cc",
+      "sources/xla/xla/shape_util.h",
+      "sources/xla/xla/service/shape_inference.cc",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "bitcast-convert.nested-shape-inference",
+    "effort_group": "bitcast-convert-compose",
+    "source_ids": [
+      "HandleBitcastConvert/compose"
+    ],
+    "theorem": "RevisedBenchmark.BitcastConvertCompose.nestedShapeInference",
+    "lhs": "Nested width-changing conversions infer output dimensions [2,2].",
+    "rhs": "Emit a single U32-to-U8 conversion with retained [2,2] dimensions; direct inference requires [4].",
+    "conditions": "Static unpadded U32 scalar → U16 vector → U8 matrix, pinned width-ratio shape inference, no dynamic axes. The verifier compares the supplied shape with the inferred shape.",
+    "types": "Unsigned U32/U16/U8. Observation is target shape admission.",
+    "outcome": "disproved",
+    "overlap": "Prior repack composition preserves a flattened stream when sizes match. That statement does not ensure direct output shape admission. Exact shape theorem and freeze were committed together; fresh independent checks and compiled conclusion available.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/SOURCE-SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/EFFORT.md",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/RESULT.md",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/SHAPE-FREEZE.md",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/ShapeInference.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-convert-compose/replay.py"
+    ]
+  },
+  {
+    "id": "reuse.physical.same-width-bitcast",
+    "effort_group": "bitcast-same-historical-reuse",
+    "source_ids": [
+      "HandleBitcastConvert/same-physical-shape"
+    ],
+    "theorem": "TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+    "lhs": "Bit-level conversion with a fixed common word width and bit order.",
+    "rhs": "Dense cell bitcast at the target index.",
+    "conditions": "Static aligned, untiled byte-width arrays with identical layout and dimensions ignoring element type, hence equal dense cell counts. Layout-sensitive fast path enabled.",
+    "types": "Dense bit-vector cells with shared bit ordering.",
+    "historical_reuse": "TensorRewrite/Theory/BitPackingProof.lean",
+    "outcome": "proved",
+    "overlap": "Previously checked physical conversion law. No new proof, no claim about packed U4 or ABI choices.",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingProof.lean",
+      "reports/theory-progress.json",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/model-audit/bitcast-same-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/bitcast-same-reuse-review.md"
+    ]
+  }
+]

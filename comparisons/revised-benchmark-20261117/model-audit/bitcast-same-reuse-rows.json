@@ -1,0 +1,22 @@
+[
+  {
+    "id": "reuse.physical.same-width-bitcast",
+    "effort_group": "bitcast-same-historical-reuse",
+    "source_ids": [
+      "HandleBitcastConvert/same-physical-shape"
+    ],
+    "theorem": "TensorRewrite.Theory.BitPacking.physical_convert_same_width",
+    "lhs": "Bit-level conversion with a fixed common word width and bit order.",
+    "rhs": "Dense cell bitcast at the target index.",
+    "conditions": "Static aligned, untiled byte-width arrays with identical layout and dimensions ignoring element type, hence equal dense cell counts. Layout-sensitive fast path enabled.",
+    "types": "Dense bit-vector cells with shared bit ordering.",
+    "historical_reuse": "TensorRewrite/Theory/BitPackingProof.lean",
+    "outcome": "proved",
+    "overlap": "Previously checked physical conversion law. No new proof, no claim about packed U4 or ABI choices.",
+    "evidence": [
+      "TensorRewrite/Theory/BitPackingProof.lean",
+      "reports/theory-progress.json",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/REVIEW.md"
+    ]
+  }
+]

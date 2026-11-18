@@ -338,3 +338,9 @@ The signed S32/S64 prefix-window calculation passed independent review at 4cc1fa
 ### Early ReduceWindow outputs
 
 Independent review at 100ed5c accepted three ordered-fold model cases covering five source branches. Skipping out-of-bounds reads leaves the initializer on a padded empty input with live outputs. Rank-zero forwarding requires a whole-state left identity. The singleton tuple calculation reuses a historical wrapper law. Author elapsed 351 seconds, independent reviewer 111 seconds including 1.261 seconds of compiler time. The ledger contains 202 cases (156 proved and 46 refuted), linked directly or through reuse to 408 of 488 source records.
+
+### Shape admission and literal storage in BitcastConvert
+
+Two independent model refutations raise the ledger to 204 mathematical cases, 156 proved and 48 disproved, with 411 source labels linked. Splitting a U32 scalar twice yields dimensions [2,2]; direct inference gives [4]. Under the little-endian evaluator profile, converting two packed nibbles [1,1] to one U8 yields 17; the raw literal copy yields 1. Both the old algebraic byte-stream result and a separate historical same-width law remain available.
+
+The shape packet's first attempt selected Lake unnecessarily. It checked out 206 MB of FloatLib in a new local .lake before any compilation. The worker stopped the process, removed that directory, and switched to direct Lean plus Std. The earlier uncompiled stream candidate is outside the accepted closure. Both corrected packets passed independent direct replay; joint review took 209 s. No official cache endpoint was retried. [Shape review](bitcast-convert-compose/REVIEW.md) · [Literal review](bitcast-packed-literal/REVIEW.md)
