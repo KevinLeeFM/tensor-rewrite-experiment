@@ -1,0 +1,32 @@
+Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
+comparisons/revised-benchmark-20261117/dot-transpose/SwapSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+TensorRewrite/Pilot/Permutation.lean: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveSpec.lean: OK
+comparisons/revised-benchmark-20261117/dot-transpose/SwapProof.lean: OK
+TensorRewrite/Pilot/Tensor 0.296s rc=0
+TensorRewrite/Pilot/Indexing 0.296s rc=0
+TensorRewrite/Pilot/Permutation 0.287s rc=0
+SwapSpec 0.315s rc=0
+SwapProof 0.322s rc=0
+'RevisedBenchmark.DotSwap.verified' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.DotSwap.operandBound' does not depend on any axioms
+RemoveSpec 0.394s rc=0
+RemoveProof 0.324s rc=1
+RemoveProof.lean:11:2: error: Tactic `rfl` failed: Expected the goal to be a binary relation
+
+Hint: Reflexivity tactics can only be used on goals of the form `x ~ x` or `R x x`
+
+⊢ Keep
+'RevisedBenchmark.RemoveInputTransposes.keepVerified' depends on axioms: [sorryAx]
+'RevisedBenchmark.RemoveInputTransposes.swapVerified' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.RemoveInputTransposes.readBound' does not depend on any axioms
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/dot-remove-transposes/replay.py", line 27, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'RemoveProof.olean', 'RemoveProof.lean']' returned non-zero exit status 1.

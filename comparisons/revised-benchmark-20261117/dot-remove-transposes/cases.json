@@ -1,0 +1,24 @@
+[
+  {
+    "id": "dot.remove-common-input-transposes",
+    "effort_group": "dot-remove-transposes",
+    "source_ids": [
+      "RemoveTransposesFromDotOperands/keep-order",
+      "RemoveTransposesFromDotOperands/swap"
+    ],
+    "lhs": "Dot the two input transposes using their common batch list D, and left-last/right-penultimate contraction.",
+    "rhs": "Dot the raw inputs in identity batch order, exchanging them exactly when P flips the last two slots, then apply the output transpose with batch mapping P of D and the same terminal orientation.",
+    "conditions": "Legal common input transpose with batch prefix P; common original batch list D need not be sorted. One free and one contracted axis on each operand as derived from lawful equal-rank descriptors and source guards. Compatible paired extents and arbitrary static extents including zero.",
+    "types": "Exact Int dense dot; arbitrary batch rank with one free axis per operand and one paired contracted axis.",
+    "theorem": "RevisedBenchmark.RemoveInputTransposes.verified",
+    "overlap": "The swap branch is definitionally the established operand-commutation/batch permutation result after normalization. Keep normalizes by reflexivity. One named input-transpose-removal optimization with two variants under the adopted expression-based gate, zero newly discovered algebraic identities.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/CONTRACT.md",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/REVIEW.md"
+    ]
+  }
+]
