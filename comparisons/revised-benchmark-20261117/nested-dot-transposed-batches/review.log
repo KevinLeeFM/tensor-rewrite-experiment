@@ -1,0 +1,18 @@
+Independent replay log (UTC, 2026-11-18)
+Command:
+  LEAN=/workspace/toolchains/lean-4.35.0-linux/bin/lean python3 comparisons/revised-benchmark-20261117/nested-dot-transposed-batches/replay.py
+Start: 04:45:58
+End:   04:46:00
+Shell wall: 1.919 s
+SHA256SUMS: all five entries OK
+Lean 4.35.0 compiler targets (seconds, exit):
+  RadixSpec 0.435 0
+  NestedSpec 0.363 0
+  BatchSpec 0.357 0
+  BatchProof 0.383 0
+  BatchControls 0.335 0
+Axiom output: RevisedBenchmark.BatchDot.refuted depends on [propext].
+Review verdict: frozen mathematical model refuted in each orientation; exact source cost helper implementation and runtime/source reachability not established. See REVIEW.md.
+Harness note: an initial wrapper tried /usr/bin/time, which is absent in this environment; the Python replay was not invoked by that command. Reran with Bash's builtin time; no proof/replay failure.
+Source inspection: frozen algebraic_simplifier.cc hash matched; options proto was read but is not included in packet SHA256SUMS. hlo_cost_analysis.h declaration exists; GetDotFlops implementation was not present in the source checkout.
+Reviewer total source-inspection wall / active reasoning time: not measured; do not infer from compiler timings.
