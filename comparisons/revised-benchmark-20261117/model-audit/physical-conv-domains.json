@@ -1,0 +1,67 @@
+[
+  {
+    "id": "conv.full-kernel-rank3-permuted",
+    "effort_group": "conv-full-taps",
+    "source_ids": [
+      "SimplifyConvToMultiply/reduce-000",
+      "SimplifyConvToMultiply/reduce-100"
+    ],
+    "lhs": "Dense grouped forward convolution, zero-initialized ordered sum over every spatial tap and input channel; optionally reverse the kernel taps.",
+    "rhs": "Optional kernel reversal followed by physical transposes, kernel singleton broadcast, pointwise multiplication, spatial reduction and singleton output reshape.",
+    "conditions": "One spatial dimension, same type without casts, distinct or equal dimension-number permutations, no padding and all strides/dilations one. Positive nonunit kernel, inferred singleton spatial output, input and output features equal feature groups, valid forward grouping and kernel input features one.",
+    "types": "Exact Nat tensor values, independent typed physical reads. Zero batch allowed. Zero-width window rejected by shape inference.",
+    "theorem": "RevisedBenchmark.ConvFullTaps.verified",
+    "overlap": "Reuses pointwise packet grouped batch proof, left physical addressing, broadcast and permutation definitions. Proves ordered full-tap physical address equality, bounds and singleton reshape packing for either reversal; historical normalized convolution reductions omit these operations. Higher ranks, machine arithmetic and native behavior outside this domain.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-full-taps/TapSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/TapProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/TapControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/final.log",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/ir/hlo_instruction.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/attempt1.log",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/author.log",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/freeze.log",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/replay.py"
+    ],
+    "outcome": "proved"
+  },
+  {
+    "id": "conv.pointwise-u8-evaluator-saturation",
+    "effort_group": "conv-u8-saturation",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-000",
+      "HandleConvolution/to-multiply-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvU8.refuted",
+    "types": "U8 tensor values under pinned HloEvaluator arithmetic, with explicit U64 accumulator and final clamp.",
+    "conditions": "Rank three, one batch and unit spatial axis, g>1 feature groups with one input/output channel per group; dense same-type one-tap convolution. Input and kernel are parameters.",
+    "lhs": "Convolve channelwise using the widened accumulator, clamp to the byte interval and store each result.",
+    "rhs": "Store the direct per-channel U8 products.",
+    "overlap": "The exact Nat case uses the same geometry. Its proof never assumes that narrowing with saturation equals reduction modulo 256. This packet compares both concrete machine calculations and separates the first overflowing product from a nonoverflowing product. No native run.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/U8Spec.lean",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/U8Controls.lean",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/U8Proof.lean",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/author.log",
+      "comparisons/revised-benchmark-20261117/conv-u8-saturation/replay.py"
+    ]
+  }
+]

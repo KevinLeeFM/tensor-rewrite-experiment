@@ -11,9 +11,9 @@
     "comparisons/revised-benchmark-20261117/recovered-witnesses/heldout-crosswalk.json": "f9145236877915ff65bc6811692b788a83f9fd3bb6b1567f5c676cb754ab805b",
     "comparisons/revised-benchmark-20261117/record-outcomes.json": "25f29a8d865d8c68897c1bfdee9dcf4f200db6e3e1b88af925b87804fa3111db",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59",
-    "comparisons/revised-benchmark-20261117/model-audit/evidence-sha256.json": "7cc8e5a44bd5e53040fca28b518f2921fcbd80b48283a811272bb2f2a6100c63",
-    "comparisons/revised-benchmark-20261117/model-audit/catalog-sha256.json": "6be23931a0b01b997dbcbb7ebb618dca12c2edd141ff6b7480cd16a8bf489dec",
-    "comparisons/revised-benchmark-20261117/model-audit/effort.json": "cd735b0ace628cde7ae9058f1291fbbc2114d94c30d861b1c7e9174771e099ec",
+    "comparisons/revised-benchmark-20261117/model-audit/evidence-sha256.json": "8280c7c44a6d4eb1732493fa7420ab0a9362b89c42c345aaf8cdcec6130e633d",
+    "comparisons/revised-benchmark-20261117/model-audit/catalog-sha256.json": "768e31f418077bd1a9b158b2a6c3cf91aaaa9a9c9aff2b0a5c5c06d110605791",
+    "comparisons/revised-benchmark-20261117/model-audit/effort.json": "c91381df1c9c32e8245434512dd9105613590e500324ec3dd6efcd0006dd8cb1",
     "docs/experiment-plan.md": "96e0f01a0bb7f6a9289d21bf9a9567e83bc7ccb9f47a11bea1f80e820ed7b790",
     "comparisons/revised-benchmark-20261117/model-audit/structural.json": "5a1695cc41f036f386b8d26fd0557cbc99130e55b94c455f21948bdbd80877ec",
     "comparisons/revised-benchmark-20261117/model-audit/structural-review.md": "9312f21cfc1a13c9b3561b4492c70ff36e7a93d6e5725d4e31296c57c763da9e",
@@ -50,7 +50,9 @@
     "comparisons/revised-benchmark-20261117/model-audit/collective-window.json": "a670a43514b188cf45837d9eff5d205631338aaad3b29f6ca59688c38290be13",
     "comparisons/revised-benchmark-20261117/model-audit/collective-window-review.md": "8a38136dcc22ed3578b3db461067becebcd5adab3a3f968376a245fb5bef7c86",
     "comparisons/revised-benchmark-20261117/model-audit/pointwise-concat.json": "531cc3baec1c6b0bc1a1a06973fbc33ab2a894a7caf844a41735078143b07791",
-    "comparisons/revised-benchmark-20261117/model-audit/pointwise-concat-review.md": "5ff5857d7b74ffcbfb7123545358cde039bce548491e0aa05faddd9af5b01ff0"
+    "comparisons/revised-benchmark-20261117/model-audit/pointwise-concat-review.md": "5ff5857d7b74ffcbfb7123545358cde039bce548491e0aa05faddd9af5b01ff0",
+    "comparisons/revised-benchmark-20261117/model-audit/physical-conv-domains.json": "d2cf711f485d65eb17d18ab745b456880b204aa1b30b4b9799430e0ac2c40975",
+    "comparisons/revised-benchmark-20261117/model-audit/physical-conv-domains-review.md": "6e0547a949260a85aee9e04ab1f1731f301c2f1a0b7c8e33edac36eeb8f850cc"
   },
   "source_candidates": {
     "records": [
@@ -3234,7 +3236,7 @@
         "id": "HandleConvolution/to-multiply-delegation",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -3242,7 +3244,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.pointwise-u8-evaluator-saturation"
+        ],
+        "pre_model_audit_work_state": "no_attempt_evidence_in_inherited_ledger"
       },
       {
         "id": "HandleCopy/chain-bitcast",
@@ -11036,7 +11042,8 @@
           "reason": "not measured per record in inherited ledger"
         },
         "mathematical_case_ids": [
-          "conv.pointwise-rank3-permuted"
+          "conv.pointwise-rank3-permuted",
+          "conv.pointwise-u8-evaluator-saturation"
         ],
         "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
@@ -11086,7 +11093,7 @@
         "id": "SimplifyConvToMultiply/reduce-000",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ConvolutionSeparable.convolve_eq_productReduction"
@@ -11096,7 +11103,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.full-kernel-rank3-permuted"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "SimplifyConvToMultiply/reduce-001",
@@ -11144,7 +11155,7 @@
         "id": "SimplifyConvToMultiply/reduce-100",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ConvolutionFloat.binary32_reversal_refuted",
@@ -11155,7 +11166,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.full-kernel-rank3-permuted"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "SimplifyConvToMultiply/reduce-101",
@@ -11893,7 +11908,7 @@
       "declared_value_family_complete_full_record_partitions_open": 122
     },
     "records_with_earlier_reviewed_partition": 5,
-    "records_with_any_reviewed_partition": 350,
+    "records_with_any_reviewed_partition": 353,
     "records_with_archived_configured_native_counterexample": 11,
     "records_with_reviewed_counterexample": 16,
     "reviewed_observation_outcomes": {
@@ -11901,10 +11916,10 @@
       "exact_preservation_condition_proved": 9
     },
     "work_state_counts": {
-      "reviewed_mathematical_case_whole_source_open": 264,
-      "no_attempt_evidence_in_inherited_ledger": 68,
+      "reviewed_mathematical_case_whole_source_open": 267,
+      "no_attempt_evidence_in_inherited_ledger": 67,
       "revised_model_partition_verified_whole_record_open": 75,
-      "inherited_checked_partial_evidence": 70,
+      "inherited_checked_partial_evidence": 68,
       "reviewed_complete_record_outcome": 7,
       "earlier_independently_accepted_model_partition_whole_record_open": 4
     },
@@ -18396,21 +18411,175 @@
                 ],
                 "freeze.log": []
               },
-              "review_and_author_intervals": "Author 122s setup/freeze, 79s proof/controls, 50s explicit broadcast check. See independent reviewer receipt for its measured interval."
+              "review_and_author_intervals": "Author 122s setup/freeze, 79s proof/controls, 50s explicit broadcast check. See independent reviewer receipt for its measured interval.",
+              "review_seconds": 236
             }
           },
           "accounting": "This phase began approximately 02:36 UTC during the preceding register update. Precise author selection/freeze and development intervals are in AUTHOR.md; observed review intervals include their targeted compiler replays. Historical discovery time and exclusive active/token use are unknown. The cache remained inaccessible throughout.",
           "overall_utc_start": "2026-11-18T02:03:42+00:00",
           "overall_through_final_assembly": "2026-11-18T02:47:29+00:00",
-          "overall_wall_seconds_through_final_assembly": 2627
+          "overall_wall_seconds_through_final_assembly": 2627,
+          "historical_concat_review_seconds": 66,
+          "dus_index_container_audit_seconds": 127
+        },
+        "physical-conv-domains": {
+          "start_utc": "2026-11-18T02:43:00+00:00",
+          "through_assembly_utc": "2026-11-18T02:52:22+00:00",
+          "packets": {
+            "conv-full-taps": {
+              "freeze": "ef432ea",
+              "candidate": "833a1c7",
+              "freeze_to_candidate_seconds": 247,
+              "review": "conv-full-taps/REVIEW.md",
+              "new_lean_lines": {
+                "TapControls.lean": 38,
+                "TapProof.lean": 80,
+                "TapSpec.lean": 54
+              },
+              "compiler_logs": {
+                "attempt1.log": [
+                  [
+                    "PointSpec",
+                    "0.405",
+                    "0"
+                  ],
+                  [
+                    "PointProof",
+                    "0.363",
+                    "0"
+                  ],
+                  [
+                    "TapSpec",
+                    "0.308",
+                    "0"
+                  ],
+                  [
+                    "TapProof",
+                    "0.394",
+                    "1"
+                  ]
+                ],
+                "author.log": [
+                  [
+                    "PointSpec",
+                    "0.379",
+                    "0"
+                  ],
+                  [
+                    "PointProof",
+                    "0.375",
+                    "0"
+                  ],
+                  [
+                    "TapSpec",
+                    "0.299",
+                    "0"
+                  ],
+                  [
+                    "TapProof",
+                    "0.413",
+                    "0"
+                  ],
+                  [
+                    "TapControls",
+                    "0.397",
+                    "0"
+                  ]
+                ],
+                "final.log": [
+                  [
+                    "PointSpec",
+                    "0.412",
+                    "0"
+                  ],
+                  [
+                    "PointProof",
+                    "0.377",
+                    "0"
+                  ],
+                  [
+                    "TapSpec",
+                    "0.294",
+                    "0"
+                  ],
+                  [
+                    "TapProof",
+                    "0.466",
+                    "0"
+                  ],
+                  [
+                    "TapControls",
+                    "0.443",
+                    "0"
+                  ]
+                ],
+                "freeze.log": [
+                  [
+                    "PointSpec",
+                    "0.591",
+                    "0"
+                  ],
+                  [
+                    "PointProof",
+                    "0.408",
+                    "0"
+                  ],
+                  [
+                    "TapSpec",
+                    "0.321",
+                    "0"
+                  ]
+                ]
+              },
+              "actual_effort": "Author 320s through commit; review 89s incl 1.951s independent compiler."
+            },
+            "conv-u8-saturation": {
+              "freeze": "faae169",
+              "candidate": "64ccef0",
+              "freeze_to_candidate_seconds": 1,
+              "review": "conv-u8-saturation/REVIEW.md",
+              "new_lean_lines": {
+                "U8Controls.lean": 8,
+                "U8Proof.lean": 10,
+                "U8Spec.lean": 13
+              },
+              "compiler_logs": {
+                "author.log": [
+                  [
+                    "U8Spec",
+                    "0.371",
+                    "0"
+                  ],
+                  [
+                    "U8Proof",
+                    "0.292",
+                    "0"
+                  ],
+                  [
+                    "U8Controls",
+                    "0.300",
+                    "0"
+                  ]
+                ]
+              },
+              "actual_effort": "Reviewer 168s including corrected checksum working directory and 0.945s compiler. Author exact active time unmeasured."
+            }
+          },
+          "accounting": "This phase began approximately 02:43 UTC and overlaps the preceding register update. Precise author selection/freeze and development intervals are in AUTHOR.md; observed review intervals include their targeted compiler replays. Historical discovery time and exclusive active/token use are unknown. The cache remained inaccessible throughout.",
+          "overall_utc_start": "2026-11-18T02:03:42+00:00",
+          "through_final_assembly": "2026-11-18T02:52:22+00:00",
+          "overall_wall_seconds": 2920,
+          "one_successful_author_replay_per_packet_summed_compiler_seconds": 18.289,
+          "author_replay_count": 13,
+          "resource_scope": "The compiler sum covers one successful full small author replay per packet; excludes failed compiles, repeated author checks and independent replays, all counted in their respective logs. The wall time spans all four checkpoints including supervision and coordination."
         }
       }
     },
     "acceptance": "Fixed original and replacement calculations under declared types and conditions; all admitted shapes, accesses and logical values. Model refutation requires an admitted violating witness.",
     "scope": "Reviewed source-associated cases only. The remaining mathematical denominator is open. Some cases overlap historical paper laws; never add historical and current counts to claim distinct rules.",
     "counts": {
-      "proved": 149,
-      "disproved": 39
+      "proved": 150,
+      "disproved": 40
     },
     "counts_by_catalog": {
       "structural": {
@@ -18476,9 +18645,13 @@
       },
       "pointwise-concat": {
         "proved": 1
+      },
+      "physical-conv-domains": {
+        "proved": 1,
+        "disproved": 1
       }
     },
-    "source_ids_represented": 348,
+    "source_ids_represented": 351,
     "source_ids_without_catalogued_case": [
       "AssociativeReorderNestedDot/lhs-transpose",
       "AssociativeReorderNestedDot/rhs-transpose",
@@ -18510,7 +18683,6 @@
       "HandleConvolution/onednn-delegation",
       "HandleConvolution/operand-swap-delegation",
       "HandleConvolution/to-dot-delegation",
-      "HandleConvolution/to-multiply-delegation",
       "HandleCopy/chain-bitcast",
       "HandleCopy/compatible",
       "HandleCopy/reshape-clone",
@@ -18601,11 +18773,9 @@
       "SimplifyConvToMultiply/pointwise-001",
       "SimplifyConvToMultiply/pointwise-010",
       "SimplifyConvToMultiply/pointwise-011",
-      "SimplifyConvToMultiply/reduce-000",
       "SimplifyConvToMultiply/reduce-001",
       "SimplifyConvToMultiply/reduce-010",
       "SimplifyConvToMultiply/reduce-011",
-      "SimplifyConvToMultiply/reduce-100",
       "SimplifyConvToMultiply/reduce-101",
       "SimplifyConvToMultiply/reduce-110",
       "SimplifyConvToMultiply/reduce-111",
@@ -24624,6 +24794,75 @@
         "outcome": "proved",
         "scope_review": "comparisons/revised-benchmark-20261117/model-audit/pointwise-concat-review.md",
         "catalog": "pointwise-concat"
+      },
+      {
+        "id": "conv.full-kernel-rank3-permuted",
+        "effort_group": "conv-full-taps",
+        "source_ids": [
+          "SimplifyConvToMultiply/reduce-000",
+          "SimplifyConvToMultiply/reduce-100"
+        ],
+        "lhs": "Dense grouped forward convolution, zero-initialized ordered sum over every spatial tap and input channel; optionally reverse the kernel taps.",
+        "rhs": "Optional kernel reversal followed by physical transposes, kernel singleton broadcast, pointwise multiplication, spatial reduction and singleton output reshape.",
+        "conditions": "One spatial dimension, same type without casts, distinct or equal dimension-number permutations, no padding and all strides/dilations one. Positive nonunit kernel, inferred singleton spatial output, input and output features equal feature groups, valid forward grouping and kernel input features one.",
+        "types": "Exact Nat tensor values, independent typed physical reads. Zero batch allowed. Zero-width window rejected by shape inference.",
+        "theorem": "RevisedBenchmark.ConvFullTaps.verified",
+        "overlap": "Reuses pointwise packet grouped batch proof, left physical addressing, broadcast and permutation definitions. Proves ordered full-tap physical address equality, bounds and singleton reshape packing for either reversal; historical normalized convolution reductions omit these operations. Higher ranks, machine arithmetic and native behavior outside this domain.",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/conv-full-taps/TapSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/TapProof.lean",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/TapControls.lean",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/FREEZE.md",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/final.log",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/AUTHOR.md",
+          "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+          "lean-toolchain",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+          "sources/xla/xla/hlo/ir/hlo_instruction.cc",
+          "sources/xla/xla/service/shape_inference.cc",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/attempt1.log",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/author.log",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/freeze.log",
+          "comparisons/revised-benchmark-20261117/conv-full-taps/replay.py"
+        ],
+        "outcome": "proved",
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/physical-conv-domains-review.md",
+        "catalog": "physical-conv-domains"
+      },
+      {
+        "id": "conv.pointwise-u8-evaluator-saturation",
+        "effort_group": "conv-u8-saturation",
+        "source_ids": [
+          "SimplifyConvToMultiply/pointwise-000",
+          "HandleConvolution/to-multiply-delegation"
+        ],
+        "theorem": "RevisedBenchmark.ConvU8.refuted",
+        "types": "U8 tensor values under pinned HloEvaluator arithmetic, with explicit U64 accumulator and final clamp.",
+        "conditions": "Rank three, one batch and unit spatial axis, g>1 feature groups with one input/output channel per group; dense same-type one-tap convolution. Input and kernel are parameters.",
+        "lhs": "Convolve channelwise using the widened accumulator, clamp to the byte interval and store each result.",
+        "rhs": "Store the direct per-channel U8 products.",
+        "overlap": "The exact Nat case uses the same geometry. Its proof never assumes that narrowing with saturation equals reduction modulo 256. This packet compares both concrete machine calculations and separates the first overflowing product from a nonoverflowing product. No native run.",
+        "outcome": "disproved",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/U8Spec.lean",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/FREEZE.md",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+          "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+          "sources/xla/xla/service/shape_inference.cc",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/U8Controls.lean",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/U8Proof.lean",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/author.log",
+          "comparisons/revised-benchmark-20261117/conv-u8-saturation/replay.py"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/physical-conv-domains-review.md",
+        "catalog": "physical-conv-domains"
       }
     ]
   }
