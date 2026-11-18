@@ -1,0 +1,70 @@
+[
+  {
+    "id": "reuse.numerical-tail.exp-zero",
+    "source_ids": [
+      "HandleExp/zero-scalar",
+      "HandleExp/zero-broadcast"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/NumericalComplex.lean",
+    "theorem": "TensorRewrite.Theory.Numerical.real_exp_zero, TensorRewrite.Theory.Numerical.complex_exp_zero",
+    "lhs": "Apply exp to scalar zero or the pointwise constant zero tensor.",
+    "rhs": "Pointwise constant one at the original shape.",
+    "conditions": "Direct rank-zero literal or immediate broadcast of that literal. Exact zero input, arbitrary valid broadcast output shape, no fast-math gate.",
+    "types": "Homogeneous exact real or complex logical tensors.",
+    "overlap": "Two constructors instantiate one existing constant-function identity family.",
+    "outcome": "proved",
+    "effort_group": "numerical-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalComplex.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/numerical-typed-domains-v1.json",
+      "census/mathematical-ledger.json",
+      "reports/theory-progress.json"
+    ]
+  },
+  {
+    "id": "reuse.numerical-tail.abs-square",
+    "source_ids": [
+      "HandleMultiply/abs-square"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "theorem": "TensorRewrite.Theory.Numerical.real_abs_square",
+    "lhs": "abs(a) * abs(a) pointwise.",
+    "rhs": "a * a pointwise.",
+    "conditions": "Both multiply operands are the same Abs instruction; its input is noncomplex. The selected model restricts the element type to exact reals.",
+    "types": "Homogeneous exact real tensor at arbitrary shape.",
+    "overlap": "Historical real identity. No concluded integer-overflow or encoded floating profile.",
+    "outcome": "proved",
+    "effort_group": "numerical-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/numerical-typed-domains-v1.json",
+      "census/mathematical-ledger.json",
+      "reports/theory-progress.json"
+    ]
+  },
+  {
+    "id": "reuse.numerical-tail.exp-product",
+    "source_ids": [
+      "HandleMultiply/exp-product"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "theorem": "TensorRewrite.Theory.Numerical.real_exp_product, TensorRewrite.Theory.Numerical.complex_exp_product",
+    "lhs": "exp(a) * exp(b) pointwise.",
+    "rhs": "exp(a + b) pointwise.",
+    "conditions": "Source fast math enabled and both operands Exp. On the exact real/complex model there is no positivity, range, or principal-log condition.",
+    "types": "Same-shaped homogeneous exact real or complex tensors.",
+    "overlap": "Historical exponential addition identity family; fast math is source admission, not a mathematical axiom or a guarantee about rounding.",
+    "outcome": "proved",
+    "effort_group": "numerical-tail-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "TensorRewrite/Theory/NumericalComplex.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "census/numerical-typed-domains-v1.json",
+      "census/mathematical-ledger.json",
+      "reports/theory-progress.json"
+    ]
+  }
+]
