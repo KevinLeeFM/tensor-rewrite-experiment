@@ -1,0 +1,24 @@
+[
+  {
+    "id": "reduce-window.full-span-fast-f32",
+    "outcome": "disproved",
+    "effort_group": "window-full-f32",
+    "source_ids": [
+      "HandleReduceWindow/full-dimensions"
+    ],
+    "lhs": "Full rank-one window [N] reduced by F32 scalar addition from +0; round each accumulator step to F32.",
+    "rhs": "Reduce dimension 0 using the fast floating evaluator (one binary64 sum chunk), cast once to F32, and reshape the scalar to [1].",
+    "conditions": "Static contiguous rank-one F32 input, 2\u2264N\u2264512, nonnegative exactly representable integer values \u22642^24, no stride/padding/dilation/reversal, simple add and common +0 initializer. Strict element-value observation with IEEE RNE and fast-reduce enabled.",
+    "types": "Finite integer-valued binary32 with binary64 accumulation on the replacement only.",
+    "theorem": "RevisedBenchmark.WindowFullF32.refuted",
+    "overlap": "Historical FullSpanWindow.original_reduce_reshape establishes equality for the same ordered binary operation on both folds; inherited. Here replacement changes intermediate precision. Distinct terminal pair from replicated-axis window-to-multiply and sequential-fold permutation diagnoses.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-full-f32/FullFastSpec.lean",
+      "comparisons/revised-benchmark-20261117/window-full-f32/FullFastProof.lean",
+      "comparisons/revised-benchmark-20261117/window-full-f32/FullFastControls.lean",
+      "comparisons/revised-benchmark-20261117/window-full-f32/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-full-f32/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-full-f32/author.log"
+    ]
+  }
+]
