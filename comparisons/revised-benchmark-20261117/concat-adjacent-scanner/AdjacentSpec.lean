@@ -47,19 +47,19 @@ abbrev Reader (α : Type) := Nat → List Nat → Nat → List Nat → α
 
 /-- For each outer coordinate, enumerate concat-axis positions followed by
 all inner coordinates. Slice values come from the source at physical origins. -/
-def row {α : Type} (src opaque : Reader α) (outer post : List Nat) : Block → List α
+def row {α : Type} (src other : Reader α) (outer post : List Nat) : Block → List α
   | .slice k s w => (List.range' s w).flatMap fun i => (coords post).map fun inner =>
     src k.src (List.zipWith Nat.add k.pre outer) i (List.zipWith Nat.add k.post inner)
-  | .opaque id w => (List.range w).flatMap fun i => (coords post).map (opaque id outer i)
+  | .opaque id w => (List.range w).flatMap fun i => (coords post).map (other id outer i)
 
-def packed {α : Type} (src opaque : Reader α) (pre post : List Nat) (bs : List Block) :=
-  (coords pre).flatMap fun outer => bs.flatMap (row src opaque outer post)
+def packed {α : Type} (src other : Reader α) (pre post : List Nat) (bs : List Block) :=
+  (coords pre).flatMap fun outer => bs.flatMap (row src other outer post)
 
 /-- Arbitrary static pre/post frame, empty extents and ranks permitted. The
 legal XLA subdomain has crop origins of matching rank and bounded slices.
 Total reads extend legal tensors; the stronger equality needs no such premise. -/
 def Goal := ∀ (bs : List Block),
   ((scan bs).map width).sum = (bs.map width).sum ∧
-  ∀ (α : Type) (src opaque : Reader α) (pre post : List Nat),
-    packed src opaque pre post (scan bs) = packed src opaque pre post bs
+  ∀ (α : Type) (src other : Reader α) (pre post : List Nat),
+    packed src other pre post (scan bs) = packed src other pre post bs
 end RevisedBenchmark.AdjacentScan
