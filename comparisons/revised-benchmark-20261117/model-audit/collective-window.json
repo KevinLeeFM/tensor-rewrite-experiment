@@ -1,0 +1,163 @@
+[
+  {
+    "id": "reduce-window.full-span-fast-f32",
+    "outcome": "disproved",
+    "effort_group": "window-full-f32",
+    "source_ids": [
+      "HandleReduceWindow/full-dimensions"
+    ],
+    "lhs": "Full rank-one window [N] reduced by F32 scalar addition from +0; round each accumulator step to F32.",
+    "rhs": "Reduce dimension 0 using the fast floating evaluator (one binary64 sum chunk), cast once to F32, and reshape the scalar to [1].",
+    "conditions": "Static contiguous rank-one F32 input, 2≤N≤512, nonnegative exactly representable integer values ≤2^24, no stride/padding/dilation/reversal, simple add and common +0 initializer. Strict element-value observation with IEEE RNE and fast-reduce enabled.",
+    "types": "Finite integer-valued binary32 with binary64 accumulation on the replacement only.",
+    "theorem": "RevisedBenchmark.WindowFullF32.refuted",
+    "overlap": "Historical FullSpanWindow.original_reduce_reshape establishes equality for the same ordered binary operation on both folds; inherited. Here replacement changes intermediate precision. Distinct terminal pair from replicated-axis window-to-multiply and sequential-fold permutation diagnoses.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-full-f32/FullFastSpec.lean",
+      "comparisons/revised-benchmark-20261117/window-full-f32/FullFastProof.lean",
+      "comparisons/revised-benchmark-20261117/window-full-f32/FullFastControls.lean",
+      "comparisons/revised-benchmark-20261117/window-full-f32/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-full-f32/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-full-f32/author.log",
+      "TensorRewrite/Theory/FullSpanWindowProof.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.h",
+      "sources/xla/xla/literal.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/window-full-f32/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/window-full-f32/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/window-full-f32/freeze.log",
+      "comparisons/revised-benchmark-20261117/window-full-f32/replay.py"
+    ]
+  },
+  {
+    "id": "slice.last-padded-window-to-reduce",
+    "effort_group": "slice-final-window",
+    "source_ids": [
+      "HandleSlice/reduce-window"
+    ],
+    "lhs": "Slice of a low-padded unit-stride reduce-window, selecting the final singleton output on reduced axes and the whole range on retained axes.",
+    "rhs": "Reduce the original input on the source-selected full-span axes; reshape the shorter output to the slice shape.",
+    "conditions": "Arbitrary rank, legal static unit-stride Slice with stop=window output, start=window low padding, high padding zero, no stride/dilation, some padding, nonempty effective reductions; unit or selected full-window guard with common ordered nonreversed logical reads.",
+    "types": "Any scalar payload, same pure binary reducer and initializer; exact arithmetic on a common logical order. No widened or reassociated floating evaluator claim.",
+    "theorem": "RevisedBenchmark.SliceFinalWindow.verified",
+    "overlap": "Standalone unpadded FullSpanWindow.original_reduce_reshape supplies the canonical target geometry but omits this padded slice and matching guards. Historical paper source labels contain no matching slice-reduce-window terminal equation.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-final-window/LastSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-final-window/LastProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-final-window/LastControls.lean",
+      "comparisons/revised-benchmark-20261117/slice-final-window/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/slice-final-window/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/slice-final-window/verified.log",
+      "TensorRewrite/Theory/FullSpanWindowProof.lean",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/slice-final-window/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/slice-final-window/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/slice-final-window/acceptance.log",
+      "comparisons/revised-benchmark-20261117/slice-final-window/attempt1.log",
+      "comparisons/revised-benchmark-20261117/slice-final-window/freeze.log",
+      "comparisons/revised-benchmark-20261117/slice-final-window/length1.log",
+      "comparisons/revised-benchmark-20261117/slice-final-window/replay.py"
+    ],
+    "outcome": "proved"
+  },
+  {
+    "id": "collective.uniform-rounded-count",
+    "effort_group": "collective-count-round",
+    "source_ids": [
+      "HandleAllReduceOrReduceScatter/sum-floating",
+      "HandleAllReduce/shared-handler",
+      "HandleReduceScatter/shared-handler"
+    ],
+    "theorem": "RevisedBenchmark.CollectiveCount.refuted",
+    "types": "Nonnegative integer-valued F32, nearest-even rounding.",
+    "conditions": "Uniform literal, known group size between one and sixteen, declared sequential participant order. Both collective projections.",
+    "lhs": "Sum the values across participants with rounding after each addition.",
+    "rhs": "Return the uniform value rounded after multiplication by the converted group size.",
+    "overlap": "The historical UniformSum.binary32_uniform_product_refuted already gave a scalar failure. This packet adds the bounded integer-valued witness and both participant/receiver projections. One catalogued calculation, no new rounding mechanism.",
+    "outcome": "disproved",
+    "evidence": [
+      "TensorRewrite/Theory/UniformSumCounterexample.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-round/CountSpec.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-round/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/collective-count-round/CountControls.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-round/CountProof.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-round/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/collective-count-round/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/collective-count-round/author.log",
+      "comparisons/revised-benchmark-20261117/collective-count-round/replay.py"
+    ]
+  },
+  {
+    "id": "collective.uniform-u64-count",
+    "effort_group": "collective-count-u64",
+    "source_ids": [
+      "HandleAllReduceOrReduceScatter/sum-integral",
+      "HandleAllReduce/shared-handler",
+      "HandleReduceScatter/shared-handler"
+    ],
+    "theorem": "RevisedBenchmark.CollectiveWord.verified",
+    "types": "U64 addition and multiplication modulo 2^64.",
+    "conditions": "Uniform scalar across all participants and positions, known positive group size fitting int64, arbitrary output coordinate type and scatter block width.",
+    "lhs": "Fold participant values from their first contribution and return the sum or projected receiver block.",
+    "rhs": "Return the product of the U64 literal and U64-converted group size on every final output coordinate.",
+    "overlap": "Specializes the historical repeated-word-sum proof. The new work instantiates both collective projections and the U64 host arithmetic domain.",
+    "outcome": "proved",
+    "evidence": [
+      "TensorRewrite/Theory/PrefixWindowArithmetic.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/GroupSpec.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/PrefixSpec.lean",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/PrefixProof.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/GroupControls.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/GroupProof.lean",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/author.log",
+      "comparisons/revised-benchmark-20261117/collective-count-u64/replay.py",
+      "sources/xla/xla/service/collective_ops_utils.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "sources/xla/docs/operation_semantics.md"
+    ]
+  },
+  {
+    "id": "add.factor-gradual-underflow",
+    "effort_group": "factor-subnormal-half",
+    "source_ids": [
+      "HandleAdd/factor-lhs-lhs",
+      "HandleAdd/factor-lhs-rhs",
+      "HandleAdd/factor-rhs-lhs",
+      "HandleAdd/factor-rhs-rhs"
+    ],
+    "theorem": "RevisedBenchmark.HalfFactor.refuted; RevisedBenchmark.HalfFactor.criterion",
+    "types": "Binary32 positive subnormal grid, including +0, gradual underflow and round-to-nearest-even.",
+    "conditions": "Shared literal +1/2, two one-use products, magnitudes below 2^21 in least-subnormal units, either ordering at each product. Source expressly tolerates underflow differences.",
+    "lhs": "Round two separately halved inputs then add.",
+    "rhs": "Add first, then round once when halving.",
+    "overlap": "Different from exact-ring factoring and generic reassociation. Characterizes equality by the low two input bits and counts four factor positions together.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/HalfSpec.lean",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/HalfControls.lean",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/HalfProof.lean",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/author.log",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/failed-omega.log",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/replay.py",
+      "comparisons/revised-benchmark-20261117/factor-subnormal-half/unused-simp.log"
+    ]
+  }
+]
