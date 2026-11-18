@@ -13,6 +13,10 @@ example : stripe false 1 0 ≠ stripe false 0 1 := by decide
 example : stripe false 0 0 ≠ stripe true 0 0 := by decide
 example : (∀ i j, stripe false i j = stripe false j i) = False := by decide
 example : (∀ i j, stripe true i j = stripe false j i) = False := by decide
+def onlyTrue (b : Bool) := if b then 2 else 0
+example : mass 2 3 onlyTrue (fun _ _ => true) = total 2 3 onlyTrue := by decide
+example : mass 3 2 onlyTrue b = 0 := by decide
+#print axioms oldCoordinatesValid
 #check (transposeLaw : Law)
 #check (reshapeStream : Reshape)
 #check (differentSeedObservation : ¬SameSeedTranspose)
