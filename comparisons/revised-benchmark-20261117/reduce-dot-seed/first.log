@@ -1,0 +1,22 @@
+comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedSpec.lean: OK
+comparisons/revised-benchmark-20261117/reduce-dot-seed/FREEZE.md: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+SeedSpec 0.455s exit=0
+SeedProof.lean:34:3: error: unknown tactic
+SeedProof.lean:31:31: error: unsolved goals
+n k m : Nat
+z : Int
+l : L
+r : R
+⊢ (sum n fun b => sum m fun f => oldDot k l r b f) = sum m fun f => newDot n k l r f
+'RevisedBenchmark.BatchSeed.refuted' depends on axioms: [propext]
+'RevisedBenchmark.BatchSeed.directAt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'RevisedBenchmark.BatchSeed.residual' depends on axioms: [sorryAx]
+SeedProof 0.415s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reduce-dot-seed/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'SeedProof.olean', 'SeedProof.lean']' returned non-zero exit status 1.
