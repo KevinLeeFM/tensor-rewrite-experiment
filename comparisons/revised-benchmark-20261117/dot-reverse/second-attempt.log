@@ -1,0 +1,78 @@
+comparisons/revised-benchmark-20261117/dot-reverse/MirrorSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+TensorRewrite/Pilot/Tensor 0.308s exit=0
+TensorRewrite/Pilot/Indexing 0.310s exit=0
+MirrorSpec 0.336s exit=0
+MirrorProof.lean:5:60: error: unsolved goals
+n : Nat
+f : Fin n → Int
+i : Nat
+h : i < (List.ofFn fun i => f i.rev).length
+j : i < (List.ofFn f).reverse.length
+⊢ n - (i + 1) = n - 1 - i
+MirrorProof.lean:19:65: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+MirrorProof.lean:19:75: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+MirrorProof.lean:19:65: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+MirrorProof.lean:19:75: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+MirrorProof.lean:20:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  List.ofFn fun i => ?f i.rev
+in the target expression
+  (List.ofFn fun i => sumAt ds fun t => f (i, mirror ds t)).sum = (List.ofFn fun i => sumAt ds fun t => f (i, t)).sum
+
+case cons.false
+ds : List (Nat × Bool)
+ih : ∀ (f : Coord ds → Int), (sumAt ds fun i => f (mirror ds i)) = sumAt ds f
+n : Nat
+f : Coord ((n, false) :: ds) → Int
+⊢ (List.ofFn fun i => sumAt ds fun t => f (i, mirror ds t)).sum = (List.ofFn fun i => sumAt ds fun t => f (i, t)).sum
+
+Note: The target expression is not type-correct under the `implicit` transparency level, which may have triggered the failure. This is usually caused by unfolding of semireducible definitions in prior tactic steps. Use `set_option linter.tacticCheckInstances true` to investigate the source of the issue.
+Full error:
+  Application type mismatch: The argument
+    (i, mirror ds t)
+  has type
+    Fin n × Coord ds
+  but is expected to have type
+    Coord ((n, false) :: ds)
+  in the application
+    f (i, mirror ds t)
+MirrorProof.lean:19:84: warning: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [sumAt, mirror, Bool.false_eq_true, if_false, if_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+MirrorProof.lean:25:17: error: unsolved goals
+case cons.false
+ds : List (Nat × Bool)
+ih : ∀ (k : Coord ds), mirror ds (mirror ds k) = k
+n : Nat
+i : Fin n
+t : Coord ds
+⊢ (i, t) = (i, t)
+
+case cons.true
+ds : List (Nat × Bool)
+ih : ∀ (k : Coord ds), mirror ds (mirror ds k) = k
+n : Nat
+i : Fin n
+t : Coord ds
+⊢ (i, t) = (i, t)
+'RevisedBenchmark.DotMirror.verified' depends on axioms: [sorryAx, Quot.sound]
+MirrorProof 0.389s exit=1
