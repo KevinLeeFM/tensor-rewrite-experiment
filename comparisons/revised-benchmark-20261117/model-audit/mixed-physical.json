@@ -1,0 +1,449 @@
+[
+  {
+    "effort_group": "conv-mixed-u32",
+    "lhs": "Physical grouped one-tap convolution, exact conversions of unsigned operands to U32 then U64, U64 accumulation, clamp and final U32 store.",
+    "rhs": "Transpose/convert operands to U32, broadcast kernel, multiply U32 and retain low word.",
+    "conditions": "Dense one-spatial-axis kernel extent one, rank three with arbitrary independent dimension permutations, valid grouping, kernel input feature one and both input/output feature sizes equal group count. Unit strides/dilations and zero padding. Layout-insensitive mathematical profile.",
+    "overlap": "Reuses independently checked physical addresses and exact Nat contraction. Earlier same-result U8 saturation counterexample has no operand conversions and a different result narrowing. Source-to-native reachability untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/final.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/attempt1.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/attempt2.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/freeze.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/replay.py",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "census/convolution-mathematical-domains-v1.json"
+    ],
+    "id": "conv.pointwise-byte-pair-u32",
+    "outcome": "proved",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-011"
+    ],
+    "types": "Both input operands U8; U32 result. The product is at most 65025.",
+    "theorem": "RevisedBenchmark.ConvMixedU32.bytePair"
+  },
+  {
+    "effort_group": "conv-mixed-u32",
+    "lhs": "Physical grouped one-tap convolution, exact conversions of unsigned operands to U32 then U64, U64 accumulation, clamp and final U32 store.",
+    "rhs": "Transpose/convert operands to U32, broadcast kernel, multiply U32 and retain low word.",
+    "conditions": "Dense one-spatial-axis kernel extent one, rank three with arbitrary independent dimension permutations, valid grouping, kernel input feature one and both input/output feature sizes equal group count. Unit strides/dilations and zero padding. Layout-insensitive mathematical profile.",
+    "overlap": "Reuses independently checked physical addresses and exact Nat contraction. Earlier same-result U8 saturation counterexample has no operand conversions and a different result narrowing. Source-to-native reachability untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/final.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/attempt1.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/attempt2.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/freeze.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/replay.py",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "census/convolution-mathematical-domains-v1.json"
+    ],
+    "id": "conv.pointwise-single-cast-u32",
+    "outcome": "disproved",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-010",
+      "SimplifyConvToMultiply/pointwise-001"
+    ],
+    "types": "One operand U8 and the other U32, with U32 result. Both orientations of 2 times U32_MAX yield different stored outputs.",
+    "theorem": "RevisedBenchmark.ConvMixedU32.singleCastFailures"
+  },
+  {
+    "id": "reuse.audit137.add-order",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleAdd/constant-right"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound instantiated with Rule.addComm",
+    "lhs": "constant c + nonconstant x",
+    "rhs": "x+c",
+    "conditions": "Direct constant lhs and nonconstant rhs; earlier zero forwarding has precedence.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.add-sum",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleAdd/constant-sum-direct-constants"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound instantiated with Rule.addAssoc false false",
+    "lhs": "(x+c1)+c2",
+    "rhs": "x+(c1+c2)",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Fixed operand order, nonconstant x, direct constant arrays, valid common shape.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.add-sum-broadcast",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleAdd/constant-sum-broadcast-scalars"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.add_broadcast_constants",
+    "lhs": "(x+B(c1))+B(c2)",
+    "rhs": "x+B(c1+c2)",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Fixed order, nonconstant x, two scalar constants broadcast to the same output; instantiate smallRank=0 and empty axis map.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.sub-add",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleAdd/constant-subtract-direct-constants"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound instantiated with Rule.subAddConstants false",
+    "lhs": "(c1−x)+c2",
+    "rhs": "(c1+c2)−x",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Direct constant arrays, nonconstant x. Keep subtraction order.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.sub-add-broadcast",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleAdd/constant-subtract-broadcast-scalars"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.subtract_add_broadcast_constants",
+    "lhs": "(B(c1)−x)+B(c2)",
+    "rhs": "B(c1+c2)−x",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Shared scalar-broadcast profile, nonconstant x, smallRank=0 with empty axis map.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.mul-product",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleMultiply/constant-product",
+      "HandleMultiply/legacy-constant-product-direct"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound instantiated with Rule.mulAssoc inner outer",
+    "lhs": "(x*c1)*c2 in matched operand order",
+    "rhs": "x*(c1*c2)",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Nonconstant x, two direct constants; AnyOrder in earlier branch. Later fixed direct matcher is subsumed and shadowed.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. One common calculation across both labels.",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.mul-four",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleMultiply/four-factors"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.rewrite_sound instantiated with Rule.fourFactors outer left right",
+    "lhs": "(a*c1)*(b*c2) with matched orders",
+    "rhs": "(a*b)*(c1*c2)",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Both inner operands have one nonconstant and one direct constant. All three pair orderings allowed.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticFamilyProof.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.mul-product-broadcast",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleMultiply/legacy-constant-product-broadcast-scalars"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.multiply_broadcast_constants",
+    "lhs": "(a*B(c1))*B(c2)",
+    "rhs": "a*B(c1*c2)",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Fixed order; direct scalar literals wrapped by broadcasts. Source uses Op for a in this alternate matcher. Small shape rank zero.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.mul-factor-broadcast",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleMultiply/broadcast-factor"
+    ],
+    "theorem": "TensorRewrite.Theory.ArithmeticFamily.broadcast_uniform_factor",
+    "lhs": "(a*uniform(c))*B(b)",
+    "rhs": "a*B(b*uniform(c))",
+    "conditions": "Source requires non-floating/non-complex result or enabled fast math. Scalar literal c directly or via Broadcast; nonconstant a and broadcast of nonconstant b. Preserve b’s axes; input/output dimensions equal on each mapped axis in this profile.",
+    "types": "Homogeneous static tensors over one exact commutative ring, including same-width modular words. No rounded floating claim.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/ArithmeticBroadcast.lean",
+      "TensorRewrite/Theory/ArithmeticFamily.lean",
+      "census/arithmetic-typed-domains-v1.json",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.slice-full",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleDynamicSlice/same-shape",
+      "HandleDynamicSlice/scalar"
+    ],
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_full",
+    "lhs": "DynamicSlice(x,starts,size=shape(x))",
+    "rhs": "x",
+    "conditions": "Non-async, previous successful branches excluded. SameShape gives equal dimensions; scalar-output dispatch has rank zero, so the unique rank-zero shape gives the same specialization. Source uses scalar dispatch first.",
+    "types": "Homogeneous static tensors over arbitrary payloads, valid fitting windows and decoded integer starts.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.slice-const",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateStatic.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleDynamicSlice/constant-indices"
+    ],
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_static",
+    "lhs": "DynamicSlice(x,raw,width)",
+    "rhs": "unit-stride Slice(x,min(raw,extent−width),min(raw,extent−width)+width)",
+    "conditions": "Non-async, previous successful branches excluded. Conversion enabled, nonconstant x, each axis has an integral scalar literal with successfully decoded nonnegative start. If layout-sensitive, both layouts present and memory spaces equal. No legacy single-vector route claimed.",
+    "types": "Homogeneous static tensors over arbitrary payloads, valid fitting windows and decoded integer starts.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdateStatic.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.update-full",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/full-update"
+    ],
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.update_full",
+    "lhs": "DynamicUpdateSlice(base,patch,starts) with full-size patch",
+    "rhs": "patch",
+    "conditions": "Non-async, previous successful branches excluded. SameShape(result,patch), after any broadcast-to-pad replacement. Clamping makes every start zero.",
+    "types": "Homogeneous static tensors over arbitrary payloads, valid fitting windows and decoded integer starts.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.update-empty",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/empty-update"
+    ],
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.update_empty",
+    "lhs": "DynamicUpdateSlice(base,patch,starts) with empty patch",
+    "rhs": "base",
+    "conditions": "Non-async, previous successful branches excluded. Zero extent on at least one patch axis. Earlier full-update, pad and other branches can intercept.",
+    "types": "Homogeneous static tensors over arbitrary payloads, valid fitting windows and decoded integer starts.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.reshape-empty",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Pilot/ReshapeRules.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleReshape/empty"
+    ],
+    "theorem": "TensorRewrite.Pilot.Reshape.reshapeTensor_empty",
+    "lhs": "Reshape(x,target)",
+    "rhs": "empty literal of target shape",
+    "conditions": "Target volume is zero, and legal reshape preserves volume. No element exists to inspect; shape remains observed.",
+    "types": "Static arbitrary-rank homogeneous arrays, logical row-major coordinates and legal equal volumes.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Pilot/ReshapeRules.lean",
+      "reports/mathematical-clean-replay-v1-logs/standalone-pilot-audit.log",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.reshape-id",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Pilot/ReshapeRules.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleReshape/identity"
+    ],
+    "theorem": "TensorRewrite.Pilot.Reshape.reshapeTensor_identity",
+    "lhs": "Reshape(x,shape(x))",
+    "rhs": "x",
+    "conditions": "SameShape and earlier empty branch excluded. Result/operand extents match; layout-sensitive SameShape may be stricter.",
+    "types": "Static arbitrary-rank homogeneous arrays, logical row-major coordinates and legal equal volumes.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Pilot/ReshapeRules.lean",
+      "reports/mathematical-clean-replay-v1-logs/standalone-pilot-audit.log",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.audit137.reshape-compose",
+    "effort_group": "audit137-historical-reuse",
+    "historical_reuse": "TensorRewrite/Pilot/ReshapeRules.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleReshape/compose"
+    ],
+    "theorem": "TensorRewrite.Pilot.Reshape.reshapeTensor_compose",
+    "lhs": "Reshape(Reshape(x,middle),target)",
+    "rhs": "Reshape(x,target)",
+    "conditions": "Both actual reshapes have equal volume, any intermediate rank, previous empty/no-op branches excluded.",
+    "types": "Static arbitrary-rank homogeneous arrays, logical row-major coordinates and legal equal volumes.",
+    "overlap": "Previously proved expression/domain; no new discovery. ",
+    "evidence": [
+      "TensorRewrite/Pilot/ReshapeRules.lean",
+      "reports/mathematical-clean-replay-v1-logs/standalone-pilot-audit.log",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md"
+    ]
+  }
+]
