@@ -11,9 +11,9 @@
     "comparisons/revised-benchmark-20261117/recovered-witnesses/heldout-crosswalk.json": "f9145236877915ff65bc6811692b788a83f9fd3bb6b1567f5c676cb754ab805b",
     "comparisons/revised-benchmark-20261117/record-outcomes.json": "25f29a8d865d8c68897c1bfdee9dcf4f200db6e3e1b88af925b87804fa3111db",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59",
-    "comparisons/revised-benchmark-20261117/model-audit/evidence-sha256.json": "fc366174ea99244daee9bfc198e2c884443a370517746b32dab0979e2ed13ee6",
-    "comparisons/revised-benchmark-20261117/model-audit/catalog-sha256.json": "8e0dfd87f1ea6849bdfa7b39599e6b62cd246b323e5ecad3377333f91e55b93a",
-    "comparisons/revised-benchmark-20261117/model-audit/effort.json": "2b404435dbf694246bcec040598db266c75db66f7ec26be95eb059d7d7cd2ffd",
+    "comparisons/revised-benchmark-20261117/model-audit/evidence-sha256.json": "a1074a4d5630049b2cc6d8447d8b87c5db3883e8133877107ce6ecf7400345b7",
+    "comparisons/revised-benchmark-20261117/model-audit/catalog-sha256.json": "09181c7f3ef337ac9e2ff156abb6c2aacab798f00f3dd12eb71718e8a7fda040",
+    "comparisons/revised-benchmark-20261117/model-audit/effort.json": "9fd1fca4dbf70b807a7f2ecbbdecbfdcce6f1955a15cc8613785554593c57b37",
     "docs/experiment-plan.md": "96e0f01a0bb7f6a9289d21bf9a9567e83bc7ccb9f47a11bea1f80e820ed7b790",
     "comparisons/revised-benchmark-20261117/model-audit/structural.json": "5a1695cc41f036f386b8d26fd0557cbc99130e55b94c455f21948bdbd80877ec",
     "comparisons/revised-benchmark-20261117/model-audit/structural-review.md": "9312f21cfc1a13c9b3561b4492c70ff36e7a93d6e5725d4e31296c57c763da9e",
@@ -44,7 +44,9 @@
     "comparisons/revised-benchmark-20261117/model-audit/guard-domains.json": "3f38e40ed0db67a8ac460d6b79b00cee20f4eb630298f4d7041983eb8f6af869",
     "comparisons/revised-benchmark-20261117/model-audit/guard-domains-review.md": "ef5c0ed667f765f51496871596cb08d63d3339db6c4396ef6c52b0d3ebd64f1f",
     "comparisons/revised-benchmark-20261117/model-audit/scan-shape.json": "3a80bd7af8479d673c1d515b54e2e32751c4929864ced390fb1d8392a0c1bc47",
-    "comparisons/revised-benchmark-20261117/model-audit/scan-shape-review.md": "272c4b1dcfd57cad93eec4e72e338c1496f8c2f3121ec730366f58ebceddaf87"
+    "comparisons/revised-benchmark-20261117/model-audit/scan-shape-review.md": "272c4b1dcfd57cad93eec4e72e338c1496f8c2f3121ec730366f58ebceddaf87",
+    "comparisons/revised-benchmark-20261117/model-audit/window-convolution.json": "1e8147ebd3fedb15bc85cef336d56ec565bde9ee3467e6fb195de5e51d86ccbb",
+    "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md": "fc334eb947235fe23418e6a9b4032d7f923efd703ee4ec14d75ac52e308a49da"
   },
   "source_candidates": {
     "records": [
@@ -537,7 +539,7 @@
         "id": "HandleAdd/partial-update-lhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.add_update_left"
@@ -547,13 +549,20 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "add.partial-update-zero-bits"
+        ],
+        "mathematical_reuse_ids": [
+          "reuse.window-handleadd-partial-update-lhs"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleAdd/partial-update-rhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.add_update_right"
@@ -563,7 +572,14 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "add.partial-update-zero-bits"
+        ],
+        "mathematical_reuse_ids": [
+          "reuse.window-handleadd-partial-update-rhs"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleAdd/rhs-zero",
@@ -3129,7 +3145,7 @@
         "id": "HandleConvolution/scalar-movement-delegation",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -3137,7 +3153,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.scale-across-one-select-arm"
+        ],
+        "pre_model_audit_work_state": "no_attempt_evidence_in_inherited_ledger"
       },
       {
         "id": "HandleConvolution/to-dot-delegation",
@@ -4455,7 +4475,7 @@
         "id": "HandleDynamicSlice/zero-full-axis-indices",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes"
@@ -4465,7 +4485,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.window-handledynamicslice-zero-full-axis-indices"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleDynamicUpdateSlice/empty-update",
@@ -4503,7 +4527,7 @@
         "id": "HandleDynamicUpdateSlice/nested",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.update_nested"
@@ -4513,7 +4537,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "dynamic-update.nested-evaluator-u64"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleDynamicUpdateSlice/pad-concat-high",
@@ -4601,7 +4629,7 @@
         "id": "HandleDynamicUpdateSlice/zero-full-axis-indices",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes"
@@ -4611,7 +4639,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.window-handledynamicupdateslice-zero-full-axis-indices"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleExp/zero-broadcast",
@@ -5869,7 +5901,7 @@
         "id": "HandleMultiply/conv-reorder-delegation",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -5877,7 +5909,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.rounded-bias-scale-distribution"
+        ],
+        "pre_model_audit_work_state": "no_attempt_evidence_in_inherited_ledger"
       },
       {
         "id": "HandleMultiply/exp-product",
@@ -7611,7 +7647,7 @@
         "id": "HandleReduceWindow/singleton-add-no-pad-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
@@ -7623,13 +7659,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-add-no-pad-no-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
@@ -7641,13 +7681,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-add-pad-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
@@ -7659,13 +7703,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-add-pad-no-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_add_zero",
@@ -7677,13 +7725,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-crop-all-add",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
@@ -7695,13 +7747,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-crop-all-maximum",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
@@ -7713,13 +7769,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-crop-all-minimum",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_crop_all",
@@ -7731,13 +7791,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-maximum-no-pad-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
@@ -7749,13 +7813,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
@@ -7767,13 +7835,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-maximum-pad-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
@@ -7785,13 +7857,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-maximum-pad-no-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_max",
@@ -7803,13 +7879,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-minimum-no-pad-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
@@ -7821,13 +7901,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
@@ -7839,13 +7923,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-minimum-pad-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
@@ -7857,13 +7945,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-minimum-pad-no-crop",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ReductionWindow.unit_gather_min",
@@ -7875,7 +7967,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.singleton-signed-crop-pad"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/singleton-tuple",
@@ -8859,7 +8955,7 @@
         "id": "HandleSelect/update-false-scalar-pred",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.select_scalar_false"
@@ -8869,13 +8965,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.window-handleselect-update-false-scalar-pred"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleSelect/update-false-tensor-pred",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.select_update_false"
@@ -8885,13 +8985,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.window-handleselect-update-false-tensor-pred"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleSelect/update-true-scalar-pred",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.select_scalar_true"
@@ -8901,13 +9005,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.window-handleselect-update-true-scalar-pred"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleSelect/update-true-tensor-pred",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.DynamicUpdate.select_update_true"
@@ -8917,7 +9025,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.window-handleselect-update-true-tensor-pred"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleShuffle/rotate-canonical",
@@ -10696,7 +10808,7 @@
         "id": "ScalarMultiplyReduction/target-lhs",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -10704,7 +10816,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.scale-across-one-select-arm"
+        ],
+        "pre_model_audit_work_state": "no_attempt_evidence_in_inherited_ledger"
       },
       {
         "id": "ScalarMultiplyReduction/target-output",
@@ -10799,7 +10915,7 @@
         "id": "ScalarMultiplyReduction/target-rhs",
         "outcome": "unresolved",
         "reason": "needs_formal_statement_and_domain_partition",
-        "work_state": "no_attempt_evidence_in_inherited_ledger",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [],
         "whole_record_closed_in_inherited_ledger": false,
@@ -10807,7 +10923,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.scale-across-one-select-arm"
+        ],
+        "pre_model_audit_work_state": "no_attempt_evidence_in_inherited_ledger"
       },
       {
         "id": "SimplifyConvToDot/pointwise-layout",
@@ -11484,7 +11604,7 @@
         "id": "TryToReorderConvAddMultiply/order-lhs-lhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Convolution.convolve_bias_scale"
@@ -11494,13 +11614,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.rounded-bias-scale-distribution"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "TryToReorderConvAddMultiply/order-lhs-rhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Convolution.convolve_bias_scale"
@@ -11510,13 +11634,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.rounded-bias-scale-distribution"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "TryToReorderConvAddMultiply/order-rhs-lhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Convolution.convolve_bias_scale"
@@ -11526,13 +11654,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.rounded-bias-scale-distribution"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "TryToReorderConvAddMultiply/order-rhs-rhs",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Convolution.convolve_bias_scale"
@@ -11542,7 +11674,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "conv.rounded-bias-scale-distribution"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "TryToReorderSliceAndReshape/leading-slice",
@@ -11683,7 +11819,7 @@
       "declared_value_family_complete_full_record_partitions_open": 122
     },
     "records_with_earlier_reviewed_partition": 5,
-    "records_with_any_reviewed_partition": 301,
+    "records_with_any_reviewed_partition": 333,
     "records_with_archived_configured_native_counterexample": 11,
     "records_with_reviewed_counterexample": 16,
     "reviewed_observation_outcomes": {
@@ -11691,10 +11827,10 @@
       "exact_preservation_condition_proved": 9
     },
     "work_state_counts": {
-      "reviewed_mathematical_case_whole_source_open": 215,
-      "no_attempt_evidence_in_inherited_ledger": 75,
+      "reviewed_mathematical_case_whole_source_open": 247,
+      "no_attempt_evidence_in_inherited_ledger": 71,
       "revised_model_partition_verified_whole_record_open": 75,
-      "inherited_checked_partial_evidence": 112,
+      "inherited_checked_partial_evidence": 84,
       "reviewed_complete_record_outcome": 7,
       "earlier_independently_accepted_model_partition_whole_record_open": 4
     },
@@ -17604,14 +17740,201 @@
             "result": "unknown module prefix Mathlib",
             "package_installs": 0
           }
+        },
+        "window-convolution": {
+          "start_utc": "2026-11-18T02:03:42+00:00",
+          "through_assembly_utc": "2026-11-18T02:22:46+00:00",
+          "wall_seconds_through_assembly": 1144,
+          "packets": {
+            "singleton-window-crop": {
+              "freeze": "4cdd32a",
+              "candidate": "6911b5d",
+              "freeze_to_candidate_seconds": 129,
+              "review": "singleton-window-crop/INDEPENDENT.md",
+              "new_lean_lines": {
+                "WindowControls.lean": 22,
+                "WindowProof.lean": 61,
+                "WindowSpec.lean": 54
+              },
+              "compiler_logs": {
+                "acceptance.log": [],
+                "attempt1.log": [],
+                "final.log": [],
+                "freeze.log": []
+              }
+            },
+            "conv-select-scale": {
+              "freeze": "20fa0f5",
+              "candidate": "f58e764",
+              "freeze_to_candidate_seconds": 20,
+              "review": "conv-select-scale/REVIEW.md",
+              "new_lean_lines": {
+                "ScaleControls.lean": 12,
+                "ScaleProof.lean": 10,
+                "ScaleSpec.lean": 18
+              },
+              "compiler_logs": {
+                "author.log": [
+                  [
+                    "RadixSpec",
+                    "0.422",
+                    "0"
+                  ],
+                  [
+                    "ScaleSpec",
+                    "0.301",
+                    "0"
+                  ],
+                  [
+                    "ScaleProof",
+                    "0.310",
+                    "0"
+                  ],
+                  [
+                    "ScaleControls",
+                    "0.422",
+                    "0"
+                  ]
+                ]
+              }
+            },
+            "conv-bias-distribute": {
+              "freeze": "687df44",
+              "candidate": "d34a8c2",
+              "freeze_to_candidate_seconds": 22,
+              "review": "conv-bias-distribute/REVIEW.md",
+              "new_lean_lines": {
+                "BiasControls.lean": 9,
+                "BiasProof.lean": 10,
+                "BiasSpec.lean": 16
+              },
+              "compiler_logs": {
+                "author.log": [
+                  [
+                    "RadixSpec",
+                    "0.361",
+                    "0"
+                  ],
+                  [
+                    "BiasSpec",
+                    "0.284",
+                    "0"
+                  ],
+                  [
+                    "BiasProof",
+                    "0.353",
+                    "0"
+                  ],
+                  [
+                    "BiasControls",
+                    "0.339",
+                    "0"
+                  ]
+                ]
+              }
+            },
+            "nested-update-word": {
+              "freeze": "cc51ed3",
+              "candidate": "0e9bab6",
+              "freeze_to_candidate_seconds": 46,
+              "review": "nested-update-word/ADJUDICATION.md",
+              "new_lean_lines": {
+                "WordControls.lean": 12,
+                "WordProof.lean": 12,
+                "WordSpec.lean": 29
+              },
+              "compiler_logs": {
+                "author.log": [
+                  [
+                    "WordSpec",
+                    "0.457",
+                    "0"
+                  ],
+                  [
+                    "WordProof",
+                    "0.317",
+                    "0"
+                  ],
+                  [
+                    "WordControls",
+                    "0.346",
+                    "0"
+                  ]
+                ],
+                "failed-decide.log": [
+                  [
+                    "WordSpec",
+                    "0.438",
+                    "0"
+                  ],
+                  [
+                    "WordProof",
+                    "0.352",
+                    "1"
+                  ]
+                ],
+                "failed-reduction.log": [
+                  [
+                    "WordSpec",
+                    "0.443",
+                    "0"
+                  ],
+                  [
+                    "WordProof",
+                    "0.311",
+                    "1"
+                  ]
+                ]
+              }
+            },
+            "partial-add-zero": {
+              "freeze": "054cae9",
+              "candidate": "1cf927c",
+              "freeze_to_candidate_seconds": 16,
+              "review": "partial-add-zero/REVIEW.md",
+              "new_lean_lines": {
+                "PartialControls.lean": 11,
+                "PartialProof.lean": 28,
+                "PartialSpec.lean": 25
+              },
+              "compiler_logs": {
+                "author.log": [
+                  [
+                    "ZeroSpec",
+                    "0.352",
+                    "0"
+                  ],
+                  [
+                    "PartialSpec",
+                    "0.341",
+                    "0"
+                  ],
+                  [
+                    "PartialProof",
+                    "0.324",
+                    "0"
+                  ],
+                  [
+                    "PartialControls",
+                    "0.334",
+                    "0"
+                  ]
+                ]
+              }
+            }
+          },
+          "historical_reuse_audit_seconds": 170,
+          "cache_preflight_seconds": 163,
+          "cache_exact_endpoint_followup_seconds": null,
+          "accounting": "Overlapping elapsed intervals. Each review lists its timing, and shared review intervals must be charged once. Discovery time for historical links, exclusive active effort, token counts and money are unknown. The nested update proof reused the prior nested-slice decoding idea. Include the failed author compilations and adverse review with adjudication."
         }
       }
     },
     "acceptance": "Fixed original and replacement calculations under declared types and conditions; all admitted shapes, accesses and logical values. Model refutation requires an admitted violating witness.",
     "scope": "Reviewed source-associated cases only. The remaining mathematical denominator is open. Some cases overlap historical paper laws; never add historical and current counts to claim distinct rules.",
     "counts": {
-      "proved": 145,
-      "disproved": 32
+      "proved": 146,
+      "disproved": 36
     },
     "counts_by_catalog": {
       "structural": {
@@ -17666,9 +17989,13 @@
       },
       "scan-shape": {
         "proved": 4
+      },
+      "window-convolution": {
+        "proved": 1,
+        "disproved": 4
       }
     },
-    "source_ids_represented": 299,
+    "source_ids_represented": 331,
     "source_ids_without_catalogued_case": [
       "AssociativeReorderNestedDot/lhs-transpose",
       "AssociativeReorderNestedDot/rhs-transpose",
@@ -17681,8 +18008,6 @@
       "HandleAdd/factor-lhs-rhs",
       "HandleAdd/factor-rhs-lhs",
       "HandleAdd/factor-rhs-rhs",
-      "HandleAdd/partial-update-lhs",
-      "HandleAdd/partial-update-rhs",
       "HandleAdd/scatter-concat",
       "HandleAdd/scatter-nested",
       "HandleAllReduce/shared-handler",
@@ -17714,7 +18039,6 @@
       "HandleConvolution/empty",
       "HandleConvolution/onednn-delegation",
       "HandleConvolution/operand-swap-delegation",
-      "HandleConvolution/scalar-movement-delegation",
       "HandleConvolution/to-dot-delegation",
       "HandleConvolution/to-multiply-delegation",
       "HandleCopy/chain-bitcast",
@@ -17736,13 +18060,10 @@
       "HandleDynamicSlice/constant-indices",
       "HandleDynamicSlice/same-shape",
       "HandleDynamicSlice/scalar",
-      "HandleDynamicSlice/zero-full-axis-indices",
       "HandleDynamicUpdateSlice/empty-update",
       "HandleDynamicUpdateSlice/full-update",
-      "HandleDynamicUpdateSlice/nested",
       "HandleDynamicUpdateSlice/pad-concatenate",
       "HandleDynamicUpdateSlice/pad-tuple",
-      "HandleDynamicUpdateSlice/zero-full-axis-indices",
       "HandleExp/zero-broadcast",
       "HandleExp/zero-scalar",
       "HandleGather/reshape-pad-hoist",
@@ -17753,7 +18074,6 @@
       "HandleMultiply/abs-square",
       "HandleMultiply/broadcast-factor",
       "HandleMultiply/constant-product",
-      "HandleMultiply/conv-reorder-delegation",
       "HandleMultiply/exp-product",
       "HandleMultiply/four-factors",
       "HandleMultiply/legacy-constant-product-broadcast-scalars",
@@ -17777,21 +18097,6 @@
       "HandleReduceWindow/pad-fold-direct",
       "HandleReduceWindow/scalar-single",
       "HandleReduceWindow/scalar-tuple",
-      "HandleReduceWindow/singleton-add-no-pad-crop",
-      "HandleReduceWindow/singleton-add-no-pad-no-crop",
-      "HandleReduceWindow/singleton-add-pad-crop",
-      "HandleReduceWindow/singleton-add-pad-no-crop",
-      "HandleReduceWindow/singleton-crop-all-add",
-      "HandleReduceWindow/singleton-crop-all-maximum",
-      "HandleReduceWindow/singleton-crop-all-minimum",
-      "HandleReduceWindow/singleton-maximum-no-pad-crop",
-      "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
-      "HandleReduceWindow/singleton-maximum-pad-crop",
-      "HandleReduceWindow/singleton-maximum-pad-no-crop",
-      "HandleReduceWindow/singleton-minimum-no-pad-crop",
-      "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
-      "HandleReduceWindow/singleton-minimum-pad-crop",
-      "HandleReduceWindow/singleton-minimum-pad-no-crop",
       "HandleReduceWindow/singleton-tuple",
       "HandleReshape/bitcast-chain",
       "HandleReshape/broadcast",
@@ -17802,10 +18107,6 @@
       "HandleReshape/transpose-chain-delegation",
       "HandleReshape/transpose-hoist-delegation",
       "HandleScatter/empty-updates",
-      "HandleSelect/update-false-scalar-pred",
-      "HandleSelect/update-false-tensor-pred",
-      "HandleSelect/update-true-scalar-pred",
-      "HandleSelect/update-true-tensor-pred",
       "HandleSlice/reduce-window",
       "HandleSlice/reverse-reorder-delegation",
       "HandleSlice/stride-delegation",
@@ -17829,8 +18130,6 @@
       "RewriteBatchPlusContractingAsReduce/no-free-both",
       "RewriteBatchPlusContractingAsReduce/no-free-lhs",
       "RewriteBatchPlusContractingAsReduce/no-free-rhs",
-      "ScalarMultiplyReduction/target-lhs",
-      "ScalarMultiplyReduction/target-rhs",
       "SimplifyConvToDot/pointwise-layout",
       "SimplifyConvToMultiply/pointwise-000",
       "SimplifyConvToMultiply/pointwise-001",
@@ -17854,11 +18153,7 @@
       "TrySimplifyTautologicalCompare/Gt-Gt",
       "TrySimplifyTautologicalCompare/Gt-Lt",
       "TrySimplifyTautologicalCompare/Lt-Gt",
-      "TrySimplifyTautologicalCompare/Lt-Lt",
-      "TryToReorderConvAddMultiply/order-lhs-lhs",
-      "TryToReorderConvAddMultiply/order-lhs-rhs",
-      "TryToReorderConvAddMultiply/order-rhs-lhs",
-      "TryToReorderConvAddMultiply/order-rhs-rhs"
+      "TrySimplifyTautologicalCompare/Lt-Lt"
     ],
     "inherited_family_ids_with_catalogued_case": [
       "HandleAdd/cancel-subtract-lhs",
@@ -19150,6 +19445,216 @@
         ],
         "scope_review": "comparisons/revised-benchmark-20261117/model-audit/scan-shape-review.md",
         "catalog": "scan-shape"
+      },
+      {
+        "id": "reuse.window-handleselect-update-true-tensor-pred",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_true",
+        "types": "Arbitrary common element type; same-shaped tensor of Bool.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Slice the tensor predicate at the same starts and widths.",
+        "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+        "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
+        "source_ids": [
+          "HandleSelect/update-true-tensor-pred"
+        ],
+        "overlap": "Explicit true branch choice, tensor predicate. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handleselect-update-true-scalar-pred",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_true",
+        "types": "Arbitrary common element type; scalar Bool.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Retain the identical scalar predicate inside.",
+        "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+        "rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
+        "source_ids": [
+          "HandleSelect/update-true-scalar-pred"
+        ],
+        "overlap": "Explicit true branch choice, scalar predicate. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handleselect-update-false-tensor-pred",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_false",
+        "types": "Arbitrary common element type; same-shaped tensor of Bool.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Slice the tensor predicate at the same starts and widths.",
+        "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+        "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
+        "source_ids": [
+          "HandleSelect/update-false-tensor-pred"
+        ],
+        "overlap": "Explicit false branch choice, tensor predicate. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handleselect-update-false-scalar-pred",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_false",
+        "types": "Arbitrary common element type; scalar Bool.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Retain the identical scalar predicate inside.",
+        "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+        "rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
+        "source_ids": [
+          "HandleSelect/update-false-scalar-pred"
+        ],
+        "overlap": "Explicit false branch choice, scalar predicate. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handledynamicslice-zero-full-axis-indices",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes, via equality symmetry",
+        "types": "Arbitrary common payload; mathematical index values.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. Serve the non-async scalar-list source branch after earlier exits and require at least one syntactically nonconstant-zero full axis. Starts already literal zero retain equal values.",
+        "lhs": "DynamicSlice(x,indices)",
+        "rhs": "cloned DynamicSlice with full-axis indices zero",
+        "source_ids": [
+          "HandleDynamicSlice/zero-full-axis-indices"
+        ],
+        "overlap": "Cloned opcode retains its original result shape; operation-specific read/write law. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handledynamicupdateslice-zero-full-axis-indices",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes, via equality symmetry",
+        "types": "Arbitrary common payload; mathematical index values.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. Serve the non-async scalar-list source branch after earlier exits and require at least one syntactically nonconstant-zero full axis. Starts already literal zero retain equal values.",
+        "lhs": "DynamicUpdateSlice(base,update,indices)",
+        "rhs": "cloned DUS with full-axis indices zero",
+        "source_ids": [
+          "HandleDynamicUpdateSlice/zero-full-axis-indices"
+        ],
+        "overlap": "Cloned opcode retains its original result shape; operation-specific read/write law. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handleadd-partial-update-rhs",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_right",
+        "types": "Elements in AddZeroClass, including exact Int.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. Add of x and DUS of a zero base; use literal broadcast zero and unchanged decoded starts.",
+        "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at rhs",
+        "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+        "source_ids": [
+          "HandleAdd/partial-update-rhs"
+        ],
+        "overlap": "Matches actual emitted sliced base plus update; paper dyupslice/rule01 swaps that inner add. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "reuse.window-handleadd-partial-update-lhs",
+        "effort_group": "window-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+        "outcome": "proved",
+        "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_left, (TensorRewrite.PaperComparison.Dynamic.add_into_update).symm, TensorRewrite.Theory.DynamicUpdate.add_update_right (equality transitivity)",
+        "types": "CommRing, including exact Int.",
+        "conditions": "Same-rank static outer/inner extents, each inner extent \u2264 corresponding outer extent, independently decoded integer starts clamped to [0,outer\u2212inner] per axis; empty extents and scalar shapes permitted mathematically. Outer addition has the zero-base DUS on the left; emitted addition has sliced base on the left.",
+        "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at lhs",
+        "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+        "source_ids": [
+          "HandleAdd/partial-update-lhs"
+        ],
+        "overlap": "Three previously checked equality endpoints compose over the same window. The first theorem alone would preserve the wrong inner operand order. Historical reuse; no new mathematical identity.",
+        "evidence": [
+          "TensorRewrite/Theory/DynamicUpdate.lean",
+          "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+          "TensorRewrite/Theory/DynamicUpdateProof.lean",
+          "reports/dynamic-update.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/tensorright-v1/Dynamic.lean",
+          "comparisons/tensorright-v1/dynamic-check.log",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
       }
     ],
     "cases": [
@@ -23130,6 +23635,177 @@
         ],
         "scope_review": "comparisons/revised-benchmark-20261117/model-audit/scan-shape-review.md",
         "catalog": "scan-shape"
+      },
+      {
+        "id": "reduce-window.singleton-signed-crop-pad",
+        "effort_group": "singleton-window-crop",
+        "source_ids": [
+          "HandleReduceWindow/singleton-crop-all-add",
+          "HandleReduceWindow/singleton-add-no-pad-no-crop",
+          "HandleReduceWindow/singleton-add-no-pad-crop",
+          "HandleReduceWindow/singleton-add-pad-no-crop",
+          "HandleReduceWindow/singleton-add-pad-crop",
+          "HandleReduceWindow/singleton-crop-all-minimum",
+          "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+          "HandleReduceWindow/singleton-minimum-no-pad-crop",
+          "HandleReduceWindow/singleton-minimum-pad-no-crop",
+          "HandleReduceWindow/singleton-minimum-pad-crop",
+          "HandleReduceWindow/singleton-crop-all-maximum",
+          "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+          "HandleReduceWindow/singleton-maximum-no-pad-crop",
+          "HandleReduceWindow/singleton-maximum-pad-no-crop",
+          "HandleReduceWindow/singleton-maximum-pad-crop"
+        ],
+        "lhs": "Unit-window reduction at each valid output point, evaluating the selected add/min/max with its actual initializer and translated input sample, or returning the seed when no sample exists.",
+        "rhs": "When the signed whole-axis crop guard fires, broadcast the seed; otherwise pointwise-op the operand and seed, slice at the computed static endpoints, and pad with the seed.",
+        "conditions": "Static nonempty single-input and single-output arrays, positive rank and positive output extents; no reversal, all sizes, stride and dilations one. Signed host integers assumed representable for source interpretation.",
+        "types": "Exact integers. Any seed for the evaluator\u2019s skip-outside calculation; documented identity-seed execution subdomain distinguished.",
+        "theorem": "RevisedBenchmark.SingletonWindow.verified",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowSpec.lean",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowProof.lean",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowControls.lean",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/FREEZE.md",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/acceptance.log",
+          "lean-toolchain",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+          "sources/xla/xla/service/shape_inference.cc",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/AUTHOR.md",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/INDEPENDENT.md",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/attempt1.log",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/final.log",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/freeze.log",
+          "comparisons/revised-benchmark-20261117/singleton-window-crop/replay.py"
+        ],
+        "overlap": "One parameterized case for three reducers, four optional-pad/crop combinations and early crop-all. Historical unit_gather proves affine reads and exact fixed-point reductions; existing signed Pad reverses the Slice/Pad order. Distinct work is proving actual interval validity, output shape, whole-axis exception and coordinates.",
+        "outcome": "proved",
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "conv.scale-across-one-select-arm",
+        "effort_group": "conv-select-scale",
+        "source_ids": [
+          "ScalarMultiplyReduction/target-lhs",
+          "ScalarMultiplyReduction/target-rhs",
+          "HandleConvolution/scalar-movement-delegation"
+        ],
+        "theorem": "RevisedBenchmark.ConvSelectScale.refuted",
+        "lhs": "Convolve a scalar and Select(p,a*c,b).",
+        "rhs": "Strip c from the true arm and scale the other convolution operand by c.",
+        "conditions": "One batch or one output channel, n>1 on the other axis, one tap/input channel, option enabled; all entries below 16. Tests both orientations.",
+        "types": "Nonnegative exact-integer fragment of F32, RNE.",
+        "overlap": "Select has one unscaled arm. Distinct from factoring a common scale from the entire operand.",
+        "outcome": "disproved",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/conv-select-scale/ScaleSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/ScaleProof.lean",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/ScaleControls.lean",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/FREEZE.md",
+          "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/author.log",
+          "comparisons/revised-benchmark-20261117/conv-select-scale/replay.py",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "conv.rounded-bias-scale-distribution",
+        "effort_group": "conv-bias-distribute",
+        "source_ids": [
+          "TryToReorderConvAddMultiply/order-lhs-lhs",
+          "TryToReorderConvAddMultiply/order-lhs-rhs",
+          "TryToReorderConvAddMultiply/order-rhs-lhs",
+          "TryToReorderConvAddMultiply/order-rhs-rhs",
+          "HandleMultiply/conv-reorder-delegation"
+        ],
+        "theorem": "RevisedBenchmark.ConvBias.refuted",
+        "lhs": "Add bias to one-tap convolution, then multiply by per-feature scale.",
+        "rhs": "Pre-scale the constant filter and bias, convolve and add.",
+        "conditions": "One tap, input channel, batch and group; independent output features. The frozen bounds avoid overflow or negative values. Bias and convolution are single-use; transform option enabled.",
+        "types": "Nonnegative integer-valued binary32 with nearest-even rounding at every operation.",
+        "overlap": "Four argument orders and caller share one case. Exact semiring distribution remains valid.",
+        "outcome": "disproved",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/BiasSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/BiasProof.lean",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/BiasControls.lean",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/FREEZE.md",
+          "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/author.log",
+          "comparisons/revised-benchmark-20261117/conv-bias-distribute/replay.py",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "add.partial-update-zero-bits",
+        "effort_group": "partial-add-zero",
+        "source_ids": [
+          "HandleAdd/partial-update-lhs",
+          "HandleAdd/partial-update-rhs"
+        ],
+        "theorem": "RevisedBenchmark.PartialAdd.refuted; RevisedBenchmark.PartialAdd.agree_iff",
+        "lhs": "Add the base array and a patch installed into a +0 background.",
+        "rhs": "Slice the base, add the patch within that window and reinstall the sum in the untouched base.",
+        "conditions": "Both operand orders, arbitrary rank-one extents and signed clamped start, 0 \u2264 update length \u2264 base length. Equality iff all untouched base entries are +0.",
+        "types": "Strict binary32 zero encodings in round-to-nearest-even, bitwise observation.",
+        "overlap": "Exact-algebra zero laws identify the zero encodings; iff is restricted to the two zero encodings.",
+        "outcome": "disproved",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/partial-add-zero/PartialSpec.lean",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/FREEZE.md",
+          "comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroSpec.lean",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/PartialControls.lean",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/PartialProof.lean",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/author.log",
+          "comparisons/revised-benchmark-20261117/partial-add-zero/replay.py"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
+      },
+      {
+        "id": "dynamic-update.nested-evaluator-u64",
+        "effort_group": "nested-update-word",
+        "source_ids": [
+          "HandleDynamicUpdateSlice/nested"
+        ],
+        "theorem": "RevisedBenchmark.NestedUpdateWord.refuted",
+        "lhs": "Write a patch inside a slice of the original base, then reinstall that intermediate at the original outer start.",
+        "rhs": "Write the patch directly at the word sum of individually unsigned-clamped starts.",
+        "conditions": "Static rank-one widths 10\u21926\u21922; inner start 1, outer U64 sign bit. Two\u2019s complement reinterpretation for evaluator signed starts in both slice and update. Each typed Clamp bound is 4, final bound is 8.",
+        "types": "Nat array payload (witness uses small integers), U64 starts.",
+        "overlap": "Known nested read-only witness supplied decoding insight; this separate rewrite compares whole output arrays of nested writes. No native outcome is inferred.",
+        "outcome": "disproved",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/nested-update-word/WordSpec.lean",
+          "comparisons/revised-benchmark-20261117/nested-update-word/FREEZE.md",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+          "TensorRewrite/Pilot/NestedUnsigned64.lean",
+          "comparisons/revised-benchmark-20261117/nested-update-word/ADJUDICATION.md",
+          "comparisons/revised-benchmark-20261117/nested-update-word/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/nested-update-word/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/nested-update-word/WordControls.lean",
+          "comparisons/revised-benchmark-20261117/nested-update-word/WordProof.lean",
+          "comparisons/revised-benchmark-20261117/nested-update-word/author.log",
+          "comparisons/revised-benchmark-20261117/nested-update-word/failed-decide.log",
+          "comparisons/revised-benchmark-20261117/nested-update-word/failed-reduction.log",
+          "comparisons/revised-benchmark-20261117/nested-update-word/replay.py"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/window-convolution-review.md",
+        "catalog": "window-convolution"
       }
     ]
   }

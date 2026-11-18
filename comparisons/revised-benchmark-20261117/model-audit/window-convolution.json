@@ -1,0 +1,357 @@
+[
+  {
+    "id": "reduce-window.singleton-signed-crop-pad",
+    "effort_group": "singleton-window-crop",
+    "source_ids": [
+      "HandleReduceWindow/singleton-crop-all-add",
+      "HandleReduceWindow/singleton-add-no-pad-no-crop",
+      "HandleReduceWindow/singleton-add-no-pad-crop",
+      "HandleReduceWindow/singleton-add-pad-no-crop",
+      "HandleReduceWindow/singleton-add-pad-crop",
+      "HandleReduceWindow/singleton-crop-all-minimum",
+      "HandleReduceWindow/singleton-minimum-no-pad-no-crop",
+      "HandleReduceWindow/singleton-minimum-no-pad-crop",
+      "HandleReduceWindow/singleton-minimum-pad-no-crop",
+      "HandleReduceWindow/singleton-minimum-pad-crop",
+      "HandleReduceWindow/singleton-crop-all-maximum",
+      "HandleReduceWindow/singleton-maximum-no-pad-no-crop",
+      "HandleReduceWindow/singleton-maximum-no-pad-crop",
+      "HandleReduceWindow/singleton-maximum-pad-no-crop",
+      "HandleReduceWindow/singleton-maximum-pad-crop"
+    ],
+    "lhs": "Unit-window reduction at each valid output point, evaluating the selected add/min/max with its actual initializer and translated input sample, or returning the seed when no sample exists.",
+    "rhs": "When the signed whole-axis crop guard fires, broadcast the seed; otherwise pointwise-op the operand and seed, slice at the computed static endpoints, and pad with the seed.",
+    "conditions": "Static nonempty single-input and single-output arrays, positive rank and positive output extents; no reversal, all sizes, stride and dilations one. Signed host integers assumed representable for source interpretation.",
+    "types": "Exact integers. Any seed for the evaluator’s skip-outside calculation; documented identity-seed execution subdomain distinguished.",
+    "theorem": "RevisedBenchmark.SingletonWindow.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowSpec.lean",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowProof.lean",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/WindowControls.lean",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/acceptance.log",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/INDEPENDENT.md",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/attempt1.log",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/final.log",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/freeze.log",
+      "comparisons/revised-benchmark-20261117/singleton-window-crop/replay.py"
+    ],
+    "overlap": "One parameterized case for three reducers, four optional-pad/crop combinations and early crop-all. Historical unit_gather proves affine reads and exact fixed-point reductions; existing signed Pad reverses the Slice/Pad order. Distinct work is proving actual interval validity, output shape, whole-axis exception and coordinates.",
+    "outcome": "proved"
+  },
+  {
+    "id": "conv.scale-across-one-select-arm",
+    "effort_group": "conv-select-scale",
+    "source_ids": [
+      "ScalarMultiplyReduction/target-lhs",
+      "ScalarMultiplyReduction/target-rhs",
+      "HandleConvolution/scalar-movement-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvSelectScale.refuted",
+    "lhs": "Convolve a scalar and Select(p,a*c,b).",
+    "rhs": "Strip c from the true arm and scale the other convolution operand by c.",
+    "conditions": "One batch or one output channel, n>1 on the other axis, one tap/input channel, option enabled; all entries below 16. Tests both orientations.",
+    "types": "Nonnegative exact-integer fragment of F32, RNE.",
+    "overlap": "Select has one unscaled arm. Distinct from factoring a common scale from the entire operand.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-select-scale/ScaleSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/ScaleProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/ScaleControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/author.log",
+      "comparisons/revised-benchmark-20261117/conv-select-scale/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "conv.rounded-bias-scale-distribution",
+    "effort_group": "conv-bias-distribute",
+    "source_ids": [
+      "TryToReorderConvAddMultiply/order-lhs-lhs",
+      "TryToReorderConvAddMultiply/order-lhs-rhs",
+      "TryToReorderConvAddMultiply/order-rhs-lhs",
+      "TryToReorderConvAddMultiply/order-rhs-rhs",
+      "HandleMultiply/conv-reorder-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvBias.refuted",
+    "lhs": "Add bias to one-tap convolution, then multiply by per-feature scale.",
+    "rhs": "Pre-scale the constant filter and bias, convolve and add.",
+    "conditions": "One tap, input channel, batch and group; independent output features. The frozen bounds avoid overflow or negative values. Bias and convolution are single-use; transform option enabled.",
+    "types": "Nonnegative integer-valued binary32 with nearest-even rounding at every operation.",
+    "overlap": "Four argument orders and caller share one case. Exact semiring distribution remains valid.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/BiasSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/BiasProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/BiasControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/author.log",
+      "comparisons/revised-benchmark-20261117/conv-bias-distribute/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "add.partial-update-zero-bits",
+    "effort_group": "partial-add-zero",
+    "source_ids": [
+      "HandleAdd/partial-update-lhs",
+      "HandleAdd/partial-update-rhs"
+    ],
+    "theorem": "RevisedBenchmark.PartialAdd.refuted; RevisedBenchmark.PartialAdd.agree_iff",
+    "lhs": "Add the base array and a patch installed into a +0 background.",
+    "rhs": "Slice the base, add the patch within that window and reinstall the sum in the untouched base.",
+    "conditions": "Both operand orders, arbitrary rank-one extents and signed clamped start, 0 ≤ update length ≤ base length. Equality iff all untouched base entries are +0.",
+    "types": "Strict binary32 zero encodings in round-to-nearest-even, bitwise observation.",
+    "overlap": "Exact-algebra zero laws identify the zero encodings; iff is restricted to the two zero encodings.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/partial-add-zero/PartialSpec.lean",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/PartialControls.lean",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/PartialProof.lean",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/author.log",
+      "comparisons/revised-benchmark-20261117/partial-add-zero/replay.py"
+    ]
+  },
+  {
+    "id": "dynamic-update.nested-evaluator-u64",
+    "effort_group": "nested-update-word",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/nested"
+    ],
+    "theorem": "RevisedBenchmark.NestedUpdateWord.refuted",
+    "lhs": "Write a patch inside a slice of the original base, then reinstall that intermediate at the original outer start.",
+    "rhs": "Write the patch directly at the word sum of individually unsigned-clamped starts.",
+    "conditions": "Static rank-one widths 10→6→2; inner start 1, outer U64 sign bit. Two’s complement reinterpretation for evaluator signed starts in both slice and update. Each typed Clamp bound is 4, final bound is 8.",
+    "types": "Nat array payload (witness uses small integers), U64 starts.",
+    "overlap": "Known nested read-only witness supplied decoding insight; this separate rewrite compares whole output arrays of nested writes. No native outcome is inferred.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/nested-update-word/WordSpec.lean",
+      "comparisons/revised-benchmark-20261117/nested-update-word/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "TensorRewrite/Pilot/NestedUnsigned64.lean",
+      "comparisons/revised-benchmark-20261117/nested-update-word/ADJUDICATION.md",
+      "comparisons/revised-benchmark-20261117/nested-update-word/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/nested-update-word/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/nested-update-word/WordControls.lean",
+      "comparisons/revised-benchmark-20261117/nested-update-word/WordProof.lean",
+      "comparisons/revised-benchmark-20261117/nested-update-word/author.log",
+      "comparisons/revised-benchmark-20261117/nested-update-word/failed-decide.log",
+      "comparisons/revised-benchmark-20261117/nested-update-word/failed-reduction.log",
+      "comparisons/revised-benchmark-20261117/nested-update-word/replay.py"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-true-tensor-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_true",
+    "types": "Arbitrary common element type; same-shaped tensor of Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Slice the tensor predicate at the same starts and widths.",
+    "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+    "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),u,DynamicSlice(xs,i,update_shape)),i)",
+    "source_ids": [
+      "HandleSelect/update-true-tensor-pred"
+    ],
+    "overlap": "Explicit true branch choice, tensor predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-true-scalar-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_true",
+    "types": "Arbitrary common element type; scalar Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Retain the identical scalar predicate inside.",
+    "lhs": "Select(p,DynamicUpdateSlice(xs,u,i),xs)",
+    "rhs": "DynamicUpdateSlice(xs,Select(p,u,DynamicSlice(xs,i,update_shape)),i)",
+    "source_ids": [
+      "HandleSelect/update-true-scalar-pred"
+    ],
+    "overlap": "Explicit true branch choice, scalar predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-false-tensor-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_update_false",
+    "types": "Arbitrary common element type; same-shaped tensor of Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Slice the tensor predicate at the same starts and widths.",
+    "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+    "rhs": "DynamicUpdateSlice(xs,Select(DynamicSlice(p,i,update_shape),DynamicSlice(xs,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleSelect/update-false-tensor-pred"
+    ],
+    "overlap": "Explicit false branch choice, tensor predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handleselect-update-false-scalar-pred",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.select_scalar_false",
+    "types": "Arbitrary common element type; scalar Bool.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. One-use DUS, same base reference on untouched branch. Retain the identical scalar predicate inside.",
+    "lhs": "Select(p,xs,DynamicUpdateSlice(xs,u,i))",
+    "rhs": "DynamicUpdateSlice(xs,Select(p,DynamicSlice(xs,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleSelect/update-false-scalar-pred"
+    ],
+    "overlap": "Explicit false branch choice, scalar predicate. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handledynamicslice-zero-full-axis-indices",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.slice_zero_full_axes, via equality symmetry",
+    "types": "Arbitrary common payload; mathematical index values.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Serve the non-async scalar-list source branch after earlier exits and require at least one syntactically nonconstant-zero full axis. Starts already literal zero retain equal values.",
+    "lhs": "DynamicSlice(x,indices)",
+    "rhs": "cloned DynamicSlice with full-axis indices zero",
+    "source_ids": [
+      "HandleDynamicSlice/zero-full-axis-indices"
+    ],
+    "overlap": "Cloned opcode retains its original result shape; operation-specific read/write law. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handledynamicupdateslice-zero-full-axis-indices",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.update_zero_full_axes, via equality symmetry",
+    "types": "Arbitrary common payload; mathematical index values.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Serve the non-async scalar-list source branch after earlier exits and require at least one syntactically nonconstant-zero full axis. Starts already literal zero retain equal values.",
+    "lhs": "DynamicUpdateSlice(base,update,indices)",
+    "rhs": "cloned DUS with full-axis indices zero",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/zero-full-axis-indices"
+    ],
+    "overlap": "Cloned opcode retains its original result shape; operation-specific read/write law. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handleadd-partial-update-rhs",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_right",
+    "types": "Elements in AddZeroClass, including exact Int.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Add of x and DUS of a zero base; use literal broadcast zero and unchanged decoded starts.",
+    "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at rhs",
+    "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleAdd/partial-update-rhs"
+    ],
+    "overlap": "Matches actual emitted sliced base plus update; paper dyupslice/rule01 swaps that inner add. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.window-handleadd-partial-update-lhs",
+    "effort_group": "window-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/DynamicUpdateProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.DynamicUpdate.add_update_left, (TensorRewrite.PaperComparison.Dynamic.add_into_update).symm, TensorRewrite.Theory.DynamicUpdate.add_update_right (equality transitivity)",
+    "types": "CommRing, including exact Int.",
+    "conditions": "Same-rank static outer/inner extents, each inner extent ≤ corresponding outer extent, independently decoded integer starts clamped to [0,outer−inner] per axis; empty extents and scalar shapes permitted mathematically. Outer addition has the zero-base DUS on the left; emitted addition has sliced base on the left.",
+    "lhs": "Add(x,DynamicUpdateSlice(Broadcast(0),u,i)) with update at lhs",
+    "rhs": "DynamicUpdateSlice(x,Add(DynamicSlice(x,i,update_shape),u),i)",
+    "source_ids": [
+      "HandleAdd/partial-update-lhs"
+    ],
+    "overlap": "Three previously checked equality endpoints compose over the same window. The first theorem alone would preserve the wrong inner operand order. Historical reuse; no new mathematical identity.",
+    "evidence": [
+      "TensorRewrite/Theory/DynamicUpdate.lean",
+      "TensorRewrite/Theory/DynamicUpdateLemmas.lean",
+      "TensorRewrite/Theory/DynamicUpdateProof.lean",
+      "reports/dynamic-update.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/tensorright-v1/Dynamic.lean",
+      "comparisons/tensorright-v1/dynamic-check.log",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/window-reuse-rows.json"
+    ]
+  }
+]
