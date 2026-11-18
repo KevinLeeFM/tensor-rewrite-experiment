@@ -1,0 +1,129 @@
+[
+  {
+    "id": "reduce-window.signed-prefix-conversion-order",
+    "effort_group": "prefix-signed-pipeline",
+    "source_ids": [
+      "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+      "HandleReduceWindow/cumsum-i32-reuse-literal",
+      "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+      "HandleReduceWindow/cumsum-i64-reuse-literal"
+    ],
+    "lhs": "Ordered integral sum of the uniform input prefix through position r.",
+    "rhs": "Recover the scalar by replaying typed conversions in dataflow order, then multiply it by the stored signed count r+1.",
+    "types": "Signed S32 and S64 outputs; intermediate word conversions use the frozen integral types.",
+    "conditions": "Static rank-one prefix window with full kernel n>1, low pad n−1, zero initializer, ordinary addition, unit stride and dilations. Scalar broadcast/conversion chains and value-preserving views as specified in the review.",
+    "overlap": "Earlier prefix arithmetic covers modular repeated sums. This case checks source-ordered typed literal recovery and the matching-width signed count. The U64 widening counterexample remains separate.",
+    "theorem": "RevisedBenchmark.PrefixPipeline.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineControls.lean",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineProof.lean",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineSpec.lean",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/author.log",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-control-carrier.log",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-control-carrier2.log",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-symbolic-width.log",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-zero-normalization.log",
+      "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldProof.lean"
+    ],
+    "outcome": "proved"
+  },
+  {
+    "id": "reuse.inherited137b.mul-sqrt-square-real",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleMultiply/sqrt-square"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_sqrt_square_iff (forward direction)",
+    "lhs": "sqrt(x) * sqrt(x)",
+    "rhs": "x",
+    "conditions": "Exact-real pointwise model with 0 ≤ x at every tensor index. The source matcher additionally requires the two sqrt operands to be the same HLO node; IsNonNegative is the source guard. This row credits only this real nonnegative mathematical partition.",
+    "types": "Exact real values and Real.sqrt; no binary floating rounding, NaN, infinity, signed-zero or fast-math implementation claim.",
+    "overlap": "Historical theorem reuse only; the whole source record remains unresolved. Complex input is not admitted by this HandleMultiply rule: IsNonNegative rejects complex operands.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.inherited137b.mul-rsqrt-square-real",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleMultiply/rsqrt-square"
+    ],
+    "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff (forward direction)",
+    "lhs": "rsqrt(x) * rsqrt(x)",
+    "rhs": "1 / x",
+    "conditions": "Exact-real pointwise model with 0 ≤ x at every tensor index. The theorem is an iff, including the totalized zero case. Source matcher requires a repeated identical rsqrt operand and source IsNonNegative guard; row credits this real partition only.",
+    "types": "Exact real values, Real.sqrt and totalized field reciprocal; no machine division or IEEE claim.",
+    "overlap": "Historical theorem reuse only; whole source record remains unresolved. The inherited complex_rsqrt_square pointer is not source-applicable because IsNonNegative rejects complex operands.",
+    "evidence": [
+      "TensorRewrite/Theory/NumericalReal.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.inherited137b.sqrt-square-real",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ScalarDomains.lean",
+    "outcome": "proved",
+    "source_ids": [
+      "HandleSqrt/square-real"
+    ],
+    "theorem": "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor",
+    "lhs": "sqrt(x * x)",
+    "rhs": "abs(x)",
+    "conditions": "Exact-real pointwise model; no sign premise is needed. Source branch requires fast-math and a repeated identical multiply operand.",
+    "types": "Exact real values, Real.sqrt and absolute value; not a rounded floating-point equivalence.",
+    "overlap": "Historical theorem reuse only; establishes the complete real exact-value partition, not implementation correspondence or whole-record closure.",
+    "evidence": [
+      "TensorRewrite/Theory/ScalarDomains.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.inherited137b.sqrt-square-complex",
+    "effort_group": "inherited137b-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ScalarDomainCounterexamples.lean",
+    "outcome": "disproved",
+    "source_ids": [
+      "HandleSqrt/square-complex"
+    ],
+    "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff and complex_sqrt_square_counterexample",
+    "lhs": "Complex.sqrt(z * z)",
+    "rhs": "(‖z‖ : ℂ) (the source computes abs then converts to the complex output type)",
+    "conditions": "Exact principal-complex model. The equality holds exactly when every z is real; the source fast-math matcher has no real-axis guard. At z = Complex.I the unguarded rewrite is false.",
+    "types": "Complex.sqrt, complex norm embedded into ℂ, and exact conversion; no rounded complex implementation claim.",
+    "overlap": "The iff theorem provides the exact real-axis subset; the explicit imaginary-unit counterexample disproves the source's unguarded complex model. This is not a native execution claim and does not close the source record across floating types.",
+    "evidence": [
+      "TensorRewrite/Theory/ScalarDomains.lean",
+      "TensorRewrite/Theory/ScalarDomainCounterexamples.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+      "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+    ]
+  }
+]

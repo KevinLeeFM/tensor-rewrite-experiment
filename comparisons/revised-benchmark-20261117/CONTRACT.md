@@ -330,3 +330,7 @@ Three independently reviewed refutations bring the mathematical register to **19
 The mathematical register contains **198 cases, 152 proved and 46 refuted**. For two U8 operands with U32 output, each tap product fits. Exactly 66,052 repetitions of 255 × 255 produce 4,295,031,300; the modeled convolution clamps to 4,294,967,295, while the emitted U32 reduction gives 64,004. The length-66,051 control still agrees. This symbolic fold shares one witness across six cast/reversal labels. A two-tap F16 dot also distinguishes rounding at the product from rounding only at the final sum. The exact-integer merged reduction is proved at identity seed; a separate formula accounts for repeated nonidentity initializers. [Independent reviews](model-audit/mixed-tap-reductions-review.md)
 
 Four caller labels now carry explicit, receipt-checked links to eight already catalogued outcomes. Counting each mathematical case once, 396 of 488 source labels have case or reuse links. The two inventories retain their existing interpretation. [Caller audit](model-audit/delegation137-alias-review.md)
+
+### Signed prefix and inherited square-root evidence
+
+The signed S32/S64 prefix-window calculation passed independent review at 4cc1fa4. Four separately audited square-root links at 02332d8 reuse prior exact-domain judgments, including a complex counterexample. The register now contains 199 reviewed mathematical cases and evidence links for 403 of 488 candidate records. The original 118 artifact outcomes and discovery-time limitations remain separately recorded.

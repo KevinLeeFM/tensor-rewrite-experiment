@@ -11,9 +11,9 @@
     "comparisons/revised-benchmark-20261117/recovered-witnesses/heldout-crosswalk.json": "f9145236877915ff65bc6811692b788a83f9fd3bb6b1567f5c676cb754ab805b",
     "comparisons/revised-benchmark-20261117/record-outcomes.json": "25f29a8d865d8c68897c1bfdee9dcf4f200db6e3e1b88af925b87804fa3111db",
     "sources/manifest.json": "cb7d4e6d92009905dfc1065a15a9ef556f6061f8a8d3acb849edbc088345eb59",
-    "comparisons/revised-benchmark-20261117/model-audit/evidence-sha256.json": "3dbf0c917e10da0070c647b0a10571c969f8188c4d21d6594385417bef29d519",
-    "comparisons/revised-benchmark-20261117/model-audit/catalog-sha256.json": "0b14fb8a4336dc6b67217f449d5a2069f0e94bf534983d531e2f999de1395a73",
-    "comparisons/revised-benchmark-20261117/model-audit/effort.json": "730cbcafa1e7c0f832aa7a84f70c968b9964b380708079685fc032d6676c4850",
+    "comparisons/revised-benchmark-20261117/model-audit/evidence-sha256.json": "f7cc51c457718fb5d2cbc2512adc9df3d98da99c90a862f91d25a4affa143dfc",
+    "comparisons/revised-benchmark-20261117/model-audit/catalog-sha256.json": "7e144f02e21f8d5f24c1c48e42739a9dd32220d34c7f6a2b997ea61449b2a263",
+    "comparisons/revised-benchmark-20261117/model-audit/effort.json": "50fd01aa2e562fa902a4ff0245eec05a83ee00ac3b2a889e0e642641a26c17e7",
     "docs/experiment-plan.md": "96e0f01a0bb7f6a9289d21bf9a9567e83bc7ccb9f47a11bea1f80e820ed7b790",
     "comparisons/revised-benchmark-20261117/model-audit/structural.json": "5a1695cc41f036f386b8d26fd0557cbc99130e55b94c455f21948bdbd80877ec",
     "comparisons/revised-benchmark-20261117/model-audit/structural-review.md": "9312f21cfc1a13c9b3561b4492c70ff36e7a93d6e5725d4e31296c57c763da9e",
@@ -59,6 +59,8 @@
     "comparisons/revised-benchmark-20261117/model-audit/layout-scatter-windows-review.md": "36477629269d3b4a4369f6d9d9ace60f474ca629bfb78b12f06f659795ed8b91",
     "comparisons/revised-benchmark-20261117/model-audit/mixed-tap-reductions.json": "0231b38b1383e54d56e54417a2f96f710c1ef9b17f737eb4dddd570ce238c7ee",
     "comparisons/revised-benchmark-20261117/model-audit/mixed-tap-reductions-review.md": "d659d9958b9db797ac71f362e00b061234334c4bf51f61473c18ec6f73dcedbf",
+    "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse.json": "f448bf36004c78936bbc0a06fb01b34235e24aeb243f763379aa50abaa0a76b7",
+    "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse-review.md": "7c1d0e238e868249ab41555d114deb4575c600dbfa62a225b638e541c2f99c72",
     "comparisons/revised-benchmark-20261117/model-audit/delegation137-alias-rows.json": "c5401d3102252b1ebaf62f56cab30637cde4780b77afe4299223ac2a05450e50",
     "comparisons/revised-benchmark-20261117/model-audit/delegation137-alias-review.md": "10ada2a240b3087f9612b9e8ec07e083dfc74c965522d2610852169890f541ee"
   },
@@ -6357,7 +6359,7 @@
         "id": "HandleMultiply/rsqrt-square",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Numerical.complex_rsqrt_square",
@@ -6368,13 +6370,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.inherited137b.mul-rsqrt-square-real"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleMultiply/sqrt-square",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.Numerical.complex_sqrt_square",
@@ -6385,7 +6391,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.inherited137b.mul-sqrt-square-real"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleNegate/involution",
@@ -7558,7 +7568,7 @@
         "id": "HandleReduceWindow/cumsum-i32-canonicalize-literal",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.PrefixWindow.i32_prefix_product",
@@ -7569,7 +7579,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.signed-prefix-conversion-order"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/cumsum-i32-reuse-literal",
@@ -7588,7 +7602,8 @@
           "reason": "not measured per record in inherited ledger"
         },
         "mathematical_case_ids": [
-          "window.prefix-wide-count"
+          "window.prefix-wide-count",
+          "reduce-window.signed-prefix-conversion-order"
         ],
         "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
@@ -7596,7 +7611,7 @@
         "id": "HandleReduceWindow/cumsum-i64-canonicalize-literal",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.PrefixWindow.i64_prefix_product",
@@ -7607,13 +7622,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.signed-prefix-conversion-order"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/cumsum-i64-reuse-literal",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.PrefixWindow.i64_prefix_product",
@@ -7624,7 +7643,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_case_ids": [
+          "reduce-window.signed-prefix-conversion-order"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleReduceWindow/empty-single",
@@ -9945,7 +9968,7 @@
         "id": "HandleSqrt/square-complex",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_counterexample",
@@ -9956,13 +9979,17 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.inherited137b.sqrt-square-complex"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleSqrt/square-real",
         "outcome": "unresolved",
         "reason": "partial_model_evidence_requires_partition_review",
-        "work_state": "inherited_checked_partial_evidence",
+        "work_state": "reviewed_mathematical_case_whole_source_open",
         "scope": "complete retained source record; formulation/domain coverage not yet established",
         "existing_evidence": [
           "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor"
@@ -9972,7 +9999,11 @@
           "active_seconds": null,
           "elapsed_seconds": null,
           "reason": "not measured per record in inherited ledger"
-        }
+        },
+        "mathematical_reuse_ids": [
+          "reuse.inherited137b.sqrt-square-real"
+        ],
+        "pre_model_audit_work_state": "inherited_checked_partial_evidence"
       },
       {
         "id": "HandleSubtract/add-sub-self-left",
@@ -12100,7 +12131,7 @@
       "declared_value_family_complete_full_record_partitions_open": 122
     },
     "records_with_earlier_reviewed_partition": 5,
-    "records_with_any_reviewed_partition": 398,
+    "records_with_any_reviewed_partition": 405,
     "records_with_archived_configured_native_counterexample": 11,
     "records_with_reviewed_counterexample": 16,
     "reviewed_observation_outcomes": {
@@ -12108,11 +12139,11 @@
       "exact_preservation_condition_proved": 9
     },
     "work_state_counts": {
-      "reviewed_mathematical_case_whole_source_open": 312,
+      "reviewed_mathematical_case_whole_source_open": 319,
       "no_attempt_evidence_in_inherited_ledger": 49,
       "revised_model_partition_verified_whole_record_open": 75,
       "reviewed_complete_record_outcome": 7,
-      "inherited_checked_partial_evidence": 41,
+      "inherited_checked_partial_evidence": 34,
       "earlier_independently_accepted_model_partition_whole_record_open": 4
     },
     "records_with_reviewed_record_observation": 75
@@ -19157,13 +19188,161 @@
             }
           },
           "accounting": "Overlapping participants and compiler intervals. Review reports give their own inspected files, measured elapsed time and replay. Author commit windows exclude earlier inspection and may include packaging. Failed or repeated compiler calls are retained. Tokens, exclusive reasoning time and historical discovery costs are unavailable."
+        },
+        "signed-prefix-reuse": {
+          "turn_start": "2026-11-18T02:54:15+00:00",
+          "through_register_utc": "2026-11-18T03:32:00+00:00",
+          "wall_seconds_since_first_check": 2265,
+          "packets": {
+            "prefix-signed-pipeline": {
+              "freeze": "53742fe",
+              "candidate": "a2924a4",
+              "freeze_time": "2026-11-18T03:12:57Z",
+              "candidate_time": "2026-11-18T03:14:43Z",
+              "review": "prefix-signed-pipeline/REVIEW.md",
+              "lines": {
+                "PipelineProof.lean": 22,
+                "PipelineControls.lean": 9,
+                "PipelineSpec.lean": 36
+              },
+              "compiler_logs": {
+                "failed-control-carrier.log": [
+                  [
+                    "FoldSpec",
+                    "0.399",
+                    "0"
+                  ],
+                  [
+                    "FoldProof",
+                    "2.194",
+                    "0"
+                  ],
+                  [
+                    "PipelineSpec",
+                    "0.369",
+                    "0"
+                  ],
+                  [
+                    "PipelineProof",
+                    "0.353",
+                    "0"
+                  ],
+                  [
+                    "PipelineControls",
+                    "0.297",
+                    "1"
+                  ]
+                ],
+                "author.log": [
+                  [
+                    "FoldSpec",
+                    "0.454",
+                    "0"
+                  ],
+                  [
+                    "FoldProof",
+                    "2.198",
+                    "0"
+                  ],
+                  [
+                    "PipelineSpec",
+                    "0.389",
+                    "0"
+                  ],
+                  [
+                    "PipelineProof",
+                    "0.368",
+                    "0"
+                  ],
+                  [
+                    "PipelineControls",
+                    "0.316",
+                    "0"
+                  ]
+                ],
+                "failed-symbolic-width.log": [
+                  [
+                    "FoldSpec",
+                    "0.433",
+                    "0"
+                  ],
+                  [
+                    "FoldProof",
+                    "2.161",
+                    "0"
+                  ],
+                  [
+                    "PipelineSpec",
+                    "0.362",
+                    "0"
+                  ],
+                  [
+                    "PipelineProof",
+                    "0.396",
+                    "1"
+                  ]
+                ],
+                "failed-control-carrier2.log": [
+                  [
+                    "FoldSpec",
+                    "0.581",
+                    "0"
+                  ],
+                  [
+                    "FoldProof",
+                    "2.373",
+                    "0"
+                  ],
+                  [
+                    "PipelineSpec",
+                    "0.355",
+                    "0"
+                  ],
+                  [
+                    "PipelineProof",
+                    "0.350",
+                    "0"
+                  ],
+                  [
+                    "PipelineControls",
+                    "0.289",
+                    "1"
+                  ]
+                ],
+                "failed-zero-normalization.log": [
+                  [
+                    "FoldSpec",
+                    "0.445",
+                    "0"
+                  ],
+                  [
+                    "FoldProof",
+                    "2.318",
+                    "0"
+                  ],
+                  [
+                    "PipelineSpec",
+                    "0.360",
+                    "0"
+                  ],
+                  [
+                    "PipelineProof",
+                    "0.327",
+                    "1"
+                  ]
+                ]
+              }
+            }
+          },
+          "accounting": "Overlapping participants and compiler intervals. Review reports give their own inspected files, measured elapsed time and replay. Author commit windows exclude earlier inspection and may include packaging. Failed or repeated compiler calls are retained. Tokens, exclusive reasoning time and historical discovery costs are unavailable.",
+          "historical_reuse_elapsed_seconds": 248
         }
       }
     },
     "acceptance": "Fixed original and replacement calculations under declared types and conditions; all admitted shapes, accesses and logical values. Model refutation requires an admitted violating witness.",
     "scope": "Reviewed source-associated cases only. The remaining mathematical denominator is open. Some cases overlap historical paper laws; never add historical and current counts to claim distinct rules.",
     "counts": {
-      "proved": 152,
+      "proved": 153,
       "disproved": 46
     },
     "counts_by_catalog": {
@@ -19244,6 +19423,9 @@
       },
       "mixed-tap-reductions": {
         "disproved": 2,
+        "proved": 1
+      },
+      "signed-prefix-reuse": {
         "proved": 1
       }
     },
@@ -19385,7 +19567,7 @@
         "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
       }
     ],
-    "source_ids_represented": 396,
+    "source_ids_represented": 403,
     "source_ids_without_catalogued_case": [
       "AssociativeReorderNestedDot/lhs-transpose",
       "AssociativeReorderNestedDot/rhs-transpose",
@@ -19434,12 +19616,7 @@
       "HandleMaximum/sink-tanh",
       "HandleMultiply/abs-square",
       "HandleMultiply/exp-product",
-      "HandleMultiply/rsqrt-square",
-      "HandleMultiply/sqrt-square",
       "HandleReduce/concat",
-      "HandleReduceWindow/cumsum-i32-canonicalize-literal",
-      "HandleReduceWindow/cumsum-i64-canonicalize-literal",
-      "HandleReduceWindow/cumsum-i64-reuse-literal",
       "HandleReduceWindow/empty-single",
       "HandleReduceWindow/empty-tuple",
       "HandleReduceWindow/pad-fold-convert",
@@ -19453,8 +19630,6 @@
       "HandleReshape/transpose-chain-delegation",
       "HandleReshape/transpose-hoist-delegation",
       "HandleScatter/empty-updates",
-      "HandleSqrt/square-complex",
-      "HandleSqrt/square-real",
       "HandleTranspose/chain-delegation",
       "HandleTranspose/degenerate-reshape",
       "HandleTranspose/layout-bitcast",
@@ -21528,6 +21703,107 @@
         ],
         "scope_review": "comparisons/revised-benchmark-20261117/model-audit/mixed-physical-review.md",
         "catalog": "mixed-physical"
+      },
+      {
+        "id": "reuse.inherited137b.mul-sqrt-square-real",
+        "effort_group": "inherited137b-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+        "outcome": "proved",
+        "source_ids": [
+          "HandleMultiply/sqrt-square"
+        ],
+        "theorem": "TensorRewrite.Theory.Numerical.real_sqrt_square_iff (forward direction)",
+        "lhs": "sqrt(x) * sqrt(x)",
+        "rhs": "x",
+        "conditions": "Exact-real pointwise model with 0 \u2264 x at every tensor index. The source matcher additionally requires the two sqrt operands to be the same HLO node; IsNonNegative is the source guard. This row credits only this real nonnegative mathematical partition.",
+        "types": "Exact real values and Real.sqrt; no binary floating rounding, NaN, infinity, signed-zero or fast-math implementation claim.",
+        "overlap": "Historical theorem reuse only; the whole source record remains unresolved. Complex input is not admitted by this HandleMultiply rule: IsNonNegative rejects complex operands.",
+        "evidence": [
+          "TensorRewrite/Theory/NumericalReal.lean",
+          "reports/theory-progress.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse-review.md",
+        "catalog": "signed-prefix-reuse"
+      },
+      {
+        "id": "reuse.inherited137b.mul-rsqrt-square-real",
+        "effort_group": "inherited137b-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/NumericalReal.lean",
+        "outcome": "proved",
+        "source_ids": [
+          "HandleMultiply/rsqrt-square"
+        ],
+        "theorem": "TensorRewrite.Theory.Numerical.real_rsqrt_square_iff (forward direction)",
+        "lhs": "rsqrt(x) * rsqrt(x)",
+        "rhs": "1 / x",
+        "conditions": "Exact-real pointwise model with 0 \u2264 x at every tensor index. The theorem is an iff, including the totalized zero case. Source matcher requires a repeated identical rsqrt operand and source IsNonNegative guard; row credits this real partition only.",
+        "types": "Exact real values, Real.sqrt and totalized field reciprocal; no machine division or IEEE claim.",
+        "overlap": "Historical theorem reuse only; whole source record remains unresolved. The inherited complex_rsqrt_square pointer is not source-applicable because IsNonNegative rejects complex operands.",
+        "evidence": [
+          "TensorRewrite/Theory/NumericalReal.lean",
+          "reports/theory-progress.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse-review.md",
+        "catalog": "signed-prefix-reuse"
+      },
+      {
+        "id": "reuse.inherited137b.sqrt-square-real",
+        "effort_group": "inherited137b-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/ScalarDomains.lean",
+        "outcome": "proved",
+        "source_ids": [
+          "HandleSqrt/square-real"
+        ],
+        "theorem": "TensorRewrite.Theory.ScalarDomains.real_sqrt_square_tensor",
+        "lhs": "sqrt(x * x)",
+        "rhs": "abs(x)",
+        "conditions": "Exact-real pointwise model; no sign premise is needed. Source branch requires fast-math and a repeated identical multiply operand.",
+        "types": "Exact real values, Real.sqrt and absolute value; not a rounded floating-point equivalence.",
+        "overlap": "Historical theorem reuse only; establishes the complete real exact-value partition, not implementation correspondence or whole-record closure.",
+        "evidence": [
+          "TensorRewrite/Theory/ScalarDomains.lean",
+          "reports/theory-progress.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse-review.md",
+        "catalog": "signed-prefix-reuse"
+      },
+      {
+        "id": "reuse.inherited137b.sqrt-square-complex",
+        "effort_group": "inherited137b-historical-reuse",
+        "historical_reuse": "TensorRewrite/Theory/ScalarDomainCounterexamples.lean",
+        "outcome": "disproved",
+        "source_ids": [
+          "HandleSqrt/square-complex"
+        ],
+        "theorem": "TensorRewrite.Theory.ScalarDomains.complex_sqrt_square_tensor_iff and complex_sqrt_square_counterexample",
+        "lhs": "Complex.sqrt(z * z)",
+        "rhs": "(\u2016z\u2016 : \u2102) (the source computes abs then converts to the complex output type)",
+        "conditions": "Exact principal-complex model. The equality holds exactly when every z is real; the source fast-math matcher has no real-axis guard. At z = Complex.I the unguarded rewrite is false.",
+        "types": "Complex.sqrt, complex norm embedded into \u2102, and exact conversion; no rounded complex implementation claim.",
+        "overlap": "The iff theorem provides the exact real-axis subset; the explicit imaginary-unit counterexample disproves the source's unguarded complex model. This is not a native execution claim and does not close the source record across floating types.",
+        "evidence": [
+          "TensorRewrite/Theory/ScalarDomains.lean",
+          "TensorRewrite/Theory/ScalarDomainCounterexamples.lean",
+          "reports/theory-progress.json",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/model-audit/audit137-reuse-review.md",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-rows.json",
+          "comparisons/revised-benchmark-20261117/model-audit/inherited137b-reuse-review.md"
+        ],
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse-review.md",
+        "catalog": "signed-prefix-reuse"
       }
     ],
     "cases": [
@@ -26224,6 +26500,42 @@
         ],
         "scope_review": "comparisons/revised-benchmark-20261117/model-audit/mixed-tap-reductions-review.md",
         "catalog": "mixed-tap-reductions"
+      },
+      {
+        "id": "reduce-window.signed-prefix-conversion-order",
+        "effort_group": "prefix-signed-pipeline",
+        "source_ids": [
+          "HandleReduceWindow/cumsum-i32-canonicalize-literal",
+          "HandleReduceWindow/cumsum-i32-reuse-literal",
+          "HandleReduceWindow/cumsum-i64-canonicalize-literal",
+          "HandleReduceWindow/cumsum-i64-reuse-literal"
+        ],
+        "lhs": "Ordered integral sum of the uniform input prefix through position r.",
+        "rhs": "Recover the scalar by replaying typed conversions in dataflow order, then multiply it by the stored signed count r+1.",
+        "types": "Signed S32 and S64 outputs; intermediate word conversions use the frozen integral types.",
+        "conditions": "Static rank-one prefix window with full kernel n>1, low pad n\u22121, zero initializer, ordinary addition, unit stride and dilations. Scalar broadcast/conversion chains and value-preserving views as specified in the review.",
+        "overlap": "Earlier prefix arithmetic covers modular repeated sums. This case checks source-ordered typed literal recovery and the matching-width signed count. The U64 widening counterexample remains separate.",
+        "theorem": "RevisedBenchmark.PrefixPipeline.verified",
+        "evidence": [
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/FREEZE.md",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineControls.lean",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineProof.lean",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineSpec.lean",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/REVIEW.md",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/SHA256SUMS",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/author.log",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-control-carrier.log",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-control-carrier2.log",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-symbolic-width.log",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/failed-zero-normalization.log",
+          "comparisons/revised-benchmark-20261117/prefix-signed-pipeline/replay.py",
+          "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+          "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldSpec.lean",
+          "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldProof.lean"
+        ],
+        "outcome": "proved",
+        "scope_review": "comparisons/revised-benchmark-20261117/model-audit/signed-prefix-reuse-review.md",
+        "catalog": "signed-prefix-reuse"
       }
     ]
   }
