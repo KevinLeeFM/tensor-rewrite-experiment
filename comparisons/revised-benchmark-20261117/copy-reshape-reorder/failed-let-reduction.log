@@ -1,0 +1,40 @@
+comparisons/revised-benchmark-20261117/copy-reshape-reorder/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean: OK
+comparisons/revised-benchmark-20261117/copy-layout-chain/CopyProof.lean: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/copy-reshape-reorder/ReorderSpec.lean: OK
+CopySpec 0.382 0
+'RevisedBenchmark.CopyChain.verified' depends on axioms: [propext, Quot.sound]
+CopyProof 0.318 0
+ReorderSpec 0.359 0
+ReorderProof.lean:28:6: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  if skipCopy = true then mem else copy (if before = true then prior else base) aligned (previous before base prior mem)
+in the target expression
+  copy base final mem =
+    have operand := if before = true then prior else base;
+    have chosen := if skipCopy = true then mem else copy operand aligned (previous before base prior mem);
+    if raw = true then chosen else copy aligned final chosen
+
+n : Nat
+α : Type
+before skipCopy raw : Bool
+base prior shaped aligned final : Dense n
+mem : Fin n → α
+allowOmit : skipCopy = true → before = true ∧ aligned = base
+allowRaw : raw = true → ∀ (row : Fin n), aligned.address row = final.address row
+chosen :
+  (if skipCopy = true then mem
+    else copy (if before = true then prior else base) aligned (previous before base prior mem)) =
+    copy base aligned mem
+⊢ copy base final mem =
+    have operand := if before = true then prior else base;
+    have chosen := if skipCopy = true then mem else copy operand aligned (previous before base prior mem);
+    if raw = true then chosen else copy aligned final chosen
+'RevisedBenchmark.CopyReshape.verified' depends on axioms: [sorryAx]
+ReorderProof 0.32 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/copy-reshape-reorder/replay.py", line 20, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ReorderProof.olean', 'ReorderProof.lean']' returned non-zero exit status 1.
