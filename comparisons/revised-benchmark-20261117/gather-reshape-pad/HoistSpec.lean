@@ -4,7 +4,10 @@ open GatherHoist
 
 def splitRow {p q : Nat} (row : Fin (p*q)) : Fin p × Fin q :=
   have pq : 0 < p*q := Nat.zero_lt_of_lt row.isLt
-  have hq : 0 < q := by by_cases h : q = 0 <;> simp_all
+  have hq : 0 < q := by
+    by_cases h : q = 0
+    · simp [h] at pq
+    · omega
   ⟨⟨row.val/q, (Nat.div_lt_iff_lt_mul hq).mpr (by simpa [Nat.mul_comm] using row.isLt)⟩,
    ⟨row.val%q, Nat.mod_lt _ hq⟩⟩
 
