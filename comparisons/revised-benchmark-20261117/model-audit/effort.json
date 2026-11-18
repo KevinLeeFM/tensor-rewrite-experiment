@@ -218,6 +218,120 @@
         "controls": 12
       },
       "reuse": "Unchanged ExchangeSpec.slot and Std integral order. Both cases share one idempotent fold argument. First author proof/control replay succeeded. Group windows overlap coordination. Active reasoning time and token usage unknown."
+    },
+    "gather-dot": {
+      "started_utc": "2026-11-18T00:09:31Z",
+      "groups": {
+        "effective-gather": {
+          "freeze": "b82d3b4",
+          "proof_checkpoint": "b32d510",
+          "freeze_to_proof_checkpoint_wall_seconds": 73,
+          "author_compiler_intervals_seconds": [
+            2.074,
+            2.107,
+            2.262,
+            2.658
+          ],
+          "new_lean_lines": {
+            "EffectiveGatherControls.lean": 57,
+            "EffectiveGatherProof.lean": 30,
+            "EffectiveGatherSpec.lean": 67
+          },
+          "accounting_and_reuse": "106 s from setup through freeze, 42 s from freeze through proof checks, then 31 s packaging. Includes two failed compiles. Five imported local modules reused.",
+          "independent_review": "effective-gather/REVIEW.md",
+          "details": "effective-gather/AUTHOR.md"
+        },
+        "concat-normalize": {
+          "freeze": "0182ed6",
+          "proof_checkpoint": "4cb2815",
+          "freeze_to_proof_checkpoint_wall_seconds": 83,
+          "author_compiler_intervals_seconds": [
+            1.284
+          ],
+          "new_lean_lines": {
+            "ArgReuseControls.lean": 32,
+            "ArgReuseProof.lean": 51,
+            "ArgReuseSpec.lean": 52
+          },
+          "accounting_and_reuse": "104 s from setup through freeze included detecting four inherited concat results, 60 s from freeze through clean replay, then packaging. Three failed passes are itemized in packet logs; listed compiler time is the final replay only. One existing tensor module reused.",
+          "independent_review": "concat-normalize/REVIEW.md",
+          "details": "concat-normalize/EFFORT.md"
+        },
+        "dot-concat": {
+          "freeze": "14e6af1",
+          "proof_checkpoint": "3d22e3c",
+          "freeze_to_proof_checkpoint_wall_seconds": 34,
+          "author_compiler_intervals_seconds": [
+            1.244,
+            1.074
+          ],
+          "new_lean_lines": {
+            "DotConcatControls.lean": 10,
+            "DotConcatProof.lean": 44,
+            "DotConcatSpec.lean": 27
+          },
+          "accounting_and_reuse": "First full proof compiled; second replay includes an additional finite-prefix theorem. Std only. Historical dot/rule01 covered two paired segments; its proof code was not imported.",
+          "independent_review": "dot-concat/REVIEW.md"
+        },
+        "dot-reverse": {
+          "freeze": "ca7638a",
+          "proof_checkpoint": "cb3385c",
+          "freeze_to_proof_checkpoint_wall_seconds": 22,
+          "author_compiler_intervals_seconds": [
+            0.928,
+            1.343,
+            1.821
+          ],
+          "new_lean_lines": {
+            "MirrorControls.lean": 13,
+            "MirrorProof.lean": 49,
+            "MirrorSpec.lean": 27
+          },
+          "accounting_and_reuse": "First freeze 55e9993 to final proof 63s. Initial spec failed on a reserved binder. The sole spec change renamed it. Next compile exposed an arithmetic residual and a dependent row rewrite. Explicit row equality and index arithmetic repaired them. The compiler recovery axiom in the failed log is excluded. A pre-freeze lemma lookup included missing names (0.260s separately). Uses existing Tensor and Indexing reverseIndex plus Std.",
+          "independent_review": "dot-reverse/REVIEW.md"
+        },
+        "dynamic-roundtrip": {
+          "freeze": "dc5ab0c",
+          "proof_checkpoint": "b0def58",
+          "freeze_to_proof_checkpoint_wall_seconds": 24,
+          "author_compiler_intervals_seconds": [
+            1.079,
+            1.071
+          ],
+          "new_lean_lines": {
+            "DynamicControls.lean": 11,
+            "DynamicProof.lean": 24,
+            "DynamicSpec.lean": 17
+          },
+          "accounting_and_reuse": "The first success had two simplifier warnings; a clean replay followed. Pre-freeze Std name lookup 0.268s. The signed length decoder adapts the earlier IotaRead decode_high argument. Only Std is imported; the prefix uses List.take_left.",
+          "independent_review": "dynamic-roundtrip/REVIEW.md"
+        },
+        "dot-transpose": {
+          "freeze": "f1cf153",
+          "proof_checkpoint": "f1f2646",
+          "freeze_to_proof_checkpoint_wall_seconds": 37,
+          "author_compiler_intervals_seconds": [
+            2.061,
+            1.839
+          ],
+          "new_lean_lines": {
+            "SwapControls.lean": 18,
+            "SwapProof.lean": 25,
+            "SwapSpec.lean": 21
+          },
+          "accounting_and_reuse": "Proof compiled on first replay. Control declaration name flip collided with Std; renaming it fixed the harness. Reuses three local tensor/index/permutation modules and their composition definitions.",
+          "independent_review": "dot-transpose/REVIEW.md"
+        }
+      },
+      "joint_review_intervals_seconds": {
+        "effective-gather_and_dot-concat": 96.08,
+        "concat-normalize_and_dot-reverse": 127,
+        "dynamic-roundtrip": 58,
+        "dot-transpose": 78
+      },
+      "review_accounting": "Review reports contain individual command timings. Some reviewer and proof-worker windows overlap. A single proof covers both aliases in each case. Active reasoning, tokens and per-alias costs are unknown. Historical proof-discovery cost is unchanged.",
+      "accounted_through_utc": "2026-11-18T00:19:34+00:00",
+      "wall_seconds_through_catalog_assembly": 603
     }
   }
 }

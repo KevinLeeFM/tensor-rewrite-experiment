@@ -1,0 +1,127 @@
+[
+  {
+    "id": "effective-scalar-gather",
+    "effort_group": "effective-gather",
+    "lhs": "Gather from an array of arbitrary rank, scattering decoded starts, clamping to each operand window, then adding in-window offsets.",
+    "rhs": "Broadcast the original scalar if rank is zero, otherwise broadcast its element after a logical row-major reshape to scalar, at the exact Gather result shape.",
+    "conditions": "Every operand extent is one (vacuous at rank zero). Arbitrary realized result shape, decoded integer starts or explicit batching, windows that fit, and bounded output-to-offset maps. Legal empty results included.",
+    "types": "Arbitrary logical element type, natural extents and finite-rank multidimensional bounded coordinates.",
+    "source_ids": [
+      "HandleGather/effective-scalar-rank-zero",
+      "HandleGather/effective-scalar-unit-array"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/effective-gather/EffectiveGatherSpec.lean",
+      "comparisons/revised-benchmark-20261117/effective-gather/EffectiveGatherProof.lean",
+      "comparisons/revised-benchmark-20261117/effective-gather/EffectiveGatherControls.lean",
+      "comparisons/revised-benchmark-20261117/effective-gather/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/effective-gather/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.EffectiveGather.verified",
+    "overlap": "One case covers both return variants. It proves replacement by scalar broadcast. The small Select-chain signed narrowing case and the participant-block collective AllGather have different calculations."
+  },
+  {
+    "id": "reduce.reuse-arg-extremum",
+    "lhs": "Standalone min or max reduction of the input values initialized at the corresponding infinite endpoint.",
+    "rhs": "Component zero of the sibling tuple reduction using the matched strict-comparison/left-NaN value selector, index tie-breaker, the same tensor and same ordered reduction fiber.",
+    "conditions": "Common input shape, fiber traversal and direction; a valid input iota axis. Every finite input list is allowed. The result observes only logical values, identifying NaN payloads and signed zeros.",
+    "types": "Arbitrary input rank with iota axis, output rank and extents, bounded indices. Scalar model has an arbitrary finite linear ordering with two infinite endpoints and one absorbing NaN. Index is Nat.",
+    "source_ids": [
+      "HandleReduce/reuse-argmax",
+      "HandleReduce/reuse-argmin"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseSpec.lean",
+      "comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseProof.lean",
+      "comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseControls.lean",
+      "comparisons/revised-benchmark-20261117/concat-normalize/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ArgReuse.reuse_arg_extremum",
+    "overlap": "Grouped max/min sibling projections. No arg-extremum terminal result located in Lean library or historical paper proofs. Distinct from reductions over constant broadcasts and uniform collective reductions. Initial concat selection had four already covered records.",
+    "effort_group": "concat-normalize"
+  },
+  {
+    "id": "dot.concat-sliced-constant",
+    "effort_group": "dot-concat",
+    "lhs": "Dot along the fully concatenated axis with the unsplit constant.",
+    "rhs": "Left-associated sum of block dots against successive constant slices.",
+    "conditions": "One contracting axis, no batch axes, rank-two output, at least one block, including zero widths. Free and contracting coordinates normalized by operand roles. Constant accessor only used inside its finite prefix.",
+    "types": "Exact Int matrices, arbitrary natural extents.",
+    "source_ids": [
+      "HandleDot/concat-lhs",
+      "HandleDot/concat-rhs"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-concat/DotConcatControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-concat/DotConcatProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-concat/DotConcatSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-concat/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-concat/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.DotConcat.verified",
+    "overlap": "Two operand orientations of one law. Historical dot/rule01 covers two prepaired segments. This case derives cumulative offsets into one unsplit matrix for arbitrarily many blocks."
+  },
+  {
+    "id": "dot.transfer-contracting-reverse",
+    "effort_group": "dot-reverse",
+    "lhs": "Dot with the selected batch, free and contracting axes reversed on one operand.",
+    "rhs": "Keep the batch and free reversals there and transfer each selected contracting reversal to the paired axis on the opposite operand.",
+    "conditions": "Named paired contracting axes of equal extents, with an independent reversal bit for each. Coordinates grouped by operand role. Includes zero extents and empty contraction tuple.",
+    "types": "Exact Int tensors; finite-rank batch, free and contracting coordinates.",
+    "source_ids": [
+      "HandleDot/mirror-reverse-lhs-to-rhs",
+      "HandleDot/mirror-reverse-rhs-to-lhs"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-reverse/MirrorControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-reverse/MirrorProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-reverse/MirrorSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-reverse/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-reverse/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.DotMirror.verified",
+    "overlap": "The same involution moves the operation in either direction. Uses the existing reverseIndex and Int sum invariance; excludes order-sensitive rounded reductions."
+  },
+  {
+    "id": "custom-call.bounded-dynamic-prefix-roundtrip",
+    "effort_group": "dynamic-roundtrip",
+    "lhs": "SliceToDynamic of padded storage and its own raw or typed clamped S32 runtime extent.",
+    "rhs": "Return the original rank-one dynamic vector.",
+    "conditions": "Common capacity and pad tuple, length at most capacity and representable in S32. Clamped upper endpoint must also fit S32. Arbitrary padding values and zero visible length included.",
+    "types": "Any logical payload type, rank one, equal visible length and ordered values.",
+    "source_ids": [
+      "HandleCustomCall/dynamic-roundtrip-raw-size",
+      "HandleCustomCall/dynamic-roundtrip-clamped-size"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dynamic-roundtrip/DynamicControls.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-roundtrip/DynamicProof.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-roundtrip/DynamicSpec.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-roundtrip/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dynamic-roundtrip/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Roundtrip.verified",
+    "overlap": "Both size graph variants use the same prefix. Reuses the signed decoding argument from the earlier singleton-Iota proof, and Std prefix elimination."
+  },
+  {
+    "id": "transpose.swap-batched-dot",
+    "effort_group": "dot-transpose",
+    "lhs": "Transpose a dot result by reordering batch axes and swapping the ordered free-axis groups.",
+    "rhs": "Swap the dot operands, compose each old batch-dimension list with the output permutation, and use its opposite free group.",
+    "conditions": "Legal permutations of paired batch slots, unchanged order within each free group and paired contraction space. Common finite linearization of contracting tuples; includes zero contraction extent.",
+    "types": "Exact integer dot, arbitrary batch extents and free-coordinate domains.",
+    "source_ids": [
+      "HandleTranspose/dot-canonical",
+      "HandleTranspose/dot-general"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-transpose/SwapControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-transpose/SwapProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-transpose/SwapSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-transpose/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-transpose/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.DotSwap.verified",
+    "overlap": "Canonical singleton free-axis case with identity batch permutation is an instance of the general source branch. Reuses existing witnessed axis permutation and its composition. Historical dot/rule02 already proves product commutation. New content is explicit batch-slot list composition, transposed coordinate domain and local extent bounds."
+  }
+]
