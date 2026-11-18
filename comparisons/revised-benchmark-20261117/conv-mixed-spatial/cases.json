@@ -1,0 +1,27 @@
+[
+  {
+    "id": "conv.mixed-spatial-rank4-permuted",
+    "source_ids": [
+      "SimplifyConvToMultiply/reduce-000",
+      "SimplifyConvToMultiply/reduce-100"
+    ],
+    "effort_group": "conv-mixed-spatial",
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.ConvMixedSpatial.verified",
+    "lhs": "Dense grouped exact forward convolution over spatial axes T and C with nonunit width on T and unit width on C; independently optional reversal.",
+    "rhs": "Transpose input, optionally reverse and transpose kernel, broadcast, multiply, sum along T and reinsert the singleton output axis.",
+    "types": "Rank-four exact Nat arrays with arbitrary entries, fixed independent dimension-number orders [T,B,C,F], [C,F,T,I], [F,T,C,B].",
+    "conditions": "Valid groups; same type; static dense geometry with unit stride and dilations, no padding or RHS sparsity, layout insensitive, contracted output T size one, kernel T>1, kernel C size one, one input and output channel per feature group. Only valid output reads.",
+    "overlap": "Normalized separability already known; earlier physical ordered convolution proofs have just one spatial axis. One distinct mixed-coordinate mathematical profile, referencing two previously linked lexical sites.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/MixedSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/MixedProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/MixedControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/final.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/replay.py"
+    ]
+  }
+]

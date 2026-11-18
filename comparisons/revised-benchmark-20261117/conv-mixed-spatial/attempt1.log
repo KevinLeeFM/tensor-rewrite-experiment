@@ -1,0 +1,66 @@
+MixedSpec.lean: OK
+FREEZE.md: OK
+../conv-pointwise-axes/PointSpec.lean: OK
+../conv-pointwise-axes/PointProof.lean: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+PointSpec 0.397 0
+'RevisedBenchmark.ConvPointAxes.physicalKernelSequence' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.ConvPointAxes.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+PointProof 0.366 0
+MixedSpec 0.342 0
+MixedProof.lean:28:4: error: Tactic `apply` failed: could not unify the conclusion of `@List.map_congr_left`
+  List.map ?f ?l = List.map ?g ?l
+with the goal
+  List.flatMap (fun t => [oldPair s w r rc y t 0 0]) (List.range w) = List.map (newPair s w c r y) (List.range w)
+
+Note: The full type of `@List.map_congr_left` is
+  ∀ {α : Type ?u.64} {l : List α} {α_1 : Type ?u.63} {f g : α → α_1},
+    (∀ (a : α), a ∈ l → f a = g a) → List.map f l = List.map g l
+
+s : Sizes
+w c : Nat
+legal : Legal s
+hw : 1 < w
+hwin : win s.spatial w = 1
+size : s.spatial = w
+batches : s.batches = 1
+channel : s.groups / s.groups = 1
+carried : win c 1 = c
+r rc : Bool
+y : Four
+hf : y.a < s.groups
+ht : y.b < 1
+hc : y.c < c
+hb : y.d < s.batch
+zero : y.b = 0
+grp : y.a / s.groups = 0
+bc : (if 1 = c then y.c else 0) = 0
+bb : (if 1 = s.batch then y.d else 0) = 0
+newRead :
+  ∀ (t : Nat),
+    newPair s w c r y t = ({ a := t, b := y.d, c := y.c, d := y.a }, { a := 0, b := y.a, c := flip r w t, d := 0 })
+⊢ List.flatMap (fun t => [oldPair s w r rc y t 0 0]) (List.range w) = List.map (newPair s w c r y) (List.range w)
+MixedProof.lean:36:28: error: Expected type must not contain free variables
+  ({ a := t, b := y.d, c := y.c, d := y.a }, { a := 0, b := y.a, c := flip r w t, d := 0 }).snd.a < (kernel s w).a
+
+Hint: Use the `+revert` option to automatically clean up and revert free variables
+MixedProof.lean:36:48: error: Expected type must not contain free variables
+  ({ a := t, b := y.d, c := y.c, d := y.a }, { a := 0, b := y.a, c := flip r w t, d := 0 }).snd.d < (kernel s w).d
+
+Hint: Use the `+revert` option to automatically clean up and revert free variables
+MixedProof.lean:27:60: warning: This simp argument is unused:
+  List.flatMap_singleton
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [oldTerms, newTerms, channel, List.range_one, List.map_cons, List.map_nil, List.flatMap_cons,
+    List.flatMap_nil, List.append_nil, size]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.ConvMixedSpatial.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+MixedProof 0.352 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/conv-mixed-spatial/replay.py", line 15, in <module>
+    p.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'MixedProof.olean', 'MixedProof.lean']' returned non-zero exit status 1.
