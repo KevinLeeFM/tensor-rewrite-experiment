@@ -1,0 +1,21 @@
+comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/ZeroWindowSpec.lean: OK
+comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroSpec.lean: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+sources/xla/xla/hlo/evaluator/hlo_evaluator.cc: OK
+ZeroSpec 0.433s exit=0
+ZeroWindowSpec.lean:21:4: error: Application type mismatch: The argument
+  List.range 2
+has type
+  List Nat
+but is expected to have type
+  List Int
+in the application
+  List.filterMap (fun v => padded c h x (↑↑a) (↑↑j + u - if c = true then 2 else 1) (↑↑k + v - 1)) (List.range 2)
+ZeroWindowSpec 0.380s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ZeroWindowSpec.olean', 'ZeroWindowSpec.lean']' returned non-zero exit status 1.

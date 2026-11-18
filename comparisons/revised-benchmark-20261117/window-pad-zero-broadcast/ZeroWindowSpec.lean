@@ -17,8 +17,8 @@ def padded (c h : Bool) (x : Fin 2 → Bool) (a j k : Int) : Option Bool := do
     else some false
 
 def old (c h : Bool) (x : Fin 2 → Bool) (a : Fin (width c)) (j k : Fin 2) :=
-  let entries := (List.range (if c then 4 else 2)).flatMap fun u =>
-    (List.range 2).filterMap fun v => padded c h x a.val
+  let entries := (List.range (if c then 4 else 2)).flatMap fun (u : Nat) =>
+    (List.range 2).filterMap fun (v : Nat) => padded c h x a.val
       ((j.val : Int) + u - (if c then 2 else 1)) ((k.val : Int) + v - 1)
   bits (entries.foldl plus false)
 
