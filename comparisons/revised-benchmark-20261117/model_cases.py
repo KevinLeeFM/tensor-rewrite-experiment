@@ -28,7 +28,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
     catalog_pins = directory / 'catalog-sha256.json'
     pinned_catalogs = read(catalog_pins)
     audit_inputs = [manifest_path, catalog_pins, effort_path, plan]
-    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18', 'extrema', 'gather-dot', 'pad-dot', 'slice-dot-followup', 'dot-overlap', 'dot-unit', 'fiber-broadcast', 'guard-domains', 'scan-shape', 'window-convolution', 'collective-window', 'pointwise-concat', 'physical-conv-domains', 'mixed-physical', 'layout-scatter-windows', 'mixed-tap-reductions', 'signed-prefix-reuse', 'window-early', 'bitcast-admission', 'literal-empty-outer', 'comparison-reuse', 'promotion-domain-links', 'dense-window-terminals', 'structural-factors', 'traversal-gather'):
+    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18', 'extrema', 'gather-dot', 'pad-dot', 'slice-dot-followup', 'dot-overlap', 'dot-unit', 'fiber-broadcast', 'guard-domains', 'scan-shape', 'window-convolution', 'collective-window', 'pointwise-concat', 'physical-conv-domains', 'mixed-physical', 'layout-scatter-windows', 'mixed-tap-reductions', 'signed-prefix-reuse', 'window-early', 'bitcast-admission', 'literal-empty-outer', 'comparison-reuse', 'promotion-domain-links', 'dense-window-terminals', 'structural-factors', 'traversal-gather', 'shape-numerical-tail'):
         catalog = directory / (name + '.json')
         review = directory / (name + '-review.md')
         assert digest(catalog) == pinned_catalogs[catalog.name], catalog
@@ -119,5 +119,22 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
         'inherited_family_ids_pending_catalog_review': sorted(family_ids - sources_with_cases),
         'historical_reuse_links': reuse_links,
         'cases': cases}
+    # These are the source records with no reviewed mathematical-case link in this inventory.
+    disposition_report = directory / 'six-label-disposition.md'
+    residuals = {
+        'HandleBitcast/recursive-inner': 'A recursive visitor may mutate its operand. Identify a successful inner rewrite and re-match the outer graph.',
+        'HandleDynamicUpdateSlice/pad-tuple': 'Pinned DUS shape inference admits integral scalar starts or a single integral vector; the tuple operand in this branch has no admitted instance.',
+        'ReplaceInstructionIfCompatible/single': 'Single-operand graph API. A caller must specify both the old calculation and the replacement value.',
+        'ReplaceInstructionIfCompatible/span-single': 'One-entry operand span forwards to the same API; no independently specified value pair.',
+        'ReplaceInstructionIfCompatible/span-tuple': 'Tuple assembly preserves operand order but the old tuple value depends on the caller.',
+        'ReplaceWithBitcast/unary': 'Generic bitcast builder. Size compatibility alone gives no relation to the old result; a caller and storage semantics are required.',
+    }
+    open_ids = set(out['reviewed_mathematical_cases']['source_ids_without_catalogued_case'])
+    assert set(residuals) == open_ids
+    out['reviewed_mathematical_cases']['uncatalogued_source_dispositions'] = {
+        'source_review': str(disposition_report.relative_to(root)), 'by_id': residuals,
+        'scope': 'Finite unresolved-label audit. Linked source records may have additional mathematical domains or execution conditions.'
+    }
+    audit_inputs.append(disposition_report)
     for path in audit_inputs:
         out['sources'][str(path.relative_to(root))] = digest(path)
