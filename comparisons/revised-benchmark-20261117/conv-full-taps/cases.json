@@ -1,0 +1,25 @@
+[
+  {
+    "id": "conv.full-kernel-rank3-permuted",
+    "effort_group": "conv-full-taps",
+    "source_ids": [
+      "SimplifyConvToMultiply/reduce-000",
+      "SimplifyConvToMultiply/reduce-100"
+    ],
+    "lhs": "Dense grouped forward convolution, zero-initialized ordered sum over every spatial tap and input channel; optionally reverse the kernel taps.",
+    "rhs": "Optional kernel reversal followed by physical transposes, kernel singleton broadcast, pointwise multiplication, spatial reduction and singleton output reshape.",
+    "conditions": "One spatial dimension, same type without casts, distinct or equal dimension-number permutations, no padding and all strides/dilations one. Positive nonunit kernel, inferred singleton spatial output, input and output features equal feature groups, valid forward grouping and kernel input features one.",
+    "types": "Exact Nat tensor values, independent typed physical reads. Zero batch allowed. Zero-width window rejected by shape inference.",
+    "theorem": "RevisedBenchmark.ConvFullTaps.verified",
+    "overlap": "Reuses pointwise packet grouped batch proof, left physical addressing, broadcast and permutation definitions. Proves ordered full-tap physical address equality, bounds and singleton reshape packing for either reversal; historical normalized convolution reductions omit these operations. Higher ranks, machine arithmetic and native behavior outside this domain.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-full-taps/TapSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/TapProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/TapControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/final.log",
+      "comparisons/revised-benchmark-20261117/conv-full-taps/AUTHOR.md"
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+TapSpec.lean: OK
+../conv-pointwise-axes/PointSpec.lean: OK
+../conv-pointwise-axes/PointProof.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/evaluator/hlo_evaluator.cc: OK
+../../../sources/xla/xla/hlo/ir/hlo_instruction.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+PointSpec 0.405 0
+'RevisedBenchmark.ConvPointAxes.physicalKernelSequence' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.ConvPointAxes.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+PointProof 0.363 0
+TapSpec 0.308 0
+TapProof.lean:75:4: error: Type mismatch: After simplification, term
+  pairs
+ has type
+  ∀ (a : Nat), a < w → (oldL s l o y a 0, oldK k o y (flipTap rev w a) 0) = newPair s w l k o rev y a
+but is expected to have type
+  (List.map (fun t => [(oldL s l o y t 0, oldK k o y (flipTap rev w t) 0)]) (List.range w)).flatten =
+    List.map (newPair s w l k o rev y) (List.range w)
+'RevisedBenchmark.ConvFullTaps.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+TapProof 0.394 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/conv-full-taps/replay.py", line 15, in <module>
+    p.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'TapProof.olean', 'TapProof.lean']' returned non-zero exit status 1.
