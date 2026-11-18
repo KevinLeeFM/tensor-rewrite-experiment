@@ -1,0 +1,25 @@
+[
+  {
+    "id": "bitcast-convert.packed-u4-literal-copy",
+    "outcome": "disproved",
+    "effort_group": "bitcast-packed-literal",
+    "source_ids": [
+      "HandleBitcastConvert/last-contiguous-axis"
+    ],
+    "lhs": "BitcastConvert packs two U4 literal bytes into one U8 result, or unpacks one U8 into two U4 result cells.",
+    "rhs": "Ordinary evaluator bitcast copies the result literal byte count from the input prefix, reporting failure if input storage is too short.",
+    "conditions": "Little-endian, static dense U8 scalar and U4[2] with minor-most axis 0 and explicit four-bit HLO element size, common memory space and one-byte HLO storage, layout-sensitive rewrite enabled; operand a parameter.",
+    "types": "Two unsigned nibble lanes and one unsigned byte. Observations distinguish successful result bytes from an evaluation error.",
+    "theorem": "RevisedBenchmark.BitcastPacked.verified",
+    "overlap": "Ideal packed physical split/join and same-width word reindexing are existing library results. This observation distinguishes unpacked evaluator literal backing from packed HLO size. It establishes no native backend discrepancy.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/NibbleSpec.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/NibbleProof.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/NibbleControls.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/final.log",
+      "comparisons/revised-benchmark-20261117/bitcast-packed-literal/AUTHOR.md"
+    ]
+  }
+]
