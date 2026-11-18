@@ -1,0 +1,15 @@
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkSpec.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkProof.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkControls.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/FREEZE.md: OK
+SinkSpec 0.458s exit=0
+'RevisedBenchmark.SinkMixed.verified' depends on axioms: [Quot.sound]
+SinkProof 0.313s exit=0
+fun {r q n} {s} {t} =>
+  verified : ∀ {r q n : Nat} {s : Fin r → Nat} {t : Fin q → Nat} (axis : Fin r → Fin q),
+  (∀ (i j : Fin r), i < j → axis i < axis j) →
+    ∀ (fit : ∀ (i : Fin r), t (axis i) = s i) (types : Fin n → Type) (β : Type)
+      (args : (k : Fin n) → Arg (Coord s) (types k)) (user : ((k : Fin n) → types k) → β),
+      (fun o => user fun k => before (project axis fit) (args k) o) = fun o =>
+        (fun x => user fun k => after (args k) x) (project axis fit o)
+SinkControls 0.395s exit=0

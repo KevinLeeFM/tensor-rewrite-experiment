@@ -1,0 +1,54 @@
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkSpec.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkProof.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkControls.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/FREEZE.md: OK
+SinkSpec 0.450s exit=0
+'RevisedBenchmark.SinkMixed.verified' depends on axioms: [Quot.sound]
+SinkProof 0.339s exit=0
+SinkControls.lean:7:47: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (large i)) 1
+numerals are polymorphic in Lean, but the numeral `1` cannot be used in a context where the expected type is
+  Fin (large i)
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+SinkControls.lean:7:54: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (large i)) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin (large i)
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+SinkControls.lean:12:70: error: Tactic `decide` failed to reduce
+  @decide ((if before (project second ⋯) keep ix = true then before (project second ⋯) read ix else 99) = 8)
+    (instDecidableEqNat (if before (project second ⋯) keep ix = true then before (project second ⋯) read ix else 99) 8)
+to `true` or `false`.
+
+After unfolding the instances `instDecidableEqBool`, `instDecidableEqFin`, `instDecidableEqNat`, `Bool.decEq`, and `Nat.decEq`, reduction got stuck at
+  (↑(project second ⋯ ix 0)).beq 1
+SinkControls.lean:13:61: error: Tactic `decide` failed to reduce
+  @decide (inner (project second ⋯ ix) = 8) (instDecidableEqNat (inner (project second ⋯ ix)) 8)
+to `true` or `false`.
+
+After unfolding the instances `instDecidableEqBool`, `instDecidableEqFin`, `instDecidableEqNat`, `Bool.decEq`, and `Nat.decEq`, reduction got stuck at
+  (↑(project second ⋯ ix 0)).beq 1
+SinkControls.lean:14:60: error: Tactic `decide` failed to reduce
+  @decide (inner (project first ⋯ ix) ≠ 8) instDecidableNot
+to `true` or `false`.
+
+After unfolding the instances `instDecidableEqBool`, `instDecidableEqFin`, `instDecidableEqNat`, `instDecidableNot`, `Bool.decEq`, and `Nat.decEq`, reduction got stuck at
+  (↑(project first ⋯ ix 0)).beq 1
+fun {r q n} {s} {t} =>
+  verified : ∀ {r q n : Nat} {s : Fin r → Nat} {t : Fin q → Nat} (axis : Fin r → Fin q),
+  (∀ (i j : Fin r), i < j → axis i < axis j) →
+    ∀ (fit : ∀ (i : Fin r), t (axis i) = s i) (types : Fin n → Type) (β : Type)
+      (args : (k : Fin n) → Arg (Coord s) (types k)) (user : ((k : Fin n) → types k) → β),
+      (fun o => user fun k => before (project axis fit) (args k) o) = fun o =>
+        (fun x => user fun k => after (args k) x) (project axis fit o)
+SinkControls 0.384s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/sink-mixed-broadcast/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'SinkControls.olean', 'SinkControls.lean']' returned non-zero exit status 1.
