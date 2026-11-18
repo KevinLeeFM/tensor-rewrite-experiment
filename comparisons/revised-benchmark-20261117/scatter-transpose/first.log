@@ -1,0 +1,47 @@
+comparisons/revised-benchmark-20261117/scatter-transpose/ScatterTransposeSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+TensorRewrite/Pilot/Permutation.lean: OK
+lean-toolchain: OK
+sources/xla/xla/service/scatter_simplifier.h: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+TensorRewrite/Pilot/Tensor 0.307s exit=0
+TensorRewrite/Pilot/Indexing 0.310s exit=0
+TensorRewrite/Pilot/Permutation 0.294s exit=0
+ScatterTransposeSpec 0.378s exit=0
+ScatterTransposeProof.lean:30:6: error: Tactic `rewrite` failed: motive is not type correct:
+  fun _a =>
+    (if hit s w (pull p q) (origin e.fst) then op v (e.snd fun a => pull p q a - origin e.fst a) else v) =
+      if _a then op v ((moved p e).snd fun a => q a - origin (moved p e).fst a) else v
+Error: Application type mismatch: The argument
+  instDecidableHit (fun a => s (p.outputToInput a)) (fun a => w (p.outputToInput a)) q (origin (moved p e).fst)
+has type
+  Decidable (hit (fun a => s (p.outputToInput a)) (fun a => w (p.outputToInput a)) q (origin (moved p e).fst))
+but is expected to have type
+  Decidable _a
+in the application
+  @ite α _a
+    (instDecidableHit (fun a => s (p.outputToInput a)) (fun a => w (p.outputToInput a)) q (origin (moved p e).fst))
+
+Explanation: The rewrite tactic rewrites an expression 'e' using an equality 'a = b' by the following process. First, it looks for all 'a' in 'e'. Second, it tries to abstract these occurrences of 'a' to create a function 'm := fun _a => ...', called the *motive*, with the property that 'm a' is definitionally equal to 'e'. Third, we observe that 'congrArg' implies that 'm a = m b', which can be used with lemmas such as 'Eq.mpr' to change the goal. However, if 'e' depends on specific properties of 'a', then the motive 'm' might not typecheck.
+
+Possible solutions: use rewrite's 'occs' configuration option to limit which occurrences are rewritten, or use 'simp' or 'conv' mode, which have strategies for certain kinds of dependencies (these tactics can handle proofs and 'Decidable' instances whose types depend on the rewritten term, and 'simp' can apply user-defined '@[congr]' theorems as well).
+
+r : Nat
+α : Type
+s w : Shape r
+p : AxisPermutation r
+q : Point r
+op : α → α → α
+v : α
+e : Entry r α
+ho : origin (moved p e).fst = fun a => origin e.fst (p.outputToInput a)
+hitEq :
+  hit s w (pull p q) (origin e.fst) ↔
+    hit (fun a => s (p.outputToInput a)) (fun a => w (p.outputToInput a)) q (origin (moved p e).fst)
+⊢ (if hit s w (pull p q) (origin e.fst) then op v (e.snd fun a => pull p q a - origin e.fst a) else v) =
+    if hit (fun a => s (p.outputToInput a)) (fun a => w (p.outputToInput a)) q (origin (moved p e).fst) then
+      op v ((moved p e).snd fun a => q a - origin (moved p e).fst a)
+    else v
+'RevisedBenchmark.ScatterT.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+ScatterTransposeProof 0.447s exit=1
