@@ -1,0 +1,177 @@
+[
+  {
+    "id": "dot.paired-zero-padding-to-strided-slice",
+    "effort_group": "dot-pad",
+    "lhs": "Exact dot over the entire padded contraction grid with the zero-filled operand in either orientation.",
+    "rhs": "Dot of the retained-padded operand with the other operand sliced at low, exclusive extent-minus-high and stride interior-plus-one on each moved contracting axis.",
+    "conditions": "Normalized paired contracting fibers at each output coordinate, arbitrary finite number of axes and widths including zero. Moved edges are nonnegative with a zero fill. Identity effective padding leaves all other axes and already-evaluated retained padding, including negative crops, in place. Source profitability and at least one moved axis restrict when the rewrite fires.",
+    "types": "Exact mathematical Int; natural extents and interior padding. Arrays observed extensionally, pointwise at any fixed batch/free coordinate.",
+    "source_ids": [
+      "HandleDot/mirror-pad-lhs-to-rhs",
+      "HandleDot/mirror-pad-rhs-to-lhs"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-pad/PadDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-pad/PadDotProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-pad/PadDotControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-pad/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-pad/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.PadDot.verified",
+    "overlap": "One sparsity/reindexing equality for two operand orientations. Existing dot-reverse permutes every contracting position, and dot-concat splits a dense contracting domain; neither proves sparse zero-extension support or strided slice width."
+  },
+  {
+    "id": "dot-reorder-broadcast-retained-partner-axis",
+    "outcome": "disproved",
+    "effort_group": "dot-move-broadcast",
+    "lhs": "Dot of a vector broadcast along original axis 0 with a partner. Both contract original axes [0,1].",
+    "rhs": "Reduce the partner along axis 0, then Dot the original vector with the reduced partner using retained partner dimension number 1.",
+    "conditions": "Legal parameter vector [n], broadcast [m,n] on dimension 1, partner [m,n,n], no batch axes; positive extents and strict dot-cost improvement at threshold two; both orientations evaluated.",
+    "types": "Bounded finite coordinates, exact integer logical values, sums and products.",
+    "source_ids": [
+      "HandleDot/mirror-broadcast-lhs-to-rhs",
+      "HandleDot/mirror-broadcast-rhs-to-lhs"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastDot.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/BroadcastDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/BroadcastDotProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/BroadcastDotControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/cost-excerpt.cc",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/author-replay.log",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/REVIEW.md"
+    ],
+    "overlap": "Both source directions share the same obsolete partner dimension number and count as one case. Separate from dot/rule06 (reduce a broadcasted product), Dot reverse transfer and Dot/Concat splitting. A correctly renumbered contraction is a witness control only."
+  },
+  {
+    "id": "update.overwrite-padded-edge",
+    "outcome": "proved",
+    "effort_group": "update-pad-edge",
+    "lhs": "Dynamic update of the complete low or high edge of a padded operand.",
+    "rhs": "Concatenate update and unpadded operand in the appropriate order.",
+    "conditions": "Only one axis padded, positive source and update widths on it, no interior padding, all other update axes cover full operand extents. The decoded start clamps exactly to the chosen edge.",
+    "types": "Arbitrary element type and untouched coordinate domains; arbitrary fill.",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/pad-concat-low",
+      "HandleDynamicUpdateSlice/pad-concat-high"
+    ],
+    "theorem": "RevisedBenchmark.EdgeUpdate.verified",
+    "overlap": "Low/high are two choices in one theorem. Existing concat-to-pad and uniform-base update-to-pad have different original calculations.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/update-pad-edge/EdgeControls.lean",
+      "comparisons/revised-benchmark-20261117/update-pad-edge/EdgeProof.lean",
+      "comparisons/revised-benchmark-20261117/update-pad-edge/EdgeSpec.lean",
+      "comparisons/revised-benchmark-20261117/update-pad-edge/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/update-pad-edge/REVIEW.md"
+    ]
+  },
+  {
+    "id": "dot.dynamic-free-coordinate-lookup",
+    "outcome": "proved",
+    "effort_group": "dot-dynamic-lookup",
+    "lhs": "Dot of a dynamically selected row or column from one constant matrix with the partner constant matrix.",
+    "rhs": "Dynamic row/column lookup on the full dot with start operands reordered.",
+    "conditions": "Rank two, one contraction dimension, no batches, singleton slice on one free axis and full contraction width. Arbitrary signed decoded starts, including nonzero full-width start.",
+    "types": "Exact Int matrices at finite extents, legal singleton with nonempty selected free axis; contraction and partner free extent may be zero.",
+    "source_ids": [
+      "HandleDot/dynamic-slice-lhs",
+      "HandleDot/dynamic-slice-rhs"
+    ],
+    "theorem": "RevisedBenchmark.DotLookup.verified",
+    "overlap": "Both operand positions implement one lookup interchange. Distinct from the block-dot and transpose cases; reuses typed clamp bounds.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-dynamic-lookup/LookupControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-dynamic-lookup/LookupProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-dynamic-lookup/LookupSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-dynamic-lookup/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-dynamic-lookup/REVIEW.md"
+    ]
+  },
+  {
+    "id": "reshape.delete-unit-axis-over-update",
+    "outcome": "disproved",
+    "effort_group": "reshape-dus-delete",
+    "lhs": "Row-major reshape of a legal DUS deleting a unit axis of the base matrix.",
+    "rhs": "Delete that axis from the update shape before rank-one DUS.",
+    "conditions": "Static base [1,n] reshaped to [n], update [u,v] with u\u22641 and v\u2264n, zero starts, n>1. Original emits some visible data; illegal generated reshape yields none.",
+    "types": "Exact integer elements and checked static shape/length; [3] example has zero update rows and two update columns.",
+    "source_ids": [
+      "HandleReshape/dynamic-update-unit-dims"
+    ],
+    "theorem": "RevisedBenchmark.DeleteUpdate.refuted",
+    "overlap": "A shape-totality refutation; no evidence of different values at a legal generated shape. Empty-update forwarding can preempt the matched expression. No new native or whole-record verdict.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reshape-dus-delete/DeleteControls.lean",
+      "comparisons/revised-benchmark-20261117/reshape-dus-delete/DeleteProof.lean",
+      "comparisons/revised-benchmark-20261117/reshape-dus-delete/DeleteSpec.lean",
+      "comparisons/revised-benchmark-20261117/reshape-dus-delete/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reshape-dus-delete/REVIEW.md"
+    ]
+  },
+  {
+    "id": "reshape.iota-modular-radix",
+    "outcome": "proved",
+    "effort_group": "reshape-iota-radix",
+    "lhs": "Convert the row-major flattened coordinate of a rank-one Iota to a word.",
+    "rhs": "Sum minor-to-major products of converted axis Iotas and converted cumulative strides at the element width.",
+    "conditions": "Nonempty coordinate tuple, legal bounded digit at each positive extent. Source interpretation requires representable host multipliers.",
+    "types": "BitVec w, arbitrary natural width, modular integer arithmetic.",
+    "source_ids": [
+      "HandleReshape/iota-mixed-radix"
+    ],
+    "theorem": "RevisedBenchmark.RadixIota.words",
+    "overlap": "Extends the earlier three-axis Nat packing smoke identity to arbitrary positive rank and repeated finite-width conversions. The floating numerical observation below has a different outcome.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixControls.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixProof.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/REVIEW.md"
+    ]
+  },
+  {
+    "id": "reshape.iota-binary32-radix",
+    "outcome": "disproved",
+    "effort_group": "reshape-iota-radix",
+    "lhs": "Convert the flattened Iota coordinate once to binary32.",
+    "rhs": "Perform element-typed index conversions, multiply by the converted stride, then add the minor-axis Iota with binary32 rounding at each step.",
+    "conditions": "Two output axes >1, product <2^26, finite nonnegative integers, binary32 round-to-nearest ties-to-even.",
+    "types": "Logical binary32 numerical values on this bounded domain.",
+    "source_ids": [
+      "HandleReshape/iota-mixed-radix"
+    ],
+    "theorem": "RevisedBenchmark.RadixIota.rounded_counterexample",
+    "overlap": "Same source record as modular case. Prior Nat packing cannot justify rounding at different points.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixControls.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixProof.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/REVIEW.md"
+    ]
+  },
+  {
+    "id": "reduce.uniform-arg-extremum-signed-index",
+    "outcome": "disproved",
+    "effort_group": "uniform-arg-index",
+    "lhs": "Ordered argmin or argmax over a uniform rank-one vector and a signed-word Iota, retaining the value and tie-breaking index.",
+    "rhs": "Return the uniform scalar and a zero index.",
+    "conditions": "Reduction of the Iota axis; length >1, positive signed word width and scalar broadcast. The matched reducer uses signed strict less-than on tied indices.",
+    "types": "Canonical ordered values with extrema and one NaN, signed BitVec indices. Witness uses an interior finite value.",
+    "source_ids": [
+      "HandleReduce/argmin-constant",
+      "HandleReduce/argmax-constant"
+    ],
+    "theorem": "RevisedBenchmark.ArgWord.refuted",
+    "overlap": "One signed-wrap witness works for both directions. The earlier sibling proof observed only the value with Nat indices. This observation includes the encoded index.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/uniform-arg-index/ArgWordControls.lean",
+      "comparisons/revised-benchmark-20261117/uniform-arg-index/ArgWordProof.lean",
+      "comparisons/revised-benchmark-20261117/uniform-arg-index/ArgWordSpec.lean",
+      "comparisons/revised-benchmark-20261117/uniform-arg-index/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/uniform-arg-index/REVIEW.md"
+    ]
+  }
+]

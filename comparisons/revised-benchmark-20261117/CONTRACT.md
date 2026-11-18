@@ -1,6 +1,6 @@
 # Revised benchmark verification contract
 
-**Current counts:** [Effective-scalar Gather and related cases](#effective-scalar-gather-and-related-cases). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
+**Current counts:** [Zero-padding dot and numerical boundaries](#zero-padding-dot-and-numerical-boundaries). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
 
 ## Owner direction and outcome gate
 
@@ -193,3 +193,14 @@ The Gather calculation scatters decoded starts, accounts for explicit batching, 
 The block-dot case extends the historical two-prepaired-segment law; it proves the cumulative addressing for a single unsplit constant and arbitrary block counts. The transpose-dot case also builds on the operand-commutation law of historical dot/rule02; the new statement checks reindexing of batch-dimension lists and their coordinate bounds. Four candidate concatenate records were skipped after matching their existing terminal results. The authors used the existing tensor/index/permutation theory and Std. Historical discovery time, per-alias allocation and active reasoning costs remain unknown.
 
 The next distinct source-grounded candidate is paired-axis zero padding across a dot (algebraic_simplifier.cc lines 3708–3775). Its replacement slices the opposite operand with start equal to low padding, limit equal to its extent minus high padding, and stride equal to one plus interior padding. Axes with negative edge padding stay on the original operand. A valid case needs a proof that these slices enumerate exactly the nonpadding contraction positions, including zero extents, plus retained noncontracting padding. The reverse proof alone does not establish this.
+
+## Zero-padding dot and numerical boundaries
+
+Eight additional complete mathematical cases, four proved and four refuted, raise the catalog to 136 (120 proofs, 16 refutations), linked to 181 distinct retained records. All twelve newly linked IDs had no recorded attempt evidence in the preceding ledger. Both directions of each dot rewrite and both constant arg-extremum directions are grouped. The mixed-radix Iota rewrite has opposite outcomes under modular words and finite binary32 rounding. Its earlier Nat smoke identity retains its prior provenance. The [catalog](model-audit/pad-dot.json), [independent reviews](model-audit/pad-dot-review.md), and [group timing ledger](model-audit/effort.json) give exact claims, assumptions and evidence.
+
+* Exact integer dot permits stripping zero padding from the contracted operand and slicing its partner at matching strided coordinates. The proof covers arbitrary many paired axes and empty extents. Retained padding enters through the unchanged evaluated fiber. Edge overwrite of a pad, moving dynamic row/column selection outside a constant dot, and row-major modular Iota reconstruction also passed.
+* Broadcast-to-reduction across a dot can retain the former number of a surviving partner axis. In a legal equal-extent frame the wrong axis still type-checks and changes [0,10] to [0,0]; the modeled cost ratio is four against threshold two.
+* Deleting the base unit axis of a DUS can generate an ill-shaped reshape for an empty update. The input returns [4,5,6], while the update reshape attempts to turn zero elements into two. An earlier empty-update pass can remove this pattern.
+* For an F32 Iota reshaped to [2,16777217], at [1,1] the direct rank-one conversion yields 16777218 and the rounded multiply-add calculation yields 16777216. The check evaluated a single coordinate. A uniform signed-S8 arg-extremum of length 129 returns index −128 instead of the replacement zero; the constant value is preserved.
+
+No new native executions were performed. The stronger whole-record ledger continues to record seven configured counterexamples and 481 unresolved source records. The historical artifact outcomes (116 proofs, one refutation, one vacuous case) are separate and unchanged. Remaining benchmark scope is open. The next scoped candidate identified is HandleSlice/dot-operands: inspect ConstructToDotMaps and check projecting start, limit and stride onto batch and free axes while leaving both contracting domains whole (algebraic_simplifier.cc 7863–7947).
