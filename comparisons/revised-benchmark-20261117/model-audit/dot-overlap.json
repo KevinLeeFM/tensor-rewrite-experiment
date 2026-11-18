@@ -1,0 +1,187 @@
+[
+  {
+    "id": "dot.remove-common-input-transposes",
+    "effort_group": "dot-remove-transposes",
+    "source_ids": [
+      "RemoveTransposesFromDotOperands/keep-order",
+      "RemoveTransposesFromDotOperands/swap",
+      "HandleDot/transposes-delegation"
+    ],
+    "lhs": "Dot the two input transposes using their common batch list D, and left-last/right-penultimate contraction.",
+    "rhs": "Dot the raw inputs in identity batch order, exchanging them exactly when P flips the last two slots, then apply the output transpose with batch mapping P of D and the same terminal orientation.",
+    "conditions": "Legal common input transpose with batch prefix P; common original batch list D need not be sorted. One free and one contracted axis on each operand as derived from lawful equal-rank descriptors and source guards. Compatible paired extents and arbitrary static extents including zero.",
+    "types": "Exact Int dense dot; arbitrary batch rank with one free axis per operand and one paired contracted axis.",
+    "theorem": "RevisedBenchmark.RemoveInputTransposes.verified",
+    "overlap": "The swap branch is definitionally the established operand-commutation/batch permutation result after normalization. Keep normalizes by reflexivity. One named input-transpose-removal optimization with two variants under the adopted expression-based gate, zero newly discovered algebraic identities.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/RemoveControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/CONTRACT.md",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dot-remove-transposes/replay.py"
+    ]
+  },
+  {
+    "id": "bitcast-convert.concat-raw-words",
+    "effort_group": "bitcast-concat-pack",
+    "lhs": "Concatenate converted operands along a shared logical axis, then bitcast-convert back to the original word type.",
+    "rhs": "Concatenate the original operands in their original order along that axis.",
+    "conditions": "Nonempty ordered operand list; arbitrary shared static prefix/suffix shapes and per-operand concat-axis extents; equal bit widths or integral ratio k > 1. Rank-changing conversions use the final lane axis, disjoint from concat. One consistent least-first or most-first order. Covers zero extents.",
+    "types": "Positive-width raw BitVec words or a complete trailing axis of k narrow words; arbitrary payload including sign bits. Exact logical bit observation; no physical-layout or implementation-level claim.",
+    "source_ids": [
+      "TrySimplifyTautologicalBitcastConvert/concat",
+      "HandleBitcastConvert/concat-delegation"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/PackSpec.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/PackProof.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/PackControls.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-pack/replay.py"
+    ],
+    "theorem": "RevisedBenchmark.BitcastConcat.verified",
+    "overlap": "BitPackingProof.repack_compose/repack_refl and BitPackingShapeProof split/join are inherited inverse results without intervening concatenation. Ordered many-operand concatenation and all three width directions are one mathematical case; the caller delegates directly."
+  },
+  {
+    "id": "convolution.filter-pad-integer",
+    "outcome": "proved",
+    "effort_group": "conv-filter-exact",
+    "lhs": "Convolve against the zero-interior-padded filter.",
+    "rhs": "Remove the filter pad, set kernel size and dilation per modified spatial axis, then convolve.",
+    "conditions": "Arbitrary spatial rank, zero feature/edge padding on filter, original dilation one where holes are added; legal positive stride and base/kernel dilation, signed window edges, reversal; compare shape and every value on each output-channel plane.",
+    "types": "Exact Int; arbitrary feature count and static extents including zero.",
+    "source_ids": [
+      "FoldConvFilterPad/dilation",
+      "HandleConvolution/filter-pad-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvFilter.verified",
+    "overlap": "Reuses PadDot sparse support. Output span, reversed and unreversed physical tap offsets and complete convolution sampling are additional obligations. Same transformation as exceptional filter case under a different arithmetic contract.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-filter-exact/FilterControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-filter-exact/FilterProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-filter-exact/FilterSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-filter-exact/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-filter-exact/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-filter-exact/replay.py"
+    ]
+  },
+  {
+    "id": "convolution.input-pad-strict-exceptional",
+    "outcome": "disproved",
+    "effort_group": "conv-pad-exceptional",
+    "lhs": "Convolve an explicitly edge-padded input with the kernel.",
+    "rhs": "Move the edge amounts into the window and skip out-of-range taps.",
+    "conditions": "One spatial axis, one input and output feature, unit stride and dilation, no reversal, arbitrary nonempty operand lists and nonnegative pad amounts.",
+    "types": "Strict binary32 on a closed positive-zero, positive-infinity and NaN fragment. Observe NaN class.",
+    "source_ids": [
+      "FoldConvInputPad/compose",
+      "HandleConvolution/input-pad-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvPad.inputRefuted",
+    "overlap": "Input edge versus skipped window position. The earlier semiring input-pad law excludes these multiplication rules.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/ConvPadControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/ConvPadProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/ConvPadSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/replay.py"
+    ]
+  },
+  {
+    "id": "convolution.filter-pad-strict-exceptional",
+    "outcome": "disproved",
+    "effort_group": "conv-pad-exceptional",
+    "lhs": "Convolve with materialized zero taps between consecutive filter entries.",
+    "rhs": "Convolve with the undilated stored filter and increase window dilation to jump over the holes.",
+    "conditions": "One spatial axis, one input/output feature, unit stride and original dilation, no reversal or edges, nonempty arrays. All witness input positions are in bounds.",
+    "types": "Strict binary32 on positive-zero, positive-infinity and NaN classes.",
+    "source_ids": [
+      "FoldConvFilterPad/dilation",
+      "HandleConvolution/filter-pad-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvPad.filterRefuted",
+    "overlap": "This is the exceptional arithmetic variant of filter-pad folding. The input-pad witness instead depends on skipping an out-of-bounds base position.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/ConvPadControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/ConvPadProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/ConvPadSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-pad-exceptional/replay.py"
+    ]
+  },
+  {
+    "id": "dot.nested-rounded-direct",
+    "outcome": "disproved",
+    "effort_group": "nested-dot-round",
+    "lhs": "Evaluate the original costlier nested matrix product in its selected parenthesization.",
+    "rhs": "Reassociate to the cheaper product and keep the original free-axis order.",
+    "conditions": "Unbatched matrix products, strict modeled twofold cost threshold. Both orientations have a nonempty admitted witness. Inputs and intermediates lie in a finite nonnegative integer-valued RNE binary32 fragment. Only the direct output ordering is claimed.",
+    "types": "Round-to-nearest-even on load, product and each sequential addition; pre-round integer ≤2^30.",
+    "source_ids": [
+      "AssociativeReorderNestedDot/lhs-direct",
+      "AssociativeReorderNestedDot/rhs-direct",
+      "HandleDot/nested-delegation"
+    ],
+    "theorem": "RevisedBenchmark.NestedDot.refuted",
+    "overlap": "The two cost orientations give a single reassociation law. Earlier semiring associativity and mixed-radix binary32 results do not establish it under fixed rounded accumulation.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/nested-dot-round/NestedControls.lean",
+      "comparisons/revised-benchmark-20261117/nested-dot-round/NestedProof.lean",
+      "comparisons/revised-benchmark-20261117/nested-dot-round/NestedSpec.lean",
+      "comparisons/revised-benchmark-20261117/nested-dot-round/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/nested-dot-round/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/nested-dot-round/replay.py"
+    ]
+  },
+  {
+    "id": "gather.batch-and-passthrough-pad",
+    "outcome": "proved",
+    "effort_group": "gather-pad-hoist",
+    "lhs": "Gather an indexed window from a padded operand with matching batch pad on the indices when present.",
+    "rhs": "Gather from the unpadded operand and index rows, then pad the corresponding output batch and passthrough axes.",
+    "conditions": "Static rank-three physical [batch,lookup,passthrough] operand, one explicit batching pair, full passthrough window and one clamped lookup component, arbitrary legal width, nonnegative result extents, signed edges/interior holes; passthrough-only uses identity batch and unchanged starts.",
+    "types": "Arbitrary values and independent index fill, signed integer starts; every typed output and both edge paths.",
+    "source_ids": [
+      "HandleGather/pad-hoist-batching",
+      "HandleGather/pad-hoist-passthrough"
+    ],
+    "theorem": "RevisedBenchmark.GatherHoist.verified",
+    "overlap": "Two source variants instantiate one pad transport, distinct from scalar Gather and the subsequent reshape-of-pad graph.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/GatherHoistControls.lean",
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/GatherHoistProof.lean",
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/GatherHoistSpec.lean",
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/gather-pad-hoist/replay.py"
+    ]
+  },
+  {
+    "id": "bitcast-convert.concat-added-lane-shape",
+    "outcome": "disproved",
+    "effort_group": "bitcast-concat-lane",
+    "lhs": "Narrow each wide array, concatenate on the newly appended lane dimension, and widen back.",
+    "rhs": "Concatenate the original wide arrays along the same numbered dimension.",
+    "conditions": "Static noncomplex words with divisible storage widths and ratio greater than one, equal original shapes. The original has an inferred result exactly for a unary concat on this axis; the replacement axis is outside the original rank. Earlier unary elimination can preempt this shape.",
+    "types": "Shape preservation for logical arrays; e.g. U16[3] narrowed to U8[3,2].",
+    "source_ids": [
+      "TrySimplifyTautologicalBitcastConvert/concat",
+      "HandleBitcastConvert/concat-delegation"
+    ],
+    "theorem": "RevisedBenchmark.LaneConcat.refuted",
+    "overlap": "Excluded new-lane domain of the shared-axis bit-identity proof. Count the shape refutation separately by declared domain; it supplies no native execution.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/bitcast-concat-lane/LaneControls.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-lane/LaneProof.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-lane/LaneSpec.lean",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-lane/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-lane/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/bitcast-concat-lane/replay.py"
+    ]
+  }
+]
