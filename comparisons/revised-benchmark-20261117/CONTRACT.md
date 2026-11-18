@@ -324,3 +324,9 @@ The catalog contains **192 mathematical cases, 151 proved and 41 refuted**. The 
 ## Physical row order, reducer parameters and signed zeros
 
 Three independently reviewed refutations bring the mathematical register to **195 cases, 151 proved and 44 refuted**, with case or reuse links to **380 of 488** source labels. Equal dense layout arrays allow input/output batch and spatial axes in different semantic positions; convolution-to-dot bitcasts then give 1 versus 2 at a legal output in a 2×3 example. The other two cases identify the exact reducer-role requirement when combining two scatters and distinguish +0 from −0 for four padded-window broadcast paths. Source records and native status retain their prior verdicts. [Statements and controls](model-audit/layout-scatter-windows.json) · [Independent reviews](model-audit/layout-scatter-windows-review.md)
+
+## Accumulation across taps and restored reduction axes
+
+The mathematical register contains **198 cases, 152 proved and 46 refuted**. For two U8 operands with U32 output, each tap product fits. Exactly 66,052 repetitions of 255 × 255 produce 4,295,031,300; the modeled convolution clamps to 4,294,967,295, while the emitted U32 reduction gives 64,004. The length-66,051 control still agrees. This symbolic fold shares one witness across six cast/reversal labels. A two-tap F16 dot also distinguishes rounding at the product from rounding only at the final sum. The exact-integer merged reduction is proved at identity seed; a separate formula accounts for repeated nonidentity initializers. [Independent reviews](model-audit/mixed-tap-reductions-review.md)
+
+Four caller labels now carry explicit, receipt-checked links to eight already catalogued outcomes. Counting each mathematical case once, 396 of 488 source labels have case or reuse links. The two inventories retain their existing interpretation. [Caller audit](model-audit/delegation137-alias-review.md)

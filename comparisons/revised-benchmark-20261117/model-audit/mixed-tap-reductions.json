@@ -1,0 +1,93 @@
+[
+  {
+    "id": "conv.mixed-full-uniform-accumulation",
+    "effort_group": "conv-mixed-uniform-taps",
+    "source_ids": [
+      "SimplifyConvToMultiply/reduce-001",
+      "SimplifyConvToMultiply/reduce-010",
+      "SimplifyConvToMultiply/reduce-011",
+      "SimplifyConvToMultiply/reduce-101",
+      "SimplifyConvToMultiply/reduce-110",
+      "SimplifyConvToMultiply/reduce-111"
+    ],
+    "theorem": "RevisedBenchmark.MixedTapCount.refuted",
+    "lhs": "Accumulate widened products in U64 and clamp to U32 once.",
+    "rhs": "Store each converted product and reduce with addition modulo 2^32.",
+    "conditions": "Dense rank-three groups, one full spatial kernel, singleton spatial output. Parameter data constant over taps, optional reversal. Width 66052 and input/kernel value 255 in all three mixed profiles.",
+    "types": "U8/U8, U8/U32, U32/U8 with U32 result under frozen evaluator profile.",
+    "overlap": "Pointwise U8/U8 products fit U32; here the first excess comes solely from repeated addition. One symbolic witness covers all mixed orientations and both reversal flags.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/author.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h"
+    ]
+  },
+  {
+    "id": "dot.strength-half-product-rounding",
+    "effort_group": "dot-strength-half",
+    "source_ids": [
+      "HandleDot/strength-reduce-delegation",
+      "RewriteBatchPlusContractingAsReduce/no-free-both",
+      "RewriteBatchPlusContractingAsReduce/no-free-lhs",
+      "RewriteBatchPlusContractingAsReduce/no-free-rhs"
+    ],
+    "theorem": "RevisedBenchmark.DotStrength.refuted",
+    "lhs": "Accumulate both products in F32, then narrow the final result to F16.",
+    "rhs": "Store the products in F16, widen to F32 for reduction, then narrow to F16.",
+    "conditions": "Length-two contraction on nonnegative integers through 63, with no free dimension, or a free dimension of extent two on just one operand. Default ALG_UNSET emitter, non-CPU policy where necessary.",
+    "types": "Binary16 rounding-to-nearest-even; all F32 intermediate operations exact in this domain.",
+    "overlap": "Small integer-valued witness specifically distinguishes the materialized half-precision products. Three graph shapes share the same failure.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-strength-half/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/StrengthControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/StrengthProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/StrengthSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/author.log",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/failed-control-typing.log",
+      "comparisons/revised-benchmark-20261117/dot-strength-half/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h"
+    ]
+  },
+  {
+    "id": "reduce.merged-source-axes-seed",
+    "effort_group": "merge-reduce-axes",
+    "source_ids": [
+      "MergeReduces/combined-axes",
+      "HandleReduce/merge-delegation"
+    ],
+    "theorem": "RevisedBenchmark.MergeAxes.verified; RevisedBenchmark.MergeAxes.identity",
+    "lhs": "Apply the same integer sum reducer to either leading axis, then to its surviving partner.",
+    "rhs": "Lift the shortened axis, merge the two dimensions and sum one row-major fiber.",
+    "conditions": "Arbitrary rank-three extents and third-axis outputs, including empty cases, same seed and reducer. Identity seed 0 guarantees equality. Generalized repeated-initializer correction is an additional mathematical result.",
+    "types": "Exact additive integers.",
+    "overlap": "Historical zero-seeded grouped sums are reused conceptually. The new theorem checks the source axis adjustment and derives the excess for arbitrary seeds without counting nonidentity seeds as a source defect.",
+    "outcome": "proved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/MergeControls.lean",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/MergeProof.lean",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/MergeSpec.lean",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/author.log",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/failed-flat.log",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/tensorright-v1/GroupedSums.lean"
+    ]
+  }
+]

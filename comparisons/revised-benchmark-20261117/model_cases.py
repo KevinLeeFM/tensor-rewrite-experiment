@@ -28,7 +28,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
     catalog_pins = directory / 'catalog-sha256.json'
     pinned_catalogs = read(catalog_pins)
     audit_inputs = [manifest_path, catalog_pins, effort_path, plan]
-    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18', 'extrema', 'gather-dot', 'pad-dot', 'slice-dot-followup', 'dot-overlap', 'dot-unit', 'fiber-broadcast', 'guard-domains', 'scan-shape', 'window-convolution', 'collective-window', 'pointwise-concat', 'physical-conv-domains', 'mixed-physical', 'layout-scatter-windows'):
+    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18', 'extrema', 'gather-dot', 'pad-dot', 'slice-dot-followup', 'dot-overlap', 'dot-unit', 'fiber-broadcast', 'guard-domains', 'scan-shape', 'window-convolution', 'collective-window', 'pointwise-concat', 'physical-conv-domains', 'mixed-physical', 'layout-scatter-windows', 'mixed-tap-reductions'):
         catalog = directory / (name + '.json')
         review = directory / (name + '-review.md')
         assert digest(catalog) == pinned_catalogs[catalog.name], catalog
@@ -65,6 +65,26 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
                 by_source[source_id].setdefault(source_field, []).append(row['id'])
         groups[name] = dict(counts)
     assert cited == manifest.keys()
+    alias_rows_path = directory / 'delegation137-alias-rows.json'
+    alias_review_path = directory / 'delegation137-alias-review.md'
+    for path in (alias_rows_path, alias_review_path):
+        assert digest(path) == pinned_catalogs[path.name], path
+        audit_inputs.append(path)
+    aliases = read(alias_rows_path)
+    outcomes_by_id = {case['id']: case for case in cases}
+    seen_aliases = set()
+    for alias in aliases:
+        caller = by_source[alias['source_id']]
+        target = outcomes_by_id[alias['existing_case_id']]
+        pair = (caller['id'], target['id'])
+        assert pair not in seen_aliases and caller['id'] not in target['source_ids']
+        seen_aliases.add(pair)
+        assert set(alias['existing_source_ids']) <= set(target['source_ids'])
+        assert alias['outcome'] == target['outcome'] and alias['theorem'] == target['theorem']
+        receipt = alias['historical_review_or_receipt']
+        receipt_hash = historical_blobs[receipt] if ':' in receipt else digest(root / receipt)
+        assert receipt_hash == alias['receipt_sha256']
+        caller.setdefault('mathematical_case_ids', []).append(target['id'])
     sources_with_cases = {s for s, r in by_source.items() if r.get('mathematical_case_ids') or r.get('mathematical_reuse_ids')}
     for row in modern:
         if row['id'] in sources_with_cases and row['work_state'] in {
@@ -92,6 +112,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
         'scope': 'Reviewed source-associated cases only. The remaining mathematical denominator is open. Some cases overlap historical paper laws; never add historical and current counts to claim distinct rules.',
         'counts': dict(collections.Counter(row['outcome'] for row in cases)),
         'counts_by_catalog': groups,
+        'reviewed_source_delegations': aliases,
         'source_ids_represented': len(sources_with_cases),
         'source_ids_without_catalogued_case': sorted(by_source.keys() - sources_with_cases),
         'inherited_family_ids_with_catalogued_case': sorted(family_ids & sources_with_cases),
