@@ -1,0 +1,52 @@
+comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderSpec.lean: OK
+comparisons/revised-benchmark-20261117/reduce-transpose-orders/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+RadixSpec 0.390s exit=0
+OrderSpec 0.344s exit=0
+OrderProof.lean:17:19: error: Type mismatch: After simplification, term
+  congrArg
+ has type
+  ∀ (f : ?m.37 → ?m.38), ?m.39 = ?m.40 → f ?m.39 = f ?m.40
+but is expected to have type
+  (List.map (fun p => f p.fst p.snd) (List.flatMap (fun i => List.map (fun j => (i, j)) bs) t)).sum =
+    (List.map (fun i => (List.map (f i) bs).sum) t).sum
+OrderProof.lean:18:15: error: unexpected token '('; expected command
+OrderProof.lean:51:25: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (frame false 2 3).fst) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin (frame false 2 3).fst
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+OrderProof.lean:51:27: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (frame false 2 3).snd) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin (frame false 2 3).snd
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+OrderProof.lean:53:25: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (frame true 2 3).fst) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin (frame true 2 3).fst
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+OrderProof.lean:53:27: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  OfNat (Fin (frame true 2 3).snd) 0
+numerals are polymorphic in Lean, but the numeral `0` cannot be used in a context where the expected type is
+  Fin (frame true 2 3).snd
+due to the absence of the instance above
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+'RevisedBenchmark.ReduceOrders.exactIntegers' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'RevisedBenchmark.ReduceOrders.rounded' depends on axioms: [sorryAx]
+OrderProof 0.381s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reduce-transpose-orders/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'OrderProof.olean', 'OrderProof.lean']' returned non-zero exit status 1.
