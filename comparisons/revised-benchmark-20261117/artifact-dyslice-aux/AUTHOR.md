@@ -1,0 +1,5 @@
+# Author result
+
+With the frozen goal at 47fa730, the single admissible observation at index 0 distinguishes the two rank-one outputs. The input iota has values [0,1], its start is 0 and its slice size is 1. The RHS is the constant finite TensorInt 1 of extent 1. The two values are 0 and 1. Changing the literal to 0 restores equality, as does keeping literal 1 and changing the start to 1. AuxControls also checks a length-two slice and rejects the out-of-bounds start.
+
+Author replay under pinned Lean 4.35.0 checked seven hashes and compiled AuxSpec, AuxProof and AuxControls in 0.421, 0.297 and 0.359 s respectively (1.077 s summed command time). Both audited theorems depend on propext and Quot.sound. No failed compiler attempt in this packet. Source reading, specification and proof preparation overlap the four-declaration audit beginning 05:01:51 UTC; discovery-only time was not separately measured. Independent review is pending. This packet concerns a dormant tensor-right artifact declaration and adds no executed main or XLA case.
