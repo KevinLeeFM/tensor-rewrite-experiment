@@ -1,0 +1,248 @@
+[
+  {
+    "id": "dot.drop-unit-axes",
+    "effort_group": "dot-drop-unit",
+    "source_ids": [
+      "RemoveDegenerateDimensionFromDot/direct",
+      "RemoveDegenerateDimensionFromDot/reshape-result",
+      "HandleDot/degenerate-delegation"
+    ],
+    "lhs": "Dense exact Int dot over the original batch, left/right free and ordered paired contracting shapes.",
+    "rhs": "Dot on both operands with every singleton axis removed, restoring the old output shape when needed; descriptor lists are independently filtered and renumbered in existing order.",
+    "conditions": "Legal paired dot descriptors with equal paired extents; at least one unit dimension. Arbitrary static rank and extents, including zero. Coordinates represented in lawful grouped operand order; physical-to-grouped reads are an explicit interpretation assumption.",
+    "types": "Exact Int tensor entries, Nat extents, flattened dense outputs.",
+    "theorem": "RevisedBenchmark.DotDropUnit.verified",
+    "overlap": "No preceding dot unit-removal case found. Generic singleton-reshape and descriptor conventions reused conceptually. Both exits counted as one model optimization.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/DropSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/DropProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/DropControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/CONTRACT.md",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/replay.py"
+    ]
+  },
+  {
+    "id": "scalar-concat-slice.start-only",
+    "outcome": "proved",
+    "effort_group": "scalar-concat-slice",
+    "lhs": "Legal positive-stride rank-one slice of an ordered concatenation with a singleton result.",
+    "rhs": "Return the selected compatible singleton operand or slice the first operand whose prefix endpoint strictly exceeds the original start, retaining the stride and using a unit local window.",
+    "conditions": "Rank-one static arrays; nonnegative representable prefix and index arithmetic, positive stride, legal half-open limit, computed output extent exactly one. Direct reuse requires compatibility and hence a logical singleton; the fallback also covers singleton operands.",
+    "types": "Lists over any element type; equality of the full rank-one output including length.",
+    "source_ids": [
+      "TrySimplifyScalarSlice/concat-piece",
+      "TrySimplifyScalarSlice/concat-slice",
+      "HandleSlice/scalar-slice-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ScalarConcatSlice.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/ScalarSpec.lean",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/ScalarProof.lean",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/ScalarControls.lean",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/author-replay.log",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/scalar-concat-slice/replay.py"
+    ],
+    "overlap": "Prior HandleSlice concat scan/crop results model unit stride and both endpoint searches. A scalar-output window at larger stride may cross multiple operands. These two helper branches and their delegating caller form one mathematical case."
+  },
+  {
+    "id": "reduce.transpose-int-order",
+    "outcome": "proved",
+    "effort_group": "reduce-transpose-orders",
+    "source_ids": [
+      "HandleReduce/transpose-sorted",
+      "HandleReduce/transpose-permute-result"
+    ],
+    "theorem": "RevisedBenchmark.ReduceOrders.exactIntegers",
+    "lhs": "Sequentially add the two reduced axes of a four-axis transposed tensor.",
+    "rhs": "Reduce those axes of the original operand and restore the surviving axis order if needed.",
+    "conditions": "Permutations [1,2,3,0] and [3,2,1,0], reduction axes [1,3], arbitrary four extents, arbitrary seed including empty planes.",
+    "types": "Dense exact integers; logical row-major sequential addition.",
+    "overlap": "Two result orientations share one finite-sum exchange. Historical reductions and nested-dot reassociation are different expressions.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/FREEZE.md"
+    ]
+  },
+  {
+    "id": "reduce.transpose-rounded-order",
+    "outcome": "disproved",
+    "effort_group": "reduce-transpose-orders",
+    "source_ids": [
+      "HandleReduce/transpose-sorted",
+      "HandleReduce/transpose-permute-result"
+    ],
+    "theorem": "RevisedBenchmark.ReduceOrders.rounded",
+    "lhs": "Sequentially add the transposed plane, starting at zero, rounding after each addition.",
+    "rhs": "Sequentially add the untransposed plane, then return the result in the old output order.",
+    "conditions": "Same four-axis frames and two permutations, admitted finite nonnegative integer-valued observations; witness reduction plane [[1,1],[16777216,0]].",
+    "types": "Fixed-sequence nearest-even binary32 sums through the bounded fragment.",
+    "overlap": "Same transformation as exact Int above, different arithmetic. Both orientations share one counterexample, without a native scheduling claim.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/OrderSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-transpose-orders/FREEZE.md"
+    ]
+  },
+  {
+    "id": "reuse.dynamic-slice-broadcast",
+    "outcome": "proved",
+    "effort_group": "dynamic-slice-broadcast",
+    "source_ids": [
+      "HandleDynamicSlice/broadcast-array",
+      "HandleDynamicSlice/broadcast-scalar"
+    ],
+    "theorem": "RevisedBenchmark.DynamicBroad.verified",
+    "lhs": "Dynamically slice a broadcast at signed runtime starts.",
+    "rhs": "Project the starts and widths onto the original input axes, slice there when nonscalar, and broadcast.",
+    "conditions": "All static ranks, bounded clamping, fitting widths, matching broadcast extents, including rank zero.",
+    "types": "Arbitrary homogeneous tensor values, mathematical integer starts.",
+    "overlap": "Historical dyslice/rule03 already proves this identity. Projected-fit derivation and bypass are new source-facing checks. Source coverage only; no increment to outcome totals.",
+    "evidence": [
+      "comparisons/tensorright-v1/SliceBroadcast.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/DynamicBroadControls.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/DynamicBroadProof.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/DynamicBroadSpec.lean",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/replay.py",
+      "comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/FREEZE.md"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/SliceBroadcast.lean"
+  },
+  {
+    "id": "maximum.cbrt-mixed-precision",
+    "outcome": "disproved",
+    "effort_group": "max-cbrt-precision",
+    "source_ids": [
+      "HandleMaximum/sink-cbrt"
+    ],
+    "theorem": "RevisedBenchmark.MaxCbrt.refuted",
+    "lhs": "Take maximum of separate BF16 and F32 rounded cube roots after widening the BF16 value.",
+    "rhs": "Compute F32 maximum of the inputs then round its cube root to F32.",
+    "conditions": "Exactly represented integer inputs 1 through 7; mixed output precision F32, ideal correctly rounded cube roots, strict cubed midpoint certificates.",
+    "types": "Positive finite BF16/F32.",
+    "overlap": "Monotonicity of one real or rounded operation does not equate values from two output grids. Only cube root is tested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/CbrtControls.lean",
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/CbrtProof.lean",
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/CbrtSpec.lean",
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/replay.py",
+      "comparisons/revised-benchmark-20261117/max-cbrt-precision/FREEZE.md"
+    ]
+  },
+  {
+    "id": "constant.expand-nested-tuple",
+    "outcome": "proved",
+    "effort_group": "tuple-constant-expand",
+    "source_ids": [
+      "HandleConstant/tuple"
+    ],
+    "theorem": "RevisedBenchmark.TupleExpand.verified",
+    "lhs": "Observe any component path of the original nested literal.",
+    "rhs": "Construct explicit tuples recursively and observe the same path in the resulting expression.",
+    "conditions": "Arbitrary finite arity/depth, complete leaf payload, invalid path and empty tuple observations, value-preserving leaf clone.",
+    "types": "Arbitrary payloads including tagged shapes and heterogeneous values.",
+    "overlap": "Existing tuple projection covers selection of an immediate field, without the recursive conversion.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/TupleExpandControls.lean",
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/TupleExpandProof.lean",
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/TupleExpandSpec.lean",
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/replay.py",
+      "comparisons/revised-benchmark-20261117/tuple-constant-expand/FREEZE.md"
+    ]
+  },
+  {
+    "id": "convert.integer-f32-roundtrip",
+    "outcome": "proved",
+    "effort_group": "convert-f32-roundtrip",
+    "source_ids": [
+      "HandleConvert/noop-pair"
+    ],
+    "theorem": "RevisedBenchmark.ConvertRound.verified",
+    "lhs": "Convert integer to binary32 with nearest-even rounding, then back to the same integer format with clipping.",
+    "rhs": "Forward the integer.",
+    "conditions": "Universal preservation iff width ≤24 unsigned or ≤25 signed, widths 1 through 64. A wider-width failure is outside the value-preserving source predicate.",
+    "types": "Signed/unsigned bounded mathematical integers with finite binary32 intermediary.",
+    "overlap": "Existing radix proof supplies rounding only; no new refutation is counted for the same sharp characterization.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/ConvertRoundControls.lean",
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/ConvertRoundProof.lean",
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/ConvertRoundSpec.lean",
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/replay.py",
+      "comparisons/revised-benchmark-20261117/convert-f32-roundtrip/FREEZE.md"
+    ]
+  },
+  {
+    "id": "reuse.reduce-dot-batch-identity",
+    "outcome": "proved",
+    "effort_group": "reduce-dot-seed",
+    "source_ids": [
+      "HandleReduce/dot-batch-all-batch"
+    ],
+    "theorem": "RevisedBenchmark.BatchSeed.directAt",
+    "lhs": "Reduce over the batch of an exact integer dot using the additive identity.",
+    "rhs": "Append the batch to the contraction dimensions and return the new dot.",
+    "conditions": "Grouped lhs [n,m,k], rhs [n,k]. At each inhabited output, the once-seeded calculation agrees iff z=0. The HLO Reduce contract requires this identity seed.",
+    "types": "Signed exact integers, dense products.",
+    "overlap": "Historical reduce/rule06 already supplies the identity-seeded finite-sum law. Source coverage only. A checked once-seeded z=5 model gives 9 versus 4 outside the documented HLO domain; excluded from benchmark refutations.",
+    "evidence": [
+      "comparisons/tensorright-v1/GroupedSums.lean",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/FREEZE.md"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/GroupedSums.lean",
+    "excluded_diagnostic": {
+      "theorem": "RevisedBenchmark.BatchSeed.refuted",
+      "reason": "Its nonidentity initializer violates the Reduce contract at operation_semantics.md line 3859."
+    }
+  },
+  {
+    "id": "reduce.dot-residual-seed",
+    "outcome": "proved",
+    "effort_group": "reduce-dot-seed",
+    "source_ids": [
+      "HandleReduce/dot-batch-residual-reduce"
+    ],
+    "theorem": "RevisedBenchmark.BatchSeed.residual",
+    "lhs": "Seeded additive reduction over batch and also the free axis of the old dot.",
+    "rhs": "Append the batch to the dot contraction and reduce the remaining free axis with the original seed.",
+    "conditions": "Same grouped [n,m,k] and [n,k] operands, arbitrary finite extents and seed; compare the complete scalar result.",
+    "types": "Exact integers.",
+    "overlap": "The retained seeded reduction is a separate output expression from the direct return. Finite sum exchange is reused; historical discovery time unknown.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SeedSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-dot-seed/FREEZE.md"
+    ]
+  }
+]

@@ -16,6 +16,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
     }
     by_source = {row['id']: row for row in modern}
     cases = []
+    reuse_links = []
     ids = set()
     cited = set()
     groups = {}
@@ -27,7 +28,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
     catalog_pins = directory / 'catalog-sha256.json'
     pinned_catalogs = read(catalog_pins)
     audit_inputs = [manifest_path, catalog_pins, effort_path, plan]
-    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18', 'extrema', 'gather-dot', 'pad-dot', 'slice-dot-followup', 'dot-overlap'):
+    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18', 'extrema', 'gather-dot', 'pad-dot', 'slice-dot-followup', 'dot-overlap', 'dot-unit'):
         catalog = directory / (name + '.json')
         review = directory / (name + '-review.md')
         assert digest(catalog) == pinned_catalogs[catalog.name], catalog
@@ -50,16 +51,23 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
                     cited.add(path)
             outcome = row.get('outcome', 'proved')
             assert outcome in {'proved', 'disproved'}, (row['id'], outcome)
-            counts[outcome] += 1
-            cases.append({**row, 'outcome': outcome, 'scope_review': str(review.relative_to(root)),
-                          'catalog': name})
+            entry = {**row, 'outcome': outcome, 'scope_review': str(review.relative_to(root)),
+                     'catalog': name}
+            if 'historical_reuse' in row:
+                assert row['historical_reuse'] in row['evidence'] and outcome == 'proved'
+                reuse_links.append(entry)
+                source_field = 'mathematical_reuse_ids'
+            else:
+                counts[outcome] += 1
+                cases.append(entry)
+                source_field = 'mathematical_case_ids'
             for source_id in row['source_ids']:
-                by_source[source_id].setdefault('mathematical_case_ids', []).append(row['id'])
+                by_source[source_id].setdefault(source_field, []).append(row['id'])
         groups[name] = dict(counts)
     assert cited == manifest.keys()
-    sources_with_cases = {s for s, r in by_source.items() if r.get('mathematical_case_ids')}
+    sources_with_cases = {s for s, r in by_source.items() if r.get('mathematical_case_ids') or r.get('mathematical_reuse_ids')}
     for row in modern:
-        if 'mathematical_case_ids' in row and row['work_state'] in {
+        if row['id'] in sources_with_cases and row['work_state'] in {
             'inherited_checked_partial_evidence', 'no_attempt_evidence_in_inherited_ledger'
         }:
             row['pre_model_audit_work_state'] = row['work_state']
@@ -67,7 +75,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
     candidates = out['source_candidates']
     candidates['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))
     candidates['records_with_any_reviewed_partition'] = sum(
-        bool(row.get('mathematical_case_ids') or row.get('earlier_reviewed_partition')
+        bool(row['id'] in sources_with_cases or row.get('earlier_reviewed_partition')
              or row.get('reviewed_record_observation') or row.get('accepted_model_partitions')
              or row.get('reviewed_model_counterexamples') or row.get('shape_inferred_operator_verdict')
              or row.get('complete_record_verdict')) for row in modern)
@@ -88,6 +96,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
         'source_ids_without_catalogued_case': sorted(by_source.keys() - sources_with_cases),
         'inherited_family_ids_with_catalogued_case': sorted(family_ids & sources_with_cases),
         'inherited_family_ids_pending_catalog_review': sorted(family_ids - sources_with_cases),
+        'historical_reuse_links': reuse_links,
         'cases': cases}
     for path in audit_inputs:
         out['sources'][str(path.relative_to(root))] = digest(path)
