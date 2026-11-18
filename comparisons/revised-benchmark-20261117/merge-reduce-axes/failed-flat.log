@@ -1,0 +1,52 @@
+comparisons/revised-benchmark-20261117/merge-reduce-axes/MergeSpec.lean: OK
+comparisons/revised-benchmark-20261117/merge-reduce-axes/FREEZE.md: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/tensorright-v1/GroupedSums.lean: OK
+MergeSpec 0.368s exit=0
+MergeProof.lean:23:43: error(lean.unknownIdentifier): Unknown constant `List.sum_replicate`
+MergeProof.lean:42:66: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+MergeProof.lean:42:75: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+MergeProof.lean:42:66: warning: `if_false` has been deprecated: Use `ite_false` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵f̵a̵l̵s̵e̵i̲t̲e̲_̲f̲a̲l̲s̲e̲
+MergeProof.lean:42:75: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+MergeProof.lean:43:50: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  a - b ≥ 1
+where
+ a := (List.map (fun p => x p.fst p.snd ↑k)
+    (List.flatMap (fun i => List.map (fun j => (i, j)) (List.range n)) (List.range m))).sum
+ b := sumOver (List.range m) fun i => sumOver (List.range n) fun j => x i j ↑k
+MergeProof.lean:44:60: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  a - b ≥ 1
+where
+ a := (List.map (fun p => x p.fst p.snd ↑k)
+    (List.flatMap (fun i => List.map (fun j => (i, j)) (List.range n)) (List.range m))).sum
+ b := sumOver (List.range m) fun i => sumOver (List.range n) fun j => x i j ↑k
+MergeProof.lean:42:83: warning: This simp argument is unused:
+  flat
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [original, merged, Bool.false_eq_true, if_false, if_true]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.MergeAxes.verified' depends on axioms: [propext, sorryAx]
+'RevisedBenchmark.MergeAxes.identity' depends on axioms: [propext, sorryAx]
+MergeProof 0.322s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/merge-reduce-axes/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'MergeProof.olean', 'MergeProof.lean']' returned non-zero exit status 1.
