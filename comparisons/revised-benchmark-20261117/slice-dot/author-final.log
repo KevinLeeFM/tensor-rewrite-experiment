@@ -1,0 +1,23 @@
+comparisons/revised-benchmark-20261117/slice-dot/SliceDotSpec.lean: OK
+comparisons/revised-benchmark-20261117/slice-dot/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/slice-dot/replay.py: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+SliceDotSpec 0.503s exit=0
+'RevisedBenchmark.SliceDot.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+SliceDotProof 0.435s exit=0
+fun {b l r k} =>
+  verified : ∀ {b l r k : Nat} (lhs : List (Axis b l k)) (rhs : List (Axis b r k)) (out : Nat → Nat) (ks : Fin k → Nat)
+  (s : Nat → Slice),
+  Lawful lhs →
+    Lawful rhs →
+      (∀ (j : Nat), j < b + l + r → (s j).start ≤ (s j).limit ∧ (s j).limit ≤ out j ∧ 0 < (s j).stride) →
+        projectedShape lhs b ks s = List.map (extent b (fun j => width (s j)) ks) lhs ∧
+          projectedShape rhs (b + l) ks s = List.map (extent (b + l) (fun j => width (s j)) ks) rhs ∧
+            ∀ (x y : List Nat → Int) (q : Nat → Nat),
+              (∀ (j : Nat), j < b + l + r → q j < width (s j)) →
+                dot (List.ofFn ks) (originalOperand lhs b s q x) (originalOperand rhs (b + l) s q y) =
+                  dot (List.ofFn fun i => width (project b ks s (Axis.contract i)))
+                    (replacementOperand lhs b out ks s q x) (replacementOperand rhs (b + l) out ks s q y)
+'RevisedBenchmark.SliceDot.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+SliceDotControls 0.533s exit=0

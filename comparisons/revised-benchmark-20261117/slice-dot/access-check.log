@@ -1,0 +1,26 @@
+comparisons/revised-benchmark-20261117/slice-dot/SliceDotSpec.lean: OK
+comparisons/revised-benchmark-20261117/slice-dot/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/slice-dot/replay.py: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+SliceDotSpec 0.514s exit=0
+SliceDotProof.lean:48:60: error(lean.unknownIdentifier): Unknown constant `List.Forall₂`
+SliceDotProof.lean:55:11: error(nested.lean.propRecLargeElim): Tactic `cases` failed with a nested error:
+Tactic `induction` failed: recursor `Exists.casesOn` can only eliminate into `Prop`
+
+case cons
+n : Nat
+ns : List Nat
+ih : (t : List Nat) → t ∈ grid ns → sorry
+t : List Nat
+ht : t ∈ grid (n :: ns)
+x✝ : ∃ a, a ∈ List.range n ∧ t ∈ List.map (fun x => a :: x) (grid ns)
+⊢ sorry
+'RevisedBenchmark.SliceDot.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+SliceDotProof 0.410s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/slice-dot/replay.py", line 22, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'SliceDotProof.olean', 'SliceDotProof.lean']' returned non-zero exit status 1.

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "slice.dot-project-operands",
+    "effort_group": "slice-dot",
+    "lhs": "Apply a static positive-stride slice to the output of an arbitrary paired-axis Int dot.",
+    "rhs": "Apply each projected slice on each changed operand, retaining every contracting dimension whole, then dot with the original paired-axis order.",
+    "conditions": "Arbitrary well-formed operand role permutations, legal natural start/limit/positive stride, compatible paired batch and contraction extents; source guards and profitability only restrict dispatch. Shows both projected shapes and all admitted output values.",
+    "types": "Static logical tensors of exact mathematical Int, arbitrary batch/free/contract ranks and extents, Cartesian contraction.",
+    "source_ids": [
+      "HandleSlice/dot-operands"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-dot/SliceDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-dot/SliceDotProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-dot/SliceDotControls.lean",
+      "comparisons/revised-benchmark-20261117/slice-dot/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/slice-dot/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.SliceDot.verified",
+    "overlap": "Dynamic constant lookup moves the opposite direction in a rank-two singleton subcase. Zero-pad dot changes contraction supports. Projected slice/broadcast has no summation or second operand. No independent increment for the two operand orientations or output axes."
+  }
+]

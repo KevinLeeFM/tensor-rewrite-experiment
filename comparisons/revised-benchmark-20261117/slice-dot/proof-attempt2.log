@@ -1,0 +1,32 @@
+comparisons/revised-benchmark-20261117/slice-dot/SliceDotSpec.lean: OK
+comparisons/revised-benchmark-20261117/slice-dot/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/slice-dot/replay.py: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+SliceDotSpec 0.444s exit=0
+SliceDotProof.lean:18:2: error: Tactic `split` failed: Could not split an `if` or `match` expression in the goal
+
+Hint: Use `set_option trace.split.failure true` to display additional diagnostic information
+
+b f k : Nat
+axes : List (Axis b f k)
+offset : Nat
+out : Nat → Nat
+ks : Fin k → Nat
+s : Nat → Slice
+q : Nat → Nat
+x : List Nat → Int
+t : List Nat
+⊢ x (List.map (readAt offset (fun j => atCoord (s j) (q j)) t) axes) =
+    have attrs := project offset ks s;
+    if (axes.any fun a => decide (attrs a ≠ whole (extent offset out ks a))) = true then
+      x (List.map (fun a => atCoord (attrs a) (readAt offset q t a)) axes)
+    else x (List.map (readAt offset q t) axes)
+'RevisedBenchmark.SliceDot.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+SliceDotProof 0.356s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/slice-dot/replay.py", line 22, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'SliceDotProof.olean', 'SliceDotProof.lean']' returned non-zero exit status 1.
