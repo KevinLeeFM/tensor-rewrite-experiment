@@ -1,0 +1,28 @@
+[
+  {
+    "id": "reduce-window.empty-pad-retained-shape",
+    "outcome": "disproved",
+    "effort_group": "window-empty-pad-shape",
+    "historical_reuse": "TensorRewrite/Theory/PadWindowCounterexamples.lean",
+    "source_ids": [
+      "HandleReduceWindow/pad-fold-direct",
+      "HandleReduceWindow/pad-fold-convert"
+    ],
+    "theorem": "RevisedBenchmark.EmptyFold.refuted",
+    "lhs": "Declared shape from width-two ReduceWindow on explicitly edge-padded [n,3] (optionally converted).",
+    "rhs": "Inferred shape of emitted ReduceWindow on original base with base-dilation-scaled edges, under the same retained result annotation.",
+    "conditions": "Nonnegative symmetric one-cell first-axis Pad edges, no interior, static rank two, both kernel bounds two, stride and kernel dilation one, first base dilation positive, no preexisting window padding. Counterexample n=0, first base dilation two. Compatible scalar zero fill/init; converted path S16 to S32.",
+    "types": "Static signed integer arrays and exact mathematical output extents. Source-shaped direct-handler profile.",
+    "overlap": "Prior empty_high_formula_refuted gives the one-axis geometry; this two-axis adapter and direct/converted dispatch mapping are timed separately. Operand-first HandlePad can remove the source pattern.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/EmptyFoldSpec.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/EmptyFoldProof.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/EmptyFoldControls.lean",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/author.log",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/replay.py",
+      "comparisons/revised-benchmark-20261117/window-empty-pad-shape/AUTHOR.md"
+    ]
+  }
+]
