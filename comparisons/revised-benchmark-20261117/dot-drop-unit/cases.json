@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dot.drop-unit-axes",
+    "effort_group": "dot-drop-unit",
+    "source_ids": ["RemoveDegenerateDimensionFromDot/direct", "RemoveDegenerateDimensionFromDot/reshape-result"],
+    "lhs": "Dense exact Int dot over the original batch, left/right free and ordered paired contracting shapes.",
+    "rhs": "Dot on both operands with every singleton axis removed, restoring the old output shape when needed; descriptor lists are independently filtered and renumbered in existing order.",
+    "conditions": "Legal paired dot descriptors with equal paired extents; at least one unit dimension. Arbitrary static rank and extents, including zero. Coordinates represented in lawful grouped operand order; physical-to-grouped reads are an explicit interpretation assumption.",
+    "types": "Exact Int tensor entries, Nat extents, flattened dense outputs.",
+    "theorem": "RevisedBenchmark.DotDropUnit.verified",
+    "overlap": "No preceding dot unit-removal case found. Generic singleton-reshape and descriptor conventions reused conceptually. Both exits counted as one model optimization.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/DropSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/DropProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/DropControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-drop-unit/CONTRACT.md"
+    ]
+  }
+]

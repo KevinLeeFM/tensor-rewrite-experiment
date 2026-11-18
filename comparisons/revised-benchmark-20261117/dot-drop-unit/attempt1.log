@@ -1,0 +1,89 @@
+comparisons/revised-benchmark-20261117/dot-drop-unit/DropSpec.lean: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+lean-toolchain: OK
+DropSpec 0.524s exit=0
+DropProof.lean:15:8: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+DropProof.lean:16:6: error: Tactic `apply` failed: could not unify the conclusion of `congrArg fun x => List.flatMap x (List.range n)`
+  List.flatMap ?m.61 (List.range n) = List.flatMap ?m.62 (List.range n)
+with the goal
+  List.map (expand (n :: ns))
+      (grid (if n ≠ 1 then n :: List.filter (fun x => x != 1) ns else List.filter (fun x => x != 1) ns)) =
+    List.flatMap (fun i => List.map (fun x => i :: x) (grid ns)) (List.range n)
+
+Note: The full type of `congrArg fun x => List.flatMap x (List.range n)` is
+  ?m.61 = ?m.62 → List.flatMap ?m.61 (List.range n) = List.flatMap ?m.62 (List.range n)
+
+case neg
+n : Nat
+ns : List Nat
+ih : List.map (expand ns) (grid (compact ns)) = grid ns
+h : ¬n = 1
+⊢ List.map (expand (n :: ns))
+      (grid (if n ≠ 1 then n :: List.filter (fun x => x != 1) ns else List.filter (fun x => x != 1) ns)) =
+    List.flatMap (fun i => List.map (fun x => i :: x) (grid ns)) (List.range n)
+DropProof.lean:14:56: warning: This simp argument is unused:
+  decide_eq_true_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [compact, List.filter_cons, bne_iff_ne, h, if_true, grid, List.map_flatMap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+DropProof.lean:14:75: warning: This simp argument is unused:
+  h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [compact, List.filter_cons, bne_iff_ne, decide_eq_true_eq, if_true, grid, List.map_flatMap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+DropProof.lean:15:8: warning: This simp argument is unused:
+  if_true
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [compact, List.filter_cons, bne_iff_ne, decide_eq_true_eq, h, grid, List.map_flatMap]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+DropProof.lean:15:23: warning: This simp argument is unused:
+  List.map_flatMap
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [compact, List.filter_cons, bne_iff_ne, decide_eq_true_eq, h, if_true, grid]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+DropProof.lean:39:3: error: unknown tactic
+DropProof.lean:37:39: error: unsolved goals
+b l r k : Shape
+a z : Operand
+⊢ List.flatMap
+      (fun t =>
+        List.flatMap (fun x => List.map (fun y => (List.map (fun h => a t x h * z t y h) (grid k)).sum) (grid r))
+          (grid l))
+      (grid b) =
+    List.flatMap
+      (fun t =>
+        List.flatMap
+          (fun x =>
+            List.map (fun y => (List.map (fun h => pull b l k a t x h * pull b r k z t y h) (grid (compact k))).sum)
+              (grid (compact r)))
+          (grid (compact l)))
+      (grid (compact b))
+DropProof.lean:46:2: error: Tactic `split` failed: Could not split an `if` or `match` expression in the goal
+
+Hint: Use `set_option trace.split.failure true` to display additional diagnostic information
+
+b l r k : Shape
+a z : Operand
+a✝ : 1 ∈ b ++ l ++ r ++ k
+⊢ (b ++ l ++ r, dotData b l r k a z) =
+    have out := compact b ++ compact l ++ compact r;
+    have data := dotData (compact b) (compact l) (compact r) (compact k) (pull b l k a) (pull b r k z);
+    if out = b ++ l ++ r then (out, data) else (b ++ l ++ r, data)
+DropProof 0.409s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/dot-drop-unit/replay.py", line 18, in <module>
+    p.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'DropProof.olean', 'DropProof.lean']' returned non-zero exit status 1.
