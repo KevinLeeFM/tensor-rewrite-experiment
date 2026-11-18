@@ -18,5 +18,6 @@ private def weight (p : List Nat) : Int := Int.ofNat (1 + p[0]! + p[1]! + p[2]!)
 /-- Two moved axes separated by one retained axis; model a retained zero cell. -/
 private def cropped (i : List Nat) : Int := if i[1]! = 0 then 0 else table i
 private def multi := [a, ⟨2,0,0,0⟩, ⟨2,2,0,2⟩]
+set_option maxRecDepth 4096 in
 example : replacement multi true cropped weight = 95 ∧ original multi false cropped weight = 95 := by decide
 end RevisedBenchmark.PadDot
