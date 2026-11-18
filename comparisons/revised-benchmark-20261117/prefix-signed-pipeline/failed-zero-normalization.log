@@ -1,0 +1,35 @@
+comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineSpec.lean: OK
+comparisons/revised-benchmark-20261117/prefix-signed-pipeline/FREEZE.md: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldSpec.lean: OK
+comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldProof.lean: OK
+FoldSpec 0.445s exit=0
+'RevisedBenchmark.MixedTapCount.refuted' depends on axioms: [propext, Quot.sound]
+FoldProof 2.318s exit=0
+PipelineSpec 0.360s exit=0
+PipelineProof.lean:15:27: error: unsolved goals
+case s32
+n : Nat
+a✝ : 1 < n
+ss : List (Stage n)
+v : Int
+r : Fin n
+⊢ 0#32 + BitVec.ofInt 32 (scalar ss v) * (BitVec.ofNat 32 ↑r + 1#32) =
+    BitVec.ofInt 32 (scalar ss v) * (BitVec.ofNat 32 ↑r + 1#32)
+
+case s64
+n : Nat
+a✝ : 1 < n
+ss : List (Stage n)
+v : Int
+r : Fin n
+⊢ 0#64 + BitVec.ofInt 64 (scalar ss v) * (BitVec.ofNat 64 ↑r + 1#64) =
+    BitVec.ofInt 64 (scalar ss v) * (BitVec.ofNat 64 ↑r + 1#64)
+'RevisedBenchmark.PrefixPipeline.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+PipelineProof 0.327s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/prefix-signed-pipeline/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'PipelineProof.olean', 'PipelineProof.lean']' returned non-zero exit status 1.

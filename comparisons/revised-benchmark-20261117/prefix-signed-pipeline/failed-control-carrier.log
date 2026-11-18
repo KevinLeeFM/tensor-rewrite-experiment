@@ -1,0 +1,26 @@
+comparisons/revised-benchmark-20261117/prefix-signed-pipeline/PipelineSpec.lean: OK
+comparisons/revised-benchmark-20261117/prefix-signed-pipeline/FREEZE.md: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldSpec.lean: OK
+comparisons/revised-benchmark-20261117/conv-mixed-uniform-taps/FoldProof.lean: OK
+FoldSpec 0.399s exit=0
+'RevisedBenchmark.MixedTapCount.refuted' depends on axioms: [propext, Quot.sound]
+FoldProof 2.194s exit=0
+PipelineSpec 0.369s exit=0
+'RevisedBenchmark.PrefixPipeline.verified' depends on axioms: [propext, Quot.sound]
+PipelineProof 0.353s exit=0
+PipelineControls.lean:6:47: error: failed to synthesize
+  Decidable (old Target.s64 chain (-1) 2 = 765#64)
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+PipelineControls.lean:8:24: error: failed to synthesize
+  Decidable (newValue Target.s32 [] 1 ⟨2147483647, ⋯⟩ = 2147483648#32)
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+PipelineControls 0.297s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/prefix-signed-pipeline/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'PipelineControls.olean', 'PipelineControls.lean']' returned non-zero exit status 1.
