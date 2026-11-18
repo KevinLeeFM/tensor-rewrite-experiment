@@ -18,10 +18,10 @@ def times (swapped : Bool) (a b : Int) : Int := if swapped then b*a else a*b
 
 def Case : Prop := ∀ {br lr : Nat} (b : Shape br) (l : Shape lr) (R : Type)
     (keepB : Fin br → Bool) (keepL : Fin lr → Bool) (ds : Axes) (swapped : Bool)
-    (from : Index b → Index l → Coord ds → Int) (other : Index b → R → Coord ds → Int),
+    (operand : Index b → Index l → Coord ds → Int) (other : Index b → R → Coord ds → Int),
   (fun (batch : Index b) (i : Index l) (j : R) =>
-    sumAt ds (fun k => times swapped (from (Tensor.reverseIndex keepB batch)
+    sumAt ds (fun k => times swapped (operand (Tensor.reverseIndex keepB batch)
       (Tensor.reverseIndex keepL i) (mirror ds k)) (other batch j k))) =
-  (fun batch i j => sumAt ds (fun k => times swapped (from (Tensor.reverseIndex keepB batch)
+  (fun batch i j => sumAt ds (fun k => times swapped (operand (Tensor.reverseIndex keepB batch)
       (Tensor.reverseIndex keepL i) k) (other batch j (mirror ds k))))
 end RevisedBenchmark.DotMirror
