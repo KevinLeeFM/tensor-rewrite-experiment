@@ -1,0 +1,88 @@
+[
+  {
+    "id": "conv.dot-nonfeature-layout-order",
+    "effort_group": "conv-dot-layout-order",
+    "source_ids": [
+      "SimplifyConvToDot/pointwise-layout",
+      "HandleConvolution/to-dot-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvDotOrder.criterion; RevisedBenchmark.ConvDotOrder.refuted",
+    "lhs": "Compute the grouped forward convolution using logical batch and spatial addresses in the requested output dimension order.",
+    "rhs": "Bitcast input to a matrix, multiply its rows by a single weight, then bitcast rows to the requested output shape.",
+    "conditions": "Rank three, one filter tap and one channel, same descending dense layouts with minor feature, unit groups/stride/dilations. With batch and spatial axes swapped, universal equality holds iff at least one of their extents is at most one. Matching axes always agree.",
+    "types": "Exact Nat logical data; the witness is representable as U32.",
+    "overlap": "A normalized convolution/dot with shared row order has a prior proof. The new criterion tests whether equal physical layout arrays enforce that row order and includes live mismatched dimensions.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/LayoutControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/LayoutProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/LayoutSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/author.log",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/failed-std.log",
+      "comparisons/revised-benchmark-20261117/conv-dot-layout-order/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/service/shape_inference.cc"
+    ]
+  },
+  {
+    "id": "scatter.pair-parameter-roles",
+    "effort_group": "scatter-pair-roles",
+    "source_ids": [
+      "HandleAdd/scatter-concat",
+      "HandleAdd/scatter-nested"
+    ],
+    "theorem": "RevisedBenchmark.ScatterPair.criterion",
+    "lhs": "Pointwise add of two separate one-update scatters.",
+    "rhs": "Concat: apply the left reducer to both patches on the sum. Nested: update the sum with the right scatter and then the left.",
+    "conditions": "Two distinct in-bounds positions in a common vector of length greater than two. Add reducer may read each of the two parameters twice, in either position. Universal preservation holds iff both reducers use both parameters.",
+    "types": "Exact integer array payload; flags as declared for the two paths.",
+    "overlap": "Historical ordinary-add combination and single-scatter duplicate-role failures precede this classification for two independently matched reducers. One refutation case with full role criterion; two exits counted together.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/PairControls.lean",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/PairProof.lean",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/PairSpec.lean",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/author.log",
+      "comparisons/revised-benchmark-20261117/scatter-pair-roles/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reduce-window.padded-broadcast-zero-sign",
+    "effort_group": "window-pad-zero-broadcast",
+    "source_ids": [
+      "HandleReduceWindow/pad-broadcast-direct-combined",
+      "HandleReduceWindow/pad-broadcast-direct-existing",
+      "HandleReduceWindow/pad-broadcast-convert-combined",
+      "HandleReduceWindow/pad-broadcast-convert-existing"
+    ],
+    "theorem": "RevisedBenchmark.PadZ.refuted",
+    "lhs": "Initialize a rank-three padded window at +0 and sum all admitted entries.",
+    "rhs": "Broadcast either the single covered original item or the already padded item, before or after F16-to-F32 widening.",
+    "conditions": "Two frozen concrete static geometries, two nontrivial window dimensions, no dilation or reversal, all values zero with either sign.",
+    "types": "F32 RNE and bitwise observation; F16 zero sign preserved on widening.",
+    "overlap": "Prior negative-zero partial update and reduce results concern different expressions. Here the source guard selects combined or existing padding, in each operand type.",
+    "outcome": "disproved",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/ZeroWindowControls.lean",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/ZeroWindowProof.lean",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/ZeroWindowSpec.lean",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/author.log",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/failed-controls.log",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/failed-elaboration.log",
+      "comparisons/revised-benchmark-20261117/window-pad-zero-broadcast/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-negate-zero/ZeroSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc"
+    ]
+  }
+]
