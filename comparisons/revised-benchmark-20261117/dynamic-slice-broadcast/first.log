@@ -1,0 +1,43 @@
+comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/DynamicBroadSpec.lean: OK
+comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/FREEZE.md: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+comparisons/revised-benchmark-20261117/gather-pad-hoist/GatherHoistSpec.lean: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+TensorRewrite/Pilot/Tensor 0.332s exit=0
+GatherHoistSpec 0.386s exit=0
+DynamicBroadSpec 0.455s exit=0
+DynamicBroadProof.lean:16:10: warning: This simp argument is unused:
+  slice
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [broad, GatherHoist.atStart, widths, p.matchExtent]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+DynamicBroadProof.lean:16:16: warning: This simp argument is unused:
+  broad
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [slice, GatherHoist.atStart, widths, p.matchExtent]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+DynamicBroadProof.lean:16:42: warning: This simp argument is unused:
+  widths
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [slice, broad, GatherHoist.atStart, p.matchExtent]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.DynamicBroad.verified' depends on axioms: [propext, Quot.sound]
+DynamicBroadProof 0.351s exit=0
+DynamicBroadControls.lean:14:66: error: Expected type must not contain free variables
+  1 < ex.widths x✝
+
+Hint: Use the `+revert` option to automatically clean up and revert free variables
+DynamicBroadControls 0.338s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/dynamic-slice-broadcast/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'DynamicBroadControls.olean', 'DynamicBroadControls.lean']' returned non-zero exit status 1.
