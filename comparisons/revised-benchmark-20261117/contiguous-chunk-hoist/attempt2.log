@@ -1,0 +1,27 @@
+comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/ChunkSpec.lean: OK
+comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/FREEZE.md: OK
+sources/xla/xla/util.h: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+ChunkSpec.lean:10:5: warning: Variable name `w` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _w
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+ChunkSpec 0.417 0
+ChunkProof.lean:93:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  @LT.lt Nat instLTNat (pack (List.ofFn fun k => ((blocks k).prod, ↑(i (p.toOutput k)))))
+    (List.ofFn fun x => (blocks x).prod).prod
+but is expected to have type
+  @LT.lt Nat instLTNat (emitted i) (List.ofFn fun k => (blocks k).prod).prod
+'RevisedBenchmark.ChunkHoist.inputBound' depends on axioms: [sorryAx]
+'RevisedBenchmark.ChunkHoist.verified' depends on axioms: [propext, Quot.sound]
+ChunkProof 0.379 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/replay.py", line 22, in <module>
+    proc.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ChunkProof.olean', 'ChunkProof.lean']' returned non-zero exit status 1.

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "reshape-transpose.contiguous-chunk-hoist",
+    "source_ids": [
+      "TryHoistTransposeOfReshape/contiguous-chunks",
+      "HandleReshape/transpose-hoist-delegation"
+    ],
+    "effort_group": "contiguous-chunk-hoist",
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.ChunkHoist.verified; directReshape; inputBound",
+    "lhs": "Read the fully expanded transpose-output coordinates selected by the outer reshape, restore original input axis order, and pack into the original reshape operand.",
+    "rhs": "Reshape the operand to the products of input-ordered contiguous chunks; transpose these chunk axes to the outer result order.",
+    "types": "Arbitrary finite static rank, arbitrary cell payload, logical row-major observation, bounded output coordinates.",
+    "conditions": "Source returned a covering partition into nonempty axis groups, each consecutive and internally ascending before transpose, each matching a single output extent of equal product. Chunk order arbitrary. Input operand volume matches original inner shape. Caller layout-insensitive, hoist enabled; source-representable sizes for implementation interpretation.",
+    "overlap": "Two lexical sites, one terminal. Other transpose composition, held-out slice/concat space-depth, and broadcast-preserved-factor proofs have different graph equations.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/ChunkSpec.lean",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/ChunkProof.lean",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/ChunkControls.lean",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/final.log",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/replay.py",
+      "comparisons/revised-benchmark-20261117/contiguous-chunk-hoist/AUTHOR.md"
+    ]
+  }
+]
