@@ -1,0 +1,49 @@
+[
+  {
+    "effort_group": "conv-mixed-u32",
+    "lhs": "Physical grouped one-tap convolution, exact conversions of unsigned operands to U32 then U64, U64 accumulation, clamp and final U32 store.",
+    "rhs": "Transpose/convert operands to U32, broadcast kernel, multiply U32 and retain low word.",
+    "conditions": "Dense one-spatial-axis kernel extent one, rank three with arbitrary independent dimension permutations, valid grouping, kernel input feature one and both input/output feature sizes equal group count. Unit strides/dilations and zero padding. Layout-insensitive mathematical profile.",
+    "overlap": "Reuses independently checked physical addresses and exact Nat contraction. Earlier same-result U8 saturation counterexample has no operand conversions and a different result narrowing. Source-to-native reachability untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/final.log"
+    ],
+    "id": "conv.pointwise-byte-pair-u32",
+    "outcome": "proved",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-011"
+    ],
+    "types": "Both input operands U8; U32 result. The product is at most 65025.",
+    "theorem": "RevisedBenchmark.ConvMixedU32.bytePair"
+  },
+  {
+    "effort_group": "conv-mixed-u32",
+    "lhs": "Physical grouped one-tap convolution, exact conversions of unsigned operands to U32 then U64, U64 accumulation, clamp and final U32 store.",
+    "rhs": "Transpose/convert operands to U32, broadcast kernel, multiply U32 and retain low word.",
+    "conditions": "Dense one-spatial-axis kernel extent one, rank three with arbitrary independent dimension permutations, valid grouping, kernel input feature one and both input/output feature sizes equal group count. Unit strides/dilations and zero padding. Layout-insensitive mathematical profile.",
+    "overlap": "Reuses independently checked physical addresses and exact Nat contraction. Earlier same-result U8 saturation counterexample has no operand conversions and a different result narrowing. Source-to-native reachability untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/MixedControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-u32/final.log"
+    ],
+    "id": "conv.pointwise-single-cast-u32",
+    "outcome": "disproved",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-010",
+      "SimplifyConvToMultiply/pointwise-001"
+    ],
+    "types": "One operand U8 and the other U32, with U32 result. Both orientations of 2 times U32_MAX yield different stored outputs.",
+    "theorem": "RevisedBenchmark.ConvMixedU32.singleCastFailures"
+  }
+]
