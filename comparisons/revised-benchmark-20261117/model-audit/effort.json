@@ -2900,11 +2900,50 @@
             "WindowSpec.lean": 54
           },
           "compiler_logs": {
-            "acceptance.log": [],
-            "attempt1.log": [],
-            "final.log": [],
+            "acceptance.log": [
+              [
+                "WindowSpec",
+                "0.443",
+                "0"
+              ],
+              [
+                "WindowProof",
+                "0.508",
+                "0"
+              ],
+              [
+                "WindowControls",
+                "0.308",
+                "0"
+              ]
+            ],
+            "attempt1.log": [
+              [
+                "WindowSpec",
+                "0.418",
+                "0"
+              ],
+              [
+                "WindowProof",
+                "0.491",
+                "1"
+              ]
+            ],
+            "final.log": [
+              [
+                "WindowSpec",
+                "0.452",
+                "0"
+              ],
+              [
+                "WindowProof",
+                "0.511",
+                "1"
+              ]
+            ],
             "freeze.log": []
-          }
+          },
+          "review_and_author_intervals": "Author 114s selection/freeze and 81s through proof controls. Independent review 57s incl 1.339s compiler."
         },
         "conv-select-scale": {
           "freeze": "20fa0f5",
@@ -2939,7 +2978,8 @@
                 "0"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Shared with conv-bias-distribute. Source inspection started about 02:07, before first instrumented replay at 02:10:06; joint commit at 02:12:57. Compiler 1.425s."
         },
         "conv-bias-distribute": {
           "freeze": "687df44",
@@ -2974,7 +3014,8 @@
                 "0"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Same shared review window as conv-select-scale, charge once. Compiler 1.246s."
         },
         "nested-update-word": {
           "freeze": "cc51ed3",
@@ -3028,7 +3069,8 @@
                 "1"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Shared review with partial-add-zero 299s through commit, incl 1.276s compiler for nested. Adjudication another 86s incl 1.223s compiler; adverse and final reports preserved."
         },
         "partial-add-zero": {
           "freeze": "054cae9",
@@ -3063,7 +3105,8 @@
                 "0"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Same shared review window as nested-update-word; compiler 1.470s for this packet."
         }
       },
       "historical_reuse_audit_seconds": 170,
@@ -3087,9 +3130,42 @@
             "FullFastSpec.lean": 24
           },
           "compiler_logs": {
-            "author.log": [],
-            "freeze.log": []
-          }
+            "author.log": [
+              [
+                "RadixSpec",
+                "0.41",
+                "0"
+              ],
+              [
+                "FullFastSpec",
+                "0.308",
+                "0"
+              ],
+              [
+                "FullFastProof",
+                "0.351",
+                "0"
+              ],
+              [
+                "FullFastControls",
+                "0.328",
+                "0"
+              ]
+            ],
+            "freeze.log": [
+              [
+                "RadixSpec",
+                "0.459",
+                "0"
+              ],
+              [
+                "FullFastSpec",
+                "0.315",
+                "0"
+              ]
+            ]
+          },
+          "review_and_author_intervals": "Author 156s selection/freeze, then 21s proof and controls. Review 149s to commit incl 1.465s compiler."
         },
         "slice-final-window": {
           "freeze": "1ecc955",
@@ -3102,12 +3178,67 @@
             "LastSpec.lean": 65
           },
           "compiler_logs": {
-            "acceptance.log": [],
-            "attempt1.log": [],
+            "acceptance.log": [
+              [
+                "LastSpec",
+                "0.403",
+                "0"
+              ],
+              [
+                "LastProof",
+                "0.376",
+                "0"
+              ],
+              [
+                "LastControls",
+                "0.353",
+                "0"
+              ]
+            ],
+            "attempt1.log": [
+              [
+                "LastSpec",
+                "0.342",
+                "0"
+              ],
+              [
+                "LastProof",
+                "0.346",
+                "1"
+              ]
+            ],
             "freeze.log": [],
-            "length1.log": [],
-            "verified.log": []
-          }
+            "length1.log": [
+              [
+                "LastSpec",
+                "0.403",
+                "0"
+              ],
+              [
+                "LastProof",
+                "0.361",
+                "1"
+              ]
+            ],
+            "verified.log": [
+              [
+                "LastSpec",
+                "0.407",
+                "0"
+              ],
+              [
+                "LastProof",
+                "0.405",
+                "0"
+              ],
+              [
+                "LastControls",
+                "0.420",
+                "0"
+              ]
+            ]
+          },
+          "review_and_author_intervals": "Author 85s setup/freeze, 93s development and 38s buffer-length/controls. Review 97s incl 2.010s compiler."
         },
         "collective-count-round": {
           "freeze": "52b8507",
@@ -3147,7 +3278,8 @@
                 "0"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Independent review 186s including repeated replay to capture output (1.692s compiler on captured run)."
         },
         "collective-count-u64": {
           "freeze": "a03d274",
@@ -3192,7 +3324,8 @@
                 "0"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Review 305s through commit including 2.152s compiler. Historical repeat-fold theorem already established."
         },
         "factor-subnormal-half": {
           "freeze": "44ef68d",
@@ -3251,10 +3384,94 @@
                 "0"
               ]
             ]
-          }
+          },
+          "review_and_author_intervals": "Review 74s incl 1.224s compiled. Initial failed arithmetic tactic and linter repair charged to this packet."
         }
       },
       "accounting": "Wall interval measured from preceding catalog commit, with some packet work overlapping that checkpoint. Review and compiler times overlap; every packet has its own timing. The U64 case credits prior modular arithmetic, F32 group sum credits prior scalar counterexample, and the full-window proof credits prior same-operation fold. Unknown active reasoning, token and discovery costs remain unknown."
+    },
+    "pointwise-concat": {
+      "start_utc": "2026-11-18T02:36:00+00:00",
+      "through_assembly_utc": "2026-11-18T02:47:29+00:00",
+      "packets": {
+        "conv-pointwise-axes": {
+          "freeze": "9d8b6e4",
+          "candidate": "a19bf25",
+          "freeze_to_candidate_seconds": 182,
+          "review": "conv-pointwise-axes/REVIEW.md",
+          "new_lean_lines": {
+            "PointControls.lean": 42,
+            "PointProof.lean": 96,
+            "PointSpec.lean": 81
+          },
+          "compiler_logs": {
+            "adapter.log": [
+              [
+                "PointSpec",
+                "0.428",
+                "0"
+              ],
+              [
+                "PointProof",
+                "0.410",
+                "0"
+              ],
+              [
+                "PointControls",
+                "0.453",
+                "0"
+              ]
+            ],
+            "attempt1.log": [
+              [
+                "PointSpec",
+                "0.415",
+                "0"
+              ],
+              [
+                "PointProof",
+                "0.531",
+                "1"
+              ]
+            ],
+            "attempt2.log": [
+              [
+                "PointSpec",
+                "0.462",
+                "0"
+              ],
+              [
+                "PointProof",
+                "0.377",
+                "1"
+              ]
+            ],
+            "attempt3.log": [
+              [
+                "PointSpec",
+                "0.430",
+                "0"
+              ],
+              [
+                "PointProof",
+                "0.380",
+                "0"
+              ],
+              [
+                "PointControls",
+                "0.408",
+                "0"
+              ]
+            ],
+            "freeze.log": []
+          },
+          "review_and_author_intervals": "Author 122s setup/freeze, 79s proof/controls, 50s explicit broadcast check. See independent reviewer receipt for its measured interval."
+        }
+      },
+      "accounting": "This phase began approximately 02:36 UTC during the preceding register update. Precise author selection/freeze and development intervals are in AUTHOR.md; observed review intervals include their targeted compiler replays. Historical discovery time and exclusive active/token use are unknown. The cache remained inaccessible throughout.",
+      "overall_utc_start": "2026-11-18T02:03:42+00:00",
+      "overall_through_final_assembly": "2026-11-18T02:47:29+00:00",
+      "overall_wall_seconds_through_final_assembly": 2627
     }
   }
 }

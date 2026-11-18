@@ -1,0 +1,168 @@
+[
+  {
+    "id": "conv.pointwise-rank3-permuted",
+    "effort_group": "conv-pointwise-axes",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-000"
+    ],
+    "lhs": "Dense forward convolution with one spatial axis of unit kernel size, grouped feature and batch offsets, summing the actual kernel-tap and input-channel products at each physical output coordinate.",
+    "rhs": "Independently transpose input and kernel to output order; reshape/broadcast kernel singleton axes and multiply typed operand entries pointwise.",
+    "conditions": "Arbitrary independent rank-three dimension-number bijections, no padding, stride/dilations one, dense static same-type input/output, kernel-input-feature extent one and input/output features equal featureGroupCount. Positive, nonsimultaneously nontrivial group counts; kernel output features and input batch divisible by batch group count.",
+    "types": "Exact Nat values; one-spatial-axis model allowing any positive feature-group count and zero batch/spatial extents. Only representable finite arithmetic transfers to fixed machine interpretations.",
+    "theorem": "RevisedBenchmark.ConvPointAxes.verified",
+    "overlap": "Historical convolve_single_channel and convolve_eq_productReduction are normalized value laws. New work resolves physical-number transposes, grouped batch offset, kernel broadcast with retained singleton features, output shape and typed operand reads. No claim for additional spatial axes, mixed-type conversions or sparse/backward convolution.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/adapter.log",
+      "lean-toolchain",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator.cc",
+      "sources/xla/xla/hlo/ir/hlo_instruction.cc",
+      "sources/xla/xla/service/shape_inference.cc",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/attempt1.log",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/attempt2.log",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/attempt3.log",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/freeze.log",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/replay.py"
+    ],
+    "outcome": "proved"
+  },
+  {
+    "id": "reuse.concat.unary",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_unary",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Exactly one operand; common positive rank and legal axis. Successful source replacement also requires no control predecessors and SameShape (layout-sensitive equality or layout-insensitive compatibility).",
+    "lhs": "Concatenate a single array.",
+    "rhs": "Return the operand.",
+    "source_ids": [
+      "HandleConcatenate/unary"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.concat.filter-all-empty",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_all_empty_first_iff",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "At least two operands, all zero-element arrays with a common off-axis frame. First selected extent equals total selected extent. A zero off-axis extent alone does not ensure this. Successful source replacement also requires no control predecessors and SameShape (layout-sensitive equality or layout-insensitive compatibility).",
+    "lhs": "Concatenate a nonempty operand list in which every array has zero elements.",
+    "rhs": "Return the first operand if replacement shapes are compatible.",
+    "source_ids": [
+      "HandleConcatenate/filter-all-empty"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.concat.filter-one-nonempty",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_only_nonempty",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "At least one empty operand removed, and the stable filter is exactly the singleton survivor. Successful source replacement also requires no control predecessors and SameShape (layout-sensitive equality or layout-insensitive compatibility).",
+    "lhs": "Concatenate blocks with exactly one nonempty array.",
+    "rhs": "Forward the sole nonempty operand.",
+    "source_ids": [
+      "HandleConcatenate/filter-one-nonempty"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.concat.filter-many-nonempty",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationProof.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_filtered",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "At least two nonempty arrays remain and at least one empty array was removed; a surviving array witnesses off-axis nonemptiness. Successful source replacement also requires no control predecessors and SameShape (layout-sensitive equality or layout-insensitive compatibility).",
+    "lhs": "Concatenate a list of arrays including empty ones.",
+    "rhs": "Rebuild from nonempty operands only.",
+    "source_ids": [
+      "HandleConcatenate/filter-many-nonempty"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationProof.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.concat.flatten",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationGraphLemmas.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.pack_flatten",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Layout-insensitive, at least two original operands, none empty. Inline same-axis nested concat children in order and encode other operands as singleton groups; expanded operand count must change.",
+    "lhs": "Concatenate grouped blocks along one common axis.",
+    "rhs": "Flatten the nested groups in operand order.",
+    "source_ids": [
+      "HandleConcatenate/flatten"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationGraphLemmas.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-rows.json"
+    ]
+  },
+  {
+    "id": "reuse.concat.repeat-unit-axis",
+    "effort_group": "concat-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/ConcatenationRepeat.lean",
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Theory.Concatenation.concatenate_repeated",
+    "types": "Dense static logical arrays, common arbitrary element type, shape and element equality.",
+    "conditions": "Layout-insensitive, at least two nonempty operands, every operand the identical instruction pointer, and selected extent exactly one. Earlier flatten, slice-merge and binary scalar-broadcast-to-pad branches have not returned. Legal positive rank and axis.",
+    "lhs": "Concatenate repeated references to one array whose chosen axis is unit.",
+    "rhs": "Remove the unit dimension and broadcast back on the other dimensions.",
+    "source_ids": [
+      "HandleConcatenate/repeat-unit-axis"
+    ],
+    "overlap": "Existing proved theorem associated with this source label. No new proof discovery or native run.",
+    "evidence": [
+      "TensorRewrite/Theory/ConcatenationRepeat.lean",
+      "reports/theory-progress.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-review.md",
+      "comparisons/revised-benchmark-20261117/model-audit/concat-reuse-rows.json"
+    ]
+  }
+]
