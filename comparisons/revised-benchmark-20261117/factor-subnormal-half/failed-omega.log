@@ -1,0 +1,66 @@
+comparisons/revised-benchmark-20261117/factor-subnormal-half/HalfSpec.lean: OK
+comparisons/revised-benchmark-20261117/factor-subnormal-half/FREEZE.md: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+HalfSpec 0.341s exit=0
+HalfProof.lean:6:2: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 0
+  e ≥ 0
+  -1 ≤ 2*d - f ≤ 0
+  c ≥ 0
+  a ≥ 0
+  2*a + b + c - d - e ≥ 1
+  -3 ≤ 4*a - f ≤ 0
+  -1 ≤ 4*a + 2*b - f ≤ 0
+where
+ a := ↑k / 4
+ b := ↑(k % 4) / 2
+ c := ↑(if k % 4 % 4 = 3 then 1 else 0)
+ d := ↑k / 2
+ e := ↑(if k % 4 = 3 then 1 else 0)
+ f := ↑k
+HalfProof.lean:13:2: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  o ≥ 0
+  m ≥ 0
+  k ≥ 0
+  j ≥ 0
+  h ≥ 0
+  -3 ≤ 4*h - k - m ≤ 0
+  -1 ≤ 4*h + 2*i - k - m ≤ 0
+  g ≥ 0
+  e ≥ 0
+  -3 ≤ 4*e - m ≤ 0
+  -1 ≤ 4*e + 2*f - m ≤ 0
+  d ≥ 0
+  0 ≤ 2*d + 4*e + 2*f + 2*g - 4*h - 2*i - 2*j + k ≤ 1
+  c ≥ 0
+  2*c + 2*e - 2*h - i - j + n + o ≥ 1
+  -3 ≤ 4*c - k ≤ 0
+  -1 ≤ 4*c + 4*e - k - m + 2*n ≤ 0
+where
+ c := ↑a / 4
+ d := ↑(if a % 4 % 4 = 3 then 1 else 0)
+ e := ↑b / 4
+ f := ↑(b % 4) / 2
+ g := ↑(if b % 4 % 4 = 3 then 1 else 0)
+ h := ↑(a + b) / 4
+ i := ↑((a + b) % 4) / 2
+ j := ↑(if (a + b) % 4 % 4 = 3 then 1 else 0)
+ k := ↑a
+ m := ↑b
+ n := ↑(a % 4 + b % 4) / 2
+ o := ↑(if (a % 4 + b % 4) % 4 = 3 then 1 else 0)
+HalfProof.lean:17:12: error: failed to synthesize
+  Decidable ¬ResiduesAgree 1 1
+
+Hint: Additional diagnostic information may be available using the `set_option diagnostics true` command.
+'RevisedBenchmark.HalfFactor.criterion' depends on axioms: [sorryAx]
+'RevisedBenchmark.HalfFactor.refuted' depends on axioms: [propext, sorryAx]
+HalfProof 0.354s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/factor-subnormal-half/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'HalfProof.olean', 'HalfProof.lean']' returned non-zero exit status 1.
