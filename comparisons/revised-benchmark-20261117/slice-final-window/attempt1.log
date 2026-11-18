@@ -1,0 +1,73 @@
+LastSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+LastSpec 0.342s return code 0
+LastProof.lean:30:59: error: unsolved goals
+a : Axis
+yes : keep a = true
+y : Nat
+bound : y < a.input
+k : a.kernel = 1
+right✝¹ : width a = a.input
+left✝³ : 0 < a.kernel
+left✝² : a.start ≤ a.stop
+left✝¹ : win a = a.stop
+low : a.low = ↑a.start
+left✝ : a.high = 0
+right✝ : keep a = true ∨ width a = 1 ∧ win a = a.kernel
+⊢ List.filterMap
+      (fun k =>
+        if ↑a.start ≤ ↑a.start + ↑y + ↑k ∧ ↑a.start + ↑y + ↑k - ↑a.start < ↑a.input then
+          some ((↑a.start + ↑y + ↑k).toNat - a.start)
+        else none)
+      [0] =
+    [y]
+LastProof.lean:33:25: warning: This simp argument is unused:
+  bound
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [samples, k, low]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+LastProof.lean:36:40: error: unsolved goals
+a : Axis
+no : keep a = false
+left✝⁴ : width a = 1
+k : a.kernel = a.input
+left✝³ : 0 < a.kernel
+left✝² : a.start ≤ a.stop
+left✝¹ : win a = a.stop
+low : a.low = ↑a.start
+left✝ : a.high = 0
+right✝ : keep a = true ∨ width a = 1 ∧ win a = a.kernel
+x : Nat
+hx : x ∈ List.range a.input
+bound : x < a.input
+⊢ (↑a.start ≤ ↑a.start + ↑x ∧ ↑a.start + ↑x - ↑a.start < ↑a.input) ∧ (↑a.start + ↑x).toNat - a.start = x
+LastProof.lean:44:13: warning: This simp argument is unused:
+  bound
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [low]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+LastProof.lean:58:50: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+LastProof.lean:58:36: warning: This simp argument is unused:
+  Bool.true_eq
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [old, reduced, k, if_true, fibers, w, List.flatMap_def]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.SliceFinalWindow.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+LastProof 0.346s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/slice-final-window/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'LastProof.olean', 'LastProof.lean']' returned non-zero exit status 1.

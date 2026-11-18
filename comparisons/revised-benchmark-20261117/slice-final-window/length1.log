@@ -1,0 +1,21 @@
+LastSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+LastSpec 0.403s return code 0
+LastProof.lean:77:16: error: unsolved goals
+case cons.true
+a : Axis
+t : List Axis
+ih k : True
+⊢ (List.map (fun a => (List.map Axis.input (List.filter keep t)).prod) (List.range a.input)).sum =
+    a.input * (List.map Axis.input (List.filter keep t)).prod
+'RevisedBenchmark.SliceFinalWindow.reducedLength' depends on axioms: [sorryAx]
+'RevisedBenchmark.SliceFinalWindow.verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+LastProof 0.361s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/slice-final-window/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'LastProof.olean', 'LastProof.lean']' returned non-zero exit status 1.

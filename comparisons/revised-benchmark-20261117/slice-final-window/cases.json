@@ -1,0 +1,23 @@
+[
+  {
+    "id": "slice.last-padded-window-to-reduce",
+    "effort_group": "slice-final-window",
+    "source_ids": [
+      "HandleSlice/reduce-window"
+    ],
+    "lhs": "Slice of a low-padded unit-stride reduce-window, selecting the final singleton output on reduced axes and the whole range on retained axes.",
+    "rhs": "Reduce the original input on the source-selected full-span axes; reshape the shorter output to the slice shape.",
+    "conditions": "Arbitrary rank, legal static unit-stride Slice with stop=window output, start=window low padding, high padding zero, no stride/dilation, some padding, nonempty effective reductions; unit or selected full-window guard with common ordered nonreversed logical reads.",
+    "types": "Any scalar payload, same pure binary reducer and initializer; exact arithmetic on a common logical order. No widened or reassociated floating evaluator claim.",
+    "theorem": "RevisedBenchmark.SliceFinalWindow.verified",
+    "overlap": "Standalone unpadded FullSpanWindow.original_reduce_reshape supplies the canonical target geometry but omits this padded slice and matching guards. Historical paper source labels contain no matching slice-reduce-window terminal equation.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/slice-final-window/LastSpec.lean",
+      "comparisons/revised-benchmark-20261117/slice-final-window/LastProof.lean",
+      "comparisons/revised-benchmark-20261117/slice-final-window/LastControls.lean",
+      "comparisons/revised-benchmark-20261117/slice-final-window/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/slice-final-window/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/slice-final-window/verified.log"
+    ]
+  }
+]
