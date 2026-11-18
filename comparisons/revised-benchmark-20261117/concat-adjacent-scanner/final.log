@@ -1,0 +1,67 @@
+AdjacentSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+AdjacentSpec 0.443s return code 0
+AdjacentProof.lean:66:7: error: unexpected token 'opaque'; expected '_' or identifier
+AdjacentProof.lean:66:6: error: Missing alternative name: Expected `opaque`
+AdjacentProof.lean:64:6: error: Alternative `opaque` has not been provided
+AdjacentProof.lean:60:31: error: unsolved goals
+case isFalse
+prev : Option Block
+c p : Block
+hp : prev = some p
+k : Key
+s w : Nat
+before : stopped prev (Block.slice k s w)
+old : merge p (Block.slice k s w) = none
+l : Key
+t v : Nat
+h✝ : ¬(k = l ∧ s + w = t)
+joined : none = some c
+⊢ merge p c = none
+AdjacentProof.lean:56:80: error: unsolved goals
+case slice.opaque
+prev : Option Block
+c p : Block
+hp : prev = some p
+key✝ : Key
+start✝ width✝¹ : Nat
+before : stopped prev (Block.slice key✝ start✝ width✝¹)
+old : merge p (Block.slice key✝ start✝ width✝¹) = none
+id✝ width✝ : Nat
+joined : none = some c
+⊢ merge p c = none
+
+case opaque.slice
+prev : Option Block
+c p : Block
+hp : prev = some p
+id✝ width✝¹ : Nat
+before : stopped prev (Block.opaque id✝ width✝¹)
+old : merge p (Block.opaque id✝ width✝¹) = none
+key✝ : Key
+start✝ width✝ : Nat
+joined : none = some c
+⊢ merge p c = none
+
+case opaque.opaque
+prev : Option Block
+c p : Block
+hp : prev = some p
+id✝¹ width✝¹ : Nat
+before : stopped prev (Block.opaque id✝¹ width✝¹)
+old : merge p (Block.opaque id✝¹ width✝¹) = none
+id✝ width✝ : Nat
+joined : none = some c
+⊢ merge p c = none
+AdjacentProof.lean:66:14: error: unexpected token '=>'; expected identifier
+AdjacentProof.lean:67:8: error: unexpected token '=>'; expected ':'
+'RevisedBenchmark.AdjacentScan.maximal' depends on axioms: [propext, sorryAx]
+'RevisedBenchmark.AdjacentScan.verified' depends on axioms: [propext, Quot.sound]
+AdjacentProof 0.375s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/concat-adjacent-scanner/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'AdjacentProof.olean', 'AdjacentProof.lean']' returned non-zero exit status 1.

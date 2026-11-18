@@ -1,0 +1,23 @@
+[
+  {
+    "id": "concat.adjacent-slice-maximal-scan",
+    "effort_group": "concat-adjacent-scanner",
+    "source_ids": [
+      "HandleConcatenate/adjacent-slices"
+    ],
+    "lhs": "Dense concatenation of the original ordered list of arbitrary compatible source blocks.",
+    "rhs": "Dense concatenation after the left-to-right scanner replaces maximal touching unit-slice runs by their merged slices.",
+    "conditions": "Shared arbitrary static prefix/suffix shapes; instruction identity, crop start equality and touching legal unit-stride intervals gate each merge. Noneligible operands are opaque barriers with arbitrary values/widths.",
+    "types": "Any payload type, Nat indices and lengths, including zero widths and empty output shapes.",
+    "theorem": "RevisedBenchmark.AdjacentScan.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/AdjacentSpec.lean",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/AdjacentProof.lean",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/AdjacentControls.lean",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/concat-adjacent-scanner/verified.log"
+    ],
+    "overlap": "Paper concat/rule04 is the historical two-slice case; slice_merge_run accepts a supplied run on a fixed source/crop. This proof computes the maximal grouping and proves the whole mixed-list result. No separate count for maximality or the historical pair."
+  }
+]
