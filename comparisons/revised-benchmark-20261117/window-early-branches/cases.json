@@ -1,0 +1,73 @@
+[
+  {
+    "outcome": "proved",
+    "effort_group": "window-early-branches",
+    "types": "Pure total exact values, common dimensions, heterogeneous coupled tuple state permitted. Static shapes, signed padding, positive window widths, strides and dilations, no reversal.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlySpec.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlyProof.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlyControls.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-early-branches/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-early-branches/final.log",
+      "comparisons/revised-benchmark-20261117/window-early-branches/AUTHOR.md"
+    ],
+    "id": "reduce-window.empty-skip-padding",
+    "source_ids": [
+      "HandleReduceWindow/empty-single",
+      "HandleReduceWindow/empty-tuple"
+    ],
+    "lhs": "Seeded ordered fold over bounded input coordinates for each output/component.",
+    "rhs": "Broadcast each initializer and return array or tuple of arrays.",
+    "conditions": "Zero input or output extent. No identity law needed even with live padded output.",
+    "theorem": "RevisedBenchmark.WindowEarly.empty",
+    "overlap": "Historical reduce_empty_input_fixed folds explicit padding and needs a fixed point. Empty output vacuity inherited."
+  },
+  {
+    "outcome": "proved",
+    "effort_group": "window-early-branches",
+    "types": "Pure total exact values, common dimensions, heterogeneous coupled tuple state permitted. Static shapes, signed padding, positive window widths, strides and dilations, no reversal.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlySpec.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlyProof.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlyControls.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-early-branches/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-early-branches/final.log",
+      "comparisons/revised-benchmark-20261117/window-early-branches/AUTHOR.md"
+    ],
+    "id": "reduce-window.scalar-single-sample",
+    "source_ids": [
+      "HandleReduceWindow/scalar-single",
+      "HandleReduceWindow/scalar-tuple"
+    ],
+    "lhs": "Rank-zero visit to the sole input coordinate, whole-state reducer applied once to initializer and all operands.",
+    "rhs": "Return scalar operand or tuple of scalar operands.",
+    "conditions": "Rank zero, tuple result requires tuple-root reducer as in the source branch. Whole-state initializer left identity.",
+    "theorem": "RevisedBenchmark.WindowEarly.scalar",
+    "overlap": "Rank-zero specialization of historical pointwise_eliminate, now discharged directly from the callback with whole-state tuple wiring."
+  },
+  {
+    "outcome": "proved",
+    "effort_group": "window-early-branches",
+    "types": "Pure total exact values, common dimensions, heterogeneous coupled tuple state permitted. Static shapes, signed padding, positive window widths, strides and dilations, no reversal.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlySpec.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlyProof.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/EarlyControls.lean",
+      "comparisons/revised-benchmark-20261117/window-early-branches/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/window-early-branches/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/window-early-branches/final.log",
+      "comparisons/revised-benchmark-20261117/window-early-branches/AUTHOR.md"
+    ],
+    "id": "reduce-window.unwrap-singleton-skip-padding",
+    "source_ids": [
+      "HandleReduceWindow/singleton-tuple"
+    ],
+    "lhs": "One-component tuple fold over bounded coordinates with wrapped initializer.",
+    "rhs": "Run cloned reducer's scalar child then wrap result.",
+    "conditions": "One input, singleton tuple result and tuple-root computation. Earlier source branches exclude empty and scalar shapes; theorem covers all shapes in its profile.",
+    "theorem": "RevisedBenchmark.WindowEarly.singleton",
+    "overlap": "Historical WindowTupleFamily.rewrite_sound proves the terminal in the explicit-padding model; fresh evaluator skip-padding application. Do not count a new discovery of the wrapper law."
+  }
+]

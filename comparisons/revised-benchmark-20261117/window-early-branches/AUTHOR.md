@@ -1,0 +1,15 @@
+# Three early reduce-window calculations
+
+Five lexical variants at algebraic_simplifier.cc:9570–9643 implement three calculations. The empty predicate is checked first. Rank-zero forwarding requires a tuple-root computation if the output is a tuple. The unary unwrap then requires one input and a tuple root. The source returns either the sole array or a tuple of output arrays.
+
+IterateThroughWindow (hlo_evaluator.cc:4047–4121) invokes the callback once at the scalar empty index and skips any zero base axis. Both the simple single-array and variadic paths invoke it (5040–5066 and 5119–5190). The latter feeds all accumulators followed by all input values to one computation, then decomposes its tuple. Shape inference checks same operand dimensions, result arity/types and common inferred geometry (shape_inference.cc:89–156,188–237,3205–3243). One input and a one-result tuple root are supported on that HLO path. Documented initializer identity is at xla/docs/operation_semantics.md:4163–4168. Scalar forwarding uses only left identity; a checked nonidentity rank-zero control distinguishes the computations outside that contract.
+
+The static model enumerates aligned affine input coordinates in window order, skipping nonexistent samples. Empty output is vacuous, but the empty-input control has three live padded outputs and returns the initial state with an arbitrary nonidentity reducer. At rank zero the list contains exactly the single input coordinate. The heterogeneous tuple corollaries read all components together, reduce the whole state, and project only afterward. A dual-number multiplication control exhibits cross-component dependence and left identity. The singleton clone uses the sole field of the original reducer and the same ordered coordinates. A padded, dilated window with input digits 1,3,5 yields 135 in both graphs. No runtime or C++ correspondence claims.
+
+## Historical overlap
+
+ReductionWindowAlgebra.reduce_empty_output already gives vacuity. reduce_empty_input_fixed and empty_input_components instead fold the padded value and require a fixed point. ReductionWindowAlgebra.pointwise_eliminate already proves the value identity underlying rank-zero forwarding; the fresh calculation establishes the rank-zero coordinate and tuple wiring. WindowTupleFamilyProof.rewrite_sound and WindowTransportProof.singleton_reduce already prove the full unary tuple rule for explicit padding. The singleton row is a fresh evaluator skip-padding instance of that same isomorphism, not an independently discovered rewrite.
+
+## Effort
+
+UTC 2026-11-18. Source inspection began 03:24:48. Freeze c7a5db8 at 03:27:41 (173 s). First complete build finished 03:28:20 (39 s including proof writing, 1.300 s compiler). Explicit heterogeneous tuple corollaries and final fresh replay finished by 03:29:05 (45 s, 1.269 s compiler). All exact goals and the corollary axiom audits passed; no failed compilation. A shell wrapper quoting error while saving this report was corrected before any filesystem mutation from that command. No historical proof search timing or active/token cost telemetry. Independent review pending.
