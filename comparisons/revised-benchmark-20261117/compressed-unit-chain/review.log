@@ -1,0 +1,70 @@
+comparisons/revised-benchmark-20261117/compressed-unit-chain/ChainSpec.lean: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+TensorRewrite/Pilot/Indexing.lean: OK
+TensorRewrite/Pilot/Permutation.lean: OK
+comparisons/revised-benchmark-20261117/compressed-unit-chain/RawSpec.lean: OK
+comparisons/revised-benchmark-20261117/compressed-unit-chain/GuardSpec.lean: OK
+comparisons/revised-benchmark-20261117/copy-layout-chain/CopySpec.lean: OK
+comparisons/revised-benchmark-20261117/copy-layout-chain/CopyProof.lean: OK
+comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainSpec.lean: OK
+comparisons/revised-benchmark-20261117/copy-reshape-chain-terminal/ChainProof.lean: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/compressed-unit-chain/BoundedSpec.lean: OK
+TensorRewrite/Pilot/Tensor 0.374s exit=0
+TensorRewrite/Pilot/Indexing 0.303s exit=0
+TensorRewrite/Pilot/Permutation 0.309s exit=0
+ChainSpec 0.515s exit=0
+'CompressedChain.step_verified' depends on axioms: [propext, Quot.sound]
+'CompressedChain.edit_verified' depends on axioms: [propext, Quot.sound]
+'CompressedChain.chain_verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+ChainProof 0.473s exit=0
+RawSpec 0.311s exit=0
+'CompressedChain.raw_verified' depends on axioms: [propext, Quot.sound]
+RawProof 0.363s exit=0
+GuardSpec 0.313s exit=0
+BoundedSpec 0.287s exit=0
+'CompressedChain.bounded_verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CompressedChain.guard_verified' depends on axioms: [propext, Classical.choice, Quot.sound]
+'CompressedChain.concrete_guard' depends on axioms: [propext, Quot.sound]
+GuardProof 0.327s exit=0
+fun {n} {s t} =>
+  step_verified : ∀ {n : Nat} {s t : Frame n} (op : Step n s t) (y : Digits t) (i : Fin n),
+  pull op y (slot s (eff op i)) = y (slot t i)
+fun {n} =>
+  edit_verified : ∀ {n : Nat} (s t : Frame n) (w : Fin n → Nat) (y : Digits t),
+  validUnit t y → ordinal (pairs s w (pull (Step.edit s t) y)) 0 = ordinal (pairs t w y) 0
+fun {n} {s} =>
+  chain_verified : ∀ {n : Nat} {s : Frame n} (c : Chain n s s),
+  (∀ (i : Fin n), total c i = i) →
+    ∀ (y : Digits s), validUnit s y → ∀ (α : Type) (data : Digits s → α), data (back c y) = data y
+fun {n} {s t} =>
+  raw_verified : ∀ {n : Nat} {s t : Frame n} (c : Chain n s t),
+  (∀ (i : Fin n), total c i = i) →
+    ∀ (su tu : Fin (n + 1)) (order : AxisPermutation n) (w : Fin n → Nat) (y : Digits t),
+      validUnit t y →
+        ∀ (α : Type) (storage : Nat → α), storage (address s su order w (back c y)) = storage (address t tu order w y)
+fun {n} {s t} =>
+  guard_verified : ∀ {n : Nat} {s t : Frame n} (c : Chain n s t),
+  (∀ (i : Fin n), total c i = i) →
+    ∀ (a : Digits s → Nat) (b : Digits t → Nat),
+      SameAddress a b →
+        ∀ (y : Digits t), validUnit t y → ∀ (α : Type) (storage : Nat → α), storage (a (back c y)) = storage (b y)
+fun {n} {s t} =>
+  bounded_verified : ∀ {n : Nat} {s t : Frame n} (c : Chain n s t),
+  (∀ (i : Fin n), total c i = i) →
+    ∀ (w : Fin n → Nat) (a : Digits s → Nat) (b : Digits t → Nat),
+      (∀ (y : Digits t), validUnit t y → (∀ (i : Fin n), y (slot t i) < w i) → a (expand s (y ∘ slot t)) = b y) →
+        ∀ (y : Digits t),
+          validUnit t y →
+            (∀ (i : Fin n), y (slot t i) < w i) →
+              ∀ (α : Type) (storage : Nat → α), storage (a (back c y)) = storage (b y)
+ChainControls 0.406s exit=0
+copy-layout-chain/CopySpec 0.309s exit=0
+'RevisedBenchmark.CopyChain.verified' depends on axioms: [propext, Quot.sound]
+copy-layout-chain/CopyProof 0.352s exit=0
+copy-reshape-chain-terminal/ChainSpec 0.315s exit=0
+'RevisedBenchmark.DenseChain.raw_verified' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.DenseChain.forward_verified' depends on axioms: [propext]
+copy-reshape-chain-terminal/ChainProof 0.337s exit=0
+'CompressedChainBuffer.buffer_at_paired_addresses' depends on axioms: [propext, Quot.sound]
+compressed-unit-chain/BufferEndpoint 0.296s exit=0
