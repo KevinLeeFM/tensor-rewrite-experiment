@@ -1,0 +1,230 @@
+[
+  {
+    "id": "shuffle.rotation-canonicalization",
+    "lhs": "Sequential left rotations of a base tensor by a finite chain of signed axis shifts.",
+    "rhs": "Base when the sorted normalized shift list is empty; otherwise one rotation with that list.",
+    "conditions": "Finite in-range axis/shift pairs flattened from the chain in outer-to-inner order. Base values depend only on declared visible coordinates (all-visible admits arbitrary tensors). Exact integer sums, no host overflow claim.",
+    "types": "Arbitrary finite rank, natural static extents, arbitrary logical element type, signed mathematical shifts; scalar and empty tensor domains included.",
+    "source_ids": [
+      "HandleShuffle/rotate-identity",
+      "HandleShuffle/rotate-canonical"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/rotation-model/RotationSpec.lean",
+      "comparisons/revised-benchmark-20261117/rotation-model/RotationProof.lean",
+      "comparisons/revised-benchmark-20261117/rotation-model/RotationControls.lean",
+      "comparisons/revised-benchmark-20261117/rotation-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Rotation.rotation_normalization",
+    "overlap": "Both source returns are branches of one canonicalization. The historical 118 have no rotation rule; previous candidate worksheets have no checked cyclic rotation operator. Reuses tensor/index definitions and shipped modular arithmetic.",
+    "effort_group": "rotation-model"
+  },
+  {
+    "id": "literal.uniform",
+    "lhs": "Stored dense literal (dims,xs)",
+    "rhs": "Broadcast(first(xs), dims)",
+    "conditions": "Any rank and extents with product > 1 and length-matched storage; adjacent scalar representations compare equal.",
+    "types": "A fixed exact scalar domain with decidable equality.",
+    "source_ids": [
+      "HandleConstant/uniform"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralSpec.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralProof.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Literal.uniform",
+    "overlap": "Pilot.ConstantGuardLemmas proves a Bool storage-recognition lemma for an externally supplied value; first-scalar reconstruction for arbitrary exact element types is the terminal case here.",
+    "effort_group": "literal-model"
+  },
+  {
+    "id": "literal.iota",
+    "lhs": "Stored dense rank-one literal xs",
+    "rhs": "Iota(xs.length, axis 0, encode)",
+    "conditions": "Length > 1; prior uniform branch declined; serial recognition checks each literal element against the fixed encoding of its index.",
+    "types": "Exact scalar equality with an eligible fixed coordinate encoding. Exact integer embedding is an instance.",
+    "source_ids": [
+      "HandleConstant/iota"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralSpec.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralProof.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Literal.plain",
+    "overlap": "Earlier iota-to-zero and broadcast-iota identities concern different original expressions.",
+    "effort_group": "literal-model"
+  },
+  {
+    "id": "literal.strided-iota",
+    "lhs": "Stored dense rank-one integer literal xs",
+    "rhs": "Multiply(Iota(xs.length, axis 0), BroadcastScalar(xs[1]))",
+    "conditions": "At least two elements, earlier uniform and iota guards declined, nonzero second value, serial integer scan succeeds using that inferred stride.",
+    "types": "Unbounded mathematical integers; machine overflow and representation conversion excluded.",
+    "source_ids": [
+      "HandleConstant/strided-iota"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralSpec.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/LiteralProof.lean",
+      "comparisons/revised-benchmark-20261117/literal-model/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Literal.strided",
+    "overlap": "Reuses position scan induction in this batch; computes stride from the input and separately constructs iota, broadcast multiplier and product values.",
+    "effort_group": "literal-model"
+  },
+  {
+    "id": "word.narrow-after-wide-add",
+    "effort_group": "widen-binop",
+    "lhs": "Convert both word tensors to width w, apply add pointwise, convert to width n.",
+    "rhs": "Apply add at width n to the original operands.",
+    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Either both signed or both unsigned.",
+    "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
+    "source_ids": [
+      "TryRemoveUpcastAndDowncastSurroundingBinaryOp/add"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenControls.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenProof.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenSpec.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Widen.verified .add",
+    "overlap": "Signed add/sub/mul use earlier promoted scalar laws. Four different operations, distinct from remainder. No inherited source-row evidence at baseline."
+  },
+  {
+    "id": "word.narrow-after-wide-sub",
+    "effort_group": "widen-binop",
+    "lhs": "Convert both word tensors to width w, apply sub pointwise, convert to width n.",
+    "rhs": "Apply sub at width n to the original operands.",
+    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Either both signed or both unsigned.",
+    "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
+    "source_ids": [
+      "TryRemoveUpcastAndDowncastSurroundingBinaryOp/subtract"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenControls.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenProof.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenSpec.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Widen.verified .sub",
+    "overlap": "Signed add/sub/mul use earlier promoted scalar laws. Four different operations, distinct from remainder. No inherited source-row evidence at baseline."
+  },
+  {
+    "id": "word.narrow-after-wide-mul",
+    "effort_group": "widen-binop",
+    "lhs": "Convert both word tensors to width w, apply mul pointwise, convert to width n.",
+    "rhs": "Apply mul at width n to the original operands.",
+    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Either both signed or both unsigned.",
+    "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
+    "source_ids": [
+      "TryRemoveUpcastAndDowncastSurroundingBinaryOp/multiply"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenControls.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenProof.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenSpec.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Widen.verified .mul",
+    "overlap": "Signed add/sub/mul use earlier promoted scalar laws. Four different operations, distinct from remainder. No inherited source-row evidence at baseline."
+  },
+  {
+    "id": "word.narrow-after-wide-udiv",
+    "effort_group": "widen-binop",
+    "lhs": "Convert both word tensors to width w, apply udiv pointwise, convert to width n.",
+    "rhs": "Apply udiv at width n to the original operands.",
+    "conditions": "Common shape, same signedness across conversions, n \u2264 w. Unsigned only; total BitVec.udiv zero convention.",
+    "types": "Arbitrary-rank BitVec tensors, including scalar and empty shapes.",
+    "source_ids": [
+      "TryRemoveUpcastAndDowncastSurroundingBinaryOp/divide"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenControls.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenProof.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/WidenSpec.lean",
+      "comparisons/revised-benchmark-20261117/widen-binop/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Widen.verified .udiv",
+    "overlap": "Signed add/sub/mul use earlier promoted scalar laws. Four different operations, distinct from remainder. No inherited source-row evidence at baseline."
+  },
+  {
+    "id": "dynamic-slice.singleton-iota-plain",
+    "effort_group": "iota-dynamic-read",
+    "lhs": "Read the singleton slice of Iota.",
+    "rhs": "Clamp the start using a representable typed upper endpoint, convert to element type, reshape to a singleton.",
+    "conditions": "Rank one of any positive length, output extent 1; signedness of index and element independent.",
+    "types": "S32 or U32 word values and modular multiplication.",
+    "source_ids": [
+      "HandleDynamicSlice/iota-plain-same-type",
+      "HandleDynamicSlice/iota-plain-convert"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/ReadControls.lean",
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/ReadProof.lean",
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/ReadSpec.lean",
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.IotaRead.plain",
+    "overlap": "Same-type and conversion aliases grouped. Non-Iota nested fallthrough has different inputs and replacement."
+  },
+  {
+    "id": "dynamic-slice.singleton-iota-scaled",
+    "effort_group": "iota-dynamic-read",
+    "lhs": "Read the singleton slice of Iota times a uniform scalar.",
+    "rhs": "Clamp the start using a representable typed upper endpoint, convert to element type, multiply by the scalar, reshape to a singleton.",
+    "conditions": "Rank one of any positive length, output extent 1; signedness of index and element independent.",
+    "types": "S32 or U32 word values and modular multiplication.",
+    "source_ids": [
+      "HandleDynamicSlice/iota-scaled-same-type",
+      "HandleDynamicSlice/iota-scaled-convert"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/ReadControls.lean",
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/ReadProof.lean",
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/ReadSpec.lean",
+      "comparisons/revised-benchmark-20261117/iota-dynamic-read/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.IotaRead.scaled",
+    "overlap": "Same-type and conversion aliases grouped. Non-Iota nested fallthrough has different inputs and replacement."
+  },
+  {
+    "id": "uniform-collective.gather",
+    "effort_group": "uniform-exchange",
+    "lhs": "Gather ordered equal-width blocks from all participants.",
+    "rhs": "Forward the receiver-local uniform scalar over its output shape.",
+    "conditions": "Nonempty ordered group, every input locally uniform. Equality iff zero block width, empty other coordinates, or group-wide scalar agreement.",
+    "types": "Arbitrary logical values and other-coordinate type. Gather input axis k, exchange input axis g*k, output g*k.",
+    "source_ids": [
+      "HandleAllGather/uniform"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeControls.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeProof.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeSpec.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Exchange.gatherCase",
+    "overlap": "Different original operators on different input frames. Shared uniform-output criterion and proof counted as reused work."
+  },
+  {
+    "id": "uniform-collective.all-to-all",
+    "effort_group": "uniform-exchange",
+    "lhs": "Exchange equal-sized blocks, splitting and joining on the same axis.",
+    "rhs": "Forward the receiver-local uniform scalar over its output shape.",
+    "conditions": "Nonempty ordered group, every input locally uniform. Equality iff zero block width, empty other coordinates, or group-wide scalar agreement.",
+    "types": "Arbitrary logical values and other-coordinate type. Gather input axis k, exchange input axis g*k, output g*k.",
+    "source_ids": [
+      "HandleAllToAll/uniform"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeControls.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeProof.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/ExchangeSpec.lean",
+      "comparisons/revised-benchmark-20261117/uniform-exchange/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.Exchange.exchangeCase",
+    "overlap": "Different original operators on different input frames. Shared uniform-output criterion and proof counted as reused work."
+  }
+]

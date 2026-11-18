@@ -1,6 +1,6 @@
 # Revised benchmark verification contract
 
-**Current acceptance and counts:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
+**Current counts:** [November 18 checkpoint](#november-18-model-checkpoint). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
 
 ## Owner direction and outcome gate
 
@@ -169,3 +169,11 @@ Effort is recorded by shared attempt and review windows, with compiler times nes
 The next bounded mathematical batch can reuse the modular factorization and constant reassociation proofs for the uncovered HandleAdd records. Require typed calculations and a source-ID crosswalk, collapse shared operand orientations, and charge prior discovery as inherited. The dynamic Reverse size-query experiment stays on the separate implementation-assurance queue.
 
 The pass ran 23:43:32–23:55:18 UTC through final ledger checks (11m46s). Rebuilding twice produced identical bytes. The checker validates the frozen catalog and evidence digests, including the historical Git artifacts, as well as both directions of the case-to-source mapping. A disposable control rejected an omitted case and a stale evidence hash. Across the two new packets the Lean specification/proof-and-type-check/control counts were 77/68/44 lines including comments and blank lines. They reuse the existing tensor module and Lean Std.
+
+## November 18 model checkpoint
+
+Twelve additional independently replayed mathematical rewrites bring the catalog to 120 (108 proofs, 12 refutations), with links to 155 of the 488 lexical records. Fifteen previously unrepresented source IDs gained links. Each of the five groups has a precise domain, a pre-proof specification and its own independent review. See [catalog and review index](model-audit/nov18-review.md) and [case definitions](model-audit/nov18.json). The stronger whole-record column still has 7 configured counterexamples and 481 open records. The historical 118 retain 116 proofs, one refutation and one vacuous result. Overlap prevents adding these inventories.
+
+The new work used two small proof assignments, coordinator-authored cases and three separate review assignments. Five groups share proof and review effort internally. The measured interval from first setup through catalog assembly was 549 seconds, including overlapping work. See [effort ledger](model-audit/effort.json) for frozen revisions, compiler intervals, failed probes, source line counts, inherited arithmetic and missing active-time measurements. No discovery time was recovered for historical proofs.
+
+The next source-grounded opportunity is the min/max branch of HandleAllReduceOrReduceScatter. Both rows lack inherited attempt evidence. Its case must distinguish reduction from shape selection in reduce-scatter, with a nonempty device group and an explicit value order. The integral and floating sum rows already have evidence and require separate overlap assessment.

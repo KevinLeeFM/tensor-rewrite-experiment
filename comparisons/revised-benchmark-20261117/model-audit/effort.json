@@ -103,5 +103,98 @@
   },
   "external_library": "The two new packets each import the same existing Tensor module and the pinned Lean Std. Line counts exclude unchanged imported code. Inherited/control packets add no proof source.",
   "coordinator_checks_complete": "23:55:18",
-  "coordinator_wall_through_checks_seconds": 706
+  "coordinator_wall_through_checks_seconds": 706,
+  "continuations": {
+    "nov18": {
+      "started_utc": "2026-11-17T23:56:36Z",
+      "groups": {
+        "rotation-model": {
+          "freeze": "b73a860",
+          "proof": "f3e5d10",
+          "author_compiler_seconds_observed": [
+            1.403
+          ],
+          "lines_of_new_lean_including_comments_and_blanks": {
+            "RotationControls.lean": 32,
+            "RotationProof.lean": 92,
+            "RotationSpec.lean": 65
+          },
+          "review": "rotation-model/REVIEW.md",
+          "additional_author_details": "rotation-model/EFFORT.md",
+          "observation": "Setup 23:56:56Z, proof checkpoint 23:59:59Z. Additional earlier compiles and failures in EFFORT.md. Imports unchanged Tensor and Lean Std."
+        },
+        "literal-model": {
+          "freeze": "8622695",
+          "proof": "93f28e4",
+          "author_compiler_seconds_observed": [
+            0.38,
+            0.333
+          ],
+          "lines_of_new_lean_including_comments_and_blanks": {
+            "LiteralProof.lean": 82,
+            "LiteralSpec.lean": 48
+          },
+          "review": "literal-model/REVIEW.md",
+          "additional_author_details": "literal-model/EFFORT.md",
+          "observation": "Setup 23:57:04Z, freeze 23:58:44Z, checked by 23:59:37Z, evidence commit 00:00:07Z. See EFFORT.md. Imports Lean Std."
+        },
+        "widen-binop": {
+          "freeze": "27ab2c7",
+          "proof": "ea39cc6",
+          "author_compiler_seconds_observed": [
+            1.515,
+            1.697,
+            1.738
+          ],
+          "lines_of_new_lean_including_comments_and_blanks": {
+            "WidenControls.lean": 12,
+            "WidenProof.lean": 38,
+            "WidenSpec.lean": 21
+          },
+          "review": "widen-binop/REVIEW.md",
+          "observation": "Freeze to candidate 48s. First unsigned-negation lemma name was incorrect. An unsigned division fault probe using divisor 3 did not discriminate at the chosen input; divisor 2 did. Three signed scalar laws reused from PromotedWordArithmetic. Imports Tensor, PromotedWordArithmetic, Std."
+        },
+        "iota-dynamic-read": {
+          "freeze": "84997d4",
+          "proof": "85f23d9",
+          "author_compiler_seconds_observed": [
+            0.847,
+            1.156
+          ],
+          "lines_of_new_lean_including_comments_and_blanks": {
+            "ReadControls.lean": 11,
+            "ReadProof.lean": 74,
+            "ReadSpec.lean": 33
+          },
+          "review": "iota-dynamic-read/REVIEW.md",
+          "observation": "Freeze to candidate 52s. First proof draft did not normalize Fin address projections; explicit simplification repaired it. Std only."
+        },
+        "uniform-exchange": {
+          "freeze": "6b18938",
+          "proof": "f409b46",
+          "author_compiler_seconds_observed": [
+            0.482,
+            0.422,
+            0.351,
+            0.322
+          ],
+          "lines_of_new_lean_including_comments_and_blanks": {
+            "ExchangeControls.lean": 18,
+            "ExchangeProof.lean": 36,
+            "ExchangeSpec.lean": 43
+          },
+          "review": "uniform-exchange/REVIEW.md",
+          "observation": "Freeze to proof checkpoint 113s elapsed, including context resumption. Pre-freeze width-positivity tactic unavailable in Std; cases on width fixed it. First post-freeze proof and controls compiled. Std only."
+        }
+      },
+      "shared_reviews_seconds": {
+        "rotation_literal": 93,
+        "widen_iota": 95.8,
+        "uniform_exchange": 69
+      },
+      "active_reasoning_and_token_cost": "unknown; concurrent work, shared proofs and validation prevent allocating elapsed equally to individual cases",
+      "accounted_through_utc": "2026-11-18T00:05:45+00:00",
+      "elapsed_seconds_through_catalog_assembly": 549.0
+    }
+  }
 }

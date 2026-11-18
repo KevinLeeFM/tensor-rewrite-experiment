@@ -27,7 +27,7 @@ def attach_model_cases(out, packet, root, modern, crosswalk):
     catalog_pins = directory / 'catalog-sha256.json'
     pinned_catalogs = read(catalog_pins)
     audit_inputs = [manifest_path, catalog_pins, effort_path, plan]
-    for name in ('structural', 'value', 'new', 'inherited', 'control'):
+    for name in ('structural', 'value', 'new', 'inherited', 'control', 'nov18'):
         catalog = directory / (name + '.json')
         review = directory / (name + '-review.md')
         assert digest(catalog) == pinned_catalogs[catalog.name], catalog
