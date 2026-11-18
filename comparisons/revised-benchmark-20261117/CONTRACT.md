@@ -344,3 +344,9 @@ Independent review at 100ed5c accepted three ordered-fold model cases covering f
 Two independent model refutations raise the ledger to 204 mathematical cases, 156 proved and 48 disproved, with 411 source labels linked. Splitting a U32 scalar twice yields dimensions [2,2]; direct inference gives [4]. Under the little-endian evaluator profile, converting two packed nibbles [1,1] to one U8 yields 17; the raw literal copy yields 1. Both the old algebraic byte-stream result and a separate historical same-width law remain available.
 
 The shape packet's first attempt selected Lake unnecessarily. It checked out 206 MB of FloatLib in a new local .lake before any compilation. The worker stopped the process, removed that directory, and switched to direct Lean plus Std. The earlier uncompiled stream candidate is outside the accepted closure. Both corrected packets passed independent direct replay; joint review took 209 s. No official cache endpoint was retried. [Shape review](bitcast-convert-compose/REVIEW.md) · [Literal review](bitcast-packed-literal/REVIEW.md)
+
+### Constant conversion and empty contraction
+
+Evaluating a constant conversion calls the same deterministic literal routine as precomputing the constant. Same-type conversion clones every entry. Both cases include static zero extents. The conversion-stage proof propagates a failure before any replacement is produced. The exact proofs compiled at ef8625c and passed independent review at 2cf8470. Author inspection began 03:42 UTC, final candidate at 03:44:56; reviewer elapsed 69 s (1.055 s compilation). The first failed control used an implicit bounded numeral and its diagnostic is retained.
+
+Five historical receipts linked eight more labels at 67a7be6, with the strict signed-zero MAC observation separated from any universal backend-permission claim. These mappings add no cases. The mathematical ledger has 206 cases: 158 proved and 48 refuted; 421 of 488 retained labels have links.
