@@ -1,0 +1,21 @@
+Independent review/replay (UTC, 2026-11-18)
+Fresh command:
+  LEAN=/workspace/toolchains/lean-4.35.0-linux/bin/lean python3 comparisons/revised-benchmark-20261117/conv-mixed-spatial/replay.py
+Start: 05:08:05
+End:   05:08:07
+Shell wall: 1.854 s
+Pinned Lean 4.35.0 target times (seconds, exit):
+  PointSpec 0.387 0
+  PointProof 0.380 0
+  MixedSpec 0.360 0
+  MixedProof 0.390 0
+  MixedControls 0.302 0
+  compiler sum: 1.819 s
+SHA256SUMS: all five entries OK
+Axiom output: PointAxes.physicalKernelSequence [propext, Quot.sound]; PointAxes.verified and ConvMixedSpatial.verified [propext, Classical.choice, Quot.sound].
+Verdict: accepted for the one frozen rank-four exact-Nat physical profile, with source geometry and index maps checked; no native/C++ correspondence claim and no separate reversal-flag/orientation count. See REVIEW.md.
+Official pinned-source spot checks at XLA e58e523b11f1fde802a493a776d158007486e1bf:
+  hlo_evaluator.cc excerpt 5951-6066, blob 870725d890f97787a2b7b661f25005678bcd1f54 (local git hash-object matches)
+  hlo_instruction.cc excerpt 2442-2515, blob 7eb3374e7cb882735c097465001c8c5fad0a1e32 (local git hash-object matches)
+  shape_inference.cc excerpts 2194-2260 and 2437-2465, blob b4b9c04cffe2d400937420d324f3cf12cce3e5fe (local git hash-object matches)
+The exact simplifier.cc source hash is also in packet SHA256SUMS. Source/spec inspections began before the first explicit timestamp; total reviewer wall/active time was not separately instrumented. No setup, packages, downloads, or broad builds.
