@@ -1,0 +1,116 @@
+[
+  {
+    "id": "reuse.empty-outer.dot-empty",
+    "source_ids": [
+      "HandleDot/empty"
+    ],
+    "historical_reuse": "TensorRewrite/Pilot/ContractionRules.lean",
+    "theorem": "TensorRewrite.Pilot.Contraction.dot_empty_output, dot_empty_lhs, dot_empty_rhs",
+    "lhs": "Ordered contraction over the normalized batch/free/contracting axes.",
+    "rhs": "Broadcast the scalar zero over the requested output.",
+    "conditions": "Source path: layout-insensitive HandleDot with no more than two operands; the empty output/lhs/rhs test runs before the no-contract rewrite and returns a broadcast of result-type zero. In the exact contraction model the corresponding empty result/fiber is Tensor.constant (finish zero); matching source zero therefore assumes the declared result/finish profile maps this initializer to result zero. No add/multiply associativity is needed.",
+    "types": "Static logical tensors in the declared contraction model; no scalar multiplication or additive associativity required.",
+    "overlap": "The cited empty-case theorems are terminal for the normalized abstract contraction model. Outcome ledger keeps HandleDot/empty unresolved: concrete dimension/precision/finish-to-zero correspondence, graph mapping and observation contract remain open. Reuse only; discovery time not recorded.",
+    "outcome": "proved",
+    "effort_group": "empty-outer-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Pilot/ContractionRules.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "reports/pilot-values.json",
+      "census/contraction-contract.json",
+      "reports/contraction-foundations-and-zero-mac.md"
+    ]
+  },
+  {
+    "id": "reuse.empty-outer.outer-product",
+    "source_ids": [
+      "HandleDot/outer-product-delegation",
+      "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-00",
+      "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-01",
+      "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-10",
+      "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-11"
+    ],
+    "historical_reuse": "TensorRewrite/Pilot/ContractionRules.lean",
+    "theorem": "TensorRewrite.Pilot.Contraction.dot_no_contract_of_finish_identity",
+    "lhs": "Normalize axes and evaluate the single ordered product in the zero-initialized contraction.",
+    "rhs": "Multiply the two operand values projected from the batch/left-free/right-free output and finish.",
+    "conditions": "Source path requires layout-insensitive mode, at most two operands, nonempty operands/output (empty dispatch runs first), SupportedDotPrecisionConfig(..., has_contracting_dim=false), enable_dot_to_multiply_rewrite, and zero lhs contracting dimensions. Source normalizes batch/free axes, converts each operand to result element type when needed, broadcasts, and multiplies. The theorem applies only after those axis projections and conversion/multiplication/finish maps are instantiated and finish(add zero value)=finish(value) holds.",
+    "types": "Static mathematical contraction plan with explicit value profiles. The Lean theorem parameterizes arithmetic; recorded test vectors cover negative small S8/S32 values, without general native equivalence.",
+    "overlap": "dot_no_contract_of_finish_identity is a terminal theorem for its explicit abstract plan, but it does not prove XLA dimension-list normalization, operand projections, casts, precision or graph/API correspondence. The four casts-* source variants and delegation label remain unresolved in outcome-ledger; the native integer vectors are diagnostic, not general cast proofs. One theorem row links five lexical labels, not five closed source records.",
+    "outcome": "proved",
+    "effort_group": "empty-outer-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Pilot/ContractionRules.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "reports/pilot-values.json",
+      "census/contraction-contract.json",
+      "reports/contraction-foundations-and-zero-mac.md"
+    ]
+  },
+  {
+    "id": "reuse.empty-outer.outer-zero",
+    "source_ids": [
+      "HandleDot/outer-product-delegation",
+      "RewriteAsMultiplyDotWithZeroLhsContractingDim/casts-00"
+    ],
+    "historical_reuse": "TensorRewrite/Pilot/ZeroMacCertificates.lean",
+    "theorem": "TensorRewrite.Pilot.ZeroMacProfile.negative_zero_incompatible, zero_bits_differ",
+    "lhs": "One slow binary32 MAC starting at positive zero, multiplying negative zero by one.",
+    "rhs": "The same single multiplication without adding the initializer.",
+    "conditions": "One frozen no-contracting-dimensions F32 profile with rewrite option and layout-insensitive simplification enabled, strict round-to-nearest slow evaluator, no casts, lhs negative zero and rhs one. The exact bit model constrains only the one product and mixed-zero addition; it is not a general IEEE or backend-permission assumption.",
+    "types": "Constrained binary32 bit profile, not a general IEEE implementation.",
+    "overlap": "This refutes the replacement within the constrained signed-zero profile and the cited native replay observes an evaluator/handler/pass bit difference. The receipt explicitly sets fp_diagnostic_is_source_refutation=false and backend permissions pending; therefore this is not an accepted source-level rewrite disproof or a general HLO implementation claim. It overlaps outer-product-delegation and casts-00 and adds no distinct source ID.",
+    "outcome": "disproved",
+    "effort_group": "empty-outer-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Pilot/ZeroMacCertificates.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "reports/pilot-values.json",
+      "census/contraction-contract.json",
+      "reports/contraction-foundations-and-zero-mac.md",
+      "TensorRewrite/Pilot/ZeroMacProfile.lean",
+      "reports/contraction-replay-v3/result.json"
+    ]
+  },
+  {
+    "id": "reuse.empty-outer.conv-empty",
+    "source_ids": [
+      "HandleConvolution/empty"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/ConvolutionLemmas.lean",
+    "theorem": "TensorRewrite.Theory.Convolution.convolve_empty_spatial_input, convolve_empty_kernel, convolve_no_channels",
+    "lhs": "Sum valid padded/dilated convolution terms in a factored logical plan.",
+    "rhs": "Broadcast semiring zero.",
+    "conditions": "The source first tries optional ScalarMultiplyReduction; credit this branch only when that helper leaves the convolution in place. It then replaces with result-shaped scalar zero if input or filter is a zero-element array. Empty spatial input may leave padded output live; empty kernel/zero input channels apply only where a zero feature extent makes an operand empty. Exact factored static convolution model, positive strides/dilations, and semiring zero.",
+    "types": "Homogeneous exact semiring in the factored convolution model, static shapes with positive strides and dilations.",
+    "overlap": "The theorem family is terminal for the exact factored convolution model. Outcome ledger still marks HandleConvolution/empty unresolved; the source convolution descriptor/group/window-to-Plan bridge and preceding ScalarMultiplyReduction behavior are not proved by these declarations. Reuse only; no fresh replay.",
+    "outcome": "proved",
+    "effort_group": "empty-outer-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/ConvolutionLemmas.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "reports/theory-progress.json"
+    ]
+  },
+  {
+    "id": "reuse.empty-outer.scatter-empty",
+    "source_ids": [
+      "HandleScatter/empty-updates"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/OrderedScatterGraph.lean",
+    "theorem": "TensorRewrite.Theory.OrderedScatter.empty_components; scatter_empty",
+    "lhs": "Apply ordered bounded updates to each component of the base with a common coupled reducer.",
+    "rhs": "Return original scalar-array or tuple-of-arrays bases.",
+    "conditions": "Source guard requires every scatter_updates array to have zero elements; its replacement helper additionally requires no control predecessors, compatible tuple/component shapes and preserved sharding/frontend attributes. In the matching common static event plan, a zero batch count or zero window count yields no events, so the ordered reducer is never called and the base tuple is returned.",
+    "types": "Heterogeneous arbitrary pure component values over a common index plan.",
+    "overlap": "empty_components/scatter_empty are terminal for the stated ordered model and the cited receipt contains their declarations. Outcome ledger still leaves HandleScatter/empty-updates unresolved because extracting the concrete source event plan, shape/update components and replacement/API conditions remains open. Reuse only; no source record is accepted here.",
+    "outcome": "proved",
+    "effort_group": "empty-outer-historical-reuse",
+    "evidence": [
+      "TensorRewrite/Theory/OrderedScatterGraph.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "TensorRewrite/Theory/OrderedScatterProof.lean",
+      "reports/theory-progress.json"
+    ]
+  }
+]
