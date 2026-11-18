@@ -1,0 +1,24 @@
+comparisons/revised-benchmark-20261117/full-width-precision/WidthSpec.lean: OK
+comparisons/revised-benchmark-20261117/full-width-precision/WidthProof.lean: OK
+comparisons/revised-benchmark-20261117/full-width-precision/WidthControls.lean: OK
+comparisons/revised-benchmark-20261117/full-width-precision/FREEZE.md: OK
+WidthSpec 0.471s exit=0
+WidthProof.lean:3:27: error: unsolved goals
+I : Type
+operand : I → BitVec 32
+width : 23 + 1 = 24
+i : I
+⊢ ((operand i).toNat / 8388608 % 256 = 255 → (operand i).toNat % 8388608 = 0) →
+    BitVec.ofNat 32
+        ((operand i).toNat +
+          if 1 < 2 * ((operand i).toNat % 1) ∨ 2 * ((operand i).toNat % 1) = 1 ∧ (operand i).toNat % 2 = 1 then 1
+          else 0) =
+      operand i
+'RevisedBenchmark.FullWidth.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+WidthProof 0.369s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/full-width-precision/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'WidthProof.olean', 'WidthProof.lean']' returned non-zero exit status 1.
