@@ -17,7 +17,7 @@ theorem admissible (r copies : Nat) (hr : 1 < r) (s out : List Nat) :
     by_cases n : copies*r = r
     · have one : copies = 1 := Nat.eq_of_mul_eq_mul_right (by omega : 0 < r)
           (show copies*r = 1*r by simpa using n)
-      simp [n,one,eq_comm]
+      simp [one,eq_comm]
     · have ne : copies ≠ 1 := by intro h; simp [h] at n
       simp [n,ne]
 
