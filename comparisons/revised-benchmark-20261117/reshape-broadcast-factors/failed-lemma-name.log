@@ -1,0 +1,25 @@
+comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FREEZE.md: OK
+sources/xla/xla/shape_util.cc: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/reshape-broadcast-factors/FactorSpec.lean: OK
+FactorSpec 0.412 0
+FactorProof.lean:8:14: error(lean.unknownIdentifier): Unknown constant `Nat.mul_pos_iff.mp`
+FactorProof.lean:4:57: error: unsolved goals
+w : Nat
+p q s t : List Nat
+h : p.prod = q.prod
+flat : Fin (q ++ w :: t).prod
+same : q.prod * w * s.prod = q.prod * w * t.prod
+pos : 0 < q.prod * w * t.prod
+⊢ { p := p, q := q, s := s, t := t, oldSplit := ⋯, newSplit := ⋯, equalPrefix := h }.s.prod =
+      { p := p, q := q, s := s, t := t, oldSplit := ⋯, newSplit := ⋯, equalPrefix := h }.t.prod ∧
+    0 < w
+'RevisedBenchmark.ReshapeBroadcast.verified' depends on axioms: [propext, sorryAx, Quot.sound]
+'RevisedBenchmark.ReshapeBroadcast.legal_read' depends on axioms: [sorryAx]
+FactorProof 0.323 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/reshape-broadcast-factors/replay.py", line 19, in <module>
+    result.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'FactorProof.olean', 'FactorProof.lean']' returned non-zero exit status 1.
