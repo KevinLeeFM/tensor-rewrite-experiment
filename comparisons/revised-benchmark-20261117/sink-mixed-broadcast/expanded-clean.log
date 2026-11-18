@@ -1,0 +1,16 @@
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/SinkSpec.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandSpec.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandProof.lean: OK
+comparisons/revised-benchmark-20261117/sink-mixed-broadcast/ExpandControls.lean: OK
+SinkSpec 0.436s exit=0
+ExpandSpec 0.349s exit=0
+'RevisedBenchmark.SinkMixed.expanded' depends on axioms: [propext, Quot.sound]
+ExpandProof 0.327s exit=0
+fun {r q n} {s} {t} =>
+  expanded : ∀ {r q n : Nat} {s : Fin r → Nat} {t : Fin q → Nat} (axis : Fin r → Fin q),
+  (∀ (i j : Fin r), i < j → axis i < axis j) →
+    ∀ (fit : ∀ (i : Fin r), s i = 1 ∨ t (axis i) = s i) (types : Fin n → Type) (β : Type)
+      (args : (k : Fin n) → Arg (Coord s) (types k)) (user : ((k : Fin n) → types k) → β),
+      (fun o => user fun k => before (expandProject axis fit) (args k) o) = fun o =>
+        (fun x => user fun k => after (args k) x) (expandProject axis fit o)
+ExpandControls 0.395s exit=0
