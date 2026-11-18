@@ -1,0 +1,26 @@
+[
+  {
+    "id": "reduce.concat-f32-strict",
+    "effort_group": "reduce-concat-round",
+    "outcome": "disproved",
+    "source_ids": [
+      "HandleReduce/concat"
+    ],
+    "theorem": "RevisedBenchmark.ReduceConcat.refuted",
+    "lhs": "Strict binary32 nearest-even left fold of scalar add from +0 over concatenation A++B.",
+    "rhs": "Independently fold A and B from +0 and add their scalar results in binary32.",
+    "types": "Two static F32[2] tensors, scalar F32 output. Nonnegative exact integer inputs \u2264 2^24.",
+    "conditions": "Axis zero concatenated and reduced; equal block shapes, single output, layout-insensitive. Fixed strict order with binary32 RNE per add. Pinned evaluator slow reduction path; default fast double accumulator and backend reassociation excluded.",
+    "overlap": "Historical exact AddMonoid.concat-style identity; established r32 arithmetic reused. Counterexample concerns sequential value preservation under the stated grouping. Documented backend reassociation permitted.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/ConcatRoundSpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/ConcatRoundProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/ConcatRoundControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/replay.py",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/author.log",
+      "comparisons/revised-benchmark-20261117/reduce-concat-round/AUTHOR.md"
+    ]
+  }
+]
