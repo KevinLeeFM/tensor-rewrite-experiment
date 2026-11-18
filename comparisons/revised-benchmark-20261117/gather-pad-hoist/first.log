@@ -1,0 +1,26 @@
+comparisons/revised-benchmark-20261117/gather-pad-hoist/GatherHoistSpec.lean: OK
+comparisons/revised-benchmark-20261117/gather-pad-hoist/FREEZE.md: OK
+lean-toolchain: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+GatherHoistSpec 0.496s exit=0
+GatherHoistProof.lean:15:74: error: unsolved goals
+U : Type
+n : Nat
+s : Fin n → U → Int
+ifill : Int
+i : Fin (extent (idAxis n)).toNat
+u : U
+bound : ↑i < n
+⊢ (match if h : ↑i % 1 = 0 then some ⟨↑i, ⋯⟩ else none with
+    | some i => s i u
+    | none => ifill) =
+    s ⟨↑i, ⋯⟩ u
+'RevisedBenchmark.GatherHoist.verified' depends on axioms: [propext, Quot.sound]
+'RevisedBenchmark.GatherHoist.startUnchanged' depends on axioms: [propext, sorryAx, Quot.sound]
+GatherHoistProof 0.351s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/gather-pad-hoist/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'GatherHoistProof.olean', 'GatherHoistProof.lean']' returned non-zero exit status 1.
