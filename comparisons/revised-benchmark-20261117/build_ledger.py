@@ -189,6 +189,18 @@ out['source_candidates']['reviewed_observation_outcomes'] = dict(collections.Cou
 out['source_candidates']['work_state_counts'] = dict(collections.Counter(row['work_state'] for row in modern))
 out['source_candidates']['records_with_reviewed_record_observation'] = sum('reviewed_record_observation' in row for row in modern)
 attach_model_cases(out, packet, root, modern, crosswalk)
+aux_path = packet / 'model-audit/artifact-auxiliary-outcomes.json'
+aux = load(aux_path)
+historical_rules = load(root / 'census/historical-rules.json')['rules']
+main_ids = {r['id'] for r in historical_rules if r['included_by_runall'] and r['verifier_invocations']}
+assert main_ids == {row['id'] for row in cases}
+aux_ids = {r['id'] for r in historical_rules} - main_ids
+assert len(aux['records']) == len(aux_ids) == 4
+assert {row['id'] for row in aux['records']} == aux_ids
+for path, expected in aux['evidence_sha256'].items():
+    assert sha(root / path) == expected, path
+out['auxiliary_artifact_declarations'] = aux
+out['sources'][str(aux_path.relative_to(root))] = sha(aux_path)
 out['status'] = 'reviewed_mathematical_cases_with_separate_whole_source_assurance'
 (root/'comparisons/revised-benchmark-20261117/outcome-ledger.json').write_text(json.dumps(out, indent=2)+'\n')
 print('source',out['source_candidates']['counts'],'inherited',out['source_candidates']['inherited_status_counts'])

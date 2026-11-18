@@ -81,7 +81,8 @@
     "comparisons/revised-benchmark-20261117/model-audit/shape-numerical-tail-review.md": "769944a30062224ffee90372c81b0c4707c21dc53843dba5e3b88f6d01331270",
     "comparisons/revised-benchmark-20261117/model-audit/delegation137-alias-rows.json": "8eae226981edfabdd93f1c3a86abe1a809c2a8cbb1e03e20cf786f8fc0a08766",
     "comparisons/revised-benchmark-20261117/model-audit/delegation137-alias-review.md": "5f8caf7a41b434a769164e7621fb449af8a4b483bd8d0d61903fbebd59c32052",
-    "comparisons/revised-benchmark-20261117/model-audit/six-label-disposition.md": "4b4d8f4ebb40a2b76266af685e1b0cfa95ea129770d083a84838836b09a3b428"
+    "comparisons/revised-benchmark-20261117/model-audit/six-label-disposition.md": "4b4d8f4ebb40a2b76266af685e1b0cfa95ea129770d083a84838836b09a3b428",
+    "comparisons/revised-benchmark-20261117/model-audit/artifact-auxiliary-outcomes.json": "b8818d3e1a37798039f5442730050676ab57edafdd2236322ceaeeb521942654"
   },
   "source_candidates": {
     "records": [
@@ -30685,6 +30686,83 @@
         "ReplaceWithBitcast/unary": "Generic bitcast builder. Size compatibility alone gives no relation to the old result; a caller and storage semantics are required."
       },
       "scope": "Finite unresolved-label audit. Linked source records may have additional mathematical domains or execution conditions."
+    }
+  },
+  "auxiliary_artifact_declarations": {
+    "records": [
+      {
+        "id": "debug/rulePadTwice",
+        "outcome": "proved",
+        "kind": "new",
+        "law_family": "signed-pad-composition",
+        "theorem": "Auxiliary.DebugPad.verified",
+        "review": "comparisons/revised-benchmark-20261117/artifact-debug-pad/REVIEW.md"
+      },
+      {
+        "id": "debug/rulePadLowCombine",
+        "outcome": "proved",
+        "kind": "specialized declaration",
+        "law_family": "signed-pad-composition",
+        "theorem": "Auxiliary.DebugPad.low_verified",
+        "review": "comparisons/revised-benchmark-20261117/artifact-debug-pad/REVIEW.md"
+      },
+      {
+        "id": "dyslice/rule06",
+        "outcome": "disproved",
+        "kind": "new",
+        "law_family": "dyslice-independent-literal",
+        "theorem": "ArtifactAux.DynamicSlice.refuted",
+        "review": "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/REVIEW.md"
+      },
+      {
+        "id": "generalize/foldConvInputPadGeneral",
+        "outcome": "proved in declared semiring",
+        "kind": "historical reuse",
+        "law_family": "convolution-pad-generalization",
+        "theorem": "PadConvolution.convolve_fusion with PadWindow.fused_high_nonempty",
+        "review": "comparisons/revised-benchmark-20261117/artifact-debug-pad/REVIEW.md"
+      }
+    ],
+    "scope": "Four declared programs outside the 118 invoked main artifact cases. Two pad declarations check one underlying law. The generalized convolution mapping reuses checked historical mathematics. No new XLA label, main-suite outcome or artifact SMT run.",
+    "evidence_sha256": {
+      "TensorRewrite/Theory/PadWindowLemmas.lean": "83934f05ba159d1282c37e6e491751a888d349b06f2b67b8d683059b7f2bd0c4",
+      "census/historical-rules.json": "bb7b21cb437f238b36e1802f4b0169442c5bf53460358a5f938699a2c4453b63",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/AUTHOR.md": "637a02479a63ffd3abd17040824b335ec0562505cff772c45b78934c41a4c1ee",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/FREEZE.md": "74a8daa7907fbae1c6de11adc3b64000032ddde6fa81a4286af36f0d4bdfc6ba",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/PadControls.lean": "19cab26090383dd31a138518ff24429c271bbbad5ee341733024836982dbf652",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/PadProof.lean": "40cdd8ac1cc3e9d9f121a12805a58ac5e46cdefd874378092568c9a8250c0fb7",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/PadSpec.lean": "50403844f99e0a8cbfa646321e24fcbfeb6551bf90e3456833ebc867c8dc92f3",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/REVIEW.md": "9b505d82a62de9655e4fcc4936611f4dd1d372117cbeab3e8bbc02ab7c5f18f2",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/SHA256SUMS": "7ac5d76e90270d16b1911347a4d654a83575c75af00d918128fbffaec0ac8325",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/attempt1.log": "3cb260daa2e9cc66111c1ef6f3918c8d71c24d3d9874f07acf9490c37febb0b3",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/attempt2.log": "66f7a9446bfa5c16bc4cc37cfc15e9fa84ca8562d8cc4b0423bb9baf9fb3b4b8",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/attempt3.log": "3de1393571d8056c596a0447ed69d27085a396e440f459badbe9d272472a09dd",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/final.log": "2ca9025819d780d09e86dda163d479205fd92544f17196a2ca974a079e56811d",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/replay.py": "e150247990a7c981daeb0c7f790bfb2e069726e71c1c3f09c9900f246dc389e4",
+      "comparisons/revised-benchmark-20261117/artifact-debug-pad/review.log": "d0682f32ba09473f92cd73f4b77aa50937b4680c85c19caf3d5e0e3b837c42ab",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/AUTHOR.md": "00c43a80182c18d619c72ecfb4dfdaa0fdf9b74b0ee8a0cbfcfee0bbd38ba9c0",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/AuxControls.lean": "04ec3e488552122c1b7930ef27e18d2a86edc72d97442c04e83c3f2346bf52ed",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/AuxProof.lean": "73d56cd035b20a24e87f5c189f23e83e89337171fe1223d2d5c1bd7a8978d632",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/AuxSpec.lean": "db6405a7eab5672f2932697f74c5665b16b7a99b28ebec830a8b79b42082ad6d",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/FREEZE.md": "0c7e1565853de304a62a4ba34fd88655b0fba4de795a80cb21c4f034da75bcc5",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/REVIEW.md": "0b28d6134ac1a44fcb505568b7ead15e0003992ac4da781f5b3dfb7fbe904d30",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/SHA256SUMS": "6af7ad5125163a7f2f050822f5ccee9a490c9c970f82fd9a240650e9d7ca2b5d",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/author.log": "a7729219f5db5b4a479243a35bc23698c48b37add1cf79485093202c280dca98",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/replay.py": "9c50a7f793513e758bdccb74cc441d21183a40a278ecf525a7669ac6395031b0",
+      "comparisons/revised-benchmark-20261117/artifact-dyslice-aux/review.log": "a1cd00aecd756104db78e6e554a47c11f56ef73a4ae155e30ad2af03869c90ec",
+      "comparisons/revised-benchmark-20261117/model-audit/artifact-auxiliary-scope.md": "a1d977dccc584497e6324a4a129ca38beb835243a92ca6594582f9c3b5bf79f7",
+      "comparisons/tensorright-v1/PadConvolution.lean": "dc3b867860ccdb60312b0f2d49e8e3b2cfc92df896805c10cd4cbe5df6be52c1",
+      "comparisons/tensorright-v1/artifact-rerun.json": "1674e4e9f10656bd94b51a88c37d33f5e527c4bbe53ca0c6a3c8812c6cc57d72",
+      "comparisons/tensorright-v1/cases.json": "7f306cbb46f351587d1ab3aff9066c64c19a8191562e2105f383d0ef6ca955b1",
+      "comparisons/tensorright-v1/pad-convolution-check.log": "75f6c98f6af51891b805f1496e41b8f3db133ce32cc5cb71a06f7ccb8eb16fa1",
+      "reports/mathematical-ledger-audit.log": "9e0a306b6be8ebb949b04081c9f04bc62b449152ebc190385709407b84a42bc1",
+      "sources/tensorright/artifact/tr-artifact/rules/debug/Main.hs": "1ab2c689e7ce27ff0cb6a806b379acd78c57ad95e52bca640c5144aef7d7421d",
+      "sources/tensorright/artifact/tr-artifact/rules/dyslice/Main.hs": "bf80a23150e8874ba1fd99e76530c1049aa562d94a09fcf9e3c7b2bc6314dac3",
+      "sources/tensorright/artifact/tr-artifact/rules/generalize/Main.hs": "c2039cb23ed14b6a629201e0aabddca14b59c332dc84c74b91857c9f84c7a2bb",
+      "sources/tensorright/artifact/tr-artifact/runall.sh": "7e8b901beb0ed9351d2153cc81174305b4430457836f4a469caf8b1c6674e9e9",
+      "sources/tensorright/artifact/tr-artifact/src/TensorRight/Internal/Core/Tensor/TensorInt.hs": "b639ce5aa7a5323b47be9d0e69073e3092e425878096670f7d1f2eaed5d17cc1",
+      "sources/tensorright/artifact/tr-artifact/src/TensorRight/Internal/Core/Tensor/Typed.hs": "59dabe8db53c8a1f0fdad4aa95cc1f64de963d62c72fcc44829421c10efcb9f1",
+      "sources/tensorright/artifact/tr-artifact/src/TensorRight/Internal/DSL/Eval.hs": "e1764dca0a20f720940b6f15ee595d6a20686e8414b3eadfc4b256ef238c0ace"
     }
   }
 }
