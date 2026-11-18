@@ -1,0 +1,584 @@
+[
+  {
+    "id": "reduce.replicated-multiplicity-exact-int",
+    "outcome": "proved",
+    "effort_group": "reduce-replicated-multiplicity",
+    "source_ids": [
+      "HandleReduce/broadcast-replicated-axes"
+    ],
+    "lhs": "Broadcast the operand and reduce precisely the chosen introduced axes in row-major order.",
+    "rhs": "Multiply the original operand by the converted product of reduced extents, add a broadcast zero seed, then broadcast the result on the renumbered surviving axes.",
+    "conditions": "Static ordered equal-mapped-extent broadcast with reductions only on inserted dimensions. Logical output coordinates valid. Unbounded exact Int, seed 0; arbitrary static rank/shape including zero.",
+    "types": "Unbounded exact Int, seed 0; arbitrary static rank/shape including zero.",
+    "theorem": "RevisedBenchmark.ReduceMultiplicity.exactInt",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicitySpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/attempt1.log",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "overlap": "New terminal tensor relation uses prior mapped-axis transport and RNE integer rounding. Known constant-fold coefficient identity and prior fixed-order scalar uniform-sum rounding discrepancy are inherited arithmetic; not first discoveries."
+  },
+  {
+    "id": "reduce.replicated-multiplicity-rne-binary32",
+    "outcome": "disproved",
+    "effort_group": "reduce-replicated-multiplicity",
+    "source_ids": [
+      "HandleReduce/broadcast-replicated-axes"
+    ],
+    "lhs": "Broadcast the operand and reduce precisely the chosen introduced axes in row-major order.",
+    "rhs": "Multiply the original operand by the converted product of reduced extents, add a broadcast zero seed, then broadcast the result on the renumbered surviving axes.",
+    "conditions": "Static ordered equal-mapped-extent broadcast with reductions only on inserted dimensions. Logical output coordinates valid. Fixed-order RNE binary32, finite nonnegative integer-valued inputs ≤2^24, seed +0, common count 1..256.",
+    "types": "Fixed-order RNE binary32, finite nonnegative integer-valued inputs ≤2^24, seed +0, common count 1..256.",
+    "theorem": "RevisedBenchmark.ReduceMultiplicity.refuted",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicitySpec.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityProof.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/MultiplicityControls.lean",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/attempt1.log",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/reduce-replicated-multiplicity/replay.py",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "overlap": "New terminal tensor relation uses prior mapped-axis transport and RNE integer rounding. Known constant-fold coefficient identity and prior fixed-order scalar uniform-sum rounding discrepancy are inherited arithmetic; not first discoveries."
+  },
+  {
+    "id": "window.prefix-wide-count",
+    "outcome": "disproved",
+    "effort_group": "prefix-wide-count",
+    "source_ids": [
+      "HandleReduceWindow/cumsum-i32-reuse-literal"
+    ],
+    "theorem": "RevisedBenchmark.WideCount.refuted",
+    "lhs": "Accumulate a constant U64 into a length-n inclusive sliding window with low padding n−1.",
+    "rhs": "Multiply the word by the zero-based S32 iota incremented in S32 and then converted to U64.",
+    "conditions": "Static rank one, stride one, zero seed, no dilations/reversal, direct constant broadcast. At output r=2147483647 for value one, original 0x0000000080000000, replacement 0xffffffff80000000.",
+    "types": "U64 modular addition/multiplication, S32 to U64 numeric widening.",
+    "overlap": "Historical word_prefix_product uses same-width arithmetic; signed_width_boundary_refuted supplies a component, not this mixed-width terminal. Large extent is evaluated symbolically. Native feasibility untested.",
+    "evidence": [
+      "TensorRewrite/Theory/PrefixWindowInteger.lean",
+      "TensorRewrite/Theory/PrefixWindowArithmetic.lean",
+      "TensorRewrite/Theory/PrefixWindowCounterexamples.lean",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/PrefixControls.lean",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/PrefixProof.lean",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/PrefixSpec.lean",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/replay.py",
+      "comparisons/revised-benchmark-20261117/prefix-wide-count/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "division.reciprocal-strict",
+    "outcome": "disproved",
+    "effort_group": "division-reassociation",
+    "source_ids": [
+      "HandleDivide/constant-direct",
+      "HandleDivide/constant-broadcast",
+      "HandleDivide/broadcast-reciprocal"
+    ],
+    "theorem": "RevisedBenchmark.Division.reciprocal_refuted",
+    "lhs": "Divide by a direct or rebroadcast denominator.",
+    "rhs": "Multiply by the rounded reciprocal.",
+    "conditions": "Two minimum positive subnormals 2^-149 yield 1 originally and +infinity after reciprocal overflow. The separate nonconstant broadcast arm explicitly enables CPU fast math.",
+    "types": "Strict RNE binary32 positive finite powers of two; intermediate zero, infinity and NaN allowed; gradual underflow.",
+    "overlap": "Distinct operand expressions; constant representations and broadcast sink share one scalar reciprocal law. Source/backend execution untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivControls.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivProof.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivSpec.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/division-reassociation/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/division-reassociation/replay.py",
+      "comparisons/revised-benchmark-20261117/division-reassociation/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "division.two-fractions-strict",
+    "outcome": "disproved",
+    "effort_group": "division-reassociation",
+    "source_ids": [
+      "HandleDivide/fractions"
+    ],
+    "theorem": "RevisedBenchmark.Division.fractions_refuted",
+    "lhs": "Divide A/B by C/D.",
+    "rhs": "Divide A×D by B×C.",
+    "conditions": "A=B=C=D=2^127 yields 1 versus infinity/infinity (NaN).",
+    "types": "Strict RNE binary32 positive finite powers of two; intermediate zero, infinity and NaN allowed; gradual underflow.",
+    "overlap": "Distinct operand expressions; constant representations and broadcast sink share one scalar reciprocal law. Source/backend execution untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivControls.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivProof.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivSpec.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/division-reassociation/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/division-reassociation/replay.py",
+      "comparisons/revised-benchmark-20261117/division-reassociation/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "division.nested-numerator-strict",
+    "outcome": "disproved",
+    "effort_group": "division-reassociation",
+    "source_ids": [
+      "HandleDivide/nested-numerator"
+    ],
+    "theorem": "RevisedBenchmark.Division.numerator_refuted",
+    "lhs": "Divide the previously rounded A/B by C.",
+    "rhs": "Divide A by B×C.",
+    "conditions": "A=B=C=2^127 yields the positive subnormal 2^-127 versus +0.",
+    "types": "Strict RNE binary32 positive finite powers of two; intermediate zero, infinity and NaN allowed; gradual underflow.",
+    "overlap": "Distinct operand expressions; constant representations and broadcast sink share one scalar reciprocal law. Source/backend execution untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivControls.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivProof.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivSpec.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/division-reassociation/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/division-reassociation/replay.py",
+      "comparisons/revised-benchmark-20261117/division-reassociation/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "division.nested-denominator-strict",
+    "outcome": "disproved",
+    "effort_group": "division-reassociation",
+    "source_ids": [
+      "HandleDivide/nested-denominator"
+    ],
+    "theorem": "RevisedBenchmark.Division.denominator_refuted",
+    "lhs": "Divide A by the rounded B/C.",
+    "rhs": "Divide A×C by B.",
+    "conditions": "A=B=C=2^127 yields 2^127 versus +infinity.",
+    "types": "Strict RNE binary32 positive finite powers of two; intermediate zero, infinity and NaN allowed; gradual underflow.",
+    "overlap": "Distinct operand expressions; constant representations and broadcast sink share one scalar reciprocal law. Source/backend execution untested.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivControls.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivProof.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/DivSpec.lean",
+      "comparisons/revised-benchmark-20261117/division-reassociation/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/division-reassociation/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/division-reassociation/replay.py",
+      "comparisons/revised-benchmark-20261117/division-reassociation/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "maximum.clamp-lower-domain",
+    "outcome": "disproved",
+    "effort_group": "clamp-lower-guard",
+    "source_ids": [
+      "HandleMaximum/clamp-lower-lhs",
+      "HandleMaximum/clamp-lower-rhs"
+    ],
+    "theorem": "RevisedBenchmark.ClampGuard.refuted",
+    "lhs": "Take maximum of the clamp and its own lower bound in either argument order.",
+    "rhs": "Return the clamp alone.",
+    "conditions": "Complete pointwise integer equivalence iff lo≤hi at every output position. The reversed values lo=2,x=0,hi=1 distinguish 2 from 1.",
+    "types": "Exact mathematical integers with S32-representable witness; arbitrary shape, minimum of maximum clamp semantics.",
+    "overlap": "Historical ordered-bound theorem remains valid; earlier reversed-bound certificate concerned max(min(x,hi),lo), a different calculation.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "sources/xla/docs/operation_semantics.md",
+      "sources/xla/xla/hlo/evaluator/hlo_evaluator_typed_visitor.h",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/ClampControls.lean",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/ClampProof.lean",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/ClampSpec.lean",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/replay.py",
+      "comparisons/revised-benchmark-20261117/clamp-lower-guard/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "reuse.order-max-self",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(x,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "The same array supplies both operands, including the same reads on empty or nonempty shapes.",
+    "source_ids": [
+      "HandleMaximum/self"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxSelf",
+    "overlap": "Distinct min/max constructors reflect dual equal-input rules. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-max-extreme",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(x,e) or max(e,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "e ≤ x pointwise. A matching homogeneous integral minimum/maximum literal supplies this bound. The result and surviving operand share the type; both orders checked.",
+    "source_ids": [
+      "HandleMaximum/lhs-extreme",
+      "HandleMaximum/rhs-extreme"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxExtreme reverse",
+    "overlap": "Related to paper max/rule01; this conditional finite-order law does not introduce an infinity into Int. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-max-nested",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(max(x,y),z) or max(z,max(x,y)), z exactly x or y",
+    "rhs": "max(x,y) in the two left-inner cases and right-inner z=x; max(y,x) for right-inner z=y.",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Repeated operand identity. All four placements retain the actual output operand order.",
+    "source_ids": [
+      "HandleMaximum/nested-left-lhs",
+      "HandleMaximum/nested-left-rhs",
+      "HandleMaximum/nested-right-first",
+      "HandleMaximum/nested-right-second"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxNestedLeft b and Rule.maxNestedRight b",
+    "overlap": "One nested-idempotence family with four source placements. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-max-mixed-clamp",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(lo,min(x,hi))",
+    "rhs": "clamp(lo,x,hi) = min(max(x,lo),hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Both bounds are broadcasts of effective scalar constants, either placement at each node. Source evaluator compares lo < hi and constructs Clamp only on true. This implies lo ≤ hi pointwise under the declared homogeneous exact order.",
+    "source_ids": [
+      "HandleMaximum/clamp-lhs-lhs",
+      "HandleMaximum/clamp-lhs-rhs",
+      "HandleMaximum/clamp-rhs-lhs",
+      "HandleMaximum/clamp-rhs-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxMinClamp outer inner",
+    "overlap": "Historical clamp/rule02 overlaps. Parametric constructors include all four inner/outer placements. The alternative operand orders are part of the original expression. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-self",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(x,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "The same array supplies both operands, including the same reads on empty or nonempty shapes.",
+    "source_ids": [
+      "HandleMinimum/self"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minSelf",
+    "overlap": "Distinct min/max constructors reflect dual equal-input rules. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-extreme",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(x,e) or min(e,x)",
+    "rhs": "x",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "x ≤ e pointwise. A matching homogeneous integral minimum/maximum literal supplies this bound. The result and surviving operand share the type; both orders checked.",
+    "source_ids": [
+      "HandleMinimum/lhs-extreme",
+      "HandleMinimum/rhs-extreme"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minExtreme reverse",
+    "overlap": "Related to paper max/rule02; this conditional finite-order law does not introduce an infinity into Int. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-nested",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(min(x,y),z) or min(z,min(x,y)), z exactly x or y",
+    "rhs": "min(x,y) in the two left-inner cases and right-inner z=x; min(y,x) for right-inner z=y.",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Repeated operand identity. All four placements retain the actual output operand order.",
+    "source_ids": [
+      "HandleMinimum/nested-left-lhs",
+      "HandleMinimum/nested-left-rhs",
+      "HandleMinimum/nested-right-first",
+      "HandleMinimum/nested-right-second"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minNestedLeft b and Rule.minNestedRight b",
+    "overlap": "One nested-idempotence family with four source placements. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-min-mixed-clamp",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "min(hi,max(x,lo))",
+    "rhs": "clamp(lo,x,hi) = min(max(x,lo),hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Both bounds are broadcasts of effective scalar constants, either placement at each node. Source evaluator compares lo < hi and constructs Clamp only on true. This implies lo ≤ hi pointwise under the declared homogeneous exact order.",
+    "source_ids": [
+      "HandleMinimum/clamp-lhs-lhs",
+      "HandleMinimum/clamp-lhs-rhs",
+      "HandleMinimum/clamp-rhs-lhs",
+      "HandleMinimum/clamp-rhs-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.minMaxClamp outer inner",
+    "overlap": "Historical clamp/rule03 overlaps. Parametric constructors include all four inner/outer placements. The alternative operand orders are part of the original expression. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-clamp-lower-ordered",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "max(lo,clamp(lo,x,hi)) or max(clamp(lo,x,hi),lo)",
+    "rhs": "clamp(lo,x,hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Same lower operand reference; lo ≤ hi pointwise is a MODEL RESTRICTION. Source compatibility does not test this inequality.",
+    "source_ids": [
+      "HandleMaximum/clamp-lower-lhs",
+      "HandleMaximum/clamp-lower-rhs"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.maxClampLower reverse",
+    "overlap": "Ordered subcase only; reversed bounds can disagree over Int. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.order-clamp-idempotent",
+    "effort_group": "order-historical-reuse",
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean",
+    "outcome": "proved",
+    "lhs": "clamp(lo,clamp(lo,x,hi),hi)",
+    "rhs": "clamp(lo,x,hi)",
+    "types": "Homogeneous pure tensors of one static shape in an exact linear order with zero, including Int or same-width consistently signed or unsigned words. Bitwise floating observations excluded.",
+    "conditions": "Repeated lower and upper operand identities; clamp has min(max(x,lo),hi) semantics. No ordered-bound condition is necessary, including when hi < lo. Scalars are pointwise broadcasts if used.",
+    "source_ids": [
+      "HandleClamp/idempotent"
+    ],
+    "theorem": "TensorRewrite.Theory.OrderFamily.rewrite_sound instantiated with Rule.clampIdempotent",
+    "overlap": "Direct overlap with historical clamp/rule01; historical constructor allows nonuniform shared bounds. Historical proof; zero newly discovered outcomes.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamily.lean",
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "TensorRewrite/Theory/OrderWord.lean",
+      "TensorRewrite/Theory/OrderInstances.lean",
+      "TensorRewrite/Theory/OrderCounterexamples.lean",
+      "census/order-values-family-v1.json",
+      "reports/order-values-family.json",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/model-audit/order-reuse-review.md"
+    ]
+  },
+  {
+    "id": "reuse.concatenate-pad-low",
+    "outcome": "proved",
+    "effort_group": "historical-edge-pad",
+    "source_ids": [
+      "HandleConcatenate/pad-low"
+    ],
+    "theorem": "TensorRewrite.PaperComparison.Concatenate.pad_low",
+    "lhs": "Concatenate a constant scalar broadcast with a compatible tensor in the selected order.",
+    "rhs": "Pad the given tensor at the low edge with the scalar.",
+    "conditions": "Static common frame and concat axis, source builds the matched constant width, zero interior and zero padding on other axes.",
+    "types": "Arbitrary scalar type and finite shape.",
+    "overlap": "Historical concat/rule05 or rule06. Source theorem/receipt inspection only, no newly timed proof discovery.",
+    "evidence": [
+      "comparisons/tensorright-v1/Concatenate.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/reuse-updates-concat.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/Concatenate.lean"
+  },
+  {
+    "id": "reuse.concatenate-pad-high",
+    "outcome": "proved",
+    "effort_group": "historical-edge-pad",
+    "source_ids": [
+      "HandleConcatenate/pad-high"
+    ],
+    "theorem": "TensorRewrite.PaperComparison.Concatenate.pad_high",
+    "lhs": "Concatenate a constant scalar broadcast with a compatible tensor in the selected order.",
+    "rhs": "Pad the given tensor at the high edge with the scalar.",
+    "conditions": "Static common frame and concat axis, source builds the matched constant width, zero interior and zero padding on other axes.",
+    "types": "Arbitrary scalar type and finite shape.",
+    "overlap": "Historical concat/rule05 or rule06. Source theorem/receipt inspection only, no newly timed proof discovery.",
+    "evidence": [
+      "comparisons/tensorright-v1/Concatenate.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/reuse-updates-concat.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/Concatenate.lean"
+  },
+  {
+    "id": "reuse.update-constant-pad-clamped",
+    "outcome": "proved",
+    "effort_group": "update-constant-pad",
+    "source_ids": [
+      "HandleDynamicUpdateSlice/pad-scalar-list"
+    ],
+    "theorem": "RevisedBenchmark.UpdateConstantPad.verified",
+    "lhs": "Dynamic update of uniform base at signed decoded constant starts.",
+    "rhs": "Pad the update by fill with low clamped starts and complementary high padding.",
+    "conditions": "Fit per axis; arbitrary rank and signed decoded starts, scalar-list source, no offloading. Output shape, selected update reads, boundaries, empty widths/outputs.",
+    "types": "Arbitrary homogeneous payloads, static integral extents.",
+    "overlap": "Same identity as dyupslice/rule02 with a newly checked arbitrary-start adapter. Does not validate tuple or concatenate start encodings.",
+    "evidence": [
+      "comparisons/tensorright-v1/UpdatePad.lean",
+      "comparisons/revised-benchmark-20261117/model-audit/reuse-updates-concat.md",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateControls.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateProof.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/UpdateSpec.lean",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/replay.py",
+      "comparisons/revised-benchmark-20261117/update-constant-pad/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "comparisons/tensorright-v1/UpdatePad.lean"
+  },
+  {
+    "id": "reuse.clamp-configured-runtime-id",
+    "outcome": "proved",
+    "effort_group": "runtime-id-clamp",
+    "source_ids": [
+      "HandleClamp/runtime-id"
+    ],
+    "theorem": "RevisedBenchmark.IDClamp.verified",
+    "lhs": "Clamp replica or partition ID between zero and constant upper bound.",
+    "rhs": "Forward the selected U32 runtime ID.",
+    "conditions": "ID is drawn from zero-based range of matching configured count, count != 1 and count ≤ widened upper+1. Partition ID range is a disclosed model condition.",
+    "types": "Unsigned 32-bit ID and upper, natural process index, widened comparison.",
+    "overlap": "The historical generic clampRange theorem assumed a range bound. This checked adapter derives it from configuration; no new identity count.",
+    "evidence": [
+      "TensorRewrite/Theory/OrderFamilyProof.lean",
+      "sources/xla/docs/operation_semantics.md",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/IDControls.lean",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/IDProof.lean",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/IDSpec.lean",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/replay.py",
+      "comparisons/revised-benchmark-20261117/runtime-id-clamp/FREEZE.md",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ],
+    "historical_reuse": "TensorRewrite/Theory/OrderFamilyProof.lean"
+  }
+]
