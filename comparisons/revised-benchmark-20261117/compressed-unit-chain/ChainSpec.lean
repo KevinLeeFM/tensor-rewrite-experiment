@@ -22,7 +22,7 @@ def slot : (s : Frame n) → Fin n → Fin (rank s)
 abbrev Digits (s : Frame n) := Fin (rank s) → Nat
 def expand : (s : Frame n) → (Fin n → Nat) → Digits s
 | .plain, f => f
-| .unit u, f => fun j => if h : j=u then 0 else f (del u j h)
+| .unit u, f => fun (j : Fin (_+1)) => if h : j=u then 0 else f (del u j h)
 def validUnit : (s : Frame n) → Digits s → Prop
 | .plain, _ => True | .unit u, z => z u = 0
 inductive Step (n : Nat) : Frame n → Frame n → Type
