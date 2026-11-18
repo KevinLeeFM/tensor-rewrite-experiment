@@ -1,0 +1,25 @@
+[
+  {
+    "id": "conv.swap-operands-strict-f32",
+    "effort_group": "conv-swap-order",
+    "outcome": "disproved",
+    "source_ids": [
+      "HandleConvolution/operand-swap-delegation"
+    ],
+    "theorem": "RevisedBenchmark.ConvSwapOrder.refuted",
+    "lhs": "F32 forward rank-three convolution with input width three, kernel width four, padding (0,1), ascending spatial taps and one output.",
+    "rhs": "Convolve the reversed old kernel against the old input with new window reversed, width three and signed padding (-1,0).",
+    "conditions": "Layout insensitive, swap option enabled, groups one, no sparsity or scaling, dense parameter tensors, one spatial axis, unit strides/dilations, original reversal false, singleton batch/features, two DEFAULT precision fields and a successful lowerable callback. Kernel-product benefit is 4>3.",
+    "types": "Finite nonnegative exactly represented input integers through 2^24, strict binary32 RNE multiply and accumulating addition from positive zero; no required backend reduction schedule.",
+    "overlap": "Different terminal from pointwise/reduce convolution-to-multiply or integer type profiles: an exact operand exchange reverses the order of spatial products.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-swap-order/ConvSwapSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/ConvSwapProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/ConvSwapControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/author.log",
+      "comparisons/revised-benchmark-20261117/conv-swap-order/AUTHOR.md"
+    ]
+  }
+]
