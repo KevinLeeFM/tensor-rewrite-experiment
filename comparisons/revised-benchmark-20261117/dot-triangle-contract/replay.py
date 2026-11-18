@@ -10,8 +10,8 @@ packet = Path(__file__).resolve().parent
 subprocess.run(['sha256sum', '-c', packet / 'SHA256SUMS'], cwd=packet.parents[2], check=True)
 lean = os.environ['LEAN']
 with TemporaryDirectory() as folder:
-    for stem in ('MergeSpec', 'TriangleSpec', 'TriangleProof', 'TriangleControls'):
-        source = packet.parent / 'merge-reduce-axes' if stem == 'MergeSpec' else packet
+    for stem in ('MergeSpec', 'MergeProof', 'TriangleSpec', 'TriangleProof', 'TriangleControls'):
+        source = packet.parent / 'merge-reduce-axes' if stem in ('MergeSpec','MergeProof') else packet
         shutil.copy(source / (stem+'.lean'), folder)
         start = monotonic()
         result = subprocess.run([lean, '-o', stem+'.olean', stem+'.lean'], cwd=folder,
