@@ -1,0 +1,42 @@
+lean-toolchain: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/concat-normalize/CONTRACT.md: OK
+comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseSpec.lean: OK
+TensorRewrite/Pilot/Tensor 0.301s exit=0
+ArgReuseSpec 0.321s exit=0
+ArgReuseProof.lean:17:15: error(lean.unknownIdentifier): Unknown identifier `max_eq_left`
+ArgReuseProof.lean:17:4: error: unsolved goals
+case pos
+n ia ib : Nat
+x y : Fin (n + 2)
+h : y < x
+⊢ max x y = x
+ArgReuseProof.lean:18:15: error(lean.unknownIdentifier): Unknown identifier `max_eq_right`
+ArgReuseProof.lean:18:4: error: unsolved goals
+case neg
+n ia ib : Nat
+x y : Fin (n + 2)
+h : ¬y < x
+⊢ max x y = y
+ArgReuseProof.lean:21:15: error(lean.unknownIdentifier): Unknown identifier `min_eq_left`
+ArgReuseProof.lean:21:4: error: unsolved goals
+case pos
+n ia ib : Nat
+x y : Fin (n + 2)
+h : x < y
+⊢ min x y = x
+ArgReuseProof.lean:22:15: error(lean.unknownIdentifier): Unknown identifier `min_eq_right`
+ArgReuseProof.lean:22:4: error: unsolved goals
+case neg
+n ia ib : Nat
+x y : Fin (n + 2)
+h : ¬x < y
+⊢ min x y = y
+ArgReuseProof 0.324s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/concat-normalize/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ArgReuseProof.olean', 'ArgReuseProof.lean']' returned non-zero exit status 1.

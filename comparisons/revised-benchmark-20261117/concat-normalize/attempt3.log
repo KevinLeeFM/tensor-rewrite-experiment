@@ -1,0 +1,103 @@
+lean-toolchain: OK
+TensorRewrite/Pilot/Tensor.lean: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+comparisons/revised-benchmark-20261117/concat-normalize/CONTRACT.md: OK
+comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseSpec.lean: OK
+TensorRewrite/Pilot/Tensor 0.344s exit=0
+ArgReuseSpec 0.409s exit=0
+ArgReuseProof 0.343s exit=0
+'RevisedBenchmark.ArgReuse.reuse_arg_extremum' depends on axioms: [propext, Classical.choice, Quot.sound]
+ArgReuseControls.lean:15:2: error: Function expected at
+  some [2, 4, 4][↑(j 0)]?.getD
+but this term has type
+  Option (Fin 6 → Fin 6)
+
+Note: Expected a function because this term is being applied to the argument
+  0
+ArgReuseControls.lean:24:58: error: Tactic `decide` failed to reduce
+  @decide (pairFold Direction.maximum [2, 0, 1] = (some 4, 1))
+    (instDecidableEqProd (pairFold Direction.maximum [2, 0, 1]) (some 4, 1))
+to `true` or `false`.
+
+After unfolding the instances `instDecidableEqBool`, `instDecidableEqProd`, `Bool.decEq`, and `Option.instDecidableEq`, reduction got stuck at
+  match
+    if
+        preferLeft Direction.maximum
+            ((fun a j => argStep Direction.maximum a (sample (i j), ↑j))
+                ((fun a j => argStep Direction.maximum a (sample (i j), ↑j)) (seed 4 Direction.maximum, 0) 2) 0).fst
+            (sample (i 1), ↑1).fst =
+          true then
+      ((fun a j => argStep Direction.maximum a (sample (i j), ↑j))
+          ((fun a j => argStep Direction.maximum a (sample (i j), ↑j)) (seed 4 Direction.maximum, 0) 2) 0).fst
+    else (sample (i 1), ↑1).fst with
+  | none =>
+    match some 4 with
+    | none => isTrue ⋯
+    | some val => isFalse ⋯
+  | some a =>
+    match some 4 with
+    | none => isFalse ⋯
+    | some b =>
+      match instDecidableEqFin (4 + 2) a b with
+      | { decide := true, reflects_decide := h } => isTrue ⋯
+      | { decide := false, reflects_decide := n } => isFalse ⋯
+ArgReuseControls.lean:25:52: error: Tactic `decide` failed to reduce
+  @decide (valFold Direction.maximum [2, 0, 1] = some 4)
+    (Option.instDecidableEq (valFold Direction.maximum [2, 0, 1]) (some 4))
+to `true` or `false`.
+
+After unfolding the instance `Option.instDecidableEq`, reduction got stuck at
+  match valFold Direction.maximum [2, 0, 1] with
+  | none =>
+    match some 4 with
+    | none => isTrue ⋯
+    | some val => isFalse ⋯
+  | some a =>
+    match some 4 with
+    | none => isFalse ⋯
+    | some b =>
+      match instDecidableEqFin (4 + 2) a b with
+      | { decide := true, reflects_decide := h } => isTrue ⋯
+      | { decide := false, reflects_decide := n } => isFalse ⋯
+ArgReuseControls.lean:26:52: error: Tactic `decide` failed to reduce
+  @decide (valFold Direction.minimum [2, 0, 1] = some 2)
+    (Option.instDecidableEq (valFold Direction.minimum [2, 0, 1]) (some 2))
+to `true` or `false`.
+
+After unfolding the instance `Option.instDecidableEq`, reduction got stuck at
+  match valFold Direction.minimum [2, 0, 1] with
+  | none =>
+    match some 2 with
+    | none => isTrue ⋯
+    | some val => isFalse ⋯
+  | some a =>
+    match some 2 with
+    | none => isFalse ⋯
+    | some b =>
+      match instDecidableEqFin (4 + 2) a b with
+      | { decide := true, reflects_decide := h } => isTrue ⋯
+      | { decide := false, reflects_decide := n } => isFalse ⋯
+ArgReuseControls.lean:32:77: error: Tactic `decide` failed to reduce
+  @decide (valFold Direction.maximum [2, 0, 1] ≠ (pairFold Direction.minimum [2, 0, 1]).fst) instDecidableNot
+to `true` or `false`.
+
+After unfolding the instances `instDecidableNot` and `Option.instDecidableEq`, reduction got stuck at
+  match valFold Direction.maximum [2, 0, 1] with
+  | none =>
+    match (pairFold Direction.minimum [2, 0, 1]).fst with
+    | none => isTrue ⋯
+    | some val => isFalse ⋯
+  | some a =>
+    match (pairFold Direction.minimum [2, 0, 1]).fst with
+    | none => isFalse ⋯
+    | some b =>
+      match instDecidableEqFin (4 + 2) a b with
+      | { decide := true, reflects_decide := h } => isTrue ⋯
+      | { decide := false, reflects_decide := n } => isFalse ⋯
+ArgReuseControls 0.321s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/concat-normalize/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ArgReuseControls.olean', 'ArgReuseControls.lean']' returned non-zero exit status 1.

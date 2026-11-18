@@ -1,0 +1,22 @@
+[
+  {
+    "id": "reduce.reuse-arg-extremum",
+    "lhs": "Standalone min or max reduction of the input values initialized at the corresponding infinite endpoint.",
+    "rhs": "Component zero of the sibling tuple reduction using the matched strict-comparison/left-NaN value selector, index tie-breaker, the same tensor and same ordered reduction fiber.",
+    "conditions": "Common input shape, fiber traversal and direction; a valid input iota axis. Every finite input list is allowed. The result observes only logical values, identifying NaN payloads and signed zeros.",
+    "types": "Arbitrary input rank with iota axis, output rank and extents, bounded indices. Scalar model has an arbitrary finite linear ordering with two infinite endpoints and one absorbing NaN. Index is Nat.",
+    "source_ids": [
+      "HandleReduce/reuse-argmax",
+      "HandleReduce/reuse-argmin"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseSpec.lean",
+      "comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseProof.lean",
+      "comparisons/revised-benchmark-20261117/concat-normalize/ArgReuseControls.lean",
+      "comparisons/revised-benchmark-20261117/concat-normalize/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.ArgReuse.reuse_arg_extremum",
+    "overlap": "Grouped max/min sibling projections. No arg-extremum terminal result located in Lean library or historical paper proofs. Distinct from reductions over constant broadcasts and uniform collective reductions. Initial concat selection had four already covered records.",
+    "effort_group": "concat-normalize"
+  }
+]
