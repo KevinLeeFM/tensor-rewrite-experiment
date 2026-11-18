@@ -1,0 +1,68 @@
+comparisons/revised-benchmark-20261117/abs-iota/AbsIotaSpec.lean: OK
+lean-toolchain: OK
+AbsIotaSpec 0.381s exit=0
+AbsIotaProof.lean:11:56: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  b ≥ 0
+  b - c ≥ 0
+  a ≥ 1
+  2*a - b ≥ 0
+where
+ a := ↑2 ^ k
+ b := ↑q
+ c := ↑2 ^ (k + 2)
+AbsIotaProof.lean:13:69: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  b ≥ 0
+  b - c ≤ -1
+  2*b - c ≥ 0
+  a ≥ 1
+  2*a - b ≥ 1
+where
+ a := ↑2 ^ k
+ b := ↑x.toNat
+ c := ↑2 ^ (k + 2)
+AbsIotaProof.lean:18:6: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  b ≥ 1
+  a ≥ 1
+  a ≥ 0
+  2*a - b ≥ 1
+where
+ a := ↑2 ^ k
+ b := ↑(2 ^ (k + 2) - q)
+AbsIotaProof.lean:29:56: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  a ≥ 1
+  2*a - b ≥ -1
+where
+ a := ↑2 ^ k
+ b := ↑2 ^ (k + 2)
+AbsIotaProof.lean:33:64: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  a ≥ 1
+  a ≥ 0
+  2*a - b ≤ -2
+  4*a - b ≤ -3
+where
+ a := ↑2 ^ k
+ b := ↑2 ^ (k + 2)
+AbsIotaProof.lean:34:31: warning: `if_true` has been deprecated: Use `ite_true` instead
+
+Hint: Replace the deprecated name:
+  i̵f̵_̵t̵r̵u̵e̵i̲t̲e̲_̲t̲r̲u̲e̲
+AbsIotaProof.lean:39:2: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  a ≥ 1
+  a ≥ 0
+  a ≥ 0
+where
+ a := ↑2 ^ k
+'RevisedBenchmark.AbsIota.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+AbsIotaProof 0.391s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/abs-iota/replay.py", line 24, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'AbsIotaProof.olean', 'AbsIotaProof.lean']' returned non-zero exit status 1.
