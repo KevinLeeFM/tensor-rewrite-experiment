@@ -1,0 +1,310 @@
+PointSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/evaluator/hlo_evaluator.cc: OK
+../../../sources/xla/xla/hlo/ir/hlo_instruction.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+PointSpec 0.415s return code 0
+PointProof.lean:54:55: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  q ≥ 0
+  n ≥ 0
+  n - q ≥ 1
+  0 ≤ m ≤ 2
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 1
+  f ≥ 0
+  d ≥ 0
+  c ≥ 0
+  c - d ≥ 1
+  a ≥ 1
+  a - f ≥ 1
+where
+ a := ↑s.groups
+ c := ↑s.batch
+ d := ↑(y (o.slot Role.batch))
+ f := ↑(y (o.slot Role.feature))
+ i := ↑s.spatial
+ j := ↑(y (o.slot Role.space))
+ m := ↑↑p
+ n := ↑(match o.role (o.slot Role.batch) with
+  | Role.batch => 0
+  | Role.feature => y (o.slot Role.feature)
+  | Role.space => 0)
+ q := ↑(if
+      (match o.role (o.slot Role.batch) with
+        | Role.batch => 1
+        | Role.feature => s.groups
+        | Role.space => 1) =
+        match o.role (o.slot Role.batch) with
+        | Role.batch => s.batch
+        | Role.feature => s.groups
+        | Role.space => s.spatial then
+    y (o.slot Role.batch)
+  else 0)
+PointProof.lean:54:55: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  q ≥ 0
+  n ≥ 0
+  n - q ≥ 1
+  0 ≤ m ≤ 2
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 1
+  f ≥ 0
+  d ≥ 0
+  c ≥ 0
+  c - d ≥ 1
+  a ≥ 1
+  a - f ≥ 1
+where
+ a := ↑s.groups
+ c := ↑s.batch
+ d := ↑(y (o.slot Role.batch))
+ f := ↑(y (o.slot Role.feature))
+ i := ↑s.spatial
+ j := ↑(y (o.slot Role.space))
+ m := ↑↑p
+ n := ↑(match o.role (o.slot Role.feature) with
+  | Role.batch => 0
+  | Role.feature => y (o.slot Role.feature)
+  | Role.space => 0)
+ q := ↑(if
+      (match o.role (o.slot Role.feature) with
+        | Role.batch => 1
+        | Role.feature => s.groups
+        | Role.space => 1) =
+        match o.role (o.slot Role.feature) with
+        | Role.batch => s.batch
+        | Role.feature => s.groups
+        | Role.space => s.spatial then
+    y (o.slot Role.feature)
+  else 0)
+PointProof.lean:54:55: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  q ≥ 0
+  n ≥ 0
+  n - q ≥ 1
+  0 ≤ m ≤ 2
+  j ≥ 0
+  i ≥ 0
+  i - j ≥ 1
+  f ≥ 0
+  d ≥ 0
+  c ≥ 0
+  c - d ≥ 1
+  a ≥ 1
+  a - f ≥ 1
+where
+ a := ↑s.groups
+ c := ↑s.batch
+ d := ↑(y (o.slot Role.batch))
+ f := ↑(y (o.slot Role.feature))
+ i := ↑s.spatial
+ j := ↑(y (o.slot Role.space))
+ m := ↑↑p
+ n := ↑(match o.role (o.slot Role.space) with
+  | Role.batch => 0
+  | Role.feature => y (o.slot Role.feature)
+  | Role.space => 0)
+ q := ↑(if
+      (match o.role (o.slot Role.space) with
+        | Role.batch => 1
+        | Role.feature => s.groups
+        | Role.space => 1) =
+        match o.role (o.slot Role.space) with
+        | Role.batch => s.batch
+        | Role.feature => s.groups
+        | Role.space => s.spatial then
+    y (o.slot Role.space)
+  else 0)
+PointProof.lean:58:4: error: unsolved goals
+case refine_2.refine_1.batch
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+l k o : Order
+y : Coord
+p : Fin 3
+outEq : outShape s o = place o s.batch s.groups s.spatial
+legal : Fits (place o s.batch s.groups s.spatial) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+readL : oldL s l o y 0 0 = inverseRead l o y
+shrink :
+  broadcastRead (place o 1 s.groups 1) (place o s.batch s.groups s.spatial) y = place o 0 (y (o.slot Role.feature)) 0
+readK : oldK k o y 0 0 = newK s k o y
+⊢ (match l.role p with
+    | Role.batch => y (o.slot Role.batch)
+    | Role.feature => y (o.slot Role.feature)
+    | Role.space => y (o.slot Role.space)) <
+    match l.role p with
+    | Role.batch => s.batch
+    | Role.feature => s.groups
+    | Role.space => s.spatial
+
+case refine_2.refine_1.feature
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+l k o : Order
+y : Coord
+p : Fin 3
+outEq : outShape s o = place o s.batch s.groups s.spatial
+legal : Fits (place o s.batch s.groups s.spatial) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+readL : oldL s l o y 0 0 = inverseRead l o y
+shrink :
+  broadcastRead (place o 1 s.groups 1) (place o s.batch s.groups s.spatial) y = place o 0 (y (o.slot Role.feature)) 0
+readK : oldK k o y 0 0 = newK s k o y
+⊢ (match l.role p with
+    | Role.batch => y (o.slot Role.batch)
+    | Role.feature => y (o.slot Role.feature)
+    | Role.space => y (o.slot Role.space)) <
+    match l.role p with
+    | Role.batch => s.batch
+    | Role.feature => s.groups
+    | Role.space => s.spatial
+
+case refine_2.refine_1.space
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+l k o : Order
+y : Coord
+p : Fin 3
+outEq : outShape s o = place o s.batch s.groups s.spatial
+legal : Fits (place o s.batch s.groups s.spatial) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+readL : oldL s l o y 0 0 = inverseRead l o y
+shrink :
+  broadcastRead (place o 1 s.groups 1) (place o s.batch s.groups s.spatial) y = place o 0 (y (o.slot Role.feature)) 0
+readK : oldK k o y 0 0 = newK s k o y
+⊢ (match l.role p with
+    | Role.batch => y (o.slot Role.batch)
+    | Role.feature => y (o.slot Role.feature)
+    | Role.space => y (o.slot Role.space)) <
+    match l.role p with
+    | Role.batch => s.batch
+    | Role.feature => s.groups
+    | Role.space => s.spatial
+PointProof.lean:61:4: error: unsolved goals
+case refine_2.refine_2.batch
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+l k o : Order
+outEq : outShape s o = lhsShape s o
+y : Coord
+bounds : Fits (lhsShape s o) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+readL : oldL s l o y 0 0 = inverseRead l o y
+shrink : broadcastRead (place o 1 s.groups 1) (lhsShape s o) y = place o 0 (y (o.slot Role.feature)) 0
+p : Fin 3
+readK : place k 0 (y (o.slot Role.feature)) 0 = newK s k o y
+⊢ (match k.role p with
+    | Role.batch => 0
+    | Role.feature => y (o.slot Role.feature)
+    | Role.space => 0) <
+    match k.role p with
+    | Role.batch => 1
+    | Role.feature => s.groups
+    | Role.space => 1
+
+case refine_2.refine_2.feature
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+l k o : Order
+outEq : outShape s o = lhsShape s o
+y : Coord
+bounds : Fits (lhsShape s o) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+readL : oldL s l o y 0 0 = inverseRead l o y
+shrink : broadcastRead (place o 1 s.groups 1) (lhsShape s o) y = place o 0 (y (o.slot Role.feature)) 0
+p : Fin 3
+readK : place k 0 (y (o.slot Role.feature)) 0 = newK s k o y
+⊢ (match k.role p with
+    | Role.batch => 0
+    | Role.feature => y (o.slot Role.feature)
+    | Role.space => 0) <
+    match k.role p with
+    | Role.batch => 1
+    | Role.feature => s.groups
+    | Role.space => 1
+
+case refine_2.refine_2.space
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+l k o : Order
+outEq : outShape s o = lhsShape s o
+y : Coord
+bounds : Fits (lhsShape s o) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+readL : oldL s l o y 0 0 = inverseRead l o y
+shrink : broadcastRead (place o 1 s.groups 1) (lhsShape s o) y = place o 0 (y (o.slot Role.feature)) 0
+p : Fin 3
+readK : place k 0 (y (o.slot Role.feature)) 0 = newK s k o y
+⊢ (match k.role p with
+    | Role.batch => 0
+    | Role.feature => y (o.slot Role.feature)
+    | Role.space => 0) <
+    match k.role p with
+    | Role.batch => 1
+    | Role.feature => s.groups
+    | Role.space => 1
+PointProof.lean:34:40: warning: This simp argument is unused:
+  l.role_slot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [permutation, k.role_slot, o.role_slot, l.slot_role, k.slot_role]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PointProof.lean:34:52: warning: This simp argument is unused:
+  k.role_slot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [permutation, l.role_slot, o.role_slot, l.slot_role, k.slot_role]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PointProof.lean:54:43: warning: This simp argument is unused:
+  e
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [broadcastRead, lhsShape, place, ← hp]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+PointProof.lean:60:50: warning: This simp argument is unused:
+  o.role_slot
+
+Hint: Omit it from the simp argument list.
+  [apply] simp_all [lhsShape, place]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'RevisedBenchmark.ConvPointAxes.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+PointProof 0.531s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/conv-pointwise-axes/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'PointProof.olean', 'PointProof.lean']' returned non-zero exit status 1.

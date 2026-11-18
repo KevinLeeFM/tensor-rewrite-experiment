@@ -1,0 +1,23 @@
+[
+  {
+    "id": "conv.pointwise-rank3-permuted",
+    "effort_group": "conv-pointwise-axes",
+    "source_ids": [
+      "SimplifyConvToMultiply/pointwise-000"
+    ],
+    "lhs": "Dense forward convolution with one spatial axis of unit kernel size, grouped feature and batch offsets, summing the actual kernel-tap and input-channel products at each physical output coordinate.",
+    "rhs": "Independently transpose input and kernel to output order; reshape/broadcast kernel singleton axes and multiply typed operand entries pointwise.",
+    "conditions": "Arbitrary independent rank-three dimension-number bijections, no padding, stride/dilations one, dense static same-type input/output, kernel-input-feature extent one and input/output features equal featureGroupCount. Positive, nonsimultaneously nontrivial group counts; kernel output features and input batch divisible by batch group count.",
+    "types": "Exact Nat values; one-spatial-axis model allowing any positive feature-group count and zero batch/spatial extents. Only representable finite arithmetic transfers to fixed machine interpretations.",
+    "theorem": "RevisedBenchmark.ConvPointAxes.verified",
+    "overlap": "Historical convolve_single_channel and convolve_eq_productReduction are normalized value laws. New work resolves physical-number transposes, grouped batch offset, kernel broadcast with retained singleton features, output shape and typed operand reads. No claim for additional spatial axes, mixed-type conversions or sparse/backward convolution.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/adapter.log"
+    ]
+  }
+]

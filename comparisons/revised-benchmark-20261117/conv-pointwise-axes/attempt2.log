@@ -1,0 +1,63 @@
+PointSpec.lean: OK
+../../../lean-toolchain: OK
+../../../sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+../../../sources/xla/xla/hlo/evaluator/hlo_evaluator.cc: OK
+../../../sources/xla/xla/hlo/ir/hlo_instruction.cc: OK
+../../../sources/xla/xla/service/shape_inference.cc: OK
+PointSpec 0.462s return code 0
+PointProof.lean:54:65: error: Tactic `split` failed: Could not split an `if` or `match` expression in the goal
+
+Hint: Use `set_option trace.split.failure true` to display additional diagnostic information
+
+case batch
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+unit : s.groups / s.groups = 1
+l k o : Order
+outEq : outShape s o = lhsShape s o
+y : Coord
+legal : Fits (outShape s o) y
+bounds : Fits (lhsShape s o) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+groupZero : y (o.slot Role.feature) / s.groups = 0
+readL : oldL s l o y 0 0 = inverseRead l o y
+p : Fin 3
+e : o.role p = Role.batch
+hp : o.slot Role.batch = p
+⊢ 1 = s.batch → y (o.slot Role.batch) = 0
+PointProof.lean:54:65: error: Tactic `split` failed: Could not split an `if` or `match` expression in the goal
+
+Hint: Use `set_option trace.split.failure true` to display additional diagnostic information
+
+case space
+s : Sizes
+h : Legal s
+bg : s.batches = 1
+g : 0 < s.groups
+unit : s.groups / s.groups = 1
+l k o : Order
+outEq : outShape s o = lhsShape s o
+y : Coord
+legal : Fits (outShape s o) y
+bounds : Fits (lhsShape s o) y
+b : y (o.slot Role.batch) < s.batch
+z : y (o.slot Role.feature) < s.groups
+t : y (o.slot Role.space) < s.spatial
+groupZero : y (o.slot Role.feature) / s.groups = 0
+readL : oldL s l o y 0 0 = inverseRead l o y
+p : Fin 3
+e : o.role p = Role.space
+hp : o.slot Role.space = p
+⊢ 1 = s.spatial → y (o.slot Role.space) = 0
+'RevisedBenchmark.ConvPointAxes.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+PointProof 0.377s return code 1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/conv-pointwise-axes/replay.py", line 17, in <module>
+    run.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'PointProof.olean', 'PointProof.lean']' returned non-zero exit status 1.
