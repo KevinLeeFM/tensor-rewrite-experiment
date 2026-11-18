@@ -1,0 +1,66 @@
+[
+  {
+    "source_id": "SimplifyTransposeOfBroadcast/mapped-dims-layout",
+    "existing_case_id": "transpose.broadcast",
+    "existing_source_ids": [
+      "SimplifyTransposeOfBroadcast/mapped-dims-logical"
+    ],
+    "relation": "value-domain-reuse-with-reviewed-layout-lemmas",
+    "caller_line": 2946,
+    "outcome": "proved",
+    "theorem": "Heldout.TransposeBroadcast.proof",
+    "conditions": "Original and inverse-mapped broadcast axes ordered, matching extents. Extra layout-order check succeeded; static untiled same-type dense tensors, logical observations in the requested output layout.",
+    "types": "Static same-type dense tensors; values at all bounded coordinates; no padding, layout side effects, ownership or native execution.",
+    "historical_review_or_receipt": "5f30c1be1c9237d90a2cb66352c4337903c30b69:comparisons/heldout-transpose-broadcast/independent-final-review.md",
+    "receipt_sha256": "9674329ad3c5cbdd6f682130b60e23be225124dba2debc67fe76cfefc980e73d",
+    "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+  },
+  {
+    "source_id": "HandleBitcast/broadcast-delegation",
+    "existing_case_id": "transpose.broadcast",
+    "existing_source_ids": [
+      "SimplifyTransposeOfBroadcast/mapped-dims-logical"
+    ],
+    "relation": "value-domain-reuse-with-reviewed-layout-lemmas",
+    "caller_line": 1633,
+    "outcome": "proved",
+    "theorem": "TensorRewrite.Pilot.DenseLayout.transpose_eq_bitcast; Heldout.TransposeBroadcast.proof",
+    "conditions": "Static dense untiled equal-element-type bitcast, matching physical order and extents as checked by DeduceTransposeDimensionsForBitcast. Helper eligibility holds; common output layout.",
+    "types": "Static same-type dense tensors; values at all bounded coordinates; no padding, layout side effects, ownership or native execution.",
+    "historical_review_or_receipt": "5f30c1be1c9237d90a2cb66352c4337903c30b69:comparisons/heldout-transpose-broadcast/independent-final-review.md",
+    "receipt_sha256": "9674329ad3c5cbdd6f682130b60e23be225124dba2debc67fe76cfefc980e73d",
+    "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+  },
+  {
+    "source_id": "HandleCopy/reshape-clone",
+    "existing_case_id": "copy.compose-dense-layouts",
+    "existing_source_ids": [
+      "HandleCopy/compose-copy"
+    ],
+    "relation": "value-domain-reuse-with-reviewed-layout-lemmas",
+    "caller_line": 2000,
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.CopyChain.verified (first conjunct)",
+    "conditions": "Use common logical row positions across ordinary reshape and copy, all fully allocated dense untiled layouts, equal element counts and element type. One user and source reshape-is-bitcast and tile guards met.",
+    "types": "Static same-type dense tensors; values at all bounded coordinates; no padding, layout side effects, ownership or native execution.",
+    "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/copy-layout-chain/REVIEW.md",
+    "receipt_sha256": "a3b8bc277d3c0740d7f23c9cb728e0882733b335d3c64658fe5e98dd266aa5af",
+    "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+  },
+  {
+    "source_id": "HandleReshape/copy-reorder",
+    "existing_case_id": "copy.compose-dense-layouts",
+    "existing_source_ids": [
+      "HandleCopy/compose-copy"
+    ],
+    "relation": "value-domain-reuse-with-reviewed-layout-lemmas",
+    "caller_line": 7076,
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.CopyChain.verified; RevisedBenchmark.DenseChain.raw_verified",
+    "conditions": "Successful static dense untiled source selection, row-preserving reshape/copy, matched endpoint address for new raw reshape, identical address maps for an omitted final copy. Ordinary memory without observable transfer effects.",
+    "types": "Static same-type dense tensors; values at all bounded coordinates; no padding, layout side effects, ownership or native execution.",
+    "historical_review_or_receipt": "comparisons/revised-benchmark-20261117/copy-layout-chain/REVIEW.md",
+    "receipt_sha256": "a3b8bc277d3c0740d7f23c9cb728e0882733b335d3c64658fe5e98dd266aa5af",
+    "source": "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+  }
+]
