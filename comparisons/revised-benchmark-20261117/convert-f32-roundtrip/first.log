@@ -1,0 +1,70 @@
+comparisons/revised-benchmark-20261117/convert-f32-roundtrip/ConvertRoundSpec.lean: OK
+comparisons/revised-benchmark-20261117/convert-f32-roundtrip/FREEZE.md: OK
+comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean: OK
+lean-toolchain: OK
+sources/xla/xla/primitive_util.h: OK
+sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc: OK
+RadixSpec 0.430s exit=0
+ConvertRoundSpec 0.332s exit=0
+ConvertRoundProof.lean:35:45: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≤ 8388608
+  b ≥ 16777216
+  24 ≤ a ≤ 63
+where
+ a := ↑t
+ b := ↑2 ^ t
+ c := 2 ^ t
+ConvertRoundProof.lean:36:41: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≤ -16777217
+  b ≥ 33554432
+  25 ≤ a ≤ 63
+where
+ a := ↑t
+ b := ↑2 ^ t
+ c := 2 ^ t
+ConvertRoundProof.lean:45:33: error: Application type mismatch: The argument
+  width
+has type
+  t ≤ 23
+but is expected to have type
+  t + 1 ≤ 24
+in the application
+  powerBound (t + 1) width
+ConvertRoundProof.lean:45:40: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 8388609
+  e ≤ 8388608
+  b - c ≥ 0
+  b - d ≤ 0
+  0 ≤ a ≤ 23
+where
+ a := ↑t
+ b := x
+ c := low false t
+ d := high false t
+ e := ↑2 ^ t
+ f := 2 ^ t
+ConvertRoundProof.lean:46:36: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 16777217
+  e ≤ 16777216
+  b - c ≥ 0
+  b - d ≤ 0
+  0 ≤ a ≤ 24
+where
+ a := ↑t
+ b := x
+ c := low true t
+ d := high true t
+ e := ↑2 ^ t
+ f := 2 ^ t
+'RevisedBenchmark.ConvertRound.verified' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+ConvertRoundProof 0.437s exit=1
+Traceback (most recent call last):
+  File "/workspace/tensor-benchmark-orchestration-20261117/comparisons/revised-benchmark-20261117/convert-f32-roundtrip/replay.py", line 25, in <module>
+    res.check_returncode()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 502, in check_returncode
+    raise CalledProcessError(self.returncode, self.args, self.stdout,
+subprocess.CalledProcessError: Command '['/workspace/toolchains/lean-4.35.0-linux/bin/lean', '-o', 'ConvertRoundProof.olean', 'ConvertRoundProof.lean']' returned non-zero exit status 1.
