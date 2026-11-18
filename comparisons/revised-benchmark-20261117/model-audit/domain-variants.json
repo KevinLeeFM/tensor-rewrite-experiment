@@ -79,7 +79,7 @@
     "lhs": "Nested BF16-operand matrix products with original BF16 inner result and F32 final result.",
     "rhs": "Opposite association with both dots required to return the old outer result type F32.",
     "conditions": "Unbatched direct output order, both cost orientations, strict threshold two, layout-insensitive two-operand dots with ordinary precision config, exact finite defined observations. Each witness contains a single nonzero product path.",
-    "types": "BF16 and F32 round-to-nearest-even, nonnegative finite integer-valued input. Backend performance and actual HLO execution untested.",
+    "types": "BF16 and F32 round-to-nearest-even for nonnegative integer-valued observations. The partial F32 evaluator rejects pre-round inputs above 2^30. Only pairs of defined observations are compared. Backend behavior remains untested.",
     "overlap": "Intermediate BF16 storage changes the observable despite identical wide arithmetic results when the store is omitted. Earlier homogeneous F32 counterexamples depended on rounding a sum of multiple nonzero contributions.",
     "evidence": [
       "comparisons/revised-benchmark-20261117/dot-inner-result-precision/FREEZE.md",

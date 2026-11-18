@@ -1,6 +1,6 @@
 # Revised benchmark verification contract
 
-**Current status.** [Domain variants and auxiliary artifact declarations](#domain-variants-and-auxiliary-artifact-declarations). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
+**Current status.** [Campaign synthesis, exhaustive case index, effort and remaining obligations](CAMPAIGN-SYNTHESIS.md). [Domain variants and auxiliary artifact declarations](#domain-variants-and-auxiliary-artifact-declarations). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
 
 ## Owner direction and outcome gate
 
