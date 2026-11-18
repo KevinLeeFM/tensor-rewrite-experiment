@@ -1,0 +1,102 @@
+[
+  {
+    "id": "conv.mixed-spatial-rank4-permuted",
+    "source_ids": [
+      "SimplifyConvToMultiply/reduce-000",
+      "SimplifyConvToMultiply/reduce-100"
+    ],
+    "effort_group": "conv-mixed-spatial",
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.ConvMixedSpatial.verified",
+    "lhs": "Dense grouped exact forward convolution over spatial axes T and C with nonunit width on T and unit width on C; independently optional reversal.",
+    "rhs": "Transpose input, optionally reverse and transpose kernel, broadcast, multiply, sum along T and reinsert the singleton output axis.",
+    "types": "Rank-four exact Nat arrays with arbitrary entries, fixed independent dimension-number orders [T,B,C,F], [C,F,T,I], [F,T,C,B].",
+    "conditions": "Valid groups; same type; static dense geometry with unit stride and dilations, no padding or RHS sparsity, layout insensitive, contracted output T size one, kernel T>1, kernel C size one, one input and output channel per feature group. Only valid output reads.",
+    "overlap": "Normalized separability already known; earlier physical ordered convolution proofs have just one spatial axis. One distinct mixed-coordinate mathematical profile, referencing two previously linked lexical sites.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/MixedSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/MixedProof.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/MixedControls.lean",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/final.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/replay.py",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/cases.json",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/attempt1.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/attempt2.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/controls-attempt.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/freeze.log",
+      "comparisons/revised-benchmark-20261117/conv-mixed-spatial/review.log",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-pointwise-axes/PointProof.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "dot.exact-triangle-contraction",
+    "source_ids": [
+      "AssociativeReorderNestedDot/lhs-direct",
+      "HandleDot/nested-delegation"
+    ],
+    "effort_group": "dot-triangle-contract",
+    "outcome": "proved",
+    "theorem": "RevisedBenchmark.Triangle.verified",
+    "lhs": "Sum over J,K of the AB contraction over I multiplied by C[J,K,P].",
+    "rhs": "Sum over I,J of A[M,I,J] multiplied by the BC contraction over K.",
+    "conditions": "All three pairwise contraction edges present; empty contraction sums permitted in the algebra. Nonempty source, layout-insensitive mode, default precision and profitable lhs-inner branch for the source mapping. Direct identical result axis order [M,N,P]. Output samples are bounded.",
+    "types": "Arbitrary exact integer entries, finite free and contracting extents. A[M,I,J], B[I,K,N], C[J,K,P].",
+    "overlap": "Source-specific closing A–C edge absent from standard matrix associativity. Reused public merged-axis zero-seed exchange by actual invocation. The reverse source orientation is excluded from the credited mapping.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/MergeProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/PROOF-IMPORT.sha256",
+      "comparisons/revised-benchmark-20261117/nested-dot-transposed-batches/SOURCE-SUPPLEMENT.md",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/AUTHOR.md",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/TriangleControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/TriangleProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/TriangleSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/author.log",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/replay.py",
+      "comparisons/revised-benchmark-20261117/dot-triangle-contract/review.log",
+      "comparisons/revised-benchmark-20261117/merge-reduce-axes/MergeSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc"
+    ]
+  },
+  {
+    "id": "dot.bf16-inner-result-reassociated-f32",
+    "source_ids": [
+      "AssociativeReorderNestedDot/lhs-direct",
+      "AssociativeReorderNestedDot/rhs-direct",
+      "HandleDot/nested-delegation"
+    ],
+    "effort_group": "dot-inner-result-precision",
+    "outcome": "disproved",
+    "theorem": "RevisedBenchmark.DotResult.refuted",
+    "lhs": "Nested BF16-operand matrix products with original BF16 inner result and F32 final result.",
+    "rhs": "Opposite association with both dots required to return the old outer result type F32.",
+    "conditions": "Unbatched direct output order, both cost orientations, strict threshold two, layout-insensitive two-operand dots with ordinary precision config, exact finite defined observations. Each witness contains a single nonzero product path.",
+    "types": "BF16 and F32 round-to-nearest-even, nonnegative finite integer-valued input. Backend performance and actual HLO execution untested.",
+    "overlap": "Intermediate BF16 storage changes the observable despite identical wide arithmetic results when the store is omitted. Earlier homogeneous F32 counterexamples depended on rounding a sum of multiple nonzero contributions.",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/PrecisionControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/PrecisionProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/PrecisionSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/REVIEW.md",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/author.log",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/replay.py",
+      "comparisons/revised-benchmark-20261117/dot-inner-result-precision/review.log",
+      "comparisons/revised-benchmark-20261117/reshape-iota-radix/RadixSpec.lean",
+      "comparisons/revised-benchmark-20261117/conv-bfloat-promotion/PromotionSpec.lean",
+      "comparisons/revised-benchmark-20261117/nested-dot-round/NestedSpec.lean",
+      "sources/xla/xla/hlo/transforms/simplifiers/algebraic_simplifier.cc",
+      "sources/xla/xla/service/hlo_verifier.cc",
+      "sources/xla/xla/service/shape_inference.cc"
+    ]
+  }
+]
