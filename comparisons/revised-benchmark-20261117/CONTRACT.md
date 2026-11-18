@@ -334,3 +334,7 @@ Four caller labels now carry explicit, receipt-checked links to eight already ca
 ### Signed prefix and inherited square-root evidence
 
 The signed S32/S64 prefix-window calculation passed independent review at 4cc1fa4. Four separately audited square-root links at 02332d8 reuse prior exact-domain judgments, including a complex counterexample. The register now contains 199 reviewed mathematical cases and evidence links for 403 of 488 candidate records. The original 118 artifact outcomes and discovery-time limitations remain separately recorded.
+
+### Early ReduceWindow outputs
+
+Independent review at 100ed5c accepted three ordered-fold model cases covering five source branches. Skipping out-of-bounds reads leaves the initializer on a padded empty input with live outputs. Rank-zero forwarding requires a whole-state left identity. The singleton tuple calculation reuses a historical wrapper law. Author elapsed 351 seconds, independent reviewer 111 seconds including 1.261 seconds of compiler time. The ledger contains 202 cases (156 proved and 46 refuted), linked directly or through reuse to 408 of 488 source records.
