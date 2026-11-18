@@ -1,0 +1,27 @@
+[
+  {
+    "id": "dot-reorder-broadcast-retained-partner-axis",
+    "outcome": "disproved",
+    "effort_group": "dot-move-broadcast",
+    "lhs": "Dot of a vector broadcast along original axis 0 with a partner. Both contract original axes [0,1].",
+    "rhs": "Reduce the partner along axis 0, then Dot the original vector with the reduced partner using retained partner dimension number 1.",
+    "conditions": "Legal parameter vector [n], broadcast [m,n] on dimension 1, partner [m,n,n], no batch axes; positive extents and strict dot-cost improvement at threshold two; both orientations evaluated.",
+    "types": "Bounded finite coordinates, exact integer logical values, sums and products.",
+    "source_ids": [
+      "HandleDot/mirror-broadcast-lhs-to-rhs",
+      "HandleDot/mirror-broadcast-rhs-to-lhs"
+    ],
+    "theorem": "RevisedBenchmark.BroadcastDot.verified",
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/BroadcastDotSpec.lean",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/BroadcastDotProof.lean",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/BroadcastDotControls.lean",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/cost-excerpt.cc",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/FREEZE.md",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/author-replay.log",
+      "comparisons/revised-benchmark-20261117/dot-move-broadcast/REVIEW.md"
+    ],
+    "overlap": "Both source directions share the same obsolete partner dimension number and count as one case. Separate from dot/rule06 (reduce a broadcasted product), Dot reverse transfer and Dot/Concat splitting. A correctly renumbered contraction is a witness control only."
+  }
+]
