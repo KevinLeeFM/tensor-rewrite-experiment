@@ -1,6 +1,6 @@
 # Revised benchmark verification contract
 
-**Current counts:** [November 18 checkpoint](#november-18-model-checkpoint). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
+**Current counts:** [Collective extrema follow-up](#collective-extrema-follow-up). **Acceptance definition:** [Mathematical rewrite cases under the adopted November 12 plan](#mathematical-rewrite-cases-under-the-adopted-november-12-plan). Earlier dated status sections preserve the historical review trail.
 
 ## Owner direction and outcome gate
 
@@ -177,3 +177,9 @@ Twelve additional independently replayed mathematical rewrites bring the catalog
 The new work used two small proof assignments, coordinator-authored cases and three separate review assignments. Five groups share proof and review effort internally. The measured interval from first setup through catalog assembly was 549 seconds, including overlapping work. See [effort ledger](model-audit/effort.json) for frozen revisions, compiler intervals, failed probes, source line counts, inherited arithmetic and missing active-time measurements. No discovery time was recovered for historical proofs.
 
 The next source-grounded opportunity is the min/max branch of HandleAllReduceOrReduceScatter. Both rows lack inherited attempt evidence. Its case must distinguish reduction from shape selection in reduce-scatter, with a nonempty device group and an explicit value order. The integral and floating sum rows already have evidence and require separate overlap assessment.
+
+## Collective extrema follow-up
+
+The minimum and maximum cases each cover two original calculations. All-reduce returns the reduced array to each participant. Reduce-scatter returns each participant's correctly indexed block. Both replacements broadcast the common input scalar. The original folds all participants at the selected coordinate, using the first participant as the seed. The proof works for every nonempty group in the exact integer order model, including empty output domains. A three-participant nonuniform input distinguishes the two orders and the receiver blocks. [Frozen obligations and independent review](model-audit/extrema-review.md).
+
+With these two cases the reviewed mathematical catalog has 122 cases (110 proved, 12 disproved) linked to 157 distinct lexical records. The precise number of mathematical cases represented by the remaining records is still open. All stronger and historical verdicts remain as recorded above. Two source-neighbor sum branches already cite a modular fold lemma and a fixed-order binary32 counterexample respectively. An untouched alternative for the next bounded pass is effective-scalar Gather (pinned simplifier lines 4634–4652). Its scalar and unit-array replacements may be branches of one mathematical case; check both against the earlier small-select-chain theorem and the actual legal gather coordinate map before counting.

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "uniform-collective.minimum",
+    "effort_group": "uniform-minmax",
+    "lhs": "Ordered minimum reduction across all participants, either returning the reduced array everywhere or selecting the receiver block for reduce-scatter.",
+    "rhs": "Replicate the common scalar at every valid output coordinate.",
+    "conditions": "Nonempty ordered group and a common spatially uniform scalar. Reduce-scatter axis length equals group size times arbitrary block width.",
+    "types": "Exact integer ordering, arbitrary remaining logical coordinates including empty domains.",
+    "source_ids": [
+      "HandleAllReduceOrReduceScatter/min"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/uniform-minmax/MinMaxSpec.lean",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/MinMaxProof.lean",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/MinMaxControls.lean",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.MinMax.verified .minimum",
+    "overlap": "Both collective results are conjuncts of one case per comparator. Reuses the earlier block-address definition, integral order and idempotence, with the same fold argument for both extrema. Sum has different semantics."
+  },
+  {
+    "id": "uniform-collective.maximum",
+    "effort_group": "uniform-minmax",
+    "lhs": "Ordered maximum reduction across all participants, either returning the reduced array everywhere or selecting the receiver block for reduce-scatter.",
+    "rhs": "Replicate the common scalar at every valid output coordinate.",
+    "conditions": "Nonempty ordered group and a common spatially uniform scalar. Reduce-scatter axis length equals group size times arbitrary block width.",
+    "types": "Exact integer ordering, arbitrary remaining logical coordinates including empty domains.",
+    "source_ids": [
+      "HandleAllReduceOrReduceScatter/max"
+    ],
+    "evidence": [
+      "comparisons/revised-benchmark-20261117/uniform-minmax/MinMaxSpec.lean",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/MinMaxProof.lean",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/MinMaxControls.lean",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/SHA256SUMS",
+      "comparisons/revised-benchmark-20261117/uniform-minmax/REVIEW.md"
+    ],
+    "theorem": "RevisedBenchmark.MinMax.verified .maximum",
+    "overlap": "Both collective results are conjuncts of one case per comparator. Reuses the earlier block-address definition, integral order and idempotence, with the same fold argument for both extrema. Sum has different semantics."
+  }
+]

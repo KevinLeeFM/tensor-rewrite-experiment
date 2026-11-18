@@ -1,0 +1,1 @@
+The [independent source, model, control and replay review](../uniform-minmax/REVIEW.md) applies to the two extrema cases in extrema.json. Each covers both collective output forms. The proof development interval is shared.
